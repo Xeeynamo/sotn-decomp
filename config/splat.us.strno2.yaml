@@ -49,7 +49,7 @@ segments:
       - [0x9AC, .data, e_room_bg]
       - [0x9C4, .data, e_red_door_tiles]
       - [0x9E4, .data, e_lock_camera]
-      - [0xA64, data]
+      - [0xA64, .data, e_breakable]
       - [0xB74, .data, unk_3295C]
       - [0xBB0, .data, e_background_house]
       - [0xD30, .data, e_spikes]
