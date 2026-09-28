@@ -2,7 +2,3 @@
 #include "../rno2/rno2.h"
 
 INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/unk_A130", EntityGhostDancer);
-
-INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/unk_A130", func_pspeu_09241F30);
-
-INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/unk_A130", EntityRedDoor);
