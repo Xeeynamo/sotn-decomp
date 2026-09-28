@@ -61,7 +61,7 @@ segments:
       - [0xDBD0, c, rcen/e_elevator]
       - [0xE520, c, rcen/cutscene]
       - [0x11188, c, rcen/e_room_bg]
-      - [0x11298, c, rcen_psp/unk_2BD24]
+      - [0x11298, c, rcen/e_shaft_meridian_rings]
       - [0x11DA0, c, rcen/e_lock_camera]
       - [0x12520, c, rcen/e_shaft]
       - [0x16060, c, rcen/unk_1F0D8]
@@ -83,6 +83,7 @@ segments:
       - [0x31508, .data, rcen/e_elevator]
       - [0x31538, .data, rcen/cutscene]
       - [0x31900, data] # background_block_init
+      - [0x31940, .data, rcen/e_shaft_meridian_rings]
       - [0x31A10, .data, rcen/e_lock_camera]
       - [0x31A30, .data, rcen/e_shaft]
       - [0x31C20, .data, rcen/unk_1F0D8]

@@ -4449,6 +4449,12 @@ typedef struct {
     /* 0xA0 */ struct Entity* targetOrb;
 } ET_ShaftLightning;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ SVECTOR rotations[3];
+} ET_ShaftMeridianRings;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4827,6 +4833,7 @@ typedef union { // offset=0x7C
     ET_801C5C78 et_801C5C78;
     ET_RCEN_Shaft rcenShaft;
     ET_ShaftLightning shaftLightning;
+    ET_ShaftMeridianRings shaftMeridianRings;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);
