@@ -316,14 +316,14 @@ void func_060047E8(void) {
 }
 
 void func_06004878(void) {
-    while (PER_LInit(PER_KD_SYS, 0, 0, 0, 0) == 1) {
+    while (PER_LInit(PER_KD_SYS, 0, 0, NULL, 0) == PER_INT_ERR) {
     }
 
     do {
-        DAT_060505E0 = (DAT_06065D32 != 0) ? &DAT_06065D40 : NULL;
+        DAT_060505E0 = PER_GET_SYS();
     } while (DAT_060505E0 == NULL);
 
-    DAT_0605D764 = ((DAT_060505E0->unk4 >> 9) ^ 1) & 1;
+    DAT_0605D764 = DAT_060505E0->sm & PER_MSK_STEREO ? false : true;
     if (DAT_0605D764 != 0) {
         ((s32(*)(s32))PlaySfx)(0xF0000006);
     } else {
@@ -338,12 +338,12 @@ void func_06004878(void) {
 void func_06004924(void) {
     u32 status_sys;
 
-    while (PER_LInit(PER_KD_SYS, 0, 0, 0, 0) == 1) {
+    while (PER_LInit(PER_KD_SYS, 0, 0, NULL, 0) == PER_INT_ERR) {
     }
     do {
-        DAT_060505E4 = (DAT_06065D32 != 0) ? &DAT_06065D40 : NULL;
+        DAT_060505E4 = PER_GET_SYS();
     } while (DAT_060505E4 == NULL);
-    status_sys = DAT_060505E4->unk4;
+    status_sys = DAT_060505E4->sm;
     if (DAT_0605D764 != 0) {
         status_sys &= ~PER_MSK_STEREO;
     } else {
@@ -362,17 +362,18 @@ void func_06004A10(void) {
     s8* ptr;
 
     i = 0;
-    ptr = &DAT_06057F50;
-    for (; i < 10; i++) {
+    ptr = DAT_06057F50;
+    for (; i < PER_WORK_SIZE(1, 2); i++) {
         *ptr++ = 0;
     }
 
     g_pads[0].tapped = g_pads[0].previous = g_pads[0].pressed = 0;
     ResetPadsRepeat();
-    while (PER_LInit(PER_KD_PERTIM, 1, 2, (s32)&DAT_06057F50, 0) != 0) {
+    while (PER_LInit(PER_KD_PERTIM, 1, 2, DAT_06057F50, 0) != PER_INT_OK) {
     }
 }
 
+void func_06004A74(void);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004A74, func_06004A74);
 
 void func_06004C14(void) {
@@ -468,8 +469,6 @@ void func_06004D84(void) {
     set_imask(msk);
 }
 
-void func_06004A74(void);
-
 void func_06004DE8(void) {
     u32 msk;
 
@@ -485,8 +484,30 @@ void func_06004DE8(void) {
     set_imask(msk);
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004E50, func_06004E50);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004E94, func_06004E94);
+void func_06004E50(void) {
+    u32 msk;
+
+    msk = get_imask();
+    set_imask(0);
+
+    SCL_VblankStart();
+
+    set_imask(msk);
+}
+
+void func_06004E94(void) {
+    u32 msk;
+
+    msk = get_imask();
+    set_imask(0);
+
+    SCL_VblankEnd();
+    if (func_06006ED4() == 1) {
+        SYS_EXECDMP();
+    }
+
+    set_imask(msk);
+}
 
 // _RETURN_TO_GAME
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004EF0, func_06004EF0);

@@ -4,6 +4,8 @@
 #include "xpt.h"
 #include "int.h"
 
+#define PER_WORK_SIZE(num, size) (((num) * ((size) + 2) * 2) + (size))
+
 #define PER_REG_COMREG ((volatile Uint8*)0x2010001F)
 #define PER_REG_SR ((volatile Uint8*)0x20100061)
 #define PER_REG_SF ((volatile Uint8*)0x20100063)
@@ -43,12 +45,36 @@
 #define PER_INT_OK 0x0
 #define PER_INT_ERR 0x1
 
+#define PER_GET_SYS() ((per_set_sys_flg == OFF) ? NULL : &per_get_sys_data)
+
 typedef Uint8 PerId;
 typedef Uint8 PerSize;
 typedef Uint8 PerKind;
 typedef Uint16 PerNum;
 typedef Uint8 PerMulId;
 typedef Uint8 PerMulCon;
+
+typedef struct {
+    PerMulId id;
+    PerMulCon con;
+} PerMulInfo;
+
+typedef struct {
+    Uint8 cc;
+    Uint8 ac;
+    Uint16 ss;
+    Uint32 sm;
+    Uint8 stat;
+} PerGetSys;
+
+typedef void PerGetPer;
+
+extern PerGetSys per_get_sys_data;
+extern volatile Uint8 per_set_sys_flg;
+
+Uint32 PER_LInit(PerKind, PerNum, PerSize, Uint8*, Uint8);
+Uint32 PER_LGetPer(PerGetPer**, PerMulInfo**);
+void PER_IntFunc(void);
 
 #define PER_SM_MSHON 0x00
 #define PER_SM_SSHON 0x02
