@@ -263,6 +263,7 @@
 | cen        | jtbl_pspeu_09293FB0               |       12 |          0 | Yes    |       |     |
 | no3        | jtbl_pspeu_09298DF0               |       12 |          0 | Yes    |       |     |
 | np3_psp    | jtbl_pspeu_09291B58               |       12 |          0 | Yes    |       |     |
+| rno2       | jtbl_pspeu_092874B0               |       12 |          0 | Yes    |       |     |
 | rnz0_psp   | jtbl_pspeu_09281B60               |       12 |          0 | Yes    |       |     |
 | top        | jtbl_pspeu_092769C8               |       12 |          0 | Yes    |       |     |
 | main       | func_psp_08910498                 |       12 |          1 |        |       |     |
@@ -2029,7 +2030,7 @@
 | main       | printf                            |       32 |          3 |        |       |     |
 | main       | wcrtomb                           |       32 |          3 |        |       |     |
 | no2        | func_pspeu_09257B10               |       32 |          3 |        |       |     |
-| rno2       | func_us_801B4148_from_bo0         |       32 |          3 |        |       |     |
+| rno2       | EntityRampart                     |       32 |          3 |        |       |     |
 | sel        | func_psp_09237ED8                 |       32 |          3 |        |       |     |
 | dra        | func_psp_090F01C0                 |       32 |          4 |        |       |     |
 | main       | RotAverageNclip4                  |       32 |          4 |        |       |     |
@@ -2190,7 +2191,7 @@
 | rlib       | func_pspeu_09249828               |       35 |          4 |        |       |     |
 | rno0       | func_pspeu_0925D410               |       35 |          4 |        |       |     |
 | rno1       | func_pspeu_092497F8               |       35 |          4 |        |       |     |
-| rno2       | RNO2_Load                         |       35 |          4 |        |       |     |
+| rno2       | OvlLoad                           |       35 |          4 |        |       |     |
 | rno3       | func_pspeu_09255FB0               |       35 |          4 |        |       |     |
 | rno4       | func_pspeu_09251F90               |       35 |          4 |        |       |     |
 | rnz0       | func_pspeu_09256B38               |       35 |          4 |        |       |     |
@@ -2757,8 +2758,8 @@
 | rlib       | func_pspeu_09244FC0               |       40 |          2 |        |       |     |
 | rno0       | func_pspeu_09252660               |       40 |          2 |        |       |     |
 | rno1       | func_pspeu_092461D0               |       40 |          2 |        |       |     |
-| rno2       | PreventEntityFromRespawning       |       40 |          2 |        |       |     |
 | rno2       | func_pspeu_09256FF0               |       40 |          2 |        |       |     |
+| rno2       | PreventEntityFromRespawning       |       40 |          2 |        |       |     |
 | rno3       | func_pspeu_0924FF78               |       40 |          2 |        |       |     |
 | rno4       | PreventEntityFromRespawning       |       40 |          2 |        |       |     |
 | rnz0       | func_pspeu_092529B8               |       40 |          2 |        |       |     |
@@ -4328,8 +4329,8 @@
 | rno0       | func_pspeu_0923B450               |       66 |          7 |        |       |     |
 | rno0       | func_pspeu_0924DE28               |       66 |          7 |        |       |     |
 | rno1       | func_pspeu_0924A140               |       66 |          7 |        |       |     |
-| rno2       | func_pspeu_09253F98               |       66 |          7 |        |       |     |
 | rno2       | func_pspeu_09241F30               |       66 |          7 |        |       |     |
+| rno2       | func_pspeu_09253F98               |       66 |          7 |        |       |     |
 | rno3       | func_pspeu_0923C670               |       66 |          7 |        |       |     |
 | rno4       | EntityIsNearPlayer                |       66 |          7 |        |       |     |
 | rnz0       | func_pspeu_09241808               |       66 |          7 |        |       |     |
@@ -6776,7 +6777,7 @@
 | no4        | func_pspeu_09249560               |      138 |         15 |        |       |     |
 | bo0        | func_us_801B4210                  |      138 |         20 |        |       |     |
 | no2        | func_pspeu_09257C00               |      138 |         20 |        |       |     |
-| rno2       | func_us_801B4210_from_bo0         |      138 |         20 |        |       |     |
+| rno2       | EntityStoneBrazier                |      138 |         20 |        |       |     |
 | dra        | func_psp_090EB028                 |      139 |          2 |        |       |     |
 | main       | CompMatrix                        |      139 |          4 |        |       |     |
 | bo2        | SetCutsceneScript                 |      139 |          5 |        |       |     |
@@ -9918,6 +9919,7 @@
 | no1        | func_pspeu_0923E850               |     1229 |         86 | Yes    |       |     |
 | lib        | func_psp_09268528                 |     1229 |        132 | Yes    |       |     |
 | no3        | func_pspeu_09247CA0               |     1232 |        112 | Yes    |       |     |
+| rno2       | EntityRedDoor                     |     1232 |        112 | Yes    |       |     |
 | rdai       | func_pspeu_09240AD8               |     1241 |        171 | Yes    |       |     |
 | rno4       | EntityImp                         |     1241 |        171 | Yes    |       |     |
 | rnz0       | func_pspeu_092445D8               |     1241 |        171 | Yes    |       |     |
@@ -9959,7 +9961,6 @@
 | rdai       | func_pspeu_0923DDF0               |     1247 |        112 | Yes    |       |     |
 | rlib       | func_pspeu_09239610               |     1247 |        112 | Yes    |       |     |
 | rno0       | func_pspeu_0923B538               |     1247 |        112 | Yes    |       |     |
-| rno2       | EntityRedDoor                     |     1247 |        112 | Yes    |       |     |
 | rno3       | func_pspeu_0923C758               |     1247 |        112 | Yes    |       |     |
 | rno4       | EntityRedDoor                     |     1247 |        112 | Yes    |       |     |
 | rnz0       | func_pspeu_092418F0               |     1247 |        112 | Yes    |       |     |
