@@ -49,7 +49,7 @@ typedef enum EntityID {
     E_STONE_BRAZIER,            // EntityStoneBrazier
     E_3D_BACKGROUND_HOUSE,      // Entity3DBackgroundHouse
     E_3D_HOUSE_SPAWNER,         // Entity3DHouseSpawner
-    E_UNK_1D,                   // func_us_801B4DA4_from_bo0
+    E_HOUSE_SHADER,             // EntityHouseShader
     E_SPIKES,                   // EntitySpikes
     E_SPIKES_PARTS,             // EntitySpikesParts
     E_SPIKES_DUST,              // EntitySpikesDust

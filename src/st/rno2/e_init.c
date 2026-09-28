@@ -29,7 +29,7 @@ void EntityNightSky(Entity* self);
 void EntityStoneBrazier(Entity* self);
 void Entity3DBackgroundHouse(Entity* self);
 void Entity3DHouseSpawner(Entity* self);
-void func_us_801B4DA4_from_bo0(Entity* self);
+void EntityHouseShader(Entity* self);
 void EntitySpikes(Entity* self);
 void EntitySpikesParts(Entity* self);
 void EntitySpikesDust(Entity* self);
@@ -94,7 +94,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityStoneBrazier,
     Entity3DBackgroundHouse,
     Entity3DHouseSpawner,
-    func_us_801B4DA4_from_bo0,
+    EntityHouseShader,
     EntitySpikes,
     EntitySpikesParts,
     EntitySpikesDust,

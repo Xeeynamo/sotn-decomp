@@ -1,7 +1,26 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno2.h"
 
-void func_us_801B4DA4_from_bo0(Entity* self) {
+// One of this entity exists in exactly the same location
+// as each of the 4 EntityBackgroundHouses. I can't be certain
+// about the purpose of this but it seems like some short of
+// shader doing weird graphics operations and accessing odd tpage
+// values. This should be considered a strong candidate for research
+// and testing! 
+
+// The main thing that makes me think it's a shader:
+// In the lower left of the main giant room, there is an entity for a
+// 3D house spawner, but we don't see any houses there - weird. If you go
+// into that area and walk around a bit, you may notice irregular graphics.
+// The most obvious thing I noticed: Come into the room from the lower left
+// (the spike room with the Ghost Dancers). Go right past the first set of
+// double candles, then up through the first gap in the stone above. Stand on
+// the platform to the right of the gap. The texture you're on has a pattern of
+// squares. Walk left and right, between square 3 and square 7. The left edge
+// of the platform has a strange shadow near the moon, and extends in and out
+// as you move. It seems like this is supposed to be a shader effect.
+
+void EntityHouseShader(Entity* self) {
     DRAWENV draw;
     DR_ENV* dr_env;
     Primitive* prim;
