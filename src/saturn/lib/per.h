@@ -18,9 +18,9 @@
     (*(volatile Uint8*)(address) = (Uint8)(data))
 #define PER_PeekByte(address) (*(volatile Uint8*)(address))
 
-#define PER_MID_NCON_ONE    0xf0
+#define PER_MID_NCON_ONE 0xf0
 
-#define PER_MCON_NCON_UNKNOWN   0x00
+#define PER_MCON_NCON_UNKNOWN 0x00
 
 #define PER_ID_NCON_UNKNOWN 0xf0
 #define PER_ID_DGT 0x00

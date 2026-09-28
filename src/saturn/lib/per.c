@@ -3,8 +3,12 @@
 
 #include "per.h"
 
+extern Uint8 DAT_06065D30;
 extern Uint8 per_hot_res;
+extern volatile Uint8 per_set_sys_flg;
 extern Uint8* per_get_time_adr;
+extern PerGetSys per_get_sys_data;
+extern Uint8 DAT_06065D4C;
 
 #define IREG0_SYS 0x01
 #define IREG0_NSYS 0x00
@@ -41,7 +45,7 @@ extern Uint8* per_get_time_adr;
 #define ARY_REG_IREG(data) (*(PER_REG_IREG + (data) * 2))
 
 extern Uint8 intback_ireg[3];
-
+extern Uint8 now_cont;
 extern PerKind intback_kind;
 
 extern Uint8 intback_v_blank;
@@ -64,14 +68,27 @@ extern Uint8 set_time_flg;
 extern Uint8 time_data[2][7];
 extern Uint8* set_time_adr;
 
+extern PerMulInfo DAT_06057EB8;
+extern PerMulInfo DAT_06057EBC;
+extern PerMulInfo* DAT_06057EC0;
+extern PerMulInfo* DAT_06057EC4;
+
 extern int hot_res_cnt;
 
 extern Uint8* get_oreg_adr;
-
+extern int DAT_06057ED4;
+extern int DAT_06057ED8;
 extern Uint8 end_flg;
 extern int remain_conect_cnt;
 
 extern PerSize backup_size;
+
+extern Uint8 get_per_id_flg;
+extern Uint8 get_exp_per_size_flg;
+extern Uint8 set_bdr_flg;
+extern Uint8 get_per_data_flg;
+extern Uint8 set_per_data_flg;
+extern Uint8 skip_per_data_flg;
 
 static inline void set_sr(u32 sr) { asm volatile("ldc\t%0,sr" : : "r"(sr)); }
 
@@ -95,13 +112,6 @@ static inline void set_imask(u32 imask) {
     sr |= (imask << 4);
     set_sr(sr);
 }
-
-extern Uint32 DAT_06057EB8;
-extern PerMulInfo DAT_06057EBC;
-extern PerMulInfo* DAT_06057EC0;
-extern Uint32* DAT_06057EC4;
-extern Uint8 DAT_06065D30;
-extern Uint8 DAT_06065D4C;
 
 // PER_LInit
 Uint32 PER_LInit(
@@ -171,7 +181,7 @@ Uint32 PER_LInit(
     set_per_adr = (Uint8*)intback_work + intback_num * (intback_size + 2);
     bdry_work_adr = (Uint8*)intback_work + intback_num * (intback_size + 2) * 2;
     DAT_06065D30 = 0;
-    func_0602CD44();
+    InitIntBackPer();
     msk = get_imask();
     set_imask(15);
     SYS_SETUINT_NO_MACSAVE(INT_SCU_SYS, PER_IntFunc);
@@ -221,10 +231,28 @@ void SetPerData(void) {
     }
 }
 
-// InitIntBackPer
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602CD44, func_0602CD44);
+static void InitIntBackPer(void) {
+    get_per_id_flg = ON;
+    get_exp_per_size_flg = OFF;
+    set_bdr_flg = OFF;
+    get_per_data_flg = OFF;
+    set_per_data_flg = OFF;
+    skip_per_data_flg = OFF;
+    set_time_flg = OFF;
+    get_per_cnt = 0;
+    DAT_06057ED4 = 0;
+    DAT_06057ED8 = 0;
+    remain_conect_cnt = 0;
+    now_cont = 0;
+    do {
+        DAT_06057EC4[0].id = PER_MID_NCON_ONE;
+        DAT_06057EC4[0].con = PER_MCON_NCON_UNKNOWN;
+        DAT_06057EC4[1].id = PER_MID_NCON_ONE;
+        DAT_06057EC4[1].con = PER_MCON_NCON_UNKNOWN;
+    } while (FALSE);
+}
 
-Uint32 GoIntBack(void) {
+static Uint32 GoIntBack(void) {
     if (end_flg == 4) {
         return PER_INT_ERR;
     }
