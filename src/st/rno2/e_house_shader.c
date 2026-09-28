@@ -6,7 +6,7 @@
 // about the purpose of this but it seems like some short of
 // shader doing weird graphics operations and accessing odd tpage
 // values. This should be considered a strong candidate for research
-// and testing! 
+// and testing!
 
 // The main thing that makes me think it's a shader:
 // In the lower left of the main giant room, there is an entity for a
