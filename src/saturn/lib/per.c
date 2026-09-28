@@ -161,10 +161,10 @@ Uint32 PER_LInit(
     DAT_06057EC4 = &DAT_06057EB8;
     DAT_06057EC0 = &DAT_06057EBC;
     do {
-        DAT_06057EC0[0].id = 0xF0;
-        DAT_06057EC0[0].con = 0;
-        DAT_06057EC0[1].id = 0xF0;
-        DAT_06057EC0[1].con = 0;
+        DAT_06057EC0[0].id = PER_MID_NCON_ONE;
+        DAT_06057EC0[0].con = PER_MCON_NCON_UNKNOWN;
+        DAT_06057EC0[1].id = PER_MID_NCON_ONE;
+        DAT_06057EC0[1].con = PER_MCON_NCON_UNKNOWN;
     } while (FALSE);
 
     get_per_adr = intback_work;
