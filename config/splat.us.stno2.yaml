@@ -46,7 +46,7 @@ segments:
       - [0x3E8, .data, graphics_banks]
       - [0x574, .data, gen/e_laydef]
       - [0x71C, .data, e_init]
-      - [0x994, .data, background_block_init]
+      - [0x994, .data, e_room_bg]
       - [0x9AC, .data, e_red_door_tiles]
       - [0x9EC, .data, e_lock_camera]
       - [0xA6C, .data, e_breakable]

@@ -5,6 +5,7 @@
 #include <stage.h>
 
 #define STAGE_IS_RNO2
+#define INVERTED_STAGE
 
 enum Palettes {
     PAL_NONE,
@@ -13,6 +14,8 @@ enum Palettes {
     PAL_AZAGHAL_BODY_B = 0x221,
     PAL_AZAGHAL_COMBO_A = 0x222,
     PAL_AZAGHAL_COMBO_B = 0x223,
+    PAL_BREAKABLE = 0x226,
+    PAL_BREAKABLE_DEBRIS = 0x22A,
     PAL_CTULHU_DEATH = 0x2EE,
 };
 
@@ -40,13 +43,13 @@ typedef enum EntityID {
     E_EXPLOSION_VARIANTS,       // EntityExplosionVariants
     E_GREY_PUFF,                // EntityGreyPuff
     E_DEEP_BG_ARCH,             // EntityDeepBackgroundArch
-    E_UNK_17,                   // func_us_801B3F30_from_bo0
-    E_UNK_18,                   // func_us_801B4148_from_bo0
-    E_UNK_19,                   // func_us_801B41A4_from_bo0
-    E_UNK_1A,                   // func_us_801B4210_from_bo0
+    E_FOUNTAIN_WATER,           // EntityFountainWater
+    E_RAMPART,                  // EntityRampart
+    E_NIGHT_SKY,                // EntityNightSky
+    E_STONE_BRAZIER,            // EntityStoneBrazier
     E_3D_BACKGROUND_HOUSE,      // Entity3DBackgroundHouse
     E_3D_HOUSE_SPAWNER,         // Entity3DHouseSpawner
-    E_UNK_1D,                   // func_us_801B4DA4_from_bo0
+    E_HOUSE_SHADER,             // EntityHouseShader
     E_SPIKES,                   // EntitySpikes
     E_SPIKES_PARTS,             // EntitySpikesParts
     E_SPIKES_DUST,              // EntitySpikesDust

@@ -429,7 +429,6 @@ set(SOURCE_FILES_STAGE_NO2
     src/st/no2/sprite_banks.c
     src/st/no2/tilemaps.c
     src/st/no2/stage_data.c
-    src/st/no2/background_block_init.c
     src/st/no2/e_room_bg.c
     src/st/no2/e_lock_camera.c
     src/st/no2/e_breakable.c
