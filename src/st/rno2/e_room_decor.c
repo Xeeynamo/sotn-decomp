@@ -58,12 +58,18 @@ void EntityDeepBackgroundArch(Entity* self) {
     }
 }
 
-static u16 g_Unk17PaletteAnim[] = {
+// All remaining entities in this file only exist in the single
+// gigantic room in this stage. You could call it "Olrox's Courtyard"
+
+// Notice these are the same data, just with or without PAL_FLAG(0x40)
+static u16 fountainPalettes[] = {
     PAL_FLAG(0x44), PAL_FLAG(0x48), PAL_FLAG(0x49), PAL_FLAG(0x4A),
     PAL_FLAG(0x4B), PAL_FLAG(0x4C), PAL_FLAG(0x4D)};
-static s32 g_Unk17ClutIds[] = {4, 8, 9, 10, 11, 12, 13};
+static s32 fountainCluts[] = {4, 8, 9, 10, 11, 12, 13};
 
-void func_us_801B3F30_from_bo0(Entity* self) {
+// The water in the fountain at the center of the giant room.
+// Uses a clut-cycling approach to make the water flow
+void EntityFountainWater(Entity* self) {
     u8 colorLo;
     u16 color;
     s16 deltaPosXHi;
@@ -94,7 +100,7 @@ void func_us_801B3F30_from_bo0(Entity* self) {
     case 2:
         if (--self->ext.et_801B3F30.unk80 == 0) {
             for (i = 0; i < 7; i++) {
-                curPal = g_Unk17ClutIds[i];
+                curPal = fountainCluts[i];
                 for (j = 1; j < 16; j++) {
                     color = g_Clut[0][0x400 + curPal * COLORS_PER_PAL + j];
                     colorLo = color & 0x1F;
@@ -119,10 +125,11 @@ void func_us_801B3F30_from_bo0(Entity* self) {
     if (self->ext.et_801B3F30.unk7E > 6) {
         self->ext.et_801B3F30.unk7E = 0;
     }
-    self->palette = g_Unk17PaletteAnim[self->ext.et_801B3F30.unk7E];
+    self->palette = fountainPalettes[self->ext.et_801B3F30.unk7E];
 }
 
-void func_us_801B4148_from_bo0(Entity* self) {
+// Only one exists, in the upper right corner
+void EntityRampart(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(2);
@@ -131,7 +138,7 @@ void func_us_801B4148_from_bo0(Entity* self) {
     }
 }
 
-void func_us_801B41A4_from_bo0(Entity* self) {
+void EntityNightSky(Entity* self) {
     if (g_CurrentEntity->step == 0) {
         g_CurrentEntity->step++;
     }
@@ -143,18 +150,20 @@ void func_us_801B41A4_from_bo0(Entity* self) {
     g_GpuBuffers[1].draw.b0 = 0x28;
 }
 
-static AnimateEntityFrame g_Unk1AAnimIdle[] = {
+static AnimateEntityFrame anim_flame_movement[] = {
     {10, 4}, {10, 5}, {10, 6}, {10, 7}, {10, 8}, POSE_LOOP(0)};
-static AnimateEntityFrame g_Unk1AAnimDestroyed[] = {{10, 10}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_broken[] = {{10, 10}, POSE_LOOP(0)};
 
-void func_us_801B4210_from_bo0(Entity* self) {
+// Works alongside an EntityBreakable. The EntityBreakable works as normal.
+// But this represents a stone pedestal which holds a flame, and will stay
+// in place even after the breakable part is broken.
+void EntityStoneBrazier(Entity* self) {
     Entity* entity;
-    bool flag;
+    bool parentGone = false;
     s32 i;
 
-    flag = false;
-    if (g_Entities[self->params + 0x40].entityId != 1) {
-        flag = true;
+    if (g_Entities[self->params + 0x40].entityId != E_BREAKABLE) {
+        parentGone = true;
     }
     switch (self->step) {
     case 0:
@@ -163,7 +172,7 @@ void func_us_801B4210_from_bo0(Entity* self) {
         self->zPriority = 0x80;
         break;
     case 1:
-        if (self->ext.et_801B4210.unk7C == 0 && flag) {
+        if (self->ext.et_801B4210.unk7C == 0 && parentGone) {
             self->pose = self->poseTimer = 0;
             for (i = 0; i < 5; i++) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -177,10 +186,10 @@ void func_us_801B4210_from_bo0(Entity* self) {
         }
         break;
     }
-    if (!flag) {
-        AnimateEntity(&g_Unk1AAnimIdle, self);
+    if (!parentGone) {
+        AnimateEntity(anim_flame_movement, self);
     } else {
-        AnimateEntity(&g_Unk1AAnimDestroyed, self);
+        AnimateEntity(anim_broken, self);
     }
-    self->ext.et_801B4210.unk7C = flag;
+    self->ext.et_801B4210.unk7C = parentGone;
 }

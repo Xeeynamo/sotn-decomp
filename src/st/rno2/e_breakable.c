@@ -56,11 +56,16 @@ static u16 anim_sets[] = {
 };
 static u16 unk_5A[] = {0, 124, 91, 91, 91, 91, 91, 91, 91, 91};
 static u8 blend_modes[] = {
-    BLEND_SUB | BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
-    BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
-    BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
-    BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
-    BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
+    BLEND_SUB | BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD,
 };
 static u16 hitbox_offsets_y[] = {0, 0, -24, -16, 0, 0, 0, 0, 0, 0, 0, 0};
 
@@ -131,7 +136,7 @@ void EntityBreakable(Entity* self) {
             self->rotate = ROT(180);
         }
     }
-    
+
     AnimateEntity(animations[breakableType], self);
     if (self->hitParams) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -321,4 +326,3 @@ void EntityBreakableDebris(Entity* self) {
         break;
     }
 }
-

@@ -23,10 +23,10 @@ void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
 void EntityDeepBackgroundArch(Entity* self);
-void func_us_801B3F30_from_bo0(Entity* self);
-void func_us_801B4148_from_bo0(Entity* self);
-void func_us_801B41A4_from_bo0(Entity* self);
-void func_us_801B4210_from_bo0(Entity* self);
+void EntityFountainWater(Entity* self);
+void EntityRampart(Entity* self);
+void EntityNightSky(Entity* self);
+void EntityStoneBrazier(Entity* self);
 void Entity3DBackgroundHouse(Entity* self);
 void Entity3DHouseSpawner(Entity* self);
 void func_us_801B4DA4_from_bo0(Entity* self);
@@ -88,10 +88,10 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityExplosionVariants,
     EntityGreyPuff,
     EntityDeepBackgroundArch,
-    func_us_801B3F30_from_bo0,
-    func_us_801B4148_from_bo0,
-    func_us_801B41A4_from_bo0,
-    func_us_801B4210_from_bo0,
+    EntityFountainWater,
+    EntityRampart,
+    EntityNightSky,
+    EntityStoneBrazier,
     Entity3DBackgroundHouse,
     Entity3DHouseSpawner,
     func_us_801B4DA4_from_bo0,
