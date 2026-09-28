@@ -8,7 +8,7 @@ extern Uint8 per_hot_res;
 extern volatile Uint8 per_set_sys_flg;
 extern Uint8* per_get_time_adr;
 extern PerGetSys per_get_sys_data;
-extern Uint8 DAT_06065D4C;
+extern Uint8 per_time_out_flg;
 
 #define IREG0_SYS 0x01
 #define IREG0_NSYS 0x00
@@ -27,6 +27,10 @@ extern Uint8 DAT_06065D4C;
 
 #define IREG1_OPE_ON 0x00
 #define IREG1_OPE_OFF (1 << 1)
+
+#define TIME_OUT_MAX 3
+
+#define HOT_RES_MAX 3
 
 #define END_END 0
 #define END_BREAK 1
@@ -47,7 +51,6 @@ extern Uint8 DAT_06065D4C;
 extern Uint8 intback_ireg[3];
 extern Uint8 now_cont;
 extern PerKind intback_kind;
-
 extern Uint8 intback_v_blank;
 extern PerNum intback_num;
 extern PerSize intback_size;
@@ -58,6 +61,7 @@ extern int get_per_cnt;
 extern int v_blank_cnt;
 extern void* get_per_adr;
 extern void* set_per_adr;
+extern void* change_work;
 
 extern Uint8* bdry_work_adr;
 extern Uint8 bdry_size;
@@ -72,6 +76,7 @@ extern PerMulInfo DAT_06057EB8;
 extern PerMulInfo DAT_06057EBC;
 extern PerMulInfo* DAT_06057EC0;
 extern PerMulInfo* DAT_06057EC4;
+extern void* DAT_06057EC8;
 
 extern int hot_res_cnt;
 
@@ -113,12 +118,11 @@ static inline void set_imask(u32 imask) {
     set_sr(sr);
 }
 
-// PER_LInit
 Uint32 PER_LInit(
     PerKind kind, PerNum num, PerSize size, Uint8* work, Uint8 v_blank) {
     Uint32 msk;
 
-    DAT_06065D4C = 0;
+    per_time_out_flg = 0;
     per_hot_res = 0;
     hot_res_cnt = 0;
     intback_ireg[0] = 0;
@@ -191,8 +195,79 @@ Uint32 PER_LInit(
     return GoIntBack();
 }
 
-// PER_LGetPer
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602BF40, PER_LGetPer);
+Uint32 PER_LGetPer(PerGetPer** output_dt, PerMulInfo** mul_info) {
+    if ((intback_kind != PER_KD_PER) && (intback_kind != PER_KD_PERTIM)) {
+        *output_dt = NULL;
+        return PER_INT_ERR;
+    }
+    if ((*PER_REG_SR & 0x10) == 0x10) {
+        hot_res_cnt++;
+        if (hot_res_cnt >= HOT_RES_MAX) {
+            per_hot_res = PER_HOT_RES_ON;
+            hot_res_cnt--;
+        }
+    } else {
+        per_hot_res = PER_HOT_RES_OFF;
+        hot_res_cnt = 0;
+    }
+    if (v_blank_cnt < intback_v_blank) {
+        v_blank_cnt++;
+        return PER_INT_OK;
+    }
+    v_blank_cnt = 0;
+    if ((get_per_cnt == 0) || (end_flg == END_CONT) || (end_flg == 3)) {
+        if (end_flg != 4) {
+            end_flg = 4;
+        } else {
+            end_flg = END_END;
+        }
+        if (end_flg == END_END) {
+            per_time_out_flg++;
+        }
+        if (per_time_out_flg >= TIME_OUT_MAX) {
+            if (get_exp_per_size_flg == ON) {
+                SetPerSize(PER_SIZE_NCON_15);
+            }
+            if (remain_conect_cnt > 0) {
+                DAT_06057ED4++;
+            }
+            AnyInitPerData();
+            while (DAT_06057ED4 < 2) {
+                do {
+                    DAT_06057EC4[DAT_06057ED4].id = PER_MID_NCON_ONE;
+                    DAT_06057EC4[DAT_06057ED4].con = PER_MCON_NCON_UNKNOWN;
+                } while (FALSE);
+                DAT_06057ED4++;
+            }
+            per_time_out_flg--;
+        } else {
+            func_0602CF8C();
+        }
+    } else {
+        if (end_flg != 4) {
+            per_time_out_flg = 0;
+        }
+        end_flg = END_END;
+    }
+    if (set_time_flg == ON) {
+        DAT_06065D30 = 1;
+        change_work = set_time_adr;
+        set_time_adr = per_get_time_adr;
+        per_get_time_adr = change_work;
+    } else {
+        DAT_06065D30 = 0;
+    }
+    DAT_06057EC8 = DAT_06057EC4;
+    DAT_06057EC4 = DAT_06057EC0;
+    DAT_06057EC0 = DAT_06057EC8;
+    change_work = set_per_adr;
+    set_per_adr = get_per_adr;
+    get_per_adr = change_work;
+    *output_dt = (PerGetPer*)get_per_adr;
+    *mul_info = DAT_06057EC0;
+    InitIntBackPer();
+    return GoIntBack();
+}
 
 // PER_IntFunc
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602C214, PER_IntFunc);

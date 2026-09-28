@@ -46,6 +46,9 @@
 #define PER_MSK_STEREO (0x1 << 9)
 #define PER_MSK_HELP (0x1 << 10)
 
+#define PER_HOT_RES_ON 0x1
+#define PER_HOT_RES_OFF 0x0
+
 #define PER_INT_OK 0x0
 #define PER_INT_ERR 0x1
 

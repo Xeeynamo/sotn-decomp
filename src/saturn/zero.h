@@ -33,9 +33,9 @@ extern s32 DAT_06064320;
 // are deliberately absent: zero and its dependents access them at
 // different types, and a shared declaration changes codegen.
 // Each user declares its own.
-extern s32 DAT_0601ac30[];
-extern s32 DAT_0601ac38[];
-extern s32 DAT_0601ac40[];
+extern s32 DAT_060DC004[];
+extern s32 DAT_060DC008[];
+extern s32 DAT_060DC00C[];
 extern s32 DAT_0605D910[];
 struct ShakeState {
     s16 id;

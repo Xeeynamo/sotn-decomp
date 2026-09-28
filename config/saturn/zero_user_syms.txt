@@ -541,6 +541,7 @@ _per_hot_res = 0x06065D31;
 _per_set_sys_flg = 0x06065D32;
 _per_get_time_adr = 0x06065D34;
 _per_get_sys_data = 0x06065D40;
+_per_time_out_flg = 0x06065D4C;
 _DAT_06066000 = 0x06066000;
 _g_PrimBuf = 0x060867F8;
 _g_SpriteObjectPool = 0x0608AFF8;
@@ -550,9 +551,6 @@ _DAT_060a5000 = 0x060A5000;
 _g_BatServantDesc = 0x060CF000;
 _g_BatResourceDescriptorList = 0x060CF040;
 _g_StageOverlayData = 0x060DC000;
-_DAT_0601ac30 = 0x060DC004;
-_DAT_0601ac38 = 0x060DC008;
-_DAT_0601ac40 = 0x060DC00C;
 
 /* Aliases used by modules that inherit this symbol file. */
 _IsXaBgmPlaying = 0x06012DFC;
