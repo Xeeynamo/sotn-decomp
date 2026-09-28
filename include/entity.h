@@ -4073,6 +4073,7 @@ typedef struct {
     /* 0x89 */ u8 unk89;
     /* 0x8A */ s16 : 16;
     /* 0x8C */ u32 unk8C;
+    /* 0x90 */ u32 unk90;
 } ET_DeathFlames;
 
 typedef struct {
@@ -4420,7 +4421,9 @@ typedef struct {
     /* 0x82 */ s16 angle;
     /* 0x84 */ s16 swayAngle;
     /* 0x86 */ u16 : 16;
-    /* 0x88 */ u32 : 32;
+    /* 0x88 */ u8 unk88;
+    /* 0x89 */ u8 unk89;
+    /* 0x8A */ u16 : 16;
     /* 0x8C */ u16 attackIdx;
     /* 0x8E */ u16 : 16;
     /* 0x90 */ u8 movingUp;
