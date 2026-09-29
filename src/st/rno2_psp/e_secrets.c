@@ -359,8 +359,69 @@ void func_us_801B5FB8_from_no2(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/e_secrets", func_us_801AC54C_from_bo0);
+void func_us_801AC54C_from_bo0(Entity* self) {
+    Primitive* prim;
+    s32 primIndex;
+    s32 i;
 
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitEnvironment);
+        self->hitboxState = 0;
+        self->animCurFrame = 0;
+        break;
+
+    case 1:
+        if (g_CastleFlags[RNO2_SECRET_WALL_OPEN] & 2) {
+            DestroyEntity(self);
+            return;
+        }
+        if (g_CastleFlags[RNO2_SECRET_WALL_OPEN]) {
+            g_CastleFlags[RNO2_SECRET_WALL_OPEN] |= 2;
+        }
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
+        if (primIndex != -1) {
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            self->ext.breakableNo2.unk7C = prim;
+            while (prim != NULL) {
+                prim->drawMode = DRAW_HIDE;
+                prim = prim->next;
+            }
+        } else {
+            DestroyEntity(self);
+            return;
+        }
+        prim = self->ext.breakableNo2.unk7C;
+        for (i = 0; i < 4; i++) {
+            UnkPolyFunc2(prim);
+            prim->next->x1 = self->posX.i.hi;
+            prim->next->y0 = self->posY.i.hi;
+            prim->next->r3 = i + 8;
+            prim = prim->next;
+            prim = prim->next;
+        }
+        self->step++;
+        break;
+
+    case 2:
+        i = 1;
+        prim = self->ext.breakableNo2.unk7C;
+        while (prim != NULL) {
+            if (prim->p3 & 8) {
+                i = 0;
+                func_us_801B59C4(prim);
+            }
+            prim = prim->next;
+        }
+        if (i != 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+}
 INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/e_secrets", func_us_801B6794);
 
 INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/e_secrets", EntityStoneBridgeSecret);
