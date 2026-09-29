@@ -467,4 +467,157 @@ static void func_us_801B6794(Primitive* prim) {
     }
 }
 
-INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/e_secrets", EntityStoneBridgeSecret);
+static u16 D_us_80180E14[] = {
+    0x679, 0x678, 0x677, 0x676, 0x609, 0x608, 0x607, 0x606,
+};
+static u16 D_us_80180E24[][8] = {
+    {0x005, 0x009, 0x004, 0x009, 0x00F, 0x00D, 0x00E, 0x00D},
+    {0x496, 0x497, 0x4A9, 0x4AA, 0x498, 0x499, 0x4AB, 0x4AC},
+};
+
+void EntityStoneBridgeSecret(Entity* self) {
+    Entity* tempEntity;
+    Primitive* prim;
+    s32 primIndex;
+    s32 i;
+    s32 tileIdx;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitEnvironment);
+        self->animCurFrame = 0;
+        self->drawFlags |= ENTITY_ROTATE;
+        self->rotate = ROT(270);
+        if (g_CastleFlags[RNO2_SECRET_FLOOR_OPEN]) {
+            for (i = 0; i < 8; i++) {
+                tileIdx = D_us_80180E14[i];
+                g_Tilemap.fg[tileIdx] = D_us_80180E24[1][i];
+            }
+            DestroyEntity(self);
+            return;
+        }
+        for (i = 0; i < 8; i++) {
+            tileIdx = D_us_80180E14[i];
+            g_Tilemap.fg[tileIdx] = D_us_80180E24[0][i];
+        }
+        self->hitboxState = 2;
+        self->hitPoints = 16;
+        self->hitboxWidth = 0x10;
+        self->hitboxHeight = 0x28;
+        primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, 0x1E);
+        if (primIndex != -1) {
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            self->ext.breakableNo2.unk7C = prim;
+            while (prim != NULL) {
+                prim->drawMode = DRAW_HIDE;
+                prim->priority = 0x68;
+                self->ext.breakableNo2.unk84 = prim;
+                prim = prim->next;
+            }
+        } else {
+            DestroyEntity(self);
+        }
+        break;
+
+    case 1:
+        if (self->hitFlags) {
+            for (i = 0; i < 0x10; i++) {
+                prim = self->ext.breakableNo2.unk7C;
+                prim = FindFirstUnkPrim(prim);
+                if (prim != NULL) {
+                    prim->p3 = 1;
+                }
+            }
+        }
+        prim = self->ext.breakableNo2.unk7C;
+        while (prim != NULL) {
+            if (prim->p3) {
+                func_us_801B6794(prim);
+            }
+            prim = prim->next;
+        }
+        prim = self->ext.breakableNo2.unk84;
+        prim->x0 = prim->y0 = 0;
+        prim->u0 = 0;
+        prim->drawMode = DRAW_UNK02;
+        if (self->flags & FLAG_DEAD) {
+            self->animCurFrame = 0;
+            self->step++;
+        }
+        break;
+
+    case 2:
+        primIndex = self->primIndex;
+        g_api.FreePrimitives(primIndex);
+        self->flags &= ~FLAG_HAS_PRIMS;
+        g_CastleFlags[RNO2_SECRET_FLOOR_OPEN] = 1;
+#ifndef BOSS_IS_BO0
+        g_api.RevealSecretPassageAtPlayerPositionOnMap(RNO2_SECRET_FLOOR_OPEN);
+#endif
+        for (i = 0; i < 8; i++) {
+            tileIdx = D_us_80180E14[i];
+            g_Tilemap.fg[tileIdx] = D_us_80180E24[1][i];
+        }
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x18);
+        if (primIndex != -1) {
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            self->ext.breakableNo2.unk7C = prim;
+            while (prim != NULL) {
+                prim->drawMode = DRAW_HIDE;
+                prim = prim->next;
+            }
+        } else {
+            DestroyEntity(self);
+            return;
+        }
+        prim = self->ext.breakableNo2.unk7C;
+        for (i = 0; i < 4; i++) {
+            UnkPolyFunc2(prim);
+            prim->next->x1 = self->posX.i.hi - 8 + ((i % 2) * 0x10);
+            prim->next->y0 = self->posY.i.hi + ((i / 2) * 0x10);
+            prim->next->r3 = i + 0xC;
+            prim = prim->next;
+            prim = prim->next;
+        }
+        tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (tempEntity != NULL) {
+            CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+            tempEntity->posY.i.hi += 0x20;
+            tempEntity->params = 0x13;
+            tempEntity->params += 0xAA00;
+        }
+        for (i = 0; i < 8; i++) {
+            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (tempEntity != NULL) {
+                CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, tempEntity);
+                tempEntity->posX.i.hi += 0xF - (Random() & 0x1F);
+                tempEntity->posY.i.hi += (Random() & 0x1F);
+                tempEntity->params = 0x10;
+                tempEntity->params += 0xAA00;
+            }
+        }
+        g_api.PlaySfx(SFX_WALL_DEBRIS_B);
+        self->step++;
+        break;
+
+    case 3:
+        i = 1;
+        prim = self->ext.breakableNo2.unk7C;
+        while (prim != NULL) {
+            if (prim->p3 & 8) {
+                i = 0;
+                func_us_801B59C4(prim);
+            }
+            prim = prim->next;
+        }
+        if (i != 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+}
