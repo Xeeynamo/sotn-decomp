@@ -106,7 +106,7 @@ void RunMainEngine(void) {
     s32 iVar9;
 
     if (D_80097C98 != 0) {
-        DAT_0605d7f0 = 1;
+        DAT_0605D7F0 = true;
     }
     switch (DAT_0605cd70.unk0) {
     case 0:
@@ -223,7 +223,7 @@ void RunMainEngine(void) {
     case 4:
         if (DAT_0605becc == 0) {
             DAT_0605cd70.unk0 = 5;
-            DAT_0605d7f0 = 0;
+            DAT_0605D7F0 = false;
             D_80097C98 = 0;
             DAT_060860AC = 0;
             DAT_0605ceb0 = 1;
@@ -344,7 +344,7 @@ void RunMainEngine(void) {
             iVar9 = func_800F0CD8(DAT_0605c110);
             if (iVar9 != 0) {
                 DAT_0605c110 = 0;
-                DAT_0605d7f0 = 1;
+                DAT_0605D7F0 = true;
                 if (iVar9 > 1) {
                     D_8006C374 = iVar9 - 2;
                     DAT_0605cd70.unk4 = -1;
@@ -961,7 +961,7 @@ void SubDisp(void) {
         break;
     }
     if ((g_PlayableCharacter == 0) && (DAT_0605becc == 0) &&
-        (DAT_0605cd70.unk0 > 3) && (DAT_0605d7f0 == 0)) {
+        (DAT_0605cd70.unk0 > 3) && !DAT_0605D7F0) {
         if ((g_pads[0].previous & PAD_START) && (DAT_06086270 == 0) &&
             (DAT_0605cd70.unk0 < 0x14)) {
             if (CheckIfAllButtonsAreAssigned()) {
@@ -978,7 +978,7 @@ void SubDisp(void) {
             DAT_06057f68 = 0;
             func_06073280();
             DAT_0605cd70.unk0 = 0x70;
-            DAT_0605d7f0 = 1;
+            DAT_0605D7F0 = true;
         }
     }
 LAB_06072d9e:
@@ -1034,7 +1034,7 @@ LAB_06072d9e:
         func_060645B4();
         if (DAT_0605cd70.unk0 == 0x16) {
             D_06085534 = 0x70;
-            DAT_0605d7f0 = 1;
+            DAT_0605D7F0 = true;
             DAT_06057f68 = 4;
             if (g_PlayableCharacter != 0) {
                 DAT_06086258 = 1;
@@ -1046,7 +1046,7 @@ LAB_06072d9e:
                 DAT_0605cd70.unk8 = 0;
             } else {
                 D_06085534 = 0x70;
-                DAT_0605d7f0 = 1;
+                DAT_0605D7F0 = true;
                 DAT_06057f68 = 4;
                 DAT_06086258 = 2;
             }
@@ -1088,7 +1088,7 @@ LAB_06072d9e:
             break;
         }
         DAT_0605cd70.unk0++;
-        DAT_0605d7f0 = 1;
+        DAT_0605D7F0 = true;
         break;
     case 0x72:
         if ((g_PlayableCharacter == 0) && func_060743B8(1)) {
