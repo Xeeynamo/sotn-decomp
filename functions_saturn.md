@@ -7,7 +7,6 @@
 | alucard/f_nonmat/f60A7D3C.s  | func_060A7D3C   |       26 |          1 |       |     |
 | stage_15/f_nonmat/f60EB7EC.s | func_060EB7EC   |       34 |          1 |       |     |
 | zero/f_nonmat/f6007CA0.s     | func_06007CA0   |       37 |          2 |       |     |
-| zero/f_nonmat/f6004E50.s     | func_06004E50   |       39 |          1 |       |     |
 | stage_15/f_nonmat/f60E9AAC.s | func_060E9AAC   |       40 |          4 |       |     |
 | zero/f_nonmat/f600B0B8.s     | func_0600B0B8   |       45 |          2 |       |     |
 | stage_02/f_nonmat/f60EA1E0.s | func_060EA1E0   |       46 |          2 |       |     |
@@ -19,7 +18,6 @@
 | warp/f_nonmat/f60DF528.s     | func_060DF528   |       50 |          4 |       |     |
 | zero/f_nonmat/f601333C.s     | func_0601333C   |       51 |          4 |       |     |
 | zero/f_nonmat/f600831C.s     | func_0600831C   |       51 |          6 |       |     |
-| zero/f_nonmat/f6004E94.s     | func_06004E94   |       52 |          4 |       |     |
 | zero/f_nonmat/f6004EF0.s     | func_06004EF0   |       52 |          5 |       |     |
 | zero/f_nonmat/f6009CCC.s     | func_06009CCC   |       53 |          0 |       |     |
 | zero/f_nonmat/f600FF08.s     | func_0600FF08   |       53 |          5 |       |     |
