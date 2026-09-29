@@ -172,6 +172,7 @@ D_us_80181610 = 0x0929B048;
 g_WaterSounds = 0x0929B058;
 g_WaterXTbl = 0x0929B060;
 g_BreakableCrystalFloorTiles = 0x0929B378;
+D_us_801814D4 = 0x0929B938;
 g_FloatingIcePlatformHitbox = 0x0929B940;
 D_psp_E_BREAKABLE_WALL_DEBRIS = 0x0929BCA0;
 D_psp_E_UNK_3C = 0x0929BD50;

@@ -4415,6 +4415,21 @@ typedef struct {
 } ET_801C5C78;
 
 typedef struct {
+    Primitive* unk7C;
+    s16 unk80;
+    s8 pad82[9];
+    s16 unk8C;
+    s8 pad8C[11];
+    struct Entity* unk9C;
+} ET_801D68E0;
+
+typedef struct {
+    s16 unk7C;
+    struct Entity* unk80;
+    struct Entity* unk84;
+} ET_801C81C8;
+
+typedef struct {
     /* 0x7C */ s32 : 32;
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 angle;
@@ -4822,6 +4837,8 @@ typedef union { // offset=0x7C
     ET_Crusher crusher;
     ET_801D5BA4 et_801D5BA4;
     ET_801C5C78 et_801C5C78;
+    ET_801D68E0 et_801D68E0;
+    ET_801C81C8 et_801C81C8;
     ET_RCEN_Shaft rcenShaft;
     ET_ShaftLightning shaftLightning;
 } Ext;

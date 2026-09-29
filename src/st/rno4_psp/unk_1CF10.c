@@ -164,7 +164,37 @@ INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C4228_from
 
 INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", EntityWaterBox);
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C81C8);
+#ifdef VERSION_PSP
+extern s32 E_ID(UNK_26);
+extern s32 E_ID(UNK_27);
+#endif
+extern s16 D_us_801814D4;
+
+void func_us_801C81C8(Entity* self) {
+    Entity* child;
+
+    if (!self->step) {
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = -0x7FFE;
+        self->palette = 0x44;
+        self->drawFlags = ENTITY_MASK_R;
+        self->posX.i.hi = (0x1EF - g_Tilemap.scrollX.i.hi);
+        child = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (child) {
+            CreateEntityFromCurrentEntity(E_ID(UNK_27), child);
+            child->params = 1;
+        }
+        self->ext.et_801C81C8.unk80 = child;
+        child = AllocEntity(child, &g_Entities[256]);
+        if (child) {
+            CreateEntityFromCurrentEntity(E_ID(UNK_26), child);
+            child->params = 1;
+        }
+        self->ext.et_801C81C8.unk84 = child;
+        self->ext.et_801C81C8.unk7C = 0;
+    }
+    AnimateEntity(&D_us_801814D4, self);
+}
 
 void EntityFloatingIcePlatform(Entity* self) {
     extern u16 g_FloatingIcePlatformHitbox[];
