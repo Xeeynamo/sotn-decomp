@@ -799,7 +799,7 @@
 | 1.00 | true     | func_us_801AFB1C                    | asm/us/st/nz1/matchings/st_common/func_us_801AFB1C.s 
 | 1.00 | true     | func_us_801A9F58                    | asm/us/st/rare/matchings/st_common/func_us_801A9F58.s 
 | 1.00 | true     | func_us_801B7368                    | asm/us/st/rcat/matchings/st_common/func_us_801B7368.s 
-| 1.00 | true     | DestroyEntity                       | asm/us/st/rcen/matchings/st_common/DestroyEntity.s 
+| 1.00 | true     | func_us_801A3884                    | asm/us/st/rcen/matchings/st_common/func_us_801A3884.s 
 | 1.00 | true     | DestroyEntity                       | asm/us/st/rchi/matchings/st_common/DestroyEntity.s 
 | 1.00 | true     | DestroyEntity                       | asm/us/st/rdai/matchings/st_common/DestroyEntity.s 
 | 1.00 | true     | DestroyEntity                       | asm/us/st/rlib/matchings/st_common/DestroyEntity.s 
@@ -1194,7 +1194,7 @@
 | 1.00 | true     | func_us_801AFC4C                    | asm/us/st/nz1/matchings/st_common/func_us_801AFC4C.s 
 | 1.00 | true     | func_us_801AA088                    | asm/us/st/rare/matchings/st_common/func_us_801AA088.s 
 | 1.00 | true     | func_us_801B7498                    | asm/us/st/rcat/matchings/st_common/func_us_801B7498.s 
-| 1.00 | true     | AnimateEntity                       | asm/us/st/rcen/matchings/st_common/AnimateEntity.s 
+| 1.00 | true     | func_us_801A39B4                    | asm/us/st/rcen/matchings/st_common/func_us_801A39B4.s 
 | 1.00 | true     | AnimateEntity                       | asm/us/st/rchi/matchings/st_common/AnimateEntity.s 
 | 1.00 | true     | AnimateEntity                       | asm/us/st/rdai/matchings/st_common/AnimateEntity.s 
 | 1.00 | true     | AnimateEntity                       | asm/us/st/rlib/matchings/st_common/AnimateEntity.s 
@@ -1355,7 +1355,7 @@
 | 1.00 | true     | func_us_801AEDCC                    | asm/us/st/nz1/matchings/create_entity/func_us_801AEDCC.s 
 | 1.00 | true     | func_us_801A922C                    | asm/us/st/rare/matchings/create_entity/func_us_801A922C.s 
 | 1.00 | true     | func_us_801B663C                    | asm/us/st/rcat/matchings/create_entity/func_us_801B663C.s 
-| 1.00 | true     | CreateEntityFromEntity              | asm/us/st/rcen/matchings/create_entity/CreateEntityFromEntity.s 
+| 1.00 | true     | func_us_801A2B58                    | asm/us/st/rcen/matchings/create_entity/func_us_801A2B58.s 
 | 1.00 | true     | CreateEntityFromEntity              | asm/us/st/rchi/matchings/create_entity/CreateEntityFromEntity.s 
 | 1.00 | true     | CreateEntityFromEntity              | asm/us/st/rdai/matchings/create_entity/CreateEntityFromEntity.s 
 | 1.00 | true     | CreateEntityFromEntity              | asm/us/st/rlib/matchings/create_entity/CreateEntityFromEntity.s 
@@ -2627,7 +2627,7 @@
 | 1.00 | true     | func_us_801B038C                    | asm/us/st/nz1/matchings/st_common/func_us_801B038C.s 
 | 1.00 | true     | func_us_801AA7C8                    | asm/us/st/rare/matchings/st_common/func_us_801AA7C8.s 
 | 1.00 | true     | func_us_801B7BD8                    | asm/us/st/rcat/matchings/st_common/func_us_801B7BD8.s 
-| 1.00 | true     | AllocEntity                         | asm/us/st/rcen/matchings/st_common/AllocEntity.s 
+| 1.00 | true     | func_us_801A40F4                    | asm/us/st/rcen/matchings/st_common/func_us_801A40F4.s 
 | 1.00 | true     | AllocEntity                         | asm/us/st/rchi/matchings/st_common/AllocEntity.s 
 | 1.00 | true     | AllocEntity                         | asm/us/st/rdai/matchings/st_common/AllocEntity.s 
 | 1.00 | true     | AllocEntity                         | asm/us/st/rlib/matchings/st_common/AllocEntity.s 
@@ -2892,7 +2892,7 @@
 | 1.00 | true     | func_us_801B082C                    | asm/us/st/nz1/matchings/st_common/func_us_801B082C.s 
 | 1.00 | true     | func_us_801AAC68                    | asm/us/st/rare/matchings/st_common/func_us_801AAC68.s 
 | 1.00 | true     | func_us_801B8078                    | asm/us/st/rcat/matchings/st_common/func_us_801B8078.s 
-| 1.00 | true     | InitializeEntity                    | asm/us/st/rcen/matchings/st_common/InitializeEntity.s 
+| 1.00 | true     | func_us_801A4594                    | asm/us/st/rcen/matchings/st_common/func_us_801A4594.s 
 | 1.00 | true     | InitializeEntity                    | asm/us/st/rchi/matchings/st_common/InitializeEntity.s 
 | 1.00 | true     | InitializeEntity                    | asm/us/st/rdai/matchings/st_common/InitializeEntity.s 
 | 1.00 | true     | InitializeEntity                    | asm/us/st/rlib/matchings/st_common/InitializeEntity.s 
@@ -2945,7 +2945,7 @@
 | 1.00 | true     | func_us_801AFED0                    | asm/us/st/nz1/matchings/st_common/func_us_801AFED0.s 
 | 1.00 | true     | func_us_801AA30C                    | asm/us/st/rare/matchings/st_common/func_us_801AA30C.s 
 | 1.00 | true     | func_us_801B771C                    | asm/us/st/rcat/matchings/st_common/func_us_801B771C.s 
-| 1.00 | true     | MoveEntity                          | asm/us/st/rcen/matchings/st_common/MoveEntity.s 
+| 1.00 | true     | func_us_801A3C38                    | asm/us/st/rcen/matchings/st_common/func_us_801A3C38.s 
 | 1.00 | true     | MoveEntity                          | asm/us/st/rchi/matchings/st_common/MoveEntity.s 
 | 1.00 | true     | MoveEntity                          | asm/us/st/rdai/matchings/st_common/MoveEntity.s 
 | 1.00 | true     | MoveEntity                          | asm/us/st/rlib/matchings/st_common/MoveEntity.s 
@@ -3322,7 +3322,7 @@
 | 1.00 | true     | func_us_801A6060                    | asm/us/st/rlib/matchings/st_common/func_us_801A6060.s 
 | 1.00 | true     | func_us_801BA824                    | asm/us/st/rno0/matchings/st_common/func_us_801BA824.s 
 | 1.00 | true     | func_us_801AC4EC                    | asm/us/st/rno1/matchings/st_common/func_us_801AC4EC.s 
-| 1.00 | true     | PreventEntityFromRespawning         | asm/us/st/rno2/matchings/st_common/PreventEntityFromRespawning.s 
+| 1.00 | true     | func_us_801BA1F0                    | asm/us/st/rno2/matchings/st_common/func_us_801BA1F0.s 
 | 1.00 | true     | func_us_801B73B0                    | asm/us/st/rno3/matchings/st_common/func_us_801B73B0.s 
 | 1.00 | true     | PreventEntityFromRespawning         | asm/us/st/rno4/matchings/st_common/PreventEntityFromRespawning.s 
 | 1.00 | true     | func_us_801B0104                    | asm/us/st/rnz0/matchings/st_common/func_us_801B0104.s 
@@ -3899,7 +3899,7 @@
 | 1.00 | true     | func_us_801AC6E0                    | asm/us/st/nz1/matchings/st_update/func_us_801AC6E0.s 
 | 1.00 | true     | func_us_801A6B40                    | asm/us/st/rare/matchings/st_update/func_us_801A6B40.s 
 | 1.00 | true     | func_us_801B3F50                    | asm/us/st/rcat/matchings/st_update/func_us_801B3F50.s 
-| 1.00 | true     | Random                              | asm/us/st/rcen/matchings/st_update/Random.s 
+| 1.00 | true     | func_us_801A046C                    | asm/us/st/rcen/matchings/st_update/func_us_801A046C.s 
 | 1.00 | true     | Random                              | asm/us/st/rchi/matchings/st_update/Random.s 
 | 1.00 | true     | Random                              | asm/us/st/rdai/matchings/st_update/Random.s 
 | 1.00 | true     | Random                              | asm/us/st/rlib/matchings/st_update/Random.s 
@@ -4791,7 +4791,7 @@
 | 1.00 | true     | func_us_801A7370                    | asm/us/st/rlib/matchings/st_common/func_us_801A7370.s 
 | 1.00 | true     | func_us_801BBB34                    | asm/us/st/rno0/matchings/st_common/func_us_801BBB34.s 
 | 1.00 | true     | func_us_801AD7FC                    | asm/us/st/rno1/matchings/st_common/func_us_801AD7FC.s 
-| 1.00 | true     | ReplaceBreakableWithItemDrop        | asm/us/st/rno2/matchings/st_common/ReplaceBreakableWithItemDrop.s 
+| 1.00 | true     | func_us_801BB500                    | asm/us/st/rno2/matchings/st_common/func_us_801BB500.s 
 | 1.00 | true     | func_us_801B86C0                    | asm/us/st/rno3/matchings/st_common/func_us_801B86C0.s 
 | 1.00 | true     | ReplaceBreakableWithItemDrop        | asm/us/st/rno4/matchings/st_common/ReplaceBreakableWithItemDrop.s 
 | 1.00 | true     | func_us_801B1414                    | asm/us/st/rnz0/matchings/st_common/func_us_801B1414.s 
@@ -5454,7 +5454,7 @@
 | 1.00 | true     | func_us_801B6E0C                    | asm/us/st/rdai/matchings/e_red_door/func_us_801B6E0C.s 
 | 1.00 | true     | func_us_801A5340                    | asm/us/st/rlib/matchings/e_red_door/func_us_801A5340.s 
 | 1.00 | true     | func_us_801B9B04                    | asm/us/st/rno0/matchings/e_red_door/func_us_801B9B04.s 
-| 1.00 | true     | EntityRedDoor                       | asm/us/st/rno2/matchings/e_red_door/EntityRedDoor.s 
+| 1.00 | true     | func_us_801B94D0                    | asm/us/st/rno2/matchings/e_red_door/func_us_801B94D0.s 
 | 1.00 | true     | func_us_801B6690                    | asm/us/st/rno3/matchings/e_red_door/func_us_801B6690.s 
 | 1.00 | true     | func_us_801CC9C4                    | asm/us/st/rno4/matchings/e_red_door/func_us_801CC9C4.s 
 | 1.00 | true     | func_us_801AF3E4                    | asm/us/st/rnz0/matchings/e_red_door/func_us_801AF3E4.s 
@@ -6081,15 +6081,6 @@
 | 1.00 | true     | func_us_801CEB40                    | asm/us/st/rno0/matchings/e_gorgon/func_us_801CEB40.s 
 | 1.00 | true     | func_us_801C9A60                    | asm/us/st/rno0/matchings/giantbro_helpers/func_us_801C9A60.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
-| 0.90 | true     | func_80131FA4                       | asm/us/dra/matchings/sound/func_80131FA4.s 
-| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
-| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
-| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
-| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
-| 0.90 | true     | func_801BA6A8                       | asm/us/st/sel/matchings/libpress/func_801BA6A8.s 
-| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | func_801D16B4                       | asm/us/st/no3/matchings/water_effects/func_801D16B4.s 
 | 1.00 | true     | func_us_801D6300                    | asm/us/st/no4/matchings/water_effects/func_us_801D6300.s 
 | 1.00 | true     | func_801C4DCC                       | asm/us/st/np3/matchings/water_effects/func_801C4DCC.s 
@@ -6147,6 +6138,14 @@
 | 1.00 | true     | func_us_801CA15C                    | asm/us/st/rno0/matchings/giantbro_helpers/func_us_801CA15C.s 
 | 1.00 | false    | polarPlacePartsWithAngvel           | asm/us/boss/rbo1/nonmatchings/unk_12274/polarPlacePartsWithAngvel.s 
 | 1.00 | false    | polarPlacePartsWithAngvel           | asm/us/boss/rbo2/nonmatchings/unk_1B284/polarPlacePartsWithAngvel.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
+| 0.90 | true     | func_80131FA4                       | asm/us/dra/matchings/sound/func_80131FA4.s 
+| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
+| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
+| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
+| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
+| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | DMACallback                         | asm/us/main/matchings/psxsdk/libetc/intr/DMACallback.s 
 | 0.92 | true     | InterruptCallback                   | asm/us/main/matchings/psxsdk/libetc/intr/InterruptCallback.s 
@@ -6374,10 +6373,10 @@
 | 1.00 | true     | func_801CD540                       | asm/us/st/np3/matchings/e_owl_knight/func_801CD540.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801A50BC                    | asm/us/boss/bo1/matchings/e_explosion_flame/func_us_801A50BC.s 
+| 1.00 | true     | func_us_8019D260                    | asm/us/st/rcen/matchings/e_shaft_death_flames/func_us_8019D260.s 
 | 1.00 | false    | func_us_8019D260_from_rcen          | asm/us/boss/rbo1/nonmatchings/unk_12274/func_us_8019D260_from_rcen.s 
 | 1.00 | false    | func_us_8019D260_from_rcen          | asm/us/boss/rbo2/nonmatchings/unk_1B284/func_us_8019D260_from_rcen.s 
 | 1.00 | false    | func_us_8019D260_from_rcen          | asm/us/boss/rbo6/nonmatchings/unk_1D690/func_us_8019D260_from_rcen.s 
-| 1.00 | false    | func_us_8019D260                    | asm/us/st/rcen/nonmatchings/unk_1D260/func_us_8019D260.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C4958                    | asm/us/boss/bo4/matchings/dop_anim/func_us_801C4958.s 
 | 1.00 | true     | RicSetStep                          | asm/us/boss/bo6/matchings/us_39144/RicSetStep.s 
@@ -6964,7 +6963,7 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801B4DA4                    | asm/us/boss/bo0/matchings/34DA4/func_us_801B4DA4.s 
 | 1.00 | true     | func_us_801B4DA4                    | asm/us/st/no2/matchings/34DA4/func_us_801B4DA4.s 
-| 0.99 | true     | EntityHouseShader                   | asm/us/st/rno2/matchings/e_house_shader/EntityHouseShader.s 
+| 0.99 | true     | func_us_801B3978                    | asm/us/st/rno2/matchings/e_house_shader/func_us_801B3978.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityPrisoner                      | asm/us/boss/bo0/matchings/e_prisoner/EntityPrisoner.s 
 | 0.99 | true     | func_us_801B6E34                    | asm/us/st/no2/matchings/e_prisoner/func_us_801B6E34.s 
@@ -7634,7 +7633,7 @@
 | 1.00 | true     | func_us_801DC170                    | asm/us/st/rno4/matchings/unk_58A30/func_us_801DC170.s 
 | 1.00 | true     | func_us_801C1668                    | asm/us/st/rnz0/matchings/e_imp/func_us_801C1668.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | EntityBreakable                     | asm/us/st/rno2/matchings/e_breakable/EntityBreakable.s 
+| 1.00 | true     | func_us_801B22E4                    | asm/us/st/rno2/matchings/e_breakable/func_us_801B22E4.s 
 | 0.95 | true     | func_us_801A04E8                    | asm/us/st/rtop/matchings/e_breakable/func_us_801A04E8.s 
 | 0.95 | true     | func_us_801A9390                    | asm/us/st/top/matchings/e_breakable/func_us_801A9390.s 
 -------------------------------------------------------------------------------
@@ -8114,6 +8113,9 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | SpuRead                             | asm/us/main/matchings/psxsdk/libspu/s_r/SpuRead.s 
 | 1.00 | true     | SpuWrite                            | asm/us/main/matchings/psxsdk/libspu/s_w/SpuWrite.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SpuSetVoiceAttr                     | asm/us/main/matchings/psxsdk/libspu/s_sva/SpuSetVoiceAttr.s 
+| 0.90 | true     | func_801BA6A8                       | asm/us/st/sel/matchings/libpress/func_801BA6A8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8016B97C                       | asm/us/ric/matchings/2F8E8/func_8016B97C.s 
 | 0.98 | false    | RicEntitySubwpnReboundStone         | asm/us/boss/bo6/nonmatchings/us_3E79C/RicEntitySubwpnReboundStone.s 
