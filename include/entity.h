@@ -4073,6 +4073,7 @@ typedef struct {
     /* 0x89 */ u8 unk89;
     /* 0x8A */ s16 : 16;
     /* 0x8C */ u32 unk8C;
+    /* 0x90 */ u32 unk90;
 } ET_DeathFlames;
 
 typedef struct {
@@ -4447,7 +4448,9 @@ typedef struct {
     /* 0x82 */ s16 angle;
     /* 0x84 */ s16 swayAngle;
     /* 0x86 */ u16 : 16;
-    /* 0x88 */ u32 : 32;
+    /* 0x88 */ u8 unk88;
+    /* 0x89 */ u8 unk89;
+    /* 0x8A */ u16 : 16;
     /* 0x8C */ u16 attackIdx;
     /* 0x8E */ u16 : 16;
     /* 0x90 */ u8 movingUp;
@@ -4472,6 +4475,12 @@ typedef struct {
     /* 0x9C */ struct Entity* sourceOrb;
     /* 0xA0 */ struct Entity* targetOrb;
 } ET_ShaftLightning;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ SVECTOR rotations[3];
+} ET_ShaftMeridianRings;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -4855,6 +4864,7 @@ typedef union { // offset=0x7C
     ET_801C81C8 et_801C81C8;
     ET_RCEN_Shaft rcenShaft;
     ET_ShaftLightning shaftLightning;
+    ET_ShaftMeridianRings shaftMeridianRings;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);
