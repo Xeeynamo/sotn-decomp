@@ -4443,6 +4443,12 @@ typedef struct {
 } ET_801C81C8;
 
 typedef struct {
+    struct Primitive* prim7C;
+    u8 pad80[2];
+    s32 unk84;
+} ET_801C5EE4;
+
+typedef struct {
     /* 0x7C */ s32 : 32;
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 angle;
@@ -4862,6 +4868,7 @@ typedef union { // offset=0x7C
     ET_801D58FC et_801D58FC;
     ET_801C5364 et_801C5364;
     ET_801C81C8 et_801C81C8;
+    ET_801C5EE4 et_801C5EE4;
     ET_RCEN_Shaft rcenShaft;
     ET_ShaftLightning shaftLightning;
     ET_ShaftMeridianRings shaftMeridianRings;

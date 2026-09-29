@@ -290,7 +290,181 @@ void func_us_801C5C78(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C5EE4);
+void func_us_801C5EE4(Entity *self)
+{
+  Primitive *prim;
+  Entity *player;
+  s32 scrollX;
+  s32 clut;
+  s32 upperBound;
+  int playerPosRelTop;
+  int playerPos;
+  s32 scrollY;
+  s32 scrollYWrap;
+  s32 primIndex;
+  ;
+  player = g_Entities;
+  scrollX = g_Tilemap.scrollX.i.hi;
+  ;
+  ;
+  scrollY = g_Tilemap.scrollY.i.hi;
+  scrollYWrap = ((0x500 - scrollY) / 24) + 0x4D;
+  if (scrollYWrap > 0x7F)
+  {
+    scrollYWrap = 0x7F;
+  }
+  playerPos = (scrollX + player->posX.i.hi) - 0x128;
+  if (playerPos > 0)
+  {
+    if (playerPos < 32)
+    {
+      playerPos = 0;
+    }
+    else
+    {
+      {
+        playerPos = (playerPos - 32) / (-16);
+      }
+    }
+    if (playerPos < (-8))
+    {
+      playerPos = -8;
+    }
+  }
+  else
+  {
+    if (playerPos > (-32))
+    {
+      playerPos = 0;
+    }
+    else
+    {
+      playerPos = (playerPos + 32) / (-24);
+    }
+    if (playerPos > 8)
+    {
+      playerPos = 8;
+    }
+  }
+  if (!self->step)
+  {
+    InitializeEntity(g_EInitInteractable);
+    self->animSet = 0;
+    primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
+    if (primIndex == -1)
+    {
+      DestroyEntity(self);
+      return;
+    }
+    self->ext.et_801C5EE4.unk84 = 0;
+    self->flags |= 0x800000;
+    self->primIndex = primIndex;
+    prim = (&g_PrimBuf[primIndex]);
+    self->ext.et_801C5EE4.prim7C = prim;
+
+    while (prim)
+    {
+      prim->priority = 0x9C;
+      prim->drawMode = 8;
+      prim = prim->next;
+    }
+
+  }
+  g_api.SetVolumeCommand22_23(scrollYWrap, playerPos);
+  self->ext.et_801C5EE4.unk84 += 1;
+  if (self->ext.et_801C5EE4.unk84 >= 0xE)
+  {
+    self->ext.et_801C5EE4.unk84 = 0;
+  }
+  clut = self->ext.et_801C5EE4.unk84 + 0xa0;
+  prim = self->ext.et_801C5EE4.prim7C;
+  playerPos = 0x50;
+  upperBound = 0x550;
+  upperBound = upperBound - scrollY;
+  playerPos = playerPos - scrollY;
+  if (playerPos < 0)
+  {
+    playerPos = 0;
+  }
+  if (upperBound > 0xF0)
+  {
+    upperBound = 0xF0;
+  }
+  playerPosRelTop = upperBound - playerPos;
+  while (prim)
+  {
+    upperBound = playerPos + scrollY;
+    {
+      if (upperBound >= 0x452)
+      {
+        prim->tpage = 0xE;
+        prim->u0 = (prim->u2 = 0x87);
+        prim->u1 = (prim->u3 = 0xe7);
+        prim->v2 = (prim->v3 = 0x550 - upperBound);
+        prim->v0 = (prim->v1 = 0);
+        scrollYWrap = 0x550 - upperBound;
+        prim->x0 = (prim->x2 = 0x140 - scrollX);
+        prim->x1 = (prim->x3 = 0xE0 - scrollX);
+      }
+      else
+      {
+        prim->tpage = 0xF;
+        ;
+        scrollYWrap = (0x452 - (playerPos + scrollY)) % 126;
+        if (!scrollYWrap)
+        {
+          scrollYWrap = 0x7E;
+        }
+        prim->u0 = (prim->u2 = 0xCC);
+        prim->u1 = (prim->u3 = 0xFD);
+        prim->v2 = (prim->v3 = scrollYWrap);
+        if ((playerPos + 0x7E) < 0xF0)
+        {
+          prim->v0 = (prim->v1 = 0);
+        }
+        else
+        {
+          prim->v0 = (prim->v1 = playerPos - 0x72);
+        }
+        ;
+        scrollYWrap = prim->v2 - prim->v0;
+        if ((upperBound + scrollYWrap) > 0x452)
+        {
+          scrollYWrap = upperBound - 0x452;
+          prim->v0 = (prim->v1 = prim->v2 - scrollYWrap);
+        }
+        ;
+        prim->x0 = (prim->x2 = 0x140 - scrollX);
+        prim->x1 = (prim->x3 = 0x10F - scrollX);
+      }
+
+      prim->y2 = (prim->y3 = playerPos);
+      playerPos += scrollYWrap;
+      playerPosRelTop -= scrollYWrap;
+      prim->y0 = prim->y1 = playerPos;
+      #if defined(VERSION_PSP)
+      prim->y2 -= 1;
+      prim->y3 -= 1;
+      #endif
+      prim->clut = clut;
+      prim->drawMode = 0x13;
+    }
+    prim = prim->next;
+    if(playerPosRelTop <= 0)
+    {
+      break;
+    }
+  }
+
+  while (prim)
+  {
+    prim->drawMode = 8;
+    prim = prim->next;
+  }
+
+}
+
+
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C2850_from_no4);
 
