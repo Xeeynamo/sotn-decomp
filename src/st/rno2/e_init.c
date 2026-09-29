@@ -34,9 +34,9 @@ void EntitySpikes(Entity* self);
 void EntitySpikesParts(Entity* self);
 void EntitySpikesDust(Entity* self);
 void EntitySpikesDamage(Entity* self);
-void func_us_801B5FB8_from_no2(Entity* self);
+void EntityBreakableWall(Entity* self);
 void EntityStoneBridgeSecret(Entity* self);
-void func_us_801AC54C_from_bo0(Entity* self);
+void EntityBreakableWallBackside(Entity* self);
 void EntityPrisoner(Entity* self);
 void EntitySealedDoor(Entity* self);
 void EntityCtulhu(Entity* self);
@@ -99,9 +99,9 @@ PfnEntityUpdate EntityUpdates[] = {
     EntitySpikesParts,
     EntitySpikesDust,
     EntitySpikesDamage,
-    func_us_801B5FB8_from_no2,
+    EntityBreakableWall,
     EntityStoneBridgeSecret,
-    func_us_801AC54C_from_bo0,
+    EntityBreakableWallBackside,
     EntityPrisoner,
     EntitySealedDoor,
     EntityCtulhu,

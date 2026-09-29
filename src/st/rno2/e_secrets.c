@@ -5,7 +5,7 @@ extern EInit g_EInitEnvironment;
 extern Primitive* FindFirstUnkPrim(Primitive* prim);
 extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
 
-static s32 D_us_80180D48[][2] = {
+static Point32 piecesXY[] = {
     {FIX(-0.5), FIX(0.0)},      {FIX(-0.0625), FIX(-0.125)},
     {FIX(-0.375), FIX(0.0)},    {FIX(-0.03125), FIX(-0.125)},
     {FIX(-0.125), FIX(0.0625)}, {FIX(0.0), FIX(0.0625)},
@@ -20,7 +20,7 @@ static s16 D_us_80180DC8[] = {
     0x100,  0x040, 0x020,  0x020, -0x018, 0x038, -0x030, 0x080, -0x080,
 };
 
-static void func_us_801B59C4(Primitive* prim) {
+static void BrokenPiecePhysics(Primitive* prim) {
     Collider collider;
     Entity* tempEntity;
     Primitive* prim2;
@@ -48,8 +48,8 @@ static void func_us_801B59C4(Primitive* prim) {
         }
         prim->priority = 0x68;
         prim->drawMode = DRAW_UNK02;
-        LOW(prim->next->u0) -= D_us_80180D48[prim->next->r3][0];
-        LOW(prim->next->r1) = D_us_80180D48[prim->next->r3][1];
+        LOW(prim->next->u0) -= piecesXY[prim->next->r3].x;
+        LOW(prim->next->r1) = piecesXY[prim->next->r3].y;
         LOH(prim->next->r2) = LOH(prim->next->b2) = 0x10;
         prim->next->u2 = 1;
         if (prim->next->r3 > 7 && prim->next->r3 < 12) {
@@ -72,7 +72,7 @@ static void func_us_801B59C4(Primitive* prim) {
         if (collider.effects & EFFECT_SOLID || posY > 0x100) {
             posY += collider.unk18;
             for (i = 0; i < 3; i++) {
-                prim2 = g_CurrentEntity->ext.breakableNo2.unk7C;
+                prim2 = g_CurrentEntity->ext.breakableNo2.firstPrim;
                 prim2 = FindFirstUnkPrim2(prim2, 2);
                 if (prim2 != NULL) {
                     UnkPolyFunc2(prim2);
@@ -176,14 +176,14 @@ typedef enum {
     STEP_FINALIZE,
 } BreakableCeilingSteps;
 
-void func_us_801B5FB8_from_no2(Entity* self) {
+void EntityBreakableWall(Entity* self) {
     Entity* tempEntity;
     Primitive* prim;
     s32 primIndex;
     s32 i;
     s32 tileIdx;
 
-    FntPrint("timer %x\n", self->ext.breakableNo2.unk80);
+    FntPrint("timer %x\n", self->ext.breakableNo2.timer);
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitEnvironment);
@@ -211,26 +211,26 @@ void func_us_801B5FB8_from_no2(Entity* self) {
     case STEP_SFX:
         if (self->hitFlags) {
             PlaySfxPositional(SFX_WALL_DEBRIS_B);
-            self->ext.breakableNo2.unk80 = 0x10;
-            self->ext.breakableNo2.unk88++;
+            self->ext.breakableNo2.timer = 0x10;
+            self->ext.breakableNo2.hits++;
             self->step++;
         }
-        if (self->ext.breakableNo2.unk88 == 3) {
+        if (self->ext.breakableNo2.hits == 3) {
             self->hitboxState = 0;
-            self->step = 3;
+            self->step = STEP_GENERATE_DEBRIS;
         }
         break;
 #endif
 
     case STEP_ANIMATE:
 #ifndef BOSS_IS_BO0
-        if (self->ext.breakableNo2.unk88 == 1) {
+        if (self->ext.breakableNo2.hits == 1) {
             self->animCurFrame = 12;
         }
-        if (self->ext.breakableNo2.unk88 == 2) {
+        if (self->ext.breakableNo2.hits == 2) {
             self->animCurFrame = 13;
         }
-        if (!--self->ext.breakableNo2.unk80) {
+        if (!--self->ext.breakableNo2.timer) {
             self->step--;
         }
 #else
@@ -254,7 +254,7 @@ void func_us_801B5FB8_from_no2(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            self->ext.breakableNo2.unk7C = prim;
+            self->ext.breakableNo2.firstPrim = prim;
             while (prim != NULL) {
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
@@ -272,7 +272,7 @@ void func_us_801B5FB8_from_no2(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        prim = self->ext.breakableNo2.unk7C;
+        prim = self->ext.breakableNo2.firstPrim;
         for (i = 0; i < 2; i++) {
             prim->tpage = 0xF;
             prim->clut = 0x21;
@@ -292,12 +292,12 @@ void func_us_801B5FB8_from_no2(Entity* self) {
             prim->drawMode = DRAW_UNK02;
             prim = prim->next;
         }
-        self->ext.breakableNo2.unk80 = 0x20;
+        self->ext.breakableNo2.timer = 0x20;
         self->step++;
         break;
 
     case STEP_TIMER:
-        if (!--self->ext.breakableNo2.unk80) {
+        if (!--self->ext.breakableNo2.timer) {
             self->step++;
         }
         break;
@@ -312,7 +312,7 @@ void func_us_801B5FB8_from_no2(Entity* self) {
             tileIdx = D_us_80180DEC[i];
             g_Tilemap.fg[tileIdx] = D_us_80180E00[i];
         }
-        prim = self->ext.breakableNo2.unk7C;
+        prim = self->ext.breakableNo2.firstPrim;
         for (i = 0; i < 8; i++) {
             UnkPolyFunc2(prim);
             prim->next->x1 = self->posX.i.hi - 8 + ((i % 2) * 0x10);
@@ -339,19 +339,19 @@ void func_us_801B5FB8_from_no2(Entity* self) {
             }
         }
         g_api.PlaySfx(SFX_WALL_DEBRIS_B);
-        self->ext.breakableNo2.unk80 = 0x180;
+        self->ext.breakableNo2.timer = 0x180;
         self->step++;
         break;
 
     case STEP_FINALIZE:
-        prim = self->ext.breakableNo2.unk7C;
+        prim = self->ext.breakableNo2.firstPrim;
         while (prim != NULL) {
             if (prim->p3 & 8) {
-                func_us_801B59C4(prim);
+                BrokenPiecePhysics(prim);
             }
             prim = prim->next;
         }
-        if (!--self->ext.breakableNo2.unk80) {
+        if (!--self->ext.breakableNo2.timer) {
             g_CastleFlags[RNO2_SECRET_WALL_OPEN] |= 2;
             DestroyEntity(self);
         }
@@ -359,7 +359,11 @@ void func_us_801B5FB8_from_no2(Entity* self) {
     }
 }
 
-void func_us_801AC54C_from_bo0(Entity* self) {
+// The same breakable wall as above, but as it exists in the opposite room.
+// But it is not possible to get into that room without breaking the wall.
+// Perhaps this corridor was supposed to lead somewhere else, and possible to
+// access from either end originally?
+void EntityBreakableWallBackside(Entity* self) {
     Primitive* prim;
     s32 primIndex;
     s32 i;
@@ -384,7 +388,7 @@ void func_us_801AC54C_from_bo0(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            self->ext.breakableNo2.unk7C = prim;
+            self->ext.breakableNo2.firstPrim = prim;
             while (prim != NULL) {
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
@@ -393,7 +397,7 @@ void func_us_801AC54C_from_bo0(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        prim = self->ext.breakableNo2.unk7C;
+        prim = self->ext.breakableNo2.firstPrim;
         for (i = 0; i < 4; i++) {
             UnkPolyFunc2(prim);
             prim->next->x1 = self->posX.i.hi;
@@ -407,11 +411,11 @@ void func_us_801AC54C_from_bo0(Entity* self) {
 
     case 2:
         i = 1;
-        prim = self->ext.breakableNo2.unk7C;
+        prim = self->ext.breakableNo2.firstPrim;
         while (prim != NULL) {
             if (prim->p3 & 8) {
                 i = 0;
-                func_us_801B59C4(prim);
+                BrokenPiecePhysics(prim);
             }
             prim = prim->next;
         }
@@ -509,11 +513,11 @@ void EntityStoneBridgeSecret(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            self->ext.breakableNo2.unk7C = prim;
+            self->ext.breakableNo2.firstPrim = prim;
             while (prim != NULL) {
                 prim->drawMode = DRAW_HIDE;
                 prim->priority = 0x68;
-                self->ext.breakableNo2.unk84 = prim;
+                self->ext.breakableNo2.lastPrim = prim;
                 prim = prim->next;
             }
         } else {
@@ -524,21 +528,21 @@ void EntityStoneBridgeSecret(Entity* self) {
     case 1:
         if (self->hitFlags) {
             for (i = 0; i < 0x10; i++) {
-                prim = self->ext.breakableNo2.unk7C;
+                prim = self->ext.breakableNo2.firstPrim;
                 prim = FindFirstUnkPrim(prim);
                 if (prim != NULL) {
                     prim->p3 = 1;
                 }
             }
         }
-        prim = self->ext.breakableNo2.unk7C;
+        prim = self->ext.breakableNo2.firstPrim;
         while (prim != NULL) {
             if (prim->p3) {
                 func_us_801B6794(prim);
             }
             prim = prim->next;
         }
-        prim = self->ext.breakableNo2.unk84;
+        prim = self->ext.breakableNo2.lastPrim;
         prim->x0 = prim->y0 = 0;
         prim->u0 = 0;
         prim->drawMode = DRAW_UNK02;
@@ -565,7 +569,7 @@ void EntityStoneBridgeSecret(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            self->ext.breakableNo2.unk7C = prim;
+            self->ext.breakableNo2.firstPrim = prim;
             while (prim != NULL) {
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
@@ -574,7 +578,7 @@ void EntityStoneBridgeSecret(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        prim = self->ext.breakableNo2.unk7C;
+        prim = self->ext.breakableNo2.firstPrim;
         for (i = 0; i < 4; i++) {
             UnkPolyFunc2(prim);
             prim->next->x1 = self->posX.i.hi - 8 + ((i % 2) * 0x10);
@@ -606,11 +610,11 @@ void EntityStoneBridgeSecret(Entity* self) {
 
     case 3:
         i = 1;
-        prim = self->ext.breakableNo2.unk7C;
+        prim = self->ext.breakableNo2.firstPrim;
         while (prim != NULL) {
             if (prim->p3 & 8) {
                 i = 0;
-                func_us_801B59C4(prim);
+                BrokenPiecePhysics(prim);
             }
             prim = prim->next;
         }
