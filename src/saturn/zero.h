@@ -33,9 +33,9 @@ extern s32 DAT_06064320;
 // are deliberately absent: zero and its dependents access them at
 // different types, and a shared declaration changes codegen.
 // Each user declares its own.
-extern s32 DAT_0601ac30[];
-extern s32 DAT_0601ac38[];
-extern s32 DAT_0601ac40[];
+extern s32 DAT_060DC004[];
+extern s32 DAT_060DC008[];
+extern s32 DAT_060DC00C[];
 extern s32 DAT_0605D910[];
 struct ShakeState {
     s16 id;
@@ -334,20 +334,15 @@ extern s32 DAT_0605C6D4;
 extern s16 DAT_0605C6DC;
 extern Unk0605D770 DAT_0605D770;
 extern s32 DAT_0605D764;
-struct Unk060505E0 {
-    s32 unk0;
-    s32 unk4;
-};
-extern struct Unk060505E0* DAT_060505E0;
-extern struct Unk060505E0* DAT_060505E4;
-extern struct Unk060505E0 DAT_06065D40;
-extern volatile u8 DAT_06065D32;
+
+extern PerGetSys* DAT_060505E0;
+extern PerGetSys* DAT_060505E4;
+
 struct Unk060505F8 {
     u16 idSize;
     u16 buttons;
 };
 extern struct Unk060505F8* DAT_060505F8;
-s32 PER_LInit(s32, s32, s32, s32, s32);
 void func_06004A10(void);
 void func_0600456C(void);
 void func_0600460C(void);
@@ -376,7 +371,7 @@ extern void func_06008B20(void);
 extern void func_06008EE8(void);
 extern void SignalSlaveSh2(void);
 extern void ResetPadsRepeat(void);
-extern s8 DAT_06057F50;
+extern s8 DAT_06057F50[PER_WORK_SIZE(1, 2)];
 extern void func_06008C2C(void);
 extern void (*DAT_06064624)(s32);
 extern void (*DAT_0606461C)(s32);
