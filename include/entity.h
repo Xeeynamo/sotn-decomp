@@ -4431,6 +4431,11 @@ typedef struct {
 } ET_801D58FC;
 
 typedef struct {
+    struct Primitive* prim7C;
+    u16 unk80;
+} ET_801C5364;
+
+typedef struct {
     s16 unk7C;
     struct Entity* unk80;
     struct Entity* unk84;
@@ -4846,6 +4851,7 @@ typedef union { // offset=0x7C
     ET_801C5C78 et_801C5C78;
     ET_801D68E0 et_801D68E0;
     ET_801D58FC et_801D58FC;
+    ET_801C5364 et_801C5364;
     ET_801C81C8 et_801C81C8;
     ET_RCEN_Shaft rcenShaft;
     ET_ShaftLightning shaftLightning;
