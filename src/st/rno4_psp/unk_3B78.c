@@ -110,7 +110,6 @@ void func_us_801D68E0(Entity* self) {
             self->step = 2;
         }
 
-    default:
         break;
 
     case 2:

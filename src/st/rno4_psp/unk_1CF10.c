@@ -310,11 +310,10 @@ void func_us_801C5EE4(Entity* self) {
     s32 scrollY;
     s32 scrollYWrap;
     s32 primIndex;
-    ;
+
     player = g_Entities;
     scrollX = g_Tilemap.scrollX.i.hi;
-    ;
-    ;
+
     scrollY = g_Tilemap.scrollY.i.hi;
     scrollYWrap = ((0x500 - scrollY) / 24) + 0x4D;
     if (scrollYWrap > 0x7F) {
@@ -392,7 +391,7 @@ void func_us_801C5EE4(Entity* self) {
                 prim->x1 = (prim->x3 = 0xE0 - scrollX);
             } else {
                 prim->tpage = 0xF;
-                ;
+
                 scrollYWrap = (0x452 - (playerPos + scrollY)) % 126;
                 if (!scrollYWrap) {
                     scrollYWrap = 0x7E;

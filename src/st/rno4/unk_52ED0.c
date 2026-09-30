@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno4.h"
 
+extern AnimateEntityFrame D_us_8018230C[];
+
 INCLUDE_ASM("st/rno4/nonmatchings/unk_52ED0", func_pspeu_0924B480);
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_52ED0", EntityAlucardWaterEffect);
@@ -17,8 +19,7 @@ INCLUDE_ASM("st/rno4/nonmatchings/unk_52ED0", EntityWaterDrop);
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_52ED0", func_us_801D511C);
 
-extern s32 D_us_8018230C;
-extern s16 D_us_80182330;
+extern s16 D_us_80182330[];
 extern u16 g_EInitDarkOctopus;
 
 void func_us_801D58FC(Entity* self) {
@@ -35,7 +36,7 @@ void func_us_801D58FC(Entity* self) {
     prevEnt = self - 1;
     self->posX.i.hi = prevEnt->posX.i.hi;
     self->posY.i.hi = prevEnt->posY.i.hi;
-    self->posY.i.hi += *((&D_us_80182330) + prevEnt->animCurFrame);
+    self->posY.i.hi += D_us_80182330[prevEnt->animCurFrame];
 
     switch (self->step) {
     case 0:
@@ -51,7 +52,7 @@ void func_us_801D58FC(Entity* self) {
 #endif
 
     case 1:
-        AnimateEntity(&D_us_8018230C, self);
+        AnimateEntity(D_us_8018230C, self);
 
         break;
 
@@ -263,7 +264,6 @@ void func_us_801D68E0(Entity* self) {
             self->step = 2;
         }
 
-    default:
         break;
 
     case 2:

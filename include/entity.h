@@ -4403,49 +4403,56 @@ typedef struct {
 } ET_Crusher;
 
 typedef struct {
-    /* 0x7C */ s8 pad7C[8];
-    /* 0x84 */ s16 unk84; //
-    /* 0x86 */ s8 pad86[2];
-    /* 0x88 */ u8 unk88; //
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ u8 unk88;
 } ET_801D5BA4;
 
 typedef struct {
     /* 0x7C */ Primitive* prim;
-    /* 0x80 */ s8 pad80[1];
+    /* 0x80 */ s32 : 32;
     /* 0x84 */ s32 unk84;
 } ET_801C5C78;
 
 typedef struct {
-    Primitive* unk7C;
-    s16 unk80;
-    s8 pad82[9];
-    s16 unk8C;
-    s8 pad8C[11];
-    struct Entity* unk9C;
+    /* 0x7C */ Primitive* unk7C;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s16 unk8C;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ struct Entity* unk9C;
 } ET_801D68E0;
 
 typedef struct {
-    u8 pad7C[5];
-    u16 unk82;
-    u8 pad83[5];
-    struct Entity* entity;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 : 16;
+    /* 0x82 */ u16 unk82;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s16 : 16;
+    /* 0x8A */ struct Entity* entity;
 } ET_801D58FC;
 
 typedef struct {
-    struct Primitive* prim7C;
-    u16 unk80;
+    /* 0x7C */ struct Primitive* prim7C;
+    /* 0x80 */ u16 unk80;
 } ET_801C5364;
 
 typedef struct {
-    s16 unk7C;
-    struct Entity* unk80;
-    struct Entity* unk84;
+    /* 0x7C */ s16 unk7C;
+    /* 0x80 */ struct Entity* unk80;
+    /* 0x84 */ struct Entity* unk84;
 } ET_801C81C8;
 
 typedef struct {
-    struct Primitive* prim7C;
-    u8 pad80[2];
-    s32 unk84;
+    /* 0x7C */ struct Primitive* prim7C;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 unk84;
 } ET_801C5EE4;
 
 typedef struct {
