@@ -354,7 +354,6 @@
 | zero/f_nonmat/f6006574.s     | func_06006574   |      220 |         39 |       |     |
 | maria/f_nonmat/f60BDED8.s    | func_060BDED8   |      221 |         16 |       |     |
 | richter/f_nonmat/f60BB58C.s  | func_060BB58C   |      221 |         16 |       |     |
-| zero/f_nonmat/f6004A74.s     | func_06004A74   |      221 |         18 |       |     |
 | zero/f_nonmat/f6006170.s     | func_06006170   |      221 |         27 |       |     |
 | zero/f_nonmat/f6009570.s     | func_06009570   |      223 |          8 |       |     |
 | rstage15/f_nonmat/f60DCF08.s | func_060DCF08   |      223 |         13 |       |     |
