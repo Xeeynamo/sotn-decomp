@@ -10,7 +10,166 @@ INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C12B0_from_no4);
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C15F8_from_no4);
 
-INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C5364);
+extern u8 D_us_80181084[2];
+extern s16 D_us_80181280[50]; // unknown size?
+
+void func_us_801C5364(Entity* self) {
+    Primitive* prim;
+    u32 subTileX;
+    int bgColorValue;
+    int tileY1Wrap;
+    s32 tileY1;
+    s32 tileX0;
+    s32 tileX1;
+    u8* tilePos;
+    s32 tileX1Wrap;
+    s32 primIndex;
+    s32 x0;
+    long y0;
+    s32 tileY0;
+    s32 x1;
+    s32 y1;
+    s32 i;
+    s16* tileDimensions; // It holds some dimensions of something, I'm guessing
+                         // some tile or entity sprite
+
+    if (!self->step) {
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = 0;
+        self->ext.et_801C5364.unk80 = 4;
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x10);
+        if (primIndex == (-1)) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.et_801C5364.prim7C = prim;
+        while (prim) {
+            prim->tpage = 0xF;
+            prim->clut = 0x85;
+            prim->priority = 0x18;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+    }
+    if (g_Timer & 0x80) {
+        if (g_Timer & 0x40) {
+            bgColorValue = 0x3f - (g_Timer & 0x3f);
+        } else {
+            bgColorValue = g_Timer & 0x3f;
+        }
+    } else {
+        bgColorValue = 0;
+    }
+    bgColorValue = bgColorValue + 0x80;
+    bgColorValue = 0x80;
+
+    g_GpuBuffers[0].draw.r0 = ((bgColorValue * 24) / 0x80) & 0xf8;
+    g_GpuBuffers[0].draw.g0 = 0;
+    g_GpuBuffers[0].draw.b0 = ((bgColorValue * 8) / 128) & 0xf8;
+    g_GpuBuffers[1].draw.r0 = ((bgColorValue * 24) / 128) & 0xf8;
+    g_GpuBuffers[1].draw.g0 = 0;
+    g_GpuBuffers[1].draw.b0 = ((bgColorValue * 8) / 0x80) & 0xf8;
+
+    prim = self->ext.et_801C5364.prim7C;
+
+    i = (self->params >> 8) & 0xff;
+    tileDimensions = D_us_80181280 + ((self->params & 0xff) * 4);
+    x0 = g_Tilemap.scrollX.i.hi - 0x10;
+    y0 = g_Tilemap.scrollY.i.hi;
+    x1 = x0 + 0x120;
+    y1 = y0 + 0xe0;
+    tilePos = D_us_80181084;
+    tileY1Wrap = tilePos[1];
+    while (i > 0) {
+        tileX0 = *(tileDimensions++);
+        tileX1 = *(tileDimensions++);
+        if ((x0 >= tileX0) || (x1 < tileX1)) {
+            tileDimensions = tileDimensions + 2;
+        } else {
+            tileY0 = *(tileDimensions++);
+            tileY1 = *(tileDimensions++);
+            if ((y0 < tileY0) && (!(y1 < tileY1))) {
+                {
+                    if (x0 > tileX1) {
+                        tileX1 = x0;
+                    }
+                }
+                if (tileX0 > x1) {
+                    tileX0 = x1;
+                }
+                tileX0 -= tileX1;
+                tileX1 -= (x0 + 0x10);
+                subTileX = ((x0 / 4) + tileX1) % 126;
+                if (tileY1 < y0) {
+                    tileY1 = y0;
+                }
+                if (y1 < tileY0) {
+                    tileY0 = y1;
+                }
+                tileY1Wrap = 0x63 - ((y0 - (g_Tilemap.height - 0x100)) / 4);
+                y1 = y1 + 0x46;
+                tileY1 = tileY1 - y0;
+                tileY0 -= y0;
+                if ((tileY1Wrap < tileY0) && (y1 >= tileY1)) {
+                    if (tileY1 < tileY1Wrap) {
+                        tileY1 = tileY1Wrap;
+                    }
+                    if (y1 < tileY0) {
+                        tileY0 = y1;
+                    }
+                    tileY0 -= tileY1;
+                    tileY1Wrap = ((y0 - (g_Tilemap.height - 0x100)) / 4) +
+                                 (tileY1 - 0x63);
+                    subTileX += tilePos[0];
+                    do {
+                        prim->u0 = prim->u2 = subTileX;
+                        tileX1Wrap = 0x7e - (subTileX - tilePos[0]);
+                        if (tileX0 < tileX1Wrap) {
+                            tileX1Wrap = tileX0;
+                        }
+                        prim->u1 = prim->u3 = subTileX + tileX1Wrap;
+                        prim->x0 = prim->x2 = tileX1;
+                        tileX1 = tileX1 + tileX1Wrap;
+
+                        prim->x1 = (prim->x3 = tileX1);
+                        tileX0 = tileX0 - tileX1Wrap;
+                        subTileX = tilePos[0];
+
+                        // There's this empty statement after all,
+                        // I missed it when I thought I'd found the solution
+                        // I had permuter running it for ~20 hours and couldn't
+                        // find anything else
+                        tilePos = tilePos;
+
+                        if (tileY1Wrap > 0x46) {
+                            tileX1Wrap = 0;
+                        } else {
+                            tileX1Wrap = 0x46 - tileY1Wrap;
+                        }
+                        prim->v0 = prim->v1 = tilePos[1] + tileX1Wrap;
+                        prim->v2 = prim->v3 = tilePos[1];
+                        prim->y0 = prim->y1 = tileY1;
+                        prim->y2 = prim->y3 = tileY1 + tileX1Wrap;
+                        prim->drawMode = DRAW_COLORS;
+                        prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->b0 =
+                            prim->b1 = prim->b2 = prim->b3 = bgColorValue;
+                        prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x80;
+                        prim = prim->next;
+                    } while (tileX0);
+                }
+            }
+        }
+        i -= 1;
+    }
+
+    while (prim) {
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+    }
+}
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", EntityBgColumnsParallax_from_no4);
 
@@ -131,7 +290,142 @@ void func_us_801C5C78(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C5EE4);
+void func_us_801C5EE4(Entity* self) {
+    Primitive* prim;
+    Entity* player;
+    s32 scrollX;
+    s32 clut;
+    s32 upperBound;
+    int playerPosRelTop;
+    int playerPos;
+    s32 scrollY;
+    s32 scrollYWrap;
+    s32 primIndex;
+
+    player = g_Entities;
+    scrollX = g_Tilemap.scrollX.i.hi;
+
+    scrollY = g_Tilemap.scrollY.i.hi;
+    scrollYWrap = ((0x500 - scrollY) / 24) + 0x4D;
+    if (scrollYWrap > 0x7F) {
+        scrollYWrap = 0x7F;
+    }
+    playerPos = (scrollX + player->posX.i.hi) - 0x128;
+    if (playerPos > 0) {
+        if (playerPos < 32) {
+            playerPos = 0;
+        } else {
+            { playerPos = (playerPos - 32) / (-16); }
+        }
+        if (playerPos < (-8)) {
+            playerPos = -8;
+        }
+    } else {
+        if (playerPos > (-32)) {
+            playerPos = 0;
+        } else {
+            playerPos = (playerPos + 32) / (-24);
+        }
+        if (playerPos > 8) {
+            playerPos = 8;
+        }
+    }
+    if (!self->step) {
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = 0;
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->ext.et_801C5EE4.unk84 = 0;
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = (&g_PrimBuf[primIndex]);
+        self->ext.et_801C5EE4.prim7C = prim;
+
+        while (prim) {
+            prim->priority = 0x9C;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+    }
+    g_api.SetVolumeCommand22_23(scrollYWrap, playerPos);
+    self->ext.et_801C5EE4.unk84 += 1;
+    if (self->ext.et_801C5EE4.unk84 >= 0xE) {
+        self->ext.et_801C5EE4.unk84 = 0;
+    }
+    clut = self->ext.et_801C5EE4.unk84 + 0xa0;
+    prim = self->ext.et_801C5EE4.prim7C;
+    playerPos = 0x50;
+    upperBound = 0x550;
+    upperBound = upperBound - scrollY;
+    playerPos = playerPos - scrollY;
+    if (playerPos < 0) {
+        playerPos = 0;
+    }
+    if (upperBound > 0xF0) {
+        upperBound = 0xF0;
+    }
+    playerPosRelTop = upperBound - playerPos;
+    while (prim) {
+        upperBound = playerPos + scrollY;
+        {
+            if (upperBound >= 0x452) {
+                prim->tpage = 0xE;
+                prim->u0 = (prim->u2 = 0x87);
+                prim->u1 = (prim->u3 = 0xe7);
+                prim->v2 = (prim->v3 = 0x550 - upperBound);
+                prim->v0 = (prim->v1 = 0);
+                scrollYWrap = 0x550 - upperBound;
+                prim->x0 = (prim->x2 = 0x140 - scrollX);
+                prim->x1 = (prim->x3 = 0xE0 - scrollX);
+            } else {
+                prim->tpage = 0xF;
+
+                scrollYWrap = (0x452 - (playerPos + scrollY)) % 126;
+                if (!scrollYWrap) {
+                    scrollYWrap = 0x7E;
+                }
+                prim->u0 = (prim->u2 = 0xCC);
+                prim->u1 = (prim->u3 = 0xFD);
+                prim->v2 = (prim->v3 = scrollYWrap);
+                if ((playerPos + 0x7E) < 0xF0) {
+                    prim->v0 = (prim->v1 = 0);
+                } else {
+                    prim->v0 = (prim->v1 = playerPos - 0x72);
+                };
+                scrollYWrap = prim->v2 - prim->v0;
+                if ((upperBound + scrollYWrap) > 0x452) {
+                    scrollYWrap = upperBound - 0x452;
+                    prim->v0 = (prim->v1 = prim->v2 - scrollYWrap);
+                };
+                prim->x0 = (prim->x2 = 0x140 - scrollX);
+                prim->x1 = (prim->x3 = 0x10F - scrollX);
+            }
+
+            prim->y2 = (prim->y3 = playerPos);
+            playerPos += scrollYWrap;
+            playerPosRelTop -= scrollYWrap;
+            prim->y0 = prim->y1 = playerPos;
+#if defined(VERSION_PSP)
+            prim->y2 -= 1;
+            prim->y3 -= 1;
+#endif
+            prim->clut = clut;
+            prim->drawMode = DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+        }
+        prim = prim->next;
+        if (playerPosRelTop <= 0) {
+            break;
+        }
+    }
+
+    while (prim) {
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+    }
+}
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C2850_from_no4);
 
@@ -201,7 +495,37 @@ void EntityWaterBox(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C81C8);
+#ifdef VERSION_PSP
+extern s32 E_ID(UNK_26);
+extern s32 E_ID(UNK_27);
+#endif
+extern s16 D_us_801814D4;
+
+void func_us_801C81C8(Entity* self) {
+    Entity* child;
+
+    if (!self->step) {
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = -0x7FFE;
+        self->palette = 0x44;
+        self->drawFlags = ENTITY_MASK_R;
+        self->posX.i.hi = (0x1EF - g_Tilemap.scrollX.i.hi);
+        child = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (child) {
+            CreateEntityFromCurrentEntity(E_ID(UNK_27), child);
+            child->params = 1;
+        }
+        self->ext.et_801C81C8.unk80 = child;
+        child = AllocEntity(child, &g_Entities[256]);
+        if (child) {
+            CreateEntityFromCurrentEntity(E_ID(UNK_26), child);
+            child->params = 1;
+        }
+        self->ext.et_801C81C8.unk84 = child;
+        self->ext.et_801C81C8.unk7C = 0;
+    }
+    AnimateEntity(&D_us_801814D4, self);
+}
 
 void EntityFloatingIcePlatform(Entity* self) {
     extern u16 g_FloatingIcePlatformHitbox[];
