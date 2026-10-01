@@ -81,7 +81,7 @@ extern void* DAT_06057EC8;
 extern int hot_res_cnt;
 
 extern Uint8* get_oreg_adr;
-extern int DAT_06057ED4;
+extern int body_conect_cnt;
 extern int DAT_06057ED8;
 extern Uint8 end_flg;
 extern int remain_conect_cnt;
@@ -229,15 +229,15 @@ Uint32 PER_LGetPer(PerGetPer** output_dt, PerMulInfo** mul_info) {
                 SetPerSize(PER_SIZE_NCON_15);
             }
             if (remain_conect_cnt > 0) {
-                DAT_06057ED4++;
+                body_conect_cnt++;
             }
             AnyInitPerData();
-            while (DAT_06057ED4 < 2) {
+            while (body_conect_cnt < 2) {
                 do {
-                    DAT_06057EC4[DAT_06057ED4].id = PER_MID_NCON_ONE;
-                    DAT_06057EC4[DAT_06057ED4].con = PER_MCON_NCON_UNKNOWN;
+                    DAT_06057EC4[body_conect_cnt].id = PER_MID_NCON_ONE;
+                    DAT_06057EC4[body_conect_cnt].con = PER_MCON_NCON_UNKNOWN;
                 } while (FALSE);
-                DAT_06057ED4++;
+                body_conect_cnt++;
             }
             per_time_out_flg--;
         } else {
@@ -315,7 +315,7 @@ static void InitIntBackPer(void) {
     skip_per_data_flg = OFF;
     set_time_flg = OFF;
     get_per_cnt = 0;
-    DAT_06057ED4 = 0;
+    body_conect_cnt = 0;
     DAT_06057ED8 = 0;
     remain_conect_cnt = 0;
     now_cont = 0;
