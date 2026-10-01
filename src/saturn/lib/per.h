@@ -52,6 +52,8 @@
 #define PER_INT_OK 0x0
 #define PER_INT_ERR 0x1
 
+#define PER_GET_TIM() (per_get_time_adr)
+
 #define PER_GET_SYS() ((per_set_sys_flg == OFF) ? NULL : &per_get_sys_data)
 
 typedef Uint8 PerId;
@@ -76,6 +78,7 @@ typedef struct {
 
 typedef void PerGetPer;
 
+extern Uint8* per_get_time_adr;
 extern PerGetSys per_get_sys_data;
 extern volatile Uint8 per_set_sys_flg;
 

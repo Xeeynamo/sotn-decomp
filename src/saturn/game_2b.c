@@ -412,7 +412,7 @@ void func_06079A2C(s32 arg0, s32 arg1, Point16* pos) {
 }
 
 s32 func_06079AF0(void) {
-    if ((g_Player.status & PLAYER_STATUS_DEAD) || (DAT_0605d7f0 != 0) ||
+    if ((g_Player.status & PLAYER_STATUS_DEAD) || DAT_0605D7F0 ||
         !(g_pads[0].previous & PAD_START)) {
         return 0;
     }
