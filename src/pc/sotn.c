@@ -55,7 +55,7 @@ extern u16 g_PalEquipIcon[320 * 16];
 
 // list of exposed API
 void FreePrimitives(s32 index);
-s32 AllocPrimitives(u8 primType, s32 count);
+s16 AllocPrimitives(u8 primType, s32 count);
 void ShakeCamera(cameraShakeTypes);
 void SetSpeedX(s32 speed);
 Entity* GetFreeEntity(s16 start, s16 end);
