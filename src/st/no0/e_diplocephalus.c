@@ -28,7 +28,11 @@ static u8 anim1[] = {4, 1, 4, 2, 2, 3, 4, 2, 0, 0};
 static u8 anim2[] = {6, 7, 6, 8, 0, 0};
 static u8 anim3[] = {6, 9, 6, 10, 0, 0};
 
+#ifndef FIX_UB
+// PS1 and PSP require `facing` to be a `s32` and not a `u8`
 u8 CheckColliderOffsets(s16* arg0, s32 facing);
+#endif
+
 void func_us_801D0898(Entity* self, s32 count);
 
 void EntityDiplocephalusFoot(Entity* self) {
