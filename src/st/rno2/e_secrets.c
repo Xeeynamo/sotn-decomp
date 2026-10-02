@@ -433,7 +433,14 @@ void EntityBreakableWallBackside(Entity* self) {
     }
 }
 
-static void func_us_801B6794(Primitive* prim) {
+// Breaking the floor creates some single-pixel prim tiles that are supposed to
+// arc and fly out. This does physics for that (velocieies, accelerations, etc)
+// Strangely, I don't seem to actually physically see any such pixels.
+// And nop-ing out this function doesn't visually change the breaking effect.
+// It is possible something is misconfigured here so that the pixels do not render.
+// Compare to DoorCascadePhysics.
+
+static void PixelPhysics(Primitive* prim) {
     s32 x, y;
 
     if (!prim->g3) {
@@ -544,7 +551,7 @@ void EntityStoneBridgeSecret(Entity* self) {
         prim = self->ext.breakableNo2.firstPrim;
         while (prim != NULL) {
             if (prim->p3) {
-                func_us_801B6794(prim);
+                PixelPhysics(prim);
             }
             prim = prim->next;
         }
