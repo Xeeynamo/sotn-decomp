@@ -253,7 +253,7 @@ void EntityOlroxDrool(Entity* self) {
     }
 }
 
-bool UnkCollisionFunc5(s16* pointXY) {
+int UnkCollisionFunc5(s16* pointXY) {
     Collider collider;
 
     FallEntity();

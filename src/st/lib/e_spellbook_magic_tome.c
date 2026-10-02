@@ -207,7 +207,7 @@ bool func_us_801D2148(RECT* rects) {
     return true;
 }
 
-bool func_801CDC80(s16* val, s16 target, s16 step) {
+int func_801CDC80(s16* val, s16 target, s16 step) {
     if (abs(*val - target) < step) {
         *val = target;
         return true;

@@ -677,7 +677,7 @@ u8 CheckColliderOffsets(Entity* entity, s16* arg0, u8 facing) {
     return ret;
 }
 
-bool UnkCollisionFunc5(Entity* entity, s16* pointXY) {
+int UnkCollisionFunc5(Entity* entity, s16* pointXY) {
     Collider collider;
 
     FallEntity(entity);

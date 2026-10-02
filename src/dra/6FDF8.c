@@ -109,8 +109,7 @@ bool func_8010FDF8(s32 branchFlags) {
     }
 
     if (branchFlags & 0x1000 &&
-        g_Player.padPressed & (PAD_SQUARE | PAD_CIRCLE) &&
-        func_8010EDB8() != 0) {
+        g_Player.padPressed & (PAD_SQUARE | PAD_CIRCLE) && func_8010EDB8()) {
         return 1;
     }
 

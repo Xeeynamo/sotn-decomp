@@ -2,6 +2,7 @@
 #include "pc.h"
 #include "spawn_point.h"
 #include "dra.h"
+#include "psyz/log.h"
 #include "stage.h"
 #include "dra_bss.h"
 #include "servant.h"
@@ -55,7 +56,7 @@ extern u16 g_PalEquipIcon[320 * 16];
 
 // list of exposed API
 void FreePrimitives(s32 index);
-s32 AllocPrimitives(u8 primType, s32 count);
+s16 AllocPrimitives(u8 primType, s32 count);
 void ShakeCamera(cameraShakeTypes);
 void SetSpeedX(s32 speed);
 Entity* GetFreeEntity(s16 start, s16 end);
@@ -110,8 +111,7 @@ bool InitAccessoryDefs(const char* jsonContent);
 void InitRelicDefs(void);
 void InitEnemyDefs(void);
 void InitSubwpnDefs(void);
-bool InitPalEquipIcons(const struct FileOpenRead* r);
-void InitVbVh(void);
+bool InitDraData(void);
 
 s32 func_800EDB58(u8 primType, s32 count);
 
@@ -220,9 +220,10 @@ bool InitGame(struct InitGameParams* params) {
     g_Vram.D_800ACDA8.w = 0x0100;
     g_Vram.D_800ACDA8.h = 0x0010;
 
-    FileOpenRead(InitPalEquipIcons, "assets/dra/g_PalEquipIcon.bin", NULL);
-    InitVbVh();
-
+    if (!InitDraData()) {
+        ERRORF("failed to load DRA files, game will terminate.");
+        return false;
+    }
     return true;
 }
 
@@ -259,25 +260,25 @@ int MyStoreImage(RECT* rect, u_long* p) {
     return 0;
 }
 
-void ReadToArray(const char* filename, char* content, size_t targetlen) {
-    int readlen = FileReadToBuf(filename, content, 0, targetlen);
-    if (readlen != targetlen) {
-        ERRORF(
-            "file read for '%s' failed (%d/%d)", filename, readlen, targetlen);
-    }
-}
-
-bool InitPalEquipIcons(const struct FileOpenRead* r) {
-    size_t n = fread(g_PalEquipIcon, 1, sizeof(g_PalEquipIcon), r->file);
-    if (n != sizeof(g_PalEquipIcon)) {
-        WARNF("unable to read all bytes: %d/%d", n, sizeof(g_PalEquipIcon));
+// DRA.BIN is loaded at 0x800A0000, so a PSX address maps to a file offset
+static bool ReadFromDra(u32 addr, void* dst, size_t len) {
+    const char* path = "disks/us/DRA.BIN";
+    int readlen = FileReadToBuf(path, dst, addr - DRA_PRG_PTR, len);
+    if (readlen >= 0 && (size_t)readlen != len) {
+        ERRORF("file read for '%s' at %08X failed (%d/%zu)", path, addr,
+               readlen, len);
+        return false;
     }
     return true;
 }
 
-void InitVbVh() {
-    ReadToArray("assets/dra/vb_0.bin", D_8013B6A0, LEN(D_8013B6A0));
-    ReadToArray("assets/dra/vb_1.bin", D_8017D350, LEN(D_8017D350));
-    ReadToArray("assets/dra/vb_2.bin", D_8018B4E0, LEN(D_8018B4E0));
-    ReadToArray("assets/dra/vb_3.bin", D_801A9C80, LEN(D_801A9C80));
+bool InitDraData(void) {
+    bool ok = true;
+
+    ok &= ReadFromDra(0x800D88D4, g_PalEquipIcon, sizeof(g_PalEquipIcon));
+    ok &= ReadFromDra(0x8013B6A0, D_8013B6A0, LEN(D_8013B6A0));
+    ok &= ReadFromDra(0x8017D350, D_8017D350, LEN(D_8017D350));
+    ok &= ReadFromDra(0x8018B4E0, D_8018B4E0, LEN(D_8018B4E0));
+    ok &= ReadFromDra(0x801A9C80, D_801A9C80, LEN(D_801A9C80));
+    return ok;
 }

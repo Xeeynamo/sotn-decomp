@@ -908,7 +908,7 @@ s16 GetStatusAilmentTimer(s32 statusAilment, s16 timer) {
 }
 
 // SAT: func_0606F760
-bool CastSpell(SpellIds spellId) {
+int CastSpell(SpellIds spellId) {
     u8 mpUsage = g_SpellDefs[spellId].mpUsage;
 
     if (g_Status.mp < mpUsage) {
@@ -935,7 +935,7 @@ void LearnSpell(s32 spellId) {
 }
 
 // original name: reduce_weapon
-bool ReduceWeapon(s32 hand) {
+int ReduceWeapon(s32 hand) {
     s32* equippedItem;
     bool isConsumable;
 
@@ -1215,7 +1215,7 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
 }
 
 // SAT: func_0606FFA0
-bool HasEnoughMp(s32 mpCount, bool subtractMp) {
+int HasEnoughMp(s32 mpCount, int subtractMp) {
     if (mpCount <= g_Status.mp) {
         if (subtractMp) {
             g_Status.mp -= mpCount;
