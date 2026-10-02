@@ -901,7 +901,12 @@ void EntityOwlKnight(Entity* self) {
         case 0:
             if (!(self->ext.owl.unk80 & 4)) {
                 self->step_s++;
+#ifdef FIX_UB
+                // BUG! the original call is missing the entity argument
+            } else if (!AnimateEntity(anim_knight_11, self)) {
+#else
             } else if (!AnimateEntity(anim_knight_11)) {
+#endif
                 self->flags ^= 0x4;
                 self->step_s++;
             }
