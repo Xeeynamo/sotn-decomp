@@ -32,7 +32,7 @@ typedef enum {
 typedef u16 EInit[5];
 
 // common stage initialization data
-extern GAME_IMPORT EInit g_EInitSpawner;
+extern EInit g_EInitSpawner;
 
 typedef struct AnimateEntityFrame {
     u8 duration;

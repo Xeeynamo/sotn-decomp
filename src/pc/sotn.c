@@ -260,7 +260,6 @@ int MyStoreImage(RECT* rect, u_long* p) {
     return 0;
 }
 
-// DRA.BIN is loaded at 0x800A0000, so a PSX address maps to a file offset
 static bool ReadFromDra(u32 addr, void* dst, size_t len) {
     const char* path = "disks/us/DRA.BIN";
     int readlen = FileReadToBuf(path, dst, addr - DRA_PRG_PTR, len);
