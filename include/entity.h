@@ -1876,11 +1876,10 @@ typedef struct {
 } ET_BreakableDebris;
 
 typedef struct {
-    /* 0x7C */ struct Primitive* unk7C;
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ s16 : 16;
-    /* 0x84 */ struct Primitive* unk84;
-    /* 0x88 */ u8 unk88;
+    /* 0x7C */ struct Primitive* firstPrim;
+    /* 0x80 */ s16 timer;
+    /* 0x84 */ struct Primitive* lastPrim;
+    /* 0x88 */ u8 hits;
 } ET_BreakableNO2;
 
 // This is a type of breakable wall seen in NO1 and CAT

@@ -54,9 +54,9 @@ typedef enum EntityID {
     E_SPIKES_PARTS,             // EntitySpikesParts
     E_SPIKES_DUST,              // EntitySpikesDust
     E_SPIKES_DAMAGE,            // EntitySpikesDamage
-    E_UNK_22,                   // func_us_801B5FB8_from_no2
+    E_UNK_22,                   // EntityBreakableWall
     E_STONE_BRIDGE_SECRET,      // EntityStoneBridgeSecret
-    E_UNK_24,                   // func_us_801AC54C_from_bo0
+    E_UNK_24,                   // EntityBreakableWallBackside
     E_PRISONER,                 // EntityPrisoner
     E_SEALED_DOOR,              // EntitySealedDoor
     E_CTULHU,                   // EntityCtulhu
