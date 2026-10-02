@@ -125,7 +125,7 @@ void func_060040d8(void) {
         func_06007d54();
         break;
     case 0x31:
-        DAT_0605d7f0 = 1;
+        DAT_0605D7F0 = true;
         func_0600D8BC();
         break;
     }
@@ -280,7 +280,7 @@ void func_060046E8(void) {
     g_CurrentRoom.unk2 = 0;
     g_CurrentRoom.unk4 = 0;
     g_CurrentRoom.unk6 = 0;
-    DAT_0605d7f0 = 0;
+    DAT_0605D7F0 = false;
     g_Status.timerHours = 0;
     g_Status.timerMinutes = 0;
     g_Status.timerSeconds = 1;
@@ -316,14 +316,14 @@ void func_060047E8(void) {
 }
 
 void func_06004878(void) {
-    while (PER_LInit(PER_KD_SYS, 0, 0, 0, 0) == 1) {
+    while (PER_LInit(PER_KD_SYS, 0, 0, NULL, 0) == PER_INT_ERR) {
     }
 
     do {
-        DAT_060505E0 = (DAT_06065D32 != 0) ? &DAT_06065D40 : NULL;
+        DAT_060505E0 = PER_GET_SYS();
     } while (DAT_060505E0 == NULL);
 
-    DAT_0605D764 = ((DAT_060505E0->unk4 >> 9) ^ 1) & 1;
+    DAT_0605D764 = DAT_060505E0->sm & PER_MSK_STEREO ? false : true;
     if (DAT_0605D764 != 0) {
         ((s32(*)(s32))PlaySfx)(0xF0000006);
     } else {
@@ -338,12 +338,13 @@ void func_06004878(void) {
 void func_06004924(void) {
     u32 status_sys;
 
-    while (PER_LInit(PER_KD_SYS, 0, 0, 0, 0) == 1) {
+    while (PER_LInit(PER_KD_SYS, 0, 0, NULL, 0) == PER_INT_ERR) {
     }
+
     do {
-        DAT_060505E4 = (DAT_06065D32 != 0) ? &DAT_06065D40 : NULL;
+        DAT_060505E4 = PER_GET_SYS();
     } while (DAT_060505E4 == NULL);
-    status_sys = DAT_060505E4->unk4;
+    status_sys = DAT_060505E4->sm;
     if (DAT_0605D764 != 0) {
         status_sys &= ~PER_MSK_STEREO;
     } else {
@@ -357,25 +358,68 @@ void func_06004924(void) {
     func_06004A10();
 }
 
+extern s8 DAT_06057F50[PER_WORK_SIZE(1, 2)];
+
 void func_06004A10(void) {
     s32 i;
     s8* ptr;
 
     i = 0;
-    ptr = &DAT_06057F50;
-    for (; i < 10; i++) {
+    ptr = DAT_06057F50;
+    for (; i < PER_WORK_SIZE(1, 2); i++) {
         *ptr++ = 0;
     }
 
     g_pads[0].tapped = g_pads[0].previous = g_pads[0].pressed = 0;
     ResetPadsRepeat();
-    while (PER_LInit(PER_KD_PERTIM, 1, 2, (s32)&DAT_06057F50, 0) != 0) {
+    while (PER_LInit(PER_KD_PERTIM, 1, 2, DAT_06057F50, 0) != PER_INT_OK) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004A74, func_06004A74);
+void InitializePads(void);
 
-void func_06004C14(void) {
+void func_06004A74(void) {
+    u32 status;
+    s32 i;
+
+    g_pads[0].tapped = g_pads[0].pressed;
+    status = PER_LGetPer(&DAT_060505F8, &DAT_060505FC);
+    if (DAT_060505FC->con != PER_MCON_NCON_UNKNOWN &&
+        DAT_060505F8->id == PER_ID_DGT && DAT_060505F8->size == PER_SIZE_DGT) {
+        if (!DAT_0605D7F0) {
+            UpdatePads();
+            UpdatePadsRepeat();
+        }
+    } else if (DAT_060505F8->id == PER_ID_ANL) {
+        InitializePads();
+    }
+    if (status == PER_INT_ERR) {
+        InitializePads();
+    }
+    if (DAT_060505FC->con != 1) {
+        func_06004A10();
+    }
+    if (status == PER_INT_ERR || DAT_060505FC->con != 1) {
+        DAT_06057F60[0] = 0x01;
+        DAT_06057F60[1] = 0x00;
+        DAT_06057F60[2] = 0x00;
+        DAT_06057F60[3] = 0x21;
+        DAT_06057F60[4] = 0x45;
+        DAT_06057F60[5] = 0x98;
+        DAT_06057F60[6] = 0x19;
+    } else {
+        DAT_06050600 = PER_GET_TIM();
+        DAT_06057F60[0] = DAT_06050600[0];
+        DAT_06057F60[1] = DAT_06050600[1];
+        DAT_06057F60[2] = DAT_06050600[2];
+        DAT_06057F60[3] = DAT_06050600[3];
+        DAT_06057F60[4] = DAT_06050600[4];
+        DAT_06057F60[5] = DAT_06050600[5];
+        DAT_06057F60[6] = DAT_06050600[6];
+    }
+}
+
+void UpdatePads(void) {
     s16 previous;
     s16 pressed;
 
@@ -468,8 +512,6 @@ void func_06004D84(void) {
     set_imask(msk);
 }
 
-void func_06004A74(void);
-
 void func_06004DE8(void) {
     u32 msk;
 
@@ -485,8 +527,30 @@ void func_06004DE8(void) {
     set_imask(msk);
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004E50, func_06004E50);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004E94, func_06004E94);
+void func_06004E50(void) {
+    u32 msk;
+
+    msk = get_imask();
+    set_imask(0);
+
+    SCL_VblankStart();
+
+    set_imask(msk);
+}
+
+void func_06004E94(void) {
+    u32 msk;
+
+    msk = get_imask();
+    set_imask(0);
+
+    SCL_VblankEnd();
+    if (func_06006ED4() == 1) {
+        SYS_EXECDMP();
+    }
+
+    set_imask(msk);
+}
 
 // _RETURN_TO_GAME
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004EF0, func_06004EF0);
@@ -1687,12 +1751,12 @@ void UpdateScrollForRoom(void) {
     }
 }
 
-void func_06008AB4(s32 arg0, s32 arg1, s32 arg2) {
+void func_06008AB4(void) {
     if (DAT_0605cd70.unk2 != 4 &&
         (DAT_0605cd70.unk0 != 0x91 || DAT_0605cd70.unk2 != 1) &&
         DAT_0605d772 != 4) {
         if (DAT_0605cd70.unk2 != 5 || DAT_0605cd70.unk0 <= 2) {
-            func_0600BD68(arg0, arg1, arg2, &DAT_0605cd70);
+            func_0600BD68();
         }
         func_0600DE38();
         func_0600E164();
@@ -2581,14 +2645,14 @@ s32 func_0600D028(u32 device, s8 arg1) {
 s32 func_0600D0DC(void) {
     BupDate date;
 
-    date.year =
-        (((u8)DAT_06057F60.unk6 >> 4) * 1000) +
-        ((DAT_06057F60.unk6 & 0x0F) * 100) +
-        (((u8)DAT_06057F60.unk5 >> 4) * 10) + (DAT_06057F60.unk5 & 0x0F) + 0x44;
-    date.month = DAT_06057F60.unk4 & 0x0F;
-    date.day = BCD_TO_DEC(DAT_06057F60.unk3);
-    date.time = BCD_TO_DEC(DAT_06057F60.unk2);
-    date.min = BCD_TO_DEC(DAT_06057F60.unk1);
+    date.year = (u8)((u16)(DAT_06057F60[6] >> 4) * 1000 +
+                     (u16)(DAT_06057F60[6] & 0x0F) * 100 +
+                     (u16)(DAT_06057F60[5] >> 4) * 10 +
+                     (u16)(DAT_06057F60[5] & 0x0F) - 1980);
+    date.month = DAT_06057F60[4] & 0x0F;
+    date.day = (DAT_06057F60[3] >> 4) * 10 + (DAT_06057F60[3] & 0x0F);
+    date.time = (DAT_06057F60[2] >> 4) * 10 + (DAT_06057F60[2] & 0x0F);
+    date.min = (DAT_06057F60[1] >> 4) * 10 + (DAT_06057F60[1] & 0x0F);
 
     return BUP_SetDate(&date);
 }

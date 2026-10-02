@@ -33,9 +33,9 @@ extern s32 DAT_06064320;
 // are deliberately absent: zero and its dependents access them at
 // different types, and a shared declaration changes codegen.
 // Each user declares its own.
-extern s32 DAT_0601ac30[];
-extern s32 DAT_0601ac38[];
-extern s32 DAT_0601ac40[];
+extern s32 DAT_060DC004[];
+extern s32 DAT_060DC008[];
+extern s32 DAT_060DC00C[];
 extern s32 DAT_0605D910[];
 struct ShakeState {
     s16 id;
@@ -93,8 +93,6 @@ void ClearDebugPrintTilemap();
 
 #define SH2_REG_M_FRT_IC 0x21000000
 
-#define BCD_TO_DEC(x) ((((u8)(x) >> 4) * 10) + ((x) & 0x0F))
-
 extern s32 DAT_060645d0;
 extern void* g_BatResourceDescriptorList;
 
@@ -143,7 +141,7 @@ extern s16 DAT_0605BEC2;
 extern s32 DAT_0605CD5C;
 void func_0600971C(void);
 void func_06005208(s32);
-extern s32 DAT_0605d7f0;
+extern bool DAT_0605D7F0;
 extern s32 DAT_0605c6e4;
 extern s32 DAT_0605c664;
 extern s16 DAT_0605c110;
@@ -334,27 +332,26 @@ extern s32 DAT_0605C6D4;
 extern s16 DAT_0605C6DC;
 extern Unk0605D770 DAT_0605D770;
 extern s32 DAT_0605D764;
-struct Unk060505E0 {
-    s32 unk0;
-    s32 unk4;
-};
-extern struct Unk060505E0* DAT_060505E0;
-extern struct Unk060505E0* DAT_060505E4;
-extern struct Unk060505E0 DAT_06065D40;
-extern volatile u8 DAT_06065D32;
-struct Unk060505F8 {
-    u16 idSize;
+
+extern PerGetSys* DAT_060505E0;
+extern PerGetSys* DAT_060505E4;
+typedef struct {
+    u8 id;
+    u8 size;
     u16 buttons;
-};
-extern struct Unk060505F8* DAT_060505F8;
-s32 PER_LInit(s32, s32, s32, s32, s32);
+} PerData;
+extern PerData* DAT_060505F8;
+extern PerMulInfo* DAT_060505FC;
+extern u8* DAT_06050600;
+
 void func_06004A10(void);
 void func_0600456C(void);
 void func_0600460C(void);
 void func_060046E8(void);
 void func_060047E8(void);
 void func_06004878(void);
-void func_06004C14(void);
+void UpdatePads(void);
+void UpdatePadsRepeat(void);
 s32 func_06006470(void);
 void func_06007F6C(void);
 void func_060082C8(void);
@@ -367,8 +364,8 @@ extern MthMatrix DAT_060579A8;
 extern s32 DAT_0605BEC0;
 extern s32 DAT_060576B0[];
 extern s32 DAT_06057770;
-extern void func_06008AB4();
-extern void func_0600BD68(s32 arg0, s32 arg1, s32 arg2, Unk0605cd70* arg3);
+extern void func_06008AB4(void);
+extern void func_0600BD68(void);
 void SetCurrentMatrixBinAngle(MthXyz* rot, MthXyz* pos);
 extern void func_0600DE38(void);
 extern void func_0600E164(void);
@@ -376,7 +373,6 @@ extern void func_06008B20(void);
 extern void func_06008EE8(void);
 extern void SignalSlaveSh2(void);
 extern void ResetPadsRepeat(void);
-extern s8 DAT_06057F50;
 extern void func_06008C2C(void);
 extern void (*DAT_06064624)(s32);
 extern void (*DAT_0606461C)(s32);
@@ -396,16 +392,7 @@ extern SaturnSpriteResource** DAT_06064670;
 s16 func_0600AEE4(u16*);
 extern u16* func_0600CB04(s32, s32);
 extern s32 func_0600C880(s32, s32, s32);
-struct Unk06057F60 {
-    s8 unk0;
-    s8 unk1;
-    s8 unk2;
-    s8 unk3;
-    s8 unk4;
-    s8 unk5;
-    s8 unk6;
-};
-extern struct Unk06057F60 DAT_06057F60;
+extern u8 DAT_06057F60[];
 extern s16 DAT_06038FD6;
 extern s16 DAT_06038FD8;
 void func_0601AF44(void);

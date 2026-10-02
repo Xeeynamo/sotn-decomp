@@ -4072,6 +4072,7 @@ typedef struct {
     /* 0x89 */ u8 unk89;
     /* 0x8A */ s16 : 16;
     /* 0x8C */ u32 unk8C;
+    /* 0x90 */ u32 unk90;
 } ET_DeathFlames;
 
 typedef struct {
@@ -4401,17 +4402,57 @@ typedef struct {
 } ET_Crusher;
 
 typedef struct {
-    /* 0x7C */ s8 pad7C[8];
-    /* 0x84 */ s16 unk84; //
-    /* 0x86 */ s8 pad86[2];
-    /* 0x88 */ u8 unk88; //
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ u8 unk88;
 } ET_801D5BA4;
 
 typedef struct {
     /* 0x7C */ Primitive* prim;
-    /* 0x80 */ s8 pad80[1];
+    /* 0x80 */ s32 : 32;
     /* 0x84 */ s32 unk84;
 } ET_801C5C78;
+
+typedef struct {
+    /* 0x7C */ Primitive* unk7C;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s16 unk8C;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ struct Entity* unk9C;
+} ET_801D68E0;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 : 16;
+    /* 0x82 */ u16 unk82;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s16 : 16;
+    /* 0x8A */ struct Entity* entity;
+} ET_801D58FC;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* prim7C;
+    /* 0x80 */ u16 unk80;
+} ET_801C5364;
+
+typedef struct {
+    /* 0x7C */ s16 unk7C;
+    /* 0x80 */ struct Entity* unk80;
+    /* 0x84 */ struct Entity* unk84;
+} ET_801C81C8;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* prim7C;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 unk84;
+} ET_801C5EE4;
 
 typedef struct {
     /* 0x7C */ s32 : 32;
@@ -4419,7 +4460,9 @@ typedef struct {
     /* 0x82 */ s16 angle;
     /* 0x84 */ s16 swayAngle;
     /* 0x86 */ u16 : 16;
-    /* 0x88 */ u32 : 32;
+    /* 0x88 */ u8 unk88;
+    /* 0x89 */ u8 unk89;
+    /* 0x8A */ u16 : 16;
     /* 0x8C */ u16 attackIdx;
     /* 0x8E */ u16 : 16;
     /* 0x90 */ u8 movingUp;
@@ -4444,6 +4487,12 @@ typedef struct {
     /* 0x9C */ struct Entity* sourceOrb;
     /* 0xA0 */ struct Entity* targetOrb;
 } ET_ShaftLightning;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ SVECTOR rotations[3];
+} ET_ShaftMeridianRings;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -4821,8 +4870,14 @@ typedef union { // offset=0x7C
     ET_Crusher crusher;
     ET_801D5BA4 et_801D5BA4;
     ET_801C5C78 et_801C5C78;
+    ET_801D68E0 et_801D68E0;
+    ET_801D58FC et_801D58FC;
+    ET_801C5364 et_801C5364;
+    ET_801C81C8 et_801C81C8;
+    ET_801C5EE4 et_801C5EE4;
     ET_RCEN_Shaft rcenShaft;
     ET_ShaftLightning shaftLightning;
+    ET_ShaftMeridianRings shaftMeridianRings;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);
