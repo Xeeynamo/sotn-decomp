@@ -212,6 +212,21 @@ s32 Random();
 // the caller receiving an undefined numbers that can be random and
 // mis-representative of the actual return value.
 u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags);
+u8 AnimateEntity(u8 frames[], Entity* entity);
+u8 UnkAnimFunc(u8 frames[], Entity* self, u8 arg2);
+s16 GetDistanceToPlayerX(void);
+u8 GetSideToPlayer(void);
+u8 Ratan2Shifted(s16 x, s16 y);
+u8 GetAngleBetweenEntitiesShifted(Entity* a, Entity* b);
+u8 GetAnglePointToEntityShifted(s16 x, s16 y);
+u8 AdjustValueWithinThreshold(u8 threshold, u8 currentValue, u8 targetValue);
+u16 GetAngleBetweenEntities(Entity* a, Entity* b);
+u16 LimitAngleChange(u16 delta, u16 base, u16 target);
+u8 CheckColliderOffsets(s16* arg0, u8 facing);
+u8 UnkCollisionFunc4(u8 arg0);
+Primitive* PrimToggleVisibility(Primitive* prim, s32 count);
+Primitive* UnkRecursivePrimFunc2(
+    Primitive* srcPrim, s32 iterations, Primitive* dstPrim, u8* dataPtr);
 #endif
 
 void DestroyEntity(Entity*);
