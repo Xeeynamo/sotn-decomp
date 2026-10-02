@@ -7180,7 +7180,7 @@
 | main       | sceGupSetStatus                   |      170 |         25 | Yes    |       |     |
 | bo0        | func_us_801AC54C                  |      170 |         28 |        |       |     |
 | no2        | func_pspeu_09255EF0               |      170 |         28 |        |       |     |
-| rno2       | func_us_801AC54C_from_bo0         |      170 |         28 |        |       |     |
+| rno2       | EntityBreakableWallBackside       |      170 |         28 |        |       |     |
 | dra        | func_psp_09102898                 |      170 |         34 |        |       |     |
 | no0        | func_pspeu_0925D3D0               |      171 |          3 |        |       |     |
 | nz1        | func_pspeu_09259B28               |      171 |         17 |        |       |     |
@@ -9305,7 +9305,7 @@
 | top        | func_pspeu_092406A0               |      583 |         67 | Yes    |       |     |
 | wrp        | func_psp_0923E270                 |      583 |         67 | Yes    |       |     |
 | dra        | func_psp_090EFA00                 |      584 |         77 | Yes    |       |     |
-| rno2       | func_us_801B5FB8_from_no2         |      587 |         63 | Yes    |       |     |
+| rno2       | EntityBreakableWall               |      587 |         63 | Yes    |       |     |
 | ric        | func_pspeu_092B1CD0               |      590 |         56 |        |       |     |
 | rno0       | func_pspeu_09241668               |      591 |         87 |        |       |     |
 | main       | func_psp_08921D44                 |      592 |         80 |        |       |     |
