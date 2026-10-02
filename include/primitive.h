@@ -230,7 +230,6 @@ typedef struct EntranceCascadePrim {
     /* 0x30 */ s16 : 16;
     /* 0x32 */ u16 drawMode;
 } EntranceCascadePrim; /* size=0x34 */
-#endif
 
 typedef struct FrozenShadePrim {
     /* 0x00 */ struct FrozenShadePrim* next;
@@ -365,3 +364,5 @@ STATIC_ASSERT(sizeof(Primitive) == sizeof(AxePrim), "unaligned");
 STATIC_ASSERT(sizeof(Primitive) == sizeof(EntranceCascadePrim), "unaligned");
 STATIC_ASSERT(sizeof(Primitive) == sizeof(FrozenShadePrim), "unaligned");
 STATIC_ASSERT(sizeof(Primitive) == sizeof(NumericPrim), "unaligned");
+
+#endif // PRIMITIVE_H
