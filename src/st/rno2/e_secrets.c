@@ -359,10 +359,16 @@ void EntityBreakableWall(Entity* self) {
     }
 }
 
-// The same breakable wall as above, but as it exists in the opposite room.
-// But it is not possible to get into that room without breaking the wall.
-// Perhaps this corridor was supposed to lead somewhere else, and possible to
-// access from either end originally?
+// Okay this entity represents "an unreasonable level of attention to detail"
+// in terms of the decoration in the game. So notice the last portion of the
+// above wall: In STEP_FINALIZE, its broken pieces bounce around for a bit, and
+// after a specified time, the |= 2 bit is set, to indicate that the rocks are
+// done bouncing. Yeah, cool. If you walk through the newly-opened wall into
+// the next room, this entity will be in the door you're walking through, and
+// will produce broken pieces that fall into the new room. But only if that
+// |= 2 bit is not set! So the logic says "If the pieces are still falling, and
+// the player walks into the next room, produce the pieces in there too."
+// Again, excessive detail that nobody would normally ever notice. But neat!
 void EntityBreakableWallBackside(Entity* self) {
     Primitive* prim;
     s32 primIndex;
