@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#include "bo0_entity.h"
 #include <stage.h>
 
 #define STAGE_IS_NO2
