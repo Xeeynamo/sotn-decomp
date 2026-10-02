@@ -144,7 +144,7 @@ void func_801CDAC8(Entity* ent1, Entity* ent2) {
     ent2->ext.GH_Props.unkA4 = ratan2(-ratanX, ratanY);
 }
 
-bool func_801CDC80(s16* arg0, s16 arg1, s16 arg2) {
+int func_801CDC80(s16* arg0, s16 arg1, s16 arg2) {
     if (abs(*arg0 - arg1) < arg2) {
         *arg0 = arg1;
         return true;
