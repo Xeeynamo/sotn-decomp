@@ -115,7 +115,7 @@ static void BrokenPiecePhysics(Primitive* prim) {
         prim->v2 = prim->v3 = 0xD8;
         prim->priority = 0x6A;
         prim->drawMode = DRAW_UNK02;
-        LOW(prim->next->u0) = FIX(-7.0/8) - ((Random() & 7) << 0xE);
+        LOW(prim->next->u0) = FIX(-7.0 / 8) - ((Random() & 7) << 0xE);
         LOW(prim->next->r1) = FIX(-1.5) - ((Random() & 7) << 0xD);
         LOH(prim->next->r2) = LOH(prim->next->b2) = ((Random() & 3) * 2) + 8;
         if (LOW(prim->next->u0) < 0) {
@@ -437,8 +437,8 @@ void EntityBreakableWallBackside(Entity* self) {
 // arc and fly out. This does physics for that (velocieies, accelerations, etc)
 // Strangely, I don't seem to actually physically see any such pixels.
 // And nop-ing out this function doesn't visually change the breaking effect.
-// It is possible something is misconfigured here so that the pixels do not render.
-// Compare to DoorCascadePhysics.
+// It is possible something is misconfigured here so that the pixels do not
+// render. Compare to DoorCascadePhysics.
 
 static void PixelPhysics(Primitive* prim) {
     s32 x, y;
@@ -454,6 +454,7 @@ static void PixelPhysics(Primitive* prim) {
         prim->y0 = g_CurrentEntity->posY.i.hi + 8;
         prim->x1 = 0;
         prim->y1 = 0;
+        // These are randomized initial velocities.
         LOW(prim->x2) = 0x7000 - ((Random() & 7) << 0xD);
         LOW(prim->x3) = 0x7000 - ((Random() & 7) << 0xD);
         prim->g3 = 1;
@@ -472,9 +473,10 @@ static void PixelPhysics(Primitive* prim) {
 #else
     y = (prim->y0 << 0x10) + prim->y1;
 #endif
-    y += LOW(prim->x3);
+    y += LOW(prim->x3); // Y velocity
     prim->y0 = HIH(y);
     prim->y1 = LOH(y);
+    // Apply gravity to the Y velocity
     LOW(prim->x3) += 0x2000;
     prim->r3 -= 1;
     if (!prim->r3) {
