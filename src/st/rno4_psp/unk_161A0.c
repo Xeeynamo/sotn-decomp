@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#include <ext/e_nova_skeleton.h>
 #include "../rno4/rno4.h"
 
 INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_161A0", TryShoot);
