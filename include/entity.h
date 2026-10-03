@@ -4129,23 +4129,6 @@ typedef struct {
 } ET_JackOBones;
 
 typedef struct {
-    /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ u8 movingLeft;
-    /* 0x81 */ u8 cooldown;
-    /* 0x82 */ u8 laserTimerIndex;
-    /* 0x83 */ u8 deathPartLife;
-    /* 0x84 */ s16 : 16;
-    /* 0x86 */ s16 laserTimer;
-    /* 0x88 */ u8 ringState;
-    /* 0x8A */ s16 : 16;
-    /* 0x8C */ s16 ringSize;
-    /* 0x8E */ s16 ringRot;
-    /* 0x90 */ s16 laserLength;
-    /* 0x92 */ s16 laserFadeTimer;
-    /* 0x94 */ u32 laserPulseDist;
-} ET_NovaSkeleton;
-
-typedef struct {
     /* 0x7C */ struct Entity* parent;
     /* 0x80 */ s16 stepTimer;
     /* 0x82 */ s16 : 16;
@@ -4817,7 +4800,6 @@ typedef union { // offset=0x7C
     ET_BladeSoldierDeathParts bladeSoldierDeathParts;
     ET_RdaiUnk33 rdaiUnk33;
     ET_JackOBones jackoBones;
-    ET_NovaSkeleton nova;
     ET_Orobourous orob;
     ET_Dodo dodo;
     ET_B0_Unk b0Unk;
