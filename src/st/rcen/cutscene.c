@@ -154,7 +154,7 @@ extern u32 D_894208C;
 extern u32 D_8942E0C;
 extern u32 D_8943B8C;
 extern u32 D_894490C;
-extern u32 D_pspeu_09260F58;
+extern u32 gfx_portrait_shaft;
 
 #include "../cutscene_actor_name.h"
 
@@ -606,7 +606,7 @@ void EntityCutscene(Entity* self) {
                             ptr = (u32)&D_894490C;
                             break;
                         case 10:
-                            ptr = (u32)&D_pspeu_09260F58;
+                            ptr = (u32)&gfx_portrait_shaft;
                             break;
                         }
 #else

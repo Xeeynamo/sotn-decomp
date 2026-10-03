@@ -98,11 +98,11 @@ EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
 
 // All Shaft related entities
-EInit g_EInitShaft = {ANIMSET_OVL(3), 0, 72, 512, 0x15F};
-EInit g_EInitShaftCrystalBall = {ANIMSET_OVL(3), 0, 72, 512, 0x005};
-EInit g_EInitShaftOrb = {ANIMSET_OVL(3), 0, 72, 512, 0x160};
-EInit g_EInitShaftFlame = {ANIMSET_DRA(14), 0, 121, 736, 0x161};
+EInit g_EInitShaft = {ANIMSET_OVL(3), 0, 72, 0x200, 0x15F};
+EInit g_EInitShaftCrystalBall = {ANIMSET_OVL(3), 0, 72, 0x200, 0x005};
+EInit g_EInitShaftOrb = {ANIMSET_OVL(3), 0, 72, 0x200, 0x160};
+EInit g_EInitShaftFlame = {ANIMSET_DRA(14), 0, 121, 0x2E0, 0x161};
 EInit g_EInitShaftLightningHitbox = {ANIMSET_DRA(0), 0, 0, 0, 0x162};
 
-EInit g_EInitElevator = {ANIMSET_OVL(12), 1, 72, 576, 0x005};
+EInit g_EInitElevator = {ANIMSET_OVL(12), 1, 72, 0x240, 0x005};
 // clang-format on
