@@ -112,10 +112,15 @@ static Weapon header = {
 #endif // !VERSION_PSP
 
 #ifdef VERSION_PC
-#include "../pc/stages/overlay.h"
+#include <psyz/module.h>
 #include <string.h>
 
-OVL_API void InitWeapon(Weapon* o) { memcpy(o, &header, sizeof(Weapon)); }
+void Psyz_ModuleStart(void* param) {
+    Weapon* o = param;
+    memcpy(o, &header, sizeof(Weapon));
+}
+
+void Psyz_ModuleStop(void) {}
 #endif
 
 #endif
