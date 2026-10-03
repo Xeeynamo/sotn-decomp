@@ -91,12 +91,12 @@ void EntityRealOlroxDrool(Entity* self) {
             if ((prim->y0 - prim->y1) > 8) {
                 prim->y0 = self->posY.i.hi;
                 prim->y1 = prim->y0 - 9;
-                entity = self->ext.olroxDrool.entity;
+                entity = self->ext.olroxDrool.parent;
                 offsetX = entity->posX.val;
                 offsetX -= self->ext.olroxDrool.velocityX;
                 self->posX.val += offsetX / 4;
             } else {
-                entity = self->ext.olroxDrool.entity;
+                entity = self->ext.olroxDrool.parent;
                 self->posX.i.hi = entity->posX.i.hi;
                 self->posY.i.hi = entity->posY.i.hi;
                 params = self->params;
@@ -118,7 +118,7 @@ void EntityRealOlroxDrool(Entity* self) {
         }
         prim->x0 = self->posX.i.hi;
         prim->x1 = self->posX.i.hi;
-        entity = self->ext.olroxDrool.entity;
+        entity = self->ext.olroxDrool.parent;
         self->ext.olroxDrool.velocityX = entity->posX.val;
         if (prim->y0 < prim->y1) {
             DestroyEntity(self);
