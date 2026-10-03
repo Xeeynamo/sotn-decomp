@@ -1222,48 +1222,47 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
-          - [0x40, sprite_banks, sprite_banks]
+          - [0x40, sprite_banks, us/sprite_banks]
           - [0xA0, paldef, palette_def]
           - [0xE8, layers, layers]
-          - [0x140, gfx_banks, graphics_banks]
+          - [0x140, gfx_banks, us/graphics_banks]
           - [0x2B0, layout, entity_layouts]
           - [0x458, skip]
           - [0x15A8, rooms, rooms]
           - [0x15D4, skip]
-          - [0x17A8, skip] # 0x520 unreferenced bytes, unrecognized
-          - [0x1CC8, cmpgfx, gfx_1CC8, 128, 128, 4]
-          - [0x200C, cmpgfx, gfx_200C, 128, 128, 4]
-          - [0x25B0, cmpgfx, gfx_25B0, 128, 128, 4]
-          - [0x2D80, cmpgfx, gfx_2D80, 128, 128, 4]
-          - [0x35E8, cmpgfx, gfx_35E8, 128, 128, 4]
-          - [0x4434, cmpgfx, gfx_4434, 128, 128, 4]
-          - [0x52CC, cmpgfx, gfx_52CC, 128, 128, 4]
-          - [0x5C74, cmpgfx, gfx_5C74, 128, 128, 4]
-          - [0x6784, cmpgfx, gfx_6784, 128, 128, 4]
-          - [0x6CA0, cmpgfx, gfx_6CA0, 128, 128, 4]
-          - [0x7504, cmpgfx, gfx_7504, 128, 128, 4]
-          - [0x80F0, cmpgfx, gfx_80F0, 128, 128, 4]
-          - [0x92D0, cmpgfx, gfx_92D0, 128, 128, 4]
-          - [0xA87C, cmpgfx, gfx_A87C, 128, 128, 4]
-          - [0xC190, cmpgfx, gfx_C190, 128, 128, 4]
-          - [0xC4FC, cmpgfx, gfx_C4FC, 128, 128, 4]
-          - [0xC920, cmpgfx, gfx_C920, 128, 128, 4]
-          - [0xCCDC, cmpgfx, gfx_CCDC, 128, 128, 4]
-          - [0xD688, cmpgfx, gfx_D688, 128, 128, 4]
-          - [0xE580, cmpgfx, gfx_E580, 128, 128, 4]
-          - [0xEC70, rawgfx, gfx_EC70, 48, 72, 8] # guessed: unreferenced, size fits 48x72 8bpp
-          - [0xF9F0, rawgfx, gfx_F9F0, 48, 72, 8] # guessed: unreferenced, size fits 48x72 8bpp
-          - [0x10770, cmpgfx, gfx_10770, 128, 128, 4]
-          - [0x114CC, palette, pal_114CC, 16] # 0x2E0
-          - [0x116CC, palette, pal_116CC, 16] # guessed: unused, no palette def refers to it
-          - [0x1178C, palette, pal_1178C, 16] # 0x200
-          - [0x1198C, palette, pal_1198C, 16] # 0x210
-          - [0x11A8C, palette, pal_11A8C, 16] # guessed: unused, no palette def refers to it
-          - [0x11B8C, palette, pal_11B8C, 16] # 0x218
-          - [0x11C8C, palette, pal_11C8C, 16] # guessed: unused, no palette def refers to it
-          - [0x11D8C, palette, pal_11D8C, 16] # 0x240
-          - [0x11DCC, skip] # 0x5C20 unreferenced bytes, unrecognized
-          - [0x179EC, skip]
+          - [0x17AC, cutscene, cutscene_script_psx]
+          - [0x1CBB, cutscene_events, cutscene_events]
+          - [0x1CC8, cmpgfx, gfx_stage_name_jp_sm, 128, 128, 4] # unused
+          - [0x200C, cmpgfx, gfx_stage_name_jp_lg, 128, 128, 4] # unused
+          - [0x25B0, cmpgfx, gfx_shaft_orb_1, 128, 128, 4, 0x1178C]
+          - [0x2D80, cmpgfx, gfx_shaft_orb_2, 128, 128, 4, 0x1178C]
+          - [0x35E8, cmpgfx, gfx_shaft_orb_3, 128, 128, 4, 0x1178C]
+          - [0x4434, cmpgfx, gfx_shaft_orb_4, 128, 128, 4, 0x1178C]
+          - [0x52CC, cmpgfx, gfx_shaft_orb_5, 128, 128, 4, 0x1178C]
+          - [0x5C74, cmpgfx, gfx_shaft_1, 128, 128, 4, 0x1178C]
+          - [0x6784, cmpgfx, gfx_shaft_2, 128, 128, 4, 0x1178C]
+          - [0x6CA0, cmpgfx, gfx_shaft_3, 128, 128, 4, 0x1178C]
+          - [0x7504, cmpgfx, gfx_shaft_4, 128, 128, 4, 0x1178C]
+          - [0x80F0, cmpgfx, gfx_shaft_crystal_ball_1, 128, 128, 4, 0x1178C]
+          - [0x92D0, cmpgfx, gfx_shaft_crystal_ball_2, 128, 128, 4, 0x1178C]
+          - [0xA87C, cmpgfx, gfx_shaft_crystal_ball_3, 128, 128, 4, 0x1178C]
+          - [0xC190, cmpgfx, gfx_shaft_meridian_ring_1, 128, 128, 4]
+          - [0xC4FC, cmpgfx, gfx_shaft_meridian_ring_2, 128, 128, 4]
+          - [0xC920, cmpgfx, gfx_shaft_meridian_ring_3, 128, 128, 4]
+          - [0xCCDC, cmpgfx, gfx_explosion_1, 128, 128, 4, 0x114CC]
+          - [0xD688, cmpgfx, gfx_explosion_2, 128, 128, 4, 0x114CC]
+          - [0xE580, cmpgfx, gfx_explosion_3, 128, 128, 4, 0x114CC]
+          - [0xEC70, rawgfx, gfx_portrait_alucard, 48, 72, 8, 0x1198C]
+          - [0xF9F0, rawgfx, gfx_portrait_shaft, 48, 72, 8, 0x11B8C]
+          - [0x10770, cmpgfx, gfx_elevator, 128, 128, 4, 0x11D8C]
+          - [0x114CC, palette, pal_flame, 16] # 0x2E0 / 0x2E4 / 0x2E7
+          - [0x1178C, palette, pal_shaft, 16] # 0x200
+          - [0x1198C, palette, pal_portrait_alucard, 16] # 0x210
+          - [0x11B8C, palette, pal_portrait_shaft, 16] # 0x218
+          - [0x11D8C, palette, pal_elevator, 16] # 0x240
+          - [0x11DCC, skip]
+          - [0x135CC, tiledef, rload] # 0x100 tiles per section
+          - [0x139DC, skip]
   - target: disks/us/ST/RCHI/RCHI.BIN
     asset_path: assets/st/rchi
     src_path: src/st/rchi

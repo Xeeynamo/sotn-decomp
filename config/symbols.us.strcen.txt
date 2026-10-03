@@ -1,10 +1,1 @@
-spriteBanks = 0x80180040;
-cluts = 0x801800E4;
-rooms_layers = 0x80180128;
-gfxBanks = 0x80180268;
-entityLayoutHorizontal = 0x801802B0;
-entityLayoutVertical = 0x80180384;
-BackgroundBlockInit = 0x801805BC;
-g_RedDoorTiles = 0x801805E4;
-rooms = 0x801815A8;
-cutscene_script = 0x801817AC;
+

@@ -900,6 +900,12 @@ files:
         vram: 0x09237700
         assets:
           - [0x80, skip]
+          - [0x1A320, sprite_banks, psp/sprite_banks]
+          - [0x1A380, layers, layers]
+          - [0x1A3C8, paldef, palette_def]
+          - [0x1A418, gfx_banks, psp/graphics_banks]
+          - [0x1A570, skip]
+          - [0x1A720, rooms, rooms]
           - [0x1A750, cutscene, cutscene_script_pre_fight_it]
           - [0x1AC28, cutscene, cutscene_script_pre_fight_sp]
           - [0x1B068, cutscene, cutscene_script_pre_fight_fr]
@@ -911,6 +917,33 @@ files:
           - [0x1C1D8, cutscene, cutscene_script_post_fight_ge]
           - [0x1C320, cutscene, cutscene_script_post_fight_en]
           - [0x1C420, skip]
+          - [0x1C470, cmpgfx, gfx_shaft_orb_1, 128, 128, 4, 0x2B678]
+          - [0x1CC40, cmpgfx, gfx_shaft_orb_2, 128, 128, 4, 0x2B678]
+          - [0x1D4A8, cmpgfx, gfx_shaft_orb_3, 128, 128, 4, 0x2B678]
+          - [0x1E2F8, cmpgfx, gfx_shaft_orb_4, 128, 128, 4, 0x2B678]
+          - [0x1F190, cmpgfx, gfx_shaft_orb_5, 128, 128, 4, 0x2B678]
+          - [0x1FB38, cmpgfx, gfx_shaft_1, 128, 128, 4, 0x2B678]
+          - [0x20648, cmpgfx, gfx_shaft_2, 128, 128, 4, 0x2B678]
+          - [0x20B68, cmpgfx, gfx_shaft_3, 128, 128, 4, 0x2B678]
+          - [0x213D0, cmpgfx, gfx_shaft_4, 128, 128, 4, 0x2B678]
+          - [0x21FC0, cmpgfx, gfx_shaft_crystal_ball_1, 128, 128, 4, 0x2B678]
+          - [0x231A0, cmpgfx, gfx_shaft_crystal_ball_2, 128, 128, 4, 0x2B678]
+          - [0x24750, cmpgfx, gfx_shaft_crystal_ball_3, 128, 128, 4, 0x2B678]
+          - [0x26068, cmpgfx, gfx_shaft_meridian_ring_1, 128, 128, 4]
+          - [0x263D8, cmpgfx, gfx_shaft_meridian_ring_2, 128, 128, 4]
+          - [0x26800, cmpgfx, gfx_shaft_meridian_ring_3, 128, 128, 4]
+          - [0x26BC0, cmpgfx, gfx_explosion_1, 128, 128, 4, 0x2B3B8]
+          - [0x27570, cmpgfx, gfx_explosion_2, 128, 128, 4, 0x2B3B8]
+          - [0x28468, cmpgfx, gfx_explosion_3, 128, 128, 4, 0x2B3B8]
+          - [0x28B58, rawgfx, gfx_portrait_alucard, 48, 72, 8, 0x2B878]
+          - [0x298D8, rawgfx, gfx_portrait_shaft, 48, 72, 8, 0x2BA78]
+          - [0x2A658, cmpgfx, gfx_elevator, 128, 128, 4, 0x2BC78]
+          - [0x2B3B8, palette, pal_flame, 16] # 0x2E0 / 0x2E4 / 0x2E7
+          - [0x2B678, palette, pal_shaft, 16] # 0x200
+          - [0x2B878, palette, pal_portrait_alucard, 16] # 0x210
+          - [0x2BA78, palette, pal_portrait_shaft, 16] # 0x218
+          - [0x2BC78, palette, pal_elevator, 16] # 0x240
+          - [0x2BCB8, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rchi.bin
     asset_path: assets/st/rchi
     src_path: src/st/rchi
