@@ -1604,7 +1604,7 @@
 | rare       | func_pspeu_0924B6E8               |       27 |          1 |        |       |     |
 | rno0       | func_pspeu_092547F0               |       27 |          1 |        |       |     |
 | rno1       | func_pspeu_092386A8               |       27 |          1 |        |       |     |
-| rno2       | UnkPolyFunc0                      |       27 |          1 |        |       |     |
+| rno2       | func_pspeu_09251550               |       27 |          1 |        |       |     |
 | top        | func_pspeu_09248140               |       27 |          1 |        |       |     |
 | bo0        | Ratan2Shifted                     |       27 |          2 |        |       |     |
 | main       | gte_avsz4                         |       27 |          2 |        |       |     |
@@ -1833,7 +1833,7 @@
 | np3        | func_pspeu_09262388               |       29 |          5 |        |       |     |
 | rcat       | func_pspeu_0924A7F0               |       29 |          5 |        |       |     |
 | rchi       | FindFirstUnkPrim                  |       29 |          5 |        |       |     |
-| rno2       | FindFirstUnkPrim                  |       29 |          5 |        |       |     |
+| rno2       | func_pspeu_092512D8               |       29 |          5 |        |       |     |
 | rno3       | func_pspeu_09251B38               |       29 |          5 |        |       |     |
 | rno4       | FindFirstUnkPrim                  |       29 |          5 |        |       |     |
 | rnz0       | func_pspeu_09254700               |       29 |          5 |        |       |     |
@@ -1937,7 +1937,7 @@
 | rlib       | func_pspeu_09246620               |       31 |          2 |        |       |     |
 | rno0       | func_pspeu_09254788               |       31 |          2 |        |       |     |
 | rno1       | func_pspeu_09247E58               |       31 |          2 |        |       |     |
-| rno2       | UnkPolyFunc2                      |       31 |          2 |        |       |     |
+| rno2       | func_pspeu_092514E8               |       31 |          2 |        |       |     |
 | rno3       | func_pspeu_09251C90               |       31 |          2 |        |       |     |
 | rno4       | UnkPolyFunc2                      |       31 |          2 |        |       |     |
 | rnz0       | func_pspeu_09254940               |       31 |          2 |        |       |     |
@@ -3887,7 +3887,7 @@
 | nz0        | func_pspeu_09256D78               |       59 |         11 |        |       |     |
 | rare       | func_pspeu_0924B4C0               |       59 |         11 |        |       |     |
 | rno0       | func_pspeu_092545C8               |       59 |         11 |        |       |     |
-| rno2       | FindFirstUnkPrim2                 |       59 |         11 |        |       |     |
+| rno2       | func_pspeu_09251328               |       59 |         11 |        |       |     |
 | dra        | func_psp_090F9F20                 |       59 |         14 |        |       |     |
 | main       | func_psp_08930A1C                 |       59 |         15 |        |       |     |
 | dra        | 692E8.rodata                      |       60 |          0 | Yes    |       |     |
@@ -5172,7 +5172,7 @@
 | bo6        | func_pspeu_0924A448               |       84 |          8 |        |       |     |
 | main       | rcos                              |       84 |         10 |        |       |     |
 | main       | rsin                              |       84 |         10 |        |       |     |
-| rno4       | func_us_801C81C8                  |       84 |         10 |        |       |     |
+| rno4       | func_pspeu_092594A8               |       84 |         10 |        |       |     |
 | rbo7       | func_us_80195D04                  |       84 |         13 |        |       |     |
 | dra        | func_psp_090E73D0                 |       84 |         13 |        |       |     |
 | main       | func_psp_0892A9EC                 |       84 |         16 |        |       |     |
@@ -6750,7 +6750,7 @@
 | main       | PutDrawEnv                        |      135 |          3 |        |       |     |
 | bo0        | func_pspeu_092507C0               |      135 |          5 |        |       |     |
 | no2        | func_pspeu_09256148               |      135 |          5 |        |       |     |
-| rno2       | func_us_801B6794                  |      135 |          5 |        |       |     |
+| rno2       | func_pspeu_09252A58               |      135 |          5 |        |       |     |
 | dra        | func_psp_0911B630                 |      135 |         12 |        |       |     |
 | dra        | func_psp_09134B20                 |      135 |         13 |        |       |     |
 | bo2        | EntityBossTorch                   |      135 |         17 |        |       |     |
@@ -7180,7 +7180,7 @@
 | main       | sceGupSetStatus                   |      170 |         25 | Yes    |       |     |
 | bo0        | func_us_801AC54C                  |      170 |         28 |        |       |     |
 | no2        | func_pspeu_09255EF0               |      170 |         28 |        |       |     |
-| rno2       | EntityBreakableWallBackside       |      170 |         28 |        |       |     |
+| rno2       | func_pspeu_09252800               |      170 |         28 |        |       |     |
 | dra        | func_psp_09102898                 |      170 |         34 |        |       |     |
 | no0        | func_pspeu_0925D3D0               |      171 |          3 |        |       |     |
 | nz1        | func_pspeu_09259B28               |      171 |         17 |        |       |     |
@@ -7760,7 +7760,7 @@
 | rnz0       | func_pspeu_092562F0               |      236 |         16 |        |       |     |
 | main       | func_psp_0891BCA0                 |      236 |         29 |        |       |     |
 | lib        | func_psp_09253498                 |      236 |         29 |        |       |     |
-| rno4       | func_us_801D68E0                  |      236 |         29 |        |       |     |
+| rno4       | func_pspeu_0923E200               |      236 |         29 |        |       |     |
 | ric        | func_pspeu_092AFDA8               |      236 |         46 |        |       |     |
 | nz0        | func_pspeu_0923BBE8               |      237 |         16 |        |       |     |
 | main       | sceGupClear                       |      237 |         17 |        |       |     |
@@ -7847,7 +7847,7 @@
 | rlib       | func_us_801BAF60_from_lib         |      247 |         35 |        |       |     |
 | main       | func_psp_08933F7C                 |      248 |         17 |        |       |     |
 | rno3       | func_pspeu_092577B8               |      248 |         31 |        |       |     |
-| rno4       | func_us_801D58FC                  |      248 |         33 |        |       |     |
+| rno4       | func_pspeu_09250E30               |      248 |         33 |        |       |     |
 | no4        | func_pspeu_092391D8               |      248 |         34 |        |       |     |
 | nz1        | func_pspeu_0925A958               |      248 |         36 |        |       |     |
 | top        | func_pspeu_0924AE50               |      248 |         37 |        |       |     |
@@ -8410,7 +8410,7 @@
 | rlib       | func_pspeu_09246018               |      338 |         36 |        |       |     |
 | rno0       | func_pspeu_092540C8               |      338 |         36 |        |       |     |
 | rno1       | func_pspeu_09247850               |      338 |         36 |        |       |     |
-| rno2       | UnkPrimHelper                     |      338 |         36 |        |       |     |
+| rno2       | func_pspeu_09250B58               |      338 |         36 |        |       |     |
 | rno3       | func_pspeu_09251638               |      338 |         36 |        |       |     |
 | rno4       | func_pspeu_09251440               |      338 |         36 |        |       |     |
 | rnz0       | func_pspeu_09253F80               |      338 |         36 |        |       |     |
@@ -8464,7 +8464,7 @@
 | rno2       | func_pspeu_0923B578               |      351 |         12 |        |       |     |
 |            | func_092E91A8                     |      351 |         21 |        |       |     |
 | nz1        | func_pspeu_092386A8               |      351 |         27 |        |       |     |
-| rno4       | func_us_801C5EE4                  |      351 |         34 |        |       |     |
+| rno4       | func_pspeu_092567F8               |      351 |         34 |        |       |     |
 | rdai       | func_us_801C0528                  |      351 |         42 |        |       |     |
 | rdai       | func_us_801C0898                  |      351 |         47 |        |       |     |
 | no3        | func_pspeu_0925E610               |      352 |         30 |        |       |     |
@@ -9025,7 +9025,7 @@
 | rno3       | func_pspeu_092417C8               |      480 |         31 |        |       |     |
 | bo0        | func_us_801AC894                  |      480 |         66 |        |       |     |
 | bo3        | func_us_801A5948                  |      480 |         68 | Yes    |       |     |
-| rno4       | func_us_801C5364                  |      481 |         41 |        |       |     |
+| rno4       | func_pspeu_092555A8               |      481 |         41 |        |       |     |
 | dra        | StoreSaveData                     |      481 |         49 |        |       |     |
 | rdai       | func_pspeu_0924C4C8               |      482 |         32 | Yes    |       |     |
 | dra        | func_psp_09124108                 |      482 |         41 |        |       |     |
@@ -9040,7 +9040,7 @@
 | no4        | func_pspeu_0923B378               |      485 |         30 |        |       |     |
 | rno4       | EntityBoatElevatorChains          |      485 |         30 |        |       |     |
 | no2        | func_pspeu_09256348               |      486 |         67 |        |       |     |
-| rno2       | EntityStoneBridgeSecret           |      486 |         67 |        |       |     |
+| rno2       | func_pspeu_09252C58               |      486 |         67 |        |       |     |
 | maria      | func_pspeu_092B7010               |      487 |         42 |        |       |     |
 | ric        | func_pspeu_092C02B8               |      487 |         42 |        |       |     |
 | cen        | func_pspeu_09247FA0               |      487 |         42 |        |       |     |
@@ -9305,7 +9305,7 @@
 | top        | func_pspeu_092406A0               |      583 |         67 | Yes    |       |     |
 | wrp        | func_psp_0923E270                 |      583 |         67 | Yes    |       |     |
 | dra        | func_psp_090EFA00                 |      584 |         77 | Yes    |       |     |
-| rno2       | EntityBreakableWall               |      587 |         63 | Yes    |       |     |
+| rno2       | func_pspeu_09251FC0               |      587 |         63 | Yes    |       |     |
 | ric        | func_pspeu_092B1CD0               |      590 |         56 |        |       |     |
 | rno0       | func_pspeu_09241668               |      591 |         87 |        |       |     |
 | main       | func_psp_08921D44                 |      592 |         80 |        |       |     |
@@ -9346,7 +9346,7 @@
 | ric        | func_pspeu_092BA5F8               |      624 |         46 | Yes    |       |     |
 | bo3        | func_us_801A365C                  |      625 |        121 | Yes    |       |     |
 | rdai       | func_us_801B3368                  |      626 |         34 |        |       |     |
-| rno2       | func_us_801B59C4                  |      626 |         54 |        |       |     |
+| rno2       | func_pspeu_09251678               |      626 |         54 |        |       |     |
 | bo6        | func_pspeu_09268448               |      628 |         48 |        |       |     |
 | rbo0       | func_pspeu_0923CA38               |      629 |         77 |        |       |     |
 | lib        | func_psp_0923CFC0                 |      630 |        109 | Yes    |       |     |
