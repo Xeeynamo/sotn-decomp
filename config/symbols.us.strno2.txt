@@ -4,7 +4,6 @@ g_EInitKarasuman = 0x8018091C;
 g_EInitFlyingZombieHalf2 = 0x80180958;
 g_EInitFlyingZombieHalf1 = 0x80180964;
 g_EInitGhostDancer = 0x80180988;
-g_Unk2EAnim = 0x80181C78;
 g_KarasumanRavenAbsorbAnim = 0x80181D8C;
 rooms = 0x80182390;
 g_Rno2DrawEnvClip = 0x801B1C4C;

@@ -17,10 +17,10 @@ static AnimateEntityFrame anim_idle[] = {
     {3, 1}, {5, 2}, {5, 3}, {3, 4},      {3, 5},
     {5, 6}, {5, 7}, {3, 8}, POSE_LOOP(0)};
 // Standing, leans backward with arms outstretched
-static AnimateEntityFrame anim_charge[] = {
+static AnimateEntityFrame anim_gloat_init[] = {
     {2, 9}, {3, 10}, {3, 9}, {3, 11}, {3, 12}, {4, 13}, {3, 14}, POSE_END};
 // Quick pulsing effect, stays leaned back but sort of shaking with energy
-static AnimateEntityFrame anim_charging[] = {{2, 13}, {2, 14}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_gloating[] = {{2, 13}, {2, 14}, POSE_LOOP(0)};
 static AnimateEntityFrame anim_flying[] = {
     {6, 26}, {6, 27}, {6, 28}, {6, 29}, POSE_LOOP(0)};
 static AnimateEntityFrame anim_liftoff[] = {
@@ -35,17 +35,17 @@ static AnimateEntityFrame anim_skull_hexagram_spawn[] = {
 static AnimateEntityFrame anim_skull_hexagram_flash[] = {
     {1, 43}, {1, 44}, POSE_LOOP(0)};
 
-typedef enum{
+typedef enum {
     MAL_INIT,
     MAL_INIT_WAIT,
     MAL_IDLE,
     MAL_FLY,
     MAL_4_UNUSED, // does not exist at all
-    MAL_5,
+    MAL_HOP,
     MAL_SWIPE,
-    MAL_7,
-    MAL_8,
-    MAL_9,
+    MAL_SHOOT,
+    MAL_8_UNUSED, // does not exist at all
+    MAL_GLOAT,
     MAL_DEAD
 } MalachiSteps;
 
@@ -62,22 +62,22 @@ void EntityMalachi(Entity* self) {
     Primitive* prim;
 
     if ((g_Player.status & PLAYER_STATUS_DEAD) && (self->step < 9)) {
-        SetStep(MAL_9);
+        SetStep(MAL_GLOAT);
     }
     if ((self->flags & FLAG_DEAD) && (self->step < 10)) {
         self->hitboxState = 0;
         SetStep(MAL_DEAD);
     }
-    if (self->ext.malachi.unk82) {
-        self->ext.malachi.unk82--;
+    if (self->ext.malachi.shootCooldown) {
+        self->ext.malachi.shootCooldown--;
     }
     switch (self->step) {
     case MAL_INIT:
         InitializeEntity(g_EInitMalachi);
         other = self + 1;
         CreateEntityFromCurrentEntity(E_MALACHI_SHOOTER, other);
-        self->ext.malachi.unk88 = self->hitPoints;
-        self->ext.malachi.unk88 /= 2;
+        self->ext.malachi.halfHP = self->hitPoints;
+        self->ext.malachi.halfHP /= 2;
         /* fallthrough */
     case MAL_INIT_WAIT:
         if (UnkCollisionFunc3(sensors2) & 1) {
@@ -87,28 +87,28 @@ void EntityMalachi(Entity* self) {
         break;
     case MAL_IDLE:
         if (!self->step_s) {
-            self->ext.malachi.unk80 = 0x40;
+            self->ext.malachi.timer = 0x40;
             self->step_s++;
-            if (self->hitPoints < self->ext.malachi.unk88) {
+            if (self->hitPoints < self->ext.malachi.halfHP) {
                 self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-                self->ext.malachi.unk80 = 0x20;
+                self->ext.malachi.timer = 0x20;
             }
         }
         AnimateEntity(anim_idle, self);
-        self->ext.malachi.unk80--;
-        if (self->hitPoints < self->ext.malachi.unk88) {
+        self->ext.malachi.timer--;
+        if (self->hitPoints < self->ext.malachi.halfHP) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            if (!self->ext.malachi.unk80) {
-                SetStep(MAL_5);
+            if (!self->ext.malachi.timer) {
+                SetStep(MAL_HOP);
             }
         } else {
-            if (self->ext.malachi.unk80 == 0x20) {
+            if (self->ext.malachi.timer == 0x20) {
                 self->facingLeft ^= 1;
             }
             if (self->facingLeft == ((GetSideToPlayer() & 1) ^ 1)) {
                 SetStep(MAL_FLY);
             }
-            if (!self->ext.malachi.unk80) {
+            if (!self->ext.malachi.timer) {
                 self->step_s = 0;
             }
         }
@@ -117,7 +117,7 @@ void EntityMalachi(Entity* self) {
         switch (self->step_s) {
         case 0:
             if (AnimateEntity(anim_liftoff, self) == 0) {
-                self->ext.malachi.unk9C =
+                self->ext.malachi.flightHeight =
                     (self->posY.i.hi + g_Tilemap.scrollY.i.hi) - 0x20;
                 SetSubStep(1);
             }
@@ -132,7 +132,7 @@ void EntityMalachi(Entity* self) {
             MoveEntity();
             self->velocityY += FIX(0.1875);
             yVar = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
-            yVar -= self->ext.malachi.unk9C;
+            yVar -= self->ext.malachi.flightHeight;
             if ((yVar <= 0) || (self->velocityY > 0)) {
                 self->step_s++;
             }
@@ -143,9 +143,9 @@ void EntityMalachi(Entity* self) {
                 PlaySfxPositional(SFX_WING_FLAP_A);
             }
             yVar = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
-            yVar -= self->ext.malachi.unk9C;
+            yVar -= self->ext.malachi.flightHeight;
             if (yVar == 0) {
-                self->ext.malachi.unk80 = 0x80;
+                self->ext.malachi.timer = 0x80;
                 self->velocityY = 0;
                 self->step_s++;
             } else if (yVar < 0) {
@@ -168,16 +168,16 @@ void EntityMalachi(Entity* self) {
             } else {
                 self->velocityX = FIX(-0.75);
             }
-            if (!self->ext.malachi.unk82) {
-                SetStep(MAL_7);
-                self->ext.malachi.unk85 = 1;
+            if (!self->ext.malachi.shootCooldown) {
+                SetStep(MAL_SHOOT);
+                self->ext.malachi.fly_to_shoot = 1;
             }
-            if (!self->ext.malachi.unk80) {
+            if (!self->ext.malachi.timer) {
                 if (coll == 1) {
                     SetSubStep(5);
                 }
             } else {
-                self->ext.malachi.unk80--;
+                self->ext.malachi.timer--;
             }
             break;
         case 5:
@@ -188,9 +188,9 @@ void EntityMalachi(Entity* self) {
             break;
         case 6:
             if (AnimateEntity(anim_landing, self) == 0) {
-                if (!self->ext.malachi.unk82) {
-                    SetStep(MAL_7);
-                    self->ext.malachi.unk85 = 0;
+                if (!self->ext.malachi.shootCooldown) {
+                    SetStep(MAL_SHOOT);
+                    self->ext.malachi.fly_to_shoot = 0;
                 } else {
                     SetStep(MAL_IDLE);
                 }
@@ -198,7 +198,7 @@ void EntityMalachi(Entity* self) {
             break;
         }
         break;
-    case MAL_5:
+    case MAL_HOP:
         switch (self->step_s) {
         case 0:
             if (self->facingLeft) {
@@ -215,10 +215,10 @@ void EntityMalachi(Entity* self) {
             self->velocityY += FIX(0.1875);
             if (self->velocityY > 0) {
                 self->step_s++;
-                if (!self->ext.malachi.unk84) {
-                    self->ext.malachi.unk84 = 2;
+                if (!self->ext.malachi.hopTimer) {
+                    self->ext.malachi.hopTimer = 2;
                 } else {
-                    self->ext.malachi.unk84--;
+                    self->ext.malachi.hopTimer--;
                 }
             }
             break;
@@ -232,9 +232,9 @@ void EntityMalachi(Entity* self) {
             if (AnimateEntity(anim_landing, self) == 0) {
                 self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
                 SetSubStep(0);
-                if (!self->ext.malachi.unk82) {
-                    SetStep(MAL_7);
-                    self->ext.malachi.unk85 = 0;
+                if (!self->ext.malachi.shootCooldown) {
+                    SetStep(MAL_SHOOT);
+                    self->ext.malachi.fly_to_shoot = 0;
                 }
                 if (GetDistanceToPlayerX() < 0x48) {
                     SetStep(MAL_SWIPE);
@@ -248,7 +248,7 @@ void EntityMalachi(Entity* self) {
             SetStep(MAL_IDLE);
         }
         break;
-    case MAL_7:
+    case MAL_SHOOT:
         switch (self->step_s) {
         case 0:
             // Grab our attached EnittyMalachiShooter and set it to shoot
@@ -257,21 +257,21 @@ void EntityMalachi(Entity* self) {
             other->step = 2;
             other->pose = 0;
             other->poseTimer = 0;
-            self->ext.malachi.unk80 = 0x80;
+            self->ext.malachi.timer = 0x80;
             PlaySfxPositional(SFX_MAGIC_NOISE_SWEEP);
             self->step_s++;
             /* fallthrough */
         case 1:
-            if (self->ext.malachi.unk85) {
+            if (self->ext.malachi.fly_to_shoot) {
                 AnimateEntity(anim_flying, self);
                 if (!self->poseTimer && self->pose == 1) {
                     PlaySfxPositional(SFX_WING_FLAP_A);
                 }
             }
-            if (!--self->ext.malachi.unk80) {
-                self->ext.malachi.unk82 = 0x180;
+            if (!--self->ext.malachi.timer) {
+                self->ext.malachi.shootCooldown = 0x180;
                 SetStep(MAL_IDLE);
-                if (self->ext.malachi.unk85) {
+                if (self->ext.malachi.fly_to_shoot) {
                     SetStep(MAL_FLY);
                     self->step_s = 5;
                 }
@@ -279,7 +279,7 @@ void EntityMalachi(Entity* self) {
             break;
         }
         break;
-    case MAL_9:
+    case MAL_GLOAT:
         switch (self->step_s) {
         case 0:
             if (UnkCollisionFunc3(sensors2) & 1) {
@@ -287,12 +287,12 @@ void EntityMalachi(Entity* self) {
             }
             break;
         case 1:
-            if (AnimateEntity(anim_charge, self) == 0) {
+            if (AnimateEntity(anim_gloat_init, self) == 0) {
                 SetSubStep(2);
             }
             break;
         case 2:
-            AnimateEntity(anim_charging, self);
+            AnimateEntity(anim_gloating, self);
             if ((g_Player.status & PLAYER_STATUS_DEAD) == 0) {
                 SetStep(MAL_IDLE);
             }
@@ -356,7 +356,7 @@ void EntityMalachi(Entity* self) {
             }
             prim->drawMode = DRAW_UNK_800;
             prim = prim->next;
-            self->ext.malachi.primA4 = prim;
+            self->ext.malachi.deathPrim = prim;
             if (self->params) {
                 yVar = 0xFF;
             } else {
@@ -439,25 +439,25 @@ void EntityMalachi(Entity* self) {
             }
             prim->drawMode = DRAW_DEFAULT;
             prim = prim->next; // pointless since we never access it after this
-            self->ext.malachi.unk9C = 0x28;
-            self->ext.malachi.unk80 = 0x10;
+            self->ext.malachi.flightHeight = 0x28;
+            self->ext.malachi.timer = 0x10;
             self->step_s++;
             /* fallthrough */
         case 2:
-            prim = self->ext.malachi.primA4;
+            prim = self->ext.malachi.deathPrim;
             xVar = Random() & 0x3F;
-            yVar = self->ext.malachi.unk9C;
+            yVar = self->ext.malachi.flightHeight;
             if (!(g_Timer & 0xF)) {
                 PlaySfxPositional(SFX_EXPLODE_B);
                 other = AllocEntity(&g_Entities[64], &g_Entities[256]);
                 if (other != NULL) {
                     CreateEntityFromCurrentEntity(E_EXPLOSION, other);
                     other->posX.i.hi = prim->x0 + xVar;
-                    #ifdef VERSION_PSP
-                        other->posY.i.hi = (prim->y2 - 0x30) + yVar;
-                    #else
+#ifdef VERSION_PSP
+                    other->posY.i.hi = prim->y2 - 0x30 + yVar;
+#else
                     other->posY.i.hi = prim->y2 + yVar - 0x30;
-                    #endif
+#endif
                     other->params = 3;
                 }
             }
@@ -473,17 +473,17 @@ void EntityMalachi(Entity* self) {
                     other->zPriority += 4;
                 }
             }
-            if (!--self->ext.malachi.unk80) {
-                self->ext.malachi.unk80 = 2;
-                self->ext.malachi.unk9C -= 2;
-                if (self->ext.malachi.unk9C < -0x28) {
-                    self->ext.malachi.unk80 = 0x40;
+            if (!--self->ext.malachi.timer) {
+                self->ext.malachi.timer = 2;
+                self->ext.malachi.flightHeight -= 2;
+                if (self->ext.malachi.flightHeight < -0x28) {
+                    self->ext.malachi.timer = 0x40;
                     self->step_s++;
                 }
             }
             break;
         case 3:
-            if (!--self->ext.malachi.unk80) {
+            if (!--self->ext.malachi.timer) {
                 DestroyEntity(self);
                 return;
             }
@@ -531,6 +531,7 @@ void EnittyMalachiShooter(Entity* self) {
             self->hitboxState = 0;
         }
         break;
+    // The malachi itself sets this step, which commands to shoot a ball
     case 2:
         switch (self->step_s) {
         case 0:
@@ -546,13 +547,13 @@ void EnittyMalachiShooter(Entity* self) {
             self->zPriority = other->zPriority + 1;
             self->blendMode = BLEND_ADD | BLEND_TRANSP;
             if (AnimateEntity(anim_skull_hexagram_spawn, self) == 0) {
-                self->ext.malachi.unk80 = 0x40;
+                self->ext.malachi.timer = 0x40;
                 SetSubStep(1);
             }
             break;
         case 1:
             AnimateEntity(anim_skull_hexagram_flash, self);
-            if (!--self->ext.malachi.unk80) {
+            if (!--self->ext.malachi.timer) {
                 PlaySfxPositional(SFX_EXPLODE_A);
                 other = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (other != NULL) {
@@ -617,7 +618,7 @@ void EntityMalachiBall(Entity* self) {
                 self->velocityX = FIX(-0.625);
             }
             PlaySfxPositional(SFX_MALACHI_ROLLING_ORB);
-            self->ext.malachi.unk80 = 0;
+            self->ext.malachi.timer = 0;
             self->step++;
         }
         break;
@@ -629,8 +630,8 @@ void EntityMalachiBall(Entity* self) {
         } else {
             self->palette = D_us_80180910[3] + 1;
         }
-        self->ext.malachi.unk80++;
-        if (!(self->ext.malachi.unk80 & 0x3F)) {
+        self->ext.malachi.timer++;
+        if (!(self->ext.malachi.timer & 0x3F)) {
             PlaySfxPositional(SFX_MALACHI_ROLLING_ORB);
         }
         other = AllocEntity(&g_Entities[224], &g_Entities[256]);
