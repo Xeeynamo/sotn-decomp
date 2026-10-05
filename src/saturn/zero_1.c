@@ -891,7 +891,24 @@ void func_06014658(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     DAT_06063C30[arg3].unk0 = 1;
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60146A4, func_060146A4);
+void func_060146A4(s32 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4, s32 arg5,
+                   s32 arg6, s32 arg7, s32 arg8) {
+    while (UNCACHED_SOUND_REQUESTS[arg8].unk0 != 0) {
+    }
+
+    DAT_06063C30[arg8].unk8 = arg0;
+    DAT_06063C30[arg8].unkC = arg1;
+    DAT_06063C30[arg8].unk10 = arg2;
+    DAT_06063C30[arg8].unk24 = arg3;
+    DAT_06063C30[arg8].unk26 = arg4;
+    DAT_06063C30[arg8].unk1C = arg5;
+    DAT_06063C30[arg8].unk20 = arg6;
+    arg3 = 1;
+    DAT_06063C30[arg8].unk14 = 1;
+    DAT_06063C30[arg8].unk18 = arg7;
+    DAT_06063C30[arg8].unk4 = 2;
+    DAT_06063C30[arg8].unk0 = 1;
+}
 
 void func_06014724(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     s32 savedArg3;
