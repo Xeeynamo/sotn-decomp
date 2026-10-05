@@ -44,9 +44,9 @@ void EntityCtulhuFireball(Entity* self);
 void EntityCtulhuIceShockwave(Entity* self);
 void EntityCtulhuDeath(Entity* self);
 void EntityMalachi(Entity* self);
-void func_us_801C4960(Entity* self);
-void func_us_801C4C0C(Entity* self);
-void func_us_801C4EA8(Entity* self);
+void EnittyMalachiShooter(Entity* self);
+void EntityMalachiBall(Entity* self);
+void EntityMalachiBallWisp(Entity* self);
 void EntityKarasuman(Entity* self);
 void EntityKarasumanFeatherAttack(Entity* self);
 void EntityKarasumanOrbAttack(Entity* self);
@@ -109,9 +109,9 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityCtulhuIceShockwave,
     EntityCtulhuDeath,
     EntityMalachi,
-    func_us_801C4960,
-    func_us_801C4C0C,
-    func_us_801C4EA8,
+    EnittyMalachiShooter,
+    EntityMalachiBall,
+    EntityMalachiBallWisp,
     EntityKarasuman,
     EntityKarasumanFeatherAttack,
     EntityKarasumanOrbAttack,
