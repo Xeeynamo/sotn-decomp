@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rno2/rno2.h"
 
-extern AnimateEntityFrame D_pspeu_09258C88[];
-extern AnimateEntityFrame D_pspeu_09258C90[];
+extern s16 D_pspeu_09258C88[];
+extern s16 D_pspeu_09258C90[];
 extern AnimateEntityFrame D_pspeu_09258CA0[];
 extern AnimateEntityFrame D_pspeu_09258CD0[];
 extern AnimateEntityFrame D_pspeu_09258CE8[];
@@ -43,7 +43,7 @@ void EntityMalachi(Entity* self) {
         self->ext.malachi.unk88 /= 2;
         /* fallthrough */
     case 0x1:
-        if (UnkCollisionFunc3(&D_pspeu_09258C90) & 1) {
+        if (UnkCollisionFunc3(D_pspeu_09258C90) & 1) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             SetStep(2);
         }
@@ -57,7 +57,7 @@ void EntityMalachi(Entity* self) {
                 self->ext.malachi.unk80 = 0x20;
             }
         }
-        AnimateEntity(&D_pspeu_09258CD0, self);
+        AnimateEntity(D_pspeu_09258CD0, self);
         self->ext.malachi.unk80--;
         if (self->hitPoints < self->ext.malachi.unk88) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
@@ -79,7 +79,7 @@ void EntityMalachi(Entity* self) {
     case 0x3:
         switch (self->step_s) {
         case 0:
-            if (AnimateEntity(&D_pspeu_09258D10, self) == 0) {
+            if (AnimateEntity(D_pspeu_09258D10, self) == 0) {
                 self->ext.malachi.unk9C =
                     (self->posY.i.hi + g_Tilemap.scrollY.i.hi) - 0x20;
                 SetSubStep(1);
@@ -101,7 +101,7 @@ void EntityMalachi(Entity* self) {
             }
             break;
         case 3:
-            AnimateEntity(&D_pspeu_09258D00, self);
+            AnimateEntity(D_pspeu_09258D00, self);
             if (!self->poseTimer && self->pose == 1) {
                 PlaySfxPositional(SFX_WING_FLAP_A);
             }
@@ -118,11 +118,11 @@ void EntityMalachi(Entity* self) {
             }
             break;
         case 4:
-            AnimateEntity(&D_pspeu_09258D00, self);
+            AnimateEntity(D_pspeu_09258D00, self);
             if (!self->poseTimer && self->pose == 1) {
                 PlaySfxPositional(SFX_WING_FLAP_A);
             }
-            var_s4 = UnkCollisionFunc2(&D_pspeu_09258C88);
+            var_s4 = UnkCollisionFunc2(D_pspeu_09258C88);
             if (var_s4 & 0x80) {
                 self->facingLeft ^= 1;
             }
@@ -145,12 +145,12 @@ void EntityMalachi(Entity* self) {
             break;
         case 5:
             self->animCurFrame = 0x1C;
-            if (UnkCollisionFunc3(&D_pspeu_09258C90) & 1) {
+            if (UnkCollisionFunc3(D_pspeu_09258C90) & 1) {
                 SetSubStep(6);
             }
             break;
         case 6:
-            if (AnimateEntity(&D_pspeu_09258D20, self) == 0) {
+            if (AnimateEntity(D_pspeu_09258D20, self) == 0) {
                 if (!self->ext.malachi.unk82) {
                     SetStep(7);
                     self->ext.malachi.unk85 = 0;
@@ -187,12 +187,12 @@ void EntityMalachi(Entity* self) {
             break;
         case 2:
             self->animCurFrame = 0x1C;
-            if (UnkCollisionFunc3(&D_pspeu_09258C90) & 1) {
+            if (UnkCollisionFunc3(D_pspeu_09258C90) & 1) {
                 SetSubStep(3);
             }
             break;
         case 3:
-            if (AnimateEntity(&D_pspeu_09258D20, self) == 0) {
+            if (AnimateEntity(D_pspeu_09258D20, self) == 0) {
                 self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
                 SetSubStep(0);
                 if (!self->ext.malachi.unk82) {
@@ -207,7 +207,7 @@ void EntityMalachi(Entity* self) {
         }
         break;
     case 0x6:
-        if (AnimateEntity(&D_pspeu_09258CA0, self) == 0) {
+        if (AnimateEntity(D_pspeu_09258CA0, self) == 0) {
             SetStep(2);
         }
         break;
@@ -225,7 +225,7 @@ void EntityMalachi(Entity* self) {
             /* fallthrough */
         case 1:
             if (self->ext.malachi.unk85) {
-                AnimateEntity(&D_pspeu_09258D00, self);
+                AnimateEntity(D_pspeu_09258D00, self);
                 if (!self->poseTimer && self->pose == 1) {
                     PlaySfxPositional(SFX_WING_FLAP_A);
                 }
@@ -244,17 +244,17 @@ void EntityMalachi(Entity* self) {
     case 0x9:
         switch (self->step_s) {
         case 0:
-            if (UnkCollisionFunc3(&D_pspeu_09258C90) & 1) {
+            if (UnkCollisionFunc3(D_pspeu_09258C90) & 1) {
                 self->step_s++;
             }
             break;
         case 1:
-            if (AnimateEntity(&D_pspeu_09258CE8, self) == 0) {
+            if (AnimateEntity(D_pspeu_09258CE8, self) == 0) {
                 SetSubStep(2);
             }
             break;
         case 2:
-            AnimateEntity(&D_pspeu_09258CF8, self);
+            AnimateEntity(D_pspeu_09258CF8, self);
             if ((g_Player.status & PLAYER_STATUS_DEAD) == 0) {
                 SetStep(2);
             }
@@ -511,10 +511,10 @@ void func_us_801C4960(Entity* self) {
             }
             break;
         case 1:
-            AnimateEntity(&D_pspeu_09258D68, self);
+            AnimateEntity(D_pspeu_09258D68, self);
             if (!--self->ext.malachi.unk80) {
                 PlaySfxPositional(SFX_EXPLODE_A);
-                other = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
+                other = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (other != NULL) {
                     CreateEntityFromEntity(E_UNK_2D, self, other);
                     other->facingLeft = self->facingLeft;
@@ -595,7 +595,7 @@ void func_us_801C4C0C(Entity* self) {
         if (!(self->ext.malachi.unk80 & 0x3F)) {
             PlaySfxPositional(SFX_MALACHI_ROLLING_ORB);
         }
-        other = AllocEntity(&g_Entities[0xE0], (Entity*)&D_80097C98);
+        other = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (other != NULL) {
             CreateEntityFromEntity(E_UNK_2E, self, other);
             angle = Random() * 0x10;
