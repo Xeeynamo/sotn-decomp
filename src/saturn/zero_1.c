@@ -146,15 +146,12 @@ void func_06011F40(s32 arg0);
 void func_06011F40_noInline(s32 arg0) { SND_StopPcm2(arg0); }
 
 void func_06011F58(void) {
-    s32 bgm;
-
     func_06011F40(7);
     DAT_060641F4 = 0;
     DAT_06063EB4 = 0;
     DAT_06062258 = 0;
-    bgm = DAT_06062290[DAT_06062268];
-    if (bgm != 0) {
-        GFS_NwStop(bgm);
+    if (DAT_06062290[DAT_06062268] != NULL) {
+        GFS_NwStop(DAT_06062290[DAT_06062268]);
         DAT_06063C1C = 0;
     }
     DAT_06063BE0 = 0;
@@ -163,14 +160,11 @@ void func_06011F58(void) {
 
 // original name: KeyOffBGM2
 void func_06011FC8(void) {
-    s32 bgm;
-
     func_06011F40(7);
     DAT_060641F4 = 0;
     DAT_06063EB4 = 0;
-    bgm = DAT_06062290[DAT_06062268];
-    if (bgm != 0) {
-        GFS_NwStop(bgm);
+    if (DAT_06062290[DAT_06062268] != NULL) {
+        GFS_NwStop(DAT_06062290[DAT_06062268]);
         DAT_06063C1C = 0;
     }
     DAT_06063BE0 = 0;
@@ -215,7 +209,7 @@ s32 func_06012108(void) {
     DAT_060641D0 = 0x11800;
     base = 0x200000;
     DAT_06062244 = base;
-    DAT_06062378 = base + 0x4000;
+    DAT_06062378 = DAT_06062244 + 0x4000;
     DAT_06062270.unk0 = DAT_06062378 + 0x800;
     DAT_06062270.unk4 = DAT_06062378 + 0x7000;
     return 0;
@@ -376,8 +370,8 @@ void func_06012474(void) {
 // original name: BgmPauseOff
 void func_06012554(void) {
     if (DAT_06062248 == 1) {
-        DAT_06064214 = DAT_06062248;
-        DAT_060623BC = DAT_06062248;
+        DAT_06064214 = 1;
+        DAT_060623BC = 1;
         DAT_06062248 = 0;
         DAT_06062250 = 0;
     } else if (DAT_06063EB4 == 1 && DAT_06064214 == 0) {
@@ -446,9 +440,9 @@ s32 func_060126D4(s32 arg0) {
 
     if (DAT_06041280 == 0) {
         func_06011F40(5);
-        DAT_06064390 = ((s32(*)(s32, s32))PcmOpen)(DAT_06064324, 2);
-        if (DAT_06064390 == 0) {
-            DAT_06064390 = 0;
+        DAT_06064390 = ((GfsHn(*)(s32, s32))PcmOpen)(DAT_06064324, 2);
+        if (DAT_06064390 == NULL) {
+            DAT_06064390 = NULL;
             DAT_060644AC = 0;
             return -1;
         }
@@ -457,7 +451,7 @@ s32 func_060126D4(s32 arg0) {
         PcmLseek(DAT_06064390, 0);
         result = func_06016B9C(DAT_06064390, 0x211800, DAT_06057C28);
         if (result == -1) {
-            DAT_06064390 = 0;
+            DAT_06064390 = NULL;
             DAT_060644AC = 0;
             return result;
         }
@@ -491,9 +485,9 @@ s32 func_060127F0(s32 arg0) {
 
     if (DAT_06041284 == 0) {
         func_06011F40(5);
-        DAT_060643D0 = ((s32(*)(s32, s32))PcmOpen)(DAT_06064324, 2);
-        if (DAT_060643D0 == 0) {
-            DAT_060643D0 = 0;
+        DAT_060643D0 = ((GfsHn(*)(s32, s32))PcmOpen)(DAT_06064324, 2);
+        if (DAT_060643D0 == NULL) {
+            DAT_060643D0 = NULL;
             DAT_060644AC = 0;
             return -1;
         }
@@ -503,7 +497,7 @@ s32 func_060127F0(s32 arg0) {
         PcmLseek(DAT_060643D0, 0);
         result = func_06016B9C(DAT_060643D0, 0x22A000, DAT_06057C30);
         if (result == -1) {
-            DAT_060643D0 = 0;
+            DAT_060643D0 = NULL;
             DAT_060644AC = 0;
             return result;
         }
@@ -960,14 +954,14 @@ s32 func_06014C54(void) {
 }
 
 s32 func_06014CB8(s32 arg0) {
-    if (DAT_06062290[arg0] != 0) {
+    if (DAT_06062290[arg0] != NULL) {
         func_06011F40(7);
         PcmClose(DAT_06062290[arg0], 0);
         DAT_06062290[arg0] = 0;
     }
 
     DAT_06062290[arg0] = ((s32(*)(s32, s32))PcmOpen)(arg0 + 0xE0000000, 0);
-    if (DAT_06062290[arg0] == 0)
+    if (DAT_06062290[arg0] == NULL)
         return -1;
     DAT_060623B0[0] &= ~2;
     GFS_SetGmode(DAT_06062290[arg0], GFS_GMODE_ERASE);
@@ -1245,7 +1239,7 @@ void func_06017508(void) {
         }
 
         if ((DAT_06064408 & 0xFFF) == 0) {
-            DAT_06064490[DAT_06064484] = DAT_06064408 & 0xFFF;
+            DAT_06064490[DAT_06064484] = 0;
             DAT_06064484 = (DAT_06064484 + 1) & 1;
         }
         /* fallthrough */
@@ -1297,7 +1291,7 @@ void func_06017508(void) {
             }
         }
         if ((DAT_06064408 & 0xFFF) == 0) {
-            DAT_06064490[DAT_06064484] = DAT_06064408 & 0xFFF;
+            DAT_06064490[DAT_06064484] = 0;
             DAT_06064484 = (DAT_06064484 + 1) & 1;
         }
         break;
