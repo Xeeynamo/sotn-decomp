@@ -4494,17 +4494,21 @@ typedef struct {
 } ET_ShaftMeridianRings;
 
 typedef struct {
-    u32 : 32;                 // 7C
-    u32 : 32;                 // 80
-    u32 : 32;                 // 84
-    u32 : 32;                 // 88
-    u32 : 32;                 // 8C
-    u32 : 32;                 // 90
-    u32 : 32;                 // 94
-    u32 : 32;                 // 98
-    u32 : 32;                 // 9C
-    u32 : 32;                 // A0
-    struct Primitive* primA4; // A4
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 unk85;
+    /* 0x86 */ u16 : 16;
+    /* 0x88 */ s16 unk88;
+    /* 0x8A */ u16 : 16;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ s32 unk9C;
+    /* 0xA0 */ u32 : 32;
+    /* 0xA4 */ struct Primitive* primA4;
 } ET_Malachi;
 
 typedef union { // offset=0x7C
