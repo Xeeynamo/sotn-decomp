@@ -229,7 +229,7 @@ void func_0600460C(void) {
 }
 
 void func_060046E8(void) {
-    struct BgTransfer* transfers;
+    BgTransfer* transfers;
     u32 i;
 
     DAT_06057F40 = 0;
@@ -1633,7 +1633,7 @@ void func_06008488(void) {
 s32 func_06008524(u32 dest, u32 src, u32 cnt) {
     u32 first;
     u32 i;
-    struct BgTransfer* transfer;
+    BgTransfer* transfer;
 
     first = 0;
     if (DAT_0605cd70.unk0 == 0) {
@@ -1660,8 +1660,8 @@ s32 func_06008524(u32 dest, u32 src, u32 cnt) {
 // func_06008588
 void TransferBgLayer(s32 arg0) {
     s32 cnt;
-    struct BgTransfer* puVar5;
-    struct Unk0605CD90* puVar6;
+    BgTransfer* puVar5;
+    Unk0605CD90* puVar6;
 
     puVar5 = &DAT_0605d6c0[arg0];
     puVar6 = &DAT_0605CD90[arg0];
@@ -1718,7 +1718,7 @@ void DmaScroll(u16* src, u16* dest, u32 cnt) {
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600871C, func_0600871C);
 
 // func_060089F0
-void BuildSubDispTilemap(struct Unk0605CD90* arg0) {
+void BuildSubDispTilemap(Unk0605CD90* arg0) {
     u16 sVar2;
     s16* psVar5;
     s16* psVar7;
@@ -1787,7 +1787,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009058, func_06009058);
 void func_06009510(u16 scrollId) {
     s32 i;
     s32 bound;
-    struct Unk0605CD90* ptr;
+    Unk0605CD90* ptr;
 
     i = 0;
     ptr = DAT_0605CD90;
@@ -1910,7 +1910,21 @@ void func_06009F10(void) {
 
 // _X_SCROLL_TRANS
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009F84, func_06009F84);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A030, func_0600A030);
+
+void func_0600A030(void) {
+    Unk0605CD90* ptr;
+    s32 i;
+
+    ptr = &DAT_0605CD90[0];
+    for (i = 0; i < 3; i++) {
+        if (ptr->unk18 != 0) {
+            Scl_s_reg.dispenbl |= 2 << i;
+            SclProcess = 1;
+        }
+        ptr++;
+    }
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A088, func_0600A088);
 
 void func_0600A240(s32 arg0) {
@@ -1929,8 +1943,8 @@ void SetCharTrans(u16 arg0, s32 arg1, s32 arg2) {
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A29C, LookupTblNoToVramAddr);
 
 // func_0600A304
-void SetSprGourTable(u16 arg0, SprGourTbl* gourTbl) {
-    SPR_2SetGourTbl(arg0, gourTbl);
+void SetSprGourTable(s32 gourTblNo, SprGourTbl* gourTbl) {
+    SPR_2SetGourTbl(gourTblNo, gourTbl);
 }
 
 // original name: SetPlTransNonSeparateAura
@@ -3596,7 +3610,7 @@ s32 func_06011C28(s32 volume, s16 pan) {
     s32 result;
 
     result = 0;
-    if (DAT_060643E0.unk1C == 0) {
+    if (DAT_060643E0[7] == 0) {
         return -2;
     }
     if (pan < -8 || pan > 8) {
@@ -3642,7 +3656,7 @@ void func_06011F58(void) {
         GFS_NwStop(bgm);
         DAT_06063C1C = 0;
     }
-    D_8013B61C = 0;
+    DAT_06063BE0 = 0;
     DAT_06063BD4 = 0;
 }
 
@@ -3658,6 +3672,6 @@ void func_06011FC8(void) {
         GFS_NwStop(bgm);
         DAT_06063C1C = 0;
     }
-    D_8013B61C = 0;
+    DAT_06063BE0 = 0;
     DAT_06063BD4 = 0;
 }

@@ -125,9 +125,9 @@ segments:
       - start: 0x14648
         type: c
         file: lib/snd
-        end: 0x14FF3
+        end: 0x14FD7
 
-      - start: 0x14FF4
+      - start: 0x14FD8
         type: c
         file: zero_2
         end: 0x16067

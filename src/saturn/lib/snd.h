@@ -6,6 +6,11 @@
 #define SND_RET_SET 0
 #define SND_RET_NSET 1
 
+#define SND_MD_MONO (0 << 7)
+#define SND_MD_STEREO (1 << 7)
+#define SND_MD_16 (0 << 4)
+#define SND_MD_8 (1 << 4)
+
 #define SND_INI_PRG_ADR(sys_ini) ((sys_ini).prg_adr)
 #define SND_INI_PRG_SZ(sys_ini) ((sys_ini).prg_sz)
 #define SND_INI_ARA_ADR(sys_ini) ((sys_ini).ara_adr)
@@ -88,5 +93,11 @@ typedef struct {
     Uint8 radr;
     Uint8 ladr;
 } SndPcmPlayAdr;
+
+SndRet SND_SetSeqVl(SndSeqNum, SndSeqVl, SndFade);
+
+SndRet SND_SetSeqPan(SndSeqNum, Uint8, Uint8);
+
+void SND_GetPcmPlayAdr(SndPcmPlayAdr*, SndPcmNum);
 
 #endif
