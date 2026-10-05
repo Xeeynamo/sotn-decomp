@@ -30,7 +30,6 @@ SetSubStep = 0x092505E0;
 InitializeEntity = 0x092506F0;
 EntitySealedDoor = 0x09254080;
 g_KarasumanRavenAbsorbAnim = 0x09258B18;
-g_Unk2EAnim = 0x09258D80;
 rooms_layers = 0x09260840;
 cluts = 0x09260978;
 gfxBanks = 0x09260AE0;
