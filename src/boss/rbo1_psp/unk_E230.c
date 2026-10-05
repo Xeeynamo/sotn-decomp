@@ -11,7 +11,7 @@ INCLUDE_ASM("boss/rbo1_psp/nonmatchings/rbo1_psp/unk_E230", func_801CDD80);
 
 INCLUDE_ASM("boss/rbo1_psp/nonmatchings/rbo1_psp/unk_E230", func_801CDF1C);
 
-INCLUDE_ASM("boss/rbo1_psp/nonmatchings/rbo1_psp/unk_E230", func_801CE1E8);
+#include "../../st/func_801CE1E8.h"
 
 INCLUDE_ASM("boss/rbo1_psp/nonmatchings/rbo1_psp/unk_E230", polarPlacePartsList);
 

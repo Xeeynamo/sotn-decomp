@@ -38,9 +38,9 @@ INCLUDE_ASM("boss/rbo2/nonmatchings/unk_1B284", func_801CDD80);
 
 INCLUDE_ASM("boss/rbo2/nonmatchings/unk_1B284", func_801CDF1C);
 
-INCLUDE_ASM("boss/rbo2/nonmatchings/unk_1B284", func_801CE1E8);
+#include "../../st/func_801CE1E8.h"
 
-INCLUDE_ASM("boss/rbo2/nonmatchings/unk_1B284", func_801CE228);
+#include "../../st/func_801CE228.h"
 
 INCLUDE_ASM("boss/rbo2/nonmatchings/unk_1B284", polarPlacePartsList);
 
