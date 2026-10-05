@@ -7,6 +7,7 @@
 #include "lib/per.h"
 #include "lib/bup.h"
 #include "lib/cdc.h"
+#include "lib/snd.h"
 #include "inc_asm.h"
 #include <saturn_sprite.h>
 
@@ -19,15 +20,12 @@ s32 DMA_CpuResult();
 // func_060234F4
 void DMA_ScuInit();
 
-// void SPR_2SetGourTbl(u16 arg0);
-
 void InitPrimBuf();
 void func_06004D84(void);
 void func_06004DE8(void);
 void func_06004E50(void);
 void func_06004E94(void);
 void INT_SetScuFunc(u32 vector, void (*handler)(void));
-extern s32 DAT_06064320;
 
 // DAT_0605c120, DAT_060645EC, DAT_060645e4, DAT_060645f8 and SpGourTbl
 // are deliberately absent: zero and its dependents access them at
@@ -51,10 +49,10 @@ extern SaturnSpriteResource** DAT_060645D0;
 
 extern s32 DAT_060485E0[];
 extern Unk0605DB60 d_0605DB60[32];
-extern struct BgTransfer DAT_0605d6c0[8];
+
 void func_0600871C(s32, UNK_0605c680*, s32);
 
-struct Unk0605CD90 {
+typedef struct {
     s32 dst0;
     s32 dst4;
     u16* unk8;
@@ -66,21 +64,22 @@ struct Unk0605CD90 {
     s32 unk20;
     s16 unk24;
     u8 pad[10];
-};
+} Unk0605CD90;
 
-void BuildSubDispTilemap(struct Unk0605CD90* param_1);
+void BuildSubDispTilemap(Unk0605CD90* arg0);
 s32 DAT_060086e4;
 s32 DecompressLZSS(u8*, u8*, u32);
 void DmaScroll(u16* src, u16* dest, u32 cnt);
 
-struct BgTransfer {
+typedef struct {
     u32 tileFlags;
     u32 src;
     u32 dest;
     u32 cnt;
-};
+} BgTransfer;
 
-struct Unk0605CD90 DAT_0605CD90[];
+extern Unk0605CD90 DAT_0605CD90[];
+extern BgTransfer DAT_0605d6c0[8];
 
 #define DMA_SRC_ADDR 0x002E0000
 
@@ -104,13 +103,8 @@ extern s32* DAT_06066000;
 
 void func_06006FA8(void);
 
-extern u8 g_MuteCd;
-extern u8 DAT_060644dc;
-
 extern s32 DAT_060476a4;
 extern s32 DAT_060476a0;
-extern s32 DAT_06064354;
-extern s32 DAT_060644AC;
 extern s32 DAT_06038a44;
 
 void func_060082E8(void);
@@ -118,10 +112,6 @@ void func_0600841C(void);
 
 void InitPaletteRemapLuts(void);
 void func_0600B254(void);
-
-extern s32 D_8013B61C;
-extern s32 g_PlayingXaBgmId;
-extern s8 DAT_060644C0;
 
 extern u32 DAT_0605C658;
 void func_06030df0();
@@ -226,28 +216,12 @@ extern u16 DAT_06061DE8[2];
 extern s32 DAT_06061DE0[2];
 extern u16 DAT_0605DD94;
 extern s8 DAT_0605DD60;
-s32 func_06017F5C(char*);
-void code2name(u32 code, u8* name);
-extern u8 DAT_0606423a;
-extern u8 DAT_06064414;
-extern s32 DAT_06064250[];
-void StopPcm(s32 param);
-void func_06011F40(s32 param);
-extern s32 DAT_060641F4;
-extern s32 DAT_06062258;
-extern s32 DAT_06062268;
-extern s32 DAT_06062290[];
-extern s32 DAT_06063BD4;
-extern s32 DAT_06063C1C;
-extern s32 DAT_06063EB4;
+
 void func_0600C818();
 void ResetLayerColorCalc();
 extern u16 DAT_0605cdb8;
 void DestroySpriteObject(SpriteObject*);
 extern u32 g_randomNext;
-extern u8 DAT_060644c4;
-extern s16 DAT_060643c4;
-extern s32 DAT_06064230;
 s32 func_0602A778(s32, s32, s32);
 extern s32 DAT_06039128[];
 void func_0600C18C();
@@ -404,15 +378,6 @@ extern MthMatrixTbl DAT_06061DF0;
 extern Point16 DAT_06057A08;
 extern Point16 DAT_06057A0C;
 bool CdSoundCommandQueueEmpty(void);
-struct Unk060643E0 {
-    u8 unk00[0x1C];
-    s32 unk1C;
-};
-extern struct Unk060643E0 DAT_060643E0;
-extern s16 DAT_0606436E;
-extern s32 DAT_060644B0;
-extern s32 SND_SetSeqVl(u8, u8, u8);
-extern s32 SND_SetSeqPan(u8, u8, u8);
 /* End moved declarations */
 
 #endif

@@ -229,7 +229,7 @@ void func_0600460C(void) {
 }
 
 void func_060046E8(void) {
-    struct BgTransfer* transfers;
+    BgTransfer* transfers;
     u32 i;
 
     DAT_06057F40 = 0;
@@ -1633,7 +1633,7 @@ void func_06008488(void) {
 s32 func_06008524(u32 dest, u32 src, u32 cnt) {
     u32 first;
     u32 i;
-    struct BgTransfer* transfer;
+    BgTransfer* transfer;
 
     first = 0;
     if (DAT_0605cd70.unk0 == 0) {
@@ -1660,8 +1660,8 @@ s32 func_06008524(u32 dest, u32 src, u32 cnt) {
 // func_06008588
 void TransferBgLayer(s32 arg0) {
     s32 cnt;
-    struct BgTransfer* puVar5;
-    struct Unk0605CD90* puVar6;
+    BgTransfer* puVar5;
+    Unk0605CD90* puVar6;
 
     puVar5 = &DAT_0605d6c0[arg0];
     puVar6 = &DAT_0605CD90[arg0];
@@ -1718,7 +1718,7 @@ void DmaScroll(u16* src, u16* dest, u32 cnt) {
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600871C, func_0600871C);
 
 // func_060089F0
-void BuildSubDispTilemap(struct Unk0605CD90* arg0) {
+void BuildSubDispTilemap(Unk0605CD90* arg0) {
     u16 sVar2;
     s16* psVar5;
     s16* psVar7;
@@ -1787,7 +1787,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009058, func_06009058);
 void func_06009510(u16 scrollId) {
     s32 i;
     s32 bound;
-    struct Unk0605CD90* ptr;
+    Unk0605CD90* ptr;
 
     i = 0;
     ptr = DAT_0605CD90;
@@ -1910,7 +1910,21 @@ void func_06009F10(void) {
 
 // _X_SCROLL_TRANS
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009F84, func_06009F84);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A030, func_0600A030);
+
+void func_0600A030(void) {
+    Unk0605CD90* ptr;
+    s32 i;
+
+    ptr = &DAT_0605CD90[0];
+    for (i = 0; i < 3; i++) {
+        if (ptr->unk18 != 0) {
+            Scl_s_reg.dispenbl |= 2 << i;
+            SclProcess = 1;
+        }
+        ptr++;
+    }
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A088, func_0600A088);
 
 void func_0600A240(s32 arg0) {
@@ -1929,8 +1943,8 @@ void SetCharTrans(u16 arg0, s32 arg1, s32 arg2) {
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A29C, LookupTblNoToVramAddr);
 
 // func_0600A304
-void SetSprGourTable(u16 arg0, SprGourTbl* gourTbl) {
-    SPR_2SetGourTbl(arg0, gourTbl);
+void SetSprGourTable(s32 gourTblNo, SprGourTbl* gourTbl) {
+    SPR_2SetGourTbl(gourTblNo, gourTbl);
 }
 
 // original name: SetPlTransNonSeparateAura
@@ -3524,140 +3538,3 @@ void SignalSlaveSh2(void) {
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011278, func_06011278);
-
-void func_06011A6C(s32 arg0) {
-    s32 i;
-
-    for (i = 0;; i++) {
-        if (DAT_06064250[i] != 0) {
-            if (i != 0x1E) {
-                continue;
-            }
-        }
-        break;
-    }
-    DAT_06064250[i] = arg0;
-    DAT_06064250[i + 1] = 0;
-}
-
-s32 PlaySfxVolPan(s32 sfxId, s32 sfxVol, s16 sfxPan) {
-    s32 ret = 0;
-
-    if (sfxId < 0x600 || sfxId > 0x916) {
-        return -3;
-    }
-    if (sfxPan < -8 || sfxPan > 8) {
-        sfxPan = 0x40;
-        ret = -1;
-    } else {
-        if (sfxPan == 0) {
-            sfxPan = sfxPan * 8 + 0x40;
-        } else if (sfxPan > 0) {
-            sfxPan = sfxPan * 8 + 0x3F;
-        } else {
-            sfxPan = sfxPan * 8 + 0x40;
-        }
-    }
-    DAT_06064230 = sfxVol;
-    DAT_060643c4 = sfxPan;
-    DAT_060644c4 = 1;
-    PlaySfx(sfxId);
-    DAT_060644c4 = 0;
-    return ret;
-}
-
-s32 func_06011B28(s32 arg0) {
-    if (arg0 < 0) {
-        arg0 = 0;
-    } else if (arg0 < 0x10) {
-        arg0 *= 2;
-    } else if (arg0 < 0x20) {
-        arg0 = ((arg0 - 0x10) * 0x26) / 0x10 + 0x20;
-    } else if (arg0 < 0x30) {
-        arg0 = ((arg0 - 0x20) * 0x1A) / 0x10 + 0x46;
-    } else if (arg0 < 0x40) {
-        arg0 = ((arg0 - 0x30) * 0x0D) / 0x10 + 0x60;
-    } else if (arg0 < 0x50) {
-        arg0 = (arg0 - 0x40) / 2 + 0x6D;
-    } else if (arg0 < 0x60) {
-        arg0 = ((arg0 - 0x50) * 5) / 0x10 + 0x75;
-    } else if (arg0 < 0x70) {
-        arg0 = (arg0 - 0x60) / 4 + 0x7A;
-    } else if (arg0 < 0x82) {
-        arg0 = ((arg0 - 0x70) * 4) / 18 + 0x7E;
-    }
-    if (arg0 == 0) {
-        arg0 = 1;
-    }
-    return arg0;
-}
-
-s32 func_06011C28(s32 volume, s16 pan) {
-    s32 result;
-
-    result = 0;
-    if (DAT_060643E0.unk1C == 0) {
-        return -2;
-    }
-    if (pan < -8 || pan > 8) {
-        pan = 0x40;
-        result = -1;
-    } else if (pan == 0) {
-        pan = 0x40;
-    } else {
-        if (pan > 0) {
-            pan = pan * 8 + 0x3F;
-        } else {
-            pan = pan * 8 + 0x40;
-        }
-    }
-    volume = func_06011B28((DAT_060644B0 * volume) / 127);
-    if (volume == 0) {
-        volume = 1;
-    }
-    SND_SetSeqVl(7, volume, 0);
-    SND_SetSeqPan(7, 0, pan);
-    DAT_0606436E = pan;
-    return result;
-}
-
-const u16 DAT_06011CE0 = 0x5344;
-const u16 DAT_06011CE2 = 0x0000;
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011CE4, func_06011CE4);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011EE0, func_06011EE0);
-
-// func_06011F40
-void StopPcm(s32 arg0) { SND_StopPcm2(arg0); }
-
-void func_06011F58(void) {
-    s32 bgm;
-
-    func_06011F40(7);
-    DAT_060641F4 = 0;
-    DAT_06063EB4 = 0;
-    DAT_06062258 = 0;
-    bgm = DAT_06062290[DAT_06062268];
-    if (bgm != 0) {
-        GFS_NwStop(bgm);
-        DAT_06063C1C = 0;
-    }
-    D_8013B61C = 0;
-    DAT_06063BD4 = 0;
-}
-
-// original name: KeyOffBGM2
-void func_06011FC8(void) {
-    s32 bgm;
-
-    func_06011F40(7);
-    DAT_060641F4 = 0;
-    DAT_06063EB4 = 0;
-    bgm = DAT_06062290[DAT_06062268];
-    if (bgm != 0) {
-        GFS_NwStop(bgm);
-        DAT_06063C1C = 0;
-    }
-    D_8013B61C = 0;
-    DAT_06063BD4 = 0;
-}
