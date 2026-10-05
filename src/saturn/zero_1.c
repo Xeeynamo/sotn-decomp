@@ -4,14 +4,187 @@
 #include "inc_asm.h"
 #include "sattypes.h"
 
+static inline void set_sr(register Uint32 sr) {
+    __asm__ volatile("ldc	%0, sr" : : "r"(sr));
+}
+
+static inline Uint32 get_sr(void) {
+    Uint32 sr;
+    __asm__ volatile("stc	sr, %0" : "=r"(sr));
+    return sr;
+}
+
+static inline Uint32 get_imask(void) {
+    Uint32 imask = (get_sr() & 0x000000F0) >> 4;
+    return imask;
+}
+
+static inline void set_imask(register Uint32 imask) {
+    Uint32 sr = get_sr();
+
+    sr &= ~0x000000F0;
+    sr |= imask << 4;
+    set_sr(sr);
+}
+
+void func_06011A6C(s32 arg0) {
+    s32 i;
+
+    for (i = 0;; i++) {
+        if (DAT_06064250[i] != 0) {
+            if (i != 0x1E) {
+                continue;
+            }
+        }
+        break;
+    }
+    DAT_06064250[i] = arg0;
+    DAT_06064250[i + 1] = 0;
+}
+
+s32 PlaySfxVolPan(s32 sfxId, s32 sfxVol, s16 sfxPan) {
+    s32 ret = 0;
+
+    if (sfxId < 0x600 || sfxId > 0x916) {
+        return -3;
+    }
+    if (sfxPan < -8 || sfxPan > 8) {
+        sfxPan = 0x40;
+        ret = -1;
+    } else {
+        if (sfxPan == 0) {
+            sfxPan = sfxPan * 8 + 0x40;
+        } else if (sfxPan > 0) {
+            sfxPan = sfxPan * 8 + 0x3F;
+        } else {
+            sfxPan = sfxPan * 8 + 0x40;
+        }
+    }
+    DAT_06064230 = sfxVol;
+    DAT_060643C4 = sfxPan;
+    DAT_060644C4 = 1;
+    PlaySfx(sfxId);
+    DAT_060644C4 = 0;
+    return ret;
+}
+
+s32 func_06011B28(s32 arg0) {
+    if (arg0 < 0) {
+        arg0 = 0;
+    } else if (arg0 < 0x10) {
+        arg0 *= 2;
+    } else if (arg0 < 0x20) {
+        arg0 = ((arg0 - 0x10) * 0x26) / 0x10 + 0x20;
+    } else if (arg0 < 0x30) {
+        arg0 = ((arg0 - 0x20) * 0x1A) / 0x10 + 0x46;
+    } else if (arg0 < 0x40) {
+        arg0 = ((arg0 - 0x30) * 0x0D) / 0x10 + 0x60;
+    } else if (arg0 < 0x50) {
+        arg0 = (arg0 - 0x40) / 2 + 0x6D;
+    } else if (arg0 < 0x60) {
+        arg0 = ((arg0 - 0x50) * 5) / 0x10 + 0x75;
+    } else if (arg0 < 0x70) {
+        arg0 = (arg0 - 0x60) / 4 + 0x7A;
+    } else if (arg0 < 0x82) {
+        arg0 = ((arg0 - 0x70) * 4) / 18 + 0x7E;
+    }
+    if (arg0 == 0) {
+        arg0 = 1;
+    }
+    return arg0;
+}
+
+s32 func_06011C28(s32 volume, s16 pan) {
+    s32 result;
+
+    result = 0;
+    if (DAT_060643E0[7] == 0) {
+        return -2;
+    }
+    if (pan < -8 || pan > 8) {
+        pan = 0x40;
+        result = -1;
+    } else if (pan == 0) {
+        pan = 0x40;
+    } else {
+        if (pan > 0) {
+            pan = pan * 8 + 0x3F;
+        } else {
+            pan = pan * 8 + 0x40;
+        }
+    }
+    volume = func_06011B28((DAT_060644B0 * volume) / 127);
+    if (volume == 0) {
+        volume = 1;
+    }
+    SND_SetSeqVl(7, volume, 0);
+    SND_SetSeqPan(7, 0, pan);
+    DAT_0606436E = pan;
+    return result;
+}
+
+const u16 DAT_06011CE0 = 0x5344;
+const u16 DAT_06011CE2 = 0x0000;
+
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011CE4, func_06011CE4);
+
+void func_06011EE0(s32 arg0, s32 arg1) {
+    s32 i;
+    u32 msk;
+
+    msk = get_imask();
+    set_imask(15);
+    DAT_06063BD8 = 0;
+    for (i = 0; i < 4; i++) {
+        DAT_06063C30[i].unk0 = 0;
+    }
+    func_06014424();
+    set_imask(msk);
+}
+
+void func_06011F40(s32 arg0);
+void func_06011F40_noInline(s32 arg0) { SND_StopPcm2(arg0); }
+
+void func_06011F58(void) {
+    s32 bgm;
+
+    func_06011F40(7);
+    DAT_060641F4 = 0;
+    DAT_06063EB4 = 0;
+    DAT_06062258 = 0;
+    bgm = DAT_06062290[DAT_06062268];
+    if (bgm != 0) {
+        GFS_NwStop(bgm);
+        DAT_06063C1C = 0;
+    }
+    DAT_06063BE0 = 0;
+    DAT_06063BD4 = 0;
+}
+
+// original name: KeyOffBGM2
+void func_06011FC8(void) {
+    s32 bgm;
+
+    func_06011F40(7);
+    DAT_060641F4 = 0;
+    DAT_06063EB4 = 0;
+    bgm = DAT_06062290[DAT_06062268];
+    if (bgm != 0) {
+        GFS_NwStop(bgm);
+        DAT_06063C1C = 0;
+    }
+    DAT_06063BE0 = 0;
+    DAT_06063BD4 = 0;
+}
+
 void func_06012030(void) {
-    StopPcm(7);
+    func_06011F40(7);
     DAT_06063BE0 = 0;
 }
 
 // original name: KeyOffVox
 void func_06012054(void) {
-    StopPcm(6);
+    func_06011F40(6);
     if (DAT_06062280 != NULL) {
         GFS_NwStop(DAT_06062280);
         PcmClose(DAT_06062280, 1);
@@ -22,7 +195,7 @@ void func_06012054(void) {
 
 void func_060120A0(void);
 void func_060120A0_noInline(void) {
-    StopPcm(6);
+    func_06011F40(6);
     if (DAT_06062280 != NULL) {
         GFS_NwStop(DAT_06062280);
     }
@@ -30,7 +203,7 @@ void func_060120A0_noInline(void) {
 }
 
 void func_060120D8(void) {
-    StopPcm(6);
+    func_06011F40(6);
     if (DAT_06062280 != NULL) {
         GFS_NwStop(DAT_06062280);
     }
@@ -177,7 +350,7 @@ void func_06012474(void) {
             DAT_06063EB4 = 1;
             DAT_060641F4 = 0;
             DAT_06063BE0 = 8;
-            StopPcm(7);
+            func_06011F40(7);
             DAT_060623B0[0] &= ~2;
         } else {
             DAT_06063E70 = 0;
@@ -192,7 +365,7 @@ void func_06012474(void) {
             DAT_060641DC = 0;
             DAT_06064210 = 0;
             DAT_06064214 = 8;
-            StopPcm(6);
+            func_06011F40(6);
             DAT_060623B0[1] &= ~2;
         } else {
             DAT_06062250 = DAT_06063EB0;
@@ -272,7 +445,7 @@ s32 func_060126D4(s32 arg0) {
     }
 
     if (DAT_06041280 == 0) {
-        StopPcm(5);
+        func_06011F40(5);
         DAT_06064390 = ((s32(*)(s32, s32))PcmOpen)(DAT_06064324, 2);
         if (DAT_06064390 == 0) {
             DAT_06064390 = 0;
@@ -317,7 +490,7 @@ s32 func_060127F0(s32 arg0) {
     }
 
     if (DAT_06041284 == 0) {
-        StopPcm(5);
+        func_06011F40(5);
         DAT_060643D0 = ((s32(*)(s32, s32))PcmOpen)(DAT_06064324, 2);
         if (DAT_060643D0 == 0) {
             DAT_060643D0 = 0;
@@ -351,7 +524,7 @@ s32 func_060127F0(s32 arg0) {
 }
 
 void func_06012908(void) {
-    StopPcm(5);
+    func_06011F40(5);
     if (DAT_06064338 != NULL) {
         GFS_NwStop(DAT_06064338);
         PcmClose(DAT_06064338, 2);
@@ -361,7 +534,7 @@ void func_06012908(void) {
 }
 
 void func_06012954(void) {
-    StopPcm(5);
+    func_06011F40(5);
     if (DAT_06064338 != NULL) {
         GFS_NwStop(DAT_06064338);
     }
@@ -369,7 +542,7 @@ void func_06012954(void) {
 }
 
 void func_0601298C(void) {
-    StopPcm(5);
+    func_06011F40(5);
     if (DAT_06064338 != NULL) {
         GFS_NwStop(DAT_06064338);
     }
@@ -386,7 +559,7 @@ void func_06012CAC(void) {
             DAT_0606438C = 1;
             DAT_06064334 = 0;
             DAT_06064300 = 8;
-            StopPcm(5);
+            func_06011F40(5);
             DAT_060623B0[2] &= ~2;
         } else {
             DAT_06064234 = 0;
@@ -568,7 +741,7 @@ void func_06012FB4(void) {
     DAT_0606440C = 0;
     DAT_06064328 = DAT_06064418 = DAT_060642F0 = 0;
     DAT_06064380 = DAT_060643C6 = DAT_06064379 = 0;
-    DAT_060644c4 = 0;
+    DAT_060644C4 = 0;
     DAT_06064250[0] = 0;
     DAT_060643A0 = 1;
     DAT_06064324 = 0xF00000E0;
@@ -600,29 +773,6 @@ bool func_06013320(void) {
         return 1;
     }
     return 0;
-}
-
-static inline void set_sr(register Uint32 sr) {
-    __asm__ volatile("ldc	%0, sr" : : "r"(sr));
-}
-
-static inline Uint32 get_sr(void) {
-    Uint32 sr;
-    __asm__ volatile("stc	sr, %0" : "=r"(sr));
-    return sr;
-}
-
-static inline Uint32 get_imask(void) {
-    Uint32 imask = (get_sr() & 0x000000F0) >> 4;
-    return imask;
-}
-
-static inline void set_imask(register Uint32 imask) {
-    Uint32 sr = get_sr();
-
-    sr &= ~0x000000F0;
-    sr |= imask << 4;
-    set_sr(sr);
 }
 
 // original name: sd_reset2
@@ -778,7 +928,7 @@ s32 func_06014C20(void) {
 // original name: OpenVoxFile
 s32 func_06014C54(void) {
     if (DAT_06062280 != NULL) {
-        StopPcm(6);
+        func_06011F40(6);
         PcmClose(DAT_06062280, 1);
         DAT_06062280 = NULL;
     }
@@ -794,7 +944,7 @@ s32 func_06014C54(void) {
 
 s32 func_06014CB8(s32 arg0) {
     if (DAT_06062290[arg0] != 0) {
-        StopPcm(7);
+        func_06011F40(7);
         PcmClose(DAT_06062290[arg0], 0);
         DAT_06062290[arg0] = 0;
     }
@@ -993,7 +1143,7 @@ char num2char(u32 num) {
 
 s32 func_06016FB8(void) {
     if (DAT_06064338 != NULL) {
-        StopPcm(5);
+        func_06011F40(5);
         PcmClose(DAT_06064338, 2);
         DAT_06064338 = NULL;
     }

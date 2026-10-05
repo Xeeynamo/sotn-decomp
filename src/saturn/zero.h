@@ -113,8 +113,6 @@ void func_0600841C(void);
 void InitPaletteRemapLuts(void);
 void func_0600B254(void);
 
-extern u32 DAT_06063BE0;
-
 extern u32 DAT_0605C658;
 void func_06030df0();
 void InitBackupRam(void);
@@ -218,27 +216,12 @@ extern u16 DAT_06061DE8[2];
 extern s32 DAT_06061DE0[2];
 extern u16 DAT_0605DD94;
 extern s8 DAT_0605DD60;
-s32 func_06017F5C(char*);
-void code2name(u32 code, u8* name);
 
-extern s32 DAT_06064250[];
-void StopPcm(s32 arg0);
-void func_06011F40(s32 arg0);
-extern s32 DAT_060641F4;
-extern s32 DAT_06062258;
-extern s32 DAT_06062268;
-extern s32 DAT_06062290[];
-extern s32 DAT_06063BD4;
-extern s32 DAT_06063C1C;
-extern s32 DAT_06063EB4;
 void func_0600C818();
 void ResetLayerColorCalc();
 extern u16 DAT_0605cdb8;
 void DestroySpriteObject(SpriteObject*);
 extern u32 g_randomNext;
-extern u8 DAT_060644c4;
-extern s16 DAT_060643c4;
-extern s32 DAT_06064230;
 s32 func_0602A778(s32, s32, s32);
 extern s32 DAT_06039128[];
 void func_0600C18C();
@@ -395,9 +378,6 @@ extern MthMatrixTbl DAT_06061DF0;
 extern Point16 DAT_06057A08;
 extern Point16 DAT_06057A0C;
 bool CdSoundCommandQueueEmpty(void);
-extern s32 DAT_060643E0[8];
-extern s16 DAT_0606436E;
-extern s32 DAT_060644B0;
 /* End moved declarations */
 
 #endif
