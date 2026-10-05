@@ -19,10 +19,10 @@ void func_us_801C4EA8(Entity* self) {
         self->animSet = 0xE;
         self->unk5A = 0x5C;
         self->palette = 0x2EE;
-        self->drawFlags = 5;
+        self->drawFlags = ENTITY_ROTATE | ENTITY_SCALEX;
         self->scaleX = 0x60;
         self->scaleY = 0xC0;
-        self->blendMode = 0x70;
+        self->blendMode = BLEND_QUARTER | BLEND_TRANSP;
         angle = self->rotate;
         self->velocityX = rsin(angle) * 0x10;
         self->velocityY = rcos(angle) * -0x10;
