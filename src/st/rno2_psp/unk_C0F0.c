@@ -1,16 +1,23 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rno2/rno2.h"
 
-extern s16 D_pspeu_09258C88[];
-extern s16 D_pspeu_09258C90[];
-extern AnimateEntityFrame D_pspeu_09258CA0[];
-extern AnimateEntityFrame D_pspeu_09258CD0[];
-extern AnimateEntityFrame D_pspeu_09258CE8[];
-extern AnimateEntityFrame D_pspeu_09258CF8[];
-extern AnimateEntityFrame D_pspeu_09258D00[];
-extern AnimateEntityFrame D_pspeu_09258D10[];
-extern AnimateEntityFrame D_pspeu_09258D20[];
 extern EInit g_EInitMalachi;
+extern EInit D_us_80180904;
+extern EInit D_us_80180910;
+extern EInit g_EInitParticle;
+
+
+static s16 D_pspeu_09258C88[] = {0, 72, 8, 0};
+static s16 D_pspeu_09258C90[] = {0, 40, 0, 4, 8, -4, -16, 0};
+static AnimateEntityFrame D_pspeu_09258CA0[] = {{32, 9}, {3, 10}, {3, 9}, {6, 11}, {6, 12}, {5, 13}, {5, 14}, {20, 13}, {2, 15}, {2, 17}, {33, 16}, {3, 17}, {2, 18}, {2, 19}, {2, 20}, {2, 21}, {2, 22}, {6, 9}, {3, 23}, {4, 24}, {3, 25}, POSE_END};
+extern AnimateEntityFrame D_pspeu_09258CD0[] = {{3, 1}, {5, 2}, {5, 3}, {3, 4}, {3, 5}, {5, 6}, {5, 7}, {3, 8}, POSE_LOOP(0)};
+extern AnimateEntityFrame D_pspeu_09258CE8[] = {{2, 9}, {3, 10}, {3, 9}, {3, 11}, {3, 12}, {4, 13}, {3, 14}, POSE_END};
+extern AnimateEntityFrame D_pspeu_09258CF8[] = {{2, 13}, {2, 14}, POSE_LOOP(0)};
+extern AnimateEntityFrame D_pspeu_09258D00[] = {{6, 26}, {6, 27}, {6, 28}, {6, 29}, POSE_LOOP(0)};
+extern AnimateEntityFrame D_pspeu_09258D10[] = {{2, 1}, {2, 2}, {2, 3}, {2, 4}, {2, 30}, {2, 31}, POSE_END};
+extern AnimateEntityFrame D_pspeu_09258D20[] = {{1, 1}, {1, 2}, {1, 3}, {1, 4}, {1, 30}, {1, 31}, {5, 30}, {4, 4}, {3, 3}, {2, 2}, {2, 1}, POSE_END};
+extern AnimateEntityFrame D_pspeu_09258D38[] = {{4, 32}, {4, 33}, {2, 34}, {2, 35}, {1, 36}, {1, 37}, {1, 38}, {1, 39}, {1, 38}, {1, 39}, {1, 40}, {1, 39}, {1, 40}, {1, 41}, {1, 40}, {1, 41}, {1, 42}, {1, 41}, {1, 42}, {1, 43}, {1, 42}, POSE_END};
+extern AnimateEntityFrame D_pspeu_09258D68[] = {{1, 43}, {1, 44}, POSE_LOOP(0)};
 
 void EntityMalachi(Entity* self) {
     RECT sp78;
@@ -464,10 +471,6 @@ void EntityMalachi(Entity* self) {
     }
 }
 
-extern AnimateEntityFrame D_pspeu_09258D38[];
-extern AnimateEntityFrame D_pspeu_09258D68[];
-extern EInit D_us_80180904;
-
 void func_us_801C4960(Entity* self) {
     Entity* other;
 
@@ -549,8 +552,6 @@ void func_us_801C4960(Entity* self) {
     }
 }
 
-extern EInit D_us_80180910;
-
 void func_us_801C4C0C(Entity* self) {
     Entity* other;
     s16 angle;
@@ -620,8 +621,8 @@ void func_us_801C4C0C(Entity* self) {
     }
 }
 
-extern EInit g_EInitParticle;
-extern AnimateEntityFrame g_Unk2EAnim[];
+// Data comes after the charal string for main malachi
+extern AnimateEntityFrame g_Unk2EAnim[] = {{2, 1}, {2, 2}, {2, 3}, {2, 4}, {2, 5}, {2, 6}, {2, 7}, {2, 8}, {2, 9}, {2, 10}, {2, 11}, {2, 12}, {2, 13}, POSE_END};
 
 void func_us_801C4EA8(Entity* self) {
     s16 angle;
