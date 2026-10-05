@@ -642,7 +642,7 @@ void EntityMalachiBall(Entity* self) {
             other->posY.i.hi += ((rsin(angle) * 28) >> 0xC);
             other->zPriority = self->zPriority + 1;
             if (self->facingLeft) {
-                angle += 0x800;
+                angle += ROT(180);
             }
             other->rotate = angle;
         }
