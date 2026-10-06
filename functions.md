@@ -750,8 +750,8 @@
 | rno1       | e_jack_o_bones.rodata             |       18 |          0 | Yes    |       |     |
 | rno1       | e_secrets.rodata                  |       18 |          0 | Yes    |       |     |
 | rno2       | e_ctulhu.rodata                   |       18 |          0 | Yes    |       |     |
+| rno2       | e_malachi.rodata                  |       18 |          0 | Yes    |       |     |
 | rno2       | e_secrets.rodata                  |       18 |          0 | Yes    |       |     |
-| rno2       | unk_C0F0.rodata                   |       18 |          0 | Yes    |       |     |
 | rno3       | e_jack_o_bones.rodata             |       18 |          0 | Yes    |       |     |
 | rno4       | unk_9940.rodata                   |       18 |          0 | Yes    |       |     |
 | rnz0       | e_ctulhu.rodata                   |       18 |          0 | Yes    |       |     |
@@ -7746,7 +7746,7 @@
 | nz0        | func_pspeu_092380B0               |      233 |         25 |        |       |     |
 | nz1        | func_pspeu_0924CC20               |      233 |         25 |        |       |     |
 | rno3       | func_pspeu_09255960               |      233 |         25 |        |       |     |
-| rno2       | func_us_801C4C0C                  |      233 |         33 |        |       |     |
+| rno2       | EntityMalachiBall                 |      233 |         33 |        |       |     |
 |            | func_092ECD88                     |      234 |         25 |        |       |     |
 | tt_006     | func_pspeu_092ECD88               |      234 |         25 |        |       |     |
 | rlib       | func_pspeu_09248E38               |      234 |         29 |        |       |     |
@@ -7837,7 +7837,7 @@
 | dra        | func_psp_090FA828                 |      245 |         39 | Yes    |       |     |
 | dre        | func_pspeu_0924C750               |      246 |         18 |        |       |     |
 | nz0        | func_pspeu_0923A3F8               |      246 |         21 |        |       |     |
-| rno2       | func_us_801C4960                  |      246 |         34 |        |       |     |
+| rno2       | EnittyMalachiShooter              |      246 |         34 |        |       |     |
 | rnz1       | func_pspeu_092565E0               |      246 |         35 |        |       |     |
 | dra        | func_psp_09112AC8                 |      246 |         41 |        |       |     |
 | no4        | func_pspeu_09237BE8               |      247 |          1 |        |       |     |
@@ -8955,7 +8955,7 @@
 | rbo6       | func_us_8019FCB4                  |      453 |         45 |        |       |     |
 | no0        | func_pspeu_092510A8               |      453 |         61 |        |       |     |
 | no2        | func_pspeu_0925A988               |      453 |         84 |        |       |     |
-| rno2       | EntityPrisoner                    |      453 |         84 |        |       |     |
+| rno2       | func_pspeu_09257348               |      453 |         84 |        |       |     |
 | rbo6       | EntityLockCamera                  |      454 |         48 |        |       |     |
 | nz0        | func_pspeu_092408E0               |      454 |         48 |        |       |     |
 | nz1        | func_pspeu_09258380               |      454 |         48 |        |       |     |
