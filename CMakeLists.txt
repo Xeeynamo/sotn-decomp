@@ -1250,6 +1250,44 @@ set(SOURCE_FILES_STAGE_MAD
     src/st/mad/bss.c
 )
 
+set(SOURCE_FILES_STAGE_RCEN
+    src/pc/stages/stage_rcen.c
+    src/st/rcen/header.c
+    src/st/rcen/sprite_banks.c
+    src/st/rcen/palette_def.c
+    src/st/rcen/layers.c
+    src/st/rcen/graphics_banks.c
+    src/st/rcen/gen/e_laydef.c
+    src/st/rcen/e_init.c
+    src/st/rcen/e_red_door_tiles.c
+    src/st/rcen/gen/rooms.c
+    src/st/rcen/gen/e_layout.c
+    src/st/rcen/stage_data.c
+    src/st/rcen/tilemaps.c
+    src/st/rcen/gen/us/sprites.c
+    src/st/rcen/e_room_bg.c
+    src/st/rcen/e_lock_camera.c
+    src/st/rcen/e_breakable.c
+    src/st/rcen/e_shaft.c
+    src/st/rcen/e_shaft_death_flames.c
+    src/st/rcen/cutscene.c
+    src/st/rcen/unk_1F0D8.c
+    src/st/rcen/e_elevator.c
+    src/st/rcen/st_update.c
+    src/st/rcen/collision.c
+    src/st/rcen/create_entity.c
+    src/st/rcen/e_red_door.c
+    src/st/rcen/st_common.c
+    src/st/rcen/e_collect.c
+    src/st/rcen/e_misc.c
+    src/st/rcen/e_stage_name.c
+    src/st/rcen/e_particles.c
+    src/st/rcen/e_room_fg.c
+    src/st/rcen/popup.c
+    src/st/rcen/prim_helpers.c
+    src/st/rcen/e_shaft_meridian_rings.c
+)
+
 set(SOURCE_FILES_CORE
     ${SOURCE_FILES_DRA}
     ${SOURCE_FILES_RIC}
@@ -1351,6 +1389,7 @@ add_overlay(no3 ${SOURCE_FILES_STAGE_NO3})
 add_overlay(lib ${SOURCE_FILES_STAGE_LIB})
 add_overlay(mad ${SOURCE_FILES_STAGE_MAD})
 add_overlay(bo1 ${SOURCE_FILES_BOSS_BO1})
+add_overlay(rcen ${SOURCE_FILES_STAGE_RCEN})
 
 foreach(id 000 002 007 008 012 034 035 037 040 041 043 045 046 050 051 052)
     add_overlay(w0_${id} src/weapon/w_${id}.c)
