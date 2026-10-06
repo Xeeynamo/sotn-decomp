@@ -82,7 +82,7 @@ typedef struct {
     u32 cnt;
 } BgTransfer;
 
-extern Unk0605CD90 DAT_0605CD90[];
+extern Unk0605CD90 DAT_0605CD90[4];
 extern BgTransfer DAT_0605D6C0[8];
 
 #define DMA_SRC_ADDR 0x002E0000

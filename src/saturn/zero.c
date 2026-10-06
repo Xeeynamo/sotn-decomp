@@ -1595,6 +1595,7 @@ void func_06008264(void) {
 // func_06008298
 void TransferAllBgLayers(void) {
     s32 i;
+    // BUG: DAT_0605CD90 has size 4
     for (i = 0; i < 8; i++) {
         TransferBgLayer(i);
     }
@@ -1907,7 +1908,7 @@ void func_06008B20(void) {
     s32 x, y;
     u32 i;
 
-    ptr = DAT_0605CD90;
+    ptr = &DAT_0605CD90[0];
     for (i = 0; i < 3; i++, ptr++) {
         if (ptr->unk18 != 0) {
             SCL_Open(SCL_NBG1 << i);
@@ -1935,7 +1936,35 @@ void func_06008B20(void) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008C2C, func_06008C2C);
+void func_06008C2C(void) {
+    Unk0605CD90* ptr;
+    s32 x, y;
+    u32 i;
+
+    ptr = &DAT_0605CD90[0];
+    for (i = 0; i < 3; i++, ptr++) {
+        if (i == 0) {
+            SCL_Open(SCL_NBG1);
+            x = (DAT_0605c680.unk3C / 4) * 7;
+            y = DAT_0605c680.unk40;
+            SCL_MoveTo(x, y, FIXED(0));
+            SCL_Close();
+        } else {
+            SCL_Open(SCL_NBG1 << i);
+            x = FIXED(0);
+            y = FIXED(10);
+            if (ptr->divisorX != 0) {
+                x = DAT_0605c680.unk3C / ptr->divisorX;
+            }
+            if (ptr->divisorY != 0) {
+                y = DAT_0605c680.unk40 / ptr->divisorY;
+            }
+            SCL_MoveTo(x, y, FIXED(0));
+            SCL_Close();
+        }
+    }
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008D04, func_06008D04);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008EE8, func_06008EE8);
 
