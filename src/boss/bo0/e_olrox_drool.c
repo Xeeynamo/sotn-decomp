@@ -31,9 +31,26 @@ static void func_us_801BA030(s16 sfxId) {
     }
 }
 
+ENTITY(OlroxDrool,
+    struct {
+        /* 0x7C */ struct Primitive* prim;
+        /* 0x80 */ s32 velocityX;
+        /* 0x84 */ s32 velocityY;
+        /* 0x88 */ u32 : 32;
+        /* 0x8C */ u32 : 32;
+        /* 0x90 */ u32 : 32;
+        /* 0x94 */ u32 : 32;
+        /* 0x98 */ u32 : 32;
+        /* 0x9C */ u32 : 32;
+        /* 0xA0 */ u32 : 32;
+        /* 0xA4 */ struct Entity* parent;
+    } olroxDrool
+);
+
+
 extern EInit g_EInitParticle;
 
-void EntityRealOlroxDrool(Entity* self) {
+void EntityRealOlroxDrool(EntityOlroxDrool* self) {
     Primitive* prim;
     Entity* entity;
     s16 params;
@@ -70,7 +87,7 @@ void EntityRealOlroxDrool(Entity* self) {
                 prim = prim->next;
             }
         } else {
-            DestroyEntity(self);
+            DestroyEntity(E(self));
             return;
         }
         break;
@@ -121,7 +138,7 @@ void EntityRealOlroxDrool(Entity* self) {
         entity = self->ext.olroxDrool.parent;
         self->ext.olroxDrool.velocityX = entity->posX.val;
         if (prim->y0 < prim->y1) {
-            DestroyEntity(self);
+            DestroyEntity(E(self));
             return;
         }
         break;

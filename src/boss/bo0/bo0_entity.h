@@ -2,6 +2,12 @@
 #ifndef BO0_ENTITY_H
 #define BO0_ENTITY_H
 
+
+typedef struct Entity Entity;
+typedef void (*PfnEntityUpdate)(struct Entity*);
+
+
+#include <entity_decl.h>
 #include <types.h>
 #include <common.h>
 #include <primitive.h>
@@ -168,6 +174,28 @@ typedef struct {
     ET_OlroxBlast olroxBlast;                                                  \
     ET_OlroxSkulls olroxSkulls;                                                \
     ET_OlroxTrueForm olroxTrueForm;
+
+typedef struct {
+    f32 posX;
+    f32 posY;
+    s32 velocityX;
+    s32 velocityY;
+    s16 hitboxOffX;
+    s16 hitboxOffY;
+    u16 facingLeft;
+    u16 palette;
+    u8 blendMode;
+    u8 drawFlags;
+    s16 scaleX;
+    s16 scaleY;
+    s16 rotate;
+    s16 rotPivotX;
+    s16 rotPivotY;
+    u16 zPriority;
+    u16 entityId;
+    PfnEntityUpdate pfnUpdate;
+    u16 step;
+} EntityOlroxTrueForm;
 
 SYNC_FIELD(ET_OlroxAfterImage, ET_OlroxDrool, parent);
 SYNC_FIELD(ET_OlroxAfterImage, ET_OlroxLaser, parent);
