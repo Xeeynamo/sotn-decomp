@@ -1769,15 +1769,16 @@ void func_0600871C(Unk0605CD90* arg0, UNK_0605c680* arg1, s32 arg2) {
     s16 x, y;
     u16 cols, rows;
     u16 tileBase;
-    s16 *dst;
-    s16 *src;
+    s16* dst;
+    s16* src;
     u16 i, j;
 
     if (arg0->unk20 == 0) {
         return;
     }
 
-    if ((g_CurrentRoom.stageID == 0x41) && (g_CurrentRoom.unk4 == 0x12) && (arg2 == 0)) {
+    if ((g_CurrentRoom.stageID == 0x41) && (g_CurrentRoom.unk4 == 0x12) &&
+        (arg2 == 0)) {
         arg0->width = 0x500;
     }
 
@@ -1836,7 +1837,8 @@ void func_0600871C(Unk0605CD90* arg0, UNK_0605c680* arg1, s32 arg2) {
                 dst++;
             }
 
-            if ((arg0->flags & 1) && ((x + j) % arg0->width) == (arg0->width - 1)) {
+            if ((arg0->flags & 1) &&
+                ((x + j) % arg0->width) == (arg0->width - 1)) {
                 src -= arg0->width - 1;
             } else {
                 src++;
@@ -1848,7 +1850,8 @@ void func_0600871C(Unk0605CD90* arg0, UNK_0605c680* arg1, s32 arg2) {
         src = DAT_0605C120[arg2] + 2;
         src += (x % arg0->width) + ((y + i + 1) % arg0->height) * arg0->width;
     }
-    if ((g_CurrentRoom.stageID == 0x41) && (g_CurrentRoom.unk4 == 0x12) && (arg2 == 0)) {
+    if ((g_CurrentRoom.stageID == 0x41) && (g_CurrentRoom.unk4 == 0x12) &&
+        (arg2 == 0)) {
         arg0->width = 0x2D0;
     }
 }
