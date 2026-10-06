@@ -278,7 +278,7 @@ struct Unk {
 extern s32 DAT_060F50AC;
 
 void func_060E1C08(Entity* self) {
-    if (g_pads[0].previous == 0x0800) {
+    if (g_pads[0].tapped == PAD_START) {
         DAT_060F50AC = 1;
 
         if (self->flags & FLAG_HAS_PRIMS) {
@@ -601,11 +601,11 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E73CC, func_060E73CC);
 void PlaySfx(s32);
 void DestroyEntity(Entity*);
 
-static inline SetGeomScreen(u32 h) { DAT_06061DE0[0] = DAT_06061DE0[1] = h; }
+static inline SetGeomScreen(u32 h) { DAT_06061DE0.x = DAT_06061DE0.y = h; }
 
 static inline void SetGeomOffset(u16 ofx, u16 ofy) {
-    DAT_06061DE8[0] = ofx;
-    DAT_06061DE8[1] = ofy;
+    DAT_06061DE8.x = ofx;
+    DAT_06061DE8.y = ofy;
 }
 
 void func_060E7508(Entity* self) {
@@ -1127,8 +1127,6 @@ extern s32 DAT_060F5098;
 extern MthMatrixTbl DAT_06061DF0;
 extern s32 g_Stage02Entity08ModelVertices14[];
 
-void TransformAndProjectPoints(s32* src, s32* dst, s32 count);
-
 void func_060E8E1C(s32 arg0, s32 arg1) {
     s32* dst_base;
     s32* dst;
@@ -1163,7 +1161,8 @@ void func_060E8E1C(s32 arg0, s32 arg1) {
     DAT_06061DF0.current->val[0][1] = DAT_06061DF0.current->val[0][1] * 5 / 4;
     DAT_06061DF0.current->val[0][2] = DAT_06061DF0.current->val[0][2] * 5 / 4;
 
-    TransformAndProjectPoints(dst_base, dst_base + 0x102, 14);
+    TransformAndProjectPoints(
+        (MthXyz*)dst_base, (XyInt*)(dst_base + 0x102), 14);
 }
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E8EEC, func_060E8EEC);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E9058, func_060E9058);

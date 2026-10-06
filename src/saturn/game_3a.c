@@ -3,6 +3,9 @@
 #include "sattypes.h"
 #include "game.h"
 
+#define _SPR2_
+#include "lib/spr/spr.h"
+
 void DestroyEntity(Entity* entity);
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606B6F8, LoadSubDisplayFiles);
@@ -61,7 +64,7 @@ s32 func_0606BB4C(void) {
     }
     SetStageOverlayAddress();
     ReadFileToAddr(g_StageFileRecords[g_CurrentRoom.stageID].chr,
-                   DAT_0605BEC4 + 0x25C00000);
+                   VRAM_ADDR + DAT_0605BEC4);
     func_0600C114();
     if (g_CurrentRoom.stageID == 0x40) {
         ReadFileToAddr(DAT_0606B754, 0x262000);

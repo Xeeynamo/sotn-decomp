@@ -1058,9 +1058,9 @@ void func_060B0638(s32 arg0, s32 arg1, s32 arg2) {
     }
 }
 void func_060B071C(void) {
-    if (g_pads[0].previous & PAD_R1) {
+    if (g_pads[0].tapped & PAD_R1) {
         DAT_060CE4B0++;
-    } else if (g_pads[0].previous & PAD_L1) {
+    } else if (g_pads[0].tapped & PAD_L1) {
         DAT_060CE4B0--;
     }
 }

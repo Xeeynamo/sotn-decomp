@@ -314,7 +314,7 @@ s32 func_060DF938(s32* arg0, XyInt* arg1) {
     point[2] = (MTH_Mul(DAT_06061DF0.current->val[2][0], value) +
                 DAT_06061DF0.current->val[2][3]) >>
                8;
-    MTH_Pers2D((MthXyz*)point, (MthXy*)DAT_06061DE0, arg1);
+    MTH_Pers2D((MthXyz*)point, &DAT_06061DE0, arg1);
     return point[2] << 8;
 }
 void func_060DF9B0(s32* arg0, XyInt* arg1) {
@@ -323,9 +323,9 @@ void func_060DF9B0(s32* arg0, XyInt* arg1) {
     point[0] = arg0[0] + DAT_06061DF0.current->val[0][3];
     point[1] = arg0[1] + DAT_06061DF0.current->val[1][3];
     point[2] = (arg0[2] + DAT_06061DF0.current->val[2][3]) >> 8;
-    MTH_Pers2D((MthXyz*)point, (MthXy*)DAT_06061DE0, arg1);
-    arg1->x += DAT_06061DE8[0];
-    arg1->y += DAT_06061DE8[1];
+    MTH_Pers2D((MthXyz*)point, &DAT_06061DE0, arg1);
+    arg1->x += DAT_06061DE8.x;
+    arg1->y += DAT_06061DE8.y;
 }
 void func_060DFA1C(MthXyz* angles, MthXyz* translation) {
     s32 angle;
@@ -798,7 +798,8 @@ void func_060E6310(s32 scale, s32 unused) {
     DAT_06061DF0.current->val[0][1] = DAT_06061DF0.current->val[0][1] * 5 / 4;
     DAT_06061DF0.current->val[0][2] = DAT_06061DF0.current->val[0][2] * 5 / 4;
 
-    TransformAndProjectPoints(dst_base, dst_base + 0x102, 14, &DAT_06061DF0);
+    TransformAndProjectPoints(
+        (MthXyz*)dst_base, (XyInt*)(dst_base + 0x102), 14);
 }
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E63E0, func_060E63E0);
 extern u8 g_Stage15SpriteBank23Frames[];

@@ -524,7 +524,7 @@ void RunMainEngine(void) {
             }
             break;
         case 3:
-            DAT_0605d772 = 4;
+            DAT_0605D770.unk2 = 4;
             DAT_0605cd70.unk0 += 2;
             break;
         }
@@ -543,7 +543,7 @@ void RunMainEngine(void) {
                     func_06010400();
                     SCL_DisplayFrame();
                 }
-                DAT_0605d772 = 9;
+                DAT_0605D770.unk2 = 9;
                 stopMusicFlag = 1;
                 DAT_0605cd70.unk0++;
             }
@@ -572,7 +572,7 @@ void RunMainEngine(void) {
     case 0x87:
     switchD_06070ab8_caseD_87:
         if ((g_PlayableCharacter != 0) || func_80133950()) {
-            DAT_0605d772 = (y = 11, y);
+            DAT_0605D770.unk2 = (y = 11, y);
             func_06005328();
             func_06005208(DAT_060860AC);
         }
@@ -591,7 +591,7 @@ void RunMainEngine(void) {
                     func_06010400();
                     SCL_DisplayFrame();
                 }
-                DAT_0605d772 = 4;
+                DAT_0605D770.unk2 = 4;
                 stopMusicFlag = 0;
                 DAT_0605cd70.unk0 = 0x86;
                 func_0606D554(1);
@@ -654,7 +654,7 @@ void RunMainEngine(void) {
             DAT_0605cd70.unk0 = 5;
         } else {
             func_06078120();
-            if (g_pads[0].previous & PAD_START) {
+            if (g_pads[0].tapped & PAD_START) {
                 if (StatusPause(1) != 0) {
                     DAT_0605c664 = 0;
                     PlaySfx(SET_UNPAUSE_SFX_SCRIPTS);
@@ -664,7 +664,7 @@ void RunMainEngine(void) {
                     DAT_06086258 = 0;
                 }
             } else {
-                if (((g_pads[0].previous & PAD_L1) && (DAT_0605D744 != 0)) &&
+                if (((g_pads[0].tapped & PAD_L1) && (DAT_0605D744 != 0)) &&
                     (func_06076718() != 0)) {
                     DAT_060860AC = 4;
                     StartColorOffsetFade(0, 8);
@@ -693,7 +693,7 @@ void RunMainEngine(void) {
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6071C3C, func_06071C3C);
 
-extern s32 DAT_0605c120;
+extern s32 DAT_0605C120;
 
 // original name: INIT_ROOM
 void InitRoom(void) {
@@ -732,7 +732,7 @@ void InitRoom(void) {
         g_CurrentRoom.unkA != g_CurrentRoom.unk8) {
         g_CurrentRoom.unkA = g_CurrentRoom.unk8;
     } else {
-        DAT_0605D7DC = DAT_0605c120;
+        DAT_0605D7DC = DAT_0605C120;
     }
     func_06009510(g_CurrentRoom.unk4);
     PLAYER.posX.i.hi = PLAYER.posX.i.hi % 0x140;
@@ -962,7 +962,7 @@ void SubDisp(void) {
     }
     if ((g_PlayableCharacter == 0) && (DAT_0605becc == 0) &&
         (DAT_0605cd70.unk0 > 3) && !DAT_0605D7F0) {
-        if ((g_pads[0].previous & PAD_START) && (DAT_06086270 == 0) &&
+        if ((g_pads[0].tapped & PAD_START) && (DAT_06086270 == 0) &&
             (DAT_0605cd70.unk0 < 0x14)) {
             if (CheckIfAllButtonsAreAssigned()) {
                 D_06085534 = 0x70;
@@ -1152,7 +1152,7 @@ void func_06073280(void) {
     if (g_PlayableCharacter == 0) {
         UpdateCapePalette();
     }
-    DAT_0605d772 = 8;
+    DAT_0605D770.unk2 = 8;
     func_060645B0();
     Scl_s_reg.dispenbl |= DAT_060862A4;
     SclProcess = 1;
@@ -1484,19 +1484,19 @@ s32 func_06074470(void) {
     ClearDebugPrintTilemap();
     ClearVdp2CharRamA1();
     SCL_InitConfigTb(&scfg);
-    scfg.dispenbl = 1;
-    scfg.charsize = 0;
-    scfg.pnamesize = 1;
-    scfg.platesize = 0;
-    scfg.coltype = 0;
-    scfg.datatype = 0;
-    scfg.mapover = 0;
-    scfg.flip = 0;
-    scfg.patnamecontrl = 100;
-    scfg.plate_addr[0] = 0x25E58000;
-    scfg.plate_addr[1] = 0x25E58000;
-    scfg.plate_addr[2] = 0x25E58000;
-    scfg.plate_addr[3] = 0x25E58000;
+    scfg.dispenbl = ON;
+    scfg.charsize = SCL_CHAR_SIZE_1X1;
+    scfg.pnamesize = SCL_PN1WORD;
+    scfg.platesize = SCL_PL_SIZE_1X1;
+    scfg.coltype = SCL_COL_TYPE_16;
+    scfg.datatype = SCL_CELL;
+    scfg.mapover = SCL_OVER_0;
+    scfg.flip = SCL_PN_10BIT;
+    scfg.patnamecontrl = 0x64;
+    scfg.plate_addr[0] = SCL_VDP2_VRAM_B0 + 0x18000;
+    scfg.plate_addr[1] = SCL_VDP2_VRAM_B0 + 0x18000;
+    scfg.plate_addr[2] = SCL_VDP2_VRAM_B0 + 0x18000;
+    scfg.plate_addr[3] = SCL_VDP2_VRAM_B0 + 0x18000;
     SCL_SetConfig(SCL_NBG0, &scfg);
 }
 
