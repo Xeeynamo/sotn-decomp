@@ -868,6 +868,7 @@
 | 1.00 | true     | func_us_801D289C                    | asm/us/st/rno0/matchings/e_sealed_door/func_us_801D289C.s 
 | 1.00 | true     | func_us_801A8B38                    | asm/us/st/rno1/matchings/e_red_door/func_us_801A8B38.s 
 | 1.00 | true     | func_us_801B9458                    | asm/us/st/rno2/matchings/e_red_door/func_us_801B9458.s 
+| 1.00 | true     | func_us_801B5EE4                    | asm/us/st/rno2/matchings/e_sealed_door/func_us_801B5EE4.s 
 | 1.00 | true     | func_us_801B6618                    | asm/us/st/rno3/matchings/e_red_door/func_us_801B6618.s 
 | 1.00 | true     | func_us_801CC94C                    | asm/us/st/rno4/matchings/e_red_door/func_us_801CC94C.s 
 | 1.00 | true     | func_us_801AF36C                    | asm/us/st/rnz0/matchings/e_red_door/func_us_801AF36C.s 
@@ -878,7 +879,6 @@
 | 1.00 | true     | func_801B3C58                       | asm/us/st/st0/matchings/e_red_door/func_801B3C58.s 
 | 1.00 | true     | func_us_801AFD98                    | asm/us/st/top/matchings/e_red_door/func_us_801AFD98.s 
 | 1.00 | true     | func_8018A950                       | asm/us/st/wrp/matchings/e_red_door/func_8018A950.s 
-| 1.00 | false    | func_us_801B5EE4                    | asm/us/st/rno2/nonmatchings/e_sealed_door/func_us_801B5EE4.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | EntityBloodDrips                    | asm/us/boss/bo0/matchings/e_bloody_zombie/EntityBloodDrips.s 
 | 1.00 | true     | func_us_801C3904                    | asm/us/boss/bo0/matchings/e_misc/func_us_801C3904.s 
@@ -6534,17 +6534,17 @@
 | 1.00 | true     | func_us_801A6848                    | asm/us/st/rno1/matchings/e_weather/func_us_801A6848.s 
 | 1.00 | false    | DebugInputWait                      | asm/us/boss/bo6/nonmatchings/us_3E79C/DebugInputWait.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_800F6A48                       | asm/us/dra/matchings/menu/func_800F6A48.s 
+| 0.90 | true     | def_cbread                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbread.s 
+| 0.90 | true     | def_cbready                         | asm/us/main/matchings/psxsdk/libcd/event/def_cbready.s 
+| 0.90 | true     | def_cbsync                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbsync.s 
+| 0.90 | true     | SpuSetNoiseVoice                    | asm/us/main/matchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | CdReadCallback                      | asm/us/main/matchings/psxsdk/libcd/cdread/CdReadCallback.s 
 | 1.00 | true     | CdReadyCallback                     | asm/us/main/matchings/psxsdk/libcd/sys/CdReadyCallback.s 
 | 1.00 | true     | CdSetDebug                          | asm/us/main/matchings/psxsdk/libcd/sys/CdSetDebug.s 
 | 1.00 | true     | CdSyncCallback                      | asm/us/main/matchings/psxsdk/libcd/sys/CdSyncCallback.s 
 | 1.00 | true     | SetVideoMode                        | asm/us/main/matchings/psxsdk/libetc/vmode/SetVideoMode.s 
--------------------------------------------------------------------------------
-| 0.90 | true     | def_cbread                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbread.s 
-| 0.90 | true     | def_cbready                         | asm/us/main/matchings/psxsdk/libcd/event/def_cbready.s 
-| 0.90 | true     | def_cbsync                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbsync.s 
-| 1.00 | true     | GsGetVcount                         | asm/us/main/matchings/psxsdk/libgs/gs_008/GsGetVcount.s 
-| 1.00 | true     | GsClearVcount                       | asm/us/main/matchings/psxsdk/libgs/gs_009/GsClearVcount.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801713C8                       | asm/us/servant/tt_000/matchings/bat/func_801713C8.s 
 | 1.00 | true     | func_us_801714F4                    | asm/us/servant/tt_001/matchings/ghost/func_us_801714F4.s 
@@ -6967,11 +6967,11 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityPrisoner                      | asm/us/boss/bo0/matchings/e_prisoner/EntityPrisoner.s 
 | 0.99 | true     | func_us_801B6E34                    | asm/us/st/no2/matchings/e_prisoner/func_us_801B6E34.s 
-| 0.99 | false    | EntityPrisoner                      | asm/us/st/rno2/nonmatchings/e_prisoner/EntityPrisoner.s 
+| 0.99 | true     | EntityPrisoner                      | asm/us/st/rno2/matchings/e_prisoner/EntityPrisoner.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntitySealedDoor                    | asm/us/boss/bo0/matchings/e_sealed_door/EntitySealedDoor.s 
 | 0.91 | true     | func_us_801B7980                    | asm/us/st/no2/matchings/e_sealed_door/func_us_801B7980.s 
-| 0.91 | false    | EntitySealedDoor                    | asm/us/st/rno2/nonmatchings/e_sealed_door/EntitySealedDoor.s 
+| 0.91 | true     | EntitySealedDoor                    | asm/us/st/rno2/matchings/e_sealed_door/EntitySealedDoor.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801AB9EC                    | asm/us/boss/bo0/matchings/e_secrets/func_us_801AB9EC.s 
 | 1.00 | true     | func_us_801B59C4                    | asm/us/st/no2/matchings/e_secrets/func_us_801B59C4.s 
@@ -7973,9 +7973,6 @@
 | 1.00 | true     | func_800F548C                       | asm/us/dra/matchings/menu/func_800F548C.s 
 | 0.94 | true     | func_801B1EF4                       | asm/us/st/sel/matchings/318CC/func_801B1EF4.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_800F6A48                       | asm/us/dra/matchings/menu/func_800F6A48.s 
-| 0.90 | true     | SpuSetNoiseVoice                    | asm/us/main/matchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | func_800F99B8                       | asm/us/dra/matchings/menu/func_800F99B8.s 
 | 0.95 | true     | func_801B2108                       | asm/us/st/sel/matchings/318CC/func_801B2108.s 
 -------------------------------------------------------------------------------
@@ -8077,6 +8074,9 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | get_ce                              | asm/us/main/matchings/psxsdk/libgpu/sys/get_ce.s 
 | 1.00 | true     | get_cs                              | asm/us/main/matchings/psxsdk/libgpu/sys/get_cs.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | GsGetVcount                         | asm/us/main/matchings/psxsdk/libgs/gs_008/GsGetVcount.s 
+| 1.00 | true     | GsClearVcount                       | asm/us/main/matchings/psxsdk/libgs/gs_009/GsClearVcount.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
