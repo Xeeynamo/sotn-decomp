@@ -200,7 +200,6 @@ typedef struct SclConfig {
     Uint8 mapover;
     Uint8 flip;
     Uint16 patnamecontrl;
-
     Uint32 plate_addr[32];
 } SclConfig;
 

@@ -1499,7 +1499,7 @@ void InitVdp2Display(void) {
     SPR_2FrameChgIntr(-1);
     SclPriBuffDirty.SclColOffset = 1;
     SclColOffset.ColorOffsetEnable = 0x6F;
-    SCL_SetColOffset(SCL_OFFSET_A, 0x6F, 0xFF01, 0xFF01, 0xFF01);
+    SCL_SetColOffset(SCL_OFFSET_A, 0x6F, -0xFF, -0xFF, -0xFF);
     SetVdp2BackgroundColor();
 }
 
@@ -1569,7 +1569,7 @@ void BlankScreen(void) {
     SCL_SetDisplayMode(SCL_NON_INTER, SCL_240LINE, SCL_NORMAL_A);
     SclPriBuffDirty.SclColOffset = 1;
     SclColOffset.ColorOffsetEnable = 0x6F;
-    SCL_SetColOffset(0, 0x6F, 0xFF01, 0xFF01, 0xFF01);
+    SCL_SetColOffset(SCL_OFFSET_A, 0x6F, -0xFF, -0xFF, -0xFF);
     SetVdp2BackgroundColor();
     Scl_w_reg.win0_start[0] = 0;
     Scl_w_reg.win0_start[1] = 12;
@@ -1965,7 +1965,7 @@ void func_06008C2C(void) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008D04, func_06008D04);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008D04, StartColorOffsetFade);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008EE8, func_06008EE8);
 
 void func_800EA5AC(u16 a, u8 r, u8 g, u8 b) {
@@ -1983,7 +1983,155 @@ void func_06009010(u8* rgb) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009058, func_06009058);
+extern SclConfig DAT_0605BED0[];
+
+void func_06009058(u16 arg0) {
+    SclConfig* scfg;
+    Unk0605CD90* ptr;
+    s32 i;
+
+    DAT_0605c680.unk0 = 0;
+    ptr = &DAT_0605CD90[0];
+    scfg = &DAT_0605BED0[0];
+    switch (arg0) {
+    case 6:
+        ptr->dst0 = SCL_VDP2_VRAM_A0;
+        ptr->unk8 = SCL_VDP2_VRAM_B0;
+        ptr->dst4 = SCL_COLRAM_ADDR;
+        ptr->unk24 = 0;
+        SCL_InitConfigTb(scfg);
+        scfg->charsize = 0;
+        scfg->pnamesize = 1;
+        scfg->platesize = 0;
+        scfg->coltype = 1;
+        scfg->datatype = 0;
+        scfg->mapover = 0;
+        scfg->flip = 1;
+        scfg->plate_addr[0] = scfg->plate_addr[1] = scfg->plate_addr[2] =
+            scfg->plate_addr[3] = ptr->unk8;
+        scfg->patnamecontrl = 0;
+        SCL_SetConfig(SCL_NBG0, scfg);
+        SCL_SetCycleTable(DAT_06038D30);
+        break;
+
+    case 4:
+    case 8:
+        for (i = 0; i < 2; i++, ptr++, scfg++) {
+            ptr->dst0 = SCL_VDP2_VRAM_A0 + i * 0x8000;
+            ptr->unk8 = SCL_VDP2_VRAM_B0 + i * 0x8000;
+            ptr->dst4 = SCL_COLRAM_ADDR + i * 0x200;
+            ptr->unk24 = i;
+            SCL_InitConfigTb(scfg);
+            scfg->charsize = 0;
+            scfg->pnamesize = 1;
+            scfg->platesize = 0;
+            scfg->coltype = 0;
+            scfg->datatype = 0;
+            scfg->mapover = 0;
+            scfg->flip = 0;
+            scfg->plate_addr[0] = scfg->plate_addr[1] = scfg->plate_addr[2] =
+                scfg->plate_addr[3] = ptr->unk8;
+            scfg->patnamecontrl = 0;
+            if (i != 0) {
+                scfg->patnamecontrl = 0x21;
+            }
+            SCL_SetConfig(SCL_NBG1 << i, scfg);
+        }
+        SCL_SetCycleTable(DAT_06038D50);
+        break;
+
+    case 2:
+        for (i = 0; i < 2; i++, ptr++, scfg++) {
+            ptr->dst0 = SCL_VDP2_VRAM_A0 + (1 - i) * 0x18000;
+            ptr->unk8 = SCL_VDP2_VRAM_B0 + i * 0x8000;
+            ptr->dst4 = SCL_COLRAM_ADDR + i * 0x200;
+            ptr->unk24 = i;
+            SCL_InitConfigTb(scfg);
+            scfg->charsize = 0;
+            scfg->pnamesize = 1;
+            scfg->platesize = 0;
+            scfg->coltype = 1;
+            scfg->datatype = 0;
+            scfg->mapover = 0;
+            scfg->flip = 0;
+            scfg->plate_addr[0] = scfg->plate_addr[1] = scfg->plate_addr[2] =
+                scfg->plate_addr[3] = ptr->unk8;
+            scfg->patnamecontrl = 0x43;
+            if (i != 0) {
+                scfg->flip = 1;
+                scfg->patnamecontrl = 0;
+            }
+            SCL_SetConfig(SCL_NBG1 << i, scfg);
+        }
+        SCL_SetCycleTable(DAT_06038D40);
+        break;
+
+    case 3:
+    case 7:
+        for (i = 0; i < 2; i++, ptr++, scfg++) {
+            ptr->dst0 = SCL_VDP2_VRAM_A0 + i * 0x20000;
+            ptr->unk8 = SCL_VDP2_VRAM_B0 + i * 0x8000;
+            ptr->dst4 = SCL_COLRAM_ADDR + i * 0x200;
+            ptr->unk24 = i;
+            SCL_InitConfigTb(scfg);
+            scfg->charsize = 0;
+            scfg->pnamesize = 1;
+            scfg->platesize = 0;
+            scfg->coltype = 1;
+            scfg->datatype = 0;
+            scfg->mapover = 0;
+            scfg->flip = 1;
+            scfg->plate_addr[0] = scfg->plate_addr[1] = scfg->plate_addr[2] =
+                scfg->plate_addr[3] = ptr->unk8;
+            scfg->patnamecontrl = i * 4;
+            SCL_SetConfig(SCL_NBG1 << i, scfg);
+        }
+        ptr->dst0 = SCL_VDP2_VRAM_A0 + 0x10000;
+        ptr->unk8 = SCL_VDP2_VRAM_B0 + 0x10000;
+        ptr->dst4 = SCL_COLRAM_ADDR + 0x400;
+        ptr->unk24 = 0x20;
+        SCL_InitConfigTb(scfg);
+        scfg->charsize = 0;
+        scfg->pnamesize = 1;
+        scfg->platesize = 3;
+        scfg->coltype = 0;
+        scfg->datatype = 0;
+        scfg->mapover = 0;
+        scfg->flip = 0;
+        scfg->plate_addr[0] = ptr->unk8;
+        scfg->plate_addr[1] = ptr->unk8 + 0x1000;
+        scfg->plate_addr[2] = ptr->unk8 + 0x2000;
+        scfg->plate_addr[3] = ptr->unk8 + 0x3000;
+        scfg->patnamecontrl = 0x42;
+        SCL_SetConfig(SCL_NBG3, scfg);
+        SCL_SetCycleTable(DAT_06038D60);
+        break;
+
+    case 5:
+    case 16:
+    case 17:
+        for (i = 0; i < 3; i++, ptr++, scfg++) {
+            ptr->dst0 = SCL_VDP2_VRAM_A0 + i * 0x8000;
+            ptr->unk8 = SCL_VDP2_VRAM_B0 + i * 0x8000;
+            ptr->dst4 = SCL_COLRAM_ADDR + i * 0x200;
+            ptr->unk24 = i * 0x10;
+            SCL_InitConfigTb(scfg);
+            scfg->charsize = 0;
+            scfg->pnamesize = 1;
+            scfg->platesize = 0;
+            scfg->coltype = 0;
+            scfg->datatype = 0;
+            scfg->mapover = 0;
+            scfg->flip = 0;
+            scfg->plate_addr[0] = scfg->plate_addr[1] = scfg->plate_addr[2] =
+                scfg->plate_addr[3] = ptr->unk8;
+            scfg->patnamecontrl = DAT_06038C84[i];
+            SCL_SetConfig(SCL_NBG1 << i, scfg);
+        }
+        SCL_SetCycleTable(DAT_06038D70);
+        break;
+    }
+}
 
 // original name: GAME_SCROLL_SET
 void func_06009510(u16 scrollId) {
