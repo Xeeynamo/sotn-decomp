@@ -220,7 +220,7 @@ void EntityCutscene(Entity* self) {
     u32 tempChar;
 #endif
     RECT rect;
-    s32 ptr;
+    u_long ptr;
 
 #ifdef VERSION_PSP
     DisableAutoPowerOff();
@@ -490,13 +490,13 @@ void EntityCutscene(Entity* self) {
                     *g_Dialogue.scriptCur--;
                     return;
                 case CSOP_SET_EVENTS:
-                    ptr = (u32)*g_Dialogue.scriptCur++;
+                    ptr = (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
-                    ptr |= (u32)*g_Dialogue.scriptCur++;
+                    ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
-                    ptr |= (u32)*g_Dialogue.scriptCur++;
+                    ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
-                    ptr |= (u32)*g_Dialogue.scriptCur++;
+                    ptr |= (u_long)*g_Dialogue.scriptCur++;
 #ifdef VERSION_PSP
                     ptr += (u32)D_pspeu_09269918;
 #endif
@@ -505,48 +505,44 @@ void EntityCutscene(Entity* self) {
                 case CSOP_SCRIPT_UNKNOWN_13:
                     continue;
                 case CSOP_SCRIPT_SWITCH:
-                    ptr = (u32)*g_Dialogue.scriptCur++;
+                    ptr = (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
-                    ptr |= (u32)*g_Dialogue.scriptCur++;
+                    ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
-                    ptr |= (u32)*g_Dialogue.scriptCur++;
+                    ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
-                    ptr |= (u32)*g_Dialogue.scriptCur++;
+                    ptr |= (u_long)*g_Dialogue.scriptCur++;
 #ifdef VERSION_PSP
                     ptr += (u32)D_pspeu_09269918;
 #else
                 ptr += 0x100000;
 #endif
-                    g_Dialogue.scriptCur += *(u8*)ptr << 2;
+                    g_Dialogue.scriptCur += *(u8*)CS_NEXT(ptr) << 2;
 
-                    ptr = (u32)*g_Dialogue.scriptCur++;
+                    ptr = (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
-                    ptr |= (u32)*g_Dialogue.scriptCur++;
+                    ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
-                    ptr |= (u32)*g_Dialogue.scriptCur++;
+                    ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
-                    ptr |= (u32)*g_Dialogue.scriptCur;
+                    ptr |= (u_long)*g_Dialogue.scriptCur;
 #ifdef VERSION_PSP
                     ptr += (u32)D_pspeu_09269918;
-                    g_Dialogue.scriptCur = (u8*)ptr;
-#else
-                g_Dialogue.scriptCur = (u8*)ptr + 0x100000;
 #endif
+                    g_Dialogue.scriptCur = CS_PTR(ptr);
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_15:
-                    ptr = (u32)*g_Dialogue.scriptCur++;
+                    ptr = (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
-                    ptr |= (u32)*g_Dialogue.scriptCur++;
+                    ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
-                    ptr |= (u32)*g_Dialogue.scriptCur++;
+                    ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
-                    ptr |= (u32)*g_Dialogue.scriptCur;
+                    ptr |= (u_long)*g_Dialogue.scriptCur;
 #ifdef VERSION_PSP
                     ptr += (u32)D_pspeu_09269918;
-                    g_Dialogue.scriptCur = (u8*)ptr;
-#else
-                g_Dialogue.scriptCur = (u8*)ptr + 0x100000;
 #endif
+                    g_Dialogue.scriptCur = CS_PTR(ptr);
                     continue;
                 case CSOP_WAIT_FOR_FLAG:
                     if (!((g_CutsceneFlags >> *g_Dialogue.scriptCur) & 1)) {
@@ -566,13 +562,13 @@ void EntityCutscene(Entity* self) {
                     if (g_SkipCutscene) {
                         g_Dialogue.scriptCur += 5;
                     } else {
-                        ptr = (u32)*g_Dialogue.scriptCur++;
+                        ptr = (u_long)*g_Dialogue.scriptCur++;
                         ptr <<= 4;
-                        ptr |= (u32)*g_Dialogue.scriptCur++;
+                        ptr |= (u_long)*g_Dialogue.scriptCur++;
                         ptr <<= 4;
-                        ptr |= (u32)*g_Dialogue.scriptCur++;
+                        ptr |= (u_long)*g_Dialogue.scriptCur++;
                         ptr <<= 4;
-                        ptr |= (u32)*g_Dialogue.scriptCur++;
+                        ptr |= (u_long)*g_Dialogue.scriptCur++;
 #ifdef VERSION_PSP
                         switch (ptr) {
                         case 0:
@@ -610,7 +606,7 @@ void EntityCutscene(Entity* self) {
                             break;
                         }
 #else
-                    ptr += 0x100000;
+                    ptr = (u_long)CS_PTR(ptr);
 #endif
                         j = *g_Dialogue.scriptCur++;
                         LoadTPage((u_long*)ptr, 1, 0, x_vals[j], 256, 48, 72);

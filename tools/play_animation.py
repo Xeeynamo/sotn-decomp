@@ -176,6 +176,10 @@ class AnimationShower:
         # Load DRA file dynamically, they are split out different
         if not anim_num & 0x8000:
             animset_file = f"src/dra/gen/us/{anim_set_name}.h"
+
+        if not os.path.exists(animset_file):
+            animset_file = animset_file.replace("gen", "gen/us")
+
         with open(animset_file) as f:
             self.framesdata = f.read().splitlines()
             print("Loading framearray")

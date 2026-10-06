@@ -5,7 +5,7 @@
 #include <string.h>
 #include "overlay.h"
 #include "../pc.h"
-#include "../../st/dre/dre.h"
+#include "../../st/rcen/rcen.h"
 
 extern Overlay g_Overlay;
 extern PfnEntityUpdate EntityUpdates[];
@@ -15,32 +15,29 @@ extern PfnEntityUpdate* PfnEntityUpdates;
 extern LayoutEntity** g_pStObjLayoutHorizontal;
 extern LayoutEntity** g_pStObjLayoutVertical;
 
-extern u8 gfx_portrait_alucard[];
-extern u8 gfx_portrait_lisa[];
-extern u8 gfx_portrait_succubus[];
+// Read by the SCRIPT_SWITCH in the cutscene script; never written on PSX
+static s32 D_us_801817A8 = 0;
 
-u8 D_801816C0 = 0;
-u8 D_801816C4[4] = {0};
+extern u8 gfx_portrait_alucard[];
+extern u8 gfx_portrait_shaft[];
 
 u8 cutscene_script[] = {
-#include "../../st/dre/gen/cutscene_script_psx.h"
-#include "../../st/dre/gen/cutscene_events.h"
+#include "../../st/rcen/gen/cutscene_script_psx.h"
+#include "../../st/rcen/gen/cutscene_events.h"
 };
 
 static void InitCutscenePc(void) {
     static const CutsceneSymbolRange symbols[] = {
-        {D_801816C4, 0x801816c4, sizeof(D_801816C4)},
-        {cutscene_script, 0x801816c8, sizeof(cutscene_script)},
-        {gfx_portrait_alucard, 0x8018800c, 0xd80},
-        {gfx_portrait_lisa, 0x80188d8c, 0xd80},
-        {gfx_portrait_succubus, 0x80189b0c, 0xd80},
+        {&D_us_801817A8, 0x801817a8, sizeof(s32)},
+        {cutscene_script, 0x801817ac, sizeof(cutscene_script)},
+        {gfx_portrait_alucard, 0x8018ec70, 0xd80},
+        {gfx_portrait_shaft, 0x8018f9f0, 0xd80},
     };
     CutscenePcAlloc(symbols, LEN(symbols));
 }
 
 void Psyz_ModuleStart(void* param) {
     Overlay* o = param;
-
     memcpy(o, &g_Overlay, sizeof(Overlay));
     PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = entityLayoutHorizontal;

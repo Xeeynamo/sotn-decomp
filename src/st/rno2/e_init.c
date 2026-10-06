@@ -44,9 +44,9 @@ void EntityCtulhuFireball(Entity* self);
 void EntityCtulhuIceShockwave(Entity* self);
 void EntityCtulhuDeath(Entity* self);
 void EntityMalachi(Entity* self);
-void func_us_801C4960(Entity* self);
-void func_us_801C4C0C(Entity* self);
-void func_us_801C4EA8(Entity* self);
+void EnittyMalachiShooter(Entity* self);
+void EntityMalachiBall(Entity* self);
+void EntityMalachiBallWisp(Entity* self);
 void EntityKarasuman(Entity* self);
 void EntityKarasumanFeatherAttack(Entity* self);
 void EntityKarasumanOrbAttack(Entity* self);
@@ -109,9 +109,9 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityCtulhuIceShockwave,
     EntityCtulhuDeath,
     EntityMalachi,
-    func_us_801C4960,
-    func_us_801C4C0C,
-    func_us_801C4EA8,
+    EnittyMalachiShooter,
+    EntityMalachiBall,
+    EntityMalachiBallWisp,
     EntityKarasuman,
     EntityKarasumanFeatherAttack,
     EntityKarasumanOrbAttack,
@@ -143,7 +143,7 @@ EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, 0, 0x001};
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
 EInit g_EInitEnvironment = {ANIMSET_OVL(2), 11, 0, 0, 0x003};
-EInit D_us_801808C8 = {ANIMSET_OVL(3), 1, 73, 513, 0x003};
+EInit g_EInitPrisoner = {ANIMSET_OVL(3), 1, 73, 513, 0x003};
 
 EInit g_EInitCtulhu = {ANIMSET_OVL(4), 0, 72, 515, 0x0E9};
 EInit g_EInitCtulhuFireball = {ANIMSET_OVL(4), 0, 72, 515, 0x0EA};

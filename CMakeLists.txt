@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.21)
 
 project(sotn)
 
@@ -7,11 +7,7 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-if (WIN32)
-    set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
-endif()
-
-if (MSVC)
+if(MSVC)
     cmake_policy(SET CMP0091 NEW)
     set(CMAKE_MSVC_RUNTIME_LIBRARY "$<$<CONFIG:Debug>:MultiThreadedDebugDLL>$<$<NOT:$<CONFIG:Debug>>:MultiThreadedDLL>")
 endif()
@@ -23,9 +19,9 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 option(ENABLE_ASAN "Enable AddressSanitizer" ON)
 
-if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
     set(CMAKE_BUILD_TYPE Debug)
-    if (ENABLE_ASAN)
+    if(ENABLE_ASAN)
         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
         set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fsanitize=address")
@@ -53,7 +49,7 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Werror=shift-count-overflow")
 endif()
 
-if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Werror=discarded-qualifiers")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Werror=stringop-overflow")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Werror=stringop-overread")
@@ -63,7 +59,7 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 endif()
 
 if(MSVC)
-    add_compile_options(/J)  # Treat char as unsigned
+    add_compile_options(/J) # Treat char as unsigned
 else()
     add_compile_options(-funsigned-char)
 endif()
@@ -82,13 +78,13 @@ set(SOTN_STR_BIN
 add_custom_command(
     OUTPUT "${SOTN_STR_BIN}"
     COMMAND ${CMAKE_COMMAND} -E env
-            "CARGO_TARGET_DIR=${SOTN_STR_TARGET_DIR}"
-            "${CARGO_BIN}" build --release
-            --manifest-path "${CMAKE_SOURCE_DIR}/tools/sotn_str/Cargo.toml"
+    "CARGO_TARGET_DIR=${SOTN_STR_TARGET_DIR}"
+    "${CARGO_BIN}" build --release
+    --manifest-path "${CMAKE_SOURCE_DIR}/tools/sotn_str/Cargo.toml"
     DEPENDS
-        "${CMAKE_SOURCE_DIR}/tools/sotn_str/Cargo.toml"
-        "${CMAKE_SOURCE_DIR}/tools/sotn_str/Cargo.lock"
-        "${CMAKE_SOURCE_DIR}/tools/sotn_str/src/main.rs"
+    "${CMAKE_SOURCE_DIR}/tools/sotn_str/Cargo.toml"
+    "${CMAKE_SOURCE_DIR}/tools/sotn_str/Cargo.lock"
+    "${CMAKE_SOURCE_DIR}/tools/sotn_str/src/main.rs"
     VERBATIM
     COMMENT "Building host sotn_str")
 add_custom_target(sotn_str_host DEPENDS "${SOTN_STR_BIN}")
@@ -944,7 +940,7 @@ set(SOURCE_FILES_STAGE_DRE
     src/st/dre/e_succubus.c
 )
 
-set (SOURCE_FILES_STAGE_ST0
+set(SOURCE_FILES_STAGE_ST0
     src/pc/stages/stage_st0.c
     src/st/st0/header.c
     src/st/st0/bss.c
@@ -1254,15 +1250,53 @@ set(SOURCE_FILES_STAGE_MAD
     src/st/mad/bss.c
 )
 
+set(SOURCE_FILES_STAGE_RCEN
+    src/pc/stages/stage_rcen.c
+    src/st/rcen/header.c
+    src/st/rcen/sprite_banks.c
+    src/st/rcen/palette_def.c
+    src/st/rcen/layers.c
+    src/st/rcen/graphics_banks.c
+    src/st/rcen/gen/e_laydef.c
+    src/st/rcen/e_init.c
+    src/st/rcen/e_red_door_tiles.c
+    src/st/rcen/gen/rooms.c
+    src/st/rcen/gen/e_layout.c
+    src/st/rcen/stage_data.c
+    src/st/rcen/tilemaps.c
+    src/st/rcen/gen/us/sprites.c
+    src/st/rcen/e_room_bg.c
+    src/st/rcen/e_lock_camera.c
+    src/st/rcen/e_breakable.c
+    src/st/rcen/e_shaft.c
+    src/st/rcen/e_shaft_death_flames.c
+    src/st/rcen/cutscene.c
+    src/st/rcen/unk_1F0D8.c
+    src/st/rcen/e_elevator.c
+    src/st/rcen/st_update.c
+    src/st/rcen/collision.c
+    src/st/rcen/create_entity.c
+    src/st/rcen/e_red_door.c
+    src/st/rcen/st_common.c
+    src/st/rcen/e_collect.c
+    src/st/rcen/e_misc.c
+    src/st/rcen/e_stage_name.c
+    src/st/rcen/e_particles.c
+    src/st/rcen/e_room_fg.c
+    src/st/rcen/popup.c
+    src/st/rcen/prim_helpers.c
+    src/st/rcen/e_shaft_meridian_rings.c
+)
+
 set(SOURCE_FILES_CORE
     ${SOURCE_FILES_DRA}
     ${SOURCE_FILES_RIC}
 )
-if (USE_PLAYER_MARIA)
+if(USE_PLAYER_MARIA)
     add_compile_definitions(USE_PLAYER_MARIA)
     list(APPEND SOURCE_FILES_CORE
-            ${SOURCE_FILES_MARIA}
-            src/pc/pl_maria.c)
+        ${SOURCE_FILES_MARIA}
+        src/pc/pl_maria.c)
 endif()
 
 add_subdirectory(tools/psyz/psyz)
@@ -1288,54 +1322,32 @@ target_compile_definitions(${PROJECT_NAME} PUBLIC
 
 target_include_directories(psyz PUBLIC tools/psyz/psyz/include)
 target_compile_definitions(psyz PRIVATE __psyz)
-psyz_strip_file_prefix(${PROJECT_NAME})
 psyz_title(${PROJECT_NAME} "Castlevania: Symphony of the Night")
+psyz_strip_file_prefix(${PROJECT_NAME})
 sotn_str_apply(${PROJECT_NAME})
-if (WIN32)
-    target_link_libraries(${PROJECT_NAME} PRIVATE psyz)
-    set_target_properties(${PROJECT_NAME} PROPERTIES ENABLE_EXPORTS ON)
-    if (MSVC)
-        # Windows PE has no -rdynamic equivalent, and a DLL must resolve all
-        # externals at link time.
-        # Generates an export definition for overlays to where to link to.
-        get_filename_component(_msvc_bindir "${CMAKE_C_COMPILER}" DIRECTORY)
-        set(_sotn_def "${CMAKE_BINARY_DIR}/sotn_exports.def")
-        add_custom_command(TARGET ${PROJECT_NAME} PRE_LINK
-            COMMAND ${CMAKE_COMMAND}
-                    -DDUMPBIN=${_msvc_bindir}/dumpbin.exe
-                    -DOUT=${_sotn_def}
-                    "-DINPUTS=$<TARGET_FILE:psyz>$<SEMICOLON>$<JOIN:$<TARGET_OBJECTS:${PROJECT_NAME}>,$<SEMICOLON>>"
-                    "-DNODATA_SYMBOLS=g_saveIconPal"
-                    -P ${CMAKE_SOURCE_DIR}/cmake/gen_export_def.cmake
-            VERBATIM
-            COMMENT "Generating export .def for overlay symbol resolution")
-        set_property(TARGET ${PROJECT_NAME} APPEND_STRING
-                     PROPERTY LINK_FLAGS " /DEF:${_sotn_def}")
-    endif()
-elseif (APPLE)
-    target_link_libraries(${PROJECT_NAME} PRIVATE psyz m)
-    target_link_options(${PROJECT_NAME} PRIVATE -Wl,-export_dynamic)
-else()
-    target_link_libraries(${PROJECT_NAME} PRIVATE psyz m ${CMAKE_DL_LIBS})
-    target_link_options(${PROJECT_NAME} PRIVATE -rdynamic)
+target_link_libraries(${PROJECT_NAME} PRIVATE psyz)
+if(NOT MSVC)
+    target_link_libraries(${PROJECT_NAME} PRIVATE m)
+endif()
+if(NOT WIN32)
+    target_link_libraries(${PROJECT_NAME} PRIVATE ${CMAKE_DL_LIBS})
 endif()
 
-function(add_overlay name)
-    set(_overlay_sources ${ARGN})
-    if (WIN32)
-        list(APPEND _overlay_sources src/pc/ovl_stubs.c)
-    endif()
-    add_library(${name} SHARED ${_overlay_sources})
-    set_target_properties(${name} PROPERTIES PREFIX "")
+psyz_exports(${PROJECT_NAME})
 
-    target_include_directories(${name} PRIVATE
+function(add_overlay name)
+    psyz_add_module(${name} SOURCES ${ARGN} HOST ${PROJECT_NAME})
+    set(_target ${name})
+
+    target_include_directories(${_target} BEFORE PRIVATE
         include
         src/dra
         src/pc
         src/st/${name}
+        tools/psyz/psyz/include
     )
 
-    target_compile_definitions(${name} PRIVATE
+    target_compile_definitions(${_target} PRIVATE
         _USE_MATH_DEFINES
         VERSION_PC
         PERMUTER
@@ -1346,16 +1358,13 @@ function(add_overlay name)
         OVERLAY_BUILD
     )
 
-    # Overlays need to resolve the same libraries the main exec is linked to
-    target_include_directories(${name} PRIVATE tools/psyz/psyz/include)
-    if (WIN32)
-        target_link_libraries(${name} PRIVATE ${PROJECT_NAME})
-    elseif (APPLE)
-        target_link_options(${name} PRIVATE -Wl,-undefined,dynamic_lookup)
+    if(NOT MSVC AND NOT APPLE)
+        target_link_options(${name} PRIVATE -Wl,-Bsymbolic)
     endif()
 
-    psyz_strip_file_prefix(${name})
-    sotn_str_apply(${name})
+    psyz_strip_file_prefix(${_target})
+    sotn_str_apply(${_target})
+    set(${name}_COMPILE_TARGET ${_target} PARENT_SCOPE)
 endfunction()
 
 add_overlay(sel ${SOURCE_FILES_STAGE_SEL})
@@ -1380,12 +1389,13 @@ add_overlay(no3 ${SOURCE_FILES_STAGE_NO3})
 add_overlay(lib ${SOURCE_FILES_STAGE_LIB})
 add_overlay(mad ${SOURCE_FILES_STAGE_MAD})
 add_overlay(bo1 ${SOURCE_FILES_BOSS_BO1})
+add_overlay(rcen ${SOURCE_FILES_STAGE_RCEN})
 
 foreach(id 000 002 007 008 012 034 035 037 040 041 043 045 046 050 051 052)
     add_overlay(w0_${id} src/weapon/w_${id}.c)
-    target_compile_definitions(w0_${id} PRIVATE WEAPON0)
+    target_compile_definitions(${w0_${id}_COMPILE_TARGET} PRIVATE WEAPON0)
     add_overlay(w1_${id} src/weapon/w_${id}.c)
-    target_compile_definitions(w1_${id} PRIVATE WEAPON1)
+    target_compile_definitions(${w1_${id}_COMPILE_TARGET} PRIVATE WEAPON1)
 endforeach()
 
 add_overlay(tt_000 ${SOURCE_FILES_TT_000})
