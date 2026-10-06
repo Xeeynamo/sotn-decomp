@@ -229,7 +229,7 @@ void func_0600460C(void) {
 }
 
 void func_060046E8(void) {
-    BgTransfer* transfers;
+    BgTransfer* transfer;
     u32 i;
 
     DAT_06057F40 = 0;
@@ -268,12 +268,12 @@ void func_060046E8(void) {
 
     func_0600FB34();
 
-    transfers = DAT_0605d6c0;
+    transfer = &DAT_0605D6C0[0];
     for (i = 0; i < 8; i++) {
-        transfers[i].tileFlags = 0;
-        transfers[i].src = 0;
-        transfers[i].dest = 0;
-        transfers[i].cnt = 0;
+        transfer[i].tileFlags = 0;
+        transfer[i].src = 0;
+        transfer[i].dest = 0;
+        transfer[i].cnt = 0;
     }
 
     g_CurrentRoom.stageID = 0;
@@ -311,7 +311,7 @@ void func_060047E8(void) {
     g_Tilemap.width = 0;
     g_Tilemap.y = 0;
     g_Tilemap.x = 0;
-    DAT_0605C6DC = 0;
+    DAT_0605C6D8.a = 0;
     currentMusicId = 0;
 }
 
@@ -370,7 +370,7 @@ void func_06004A10(void) {
         *ptr++ = 0;
     }
 
-    g_pads[0].tapped = g_pads[0].previous = g_pads[0].pressed = 0;
+    g_pads[0].previous = g_pads[0].tapped = g_pads[0].pressed = 0;
     ResetPadsRepeat();
     while (PER_LInit(PER_KD_PERTIM, 1, 2, DAT_06057F50, 0) != PER_INT_OK) {
     }
@@ -382,7 +382,7 @@ void func_06004A74(void) {
     u32 status;
     s32 i;
 
-    g_pads[0].tapped = g_pads[0].pressed;
+    g_pads[0].previous = g_pads[0].pressed;
     status = PER_LGetPer(&DAT_060505F8, &DAT_060505FC);
     if (DAT_060505FC->con != PER_MCON_NCON_UNKNOWN &&
         DAT_060505F8->id == PER_ID_DGT && DAT_060505F8->size == PER_SIZE_DGT) {
@@ -420,14 +420,10 @@ void func_06004A74(void) {
 }
 
 void UpdatePads(void) {
-    s16 previous;
-    s16 pressed;
-
-    previous = g_pads[0].pressed;
-    g_pads[0].tapped = previous;
-    pressed = ~DAT_060505F8->buttons;
-    g_pads[0].pressed = pressed;
-    g_pads[0].previous = pressed & (previous ^ pressed);
+    g_pads[0].previous = g_pads[0].pressed;
+    g_pads[0].pressed = ~DAT_060505F8->buttons;
+    g_pads[0].tapped =
+        (g_pads[0].pressed ^ g_pads[0].previous) & g_pads[0].pressed;
 }
 
 s32 g_PadsRepeatTimer[];
@@ -449,7 +445,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004C70, UpdatePadsRepeat);
 
 // func_06004CDC
 void InitializePads(void) {
-    g_pads[0].previous = g_pads[0].pressed = g_pads[0].tapped =
+    g_pads[0].tapped = g_pads[0].pressed = g_pads[0].previous =
         g_pads[0].repeat = PAD_NONE;
 }
 
@@ -520,7 +516,7 @@ void func_06004DE8(void) {
 
     SCL_VblankEnd();
     func_06004A74();
-    if (func_06006ED4() == 1) {
+    if (IsCdOpened() == true) {
         SYS_EXECDMP();
     }
 
@@ -545,7 +541,7 @@ void func_06004E94(void) {
     set_imask(0);
 
     SCL_VblankEnd();
-    if (func_06006ED4() == 1) {
+    if (IsCdOpened() == true) {
         SYS_EXECDMP();
     }
 
@@ -569,7 +565,7 @@ void func_06005208(s32 arg) {
     if (mode == 5) {
         Scl_s_reg.dispenbl &= 0xFFFE;
         SclProcess = 1;
-        DAT_0605d772 = 5;
+        DAT_0605D770.unk2 = 5;
     } else {
         DAT_0605C100 = 0;
         DAT_0605CD80 = 0;
@@ -1146,26 +1142,24 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006720, func_06006720);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006A7C, func_06006A7C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006C00, func_06006C00);
 
-s8* func_06006E14(s8* path) {
+char* func_06006E14(char* path) {
     s32 lastSlash;
     s32 i;
 
     lastSlash = -1;
-    i = 0;
-    do {
+    for (i = 0; i < 0x3F; i++) {
         if (path[i] == '\\') {
             lastSlash = i;
         } else if (path[i] == 0) {
             break;
         }
-        i++;
-    } while (i <= 0x3E);
+    }
 
     lastSlash++;
     return path + lastSlash;
 }
 
-void func_06006E4C(s8* path, s8* dst) {
+void func_06006E4C(char* path, char* dst) {
     s32 lastSlash;
     s32 i;
 
@@ -1196,9 +1190,7 @@ s32 func_06006E9C(s32* nsct, s32 gfs) {
 }
 
 // original name: IsCdOpened
-bool func_06006ED4() {
-    return (CDC_GetHirqReq() & CDC_HIRQ_DCHG) ? true : false;
-}
+bool IsCdOpened() { return (CDC_GetHirqReq() & CDC_HIRQ_DCHG) ? true : false; }
 
 s32 func_06006EF8(void) {
     s32 stat[4];
@@ -1407,9 +1399,10 @@ void ResetSpriteVram() {
     d_06038dbc = 0;
 }
 
-extern u16 d_0605AEA0[4];
+extern XyInt DAT_0605AEA0[2];
 extern SprSpCmd DAT_06050684[];
 extern SprSpCmd* d_0605AEAC;
+extern XyInt DAT_0600E23C;
 
 void func_06007D54(void) {
     SprSpCmd cmd;
@@ -1417,22 +1410,22 @@ void func_06007D54(void) {
     SPR_2OpenCommand(1);
 
     cmd.control = 0x1009;
-    LOW(cmd.cx) = DAT_0605BEC0;
+    LOW(cmd.cx) = LOW(DAT_0605BEC0);
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(0, &cmd);
         d_0605AEAC++;
     }
 
     cmd.control = 0x1008;
-    LOW(cmd.ax) = ((s32*)d_0605AEA0)[0];
-    LOW(cmd.cx) = ((s32*)d_0605AEA0)[1];
+    LOW(cmd.ax) = LOW(DAT_0605AEA0[0]);
+    LOW(cmd.cx) = LOW(DAT_0605AEA0[1]);
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(0, &cmd);
         d_0605AEAC++;
     }
 
     cmd.control = 0x100A;
-    LOW(cmd.ax) = DAT_0600E23C;
+    LOW(cmd.ax) = LOW(DAT_0600E23C);
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(0, &cmd);
         d_0605AEAC++;
@@ -1456,7 +1449,7 @@ void CloseSpriteList(void) {
         cmd.ax = cmd.dx = 0;
         cmd.bx = cmd.cx = d_0605BEBE;
         cmd.ay = cmd.by = 0;
-        cmd.cy = cmd.dy = d_0605AEA0[1] - 1;
+        cmd.cy = cmd.dy = DAT_0605AEA0[0].y - 1;
         SPR_2Cmd(0x1FF, &cmd);
         d_0605AEAC++;
     }
@@ -1467,8 +1460,8 @@ void CloseSpriteList(void) {
 // func_06007EB8
 void SetSpriteEraseData(s16 arg0) {
     SPR_2FrameEraseData(arg0);
-    SPR_SetEraseData(
-        arg0, d_0605AEA0[0], d_0605AEA0[1], d_0605AEA0[2], d_0605AEA0[3]);
+    SPR_SetEraseData(arg0, DAT_0605AEA0[0].x, DAT_0605AEA0[0].y,
+                     DAT_0605AEA0[1].x, DAT_0605AEA0[1].y);
 }
 
 // func_06007F04
@@ -1477,8 +1470,8 @@ void InitVdp2Display(void) {
     SCL_SetDisplayMode(0, 1, 0);
     SPR_2FrameChgIntr(-1);
     SclPriBuffDirty.SclColOffset = 1;
-    SclColOffset.ColorOffsetEnable = 0x6f;
-    SCL_SetColOffset(0, 0x6f, 0xFF01, 0xFF01, 0xFF01);
+    SclColOffset.ColorOffsetEnable = 0x6F;
+    SCL_SetColOffset(0, 0x6F, 0xFF01, 0xFF01, 0xFF01);
     SetVdp2BackgroundColor();
 }
 
@@ -1642,7 +1635,7 @@ s32 func_06008524(u32 dest, u32 src, u32 cnt) {
     if (DAT_0605cd70.unk0 == 1) {
         first = 3;
     }
-    transfer = &DAT_0605d6c0[first];
+    transfer = &DAT_0605D6C0[first];
 
     for (i = first; i < 8; i++, transfer++) {
         if (transfer->cnt == 0) {
@@ -1660,50 +1653,50 @@ s32 func_06008524(u32 dest, u32 src, u32 cnt) {
 // func_06008588
 void TransferBgLayer(s32 arg0) {
     s32 cnt;
-    BgTransfer* puVar5;
+    BgTransfer* transfer;
     Unk0605CD90* puVar6;
 
-    puVar5 = &DAT_0605d6c0[arg0];
+    transfer = &DAT_0605D6C0[arg0];
     puVar6 = &DAT_0605CD90[arg0];
-    if (puVar5->tileFlags == 0) {
+    if (transfer->tileFlags == 0) {
         return;
     }
-    if (puVar5->tileFlags & 1) {
+    if (transfer->tileFlags & 1) {
         cnt = DecompressLZSS(puVar6->unkc, (s32)DAT_060485E0, puVar6->unk18);
         DmaScroll((u16*)DAT_060485E0, puVar6->dst0, cnt);
     }
-    if (puVar5->tileFlags & 2) {
+    if (transfer->tileFlags & 2) {
         cnt = DecompressLZSS(puVar6->unk10, (s32)DAT_060485E0, puVar6->unk1c);
         DmaScroll((u16*)DAT_060485E0, puVar6->dst4, cnt);
     }
-    if (puVar5->tileFlags & 4) {
+    if (transfer->tileFlags & 4) {
         if (DAT_0605cd70.unk2 == 4) {
             BuildSubDispTilemap(puVar6);
         } else {
             func_0600871C(puVar6, &DAT_0605c680, arg0);
         }
     }
-    if (puVar5->tileFlags & 8) {
-        DmaScroll(puVar5->src, puVar5->dest, puVar5->cnt);
+    if (transfer->tileFlags & 8) {
+        DmaScroll(transfer->src, transfer->dest, transfer->cnt);
     }
-    if (puVar5->tileFlags & 0x10) {
-        DmaScroll(puVar5->src, puVar5->dest, puVar5->cnt);
+    if (transfer->tileFlags & 0x10) {
+        DmaScroll(transfer->src, transfer->dest, transfer->cnt);
     }
-    if (puVar5->tileFlags & 0x20) {
-        DmaScroll(puVar5->src, puVar5->dest, puVar5->cnt);
+    if (transfer->tileFlags & 0x20) {
+        DmaScroll(transfer->src, transfer->dest, transfer->cnt);
     }
-    if (puVar5->tileFlags & 0x40) {
+    if (transfer->tileFlags & 0x40) {
         cnt = DecompressLZSS(puVar6->unkc, DMA_SRC_ADDR, puVar6->unk18);
         DmaScroll(DMA_SRC_ADDR, puVar6->dst0, cnt);
     }
-    if (puVar5->tileFlags & 0x80) {
+    if (transfer->tileFlags & 0x80) {
         cnt = DecompressLZSS(puVar6->unk10, DMA_SRC_ADDR, puVar6->unk1c);
         DmaScroll(DMA_SRC_ADDR, puVar6->dst4, cnt);
     }
-    puVar5->tileFlags = 0;
-    puVar5->cnt = 0;
-    puVar5->dest = 0;
-    puVar5->src = 0;
+    transfer->tileFlags = 0;
+    transfer->cnt = 0;
+    transfer->dest = 0;
+    transfer->src = 0;
 }
 
 // original name: DMA_SCROLL
@@ -1722,8 +1715,7 @@ void BuildSubDispTilemap(Unk0605CD90* arg0) {
     u16 sVar2;
     s16* psVar5;
     s16* psVar7;
-    u16 i; // r2
-    u16 j; // r1
+    u16 i, j;
 
     psVar7 = DAT_0605c120[3] + 1;
     sVar2 = arg0->unk24 * 0x1000;
@@ -1754,7 +1746,7 @@ void UpdateScrollForRoom(void) {
 void func_06008AB4(void) {
     if (DAT_0605cd70.unk2 != 4 &&
         (DAT_0605cd70.unk0 != 0x91 || DAT_0605cd70.unk2 != 1) &&
-        DAT_0605d772 != 4) {
+        DAT_0605D770.unk2 != 4) {
         if (DAT_0605cd70.unk2 != 5 || DAT_0605cd70.unk0 <= 2) {
             func_0600BD68();
         }
@@ -1766,18 +1758,21 @@ void func_06008AB4(void) {
 // _SCROLL_DSP
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008B20, func_06008B20);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008C2C, func_06008C2C);
-INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6008D04, func_06008D04);
-INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6008EE8, func_06008EE8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008FF0, func_800EA5AC);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008D04, func_06008D04);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008EE8, func_06008EE8);
+
+void func_800EA5AC(u16 a, u8 r, u8 g, u8 b) {
+    DAT_0605C6D8.a = a;
+    DAT_0605C6D8.r = r;
+    DAT_0605C6D8.g = g;
+    DAT_0605C6D8.b = b;
+}
 
 void func_06009010(u8* rgb) {
-    s16 enabled;
-
-    enabled = DAT_0605C6DC;
-    if (enabled != 0) {
+    if (DAT_0605C6D8.a != 0) {
         SCL_SetColOffset(SCL_OFFSET_A, 0x6F, rgb[0], rgb[1], rgb[2]);
     } else {
-        SCL_SetColOffset(SCL_OFFSET_A, 0x6F, 0, 0, enabled);
+        SCL_SetColOffset(SCL_OFFSET_A, 0x6F, 0, 0, 0);
     }
 }
 
@@ -1790,7 +1785,7 @@ void func_06009510(u16 scrollId) {
     Unk0605CD90* ptr;
 
     i = 0;
-    ptr = DAT_0605CD90;
+    ptr = &DAT_0605CD90[0];
 
     for (; i < 4; i++, ptr++) {
         ptr->unk18 = 0;
@@ -2152,22 +2147,22 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B954, func_0600B954);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600BA24, func_0600BA24);
 
 void func_0600BCE0(s32* mtx, s16 angle) {
-    s32 sincos[2];
+    Fixed32 s, c;
     s32 cosv;
     s32 sinv;
     s32 axis;
 
-    rsincos(angle, &sincos[0], &sincos[1]);
-    cosv = sincos[1];
-    sinv = sincos[0];
+    rsincos(angle, &s, &c);
+    cosv = c;
+    sinv = s;
     axis = mtx[0];
-    sincos[1] = cosv * 0x10;
-    sincos[0] = sinv * 0x10;
-    mtx[0] = MTH_Mul(sincos[1], axis);
-    mtx[1] = MTH_Mul(sincos[0], axis);
+    c = cosv * 0x10;
+    s = sinv * 0x10;
+    mtx[0] = MTH_Mul(c, axis);
+    mtx[1] = MTH_Mul(s, axis);
     axis = mtx[3];
-    mtx[2] = -MTH_Mul(sincos[0], axis);
-    mtx[3] = MTH_Mul(sincos[1], axis);
+    mtx[2] = -MTH_Mul(s, axis);
+    mtx[3] = MTH_Mul(c, axis);
 }
 
 extern SprGourTbl* SpGourTbl;
@@ -2223,42 +2218,42 @@ void func_0600BEA8(void) {
 }
 
 void func_0600BF08(void) {
-    u16 sp[2];
+    s16 size[2];
 
-    sp[0] = 0x60;
-    sp[1] = 0x80;
-    AllocSpriteCharVram(8, 0, sp, 0);
+    size[0] = 0x60;
+    size[1] = 0x80;
+    AllocSpriteCharVram(8, 0, size, 0);
 }
 
 void func_0600BF38(void) {
-    s16 local[2];
+    s16 size[2];
     s32 i;
 
-    local[0] = 0x80;
-    local[1] = 0x50;
+    size[0] = 0x80;
+    size[1] = 0x50;
     for (i = 0; i < 8; i++) {
-        AllocSpriteCharVram(8, 0, local, 0);
+        AllocSpriteCharVram(8, 0, size, 0);
     }
     func_0600AB60();
 }
 
 void func_0600BF8C(void) {
-    s16 local[2];
+    s16 size[2];
     s32 i;
 
-    local[0] = 0x100;
-    local[1] = 0x80;
+    size[0] = 0x100;
+    size[1] = 0x80;
     for (i = 0; i < 2; i++) {
-        AllocSpriteCharVram(8, 0, local, 0);
+        AllocSpriteCharVram(8, 0, size, 0);
     }
 }
 
 void func_0600BFD8(void) {
-    s16 local[2];
+    s16 size[2];
 
-    local[0] = 0x100;
-    local[1] = 0xA0;
-    AllocSpriteCharVram(8, 0, local, 0);
+    size[0] = 0x100;
+    size[1] = 0xA0;
+    AllocSpriteCharVram(8, 0, size, 0);
 }
 
 void func_0600C00C(void) {
@@ -2321,7 +2316,7 @@ void func_0600C114(void) {
     s32 i;
 
     d_0605BECA = DAT_06038FD4;
-    bank = *DAT_060645EC;
+    bank = DAT_060645EC[0];
     i = 0;
     while (bank != NULL) {
         if (bank->palettes != NULL) {
@@ -2343,8 +2338,7 @@ void func_0600C18C(void) { d_0605AEA8 = 0x10; }
 
 void func_0600C1A0(void) {
     SaturnSpriteResource* entry;
-    s32 i;
-    s32 j;
+    s32 i, j;
 
     if (g_PlayableCharacter == 1 || g_PlayableCharacter == 2) {
         d_0605AEA8 = 0x30;
@@ -2353,7 +2347,7 @@ void func_0600C1A0(void) {
     }
     d_0605AEB0 = 0;
 
-    for (i = 0; i <= 4; i++) {
+    for (i = 0; i < 5; i++) {
         entry = DAT_06064650[i];
         if (entry->palettes != NULL) {
             entry->flags = func_0600AEE4(entry->palettes);
@@ -2548,7 +2542,7 @@ void InitBackupRam(void) {
 
     func_0600CC14();
 
-    BUP_Init(0x0605DDD0, 0x06002000, (BupConfig*)&DAT_0605DD90);
+    BUP_Init(DAT_0605DDD0, DAT_06002000, &DAT_0605DD90);
 
     func_0600CBCC();
 
@@ -2574,7 +2568,7 @@ s32 func_0600CD70(void) {
     InitBackupRam();
     func_0600CC14();
 
-    if ((u16)DAT_0605DD90 == 1) {
+    if (DAT_0605DD90.unit_id == 1) {
         status = BUP_Stat(0, 0, &sttb);
         result = 0;
         if (status == BUP_UNFORMAT) {
@@ -2945,8 +2939,8 @@ void func_0600E164(void) {
     count = DAT_0605CD5C;
     if (count != 0) {
         if (count > 0) {
-            cmd.ax = cmd.dx = *(s16*)&DAT_0605BEC0 - (--count);
-            cmd.bx = cmd.cx = *(s16*)&DAT_0605BEC0;
+            cmd.ax = cmd.dx = DAT_0605BEC0.x - (--count);
+            cmd.bx = cmd.cx = DAT_0605BEC0.x;
         } else {
             cmd.ax = cmd.dx = 0;
             cmd.bx = cmd.cx = -count - 1;
@@ -2954,19 +2948,21 @@ void func_0600E164(void) {
         cmd.control = 0x1004;
         cmd.drawMode = 0x00C0;
         cmd.color = 0x67F0;
-        cmd.ay = cmd.by = DAT_0605AEA2;
-        cmd.cy = cmd.dy = DAT_0605BEC2;
+        cmd.ay = cmd.by = DAT_0605AEA0[0].y;
+        cmd.cy = cmd.dy = DAT_0605BEC0.y;
         SPR_2Cmd(0x1FF, &cmd);
         d_0605AEAC++;
     }
 }
 
-const Uint16 DAT_0600E228[12] = {0};
+const Uint16 DAT_0600E228[10] = {0};
 
-void func_0600E240(Point16* arg0) {
+const XyInt DAT_0600E23C = {0, 0};
+
+void func_0600E240(XyInt* arg0) {
     MTH_InitialMatrix(&DAT_06061DF0, 2, &DAT_060579A8);
-    DAT_06061DE8[0] = ((Point16*)&DAT_0600E23C)->x;
-    DAT_06061DE8[1] = ((Point16*)&DAT_0600E23C)->y;
+    DAT_06061DE8.x = DAT_0600E23C.x;
+    DAT_06061DE8.y = DAT_0600E23C.y;
     DAT_06057A08.x = -(arg0->x / 2);
     DAT_06057A08.y = -(arg0->y / 2);
     DAT_06057A0C.x = arg0->x + arg0->x / 2;
@@ -3034,20 +3030,68 @@ void TransformNormals(MthXyz* src, MthXyz* dst, s32 count) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E450, TransformAndProjectPoints);
+// 0x0600E450
+void TransformAndProjectPoints(MthXyz* src, XyInt* dst, s32 count) {
+    MthXyz point;
 
-// original name: CheckClipScreenArea
-s32 CheckClipScreenArea(Point16* arg0) {
-    if (arg0->x < DAT_06057A08.x || DAT_06057A0C.x < arg0->x ||
-        arg0->y < DAT_06057A08.y || DAT_06057A0C.y < arg0->y) {
-        return 0;
+    while (count > 0) {
+        MTH_CoordTrans(DAT_06061DF0.current, src, &point);
+        point.z >>= 8;
+        MTH_Pers2D(&point, &DAT_06061DE0, dst);
+        dst->x += DAT_06061DE8.x;
+        dst->y += DAT_06061DE8.y;
+        src++;
+        dst++;
+        count--;
     }
-    return 1;
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E51C, RotateVec2Degrees);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E5A4, RotateVec2);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E61C, func_0600E61C);
+// original name: CheckClipScreenArea
+bool CheckClipScreenArea(XyInt* arg0) {
+    if (arg0->x < DAT_06057A08.x || DAT_06057A0C.x < arg0->x ||
+        arg0->y < DAT_06057A08.y || DAT_06057A0C.y < arg0->y) {
+        return false;
+    }
+    return true;
+}
+
+// 0x0600E51C
+void RotateVec2Degrees(MthXy* arg0, s16 arg1) {
+    Fixed32 angle;
+    Fixed32 s, c;
+    MthXy pos;
+
+    angle = MTH_IntToFixed(arg1);
+    c = MTH_Cos(angle);
+    s = MTH_Sin(angle);
+
+    pos = *arg0;
+    arg0->x = MTH_Mul(c, pos.x) - MTH_Mul(s, pos.y);
+    arg0->y = MTH_Mul(s, pos.x) + MTH_Mul(c, pos.y);
+}
+
+// 0x0600E5A4
+void RotateVec2(MthXy* arg0, s16 arg1) {
+    Fixed32 s, c;
+    MthXy pos;
+
+    rsincos(arg1, &s, &c);
+    c *= 0x10;
+    s *= 0x10;
+
+    pos = *arg0;
+    arg0->x = MTH_Mul(c, pos.x) - MTH_Mul(s, pos.y);
+    arg0->y = MTH_Mul(s, pos.x) + MTH_Mul(c, pos.y);
+}
+
+bool func_0600E61C(XyInt* p0, XyInt* p1, XyInt* p2) {
+    s32 dx1 = p1->x - p0->x;
+    s32 dx2 = p2->x - p0->x;
+    s32 dy1 = p1->y - p0->y;
+    s32 dy2 = p2->y - p0->y;
+
+    return (dx1 * dy2) > (dy1 * dx2);
+}
 
 const s16 ratan_tbl[] = {
     0x000, 0x000, 0x001, 0x001, 0x002, 0x003, 0x003, 0x004, 0x005, 0x005, 0x006,
@@ -3318,6 +3362,7 @@ const s16 rsin_tbl[] = {
     0x0FFF, 0x0FFF, 0x0FFF, 0x0FFF, 0x0FFF, 0x0FFF, 0x0FFF,
 };
 
+//_SSsin
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F7BC, rsin);
 
 //_SScos
@@ -3421,8 +3466,8 @@ void func_0600FB34(void) {
 }
 
 s32 func_0600FB4C(void) {
-    if ((DAT_0605d772 == 0) && ((g_pads[0].pressed & 0x700) == 0x700)) {
-        if ((g_pads[0].previous & PAD_START) && (DAT_0605C658 != 0)) {
+    if ((DAT_0605D770.unk2 == 0) && ((g_pads[0].pressed & 0x700) == 0x700)) {
+        if ((g_pads[0].tapped & PAD_START) && (DAT_0605C658 != 0)) {
             return 1;
         }
     }
@@ -3481,30 +3526,30 @@ void func_0600FFB8(Entity* self) {
 
 // func_06010008
 void InitDebugPrint(void) {
-    SclConfig temp;
+    SclConfig scfg;
 
     DAT_06062224[1] = 0;
     DAT_06062224[0] = 0;
     ClearDebugPrintTilemap();
-    SCL_InitConfigTb(&temp);
-    temp.dispenbl = 1;
-    temp.charsize = 0;
-    temp.pnamesize = 1;
-    temp.platesize = 0;
-    temp.coltype = 0;
-    temp.datatype = 0;
-    temp.mapover = 0;
-    temp.flip = 0;
-    temp.patnamecontrl = 0x66;
-    temp.plate_addr[0] = VDP2_DEBUG_TILEMAP_OFFSET;
-    temp.plate_addr[1] = VDP2_DEBUG_TILEMAP_OFFSET;
-    temp.plate_addr[2] = VDP2_DEBUG_TILEMAP_OFFSET;
-    temp.plate_addr[3] = VDP2_DEBUG_TILEMAP_OFFSET;
-    SCL_SetConfig(SCL_NBG0, &temp);
-    DAT_0605d6c0[3].tileFlags = 0x10;
-    DAT_0605d6c0[3].src = &DAT_06039214;
-    DAT_0605d6c0[3].dest = VDP2_25F00600;
-    DAT_0605d6c0[3].cnt = 0x80;
+    SCL_InitConfigTb(&scfg);
+    scfg.dispenbl = 1;
+    scfg.charsize = 0;
+    scfg.pnamesize = 1;
+    scfg.platesize = 0;
+    scfg.coltype = 0;
+    scfg.datatype = 0;
+    scfg.mapover = 0;
+    scfg.flip = 0;
+    scfg.patnamecontrl = 0x66;
+    scfg.plate_addr[0] = SCL_VDP2_VRAM_B0 + 0x18000;
+    scfg.plate_addr[1] = SCL_VDP2_VRAM_B0 + 0x18000;
+    scfg.plate_addr[2] = SCL_VDP2_VRAM_B0 + 0x18000;
+    scfg.plate_addr[3] = SCL_VDP2_VRAM_B0 + 0x18000;
+    SCL_SetConfig(SCL_NBG0, &scfg);
+    DAT_0605D6C0[3].tileFlags = 0x10;
+    DAT_0605D6C0[3].src = &DAT_06039214;
+    DAT_0605D6C0[3].dest = SCL_COLRAM_ADDR + 0x600;
+    DAT_0605D6C0[3].cnt = 0x80;
 }
 
 // 0x060100B8
@@ -3514,7 +3559,7 @@ void ClearDebugPrintTilemap(void) {
     u16 i;
     u16* ptr;
 
-    ptr = VDP2_DEBUG_TILEMAP_OFFSET;
+    ptr = SCL_VDP2_VRAM_B0 + 0x18000;
     for (i = 0; i < 0x1000; i++) {
         *ptr++ = 0;
     }

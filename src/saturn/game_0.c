@@ -249,7 +249,7 @@ void CreateEntitiesBelow(s16 posY) {
 extern u16** DAT_060645e4;
 extern u16** DAT_060645f8;
 
-void InitRoomEntities(s32 param_1) {
+void InitRoomEntities(s32 arg0) {
     Tilemap* tilemap;
     s16 temp;
     s16 i;
@@ -258,39 +258,39 @@ void InitRoomEntities(s32 param_1) {
     s32 iVar9;
     s16 rightEdge;
 
-    if (param_1 >= 0x60) {
+    if (arg0 >= 0x60) {
         u16 uVar5 = D_8003C708.flags & 0x63;
 
         switch (uVar5) {
         case 0x20:
-            param_1 = 0x30;
+            arg0 = 0x30;
             break;
         case 0x21:
-            param_1 = 0x31;
+            arg0 = 0x31;
             break;
         case 0x22:
-            param_1 = 0x32;
+            arg0 = 0x32;
             break;
         default:
-            param_1 = 0x0;
+            arg0 = 0x0;
             break;
         }
-    } else if (param_1 == 0x50) {
+    } else if (arg0 == 0x50) {
         switch (D_8003C708.flags & 0x63) {
         case 0x40:
-            param_1 = 0x33;
+            arg0 = 0x33;
             break;
         case 0x41:
-            param_1 = 0x34;
+            arg0 = 0x34;
             break;
         default:
-            param_1 = 0;
+            arg0 = 0;
             break;
         }
     } else {
-        param_1++;
+        arg0++;
     }
-    iVar9 = g_CurrentRoom.unk8 * 0x35 + param_1;
+    iVar9 = g_CurrentRoom.unk8 * 0x35 + arg0;
     g_LayoutObjHorizontal = DAT_060645e4[iVar9];
     g_LayoutObjVertical = DAT_060645f8[iVar9];
     ptrH = g_LayoutObjHorizontal;

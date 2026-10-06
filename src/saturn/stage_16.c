@@ -334,8 +334,7 @@ void func_060E323C(s32 scale, s32 unused) {
     DAT_06061DF0.current->val[0][1] = DAT_06061DF0.current->val[0][1] * 5 / 4;
     DAT_06061DF0.current->val[0][2] = DAT_06061DF0.current->val[0][2] * 5 / 4;
 
-    TransformAndProjectPoints(
-        base, (s32*)((char*)base + 0x408), 0xE, &DAT_06061DF0);
+    TransformAndProjectPoints((MthXyz*)base, (XyInt*)((char*)base + 0x408), 14);
 }
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E330C, func_060E330C);
 void func_060E3478(Entity* entity) {

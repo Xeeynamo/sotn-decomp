@@ -524,7 +524,7 @@ void RunMainEngine(void) {
             }
             break;
         case 3:
-            DAT_0605d772 = 4;
+            DAT_0605D770.unk2 = 4;
             DAT_0605cd70.unk0 += 2;
             break;
         }
@@ -543,7 +543,7 @@ void RunMainEngine(void) {
                     func_06010400();
                     SCL_DisplayFrame();
                 }
-                DAT_0605d772 = 9;
+                DAT_0605D770.unk2 = 9;
                 stopMusicFlag = 1;
                 DAT_0605cd70.unk0++;
             }
@@ -572,7 +572,7 @@ void RunMainEngine(void) {
     case 0x87:
     switchD_06070ab8_caseD_87:
         if ((g_PlayableCharacter != 0) || func_80133950()) {
-            DAT_0605d772 = (y = 11, y);
+            DAT_0605D770.unk2 = (y = 11, y);
             func_06005328();
             func_06005208(DAT_060860AC);
         }
@@ -591,7 +591,7 @@ void RunMainEngine(void) {
                     func_06010400();
                     SCL_DisplayFrame();
                 }
-                DAT_0605d772 = 4;
+                DAT_0605D770.unk2 = 4;
                 stopMusicFlag = 0;
                 DAT_0605cd70.unk0 = 0x86;
                 func_0606D554(1);
@@ -654,7 +654,7 @@ void RunMainEngine(void) {
             DAT_0605cd70.unk0 = 5;
         } else {
             func_06078120();
-            if (g_pads[0].previous & PAD_START) {
+            if (g_pads[0].tapped & PAD_START) {
                 if (StatusPause(1) != 0) {
                     DAT_0605c664 = 0;
                     PlaySfx(SET_UNPAUSE_SFX_SCRIPTS);
@@ -664,7 +664,7 @@ void RunMainEngine(void) {
                     DAT_06086258 = 0;
                 }
             } else {
-                if (((g_pads[0].previous & PAD_L1) && (DAT_0605D744 != 0)) &&
+                if (((g_pads[0].tapped & PAD_L1) && (DAT_0605D744 != 0)) &&
                     (func_06076718() != 0)) {
                     DAT_060860AC = 4;
                     StartColorOffsetFade(0, 8);
@@ -962,7 +962,7 @@ void SubDisp(void) {
     }
     if ((g_PlayableCharacter == 0) && (DAT_0605becc == 0) &&
         (DAT_0605cd70.unk0 > 3) && !DAT_0605D7F0) {
-        if ((g_pads[0].previous & PAD_START) && (DAT_06086270 == 0) &&
+        if ((g_pads[0].tapped & PAD_START) && (DAT_06086270 == 0) &&
             (DAT_0605cd70.unk0 < 0x14)) {
             if (CheckIfAllButtonsAreAssigned()) {
                 D_06085534 = 0x70;
@@ -1152,7 +1152,7 @@ void func_06073280(void) {
     if (g_PlayableCharacter == 0) {
         UpdateCapePalette();
     }
-    DAT_0605d772 = 8;
+    DAT_0605D770.unk2 = 8;
     func_060645B0();
     Scl_s_reg.dispenbl |= DAT_060862A4;
     SclProcess = 1;

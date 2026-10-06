@@ -445,8 +445,6 @@ void func_060E4368(s32 arg0, s32 arg1, s32 arg2) {
 extern s32 DAT_060F34D0[];
 extern s32 DAT_060F34E0[];
 extern MthMatrixTbl DAT_06061DF0;
-extern void TransformAndProjectPoints(
-    s32* src, s32* dst, s32 count, MthMatrixTbl* matrixTbl);
 
 void func_060E43A4(s32 scale, s32 unused) {
     s32* base;
@@ -485,8 +483,7 @@ void func_060E43A4(s32 scale, s32 unused) {
     DAT_06061DF0.current->val[0][1] = DAT_06061DF0.current->val[0][1] * 5 / 4;
     DAT_06061DF0.current->val[0][2] = DAT_06061DF0.current->val[0][2] * 5 / 4;
 
-    TransformAndProjectPoints(
-        base, (s32*)((char*)base + 0x408), 0xE, &DAT_06061DF0);
+    TransformAndProjectPoints((MthXyz*)base, (XyInt*)((char*)base + 0x408), 14);
 }
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E4474, func_060E4474);
 void func_060E45E0(Entity* entity) {

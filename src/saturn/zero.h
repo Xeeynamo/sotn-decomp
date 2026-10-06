@@ -79,12 +79,9 @@ typedef struct {
 } BgTransfer;
 
 extern Unk0605CD90 DAT_0605CD90[];
-extern BgTransfer DAT_0605d6c0[8];
+extern BgTransfer DAT_0605D6C0[8];
 
 #define DMA_SRC_ADDR 0x002E0000
-
-#define VDP2_DEBUG_TILEMAP_OFFSET (SCL_VDP2_VRAM + 0x58000)
-#define VDP2_25F00600 SCL_VDP2_VRAM + 0x100600
 
 extern s16 DAT_06062224[];
 extern s32 DAT_06039214;
@@ -92,7 +89,6 @@ void ClearDebugPrintTilemap();
 
 #define SH2_REG_M_FRT_IC 0x21000000
 
-extern s32 DAT_060645d0;
 extern void* g_BatResourceDescriptorList;
 
 extern s32* DAT_060a5000;
@@ -103,8 +99,8 @@ extern s32* DAT_06066000;
 
 void func_06006FA8(void);
 
-extern s32 DAT_060476a4;
 extern s32 DAT_060476a0;
+extern s32 DAT_060476a4;
 extern s32 DAT_06038a44;
 
 void func_060082E8(void);
@@ -119,15 +115,10 @@ void InitBackupRam(void);
 s32 func_0600D028(u32 device, s8 arg1);
 s8 func_0600D264(u32 device, s8 arg1);
 s8 func_0600D47C(u32 device, s8 arg1);
-extern s8 DAT_0605DD61;
-extern s16 DAT_0605DD90;
 void InitSystem();
 void func_060040D8();
 
 /* Declarations moved here by tools/saturn/move_declarations.py */
-extern u16 DAT_0605d772;
-extern s16 DAT_0605AEA2;
-extern s16 DAT_0605BEC2;
 extern s32 DAT_0605CD5C;
 void func_0600971C(void);
 void func_06005208(s32);
@@ -212,14 +203,18 @@ extern EntityEntry** PfnEntityUpdates[];
 extern GameApi g_api;
 extern GameSettings g_Settings;
 extern int rand(void);
-extern u16 DAT_06061DE8[2];
-extern s32 DAT_06061DE0[2];
+extern MthXy DAT_06061DE0;
+extern XyInt DAT_06061DE8;
+extern BupConfig DAT_0605DD90;
 extern u16 DAT_0605DD94;
 extern s8 DAT_0605DD60;
+extern s8 DAT_0605DD61;
+extern u32 DAT_0605DDD0[BUP_LIB_SIZE4];
+extern u32 DAT_06002000[BUP_WORK_SIZE4];
 
 void func_0600C818();
 void ResetLayerColorCalc();
-extern u16 DAT_0605cdb8;
+extern u16 DAT_0605CDB8;
 void DestroySpriteObject(SpriteObject*);
 extern u32 g_randomNext;
 s32 func_0602A778(s32, s32, s32);
@@ -303,7 +298,13 @@ extern u8 DAT_06057F40;
 extern s32 DAT_0605C118;
 extern s32 DAT_0605CE90;
 extern s32 DAT_0605C6D4;
-extern s16 DAT_0605C6DC;
+typedef struct {
+    s8 r;
+    s8 g;
+    s8 b;
+    s16 a;
+} Unk0605C6D8;
+extern Unk0605C6D8 DAT_0605C6D8;
 extern Unk0605D770 DAT_0605D770;
 extern s32 DAT_0605D764;
 
@@ -333,14 +334,14 @@ void func_06009D30(void);
 void func_0600B234(void);
 void func_0600DAB4(void);
 extern void SPR_2OpenCommand(Uint16);
-extern s32 DAT_0600E23C;
 extern MthMatrix DAT_060579A8;
-extern s32 DAT_0605BEC0;
+extern Point16 DAT_0605BEC0;
 extern s32 DAT_060576B0[];
 extern s32 DAT_06057770;
 extern void func_06008AB4(void);
 extern void func_0600BD68(void);
 void SetCurrentMatrixBinAngle(MthXyz* rot, MthXyz* pos);
+void TransformAndProjectPoints(MthXyz* src, XyInt* dst, s32 count);
 extern void func_0600DE38(void);
 extern void func_0600E164(void);
 extern void func_06008B20(void);

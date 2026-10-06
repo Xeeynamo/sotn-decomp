@@ -8,13 +8,7 @@ void make_all(void);
 
 extern s32 DAT_060486A0[];
 
-typedef struct {
-    s32 : 32;
-    s32 : 32;
-    u16* unk8;
-} unkStruct0;
-
-extern unkStruct0* DAT_060645EC;
+extern SaturnSpriteResource** DAT_060645EC;
 
 extern u8 g_PrimitiveUvOffsetByType[6];
 extern u16 g_testCollEnemyLookup[];
@@ -503,11 +497,11 @@ void HitDetection(void) {
     while (prim != NULL) {
         if (prim->drawMode != DRAW_HIDE) {
             miscVar2 = prim->x3;
-            ptr = DAT_0605aec0[DAT_060645EC->unk8[4] +
+            ptr = DAT_0605aec0[DAT_060645EC[2]->allocationIndex +
                                g_PrimitiveUvOffsetByType[miscVar2]];
             prim->unk8 = ptr[0];
             prim->unkA = ptr[1];
-            prim->unk6 = LookupTblNoToVram(DAT_060645EC->unk8[5]);
+            prim->unk6 = LookupTblNoToVram(DAT_060645EC[2]->flags);
             miscVar2++;
             if (miscVar2 > 6) {
                 prim->drawMode = DRAW_HIDE;

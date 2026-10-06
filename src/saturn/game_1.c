@@ -283,13 +283,13 @@ s32 func_06067090(Entity* self) {
                 func_06066FE0(i, prim1, DAT_060485C0.unk4);
             }
         } else {
-            if (g_pads[0].previous & PAD_LEFT) {
+            if (g_pads[0].tapped & PAD_LEFT) {
                 if (DAT_060485C0.unk4 != 0) {
                     PlaySfx(SFX_UI_SUBWEAPON_TINK);
                 }
                 DAT_060485C0.unk4 = 0;
             }
-            if (g_pads[0].previous & PAD_RIGHT) {
+            if (g_pads[0].tapped & PAD_RIGHT) {
                 if (DAT_060485C0.unk4 == 0) {
                     PlaySfx(SFX_UI_SUBWEAPON_TINK);
                 }
@@ -299,7 +299,7 @@ s32 func_06067090(Entity* self) {
                 prim1 = prim1->next;
                 func_06066FE0(i, prim1, DAT_060485C0.unk4);
             }
-            if (g_pads[0].previous & 0x100) {
+            if (g_pads[0].tapped & 0x100) {
                 DAT_060485C0.unk4 = self->ext.save.unk28;
                 for (i = 0; i < 9; i++) {
                     prim0->drawMode = DRAW_HIDE;
@@ -307,7 +307,7 @@ s32 func_06067090(Entity* self) {
                 }
                 return 2;
             }
-            if (g_pads[0].previous & 0x600) {
+            if (g_pads[0].tapped & 0x600) {
                 PlaySfx(SFX_UI_CONFIRM);
                 DAT_060485C0.unk5 = 0;
                 for (i = 0; i < 9; i++) {
@@ -423,13 +423,13 @@ s32 func_060674B8(Entity* self, s32 arg1) {
                 func_06066FE0(i, prim1, self->ext.save.unk1C);
             }
         } else {
-            if (g_pads[0].previous & PAD_LEFT) {
+            if (g_pads[0].tapped & PAD_LEFT) {
                 if (self->ext.save.unk1C != 0) {
                     PlaySfx(SFX_UI_SUBWEAPON_TINK);
                 }
                 self->ext.save.unk1C = 0;
             }
-            if (g_pads[0].previous & PAD_RIGHT) {
+            if (g_pads[0].tapped & PAD_RIGHT) {
                 if (self->ext.save.unk1C == 0) {
                     PlaySfx(SFX_UI_SUBWEAPON_TINK);
                 }
@@ -439,7 +439,7 @@ s32 func_060674B8(Entity* self, s32 arg1) {
                 prim1 = prim1->next;
                 func_06066FE0(i, prim1, self->ext.save.unk1C);
             }
-            if (g_pads[0].previous & 0x100) {
+            if (g_pads[0].tapped & 0x100) {
                 self->ext.save.unk1C = 1;
                 for (i = 0; i < 9; i++) {
                     prim0->drawMode = DRAW_HIDE;
@@ -447,7 +447,7 @@ s32 func_060674B8(Entity* self, s32 arg1) {
                 }
                 return 1;
             }
-            if (g_pads[0].previous & 0x600) {
+            if (g_pads[0].tapped & 0x600) {
                 PlaySfx(SFX_UI_CONFIRM);
                 for (i = 0; i < 9; i++) {
                     prim0->drawMode = DRAW_HIDE;

@@ -1166,8 +1166,8 @@ typedef struct {
 
 typedef struct {
     /* 0x0 */ u16 pressed;
-    /* 0x2 */ u16 previous;
-    /* 0x4 */ u16 tapped;
+    /* 0x2 */ u16 tapped;
+    /* 0x4 */ u16 previous;
     /* 0x6 */ u16 repeat;
 } Pad; // size = 0x8
 
@@ -1244,7 +1244,7 @@ typedef struct {
 
 typedef struct {
     u16 unk0;
-    s16 : 16;
+    u16 unk2;
     s32 : 32;
     u32 unk8;
 } Unk0605D770;
