@@ -148,7 +148,7 @@ static s32 attack_steps[] = {
 };
 
 // Similar to the one in st_common
-static s16 LimitAngleChange(s16 delta, s16 base, s16 target) {
+static s16 _LimitAngleChange(s16 delta, s16 base, s16 target) {
     s16 diff;
     s16 ret;
 
@@ -364,7 +364,7 @@ void EntityShaft(Entity* self) {
         posX -= self->posX.i.hi;
         posY -= self->posY.i.hi;
         angle = ratan2(posY, posX);
-        angle = LimitAngleChange(0x20, self->ext.rcenShaft.angle, angle);
+        angle = _LimitAngleChange(0x20, self->ext.rcenShaft.angle, angle);
         self->velocityX = (rcos(angle) * FIX(1.75)) >> 0xC;
         self->velocityY = (rsin(angle) * FIX(1.75)) >> 0xC;
         self->ext.rcenShaft.angle = angle;
@@ -706,7 +706,7 @@ void EntityShaftAttackOrb(Entity* self) {
         posX -= self->posX.i.hi;
         posY -= self->posY.i.hi;
         angle = ratan2(posY, posX);
-        angle = LimitAngleChange(0x30, self->ext.rcenShaft.angle, angle);
+        angle = _LimitAngleChange(0x30, self->ext.rcenShaft.angle, angle);
         self->velocityX = (rcos(angle) * FIX(2.5)) >> 0xC;
         self->velocityY = (rsin(angle) * FIX(2.5)) >> 0xC;
         self->ext.rcenShaft.angle = angle;
@@ -1408,7 +1408,7 @@ void EntityShaftOrbitOrb(Entity* self) {
         posY -= self->posY.i.hi;
 
         angle = ratan2(posY, posX);
-        angle = LimitAngleChange(0x40, self->ext.rcenShaft.angle, angle);
+        angle = _LimitAngleChange(0x40, self->ext.rcenShaft.angle, angle);
         self->velocityX = (rcos(angle) * FIX(2.5)) >> 0xC;
         self->velocityY = (rsin(angle) * FIX(2.5)) >> 0xC;
         self->ext.rcenShaft.angle = angle;

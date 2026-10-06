@@ -25,7 +25,7 @@
 
 // PSP does & 7FFF for many calls to rand(), PS1 does not.
 // This works around that.
-#ifdef VERSION_PSP
+#if defined(VERSION_PSP) || defined(VERSION_PC)
 #define PSP_RANDMASK 0x7FFF
 #else
 #define PSP_RANDMASK 0xFFFFFFFF
