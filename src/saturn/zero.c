@@ -1782,8 +1782,8 @@ void func_0600871C(Unk0605CD90* arg0, UNK_0605c680* arg1, s32 arg2) {
         arg0->width = 0x500;
     }
 
-    scrollX = 0;
-    scrollY = 0x80000;
+    scrollX = FIXED(0);
+    scrollY = FIXED(8);
 
     if (arg0->divisorX != 0) {
         scrollX = arg1->unk4 / arg0->divisorX;
@@ -1901,8 +1901,40 @@ void func_06008AB4(void) {
     }
 }
 
-// _SCROLL_DSP
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008B20, func_06008B20);
+// original name: SCROLL_DSP
+void func_06008B20(void) {
+    Unk0605CD90* ptr;
+    s32 x, y;
+    u32 i;
+
+    ptr = DAT_0605CD90;
+    for (i = 0; i < 3; i++, ptr++) {
+        if (ptr->unk18 != 0) {
+            SCL_Open(SCL_NBG1 << i);
+            x = FIXED(0);
+            y = FIXED(10);
+            if (ptr->divisorX != 0) {
+                x = DAT_0605c680.unk3C / ptr->divisorX;
+            }
+            if (ptr->divisorY != 0) {
+                y = DAT_0605c680.unk40 / ptr->divisorY;
+            }
+            SCL_MoveTo(x, y, 0);
+            SCL_Close();
+        }
+    }
+    if (DAT_0605cd70.unk2 == 5) {
+        SCL_Open(SCL_NBG0);
+        SCL_MoveTo(FIXED(0), FIXED(8), FIXED(0));
+        SCL_Close();
+    }
+    if (DAT_0605cd70.unk2 == 4) {
+        SCL_Open(SCL_NBG0);
+        SCL_MoveTo(FIXED(15), FIXED(13), FIXED(0));
+        SCL_Close();
+    }
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008C2C, func_06008C2C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008D04, func_06008D04);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008EE8, func_06008EE8);
@@ -1980,17 +2012,17 @@ void func_0600971C(void) {
     SclProcess = 1;
 }
 
-void func_060097B4(Entity* arg0, s32 arg1) {
+void func_060097B4(Unk0605CD90* arg0, s32 arg1) {
     s32 x, y;
 
-    SCL_Open(8 << arg1);
-    x = 0;
-    y = 0xA0000;
-    if (arg0->step != 0) {
-        x = DAT_0605c680.unk34 / arg0->step;
+    SCL_Open(SCL_NBG1 << arg1);
+    x = FIXED(0);
+    y = FIXED(10);
+    if (arg0->divisorX != 0) {
+        x = DAT_0605c680.unk34 / arg0->divisorX;
     }
-    if (arg0->step_s != 0) {
-        y = DAT_0605c680.unk38 / arg0->step_s;
+    if (arg0->divisorY != 0) {
+        y = DAT_0605c680.unk38 / arg0->divisorY;
     }
     SCL_MoveTo(x, y, 0);
     SCL_Close();
