@@ -64,9 +64,9 @@ typedef enum EntityID {
     E_CTULHU_ICE_SHOCKWAVE,     // EntityCtulhuIceShockwave
     E_CTULHU_DEATH,             // EntityCtulhuDeath
     E_MALACHI,                  // EntityMalachi
-    E_UNK_2C,                   // func_us_801C4960
-    E_UNK_2D,                   // func_us_801C4C0C
-    E_UNK_2E,                   // func_us_801C4EA8
+    E_MALACHI_SHOOTER,          // EnittyMalachiShooter
+    E_MALACHI_BALL,             // EntityMalachiBall
+    E_MALACHI_BALL_WISP,        // EntityMalachiBallWisp
     E_KARASUMAN,                // EntityKarasuman
     E_KARASUMAN_FEATHER_ATTACK, // EntityKarasumanFeatherAttack
     E_KARASUMAN_ORB_ATTACK,     // EntityKarasumanOrbAttack

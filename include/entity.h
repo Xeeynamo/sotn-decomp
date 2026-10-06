@@ -4493,6 +4493,24 @@ typedef struct {
     /* 0x84 */ SVECTOR rotations[3];
 } ET_ShaftMeridianRings;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 shootCooldown;
+    /* 0x84 */ u8 hopTimer;
+    /* 0x85 */ u8 fly_to_shoot;
+    /* 0x86 */ u16 : 16;
+    /* 0x88 */ s16 halfHP;
+    /* 0x8A */ u16 : 16;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ s32 flightHeight;
+    /* 0xA0 */ u32 : 32;
+    /* 0xA4 */ struct Primitive* deathPrim;
+} ET_Malachi;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4877,6 +4895,7 @@ typedef union { // offset=0x7C
     ET_RCEN_Shaft rcenShaft;
     ET_ShaftLightning shaftLightning;
     ET_ShaftMeridianRings shaftMeridianRings;
+    ET_Malachi malachi;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);
