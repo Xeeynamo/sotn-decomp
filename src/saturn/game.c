@@ -693,7 +693,7 @@ void RunMainEngine(void) {
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6071C3C, func_06071C3C);
 
-extern s32 DAT_0605c120;
+extern s32 DAT_0605C120;
 
 // original name: INIT_ROOM
 void InitRoom(void) {
@@ -732,7 +732,7 @@ void InitRoom(void) {
         g_CurrentRoom.unkA != g_CurrentRoom.unk8) {
         g_CurrentRoom.unkA = g_CurrentRoom.unk8;
     } else {
-        DAT_0605D7DC = DAT_0605c120;
+        DAT_0605D7DC = DAT_0605C120;
     }
     func_06009510(g_CurrentRoom.unk4);
     PLAYER.posX.i.hi = PLAYER.posX.i.hi % 0x140;

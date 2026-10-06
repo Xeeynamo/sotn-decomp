@@ -183,15 +183,15 @@ void func_0600456C(void) {
     func_06004878();
     func_060046E8();
     func_060047E8();
-    func_06007F6C();
+    SetVDP2Vram();
 
     Scl_w_reg.win0_start[0] = 0;
     Scl_w_reg.win0_start[1] = 12;
     Scl_w_reg.win0_end[0] = 640;
     Scl_w_reg.win0_end[1] = 240;
-    Scl_w_reg.wincontrl[0] = 0x383;
+    Scl_w_reg.wincontrl[0] = 0x0383;
     Scl_w_reg.wincontrl[1] = 0x8383;
-    Scl_w_reg.wincontrl[2] = 0x83;
+    Scl_w_reg.wincontrl[2] = 0x0083;
 
     SclProcess = 1;
     func_06009D30();
@@ -210,15 +210,15 @@ void func_0600460C(void) {
     func_0600B234();
     func_0600DAB4();
     InitVdp2Display();
-    func_06007F6C();
+    SetVDP2Vram();
 
     Scl_w_reg.win0_start[0] = 0;
     Scl_w_reg.win0_start[1] = 12;
     Scl_w_reg.win0_end[0] = 640;
     Scl_w_reg.win0_end[1] = 240;
-    Scl_w_reg.wincontrl[0] = 0x383;
+    Scl_w_reg.wincontrl[0] = 0x0383;
     Scl_w_reg.wincontrl[1] = 0x8383;
-    Scl_w_reg.wincontrl[2] = 0x83;
+    Scl_w_reg.wincontrl[2] = 0x0083;
     SclProcess = 1;
 
     func_06009D30();
@@ -582,7 +582,7 @@ void func_06005208(s32 arg) {
     DAT_0605c110 = 0;
 
     if (mode == 5) {
-        Scl_s_reg.dispenbl &= 0xFFFE;
+        Scl_s_reg.dispenbl &= ~0x0001;
         SclProcess = 1;
         DAT_0605D770.unk2 = 5;
     } else {
@@ -634,7 +634,7 @@ void func_06005470(void) {
     }
 }
 
-extern s32* DAT_0605c120[];
+extern s16* DAT_0605C120[];
 
 void func_06005508(void) {
     ReadFileToAddr("TITLE.PRG", (s32)&DAT_060a5000);
@@ -650,7 +650,7 @@ void func_06005508(void) {
     if (DAT_0605D7DC & 1) {
         DAT_0605D7DC++;
     }
-    *DAT_0605c120 = (s32*)DAT_0605D7DC;
+    DAT_0605C120[0] = (s16*)DAT_0605D7DC;
 }
 
 // original name: READ_LOAD_MODE
@@ -680,7 +680,7 @@ s32 func_060055C8(void) {
     case 0:
         ResetSpriteVram();
         AllocGameSprite(g_PlayableCharacter);
-        Scl_s_reg.dispenbl &= 0xFFC0;
+        Scl_s_reg.dispenbl &= ~0x003F;
         SclProcess = 1;
         ((s32(*)(s32, s32))StartColorOffsetFade)(1, 2);
         DAT_0605D770.unk0++;
@@ -1394,27 +1394,36 @@ u16 func_06007BE0(s16* colors, s32 arg1) {
     return tblNo;
 }
 
-// _SprSetGourTbl
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007CA0, AllocGourTbl);
+extern s32 DAT_0605BEC4;
+extern u16 DAT_0605BEC8;
+extern s16 DAT_0605BECA;
+extern s32 d_06038dbc;
+extern s32 d_060576AC;
+
+// original name: SprSetGourTbl
+u16 SprSetGourTbl(SprGourTbl* gourTbl) {
+    u16 prev;
+
+    prev = DAT_0605BEC8;
+    if (DAT_0605BEC8 < 0x304) {
+        SPR_2SetGourTbl(DAT_0605BEC8, gourTbl);
+        DAT_0605BEC8++;
+    }
+    return prev;
+}
 
 // func_06007CE0
 u16 LocalLookupTblNoToVram(u16 arg0) { return arg0 * 0x10 + 0x400; }
 
-extern s16 d_0605BECA;
-extern s16 d_0605BEC8;
-extern s32 d_06038dbc;
-extern s32 DAT_0605BEC4;
-extern s32 d_060576AC;
-
 // func_06007CF8
 void ResetSpriteVram() {
     SPR_2ClrAllChar();
-    d_0605BECA = 0;
+    DAT_0605BECA = 0;
     d_0605AEA8 = 0;
     d_0605AEB0 = 0;
-    d_0605BEC8 = 0x304;
+    DAT_0605BEC8 = 0x304;
     d_060576AC = 0;
-    DAT_0605BEC4 = 0x00011180;
+    DAT_0605BEC4 = 0x11180;
     d_06038dbc = 0;
 }
 
@@ -1486,16 +1495,16 @@ void SetSpriteEraseData(s16 arg0) {
 // func_06007F04
 void InitVdp2Display(void) {
     SCL_Vdp2Init();
-    SCL_SetDisplayMode(0, 1, 0);
+    SCL_SetDisplayMode(SCL_NON_INTER, SCL_240LINE, SCL_NORMAL_A);
     SPR_2FrameChgIntr(-1);
     SclPriBuffDirty.SclColOffset = 1;
     SclColOffset.ColorOffsetEnable = 0x6F;
-    SCL_SetColOffset(0, 0x6F, 0xFF01, 0xFF01, 0xFF01);
+    SCL_SetColOffset(SCL_OFFSET_A, 0x6F, 0xFF01, 0xFF01, 0xFF01);
     SetVdp2BackgroundColor();
 }
 
 // original name: SET_VDP2_VRAM
-void func_06007F6C(void) {
+void SetVDP2Vram(void) {
     SclVramConfig cfg;
     SCL_InitVramConfigTb(&cfg);
     cfg.vramModeA = 0;
@@ -1522,7 +1531,20 @@ void func_06007F6C(void) {
     SCL_SetColMixMode(6, 1);
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008048, ResetLayerColorCalc);
+// func_06008048
+void ResetLayerColorCalc(void) {
+    SCL_DisableLineCol(SCL_NBG1);
+    SCL_DisableLineCol(SCL_NBG2);
+    SCL_DisableLineCol(SCL_NBG3);
+    SCL_DisableLineCol(SCL_SPR);
+    SCL_SET_EXCCEN(0);
+    SCL_SET_N1CCEN(0);
+    SCL_SET_N2CCEN(0);
+    SCL_SET_N3CCEN(0);
+    SCL_SET_CCMD(1);
+    SCL_SET_S0CCRT(23);
+    SCL_SET_S1CCRT(15);
+}
 
 void func_060080EC(s32 arg0) {
     if (arg0 == 1) {
@@ -1542,7 +1564,22 @@ void SetVdp2BackgroundColorRgb(u8 r, u8 g, u8 b) {
     SCL_SetBack(SCL_VDP2_VRAM + 0x80000 - 0x1E0, 1, &color);
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600819C, BlankScreen);
+// func_0600819C
+void BlankScreen(void) {
+    SCL_SetDisplayMode(SCL_NON_INTER, SCL_240LINE, SCL_NORMAL_A);
+    SclPriBuffDirty.SclColOffset = 1;
+    SclColOffset.ColorOffsetEnable = 0x6F;
+    SCL_SetColOffset(0, 0x6F, 0xFF01, 0xFF01, 0xFF01);
+    SetVdp2BackgroundColor();
+    Scl_w_reg.win0_start[0] = 0;
+    Scl_w_reg.win0_start[1] = 12;
+    Scl_w_reg.win0_end[0] = 640;
+    Scl_w_reg.win0_end[1] = 240;
+    Scl_w_reg.wincontrl[0] = 0x0383;
+    Scl_w_reg.wincontrl[1] = 0x8383;
+    Scl_w_reg.wincontrl[2] = 0x0083;
+    SclProcess = 1;
+}
 
 // func_0600824C
 void InitScuDma(void) { DMA_ScuInit(); }
@@ -1673,26 +1710,26 @@ s32 func_06008524(u32 dest, u32 src, u32 cnt) {
 void TransferBgLayer(s32 arg0) {
     s32 cnt;
     BgTransfer* transfer;
-    Unk0605CD90* puVar6;
+    Unk0605CD90* ptr;
 
     transfer = &DAT_0605D6C0[arg0];
-    puVar6 = &DAT_0605CD90[arg0];
+    ptr = &DAT_0605CD90[arg0];
     if (transfer->tileFlags == 0) {
         return;
     }
     if (transfer->tileFlags & 1) {
-        cnt = DecompressLZSS(puVar6->unkc, (s32)DAT_060485E0, puVar6->unk18);
-        DmaScroll((u16*)DAT_060485E0, puVar6->dst0, cnt);
+        cnt = DecompressLZSS(ptr->unkC, (s32)DAT_060485E0, ptr->unk18);
+        DmaScroll((u16*)DAT_060485E0, ptr->dst0, cnt);
     }
     if (transfer->tileFlags & 2) {
-        cnt = DecompressLZSS(puVar6->unk10, (s32)DAT_060485E0, puVar6->unk1c);
-        DmaScroll((u16*)DAT_060485E0, puVar6->dst4, cnt);
+        cnt = DecompressLZSS(ptr->unk10, (s32)DAT_060485E0, ptr->unk1C);
+        DmaScroll((u16*)DAT_060485E0, ptr->dst4, cnt);
     }
     if (transfer->tileFlags & 4) {
         if (DAT_0605cd70.unk2 == 4) {
-            BuildSubDispTilemap(puVar6);
+            BuildSubDispTilemap(ptr);
         } else {
-            func_0600871C(puVar6, &DAT_0605c680, arg0);
+            func_0600871C(ptr, &DAT_0605c680, arg0);
         }
     }
     if (transfer->tileFlags & 8) {
@@ -1705,12 +1742,12 @@ void TransferBgLayer(s32 arg0) {
         DmaScroll(transfer->src, transfer->dest, transfer->cnt);
     }
     if (transfer->tileFlags & 0x40) {
-        cnt = DecompressLZSS(puVar6->unkc, DMA_SRC_ADDR, puVar6->unk18);
-        DmaScroll(DMA_SRC_ADDR, puVar6->dst0, cnt);
+        cnt = DecompressLZSS(ptr->unkC, DMA_SRC_ADDR, ptr->unk18);
+        DmaScroll(DMA_SRC_ADDR, ptr->dst0, cnt);
     }
     if (transfer->tileFlags & 0x80) {
-        cnt = DecompressLZSS(puVar6->unk10, DMA_SRC_ADDR, puVar6->unk1c);
-        DmaScroll(DMA_SRC_ADDR, puVar6->dst4, cnt);
+        cnt = DecompressLZSS(ptr->unk10, DMA_SRC_ADDR, ptr->unk1C);
+        DmaScroll(DMA_SRC_ADDR, ptr->dst4, cnt);
     }
     transfer->tileFlags = 0;
     transfer->cnt = 0;
@@ -1727,29 +1764,116 @@ void DmaScroll(u16* src, u16* dest, u32 cnt) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600871C, func_0600871C);
+void func_0600871C(Unk0605CD90* arg0, UNK_0605c680* arg1, s32 arg2) {
+    s32 scrollX, scrollY;
+    s16 x, y;
+    u16 cols, rows;
+    u16 tileBase;
+    s16 *dst;
+    s16 *src;
+    u16 i, j;
+
+    if (arg0->unk20 == 0) {
+        return;
+    }
+
+    if ((g_CurrentRoom.stageID == 0x41) && (g_CurrentRoom.unk4 == 0x12) && (arg2 == 0)) {
+        arg0->width = 0x500;
+    }
+
+    scrollX = 0;
+    scrollY = 0x80000;
+
+    if (arg0->divisorX != 0) {
+        scrollX = arg1->unk4 / arg0->divisorX;
+    }
+
+    if (arg0->divisorY != 0) {
+        scrollY = arg1->unkC / arg0->divisorY;
+    }
+
+    x = (scrollX >> 19) - 8;
+    y = (scrollY >> 19) - 8;
+
+    cols = 0x38;
+    rows = 0x2E;
+
+    if (x < 0) {
+        cols += x;
+        x = 0;
+    }
+
+    if (y < 0) {
+        rows += y;
+        y = 0;
+    }
+
+    if ((arg0->flags & 1) == 0) {
+        if ((x + cols) > arg0->width) {
+            cols = arg0->width - x;
+        }
+    }
+    if ((arg0->flags & 2) == 0) {
+        if ((y + rows) > arg0->height) {
+            rows = arg0->height - y;
+        }
+    }
+
+    src = DAT_0605C120[arg2] + 2;
+    dst = arg0->unk8;
+    tileBase = arg0->unk24 * 0x1000;
+
+    src += (x % arg0->width) + (y % arg0->height) * arg0->width;
+    dst += ((y & 0x3F) << 6) + (x & 0x3F);
+
+    for (i = 0; i < rows; i++) {
+        for (j = 0; j < cols; j++) {
+            *dst = *src + tileBase;
+
+            if (((x + j) & 0x3F) == 0x3F) {
+                dst -= 0x3F;
+            } else {
+                dst++;
+            }
+
+            if ((arg0->flags & 1) && ((x + j) % arg0->width) == (arg0->width - 1)) {
+                src -= arg0->width - 1;
+            } else {
+                src++;
+            }
+        }
+        dst = arg0->unk8 + (x & 0x3F);
+        dst += ((y + i + 1) & 0x3F) << 6;
+
+        src = DAT_0605C120[arg2] + 2;
+        src += (x % arg0->width) + ((y + i + 1) % arg0->height) * arg0->width;
+    }
+    if ((g_CurrentRoom.stageID == 0x41) && (g_CurrentRoom.unk4 == 0x12) && (arg2 == 0)) {
+        arg0->width = 0x2D0;
+    }
+}
 
 // func_060089F0
 void BuildSubDispTilemap(Unk0605CD90* arg0) {
-    u16 sVar2;
-    s16* psVar5;
-    s16* psVar7;
+    u16 tileBase;
+    s16* dst;
+    s16* src;
     u16 i, j;
 
-    psVar7 = DAT_0605c120[3] + 1;
-    sVar2 = arg0->unk24 * 0x1000;
+    src = DAT_0605C120[3] + 2;
+    tileBase = arg0->unk24 * 0x1000;
     j = 0;
-    psVar5 = arg0->unk8 + j * 0x20;
+    dst = arg0->unk8 + j * 0x20;
     for (j = 0; j < 32; j++) {
         for (i = 0; i < 32; i++) {
-            *psVar5++ = *psVar7++ + sVar2;
+            *dst++ = *src++ + tileBase;
         }
-        psVar5 = 0x400 + arg0->unk8 + j * 0x20;
+        dst = 0x400 + arg0->unk8 + j * 0x20;
 
         for (i = 0; i < 10; i++) {
-            *psVar5++ = *psVar7++ + sVar2;
+            *dst++ = *src++ + tileBase;
         }
-        psVar5 = arg0->unk8 + (j + 1) * 0x20;
+        dst = arg0->unk8 + (j + 1) * 0x20;
     }
 }
 
@@ -1836,7 +1960,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009570, func_06009570);
 
 void func_0600971C(void) {
     if (g_PlayableCharacter == 0) {
-        SCL_SetDisplayMode(0, 1, 0);
+        SCL_SetDisplayMode(SCL_NON_INTER, SCL_240LINE, SCL_NORMAL_A);
         SCL_SetCycleTable(DAT_06038D70);
     }
 
@@ -1849,7 +1973,7 @@ void func_0600971C(void) {
     Scl_w_reg.wincontrl[2] = 0x0083;
 
     SclProcess = 1;
-    Scl_s_reg.dispenbl &= 0xFFFE;
+    Scl_s_reg.dispenbl &= ~0x0001;
     SclProcess = 1;
 }
 
@@ -1956,8 +2080,7 @@ void SetCharTrans(u16 arg0, s32 arg1, s32 arg2) {
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A29C, LookupTblNoToVramAddr);
 
-// func_0600A304
-void SetSprGourTable(s32 gourTblNo, SprGourTbl* gourTbl) {
+void func_0600A304(s32 gourTblNo, SprGourTbl* gourTbl) {
     SPR_2SetGourTbl(gourTblNo, gourTbl);
 }
 
@@ -2290,9 +2413,9 @@ void func_0600C00C(void) {
         banks[4]->allocationIndex = 3;
     }
     if (g_PlayableCharacter == 1 || g_PlayableCharacter == 2) {
-        d_0605BECA = 0xA;
+        DAT_0605BECA = 10;
     } else {
-        d_0605BECA = 0xD;
+        DAT_0605BECA = 13;
     }
     bank = DAT_06064650[5];
     i = 5;
@@ -2311,20 +2434,20 @@ void func_0600C00C(void) {
         i++;
         bank = DAT_06064650[i];
     }
-    DAT_06038FD4 = d_0605BECA;
+    DAT_06038FD4 = DAT_0605BECA;
 }
 
 void func_0600C0C4(int arg0) {
     if (arg0 == 0) {
-        d_0605BECA = 10;
+        DAT_0605BECA = 10;
         DAT_060645D4[0]->allocationIndex = 10;
     } else {
-        d_0605BECA = 11;
+        DAT_0605BECA = 11;
         DAT_06064670[0]->allocationIndex = 11;
     }
 }
 
-void func_0600C0FC(void) { DAT_060645D0[0]->allocationIndex = 0xC; }
+void func_0600C0FC(void) { DAT_060645D0[0]->allocationIndex = 12; }
 
 extern SaturnSpriteResource** DAT_060645EC;
 
@@ -2334,7 +2457,7 @@ void func_0600C114(void) {
     s32 palette;
     s32 i;
 
-    d_0605BECA = DAT_06038FD4;
+    DAT_0605BECA = DAT_06038FD4;
     bank = DAT_060645EC[0];
     i = 0;
     while (bank != NULL) {

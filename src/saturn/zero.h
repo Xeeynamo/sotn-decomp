@@ -27,7 +27,7 @@ void func_06004E50(void);
 void func_06004E94(void);
 void INT_SetScuFunc(u32 vector, void (*handler)(void));
 
-// DAT_0605c120, DAT_060645EC, DAT_060645e4, DAT_060645f8 and SpGourTbl
+// DAT_0605C120, DAT_060645EC, DAT_060645e4, DAT_060645f8 and SpGourTbl
 // are deliberately absent: zero and its dependents access them at
 // different types, and a shared declaration changes codegen.
 // Each user declares its own.
@@ -50,21 +50,25 @@ extern SaturnSpriteResource** DAT_060645D0;
 extern s32 DAT_060485E0[];
 extern Unk0605DB60 d_0605DB60[32];
 
-void func_0600871C(s32, UNK_0605c680*, s32);
-
 typedef struct {
     s32 dst0;
     s32 dst4;
     u16* unk8;
-    s32 unkc;
+    s32 unkC;
     s32 unk10;
     s32 unk14;
     s32 unk18;
-    s32 unk1c;
+    s32 unk1C;
     s32 unk20;
     s16 unk24;
-    u8 pad[10];
+    u16 flags;
+    u16 width;
+    u16 height;
+    u16 divisorX;
+    u16 divisorY;
 } Unk0605CD90;
+
+void func_0600871C(Unk0605CD90*, UNK_0605c680*, s32);
 
 void BuildSubDispTilemap(Unk0605CD90* arg0);
 s32 DAT_060086e4;
@@ -328,7 +332,7 @@ void func_06004878(void);
 void UpdatePads(void);
 void UpdatePadsRepeat(void);
 s32 func_06006470(void);
-void func_06007F6C(void);
+void SetVDP2Vram(void);
 void func_060082C8(void);
 void func_06009D30(void);
 void func_0600B234(void);
