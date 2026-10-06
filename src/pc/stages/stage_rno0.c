@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#include <psyz/module.h>
 #include <game.h>
 #include <string.h>
 #include "overlay.h"
@@ -9,9 +10,9 @@ extern RoomDef rooms_layers[];
 extern GfxBank* gfxBanks[];
 extern LayoutEntity* entityLayoutHorizontal[];
 extern LayoutEntity* entityLayoutVertical[];
-extern GAME_IMPORT PfnEntityUpdate* PfnEntityUpdates;
-extern GAME_IMPORT LayoutEntity** g_pStObjLayoutHorizontal;
-extern GAME_IMPORT LayoutEntity** g_pStObjLayoutVertical;
+extern PfnEntityUpdate* PfnEntityUpdates;
+extern LayoutEntity** g_pStObjLayoutHorizontal;
+extern LayoutEntity** g_pStObjLayoutVertical;
 
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 3};
 EInit g_EInitDamageNum;
@@ -31,7 +32,9 @@ void EntityEquipItemDrop(Entity* entity) { UnsupportedEntity(entity); }
 void EntityRedDoor(Entity* entity);
 void EntityRoomForeground(Entity* entity);
 
-OVL_API void InitStage(Overlay* o) {
+void Psyz_ModuleStart(void* param) {
+    Overlay* o = param;
+
     s32 i;
 
     memset(o, 0, sizeof(*o));
@@ -54,3 +57,5 @@ OVL_API void InitStage(Overlay* o) {
     g_pStObjLayoutHorizontal = entityLayoutHorizontal;
     g_pStObjLayoutVertical = entityLayoutVertical;
 }
+
+void Psyz_ModuleStop(void) {}
