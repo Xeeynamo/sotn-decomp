@@ -1,18 +1,19 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#include <psyz/module.h>
 #include <game.h>
 #include <cutscene.h>
 #include <string.h>
 #include "overlay.h"
 #include "../pc.h"
-#include "../st/rcen/rcen.h"
+#include "../../st/rcen/rcen.h"
 
 extern Overlay g_Overlay;
 extern PfnEntityUpdate EntityUpdates[];
 extern LayoutEntity* entityLayoutHorizontal[];
 extern LayoutEntity* entityLayoutVertical[];
-extern GAME_IMPORT PfnEntityUpdate* PfnEntityUpdates;
-extern GAME_IMPORT LayoutEntity** g_pStObjLayoutHorizontal;
-extern GAME_IMPORT LayoutEntity** g_pStObjLayoutVertical;
+extern PfnEntityUpdate* PfnEntityUpdates;
+extern LayoutEntity** g_pStObjLayoutHorizontal;
+extern LayoutEntity** g_pStObjLayoutVertical;
 
 // Read by the SCRIPT_SWITCH in the cutscene script; never written on PSX
 static s32 D_us_801817A8 = 0;
@@ -35,10 +36,13 @@ static void InitCutscenePc(void) {
     CutscenePcAlloc(symbols, LEN(symbols));
 }
 
-OVL_API void InitStage(Overlay* o) {
+void Psyz_ModuleStart(void* param) {
+    Overlay* o = param;
     memcpy(o, &g_Overlay, sizeof(Overlay));
     PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = entityLayoutHorizontal;
     g_pStObjLayoutVertical = entityLayoutVertical;
     InitCutscenePc();
 }
+
+void Psyz_ModuleStop(void) {}
