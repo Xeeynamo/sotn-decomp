@@ -2000,13 +2000,13 @@ void func_06009058(u16 arg0) {
         ptr->dst4 = SCL_COLRAM_ADDR;
         ptr->unk24 = 0;
         SCL_InitConfigTb(scfg);
-        scfg->charsize = 0;
-        scfg->pnamesize = 1;
-        scfg->platesize = 0;
-        scfg->coltype = 1;
-        scfg->datatype = 0;
-        scfg->mapover = 0;
-        scfg->flip = 1;
+        scfg->charsize = SCL_CHAR_SIZE_1X1;
+        scfg->pnamesize = SCL_PN1WORD;
+        scfg->platesize = SCL_PL_SIZE_1X1;
+        scfg->coltype = SCL_COL_TYPE_256;
+        scfg->datatype = SCL_CELL;
+        scfg->mapover = SCL_OVER_0;
+        scfg->flip = SCL_PN_12BIT;
         scfg->plate_addr[0] = scfg->plate_addr[1] = scfg->plate_addr[2] =
             scfg->plate_addr[3] = ptr->unk8;
         scfg->patnamecontrl = 0;
@@ -2022,13 +2022,13 @@ void func_06009058(u16 arg0) {
             ptr->dst4 = SCL_COLRAM_ADDR + i * 0x200;
             ptr->unk24 = i;
             SCL_InitConfigTb(scfg);
-            scfg->charsize = 0;
-            scfg->pnamesize = 1;
-            scfg->platesize = 0;
-            scfg->coltype = 0;
-            scfg->datatype = 0;
-            scfg->mapover = 0;
-            scfg->flip = 0;
+            scfg->charsize = SCL_CHAR_SIZE_1X1;
+            scfg->pnamesize = SCL_PN1WORD;
+            scfg->platesize = SCL_PL_SIZE_1X1;
+            scfg->coltype = SCL_COL_TYPE_16;
+            scfg->datatype = SCL_CELL;
+            scfg->mapover = SCL_OVER_0;
+            scfg->flip = SCL_PN_10BIT;
             scfg->plate_addr[0] = scfg->plate_addr[1] = scfg->plate_addr[2] =
                 scfg->plate_addr[3] = ptr->unk8;
             scfg->patnamecontrl = 0;
@@ -2047,18 +2047,18 @@ void func_06009058(u16 arg0) {
             ptr->dst4 = SCL_COLRAM_ADDR + i * 0x200;
             ptr->unk24 = i;
             SCL_InitConfigTb(scfg);
-            scfg->charsize = 0;
-            scfg->pnamesize = 1;
-            scfg->platesize = 0;
-            scfg->coltype = 1;
-            scfg->datatype = 0;
-            scfg->mapover = 0;
-            scfg->flip = 0;
+            scfg->charsize = SCL_CHAR_SIZE_1X1;
+            scfg->pnamesize = SCL_PN1WORD;
+            scfg->platesize = SCL_PL_SIZE_1X1;
+            scfg->coltype = SCL_COL_TYPE_256;
+            scfg->datatype = SCL_CELL;
+            scfg->mapover = SCL_OVER_0;
+            scfg->flip = SCL_PN_10BIT;
             scfg->plate_addr[0] = scfg->plate_addr[1] = scfg->plate_addr[2] =
                 scfg->plate_addr[3] = ptr->unk8;
             scfg->patnamecontrl = 0x43;
             if (i != 0) {
-                scfg->flip = 1;
+                scfg->flip = SCL_PN_12BIT;
                 scfg->patnamecontrl = 0;
             }
             SCL_SetConfig(SCL_NBG1 << i, scfg);
@@ -2074,13 +2074,13 @@ void func_06009058(u16 arg0) {
             ptr->dst4 = SCL_COLRAM_ADDR + i * 0x200;
             ptr->unk24 = i;
             SCL_InitConfigTb(scfg);
-            scfg->charsize = 0;
-            scfg->pnamesize = 1;
-            scfg->platesize = 0;
-            scfg->coltype = 1;
-            scfg->datatype = 0;
-            scfg->mapover = 0;
-            scfg->flip = 1;
+            scfg->charsize = SCL_CHAR_SIZE_1X1;
+            scfg->pnamesize = SCL_PN1WORD;
+            scfg->platesize = SCL_PL_SIZE_1X1;
+            scfg->coltype = SCL_COL_TYPE_256;
+            scfg->datatype = SCL_CELL;
+            scfg->mapover = SCL_OVER_0;
+            scfg->flip = SCL_PN_12BIT;
             scfg->plate_addr[0] = scfg->plate_addr[1] = scfg->plate_addr[2] =
                 scfg->plate_addr[3] = ptr->unk8;
             scfg->patnamecontrl = i * 4;
@@ -2091,13 +2091,13 @@ void func_06009058(u16 arg0) {
         ptr->dst4 = SCL_COLRAM_ADDR + 0x400;
         ptr->unk24 = 0x20;
         SCL_InitConfigTb(scfg);
-        scfg->charsize = 0;
-        scfg->pnamesize = 1;
-        scfg->platesize = 3;
-        scfg->coltype = 0;
-        scfg->datatype = 0;
-        scfg->mapover = 0;
-        scfg->flip = 0;
+        scfg->charsize = SCL_CHAR_SIZE_1X1;
+        scfg->pnamesize = SCL_PN1WORD;
+        scfg->platesize = SCL_PL_SIZE_2X2;
+        scfg->coltype = SCL_COL_TYPE_16;
+        scfg->datatype = SCL_CELL;
+        scfg->mapover = SCL_OVER_0;
+        scfg->flip = SCL_PN_10BIT;
         scfg->plate_addr[0] = ptr->unk8;
         scfg->plate_addr[1] = ptr->unk8 + 0x1000;
         scfg->plate_addr[2] = ptr->unk8 + 0x2000;
@@ -2116,13 +2116,13 @@ void func_06009058(u16 arg0) {
             ptr->dst4 = SCL_COLRAM_ADDR + i * 0x200;
             ptr->unk24 = i * 0x10;
             SCL_InitConfigTb(scfg);
-            scfg->charsize = 0;
-            scfg->pnamesize = 1;
-            scfg->platesize = 0;
-            scfg->coltype = 0;
-            scfg->datatype = 0;
-            scfg->mapover = 0;
-            scfg->flip = 0;
+            scfg->charsize = SCL_CHAR_SIZE_1X1;
+            scfg->pnamesize = SCL_PN1WORD;
+            scfg->platesize = SCL_PL_SIZE_1X1;
+            scfg->coltype = SCL_COL_TYPE_16;
+            scfg->datatype = SCL_CELL;
+            scfg->mapover = SCL_OVER_0;
+            scfg->flip = SCL_PN_10BIT;
             scfg->plate_addr[0] = scfg->plate_addr[1] = scfg->plate_addr[2] =
                 scfg->plate_addr[3] = ptr->unk8;
             scfg->patnamecontrl = DAT_06038C84[i];
