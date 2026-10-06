@@ -5,6 +5,14 @@
 #include "inc_asm.h"
 #include "sattypes.h"
 
+void func_06019058(Entity* self) {
+    if (self->step == 0) {
+        self->step++;
+    }
+}
+
+const s16 DAT_6019072 = 0;
+
 void func_06019074(s8* arg0, u8 arg1) {
     BottomCornerText text;
 
