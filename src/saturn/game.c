@@ -1484,19 +1484,19 @@ s32 func_06074470(void) {
     ClearDebugPrintTilemap();
     ClearVdp2CharRamA1();
     SCL_InitConfigTb(&scfg);
-    scfg.dispenbl = 1;
-    scfg.charsize = 0;
-    scfg.pnamesize = 1;
-    scfg.platesize = 0;
-    scfg.coltype = 0;
-    scfg.datatype = 0;
-    scfg.mapover = 0;
-    scfg.flip = 0;
-    scfg.patnamecontrl = 100;
-    scfg.plate_addr[0] = 0x25E58000;
-    scfg.plate_addr[1] = 0x25E58000;
-    scfg.plate_addr[2] = 0x25E58000;
-    scfg.plate_addr[3] = 0x25E58000;
+    scfg.dispenbl = ON;
+    scfg.charsize = SCL_CHAR_SIZE_1X1;
+    scfg.pnamesize = SCL_PN1WORD;
+    scfg.platesize = SCL_PL_SIZE_1X1;
+    scfg.coltype = SCL_COL_TYPE_16;
+    scfg.datatype = SCL_CELL;
+    scfg.mapover = SCL_OVER_0;
+    scfg.flip = SCL_PN_10BIT;
+    scfg.patnamecontrl = 0x64;
+    scfg.plate_addr[0] = SCL_VDP2_VRAM_B0 + 0x18000;
+    scfg.plate_addr[1] = SCL_VDP2_VRAM_B0 + 0x18000;
+    scfg.plate_addr[2] = SCL_VDP2_VRAM_B0 + 0x18000;
+    scfg.plate_addr[3] = SCL_VDP2_VRAM_B0 + 0x18000;
     SCL_SetConfig(SCL_NBG0, &scfg);
 }
 

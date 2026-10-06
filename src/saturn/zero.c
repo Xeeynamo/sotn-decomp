@@ -2168,7 +2168,60 @@ void func_06009510(u16 scrollId) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009570, func_06009570);
+void func_06009570(s32 arg0) {
+    SclConfig scfg;
+    s32* temp_r1;
+    Unk0605CD90* ptr;
+    s16* src;
+
+    SCL_InitConfigTb(&scfg);
+    scfg.charsize = SCL_CHAR_SIZE_2X2;
+    scfg.pnamesize = SCL_PN1WORD;
+    scfg.platesize = SCL_PL_SIZE_2X1;
+    scfg.coltype = SCL_COL_TYPE_16;
+    scfg.datatype = SCL_CELL;
+    scfg.mapover = SCL_OVER_0;
+    scfg.flip = SCL_PN_10BIT;
+    scfg.patnamecontrl = 0x64;
+    scfg.plate_addr[3] = SCL_VDP2_VRAM_B0 + 0x18000;
+    scfg.plate_addr[2] = SCL_VDP2_VRAM_B0 + 0x18000;
+    scfg.plate_addr[1] = SCL_VDP2_VRAM_B0 + 0x18000;
+    scfg.plate_addr[0] = SCL_VDP2_VRAM_B0 + 0x18000;
+    SCL_SetConfig(SCL_NBG0, &scfg);
+    ptr = &DAT_0605CD90[3];
+    temp_r1 = &DAT_06038CA0[arg0 * 6];
+    ptr->unk8 = SCL_VDP2_VRAM_B0 + 0x18000;
+    ptr->dst0 = SCL_VDP2_VRAM_A1;
+    ptr->dst4 = SCL_COLRAM_ADDR + 0x600;
+    ptr->unk24 = 0x30;
+    ptr->unkC = *temp_r1++ + 0x00252000;
+    ptr->unk18 = *temp_r1++;
+    ptr->unk10 = *temp_r1++ + 0x00252000;
+    ptr->unk1C = *temp_r1++;
+    ptr->unk14 = *temp_r1++ + 0x00252000;
+    ptr->unk20 = *temp_r1++;
+    ptr->divisorX = ptr->divisorY = 1;
+    ptr->flags = 0;
+    SCL_Open(SCL_NBG0);
+    SCL_MoveTo(FIXED(8), FIXED(8), FIXED(0));
+    SCL_Close();
+    DAT_0605C120[3] = 0x2C7000;
+    src = DAT_0605C120[3];
+    DecompressLZSS(ptr->unk14, src, ptr->unk20);
+    ptr->width = src[0];
+    ptr->height = src[1];
+    DAT_0605D6C0[3].tileFlags = 7;
+    SCL_SetDisplayMode(SCL_DOUBLE_INTER, SCL_240LINE, SCL_HIRESO_A);
+    Scl_w_reg.win0_start[0] = 0;
+    Scl_w_reg.win0_start[1] = 12;
+    Scl_w_reg.win0_end[0] = 640;
+    Scl_w_reg.win0_end[1] = 480;
+    Scl_w_reg.wincontrl[0] = 0x8383;
+    Scl_w_reg.wincontrl[1] = 0x8383;
+    Scl_w_reg.wincontrl[2] = 0x0083;
+    SclProcess = 1;
+    SCL_SetCycleTable(DAT_06038DA0);
+}
 
 void func_0600971C(void) {
     if (g_PlayableCharacter == 0) {
@@ -2243,13 +2296,13 @@ void func_06009F10(void) {
     SclConfig scfg;
 
     SCL_InitConfigTb(&scfg);
-    scfg.charsize = 0;
-    scfg.pnamesize = 1;
-    scfg.platesize = 0;
-    scfg.coltype = 0;
-    scfg.datatype = 0;
-    scfg.mapover = 0;
-    scfg.flip = 0;
+    scfg.charsize = SCL_CHAR_SIZE_1X1;
+    scfg.pnamesize = SCL_PN1WORD;
+    scfg.platesize = SCL_PL_SIZE_1X1;
+    scfg.coltype = SCL_COL_TYPE_16;
+    scfg.datatype = SCL_CELL;
+    scfg.mapover = SCL_OVER_0;
+    scfg.flip = SCL_PN_10BIT;
     scfg.plate_addr[3] = SCL_VDP2_VRAM_B0 + 0x8000;
     scfg.plate_addr[2] = SCL_VDP2_VRAM_B0 + 0x8000;
     scfg.plate_addr[1] = SCL_VDP2_VRAM_B0 + 0x8000;
@@ -3886,14 +3939,14 @@ void InitDebugPrint(void) {
     DAT_06062224[0] = 0;
     ClearDebugPrintTilemap();
     SCL_InitConfigTb(&scfg);
-    scfg.dispenbl = 1;
-    scfg.charsize = 0;
-    scfg.pnamesize = 1;
-    scfg.platesize = 0;
-    scfg.coltype = 0;
-    scfg.datatype = 0;
-    scfg.mapover = 0;
-    scfg.flip = 0;
+    scfg.dispenbl = ON;
+    scfg.charsize = SCL_CHAR_SIZE_1X1;
+    scfg.pnamesize = SCL_PN1WORD;
+    scfg.platesize = SCL_PL_SIZE_1X1;
+    scfg.coltype = SCL_COL_TYPE_16;
+    scfg.datatype = SCL_CELL;
+    scfg.mapover = SCL_OVER_0;
+    scfg.flip = SCL_PN_10BIT;
     scfg.patnamecontrl = 0x66;
     scfg.plate_addr[0] = SCL_VDP2_VRAM_B0 + 0x18000;
     scfg.plate_addr[1] = SCL_VDP2_VRAM_B0 + 0x18000;
