@@ -278,7 +278,7 @@ struct Unk {
 extern s32 DAT_060F50AC;
 
 void func_060E1C08(Entity* self) {
-    if (g_pads[0].tapped == 0x800) {
+    if (g_pads[0].tapped == PAD_START) {
         DAT_060F50AC = 1;
 
         if (self->flags & FLAG_HAS_PRIMS) {

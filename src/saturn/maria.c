@@ -1978,7 +1978,7 @@ void func_060BF35C(void) {
         DAT_0605cd70.unk8 += 1;
     }
 after:
-    if ((DAT_06057f68 == 0) && (g_pads[0].tapped & 0x100)) {
+    if ((DAT_06057f68 == 0) && (g_pads[0].tapped & PAD_CROSS)) {
         D_06085534 = 6;
         DAT_06057f68 = 4;
     }
@@ -1986,6 +1986,7 @@ after:
 }
 
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BF3D0, func_060BF3D0);
+
 void func_060BF704(void) {
     switch (DAT_0605cd70.unk8) {
     case 0:

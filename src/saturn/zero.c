@@ -426,7 +426,7 @@ void UpdatePads(void) {
         (g_pads[0].pressed ^ g_pads[0].previous) & g_pads[0].pressed;
 }
 
-s32 g_PadsRepeatTimer[];
+extern u8 g_PadsRepeatTimer[0x10];
 
 // func_06004C44
 void ResetPadsRepeat(void) {
@@ -440,8 +440,27 @@ void ResetPadsRepeat(void) {
     }
 }
 
-// _REPEAT_PAD
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004C70, UpdatePadsRepeat);
+// original name: REPEAT_PAD
+void UpdatePadsRepeat(void) {
+    u16 button = 1;
+    u16 tapped = g_pads[0].tapped;
+    u16 pressed = g_pads[0].pressed;
+    u16 repeat = 0;
+    s32 i;
+
+    for (i = 0; i < 0x10; i++, button <<= 1) {
+        if (pressed & button) {
+            if (tapped & button) {
+                repeat |= button;
+                g_PadsRepeatTimer[i] = 0x10;
+            } else if (!g_PadsRepeatTimer[i]--) {
+                repeat |= button;
+                g_PadsRepeatTimer[i] = 5;
+            }
+        }
+    }
+    g_pads[0].repeat = repeat;
+}
 
 // func_06004CDC
 void InitializePads(void) {

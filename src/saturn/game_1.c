@@ -299,7 +299,7 @@ s32 func_06067090(Entity* self) {
                 prim1 = prim1->next;
                 func_06066FE0(i, prim1, DAT_060485C0.unk4);
             }
-            if (g_pads[0].tapped & 0x100) {
+            if (g_pads[0].tapped & PAD_CROSS) {
                 DAT_060485C0.unk4 = self->ext.save.unk28;
                 for (i = 0; i < 9; i++) {
                     prim0->drawMode = DRAW_HIDE;
@@ -439,7 +439,7 @@ s32 func_060674B8(Entity* self, s32 arg1) {
                 prim1 = prim1->next;
                 func_06066FE0(i, prim1, self->ext.save.unk1C);
             }
-            if (g_pads[0].tapped & 0x100) {
+            if (g_pads[0].tapped & PAD_CROSS) {
                 self->ext.save.unk1C = 1;
                 for (i = 0; i < 9; i++) {
                     prim0->drawMode = DRAW_HIDE;

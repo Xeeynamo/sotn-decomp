@@ -2057,13 +2057,15 @@ void func_060BCA10(void) {
         DAT_0605cd70.unk8++;
     }
 after:
-    if ((DAT_06057f68 == 0) && (g_pads[0].tapped & 0x100)) {
+    if ((DAT_06057f68 == 0) && (g_pads[0].tapped & PAD_CROSS)) {
         D_06085534 = 6;
         DAT_06057f68 = 4;
     }
     func_060BC834();
 }
+
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BCA84, func_060BCA84);
+
 void func_060BCDB8(void) {
     switch (DAT_0605cd70.unk8) {
     case 0:

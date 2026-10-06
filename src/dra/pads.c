@@ -17,9 +17,10 @@ static void ResetPadsRepeat(void) {
     }
 }
 
+// original name: REPEAT_PAD
 static void UpdatePadsRepeat(void) {
     u16 button = 1;
-    u16 unk = g_pads[0].tapped;
+    u16 tapped = g_pads[0].tapped;
     u16 pressed = g_pads[0].pressed;
     u16 repeat = 0;
     u8* timers = g_PadsRepeatTimer;
@@ -27,7 +28,7 @@ static void UpdatePadsRepeat(void) {
 
     while (i < 0x10) {
         if (pressed & button) {
-            if (unk & button) {
+            if (tapped & button) {
                 repeat |= button;
                 timers[0] = 0x10;
             } else {
