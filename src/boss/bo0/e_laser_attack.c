@@ -163,7 +163,7 @@ void EntityLaserAttack(Entity* self) {
     s16 offsetX;
     s16 offsetY;
 
-    entity = self->ext.olroxLaser.next;
+    entity = self->ext.olroxLaser.parent;
     if (entity->flags & FLAG_DEAD) {
         DestroyEntity(self);
         return;
@@ -232,7 +232,7 @@ void EntityLaserAttack(Entity* self) {
             DestroyEntity(self);
         }
 
-        entity = self->ext.olroxLaser.next;
+        entity = self->ext.olroxLaser.parent;
         angle = ROT(180) - (entity->rotate - ROT(22.5));
         if (self->facingLeft) {
             angle = ROT(180) - angle;
@@ -243,7 +243,7 @@ void EntityLaserAttack(Entity* self) {
         break;
 
     case 1:
-        entity = self->ext.olroxLaser.next;
+        entity = self->ext.olroxLaser.parent;
         angle = ROT(180) - (entity->rotate - ROT(22.5));
         if (self->facingLeft) {
             angle = ROT(180) - angle;
@@ -265,7 +265,7 @@ void EntityLaserAttack(Entity* self) {
             offsetX = 0x200 - offsetX;
         }
         if (offsetX < 0x30) {
-            entity = self->ext.olroxLaser.next;
+            entity = self->ext.olroxLaser.parent;
             entity->ext.olroxLaser.unkA9 = 0;
             DestroyEntity(self);
             return;
@@ -298,7 +298,7 @@ void EntityLaserAttack(Entity* self) {
         } else {
             prim->x1 -= 2;
         }
-        entity = self->ext.olroxLaser.next;
+        entity = self->ext.olroxLaser.parent;
         prim->x0 = entity->posX.i.hi;
         prim->y0 = entity->posY.i.hi;
         angle = ROT(180) - (entity->rotate - ROT(22.5));
@@ -481,7 +481,7 @@ void EntityLaserAttack(Entity* self) {
         if (hitboxOffX > 8) {
             self->hitboxWidth = hitboxOffX - 8;
         }
-        entity = self->ext.olroxLaser.next;
+        entity = self->ext.olroxLaser.parent;
         entity->ext.olroxLaser.unkA9 = 0;
         child = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (child != NULL) {
@@ -635,7 +635,7 @@ void EntityFireballAttack(Entity* self) {
         self->hitboxHeight = 5;
         self->drawFlags |= ENTITY_ROTATE | ENTITY_SCALEX;
         self->scaleX = 0x140;
-        next = self->ext.olroxLaser.next;
+        next = self->ext.olroxLaser.parent;
         self->rotate = next->rotate - ROT(22.5);
         if (self->facingLeft) {
             angle = self->rotate;
