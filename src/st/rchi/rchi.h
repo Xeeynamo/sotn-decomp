@@ -5,6 +5,7 @@
 #include <stage.h>
 
 #define STAGE_IS_RCHI
+#define INVERTED_STAGE
 
 enum Palettes {
     PAL_NONE,

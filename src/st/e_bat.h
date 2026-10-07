@@ -2,13 +2,17 @@
 
 extern EInit g_EInitBat;
 
-static u8 bat_anim_fly[] = {4, 21, 1, 22, 1, 23, 1, 30, 1, 24, 1, 25, 4, 26,
-                            2, 27, 2, 28, 2, 29, 1, 30, 2, 23, 2, 22, 0, 0};
-static u8 bat_anim_drop[] = {5, 31, 5, 32, 5, 31, 5, 32, 5,  31, 5,   32, 4, 31,
-                             4, 32, 3, 31, 3, 32, 2, 31, 12, 32, 255, 0,  0, 0};
+static AnimateEntityFrame bat_anim_fly[] = {
+    {4, 21}, {1, 22}, {1, 23}, {1, 30}, {1, 24}, {1, 25}, {4, 26},
+    {2, 27}, {2, 28}, {2, 29}, {1, 30}, {2, 23}, {2, 22}, POSE_LOOP(0),
+};
+static AnimateEntityFrame bat_anim_drop[] = {
+    {5, 31}, {5, 32}, {5, 31}, {5, 32}, {5, 31},  {5, 32},  {4, 31},
+    {4, 32}, {3, 31}, {3, 32}, {2, 31}, {12, 32}, POSE_END,
+};
 
 void EntityBat(Entity* self) {
-#ifdef STAGE_IS_RCAT
+#ifdef INVERTED_STAGE
     Collider collider;
 #endif
     Entity* newEntity;
@@ -24,7 +28,7 @@ void EntityBat(Entity* self) {
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
             newEntity->params = 1;
         }
-#ifdef STAGE_IS_RCAT
+#ifdef INVERTED_STAGE
         g_api.PlaySfx(SFX_BAT_SCREECH);
 #else
         PlaySfxPositional(SFX_BAT_SCREECH_SWISH);
@@ -35,7 +39,7 @@ void EntityBat(Entity* self) {
 
     switch (self->step) {
     case 0:
-#ifdef STAGE_IS_RCAT
+#ifdef INVERTED_STAGE
 #ifdef STAGE_IS_RCHI
         self->ext.batEnemy.yProximity = 0x60;
         self->ext.batEnemy.xProximity = 0x60;
@@ -52,7 +56,7 @@ void EntityBat(Entity* self) {
     case 1:
         xDistance = GetDistanceToPlayerX();
         yDistance = GetDistanceToPlayerY();
-#ifdef STAGE_IS_RCAT
+#ifdef INVERTED_STAGE
         if ((xDistance < self->ext.batEnemy.xProximity) &&
             (yDistance < self->ext.batEnemy.yProximity) &&
 #else
@@ -66,7 +70,7 @@ void EntityBat(Entity* self) {
     case 2:
         if (AnimateEntity(bat_anim_drop, self) == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-#ifdef STAGE_IS_RCAT
+#ifdef INVERTED_STAGE
             self->velocityY = FIX(1.125);
 #else
             self->velocityY = FIX(0.875);
@@ -86,7 +90,7 @@ void EntityBat(Entity* self) {
         AnimateEntity(bat_anim_fly, self);
         MoveEntity();
 
-#ifdef STAGE_IS_RCAT
+#ifdef INVERTED_STAGE
         var_s2 = 0;
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
@@ -107,7 +111,7 @@ void EntityBat(Entity* self) {
             } else {
                 self->velocityX = FIX(-1.5);
             }
-            self->ext.batEnemy.accelY = 0x800;
+            self->ext.batEnemy.accelY = FIX(0.03125);
             self->step = 4;
         }
 #else
@@ -117,7 +121,7 @@ void EntityBat(Entity* self) {
             } else {
                 self->velocityX = FIX(-1);
             }
-            self->ext.batEnemy.accelY = 0x800;
+            self->ext.batEnemy.accelY = FIX(0.03125);
             self->step++;
         }
 #endif
@@ -130,7 +134,7 @@ void EntityBat(Entity* self) {
             self->ext.batEnemy.accelY = -self->ext.batEnemy.accelY;
         }
         self->velocityY += self->ext.batEnemy.accelY;
-#ifdef STAGE_IS_RCAT
+#ifdef INVERTED_STAGE
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
         if (self->velocityY > 0) {
