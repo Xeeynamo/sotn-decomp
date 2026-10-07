@@ -62,7 +62,7 @@ static AnimateEntityFrame D_us_801811F0[] = {
     {4, 23}, {4, 26}, {4, 27}, {6, 28}, {16, 29}, {8, 21}, POSE_END
 };
 
-static AnimateEntityFrame D_us_80181D38[] = {
+static AnimateEntityFrame D_us_80181200[] = {
     {10, 30}, {1, 31}, {1, 32}, {1, 33}, {1, 34}, {1, 30}, {1, 35}, {1, 36}, {1, 37}, {1, 38}, {1, 30}, {1, 39}, {1, 40}, {1, 41}, {1, 42}, {1, 30}, {1, 43}, {1, 44}, {1, 45}, {1, 46}, POSE_LOOP(0)
 };
 
@@ -582,7 +582,84 @@ void EntityKarasumanFeatherAttack(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno2/nonmatchings/e_karasuman", EntityKarasumanOrbAttack);
+extern EInit g_EInitKarasumanOrbAttack;
+
+void EntityKarasumanOrbAttack(Entity* self) {
+    Entity* entity;
+    s16 angle;
+    s16 angleBetweenEntities;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitKarasumanOrbAttack);
+        self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
+        self->scaleX = self->scaleY = 0;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
+        // fallthrough
+
+    case 1:
+        self->scaleX = self->scaleY += 6;
+        if (self->scaleX > 0xA0) {
+            self->step++;
+        }
+        // fallthrough
+
+    case 2:
+        AnimateEntity(D_us_80181200, self);
+        entity = self->ext.karasuman.parent;
+        if (entity->ext.karasuman.flag1) {
+            self->step++;
+        }
+            if(entity->entityId != E_KARASUMAN || entity->flags & FLAG_DEAD){
+                DestroyEntity(self);
+                return;
+            }
+        
+        break;
+
+    case 3:
+        angle = (self->params << 9) + ROT(22.5);
+        self->velocityX = rcos(angle) << 6;
+        self->velocityY = rsin(angle) << 6;
+        self->ext.karasuman.angle = angle;
+        self->ext.karasuman.timer = 128;
+        self->step++;
+        // fallthrough
+
+    case 4:
+        entity = &PLAYER;
+        angle = GetAngleBetweenEntities(self, entity);
+        angle = LimitAngleChange(24, self->ext.karasuman.angle, angle);
+        self->velocityX = 64 * rcos(angle);
+        self->velocityY = 64 * rsin(angle);
+        self->ext.karasuman.angle = angle;
+        if (self->hitFlags & 0x80) {
+            self->ext.karasuman.timer = 16;
+            self->step = 6;
+        }
+
+        if (!--self->ext.karasuman.timer) {
+            self->step++;
+        }
+        // fallthrough
+
+    case 5:
+        self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
+        AnimateEntity(D_us_80181200, self);
+        MoveEntity();
+        break;
+
+    case 6:
+        AnimateEntity(D_us_80181200, self);
+        entity = &PLAYER;
+        self->posX.i.hi = entity->posX.i.hi;
+        self->posY.i.hi = entity->posY.i.hi;
+        if (!--self->ext.karasuman.timer) {
+            self->step = 5;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("st/rno2/nonmatchings/e_karasuman", EntityKarasumanRavenAttack);
 
