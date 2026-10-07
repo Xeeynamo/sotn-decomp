@@ -1,7 +1,544 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno2.h"
 
-INCLUDE_ASM("st/rno2/nonmatchings/e_karasuman", EntityKarasuman);
+extern EInit g_EInitKarasuman;
+
+static s16 D_us_8018115C[] = {
+    0, 32, 0, 4, 4, -4, -8, 0,
+};
+
+static s16 D_us_8018116C[] UNUSED = {
+    0,
+    32,
+    4,
+    0,
+};
+
+static AnimateEntityFrame D_us_80181174[] = {
+    {30, 1}, {30, 2}, POSE_LOOP(0)
+};
+
+static AnimateEntityFrame D_us_8018117C[] = {
+    {8, 1}, {6, 3}, {4, 4}, {4, 47}, {1, 10}, {1, 48}, {16, 10}, {6, 9}, {6, 47}, {4, 4}, POSE_END
+};
+
+static AnimateEntityFrame D_us_80181194[] = {
+    {2, 4}, {8, 5}, {8, 6}, {3, 5}, POSE_END
+};
+
+static AnimateEntityFrame D_us_801811A0[] = {
+    {8, 7}, {8, 8}, {2, 15}, POSE_END
+};
+
+static AnimateEntityFrame D_us_801811A8[] = {
+    {8, 15}, {8, 16}, {8, 17}, {8, 18}, {8, 19}, {8, 20}, {8, 21}, POSE_LOOP(0)
+};
+
+static AnimateEntityFrame D_us_801811B8[] = {
+    {8, 15}, {8, 7}, POSE_END
+};
+
+static AnimateEntityFrame D_us_801811C0[] = {
+    {8, 5}, {8, 6}, {8, 5}, {8, 4}, POSE_END
+};
+
+static AnimateEntityFrame D_us_801811CC[] = {
+    {4, 11}, {2, 12}, {1, 13}, {1, 12}, POSE_END
+};
+
+static AnimateEntityFrame D_us_801811D8[] = {
+    {4, 11}, {4, 7}, POSE_END
+};
+
+static AnimateEntityFrame D_us_801811E0[] = {
+    {16, 15}, {4, 22}, {2, 23}, POSE_END
+};
+
+static AnimateEntityFrame D_us_801811E8[] = {
+    {1, 23}, {1, 24}, {1, 25}, POSE_LOOP(0)
+};
+
+static AnimateEntityFrame D_us_801811F0[] = {
+    {4, 23}, {4, 26}, {4, 27}, {6, 28}, {16, 29}, {8, 21}, POSE_END
+};
+
+static AnimateEntityFrame D_us_80181D38[] = {
+    {10, 30}, {1, 31}, {1, 32}, {1, 33}, {1, 34}, {1, 30}, {1, 35}, {1, 36}, {1, 37}, {1, 38}, {1, 30}, {1, 39}, {1, 40}, {1, 41}, {1, 42}, {1, 30}, {1, 43}, {1, 44}, {1, 45}, {1, 46}, POSE_LOOP(0)
+};
+
+static AnimateEntityFrame D_us_8018122C[] = {
+    {24, 4}, {8, 47}, {1, 10}, {1, 48}, {1, 10}, POSE_END
+};
+
+static AnimateEntityFrame D_us_80181238[] = {
+    {8, 9}, {8, 47}, POSE_END
+};
+
+static AnimateEntityFrame D_us_80181240[] = {
+    {16, 15}, {8, 14}, {32, 49}, {2, 50}, {2, 51}, POSE_END
+};
+
+static AnimateEntityFrame D_us_8018124C[] = {
+    {8, 52}, {8, 53}, {8, 14}, POSE_END
+};
+
+static AnimateEntityFrame g_KarasumanRavenAbsorbAnim[] = {
+    {4, 54}, {4, 55}, {4, 56}, {4, 57}, {4, 58}, {4, 56}, POSE_LOOP(0)
+};
+
+static AnimateEntityFrame D_us_80181264[] = {
+    {1, 53}, {3, 49}, {2, 52}, {1, 50}, {1, 51}, {24, 60}, POSE_END
+};
+
+static AnimateEntityFrame D_us_80181274[] = {
+    {4, 51}, {24, 60}, POSE_END
+};
+
+static FrameProperty D_us_8018127C[] = {
+    {0x00, 0x00, 0x00, 0x00}, {0x00, 0x08, 0x04, 0x17},
+    {0x00, 0x0C, 0x04, 0x13}, {0x00, 0x0D, 0x04, 0x12},
+    {0x00, 0x07, 0x04, 0x12}, {0x00, 0x04, 0x04, 0x13},
+    {0x00, 0x07, 0x04, 0x17}, {0x00, 0x05, 0x04, 0x13},
+    {0x00, 0x00, 0x08, 0x08}, {0xFF, 0x01, 0x08, 0x08},
+    {0x02, 0x03, 0x04, 0x13}, {0x00, 0x00, 0x04, 0x06},
+    {0x00, 0x00, 0x0E, 0x02}, {0xC0, 0xB8, 0x00, 0x00},
+    {0xF8, 0xF8, 0x00, 0x00},
+};
+
+static u8 D_us_801812B8[] = {
+    0, 1, 1, 1, 1, 2,  3, 1, 4, 1, 1,  1,  1,  1,  5,  6,  7,  7,  7,  7,  7, 7,
+    7, 7, 7, 7, 7, 7,  7, 7, 8, 8, 8,  8,  8,  8,  8,  8,  8,  8,  9,  8,  8, 8,
+    8, 8, 8, 1, 1, 10, 7, 7, 7, 5, 11, 11, 11, 11, 11, 12, 10, 13, 13, 14,
+};
+
+
+void EntityKarasuman(Entity* self) {
+    Entity* entity;
+    s32 i;
+    s32 offsetX;
+    s32 offsetY;
+    s8* frameProperty;
+
+    if (self->hitFlags & 3 && self->step & 1) {
+        SetStep(12);
+    }
+    if (self->flags & FLAG_DEAD && self->step < 14) {
+        SetStep(14);
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitKarasuman);
+        self->animCurFrame = 1;
+        // fallthrough
+
+    case 1:
+        if (UnkCollisionFunc3(D_us_8018115C) & 1) {
+            SetStep(2);
+        }
+        break;
+
+    case 2:
+        switch (self->step_s) {
+        case 0:
+            AnimateEntity(D_us_80181174, self);
+            if (GetDistanceToPlayerX() < 0x50) {
+                SetSubStep(1);
+            }
+            break;
+        case 1:
+            if (AnimateEntity(D_us_8018117C, self) == 0) {
+                SetStep(5);
+            }
+            break;
+        }
+        break;
+    case 5:
+        switch (self->step_s) {
+        case 0:
+            if (AnimateEntity(D_us_80181194, self) == 0) {
+                self->velocityX = 0;
+                self->velocityY = FIX(-4);
+                SetSubStep(1);
+            }
+            break;
+        case 1:
+            MoveEntity();
+            self->velocityY += FIX(0.125);
+            if (AnimateEntity(D_us_801811A0, self) == 0) {
+                SetStep(3);
+                if (self->ext.karasuman.flag2) {
+                    SetStep(10);
+                }
+            }
+            break;
+        }
+        break;
+
+    case 3:
+        if (!self->step_s) {
+            self->ext.karasuman.timer = 0x80;
+            self->velocityY = 0;
+            self->step_s++;
+        }
+        AnimateEntity(D_us_801811A8, self);
+        if (GetSideToPlayer() & 1) {
+            self->velocityX -= FIX(1.0 / 64.0);
+            if (self->velocityX < FIX(-0.75)) {
+                self->velocityX = FIX(-0.75);
+            }
+        } else {
+            self->velocityX += FIX(1.0 / 64.0);
+            if (self->velocityX > FIX(0.75)) {
+                self->velocityX = FIX(0.75);
+            }
+        }
+        if (!self->poseTimer && self->pose == 1) {
+            PlaySfxPositional(SFX_UNK_NZ1_722);
+        }
+
+        if (!--self->ext.karasuman.timer) {
+            if (self->ext.karasuman.flag0) {
+                SetStep(6);
+            } else {
+                SetStep(4);
+            }
+            self->ext.karasuman.flag0 ^= 1;
+        }
+        break;
+    case 4:
+        switch (self->step_s) {
+        case 0:
+            if (AnimateEntity(D_us_801811CC, self) == 0) {
+                self->ext.karasuman.timer = 48;
+                SetSubStep(1);
+            }
+            break;
+        case 1:
+            if (!(g_Timer & 7)) {
+                PlaySfxPositional(SFX_BAT_ECHO_C);
+                for (i = 0; i < 8; i++) {
+                    entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                    if (entity != NULL) {
+                        CreateEntityFromEntity(
+                            E_ID(KARASUMAN_FEATHER_ATTACK), self, entity);
+                        entity->posY.i.hi -= 28;
+                    }
+                }
+            }
+            if (!--self->ext.karasuman.timer) {
+                self->step_s++;
+            }
+            break;
+        case 2:
+            if (AnimateEntity(D_us_801811D8, self) == 0) {
+                SetStep(7);
+                self->step_s = 2;
+            }
+            break;
+        }
+        break;
+    case 7:
+        switch (self->step_s) {
+        case 0:
+            self->velocityX = 0;
+            self->velocityY = 0;
+            self->step_s++;
+            // fallthrough
+        case 1:
+            if (AnimateEntity(D_us_801811B8, self) == 0) {
+                SetSubStep(2);
+            }
+            break;
+        case 2:
+            if (UnkCollisionFunc3(D_us_8018115C) & 1) {
+                self->step_s++;
+            } else {
+                self->velocityY -= FIX(0.09375);
+            }
+            break;
+        case 3:
+            if (AnimateEntity(D_us_801811C0, self) == 0) {
+                SetStep(5); // This is dumb, we override it immediately
+                SetStep(8);
+            }
+            break;
+        }
+        break;
+    case 6:
+        switch (self->step_s) {
+        case 0:
+            self->ext.karasuman.flag1 = 0;
+            if (AnimateEntity(D_us_801811E0, self) == 0) {
+                SetSubStep(1);
+            }
+            break;
+        case 1:
+            for (i = 0; i < 4; i++) {
+                entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                if (entity != NULL) {
+                    CreateEntityFromEntity(
+                        E_ID(KARASUMAN_ORB_ATTACK), self, entity);
+                    entity->params = i;
+                    entity->ext.karasuman.parent = self;
+                    entity->zPriority = self->zPriority + 1;
+                }
+            }
+            PlaySfxPositional(SFX_RNO2_ANIME_SWORD);
+            self->ext.karasuman.timer = 128;
+            self->step_s++;
+            // fallthrough
+        case 2:
+            AnimateEntity(D_us_801811E8, self);
+            if (!(self->ext.karasuman.timer & 7)) {
+                PlaySfxPositional(SFX_RAPID_SYNTH_BUBBLE_SHORT);
+            }
+            if (!--self->ext.karasuman.timer) {
+                PlaySfxPositional(SFX_TELEPORT_BANG_A);
+                self->ext.karasuman.flag1 = 1;
+                self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
+                self->scaleX = self->scaleY = 256;
+                self->velocityY = FIX(-6.0);
+                self->velocityX = 0;
+                SetSubStep(3);
+            }
+            break;
+        case 3:
+            if (AnimateEntity(D_us_801811F0, self) == 0) {
+                self->step_s++;
+            }
+            // fallthrough
+        case 4:
+            MoveEntity();
+            self->velocityY -= self->velocityY / 8;
+            if (self->scaleX > 224) {
+                self->scaleX = self->scaleY -= 4;
+            } else if (self->step_s == 4) {
+                self->step_s++;
+            }
+            break;
+        case 5:
+            self->scaleX = self->scaleY += 8;
+            if (self->scaleX > 256) {
+                self->drawFlags = ENTITY_DEFAULT;
+                SetStep(7);
+            }
+            break;
+        }
+        break;
+    case 8:
+        switch (self->step_s) {
+        case 0:
+            if (AnimateEntity(D_us_8018122C, self) == 0) {
+                SetSubStep(1);
+            }
+            break;
+        case 1:
+            self->ext.karasuman.timer = 128;
+            self->ext.karasuman.flag2 = 1;
+            self->step_s++;
+            // fallthrough
+        case 2:
+            if (!(self->ext.karasuman.timer & 3)) {
+                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (entity != NULL) {
+                    CreateEntityFromEntity(
+                        E_ID(KARASUMAN_RAVEN_ATTACK), self, entity);
+                    entity->ext.karasuman.parent = self;
+                    entity->params = 1;
+                }
+            }
+            if (!(self->ext.karasuman.timer & 7)) {
+                g_api.PlaySfx(SFX_WING_FLAP_A);
+            }
+
+            if (!--self->ext.karasuman.timer) {
+                self->ext.karasuman.timer = 64;
+                self->step_s++;
+            }
+            break;
+        case 3:
+            if (AnimateEntity(D_us_80181238, self) == 0) {
+                SetStep(5);
+            }
+        }
+        break;
+    case 10:
+        switch (self->step_s) {
+        case 0:
+            self->ext.karasuman.flag2 = 0;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            self->step_s++;
+            // fallthrough
+        case 1:
+            if (AnimateEntity(D_us_80181240, self) == 0) {
+                self->ext.karasuman.timer = 96;
+                if (self->facingLeft) {
+                    self->velocityX = FIX(-2.0);
+                } else {
+                    self->velocityX = FIX(2.0);
+                }
+                self->velocityY = FIX(-2.0);
+                self->step_s++;
+            }
+            break;
+        case 2:
+            if (self->ext.karasuman.timer > 0x48) {
+                MoveEntity();
+                self->velocityX -= self->velocityX / 8;
+                self->velocityY -= self->velocityY / 8;
+            }
+            if (!(self->ext.karasuman.timer & 7)) {
+                g_api.PlaySfx(SFX_WING_FLAP_A);
+                entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                if (entity != NULL) {
+                    CreateEntityFromEntity(
+                        E_ID(KARASUMAN_RAVEN_ATTACK), self, entity);
+                    entity->facingLeft = self->facingLeft;
+                    entity->ext.karasuman.parent = self;
+                }
+            }
+
+            if (!--self->ext.karasuman.timer) {
+                SetSubStep(3);
+            }
+            break;
+        case 3:
+            if (AnimateEntity(D_us_8018124C, self) == 0) {
+                SetStep(3);
+            }
+            break;
+        }
+        break;
+    case 12:
+        if (!self->step_s) {
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            if (self->facingLeft) {
+                self->velocityX = FIX(-4.0);
+            } else {
+                self->velocityX = FIX(4.0);
+            }
+            self->velocityY = FIX(-2.0);
+            for (i = 0; i < 8; i++) {
+                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (entity != NULL) {
+                    CreateEntityFromEntity(
+                        E_ID(KARASUMAN_FEATHER), self, entity);
+                    if (Random() & 1) {
+                        entity->zPriority = self->zPriority + 1;
+                    } else {
+                        entity->zPriority = self->zPriority - 1;
+                    }
+                }
+            };
+            self->step_s++;
+        }
+        MoveEntity();
+
+        self->velocityX -= self->velocityX / 16;
+        self->velocityY -= self->velocityY / 16;
+
+        if (AnimateEntity(D_us_80181264, self) == 0) {
+            SetStep(7);
+        }
+        break;
+    case 14:
+        switch (self->step_s) {
+        case 0:
+            self->hitboxState = 0;
+            for (i = 0; i < 32; i++) {
+                entity = AllocEntity(&g_Entities[160], &g_Entities[256]);
+                if (entity != NULL) {
+                    CreateEntityFromEntity(
+                        E_ID(KARASUMAN_FEATHER), self, entity);
+                    if (Random() & 1) {
+                        entity->zPriority = self->zPriority + 1;
+                    } else {
+                        entity->zPriority = self->zPriority - 1;
+                    }
+                }
+            }
+            PlaySfxPositional(SFX_UNK_NZ1_723);
+            self->step_s++;
+            // fallthrough
+        case 1:
+            if ((AnimateEntity(D_us_80181274, self) == 0) &&
+                (UnkCollisionFunc3(D_us_8018115C) & 1)) {
+                self->step_s++;
+            }
+            break;
+        case 2:
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (entity != NULL) {
+                CreateEntityFromEntity(
+                    E_ID(KARASUMAN_RAVEN_ABSORB), self, entity);
+                entity->params = 1;
+                entity->zPriority = self->zPriority + 1;
+            }
+            self->ext.karasuman.timer = 64;
+            self->step_s++;
+            // fallthrough
+        case 3:
+            if ((self->ext.karasuman.timer & 0x1)) {
+                entity = AllocEntity(&g_Entities[160], &g_Entities[256]);
+                if (entity != NULL) {
+                    CreateEntityFromEntity(
+                        E_ID(KARASUMAN_RAVEN_ABSORB), self, entity);
+                    entity->facingLeft = Random() & 1;
+                    entity->params = 0;
+                    entity->zPriority = self->zPriority + 1;
+                }
+            }
+
+            if (!(self->ext.karasuman.timer & 0xF)) {
+                PlaySfxPositional(SFX_WING_FLAP_A);
+            }
+
+            if (!--self->ext.karasuman.timer) {
+                self->palette = PAL_FLAG(0x2E4);
+                self->blendMode = BLEND_TRANSP | BLEND_ADD;
+                self->drawFlags |= ENTITY_OPACITY;
+                self->opacity = 0x80;
+                self->ext.karasuman.timer = 32;
+                self->step_s++;
+            }
+            break;
+        case 4:
+            if((g_Timer & 0xF) == 0){
+                PlaySfxPositional(SFX_FIREBALL_SHOT_B);
+                entity = AllocEntity(&g_Entities[160], &g_Entities[256]);
+                if (entity != NULL) {
+                    CreateEntityFromEntity(
+                        E_ID(EXPLOSION), self, entity);
+                    entity->facingLeft = Random() & 1;
+                    entity->zPriority = self->zPriority + 1;
+                    entity->posY.i.hi += 32;
+                    entity->params = 3;
+                }
+            }
+            if (self->opacity) {
+                self->opacity -= 3;
+            }
+
+            if (!--self->ext.karasuman.timer) {
+                DestroyEntity(self);
+                return;
+            }
+            break;
+        }
+        break;
+    case 0xFF:
+#include "../pad2_anim_debug.h"
+        break;
+    }
+
+    frameProperty = (s8*)D_us_8018127C;
+    frameProperty += D_us_801812B8[self->animCurFrame] * sizeof(FrameProperty);
+    self->hitboxOffX = *frameProperty++;
+    self->hitboxOffY = *frameProperty++;
+    self->hitboxWidth = *frameProperty++;
+    self->hitboxHeight = *frameProperty++;
+}
 
 extern u16 D_us_80180928;
 
@@ -98,7 +635,6 @@ void EntityKarasumanRavenAbsorb(Entity* self) {
     s16 angle;
     extern u16 D_us_80180940;
 
-    extern AnimationFrame g_KarasumanRavenAbsorbAnim[];
 
     switch (self->step) {
     case 0:

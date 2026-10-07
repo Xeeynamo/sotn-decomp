@@ -69,7 +69,7 @@ segments:
       - [0x1A64, .data, e_ctulhu]
       - [0x1B98, data]
       - [0x1BA0, .data, e_malachi]
-      - [0x1C94, data]
+      - [0x1C94, .data, e_karasuman]
       - [0x1E30, .data, e_bloody_zombie]
       - [0x1F28, data]
       - [0x1FF4, .data, e_azaghal]
