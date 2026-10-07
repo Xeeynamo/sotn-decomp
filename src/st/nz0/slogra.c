@@ -51,29 +51,65 @@ typedef enum {
 
 static s16 sensors1[] = {0, 32, 0, 4, 16, -4, -32, 0};
 static s16 sensors2[] = {0, 32, 16, 0};
-static u8 anim1[] = {9, 1, 8, 2, 12, 3, 10, 2, 0, 0};
-static u8 anim2[] = {7, 1, 7, 4, 7, 5, 17, 1, 0, 0};
-static u8 anim3[] = {8, 1, 4, 31, 10, 32, 4, 33, 4, 34, 4, 6, -1, 0};
-static u8 anim4[] = {4, 6, 3, 7, 2, 9, 4, 8, 32, 6, -1, 0};
-static u8 anim5[] = {1, 6, 6, 32, 6, 31, 53, 1, -1, 0};
-static u8 anim6[] = {7,  1, 5,  10, 22, 11, 2,  12, 2,
-                     13, 2, 14, 2,  15, 65, 14, -1, 0};
-static u8 unused_anim[] = {24, 14, 6, 13, 5, 31, 34, 1, -1, 0};
-static u8 anim7[] = {3,  16, 3,  17, 1,  18, 1,  19, 1,
-                     18, 1,  19, 1,  18, 24, 19, -1, 0};
-static u8 anim8[] = {3, 16, 3, 17, 3, 18, 1,  21, 1,  20,
-                     1, 21, 1, 20, 1, 21, 40, 20, -1, 0};
-static u8 anim9[] = {9, 22, 8, 23, 12, 24, 10, 23, 0, 0};
-static u8 anim10[] = {7, 22, 7, 25, 7, 26, 17, 22, 0, 0};
-static u8 anim11[] = {3,  27, 3,  28, 1,  21, 1,  20, 1,
-                      21, 1,  20, 1,  21, 24, 20, -1, 0};
-static u8 anim12[] = {5, 25, 5, 26, 5, 27, 5, 28, 7,  20, 14, 21,
-                      5, 27, 2, 30, 1, 29, 1, 30, 50, 29, -1, 0};
-static u8 anim13[] = {2, 21, 2, 27, 2, 30, 1, 29, 1, 30, 2, 29, -1, 0};
-static u8 anim14[] = {2, 21, 3, 20, 0, 0};
-static u8 anim15[] = {3, 36, 2, 37, -1, 0};
-static u8 anim16[] = {2, 38, 2, 39, 2, 40, 2, 41, 2, 42, 2, 43, -1, 0};
-static u8 anim17[] = {1, 38, 1, 39, 0, 0};
+
+static AnimateEntityFrame anim_walk_with_spear[] = {
+    {9, 1}, {8, 2}, {12, 3}, {10, 2}, POSE_LOOP(0),
+};
+static AnimateEntityFrame anim_taunt_with_spear[] = {
+    {7, 1}, {7, 4}, {7, 5}, {17, 1}, POSE_LOOP(0),
+};
+static AnimateEntityFrame anim_projectile_attack[] = {
+    {8, 1}, {4, 31}, {10, 32}, {4, 33}, {4, 34}, {4, 6}, POSE_END,
+};
+static AnimateEntityFrame anim_projectile_attack_cooldown[] = {
+    {4, 6}, {3, 7}, {2, 9}, {4, 8}, {32, 6}, POSE_END,
+};
+static AnimateEntityFrame anim_projectile_fire_end[] = {
+    {1, 6}, {6, 32}, {6, 31}, {53, 1}, POSE_END,
+};
+static AnimateEntityFrame anim_spear_attack[] = {
+    {7, 1},  {5, 10}, {22, 11}, {2, 12},  {2, 13},
+    {2, 14}, {2, 15}, {65, 14}, POSE_END,
+};
+// An unused set of frames which returns from spear extended back to the idle
+// pose
+static AnimateEntityFrame anim_unused_return_idle[] = {
+    {24, 14}, {6, 13}, {5, 31}, {34, 1}, POSE_END,
+};
+static AnimateEntityFrame anim_knockback_spear[] = {
+    {3, 16}, {3, 17}, {1, 18},  {1, 19},  {1, 18},
+    {1, 19}, {1, 18}, {24, 19}, POSE_END,
+};
+static AnimateEntityFrame anim_lose_spear[] = {
+    {3, 16}, {3, 17}, {3, 18}, {1, 21},  {1, 20},
+    {1, 21}, {1, 20}, {1, 21}, {40, 20}, POSE_END,
+};
+static AnimateEntityFrame anim_walk_no_spear[] = {
+    {9, 22}, {8, 23}, {12, 24}, {10, 23}, POSE_LOOP(0),
+};
+static AnimateEntityFrame anim_taunt_no_spear[] = {
+    {7, 22}, {7, 25}, {7, 26}, {17, 22}, POSE_LOOP(0),
+};
+static AnimateEntityFrame anim_knockback_no_spear[] = {
+    {3, 27}, {3, 28}, {1, 21},  {1, 20},  {1, 21},
+    {1, 20}, {1, 21}, {24, 20}, POSE_END,
+};
+static AnimateEntityFrame anim_attack_no_spear[] = {
+    {5, 25}, {5, 26}, {5, 27}, {5, 28}, {7, 20},  {14, 21},
+    {5, 27}, {2, 30}, {1, 29}, {1, 30}, {50, 29}, POSE_END,
+};
+// A variant of the above which plays extra quickly
+static AnimateEntityFrame anim_attack_no_spear_fast[] = {
+    {2, 21}, {2, 27}, {2, 30}, {1, 29}, {1, 30}, {2, 29}, POSE_END,
+};
+static AnimateEntityFrame anim_dying[] = {{2, 21}, {3, 20}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_spear_plunge[] = {{3, 36}, {2, 37}, POSE_END};
+static AnimateEntityFrame anim_projectile_init[] = {
+    {2, 38}, {2, 39}, {2, 40}, {2, 41}, {2, 42}, {2, 43}, POSE_END,
+};
+static AnimateEntityFrame anim_projectile_flight[] = {
+    {1, 38}, {1, 39}, POSE_LOOP(0)};
+
 static s8 slograHitboxes[] = {
     0,  0, 0,  0,  -8,  2,   19, 27, -12, 6,   19, 24, -11, 6,  19, 24,
     -7, 2, 19, 27, 0,   2,   19, 27, -82, -96, 0,  0,  -27, 13, 32, 11,
@@ -127,7 +163,7 @@ void EntitySlogra(Entity* self) {
     Entity* otherEnt;
     s32 entityOnFloor;
     s8* hitbox;
-    u8* animation;
+    AnimateEntityFrame* animation;
     s32 posY;
 
     self->ext.GS_Props.pickupFlag = 0;
@@ -170,7 +206,7 @@ void EntitySlogra(Entity* self) {
         break;
 
     case SLOGRA_IDLE:
-        AnimateEntity(anim2, self);
+        AnimateEntity(anim_taunt_with_spear, self);
         if (self->hitFlags) {
             g_BossFlag |= BOSS_FLAG_FIGHT_BEGIN;
         }
@@ -180,7 +216,7 @@ void EntitySlogra(Entity* self) {
         break;
 
     case SLOGRA_TAUNT_WITH_SPEAR:
-        if (AnimateEntity(anim2, self) == 0) {
+        if (AnimateEntity(anim_taunt_with_spear, self) == 0) {
             SetStep(SLOGRA_WALKING_WITH_SPEAR);
         }
         break;
@@ -196,7 +232,7 @@ void EntitySlogra(Entity* self) {
             self->ext.GS_Props.timer = 128;
             self->step_s++;
         }
-        AnimateEntity(anim1, self);
+        AnimateEntity(anim_walk_with_spear, self);
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         if (self->facingLeft ^ self->ext.GS_Props.flag) {
             self->velocityX = FIX(0.75);
@@ -240,7 +276,7 @@ void EntitySlogra(Entity* self) {
             PlaySfxPositional(SFX_SLOGRA_ROAR);
             self->step_s++;
         }
-        if (AnimateEntity(anim6, self) == 0) {
+        if (AnimateEntity(anim_spear_attack, self) == 0) {
             SetStep(SLOGRA_WALKING_WITH_SPEAR);
         }
         if (!self->poseTimer && self->pose == 4) {
@@ -255,7 +291,7 @@ void EntitySlogra(Entity* self) {
             self->step_s++;
 
         case SLOGRA_FIRE_PROJECTILE:
-            if (AnimateEntity(anim3, self) == 0) {
+            if (AnimateEntity(anim_projectile_attack, self) == 0) {
                 PlaySfxPositional(SFX_FM_EXPLODE_SWISHES);
                 otherEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (otherEnt != NULL) {
@@ -275,13 +311,13 @@ void EntitySlogra(Entity* self) {
             break;
 
         case SLOGRA_FIRE_COOLDOWN:
-            if (AnimateEntity(anim4, self) == 0) {
+            if (AnimateEntity(anim_projectile_attack_cooldown, self) == 0) {
                 SetSubStep(SLOGRA_FIRE_END);
             }
             break;
 
         case SLOGRA_FIRE_END: // go back to standing position
-            if (AnimateEntity(anim5, self) == 0) {
+            if (AnimateEntity(anim_projectile_fire_end, self) == 0) {
                 SetStep(SLOGRA_WALKING_WITH_SPEAR);
             }
             break;
@@ -313,9 +349,9 @@ void EntitySlogra(Entity* self) {
             entityOnFloor = EntitySlograSpecialCollision(sensors1);
             self->velocityY -= FIX(9.0 / 64);
             if (self->ext.GS_Props.nearDeath) {
-                animation = anim11;
+                animation = anim_knockback_no_spear;
             } else {
-                animation = anim7;
+                animation = anim_knockback_spear;
             }
             if (AnimateEntity(animation, self) == 0 && entityOnFloor & 1) {
                 SetStep(SLOGRA_WALKING_WITH_SPEAR);
@@ -328,7 +364,7 @@ void EntitySlogra(Entity* self) {
 
     case SLOGRA_LOSE_SPEAR:
         entityOnFloor = EntitySlograSpecialCollision(sensors1);
-        if (AnimateEntity(anim8, self) == 0) {
+        if (AnimateEntity(anim_lose_spear, self) == 0) {
             if (entityOnFloor & 1) {
                 SetStep(SLOGRA_TAUNT_WITHOUT_SPEAR);
             }
@@ -339,7 +375,7 @@ void EntitySlogra(Entity* self) {
         break;
 
     case SLOGRA_TAUNT_WITHOUT_SPEAR:
-        if (AnimateEntity(anim10, self) == 0) {
+        if (AnimateEntity(anim_taunt_no_spear, self) == 0) {
             SetStep(SLOGRA_WALKING_WITHOUT_SPEAR);
         }
         break;
@@ -352,7 +388,7 @@ void EntitySlogra(Entity* self) {
             self->step_s++;
         }
 
-        AnimateEntity(anim9, self);
+        AnimateEntity(anim_walk_no_spear, self);
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         if (self->facingLeft ^ self->ext.GS_Props.flag) {
             self->velocityX = FIX(0.75);
@@ -380,7 +416,7 @@ void EntitySlogra(Entity* self) {
         break;
 
     case SLOGRA_ATTACK: // Attack without spear
-        if (AnimateEntity(anim12, self) == 0) {
+        if (AnimateEntity(anim_attack_no_spear, self) == 0) {
             SetStep(SLOGRA_WALKING_WITHOUT_SPEAR);
         }
         if (!self->poseTimer && self->pose == 7) {
@@ -401,9 +437,9 @@ void EntitySlogra(Entity* self) {
 
         case SLOGRA_COMBO_ATTACK_PLUNGE:
             if (self->ext.GS_Props.nearDeath) {
-                animation = anim13;
+                animation = anim_attack_no_spear_fast;
             } else {
-                animation = anim15;
+                animation = anim_spear_plunge;
             }
             AnimateEntity(animation, self);
             MoveEntity();
@@ -442,7 +478,7 @@ void EntitySlogra(Entity* self) {
 
         case SLOGRA_DYING_EXPLODING:
             entityOnFloor = EntitySlograSpecialCollision(sensors1);
-            AnimateEntity(anim14, self);
+            AnimateEntity(anim_dying, self);
             if ((g_Timer & 3) == 0) {
                 otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (otherEnt != NULL) {
@@ -557,14 +593,14 @@ void EntitySlograSpearProjectile(Entity* self) {
         }
 
     case 1:
-        if (AnimateEntity(anim16, self) == 0) {
+        if (AnimateEntity(anim_projectile_init, self) == 0) {
             SetStep(SLOGRA_IDLE);
         }
         break;
 
     case 2:
         MoveEntity();
-        AnimateEntity(anim17, self);
+        AnimateEntity(anim_projectile_flight, self);
         break;
     }
 }

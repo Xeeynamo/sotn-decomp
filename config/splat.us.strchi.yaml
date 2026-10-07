@@ -55,7 +55,8 @@ segments:
       - [0x1274, .data, e_misc]
       - [0x132C, .data, e_particles]
       - [0x13AC, .data, e_room_fg]
-      - [0x1438, data]
+      - [0x1438, .data, e_slogra]
+      - [0x161C, data] # gaibon
       - [0x1754, .data, e_gaibon]
       - [0x1780, .data, e_thornweed]
       - [0x1838, data]

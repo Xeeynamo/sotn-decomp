@@ -46,7 +46,7 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, rchi/create_entity]
-      - [0x1028, c, rchi_psp/e_slogra]
+      - [0x1028, c, rchi/e_slogra]
       - [0x24B0, c, rchi/e_stage_name]
       - [0x3330, c, rchi/e_red_door]
       - [0x4638, c, rchi/st_update]
@@ -67,7 +67,7 @@ segments:
       - [0x13858, c, rchi/e_lock_camera]
       - [0x13AB8, c, rchi_psp/e_demon_switch_wall]
       - [0x14300, c, rchi_psp/e_breakable_wall]
-      - [0x14F80, data]
+      - [0x14F80, .data, rchi/e_slogra]
       - [0x15190, .data, rchi/e_red_door]
       - [0x151A8, .data, rchi/st_update]
       - [0x151D8, data]

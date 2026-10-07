@@ -1267,6 +1267,35 @@ files:
     asset_path: assets/st/rchi
     src_path: src/st/rchi
     splat_config_path: config/splat.us.strchi.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x2C, sprite_banks, sprite_banks]
+          - [0x8C, paldef, palette_def]
+          - [0xD4, layers, layers]
+          - [0x284, gfx_banks, graphics_banks]
+          - [0x34C, layout, entity_layouts]
+          - [0x4F4, skip]
+          - [0x1838, rooms, rooms]
+          - [0x18D4, skip]
+          - [0x2194, cmpgfx, gfx_2194, 128, 128, 4] # guessed: unreferenced, inflates to 0x2000
+          - [0x24D8, cmpgfx, gfx_24D8, 128, 128, 4] # guessed: unreferenced, inflates to 0x2000
+          - [0x2A7C, cmpgfx, gfx_2A7C, 128, 128, 4]
+          - [0x3570, cmpgfx, gfx_3570, 128, 128, 4]
+          - [0x3F58, cmpgfx, gfx_3F58, 128, 128, 4]
+          - [0x481C, cmpgfx, gfx_481C, 128, 128, 4]
+          - [0x558C, cmpgfx, gfx_558C, 128, 128, 4]
+          - [0x5D4C, cmpgfx, gfx_5D4C, 128, 128, 4]
+          - [0x6AD8, cmpgfx, gfx_6AD8, 128, 128, 4]
+          - [0x759C, palette, pal_759C, 16] # 0x2E0
+          - [0x779C, palette, pal_779C, 16] # guessed: unused, no palette def refers to it
+          - [0x785C, palette, pal_785C, 16] # 0x200
+          - [0x78BC, palette, pal_78BC, 16] # 0x203
+          - [0x79BC, palette, pal_79BC, 16] # 0x20B
+          - [0x7A3C, palette, pal_7A3C, 16] # 0x240
+          - [0x7A9C, skip] # 0xD230 unreferenced bytes, unrecognized
+          - [0x14CCC, skip]
   - target: disks/us/ST/RDAI/RDAI.BIN
     asset_path: assets/st/rdai
     src_path: src/st/rdai
