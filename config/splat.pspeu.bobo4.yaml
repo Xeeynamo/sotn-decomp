@@ -97,7 +97,7 @@ segments:
       - [0x30A68, .data, bo4/e_lock_camera]
       - [0x30AE0, .data, bo4/unk_365FC]
       - [0x30B08, .data, bo4/unk_49A6C]
-      - [0x31800, data]
+      - [0x31800, .data, bo4/doppleganger_anim]
       - [0x33A30, .data, bo4/doppleganger]
       - [0x33AE0, .data, bo4/unk_465F0]
       - [0x33B38, .data, bo4/unk_45648]
