@@ -3,8 +3,8 @@
 
 INCLUDE_ASM("st/tek/nonmatchings/e_spectral_sword_dai", func_801D32F4);
 
-INCLUDE_ASM("st/tek/nonmatchings/e_spectral_sword_dai", func_801D3360);
+INCLUDE_ASM("st/tek/nonmatchings/e_spectral_sword_dai", EntitySpectralSwordDAI);
 
-INCLUDE_ASM("st/tek/nonmatchings/e_spectral_sword_dai", func_801D3E08);
+INCLUDE_ASM("st/tek/nonmatchings/e_spectral_sword_dai", EntitySpectralSwordDAIAura);
 
-INCLUDE_ASM("st/tek/nonmatchings/e_spectral_sword_dai", func_801D3EDC);
+INCLUDE_ASM("st/tek/nonmatchings/e_spectral_sword_dai", EntitySpectralSwordWeapon);

@@ -1,4 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "tek.h"
 
-INCLUDE_ASM("st/tek/nonmatchings/e_breakable", func_801BF424);
+INCLUDE_ASM("st/tek/nonmatchings/e_breakable", EntityBreakable);

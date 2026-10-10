@@ -3,4 +3,4 @@
 
 INCLUDE_ASM("st/tek/nonmatchings/e_lock_camera", func_801BEF44);
 
-INCLUDE_ASM("st/tek/nonmatchings/e_lock_camera", func_801BEFC8);
+INCLUDE_ASM("st/tek/nonmatchings/e_lock_camera", EntityLockCamera);

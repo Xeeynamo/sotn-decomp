@@ -63,7 +63,7 @@ INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C4330);
 
 INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C43D0);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C44CC);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", EntityDummy);
 
 INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C44F4);
 

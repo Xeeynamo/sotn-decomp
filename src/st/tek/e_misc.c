@@ -3,15 +3,15 @@
 
 INCLUDE_ASM("st/tek/nonmatchings/e_misc", func_801C69A0);
 
-INCLUDE_ASM("st/tek/nonmatchings/e_misc", func_801C6A90);
+INCLUDE_ASM("st/tek/nonmatchings/e_misc", EntityUnkId13);
 
 INCLUDE_ASM("st/tek/nonmatchings/e_misc", func_801C6BA0);
 
 INCLUDE_ASM("st/tek/nonmatchings/e_misc", func_801C6CD0);
 
-INCLUDE_ASM("st/tek/nonmatchings/e_misc", func_801C6DB8);
+INCLUDE_ASM("st/tek/nonmatchings/e_misc", EntityExplosionVariants);
 
-INCLUDE_ASM("st/tek/nonmatchings/e_misc", func_801C6EA8);
+INCLUDE_ASM("st/tek/nonmatchings/e_misc", EntityGreyPuff);
 
 INCLUDE_ASM("st/tek/nonmatchings/e_misc", func_801C6F98);
 
@@ -19,7 +19,7 @@ INCLUDE_ASM("st/tek/nonmatchings/e_misc", func_801C71C8);
 
 INCLUDE_ASM("st/tek/nonmatchings/e_misc", func_801C72C4);
 
-INCLUDE_ASM("st/tek/nonmatchings/e_misc", func_801C7844);
+INCLUDE_ASM("st/tek/nonmatchings/e_misc", EntityIntenseExplosion);
 
 INCLUDE_ASM("st/tek/nonmatchings/e_misc", func_801C794C);
 

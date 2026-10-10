@@ -3,4 +3,4 @@
 
 INCLUDE_ASM("st/tek/nonmatchings/e_stage_name", func_801C8E04);
 
-INCLUDE_ASM("st/tek/nonmatchings/e_stage_name", func_801C8FD4);
+INCLUDE_ASM("st/tek/nonmatchings/e_stage_name", EntityStageNamePopup);

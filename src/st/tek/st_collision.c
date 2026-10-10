@@ -3,4 +3,4 @@
 
 INCLUDE_ASM("st/tek/nonmatchings/st_collision", func_801BF9B0);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_collision", func_801C08EC);
+INCLUDE_ASM("st/tek/nonmatchings/st_collision", EntityDamageDisplay);

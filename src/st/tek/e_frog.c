@@ -3,4 +3,4 @@
 
 INCLUDE_ASM("st/tek/nonmatchings/e_frog", func_801CBEE0);
 
-INCLUDE_ASM("st/tek/nonmatchings/e_frog", func_801CC084);
+INCLUDE_ASM("st/tek/nonmatchings/e_frog", EntityFrog);

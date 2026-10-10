@@ -1,194 +1,194 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "tek.h"
 
-void func_801BF424(Entity* self);
-void func_801C58C0(Entity* self);
-void func_801C5088(Entity* self);
-void func_801C08EC(Entity* self);
-void func_801C1B6C(Entity* self);
-void func_801C7844(Entity* self);
-void func_801C2C28(Entity* self);
-void func_801C2788(Entity* self);
-void func_801C8FD4(Entity* self);
-void func_801C5A94(Entity* self);
-void func_801C6074(Entity* self);
-void func_801C6898(Entity* self);
-void func_801C3004(Entity* self);
-void func_801C44CC(Entity* self);
-void func_801BEE30(Entity* self);
-void func_801BEFC8(Entity* self);
-void func_801C6A90(Entity* self);
-void func_801C6DB8(Entity* self);
-void func_801C6EA8(Entity* self);
-void func_801CAC9C(Entity* self);
-void func_801CB204(Entity* self);
-void func_801CB89C(Entity* self);
-void func_801CB9A4(Entity* self);
-void func_801CC084(Entity* self);
-void func_801CC434(Entity* self);
-void func_801CCBFC(Entity* self);
-void func_801CCE90(Entity* self);
-void func_801CD990(Entity* self);
-void func_801CDA88(Entity* self);
-void func_801CDCF8(Entity* self);
-void func_801CE0AC(Entity* self);
-void func_801CE3F8(Entity* self);
-void func_801CE8D8(Entity* self);
-void func_801CE9B8(Entity* self);
-void func_801CED54(Entity* self);
-void func_801CF414(Entity* self);
-void func_801CF320(Entity* self);
-void func_801CF4EC(Entity* self);
-void func_801CF9FC(Entity* self);
-void func_801CFD2C(Entity* self);
-void func_801CFF04(Entity* self);
-void func_801D082C(Entity* self);
-void func_801D0940(Entity* self);
-void func_801D0BA4(Entity* self);
-void func_801D0DD8(Entity* self);
-void func_801D14A4(Entity* self);
-void func_801D13B0(Entity* self);
-void func_801D18A4(Entity* self);
-void func_801D1E60(Entity* self);
-void func_801D22EC(Entity* self);
-void func_801D1D6C(Entity* self);
-void func_801D2464(Entity* self);
-void func_801D2C00(Entity* self);
-void func_801D2EF0(Entity* self);
-void func_801D3160(Entity* self);
-void func_801DC5B0(Entity* self);
-void func_801DD314(Entity* self);
-void func_801DD3E8(Entity* self);
-void func_801D3360(Entity* self);
-void func_801D3E08(Entity* self);
-void func_801D3EDC(Entity* self);
-void func_801D41FC(Entity* self);
-void func_801D497C(Entity* self);
-void func_801D4AD4(Entity* self);
-void func_801D4CD0(Entity* self);
-void func_801D579C(Entity* self);
-void func_801D5870(Entity* self);
-void func_801D5E8C(Entity* self);
-void func_801D6290(Entity* self);
-void func_801D6A88(Entity* self);
-void func_801D6D14(Entity* self);
-void func_801D6E20(Entity* self);
-void func_801D6FD4(Entity* self);
-void func_801D7108(Entity* self);
-void func_801D758C(Entity* self);
-void func_801D7810(Entity* self);
-void func_801D791C(Entity* self);
-void func_801D7C68(Entity* self);
-void func_801D8504(Entity* self);
-void func_801D8BE8(Entity* self);
-void func_801D902C(Entity* self);
-void func_801D93C0(Entity* self);
-void func_801D95B4(Entity* self);
-void func_801D9D44(Entity* self);
-void func_801DA550(Entity* self);
-void func_801DA148(Entity* self);
-void func_801DA288(Entity* self);
-void func_801DA484(Entity* self);
-void func_801DA6C0(Entity* self);
-void func_801DA7D0(Entity* self);
-void func_801DAB40(Entity* self);
-void func_801DB884(Entity* self);
+void EntityBreakable(Entity* self);
+void EntityExplosion(Entity* self);
+void EntityPrizeDrop(Entity* self);
+void EntityDamageDisplay(Entity* self);
+void EntityRedDoor(Entity* self);
+void EntityIntenseExplosion(Entity* self);
+void EntitySoulStealOrb(Entity* self);
+void EntityRoomForeground(Entity* self);
+void EntityStageNamePopup(Entity* self);
+void EntityEquipItemDrop(Entity* self);
+void EntityRelicOrb(Entity* self);
+void EntityPersistentItemDrop(Entity* self);
+void EntityEnemyBlood(Entity* self);
+void EntityDummy(Entity* self);
+void EntityBackgroundBlock(Entity* self);
+void EntityLockCamera(Entity* self);
+void EntityUnkId13(Entity* self);
+void EntityExplosionVariants(Entity* self);
+void EntityGreyPuff(Entity* self);
+void EntityDodoBird(Entity* self);
+void EntityBoneScimitar(Entity* self);
+void EntityBoneScimitarParts(Entity* self);
+void EntityToad(Entity* self);
+void EntityFrog(Entity* self);
+void EntityBoneArcher(Entity* self);
+void EntityBoneArcherArrow(Entity* self);
+void EntityGraveKeeper(Entity* self);
+void EntityGraveKeeperHitbox(Entity* self);
+void EntityTombstone(Entity* self);
+void EntityBlackCrow(Entity* self);
+void EntityBlueRaven(Entity* self);
+void EntityJackOBones(Entity* self);
+void EntityJackOBonesPieces(Entity* self);
+void EntityJackOBonesJack(Entity* self);
+void EntityBoneHalberd(Entity* self);
+void EntityBoneHalberdAttack(Entity* self);
+void EntityBoneHalberdPieces(Entity* self);
+void EntityYorick(Entity* self);
+void EntityYorickSkull(Entity* self);
+void EntityYorickPieces(Entity* self);
+void EntityBladeMaster(Entity* self);
+void EntityBladeMasterAttackHitbox(Entity* self);
+void EntityBladeMasterDeathParts(Entity* self);
+void EntityBladeMasterDeathExplosion(Entity* self);
+void EntityBladeSoldier(Entity* self);
+void EntityBladeSoldierAttackHitbox(Entity* self);
+void EntityBladeSoldierDeathParts(Entity* self);
+void EntityNovaSkeleton(Entity* self);
+void EntityNovaLaser(Entity* self);
+void EntityNovaLaserPulse(Entity* self);
+void EntityNovaSkeletonPieces(Entity* self);
+void EntityBoneMusket(Entity* self);
+void EntityBoneMusketUnk(Entity* self);
+void EntityWingedGuard(Entity* self);
+void EntityWingedGuardParts(Entity* self);
+void EntitySpectralSwordNO2(Entity* self);
+void EntitySpectralSwordNO2Aura(Entity* self);
+void EntityPoltergeist(Entity* self);
+void EntitySpectralSwordDAI(Entity* self);
+void EntitySpectralSwordDAIAura(Entity* self);
+void EntitySpectralSwordWeapon(Entity* self);
+void EntityValhallaKnight(Entity* self);
+void EntityValhallaKnightUnk1(Entity* self);
+void EntityValhallaKnightUnk2(Entity* self);
+void EntitySpectralSwordRDAI(Entity* self);
+void EntitySpectralSwordRDAIAura(Entity* self);
+void EntitySpear(Entity* self);
+void EntityShield(Entity* self);
+void EntityOrobourous(Entity* self);
+void EntityOrobSegment(Entity* self);
+void EntityOrobHeadParts(Entity* self);
+void EntityOrobRider(Entity* self);
+void EntityOrobHolyAttacker(Entity* self);
+void EntityDragonRider(Entity* self);
+void EntityDragonSegment(Entity* self);
+void EntityDragonHeadParts(Entity* self);
+void EntityDragonRiderHitbox(Entity* self);
+void EntityVenusWeed(Entity* self);
+void EntityVenusWeedFlower(Entity* self);
+void EntityVenusWeedTendril(Entity* self);
+void EntityVenusWeedDart(Entity* self);
+void EntityVenusWeedSpike(Entity* self);
+void EntityBombKnight(Entity* self);
+void EntityThrownBomb(Entity* self);
+void EntityBombKnightDeathParts(Entity* self);
+void EntityBombFuseSparks(Entity* self);
+void EntityThrownRock(Entity* self);
+void EntityRockPiece(Entity* self);
+void EntityBombKnightArm(Entity* self);
+void EntityThornweed(Entity* self);
+void EntityCorpseweed(Entity* self);
+void EntityCorpseweedProjectile(Entity* self);
 
 PfnEntityUpdate EntityUpdates[] = {
-    /* 0x01 */ func_801BF424,
-    /* 0x02 */ func_801C58C0,
-    /* 0x03 */ func_801C5088,
-    /* 0x04 */ func_801C08EC,
-    /* 0x05 */ func_801C1B6C,
-    /* 0x06 */ func_801C7844,
-    /* 0x07 */ func_801C2C28,
-    /* 0x08 */ func_801C2788,
-    /* 0x09 */ func_801C8FD4,
-    /* 0x0A */ func_801C5A94,
-    /* 0x0B */ func_801C6074,
-    /* 0x0C */ func_801C6898,
-    /* 0x0D */ func_801C3004,
-    /* 0x0E */ func_801C44CC,
-    /* 0x0F */ func_801C44CC,
-    /* 0x10 */ func_801C44CC,
-    /* 0x11 */ func_801BEE30,
-    /* 0x12 */ func_801BEFC8,
-    /* 0x13 */ func_801C6A90,
-    /* 0x14 */ func_801C6DB8,
-    /* 0x15 */ func_801C6EA8,
-    /* 0x16 */ func_801CAC9C,
-    /* 0x17 */ func_801CB204,
-    /* 0x18 */ func_801CB89C,
-    /* 0x19 */ func_801CB9A4,
-    /* 0x1A */ func_801CC084,
-    /* 0x1B */ func_801CC434,
-    /* 0x1C */ func_801CCBFC,
-    /* 0x1D */ func_801CCE90,
-    /* 0x1E */ func_801CD990,
-    /* 0x1F */ func_801CDA88,
-    /* 0x20 */ func_801CDCF8,
-    /* 0x21 */ func_801CE0AC,
-    /* 0x22 */ func_801CE3F8,
-    /* 0x23 */ func_801CE8D8,
-    /* 0x24 */ func_801CE9B8,
-    /* 0x25 */ func_801CED54,
-    /* 0x26 */ func_801CF414,
-    /* 0x27 */ func_801CF320,
-    /* 0x28 */ func_801CF4EC,
-    /* 0x29 */ func_801CF9FC,
-    /* 0x2A */ func_801CFD2C,
-    /* 0x2B */ func_801CFF04,
-    /* 0x2C */ func_801D082C,
-    /* 0x2D */ func_801D0940,
-    /* 0x2E */ func_801D0BA4,
-    /* 0x2F */ func_801D0DD8,
-    /* 0x30 */ func_801D14A4,
-    /* 0x31 */ func_801D13B0,
-    /* 0x32 */ func_801D18A4,
-    /* 0x33 */ func_801D1E60,
-    /* 0x34 */ func_801D22EC,
-    /* 0x35 */ func_801D1D6C,
-    /* 0x36 */ func_801D2464,
-    /* 0x37 */ func_801D2C00,
-    /* 0x38 */ func_801D2EF0,
-    /* 0x39 */ func_801D3160,
-    /* 0x3A */ func_801DC5B0,
-    /* 0x3B */ func_801DD314,
-    /* 0x3C */ func_801DD3E8,
-    /* 0x3D */ func_801D3360,
-    /* 0x3E */ func_801D3E08,
-    /* 0x3F */ func_801D3EDC,
-    /* 0x40 */ func_801D41FC,
-    /* 0x41 */ func_801D497C,
-    /* 0x42 */ func_801D4AD4,
-    /* 0x43 */ func_801D4CD0,
-    /* 0x44 */ func_801D579C,
-    /* 0x45 */ func_801D5870,
-    /* 0x46 */ func_801D5E8C,
-    /* 0x47 */ func_801D6290,
-    /* 0x48 */ func_801D6A88,
-    /* 0x49 */ func_801D6D14,
-    /* 0x4A */ func_801D6E20,
-    /* 0x4B */ func_801D6FD4,
-    /* 0x4C */ func_801D7108,
-    /* 0x4D */ func_801D758C,
-    /* 0x4E */ func_801D7810,
-    /* 0x4F */ func_801D791C,
-    /* 0x50 */ func_801D7C68,
-    /* 0x51 */ func_801D8504,
-    /* 0x52 */ func_801D8BE8,
-    /* 0x53 */ func_801D902C,
-    /* 0x54 */ func_801D93C0,
-    /* 0x55 */ func_801D95B4,
-    /* 0x56 */ func_801D9D44,
-    /* 0x57 */ func_801DA550,
-    /* 0x58 */ func_801DA148,
-    /* 0x59 */ func_801DA288,
-    /* 0x5A */ func_801DA484,
-    /* 0x5B */ func_801DA6C0,
-    /* 0x5C */ func_801DA7D0,
-    /* 0x5D */ func_801DAB40,
-    /* 0x5E */ func_801DB884,
+    /* 0x01 */ EntityBreakable,
+    /* 0x02 */ EntityExplosion,
+    /* 0x03 */ EntityPrizeDrop,
+    /* 0x04 */ EntityDamageDisplay,
+    /* 0x05 */ EntityRedDoor,
+    /* 0x06 */ EntityIntenseExplosion,
+    /* 0x07 */ EntitySoulStealOrb,
+    /* 0x08 */ EntityRoomForeground,
+    /* 0x09 */ EntityStageNamePopup,
+    /* 0x0A */ EntityEquipItemDrop,
+    /* 0x0B */ EntityRelicOrb,
+    /* 0x0C */ EntityPersistentItemDrop,
+    /* 0x0D */ EntityEnemyBlood,
+    /* 0x0E */ EntityDummy,
+    /* 0x0F */ EntityDummy,
+    /* 0x10 */ EntityDummy,
+    /* 0x11 */ EntityBackgroundBlock,
+    /* 0x12 */ EntityLockCamera,
+    /* 0x13 */ EntityUnkId13,
+    /* 0x14 */ EntityExplosionVariants,
+    /* 0x15 */ EntityGreyPuff,
+    /* 0x16 */ EntityDodoBird,
+    /* 0x17 */ EntityBoneScimitar,
+    /* 0x18 */ EntityBoneScimitarParts,
+    /* 0x19 */ EntityToad,
+    /* 0x1A */ EntityFrog,
+    /* 0x1B */ EntityBoneArcher,
+    /* 0x1C */ EntityBoneArcherArrow,
+    /* 0x1D */ EntityGraveKeeper,
+    /* 0x1E */ EntityGraveKeeperHitbox,
+    /* 0x1F */ EntityTombstone,
+    /* 0x20 */ EntityBlackCrow,
+    /* 0x21 */ EntityBlueRaven,
+    /* 0x22 */ EntityJackOBones,
+    /* 0x23 */ EntityJackOBonesPieces,
+    /* 0x24 */ EntityJackOBonesJack,
+    /* 0x25 */ EntityBoneHalberd,
+    /* 0x26 */ EntityBoneHalberdAttack,
+    /* 0x27 */ EntityBoneHalberdPieces,
+    /* 0x28 */ EntityYorick,
+    /* 0x29 */ EntityYorickSkull,
+    /* 0x2A */ EntityYorickPieces,
+    /* 0x2B */ EntityBladeMaster,
+    /* 0x2C */ EntityBladeMasterAttackHitbox,
+    /* 0x2D */ EntityBladeMasterDeathParts,
+    /* 0x2E */ EntityBladeMasterDeathExplosion,
+    /* 0x2F */ EntityBladeSoldier,
+    /* 0x30 */ EntityBladeSoldierAttackHitbox,
+    /* 0x31 */ EntityBladeSoldierDeathParts,
+    /* 0x32 */ EntityNovaSkeleton,
+    /* 0x33 */ EntityNovaLaser,
+    /* 0x34 */ EntityNovaLaserPulse,
+    /* 0x35 */ EntityNovaSkeletonPieces,
+    /* 0x36 */ EntityBoneMusket,
+    /* 0x37 */ EntityBoneMusketUnk,
+    /* 0x38 */ EntityWingedGuard,
+    /* 0x39 */ EntityWingedGuardParts,
+    /* 0x3A */ EntitySpectralSwordNO2,
+    /* 0x3B */ EntitySpectralSwordNO2Aura,
+    /* 0x3C */ EntityPoltergeist,
+    /* 0x3D */ EntitySpectralSwordDAI,
+    /* 0x3E */ EntitySpectralSwordDAIAura,
+    /* 0x3F */ EntitySpectralSwordWeapon,
+    /* 0x40 */ EntityValhallaKnight,
+    /* 0x41 */ EntityValhallaKnightUnk1,
+    /* 0x42 */ EntityValhallaKnightUnk2,
+    /* 0x43 */ EntitySpectralSwordRDAI,
+    /* 0x44 */ EntitySpectralSwordRDAIAura,
+    /* 0x45 */ EntitySpear,
+    /* 0x46 */ EntityShield,
+    /* 0x47 */ EntityOrobourous,
+    /* 0x48 */ EntityOrobSegment,
+    /* 0x49 */ EntityOrobHeadParts,
+    /* 0x4A */ EntityOrobRider,
+    /* 0x4B */ EntityOrobHolyAttacker,
+    /* 0x4C */ EntityDragonRider,
+    /* 0x4D */ EntityDragonSegment,
+    /* 0x4E */ EntityDragonHeadParts,
+    /* 0x4F */ EntityDragonRiderHitbox,
+    /* 0x50 */ EntityVenusWeed,
+    /* 0x51 */ EntityVenusWeedFlower,
+    /* 0x52 */ EntityVenusWeedTendril,
+    /* 0x53 */ EntityVenusWeedDart,
+    /* 0x54 */ EntityVenusWeedSpike,
+    /* 0x55 */ EntityBombKnight,
+    /* 0x56 */ EntityThrownBomb,
+    /* 0x57 */ EntityBombKnightDeathParts,
+    /* 0x58 */ EntityBombFuseSparks,
+    /* 0x59 */ EntityThrownRock,
+    /* 0x5A */ EntityRockPiece,
+    /* 0x5B */ EntityBombKnightArm,
+    /* 0x5C */ EntityThornweed,
+    /* 0x5D */ EntityCorpseweed,
+    /* 0x5E */ EntityCorpseweedProjectile,
 };
 
 // clang-format off

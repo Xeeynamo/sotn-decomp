@@ -3,10 +3,10 @@
 
 INCLUDE_ASM("st/tek/nonmatchings/e_blade_master", func_801CFE1C);
 
-INCLUDE_ASM("st/tek/nonmatchings/e_blade_master", func_801CFF04);
+INCLUDE_ASM("st/tek/nonmatchings/e_blade_master", EntityBladeMaster);
 
-INCLUDE_ASM("st/tek/nonmatchings/e_blade_master", func_801D082C);
+INCLUDE_ASM("st/tek/nonmatchings/e_blade_master", EntityBladeMasterAttackHitbox);
 
-INCLUDE_ASM("st/tek/nonmatchings/e_blade_master", func_801D0940);
+INCLUDE_ASM("st/tek/nonmatchings/e_blade_master", EntityBladeMasterDeathParts);
 
-INCLUDE_ASM("st/tek/nonmatchings/e_blade_master", func_801D0BA4);
+INCLUDE_ASM("st/tek/nonmatchings/e_blade_master", EntityBladeMasterDeathExplosion);

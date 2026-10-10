@@ -3,8 +3,8 @@
 
 INCLUDE_ASM("st/tek/nonmatchings/e_jack_o_bones", func_801CE354);
 
-INCLUDE_ASM("st/tek/nonmatchings/e_jack_o_bones", func_801CE3F8);
+INCLUDE_ASM("st/tek/nonmatchings/e_jack_o_bones", EntityJackOBones);
 
-INCLUDE_ASM("st/tek/nonmatchings/e_jack_o_bones", func_801CE8D8);
+INCLUDE_ASM("st/tek/nonmatchings/e_jack_o_bones", EntityJackOBonesPieces);
 
-INCLUDE_ASM("st/tek/nonmatchings/e_jack_o_bones", func_801CE9B8);
+INCLUDE_ASM("st/tek/nonmatchings/e_jack_o_bones", EntityJackOBonesJack);

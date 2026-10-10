@@ -11,6 +11,7 @@ options:
   compiler:     GCC
   symbol_addrs_path:
     - config/undefined_syms.sttek.txt
+    - config/symbols.hd.sttek.txt
   undefined_funcs_auto_path: build/hd/config/undefined_funcs_auto.hd.sttek.txt
   undefined_syms_auto_path:  build/hd/config/undefined_syms_auto.hd.sttek.txt
   find_file_boundaries: yes

@@ -23,14 +23,14 @@ INCLUDE_ASM("st/tek/nonmatchings/e_collect", func_801C5044);
 
 INCLUDE_ASM("st/tek/nonmatchings/e_collect", func_801C506C);
 
-INCLUDE_ASM("st/tek/nonmatchings/e_collect", func_801C5088);
+INCLUDE_ASM("st/tek/nonmatchings/e_collect", EntityPrizeDrop);
 
-INCLUDE_ASM("st/tek/nonmatchings/e_collect", func_801C58C0);
+INCLUDE_ASM("st/tek/nonmatchings/e_collect", EntityExplosion);
 
 INCLUDE_ASM("st/tek/nonmatchings/e_collect", func_801C59BC);
 
-INCLUDE_ASM("st/tek/nonmatchings/e_collect", func_801C5A94);
+INCLUDE_ASM("st/tek/nonmatchings/e_collect", EntityEquipItemDrop);
 
-INCLUDE_ASM("st/tek/nonmatchings/e_collect", func_801C6074);
+INCLUDE_ASM("st/tek/nonmatchings/e_collect", EntityRelicOrb);
 
-INCLUDE_ASM("st/tek/nonmatchings/e_collect", func_801C6898);
+INCLUDE_ASM("st/tek/nonmatchings/e_collect", EntityPersistentItemDrop);
