@@ -335,6 +335,9 @@ files:
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/te4.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/te5.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/tek.bin
+    asset_path: assets/st/tek
+    src_path: src/st/tek
+    splat_config_path: config/splat.hd.sttek.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/top.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/wrp.bin
     asset_path: assets/st/wrp

@@ -92,7 +92,7 @@ var metaOverlays = map[string]metaOverlay{
 	"tt_006": {"tt_006", "servant", "Nose demon familiar"},
 	"fname":  {"fname", "engine", "fname (HD exclusive)"},
 	"sd":     {"sd", "engine", "sd (HD exclusive)"},
-	"tek":    {"tek", "engine", "tek (HD exclusive)"},
+	"sttek":  {"tek", "st", "TEK: Enemy test room (HD exclusive)"},
 }
 var metaCategories = map[string]string{
 	"engine":  "Game engine/misc",
