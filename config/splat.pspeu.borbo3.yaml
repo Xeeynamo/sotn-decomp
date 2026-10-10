@@ -89,7 +89,7 @@ segments:
       - [0x1D0E8, .data, rbo3/header]
       - [0x1D118, data]
       - [0x1D210, .data, rbo3/rbo3]
-      - [0x1D220, data]
+      - [0x1D220, .data, rbo3/background_block_init]
       - [0x1D240, .data, rbo3/e_lock_camera]
       - [0x1D2B8, data]
       - [0x1D2E8, .data, rbo3/e_clouds]
