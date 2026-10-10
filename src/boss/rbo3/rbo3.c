@@ -31,7 +31,7 @@ char D_pspeu_09254890[] = "charal %x\n";
 #endif
 
 #ifdef VERSION_PSP
-INCLUDE_ASM("boss/rbo3_psp/nonmatchings/rbo3/rbo3", EntityMedusa);
+INCLUDE_ASM("boss/rbo3/nonmatchings/rbo3", EntityMedusa);
 #else
 void EntityMedusa(Entity* self) {
     Entity* entity;
@@ -266,7 +266,7 @@ void EntityMedusa(Entity* self) {
 extern EInit D_us_80180498;
 
 #ifdef VERSION_PSP
-INCLUDE_ASM("boss/rbo3_psp/nonmatchings/rbo3/rbo3", func_us_80192020);
+INCLUDE_ASM("boss/rbo3/nonmatchings/rbo3", func_us_80192020);
 #else
 void func_us_80192020(Entity* self) {
     Primitive* prim;
@@ -365,7 +365,7 @@ extern s8 D_us_80180684[];
 extern u8 D_us_801806B0[];
 
 #ifdef VERSION_PSP
-INCLUDE_ASM("boss/rbo3_psp/nonmatchings/rbo3/rbo3", func_us_801922EC);
+INCLUDE_ASM("boss/rbo3/nonmatchings/rbo3", func_us_801922EC);
 #else
 void func_us_801922EC(Entity* self) {
     Entity* prev;
@@ -408,7 +408,7 @@ void func_us_801922EC(Entity* self) {
 extern EInit D_us_801804A4;
 
 #ifdef VERSION_PSP
-INCLUDE_ASM("boss/rbo3_psp/nonmatchings/rbo3/rbo3", func_us_801923DC);
+INCLUDE_ASM("boss/rbo3/nonmatchings/rbo3", func_us_801923DC);
 #else
 void func_us_801923DC(Entity* self) {
     const int PrimCount = 13;

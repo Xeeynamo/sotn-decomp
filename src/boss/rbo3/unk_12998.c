@@ -7,7 +7,7 @@ extern EntityConfig D_us_8018071C[];
 
 // Entity ID 0x1B
 #ifdef VERSION_PSP
-INCLUDE_ASM("boss/rbo3_psp/nonmatchings/rbo3/unk_12998", func_us_80192998);
+INCLUDE_ASM("boss/rbo3/nonmatchings/unk_12998", func_us_80192998);
 #else
 void func_us_80192998(Entity* self) {
     s32 params;
