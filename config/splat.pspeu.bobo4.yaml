@@ -71,7 +71,7 @@ segments:
       - [0x227E0, c, bo4/dop_anim]
       - [0x23CE0, c, bo4/unk_46040]
       - [0x24420, c, bo4/dop_collision]
-      - [0x25B08, c, bo4_psp/unk_25B08]
+      - [0x25B08, c, bo4/unk_50D4C]
       - [0x27580, .data, bo4/e_life_up]
       - [0x275D0, .data, bo4/e_red_door]
       - [0x275E8, .data, bo4/st_update]

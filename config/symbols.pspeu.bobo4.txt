@@ -162,3 +162,4 @@ D_us_8018133C = 0x0926B168;
 g_WingSmashTimer = 0x0926CE20;
 D_us_80181318 = 0x0926B1B8;
 g_DopAnimationFrames = 0x0926B038;
+D_us_80184278 = 0x0926B4A8;
