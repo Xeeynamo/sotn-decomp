@@ -124,7 +124,8 @@ bool func_us_801C6040(s32 arg0) {
         return true;
     }
 
-    if ((arg0 & 0x1000) && (g_Dop.padTapped & (PAD_SQUARE | PAD_CIRCLE)) && func_us_801C5CF8()) {
+    if ((arg0 & 0x1000) && (g_Dop.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
+        func_us_801C5CF8()) {
         return true;
     }
 
@@ -134,7 +135,8 @@ bool func_us_801C6040(s32 arg0) {
             return true;
         }
 
-        if ((arg0 & 0x20) && (g_Dop.padTapped & PAD_CROSS) && !(g_Dop.unk44 & 1)) {
+        if ((arg0 & 0x20) && (g_Dop.padTapped & PAD_CROSS) &&
+            !(g_Dop.unk44 & 1)) {
             func_us_801C5990();
             return true;
         }

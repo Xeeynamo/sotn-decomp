@@ -2171,8 +2171,9 @@ void EntityDopplegangerOutline(Entity* self) {
         }
         prim->v0 = prim->v1 = one;
         prim->v2 = prim->v3 = one + height;
-        g_api.func_800EB758(self->posX.i.hi, self->posY.i.hi, self,
-                            self->drawFlags, (POLY_GT4*)prim, (u16)self->facingLeft);
+        g_api.func_800EB758(
+            self->posX.i.hi, self->posY.i.hi, self, self->drawFlags,
+            (POLY_GT4*)prim, (u16)self->facingLeft);
         PRED(prim) = primData[0] * self->ext.playerOutline.brightness / 256;
         PGRN(prim) = primData[1] * self->ext.playerOutline.brightness / 256;
         PBLU(prim) = primData[2] * self->ext.playerOutline.brightness / 256;
@@ -2653,7 +2654,7 @@ void func_us_801CD89C(Entity* self) {
         if ((self->pose == 8) && (self->anim != D_us_801817A8)) {
             self->blendMode = BLEND_TRANSP;
             if (!(paramsLo & 1) && (self->poseTimer == 1)) {
-                CreateEntFactoryFromEntity(self, FACTORY(4, 4), 0);
+                CreateEntFactoryFromEntity(self, FACTORY(BP_4, 4), 0);
             }
         }
 
