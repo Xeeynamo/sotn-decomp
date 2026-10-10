@@ -1323,6 +1323,7 @@ files:
         vram: 0x09237700
         assets:
           - [0x80, skip]
+          - [0x12D18, sprite_banks, psp/sprite_banks]
           - [0x12D78, layers, layers]
           - [0x12DA0, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo4.bin
