@@ -65,7 +65,7 @@ segments:
       - [0xE378, c, rbo3/unk_11438]
       - [0xE8E0, c, rbo3/unk_13050]
       - [0xEA60, c, rbo3/rbo3]
-      - [0x10330, c, rbo3_psp/unk_10330]
+      - [0x10330, c, rbo3/e_room_bg]
       - [0x10410, c, rbo3/e_lock_camera]
       - [0x10670, c, rbo3_psp/unk_10670]
       - [0x10D58, c, rbo3/e_clouds]
