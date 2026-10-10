@@ -103,6 +103,9 @@ files:
           - [0x3B298, palette, D_800DB1F4, 16]
           - [0x3B458, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/fname.bin
+    asset_path: assets/servant/fname
+    src_path: src/servant/fname
+    splat_config_path: config/splat.hd.fname.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/sd.bin
     asset_path: assets/sd
     src_path: src/sd

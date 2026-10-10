@@ -228,7 +228,10 @@ func objdiffgen(c *assetConfig, isProgressReport bool) error {
 			ID:   categoryID,
 			Name: overlayMeta.name,
 		})
+		objSubdir := objSubdirFor(string(c.Version), splatConfig.Options.Basename)
+		asmDataSections := map[string]struct{}{"data": {}, "rodata": {}, "bss": {}}
 		srcs := map[string]string{}
+		var asmUnits []string
 		splatConfig.ForEachCodeSubsegment(func(_ splat.Segment, subsegments []any) {
 			for _, seg := range subsegments {
 				segment, ok := seg.([]any)
@@ -272,19 +275,33 @@ func objdiffgen(c *assetConfig, isProgressReport bool) error {
 				default:
 					continue
 				}
-				srcs[name] = cat
+				srcFile := filepath.Join(splatConfig.Options.SrcPath, name+".c")
+				_, isAsm := asmDataSections[cat]
+				if isAsm {
+					srcFile = filepath.Join(splatConfig.Options.AsmPath, "data", fmt.Sprintf("%s.%s.s", name, cat))
+				}
+				if _, found := srcs[srcFile]; found {
+					continue
+				}
+				srcs[srcFile] = name
+				if isAsm {
+					asmUnits = append(asmUnits, srcFile)
+				}
 			}
 		})
-		objSubdir := objSubdirFor(string(c.Version), splatConfig.Options.Basename)
-		asmDataSections := map[string]struct{}{"data": {}, "rodata": {}, "bss": {}}
-		for name, cat := range srcs {
-			srcFile := filepath.Join(splatConfig.Options.SrcPath, name+".c")
-			if _, isAsm := asmDataSections[cat]; isAsm {
-				srcFile = filepath.Join(splatConfig.Options.AsmPath, "data", fmt.Sprintf("%s.%s.s", name, cat))
+		usedNames := map[string]int{}
+		for _, unitName := range srcs {
+			usedNames[unitName]++
+		}
+		for _, srcFile := range asmUnits {
+			if name := srcs[srcFile]; usedNames[name] > 1 {
+				srcs[srcFile] = fmt.Sprintf("%s.%s", name, strings.Split(filepath.Base(srcFile), ".")[1])
 			}
+		}
+		for srcFile, unitName := range srcs {
 			objFile := filepath.Join(objSubdir, srcFile+".o")
 			units = append(units, objdiff.Unit{
-				Name:       fmt.Sprintf("%s/%s", categoryID, name),
+				Name:       fmt.Sprintf("%s/%s", categoryID, unitName),
 				BasePath:   filepath.Join(buildDir, objFile),
 				TargetPath: filepath.Join(targetDir, objFile),
 				Metadata: objdiff.Metadata{
