@@ -12,7 +12,6 @@ InitializeEntity = 0x092448A0;
 EntityMedusa = 0x092460E0;
 func_us_80192998 = 0x09248188;
 spriteBanks = 0x0924A398;
-rooms_layers = 0x0924A418;
 cluts = 0x0924A440;
 gfxBanks = 0x0924A4C8;
 g_EInitParticle = 0x0924A5E0;

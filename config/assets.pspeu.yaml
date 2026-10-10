@@ -1318,6 +1318,13 @@ files:
     asset_path: assets/boss/rbo3
     src_path: src/boss/rbo3
     splat_config_path: config/splat.pspeu.borbo3.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          - [0x12D78, layers, layers]
+          - [0x12DA0, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo4.bin
     asset_path: assets/boss/rbo4
     src_path: src/boss/rbo4
