@@ -9,6 +9,10 @@
 extern s32 D_800A6C18;
 #define D_80096ED0_mad D_800A6C18
 
+// state of the beta-style fade out in e_misc.h, it lives in the bss of e_misc
+extern s16 D_801DDEDC;
+#define D_80199DE8 D_801DDEDC
+
 enum Palettes {
     PAL_NONE = 0,
     PAL_DODO_BIRD = 0x200,
