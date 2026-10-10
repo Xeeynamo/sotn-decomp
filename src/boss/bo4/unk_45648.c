@@ -227,7 +227,6 @@ s32 func_us_801C5B68(void) {
     return 0;
 }
 
-#ifndef VERSION_PC
 static void func_8010ED54(u8 anim) UNUSED {
     DOPPLEGANGER.velocityX = DOPPLEGANGER.velocityY = 0;
     SetDopplegangerStep(16);
@@ -235,7 +234,6 @@ static void func_8010ED54(u8 anim) UNUSED {
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(61, 20), 0);
     g_Dop.unk48 = 0;
 }
-#endif
 
 s32 func_us_801C5CF8(void) {
     s32 defaultAnimOffset;
