@@ -1289,7 +1289,7 @@ s32 D_us_80181B70 = 0;
 
 // player turns white for some sort of status effect
 #ifdef VERSION_PSP
-INCLUDE_ASM("boss/bo4_psp/nonmatchings/bo4/unk_49A6C", EntityDopplegangerBlinkWhite);
+INCLUDE_ASM("boss/bo4/nonmatchings/unk_49A6C", EntityDopplegangerBlinkWhite);
 #else
 void EntityDopplegangerBlinkWhite(Entity* self) {
     Primitive* prim;
@@ -1924,7 +1924,7 @@ s16 D_us_80181B74[23][5] = {
 };
 
 #ifdef VERSION_PSP
-INCLUDE_ASM("boss/bo4_psp/nonmatchings/bo4/unk_49A6C", EntityDopplegangerOutline);
+INCLUDE_ASM("boss/bo4/nonmatchings/unk_49A6C", EntityDopplegangerOutline);
 #else
 void EntityDopplegangerOutline(Entity* self) {
     s16* animFramePtr;
@@ -2364,7 +2364,7 @@ extern s32 D_us_801D4118[32];
 extern s32 D_us_801D4198[32];
 
 #ifdef VERSION_PSP
-INCLUDE_ASM("boss/bo4_psp/nonmatchings/bo4/unk_49A6C", func_us_801CD178);
+INCLUDE_ASM("boss/bo4/nonmatchings/unk_49A6C", func_us_801CD178);
 #else
 void func_us_801CD178(Entity* self) {
     byte stackpad[0x28];
@@ -2852,7 +2852,7 @@ Point16* D_us_80181DF8[] = {
 };
 
 #ifdef VERSION_PSP
-INCLUDE_ASM("boss/bo4_psp/nonmatchings/bo4/unk_49A6C", EntityHitByIce);
+INCLUDE_ASM("boss/bo4/nonmatchings/unk_49A6C", EntityHitByIce);
 #else
 void EntityHitByIce(Entity* self) {
     s32 i;
@@ -3179,7 +3179,7 @@ STATIC_PAD_BSS(0x68);
 
 // spawns mist (player transform)
 #ifdef VERSION_PSP
-INCLUDE_ASM("boss/bo4_psp/nonmatchings/bo4/unk_49A6C", EntityMist);
+INCLUDE_ASM("boss/bo4/nonmatchings/unk_49A6C", EntityMist);
 #else
 void EntityMist(Entity* self) {
     Primitive* prim;

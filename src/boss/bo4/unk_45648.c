@@ -14,7 +14,7 @@ u8 D_us_80181318[][2] = {
 };
 
 #ifdef VERSION_PSP
-INCLUDE_ASM("boss/bo4_psp/nonmatchings/bo4/unk_45648", func_8010E470);
+INCLUDE_ASM("boss/bo4/nonmatchings/unk_45648", func_8010E470);
 #else
 void func_8010E470(s32 arg0, s32 velocityX) {
     s32 unused_stack[2];

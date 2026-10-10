@@ -346,7 +346,7 @@ bool func_us_801C6040(s32 branchFlags);
 extern PlayerState g_Dop;
 
 #ifdef VERSION_PSP
-INCLUDE_ASM("boss/bo4_psp/nonmatchings/bo4/unk_465F0", DopplegangerStepHighJump);
+INCLUDE_ASM("boss/bo4/nonmatchings/unk_465F0", DopplegangerStepHighJump);
 #else
 void DopplegangerStepHighJump(void) {
     s32 temp;
@@ -470,7 +470,7 @@ s16 D_us_8018133C[] = {
 #ifdef VERSION_PSP
 // referenced by the PSP asm until this function matches
 char D_pspeu_0926B178[] = "dam_kind:%04x\n";
-INCLUDE_ASM("boss/bo4_psp/nonmatchings/bo4/unk_465F0", DopplegangerHandleDamage);
+INCLUDE_ASM("boss/bo4/nonmatchings/unk_465F0", DopplegangerHandleDamage);
 #else
 void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
     s32 sfxIndex;
@@ -830,7 +830,7 @@ s32 g_WingSmashTimer;
 extern s32 D_us_801D4A1C;
 
 #ifdef VERSION_PSP
-INCLUDE_ASM("boss/bo4_psp/nonmatchings/bo4/unk_465F0", ControlBatForm);
+INCLUDE_ASM("boss/bo4/nonmatchings/unk_465F0", ControlBatForm);
 #else
 void ControlBatForm(void) {
     Entity* newEntity;
