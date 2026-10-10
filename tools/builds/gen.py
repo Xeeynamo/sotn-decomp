@@ -767,6 +767,8 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
     strip_rule = "psx-strip"
     if platform != "psp" and not is_hd(ver) and is_servant(ovl_name):
         strip_rule = "psx-strip-servant"
+    if ovl_name == "fname":
+        strip_rule = "psx-strip-servant"
     output_name = os.path.basename(target_path)
     if ovl_name == "main":
         output_name = "main.exe"
