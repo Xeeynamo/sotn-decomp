@@ -6,9 +6,11 @@ extern EInit g_EInitParticle;
 extern EntityConfig D_us_8018071C[];
 
 // Entity ID 0x1B
+#ifdef VERSION_PSP
+INCLUDE_ASM("boss/rbo3_psp/nonmatchings/rbo3/unk_12998", func_us_80192998);
+#else
 void func_us_80192998(Entity* self) {
     s32 params;
-    u32 priorityParams;
     EntityConfig* obj;
 
     switch (self->step) {
@@ -22,9 +24,8 @@ void func_us_80192998(Entity* self) {
         self->unk5A = obj->unk5A;
         self->ext.e_80192998.anim = obj->animData;
         self->step = params + 1;
-        priorityParams = self->params & 0xFF00;
-        if (priorityParams) {
-            self->zPriority = priorityParams >> 8;
+        if (self->params & 0xFF00) {
+            self->zPriority = (self->params & 0xFF00) >> 8;
         }
 
         if (self->params & 0xF0) {
@@ -35,7 +36,7 @@ void func_us_80192998(Entity* self) {
         break;
 
     case 1:
-        if (self->step_s == 0) {
+        if (!self->step_s) {
             self->drawFlags = ENTITY_OPACITY;
             self->opacity = 0xC0;
             self->facingLeft = Random() & 1;
@@ -46,10 +47,15 @@ void func_us_80192998(Entity* self) {
         }
         MoveEntity();
         self->velocityY += self->ext.e_80192998.accelY;
+#ifdef VERSION_PSP
+        self->opacity--;
+#else
         self->opacity += 255;
-        if (AnimateEntity(self->ext.e_80192998.anim, self) == 0) {
+#endif
+        if (!AnimateEntity(self->ext.e_80192998.anim, self)) {
             DestroyEntity(self);
         }
         break;
     }
 }
+#endif
