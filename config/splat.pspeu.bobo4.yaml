@@ -83,7 +83,7 @@ segments:
       - [0x2BC10, .data, bo4/e_red_door_tiles]
       - [0x2BC30, .data, bo4/e_init]
       - [0x2BD98, .data, bo4/gen/rooms]
-      - [0x2BDB8, data]
+      - [0x2BDB8, .data, bo4/spritesheets]
       - [0x2BDC8, .data, bo4/e_breakable]
       - [0x2BE18, data]
       - [0x309F0, .data, bo4/header]

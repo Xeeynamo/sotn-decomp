@@ -36,8 +36,8 @@ void InitEntityIds(void) {
 extern LayoutEntity* D_8D2DDC8[];
 extern LayoutEntity* D_8D2DE9C[];
 extern AbbreviatedOverlay2 g_BossOverlay;
-extern void* D_pspeu_09263438;
-extern void* D_pspeu_09263440;
+extern u8** doppleganger_sprites;
+extern u8** bat_form_sprites;
 
 void func_892A018(void);
 void func_8929FA8(void* arg0, s32 arg1);
@@ -48,7 +48,7 @@ void BO4_Load(void) {
     g_pStObjLayoutHorizontal = D_8D2DDC8;
     g_pStObjLayoutVertical = D_8D2DE9C;
     func_892A018();
-    func_8929FA8(D_pspeu_09263438, 0xD3);
-    func_8929FA8(D_pspeu_09263440, 0x6);
+    func_8929FA8(doppleganger_sprites, 0xD3);
+    func_8929FA8(bat_form_sprites, 0x6);
     memcpy(&g_api.o, &g_BossOverlay, sizeof(Overlay));
 }
