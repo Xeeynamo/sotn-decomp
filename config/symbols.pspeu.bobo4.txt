@@ -157,3 +157,6 @@ g_DopSensorsWallDefault = 0x0926B238;
 g_DopSensorsCeiling = 0x0926B248;
 g_DopSensorsFloor = 0x0926B258;
 D_us_801D4A1C = 0x0926C938;
+D_us_80183B0C = 0x0926AB10;
+D_us_8018133C = 0x0926B168;
+g_WingSmashTimer = 0x0926CE20;
