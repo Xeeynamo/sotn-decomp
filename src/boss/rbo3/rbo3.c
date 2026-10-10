@@ -38,10 +38,9 @@ void EntityMedusa(Entity* self) {
     Entity* entity;
     s16 rotate;
     s32 x;
+    s32 y;
     s32 i;
-    s32 velocityX;
     s8* rect;
-    u8* indexes;
 
     if (self->flags & FLAG_DEAD) {
         if (self->step != 7) {
@@ -54,7 +53,8 @@ void EntityMedusa(Entity* self) {
         InitializeEntity(g_EInitMedusa);
         self->animCurFrame = 1;
         self->hitboxState = 0;
-        CreateEntityFromEntity(E_ID(UNK_25), self, self + 1);
+        entity = self + 1;
+        CreateEntityFromEntity(E_ID(UNK_25), self, entity);
         SetStep(1);
         // fallthrough
 
@@ -89,17 +89,18 @@ void EntityMedusa(Entity* self) {
         }
         MoveEntity();
 
-        if (self->facingLeft == self->ext.GS_Props.attackMode) {
-            self->velocityX = FIX(1.0 / 2.0);
-        } else {
+        if (self->facingLeft != self->ext.GS_Props.attackMode) {
             self->velocityX = -FIX(1.0 / 2.0);
+        } else {
+            self->velocityX = FIX(1.0 / 2.0);
         }
         if (self->hitFlags & 3) {
             SetStep(6);
         }
-        x = PLAYER.posX.i.hi - self->posX.i.hi;
+        entity = &PLAYER;
+        x = entity->posX.i.hi - self->posX.i.hi;
         if (g_Player.status & PLAYER_STATUS_UNK2000 &&
-            (x * PLAYER.velocityX) < 0) {
+            (x * entity->velocityX) < 0) {
             if (abs(x) < 80) {
                 SetStep(5);
             }
@@ -107,10 +108,10 @@ void EntityMedusa(Entity* self) {
 
         if (!--self->ext.GS_Props.timer) {
             GetSideToPlayer();
-            if (GetDistanceToPlayerX() <= 64) {
-                SetStep(5);
-            } else {
+            if (GetDistanceToPlayerX() > 64) {
                 SetStep(4);
+            } else {
+                SetStep(5);
             }
         }
         break;
@@ -245,6 +246,8 @@ void EntityMedusa(Entity* self) {
     }
 
     x = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
+    rotate = self->posY.i.hi;
+    y = rotate + g_Tilemap.scrollY.i.hi;
     if (self->velocityX < 0) {
         if (x < 128) {
             self->posX.i.hi = 128 - g_Tilemap.scrollX.i.hi;
@@ -253,9 +256,8 @@ void EntityMedusa(Entity* self) {
         self->posX.i.hi = 384 - g_Tilemap.scrollX.i.hi;
     }
 
-    indexes = D_us_80180670;
     rect = D_us_80180648;
-    rect += indexes[self->animCurFrame] * 4;
+    rect += D_us_80180670[self->animCurFrame] * 4;
 
     self->hitboxOffX = *rect++;
     self->hitboxOffY = *rect++;
