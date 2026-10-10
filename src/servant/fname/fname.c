@@ -43,8 +43,83 @@ extern BatSpriteData g_BatSpriteData[];
 #include "../calculate_angle_to_entity.h"
 #include "../step_angle_towards.h"
 
-// new function
-INCLUDE_ASM("servant/fname/nonmatchings/fname", func_80170914);
+extern s32 s_TargetMatch[0x80];
+extern s32 s_LastTargetedEntityIndex;
+
+Entity* FindValidTarget(Entity* self) {
+    const s32 EntitySearchCount = 128;
+    s32 foundIndex;
+    s32 i;
+    u32 found;
+    Entity* entity;
+
+    found = 0;
+    entity = &g_Entities[STAGE_ENTITY_START];
+    for (i = 0; i < EntitySearchCount; i++, entity++) {
+        s_TargetMatch[i] = 0;
+        if (!entity->entityId) {
+            continue;
+        }
+        if (entity->hitboxState == 0) {
+            continue;
+        }
+        if (entity->flags & FLAG_UNK_00200000) {
+            continue;
+        }
+        if (entity->posX.i.hi < -16) {
+            continue;
+        }
+        if (entity->posX.i.hi > 272) {
+            continue;
+        }
+        if (entity->posY.i.hi > 240) {
+            continue;
+        }
+        if (entity->posY.i.hi < 0) {
+            continue;
+        }
+        if (abs(self->posX.i.hi - entity->posX.i.hi) < 64 &&
+            abs(self->posY.i.hi - entity->posY.i.hi) < 64) {
+            continue;
+        }
+        if (!self->facingLeft && self->posX.i.hi < entity->posX.i.hi) {
+            continue;
+        }
+        if (self->facingLeft && self->posX.i.hi > entity->posX.i.hi) {
+            continue;
+        }
+        if (entity->hitPoints >= 0x7000) {
+            continue;
+        }
+
+        if (entity->flags & FLAG_UNK_80000) {
+            if (entity->hitPoints >=
+                g_BatAbilityStats[g_CurrentEntity->ext.bat.unk7C]
+                    .minimumEnemyHp) {
+                found++;
+                s_TargetMatch[i] = 1;
+            }
+        } else {
+            entity->flags |= FLAG_UNK_80000;
+            return entity;
+        }
+    }
+
+    if (found > 0) {
+        foundIndex = s_LastTargetedEntityIndex % EntitySearchCount;
+        for (i = 0; i < EntitySearchCount; i++) {
+            if (s_TargetMatch[foundIndex]) {
+                entity = &g_Entities[STAGE_ENTITY_START + foundIndex];
+                s_LastTargetedEntityIndex =
+                    (foundIndex + 1) % EntitySearchCount;
+                return entity;
+            }
+            foundIndex = (foundIndex + 1) % EntitySearchCount;
+        }
+    }
+
+    return NULL;
+}
 
 #include "../check_entity_valid.h"
 
