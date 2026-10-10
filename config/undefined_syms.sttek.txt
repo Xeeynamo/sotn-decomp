@@ -21,3 +21,5 @@ g_ScrollDeltaY = 0x800A70F0;
 g_Player = 0x800823F0;
 rcos = 0x80017B04;
 rsin = 0x80017A38;
+g_Status = 0x800A8940;
+ratan2 = 0x80019E48;
