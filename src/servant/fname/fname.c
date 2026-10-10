@@ -268,8 +268,142 @@ static void UpdatePrimWhenAlucardIsBat(Entity* entity) {
     prim->y2 = prim->y3 = prim->y0 + g_BatSpriteData[frame].height;
 }
 
+#define RandBeta(x) ((s32 (*)(s32))rand)(x)
+
 // has some differences with TT_000
-INCLUDE_ASM("servant/fname/nonmatchings/fname", SwitchModeInitialize);
+void SwitchModeInitialize(Entity* self) {
+    s32 i;
+
+    if (!self->ext.bat.previouslyInitialized) {
+        self->ext.bat.batIndex = self->params;
+        self->ext.bat.doUpdateCloseAnimation = false;
+        switch (self->entityId) {
+        case ENTITY_ID_SEEK_MODE:
+            self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+            if (self->primIndex == -1) {
+                DestroyEntity(self);
+                return;
+            }
+            UpdatePrimitives(self, 0);
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                          FLAG_HAS_PRIMS | FLAG_UNK_20000;
+            SetEntityAnimation(self, g_DefaultBatAnimationFrame);
+            self->attack = D_80170658[self->ext.bat.unk7C * 5];
+            self->attackElement = 0x20;
+            self->hitboxState = 2;
+            self->nFramesInvincibility = 2;
+            self->stunFrames = 4;
+            self->hitEffect = 1;
+            self->entityRoomIndex = 0;
+            g_api.func_80118894(self);
+            self->ext.bat.randomMovementAngle = RandBeta(0xFFF);
+            self->ext.bat.targetAngle = 0;
+            self->ext.bat.randomMovementScaler = 12;
+            self->ext.bat.frameCounter = RandBeta(0xFFF);
+            self->ext.bat.angleStep = 0x20;
+            self->step++;
+            break;
+        case ENTITY_ID_ATTACK_MODE:
+            self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+            if (self->primIndex == -1) {
+                DestroyEntity(self);
+                return;
+            }
+            UpdatePrimitives(self, 0);
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                          FLAG_UNK_02000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+            SetEntityAnimation(self, g_DefaultBatAnimationFrame);
+            if (!self->ext.bat.batIndex) {
+                self->ext.bat.follow = &PLAYER;
+            } else {
+                self->ext.bat.follow = &g_Entities[self->ext.bat.batIndex + 3];
+            }
+            self->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
+            self->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
+
+            if (!self->ext.bat.batIndex) {
+                for (i = 0; i < 16; i++) {
+                    s_BatPathingPoints[self->ext.bat.batIndex][i].x =
+                        self->ext.bat.follow->posX.i.hi + self->ext.bat.cameraX;
+                    s_BatPathingPoints[self->ext.bat.batIndex][i].y =
+                        self->ext.bat.follow->posY.i.hi + self->ext.bat.cameraY;
+                }
+            } else {
+                for (i = 0; i < 16; i++) {
+                    if (PLAYER.facingLeft) {
+                        s_BatPathingPoints[self->ext.bat.batIndex][i].x =
+                            PLAYER.posX.i.hi +
+                            ((self->ext.bat.batIndex + 1) * 0x10) +
+                            self->ext.bat.cameraX;
+
+                    } else {
+                        s_BatPathingPoints[self->ext.bat.batIndex][i].x =
+                            PLAYER.posX.i.hi -
+                            ((self->ext.bat.batIndex + 1) * 0x10) +
+                            self->ext.bat.cameraX;
+                    }
+                    s_BatPathingPoints[self->ext.bat.batIndex][i].y =
+                        PLAYER.posY.i.hi + self->ext.bat.cameraY;
+                }
+                self->posX.i.hi = PLAYER.facingLeft ? 0x180 : -0x80;
+                self->posY.i.hi = rand() % 256;
+            }
+            self->ext.bat.hasShotFireball = false;
+            self->step++;
+            break;
+        }
+    } else {
+        self->ext.bat.doUpdateCloseAnimation = false;
+        switch (self->entityId) {
+        case ENTITY_ID_SEEK_MODE:
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                          FLAG_HAS_PRIMS | FLAG_UNK_20000;
+            SetEntityAnimation(self, g_DefaultBatAnimationFrame);
+            self->attack = D_80170658[self->ext.bat.unk7C * 5];
+            self->attackElement = 0x20;
+            self->hitboxState = 2;
+            self->nFramesInvincibility = 2;
+            self->stunFrames = 4;
+            self->hitEffect = 1;
+            self->entityRoomIndex = 0;
+            g_api.func_80118894(self);
+            self->ext.bat.frameCounter = RandBeta(0xFFF);
+            self->step++;
+            break;
+        case ENTITY_ID_ATTACK_MODE:
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                          FLAG_UNK_02000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+            SetEntityAnimation(self, g_DefaultBatAnimationFrame);
+            if (!self->ext.bat.batIndex) {
+                self->ext.bat.follow = &PLAYER;
+            } else {
+                self->ext.bat.follow = &g_Entities[self->ext.bat.batIndex + 3];
+            }
+            self->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
+            self->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
+
+            for (i = 0; i < 16; i++) {
+                if (PLAYER.facingLeft) {
+                    s_BatPathingPoints[self->ext.bat.batIndex][i].x =
+                        PLAYER.posX.i.hi +
+                        ((self->ext.bat.batIndex + 1) * 0x10) +
+                        self->ext.bat.cameraX;
+                } else {
+                    s_BatPathingPoints[self->ext.bat.batIndex][i].x =
+                        PLAYER.posX.i.hi -
+                        ((self->ext.bat.batIndex + 1) * 0x10) +
+                        self->ext.bat.cameraX;
+                }
+                s_BatPathingPoints[self->ext.bat.batIndex][i].y =
+                    PLAYER.posY.i.hi + self->ext.bat.cameraY;
+            }
+            self->ext.bat.hasShotFireball = false;
+            self->step++;
+            break;
+        }
+    }
+    self->ext.bat.previouslyInitialized = self->entityId;
+}
 
 #include "../is_movement_allowed.h"
 
