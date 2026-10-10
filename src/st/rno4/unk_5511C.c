@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../rno4/rno4.h"
+#include "rno4.h"
 
 extern AnimateEntityFrame D_us_8018230C[];
 
@@ -243,24 +243,9 @@ void func_us_801D511C(Entity* self) {
         return;
 
     case 16:
-        if (g_pads[1].pressed & 0x8000) {
-            if (self->params) {
-                break;
-            }
-            self->animCurFrame++;
-            self->params |= 1;
-        } else {
-            self->params = 0;
-        }
-        if (g_pads[1].pressed & 0x2000) {
-            if (self->step_s) {
-                break;
-            }
-            self->animCurFrame--;
-            self->step_s |= 1;
-        } else {
-            self->step_s = 0;
-        }
+#define PAD2_ANIM_DEBUG_PRINT()
+#include "../../st/pad2_anim_debug.h"
+#undef PAD2_ANIM_DEBUG_PRINT
     }
 }
 
@@ -367,7 +352,7 @@ extern u16 D_us_80180B54;
 extern s16 D_us_801822DC;
 
 void func_us_801D5BA4(Entity* self) {
-    Entity* ent;
+    Entity* player;
 
     switch (self->step) {
     case 0:
@@ -378,8 +363,8 @@ void func_us_801D5BA4(Entity* self) {
         self->opacity = 0x40;
         self->scaleX = 0x10;
         self->scaleY = 0x40;
-        ent = g_Entities;
-        self->zPriority = ent->zPriority + 1;
+        player = &PLAYER;
+        self->zPriority = player->zPriority + 1;
         self->rotate = self->ext.et_801D5BA4.unk84;
         self->ext.et_801D5BA4.unk88 = 0x30;
         self->step_s = 0;
