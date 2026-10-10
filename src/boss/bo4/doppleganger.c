@@ -1,22 +1,28 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo4.h"
 
+#ifdef VERSION_PSP
+PlayerState g_Dop;
+s32 D_us_801D4118[32];
+s32 D_us_801D4198[32];
+s32 D_us_801D4A1C;
+#else
 extern s32 D_us_801D4118[];
 extern s32 D_us_801D4198[];
+#endif
 
 static void func_us_801C1A38(void) {
     Entity* entity;
     Primitive* prim;
-    s16 primIndex;
-    s32 angle;
-    s32 scale;
+    s16 angle;
+    s16 scale;
     s32 i;
     s32 colliderSize;
     s32* colliders;
 
     g_CurrentEntity = &DOPPLEGANGER;
     DOPPLEGANGER.animSet = ANIMSET_OVL(1);
-    DOPPLEGANGER.unk5A = 8;
+    g_CurrentEntity->unk5A = 8;
     g_PlayerDraw[8].enableColorBlend = 0;
     DOPPLEGANGER.zPriority = g_unkGraphicsStruct.g_zEntityCenter + 8;
     if (DOPPLEGANGER.posX.i.hi < PLAYER.posX.i.hi) {
@@ -25,10 +31,9 @@ static void func_us_801C1A38(void) {
         DOPPLEGANGER.facingLeft = true;
     }
 
-    DOPPLEGANGER.palette = PAL_FLAG(0x200);
-    DOPPLEGANGER.scaleX = 0x100;
-    DOPPLEGANGER.scaleY = 0x100;
     DOPPLEGANGER.blendMode = BLEND_NO;
+    DOPPLEGANGER.palette = PAL_FLAG(0x200);
+    DOPPLEGANGER.scaleY = DOPPLEGANGER.scaleX = 0x100;
     DOPPLEGANGER.flags =
         FLAG_UNK_10000000 | FLAG_POS_CAMERA_LOCKED | FLAG_SUPPRESS_STUN;
 
@@ -36,8 +41,8 @@ static void func_us_801C1A38(void) {
     //      ceiling colliders, but not all of them
     colliderSize = (sizeof(Collider) * 6) + 0x1C;
     colliders = (s32*)g_Dop.colFloor;
-    for (i = 0; i < colliderSize; i++, colliders++) {
-        *colliders = 0;
+    for (i = 0; i < colliderSize; i++) {
+        *colliders++ = 0;
     }
 
     g_Dop.unk04 = 0;
@@ -52,14 +57,12 @@ static void func_us_801C1A38(void) {
         entity->palette = PAL_FLAG(0x200);
         entity->flags = FLAG_POS_CAMERA_LOCKED;
     }
-    primIndex = g_api.AllocPrimitives(PRIM_TILE, 6);
-    prim = &g_PrimBuf[primIndex];
-    g_Entities[E_ID_41].primIndex = primIndex;
+    g_Entities[E_ID_41].primIndex = g_api.AllocPrimitives(PRIM_TILE, 6);
     g_Entities[E_ID_41].flags |= FLAG_HAS_PRIMS;
+    prim = &g_PrimBuf[g_Entities[E_ID_41].primIndex];
 
-    while (prim != NULL) {
+    for (i = 0; prim != NULL; i++, prim = prim->next) {
         prim->drawMode = DRAW_HIDE | DRAW_UNK02;
-        prim = prim->next;
     }
 
     for (i = 0; i < 32; i++) {
@@ -98,11 +101,10 @@ void EntityDoppleganger10(void) {
     s16 step;
     s16 step_s;
     s32 var_s5;
-    s32 posY;
     s32 posX;
+    s32 posY;
     s32 vram_flag;
-    Pos pos;
-    Pos unused_pos;
+    DamageParam damage;
     SpriteParts* parts;
 
     g_CurrentEntity = &DOPPLEGANGER;
@@ -119,7 +121,8 @@ void EntityDoppleganger10(void) {
             D_us_801805A0 |= 2;
             step = DOPPLEGANGER.step;
             step_s = DOPPLEGANGER.step_s;
-            pos.x.val = D_us_8018120C[g_CurrentEntity->nFramesInvincibility];
+            damage.effects =
+                D_us_8018120C[g_CurrentEntity->nFramesInvincibility];
             SetDopplegangerStep(Dop_Kill);
         } else {
             for (i = 0; i < LEN(g_Dop.timers); i++) {
@@ -198,17 +201,17 @@ void EntityDoppleganger10(void) {
                     (g_CurrentEntity->hitFlags < 4)) {
                     step = DOPPLEGANGER.step;
                     step_s = DOPPLEGANGER.step_s;
-                    pos.x.val =
+                    damage.effects =
                         D_us_8018120C[g_CurrentEntity->nFramesInvincibility];
 
                     if ((g_Dop.unk6C - g_Dop.unk6A) >= 10) {
-                        pos.y.val = 3;
+                        damage.damageKind = 3;
                     } else {
-                        pos.y.val = 2;
+                        damage.damageKind = 2;
                     }
 
                     i = 3;
-                    if (pos.x.val & 0x200) {
+                    if (damage.effects & EFFECT_UNK_0200) {
                         i = 7;
                     }
 
@@ -318,10 +321,10 @@ void EntityDoppleganger10(void) {
         DopplegangerStepSwordWarp();
         break;
     case Dop_Hit:
-        DopplegangerHandleDamage(&pos, step, step_s);
+        DopplegangerHandleDamage(&damage, step, step_s);
         break;
     case Dop_Kill:
-        DopplegangerStepKill(&pos, step, step_s);
+        DopplegangerStepKill(&damage, step, step_s);
         break;
     case Dop_StatusStone:
         DopplegangerStepStone(var_s5);
@@ -447,9 +450,9 @@ void EntityDoppleganger10(void) {
         }
     }
     InitPlayerAfterImage();
-    vram_flag = g_Dop.vram_flag;
     posX = DOPPLEGANGER.posX.val;
     posY = DOPPLEGANGER.posY.val;
+    vram_flag = g_Dop.vram_flag;
 
     if ((g_Dop.status & PLAYER_STATUS_BAT_FORM) ||
         DOPPLEGANGER.step == Dop_HighJump ||
@@ -729,7 +732,11 @@ static void DopplegangerThinking(void) {
                 D_us_801D3D2C--;
             } else {
                 // crouch attack
+#ifdef VERSION_PSP
+                g_Dop.padSim |= PAD_SQUARE;
+#else
                 g_Dop.padSim |= PAD_DOWN | PAD_SQUARE;
+#endif
                 D_us_801D3D2C = 32;
             }
         }
@@ -759,7 +766,11 @@ static void DopplegangerThinking(void) {
             g_Dop.padSim |= PAD_CROSS;
             if (DOPPLEGANGER.velocityY > 0) {
                 if (DOPPLEGANGER.velocityY > FIX(2)) {
+#ifdef VERSION_PSP
+                    g_Dop.padSim |= PAD_DOWN | PAD_SQUARE;
+#else
                     g_Dop.padSim |= PAD_DOWN | PAD_SQUARE | PAD_CROSS;
+#endif
                 }
 
                 if (abs(DOPPLEGANGER.posY.i.hi - PLAYER.posY.i.hi) < 16) {
@@ -828,8 +839,8 @@ static void DopplegangerThinking(void) {
 extern EInit g_EInitDoppleganger10;
 
 void EntityUnkId16(Entity* self) {
-    s32 i;
     Entity* entity;
+    s32 i;
     s16 hitPoints;
 
     g_Dop.unk6A = DOPPLEGANGER.hitPoints;
@@ -838,6 +849,7 @@ void EntityUnkId16(Entity* self) {
         func_us_801C1A38();
 
         entity = &g_Entities[STAGE_ENTITY_START + 4];
+        self = &DOPPLEGANGER;
         for (i = (STAGE_ENTITY_START + 4); i < (STAGE_ENTITY_START + 80); i++,
             entity++) {
             DestroyEntity(entity);
@@ -856,5 +868,3 @@ void EntityUnkId16(Entity* self) {
     g_Dop.unk6C = g_Dop.unk6A;
     FntPrint("life:%02x\n", DOPPLEGANGER.hitPoints);
 }
-
-#include "../dop_collision.h"
