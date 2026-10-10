@@ -125,20 +125,20 @@ typedef enum {
     KARA_INIT,
     KARA_WAIT,
     KARA_WAKEUP,
-    KARA_3,
-    KARA_4,
-    KARA_5,
-    KARA_6,
-    KARA_7,
-    KARA_8,
-    KARA_9,
-    KARA_10,
-    KARA_11,
-    KARA_12,
-    KARA_13,
-    KARA_14,
-    KARA_15,
-    KARA_16
+    KARA_FLYING, // flinchy
+    KARA_RISE,
+    KARA_5_UNUSED,
+    KARA_FEATHER_ATTACK,
+    KARA_DESCEND, // flinchy
+    KARA_ORB_ATTACK,
+    KARA_9_UNUSED,
+    KARA_GATHER_RAVENS,
+    KARA_11_UNUSED,
+    KARA_RAVEN_ATTACK,
+    KARA_13_UNUSED,
+    KARA_FLINCH,
+    KARA_15_UNUSED,
+    KARA_DEATH
 } KaraSteps;
 
 void EntityKarasuman(Entity* self) {
@@ -148,11 +148,12 @@ void EntityKarasuman(Entity* self) {
     s32 offsetY;
     s8* frameProperty;
 
+    // If the step is odd, karasuman is vulnerable to flinching
     if (self->hitFlags & 3 && self->step & 1) {
-        SetStep(KARA_14);
+        SetStep(KARA_FLINCH);
     }
-    if (self->flags & FLAG_DEAD && self->step < 16) {
-        SetStep(KARA_16);
+    if (self->flags & FLAG_DEAD && self->step < KARA_DEATH) {
+        SetStep(KARA_DEATH);
     }
 
     switch (self->step) {
@@ -178,12 +179,12 @@ void EntityKarasuman(Entity* self) {
             break;
         case 1:
             if (AnimateEntity(anim_unfurl_wings, self) == 0) {
-                SetStep(KARA_4);
+                SetStep(KARA_RISE);
             }
             break;
         }
         break;
-    case KARA_4:
+    case KARA_RISE:
         switch (self->step_s) {
         case 0:
             if (AnimateEntity(anim_begin_jump, self) == 0) {
@@ -196,16 +197,16 @@ void EntityKarasuman(Entity* self) {
             MoveEntity();
             self->velocityY += FIX(0.125);
             if (AnimateEntity(anim_rising, self) == 0) {
-                SetStep(KARA_3);
+                SetStep(KARA_FLYING);
                 if (self->ext.karasuman.flag2) {
-                    SetStep(KARA_12);
+                    SetStep(KARA_RAVEN_ATTACK);
                 }
             }
             break;
         }
         break;
 
-    case KARA_3:
+    case KARA_FLYING:
         if (!self->step_s) {
             self->ext.karasuman.timer = 48;
             self->velocityY = 0;
@@ -230,14 +231,14 @@ void EntityKarasuman(Entity* self) {
 
         if (!--self->ext.karasuman.timer) {
             if (self->ext.karasuman.flag0) {
-                SetStep(KARA_8);
+                SetStep(KARA_ORB_ATTACK);
             } else {
-                SetStep(KARA_6);
+                SetStep(KARA_FEATHER_ATTACK);
             }
             self->ext.karasuman.flag0 ^= 1;
         }
         break;
-    case KARA_6:
+    case KARA_FEATHER_ATTACK:
         switch (self->step_s) {
         case 0:
             if (AnimateEntity(anim_4wings_featherattack, self) == 0) {
@@ -263,13 +264,13 @@ void EntityKarasuman(Entity* self) {
             break;
         case 2:
             if (AnimateEntity(anim_end_featherattack, self) == 0) {
-                SetStep(KARA_7);
+                SetStep(KARA_DESCEND);
                 self->step_s = 2;
             }
             break;
         }
         break;
-    case KARA_7:
+    case KARA_DESCEND:
         switch (self->step_s) {
         case 0:
             self->velocityX = 0;
@@ -290,13 +291,13 @@ void EntityKarasuman(Entity* self) {
             break;
         case 3:
             if (AnimateEntity(anim_landing, self) == 0) {
-                SetStep(KARA_4);
-                SetStep(KARA_10);
+                SetStep(KARA_RISE); // This is dumb, we override it immediately
+                SetStep(KARA_GATHER_RAVENS);
             }
             break;
         }
         break;
-    case KARA_8:
+    case KARA_ORB_ATTACK:
         switch (self->step_s) {
         case 0:
             self->ext.karasuman.flag1 = 0;
@@ -351,12 +352,12 @@ void EntityKarasuman(Entity* self) {
             self->scaleX = self->scaleY += 8;
             if (self->scaleX > 256) {
                 self->drawFlags = ENTITY_DEFAULT;
-                SetStep(KARA_7);
+                SetStep(KARA_DESCEND);
             }
             break;
         }
         break;
-    case KARA_10:
+    case KARA_GATHER_RAVENS:
         switch (self->step_s) {
         case 0:
             if (AnimateEntity(anim_prep_ravens, self) == 0) {
@@ -389,11 +390,11 @@ void EntityKarasuman(Entity* self) {
             break;
         case 3:
             if (AnimateEntity(anim_relax_wings_ground, self) == 0) {
-                SetStep(KARA_4);
+                SetStep(KARA_RISE);
             }
         }
         break;
-    case KARA_12:
+    case KARA_RAVEN_ATTACK:
         switch (self->step_s) {
         case 0:
             self->ext.karasuman.flag2 = 0;
@@ -435,12 +436,12 @@ void EntityKarasuman(Entity* self) {
             break;
         case 3:
             if (AnimateEntity(anim_finish_ravens, self) == 0) {
-                SetStep(KARA_3);
+                SetStep(KARA_FLYING);
             }
             break;
         }
         break;
-    case KARA_14:
+    case KARA_FLINCH:
         if (!self->step_s) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             if (self->facingLeft) {
@@ -469,10 +470,10 @@ void EntityKarasuman(Entity* self) {
         self->velocityY -= self->velocityY / 16;
 
         if (AnimateEntity(anim_flinch, self) == 0) {
-            SetStep(KARA_7);
+            SetStep(KARA_DESCEND);
         }
         break;
-    case KARA_16:
+    case KARA_DEATH:
         switch (self->step_s) {
         case 0:
             g_BossFlag |= 2;
@@ -606,11 +607,11 @@ void EntityKarasumanFeatherAttack(Entity* self) {
             self->facingLeft = true;
         }
 
-        angle = (Random() * 4) - FLT(0.125);
+        angle = (Random() * 4) - ROT(45);
         self->rotate = angle;
         angle = self->rotate;
         if (!self->facingLeft) {
-            angle = FLT(0.5) - angle;
+            angle = ROT(180) - angle;
         }
         self->velocityX = 96 * rcos(angle);
         self->velocityY = -96 * rsin(angle);
