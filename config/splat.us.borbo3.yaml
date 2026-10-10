@@ -50,7 +50,7 @@ segments:
       - [0x4C8, .data, background_block_init]
       - [0x4E0, .data, e_red_door_tiles]
       - [0x510, .data, e_lock_camera]
-      - [0x590, data] # e_breakable
+      - [0x590, .data, e_breakable]
       - [0x5F0, data, e_medusa] # medusa
       - [0x730, .data, st_update]
       - [0x77C, .data, collision]

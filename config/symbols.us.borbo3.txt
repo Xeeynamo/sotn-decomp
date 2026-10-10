@@ -1,8 +1,3 @@
-g_eBreakableAnimations = 0x801805A0;
-g_eBreakableHitboxes = 0x801805C0;
-g_eBreakableExplosionTypes = 0x801805C8;
-g_eBreakableanimSets = 0x801805D0;
-blend_modes = 0x801805E0;
 PrizeDrops = 0x801805F0;
 Update = 0x801931C8;
 UpdateStageEntities = 0x801934C4;
