@@ -87,7 +87,7 @@ segments:
       - [0x2BDC8, .data, bo4/e_breakable]
       - [0x2BE18, data]
       - [0x309F0, .data, bo4/header]
-      - [0x30A28, data]
+      - [0x30A28, .data, bo4/background_block_init]
       - [0x30A68, .data, bo4/e_lock_camera]
       - [0x30AE0, data]
       - [0x33E80, .rodata, bo4/e_life_up]
