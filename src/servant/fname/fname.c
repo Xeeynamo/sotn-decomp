@@ -1,4 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+
+// An early version of the TT_000 Bat familiar, only found in the HD version.
+// Gameplay differences to TT_000:
+// * no levelling, as GetServantStats is never called
+// * base LV1 attack, spawns no extra bats unlike the final version
+// * the seek mode sets up its attack hitbox once, using ELEMENT_HIT
+// * targets any enemy, while TT_000 does only attack enemies below level 30
+// * after a hit, it resets its heading and turns back four times faster
+// * no fast catch-up when far away, speed is fixed
+// * keeps looking for targets even during a cutscene
+// * no familiar events, and no sound effects
+// * always spawns next to Alucard, no matter how it was summoned
+
 #define VERSION_BETA
 #include <servant.h>
 #include <sfx.h>
