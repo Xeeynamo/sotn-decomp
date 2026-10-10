@@ -55,6 +55,7 @@ g_EInitObtainable = 0x0924A5D0;
 g_EInitParticle = 0x0924A5E0;
 g_EInitInteractable = 0x0924A5F0;
 g_EInitUnkId13 = 0x0924A600;
+g_EInitLockCamera = 0x0924A610;
 g_EInitCommon = 0x0924A620;
 g_EInitDamageNum = 0x0924A630;
 g_EInitMedusa = 0x0924A640;
