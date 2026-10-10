@@ -1325,7 +1325,12 @@ files:
           - [0x80, skip]
           - [0x12D18, sprite_banks, psp/sprite_banks]
           - [0x12D78, layers, layers]
-          - [0x12DA0, skip]
+          - [0x12DA0, paldef, palette_def]
+          - [0x12DC8, skip]
+          - [0x185F8, palette, D_us_80187350, 16]
+          - [0x187F8, palette, D_us_80187550, 16]
+          - [0x188B8, palette, D_us_80187610, 16]
+          - [0x188D8, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo4.bin
     asset_path: assets/boss/rbo4
     src_path: src/boss/rbo4
