@@ -15,92 +15,66 @@ static s16 D_us_8018116C[] UNUSED = {
     0,
 };
 
-static u8 D_us_80181174[] = {
-    0x1E, 0x01, 0x1E, 0x02, 0x00, 0x00, 0x00, 0x00,
-};
+static AnimateEntityFrame anim_breathing[] = {{30, 1}, {30, 2}, POSE_LOOP(0)};
 
-static u8 D_us_8018117C[] = {
-    0x08, 0x01, 0x06, 0x03, 0x04, 0x04, 0x04, 0x2F, 0x01, 0x0A, 0x01,
-    0x30, 0x10, 0x0A, 0x06, 0x09, 0x06, 0x2F, 0x04, 0x04, 0xFF,
-};
+static AnimateEntityFrame anim_unfurl_wings[] = {
+    {8, 1},   {6, 3}, {4, 4},  {4, 47}, {1, 10}, {1, 48},
+    {16, 10}, {6, 9}, {6, 47}, {4, 4},  POSE_END};
 
-static u8 D_us_80181194[] = {
-    2, 4, 8, 5, 8, 6, 3, 5, 0xFF,
-};
+static AnimateEntityFrame anim_begin_jump[] = {
+    {2, 4}, {8, 5}, {8, 6}, {3, 5}, POSE_END};
 
-static u8 D_us_801811A0[] = {
-    8, 7, 8, 8, 2, 15, 0xFF,
-};
+static AnimateEntityFrame anim_rising[] = {{8, 7}, {8, 8}, {2, 15}, POSE_END};
 
-static u8 D_us_801811A8[] = {
-    8, 15, 8, 16, 8, 17, 8, 18, 8, 19, 8, 20, 8, 21, 0, 0,
-};
+static AnimateEntityFrame anim_flapping[] = {
+    {8, 15}, {8, 16}, {8, 17}, {8, 18},
+    {8, 19}, {8, 20}, {8, 21}, POSE_LOOP(0)};
 
-static u8 D_us_801811B8[] = {
-    8, 15, 8, 7, 0xFF,
-};
+static AnimateEntityFrame anim_relax_wings_flying[] = {
+    {8, 15}, {8, 7}, POSE_END};
 
-static u8 D_us_801811C0[] = {
-    0x08, 0x05, 0x08, 0x06, 0x08, 0x05, 0x08, 0x04, 0xFF,
-};
+static AnimateEntityFrame anim_landing[] = {
+    {8, 5}, {8, 6}, {8, 5}, {8, 4}, POSE_END};
 
-static u8 D_us_801811CC[] = {
-    0x04, 0x0B, 0x02, 0x0C, 0x01, 0x0D, 0x01, 0x0C, 0xFF,
-};
+static AnimateEntityFrame anim_4wings_featherattack[] = {
+    {4, 11}, {2, 12}, {1, 13}, {1, 12}, POSE_END};
 
-static u8 D_us_801811D8[] = {
-    0x04, 0x0B, 0x04, 0x07, 0xFF,
-};
+static AnimateEntityFrame anim_end_featherattack[] = {
+    {4, 11}, {4, 7}, POSE_END};
 
-static u8 D_us_801811E0[] = {
-    0x10, 0x0F, 0x04, 0x16, 0x02, 0x17, 0xFF,
-};
+static AnimateEntityFrame anim_prep_orbs[] = {
+    {16, 15}, {4, 22}, {2, 23}, POSE_END};
 
-static u8 D_us_801811E8[] = {
-    0x01, 0x17, 0x01, 0x18, 0x01, 0x19, 0x00,
-};
+static AnimateEntityFrame anim_flashing_make_orbs[] = {
+    {1, 23}, {1, 24}, {1, 25}, POSE_LOOP(0)};
 
-static u8 D_us_801811F0[] = {
-    0x04, 0x17, 0x04, 0x1A, 0x04, 0x1B, 0x06,
-    0x1C, 0x10, 0x1D, 0x08, 0x15, 0xFF,
-};
+static AnimateEntityFrame anim_wings_low[] = {
+    {4, 23}, {4, 26}, {4, 27}, {6, 28}, {16, 29}, {8, 21}, POSE_END};
 
-static u8 D_us_80181200[] = {
-    0x0A, 0x1E, 0x01, 0x1F, 0x01, 0x20, 0x01, 0x21, 0x01, 0x22, 0x01,
-    0x1E, 0x01, 0x23, 0x01, 0x24, 0x01, 0x25, 0x01, 0x26, 0x01, 0x1E,
-    0x01, 0x27, 0x01, 0x28, 0x01, 0x29, 0x01, 0x2A, 0x01, 0x1E, 0x01,
-    0x2B, 0x01, 0x2C, 0x01, 0x2D, 0x01, 0x2E, 0x00,
-};
+static AnimateEntityFrame anim_orb[] = {
+    {10, 30}, {1, 31}, {1, 32}, {1, 33}, {1, 34}, {1, 30}, {1, 35},
+    {1, 36},  {1, 37}, {1, 38}, {1, 30}, {1, 39}, {1, 40}, {1, 41},
+    {1, 42},  {1, 30}, {1, 43}, {1, 44}, {1, 45}, {1, 46}, POSE_LOOP(0)};
 
-static u8 D_us_8018122C[] = {
-    0x18, 0x04, 0x08, 0x2F, 0x01, 0x0A, 0x01, 0x30, 0x01, 0x0A, 0xFF,
-};
+static AnimateEntityFrame anim_prep_ravens[] = {
+    {24, 4}, {8, 47}, {1, 10}, {1, 48}, {1, 10}, POSE_END};
 
-static u8 D_us_80181238[] = {
-    0x08, 0x09, 0x08, 0x2F, 0xFF,
-};
+static AnimateEntityFrame anim_relax_wings_ground[] = {
+    {8, 9}, {8, 47}, POSE_END};
 
-static u8 D_us_80181240[] = {
-    0x10, 0x0F, 0x08, 0x0E, 0x20, 0x31, 0x02, 0x32, 0x02, 0x33, 0xFF,
-};
+static AnimateEntityFrame anim_turn_ravens[] = {
+    {16, 15}, {8, 14}, {32, 49}, {2, 50}, {2, 51}, POSE_END};
 
-static u8 D_us_8018124C[] = {
-    0x08, 0x34, 0x08, 0x35, 0x08, 0x0E, 0xFF,
-};
+static AnimateEntityFrame anim_finish_ravens[] = {
+    {8, 52}, {8, 53}, {8, 14}, POSE_END};
 
-static u8 D_us_80181254[] = {
-    0x04, 0x36, 0x04, 0x37, 0x04, 0x38, 0x04, 0x39,
-    0x04, 0x3A, 0x04, 0x38, 0x00, 0x00, 0x00, 0x00,
-};
+static AnimateEntityFrame anim_raven[] = {
+    {4, 54}, {4, 55}, {4, 56}, {4, 57}, {4, 58}, {4, 56}, POSE_LOOP(0)};
 
-static u8 D_us_80181264[] = {
-    0x01, 0x35, 0x03, 0x31, 0x02, 0x34, 0x01,
-    0x32, 0x01, 0x33, 0x18, 0x3C, 0xFF,
-};
+static AnimateEntityFrame anim_flinch[] = {
+    {1, 53}, {3, 49}, {2, 52}, {1, 50}, {1, 51}, {24, 60}, POSE_END};
 
-static u8 D_us_80181274[] = {
-    0x04, 0x33, 0x18, 0x3C, 0xFF,
-};
+static AnimateEntityFrame anim_death[] = {{4, 51}, {24, 60}, POSE_END};
 
 static FrameProperty D_us_8018127C[] = {
     {0x00, 0x00, 0x00, 0x00}, {0x00, 0x08, 0x04, 0x17},
@@ -128,6 +102,26 @@ extern s32 E_ID(KARASUMAN_FEATHER);
 extern s32 E_ID(KARASUMAN_RAVEN_ABSORB);
 #endif
 
+typedef enum {
+    KARA_INIT,
+    KARA_WAIT,
+    KARA_WAKEUP,
+    KARA_FLYING, // flinchy
+    KARA_RISE,
+    KARA_5_UNUSED,
+    KARA_FEATHER_ATTACK,
+    KARA_DESCEND, // flinchy
+    KARA_ORB_ATTACK,
+    KARA_9_UNUSED,
+    KARA_GATHER_RAVENS,
+    KARA_11_UNUSED,
+    KARA_RAVEN_ATTACK,
+    KARA_13_UNUSED,
+    KARA_FLINCH,
+    KARA_15_UNUSED,
+    KARA_DEATH
+} KaraSteps;
+
 void EntityKarasuman(Entity* self) {
     Entity* entity;
     s32 i;
@@ -135,45 +129,46 @@ void EntityKarasuman(Entity* self) {
     s32 offsetY;
     s8* frameProperty;
 
+    // If the step is odd, karasuman is vulnerable to flinching
     if (self->hitFlags & 3 && self->step & 1) {
-        SetStep(14);
+        SetStep(KARA_FLINCH);
     }
-    if (self->flags & FLAG_DEAD && self->step < 16) {
-        SetStep(16);
+    if (self->flags & FLAG_DEAD && self->step < KARA_DEATH) {
+        SetStep(KARA_DEATH);
     }
 
     switch (self->step) {
-    case 0:
+    case KARA_INIT:
         InitializeEntity(g_EInitKarasuman);
         self->flags &= ~(FLAG_UNK_800 | FLAG_UNK_400);
         self->animCurFrame = 1;
         // fallthrough
 
-    case 1:
+    case KARA_WAIT:
         if (UnkCollisionFunc3(D_us_8018115C) & 1) {
-            SetStep(2);
+            SetStep(KARA_WAKEUP);
         }
         break;
 
-    case 2:
+    case KARA_WAKEUP:
         switch (self->step_s) {
         case 0:
-            AnimateEntity(D_us_80181174, self);
+            AnimateEntity(anim_breathing, self);
             if (g_BossFlag & 1) {
                 SetSubStep(1);
             }
             break;
         case 1:
-            if (AnimateEntity(D_us_8018117C, self) == 0) {
-                SetStep(4);
+            if (AnimateEntity(anim_unfurl_wings, self) == 0) {
+                SetStep(KARA_RISE);
             }
             break;
         }
         break;
-    case 4:
+    case KARA_RISE:
         switch (self->step_s) {
         case 0:
-            if (AnimateEntity(D_us_80181194, self) == 0) {
+            if (AnimateEntity(anim_begin_jump, self) == 0) {
                 self->velocityX = 0;
                 self->velocityY = FIX(-4);
                 SetSubStep(1);
@@ -182,23 +177,23 @@ void EntityKarasuman(Entity* self) {
         case 1:
             MoveEntity();
             self->velocityY += FIX(0.125);
-            if (AnimateEntity(D_us_801811A0, self) == 0) {
-                SetStep(3);
+            if (AnimateEntity(anim_rising, self) == 0) {
+                SetStep(KARA_FLYING);
                 if (self->ext.karasuman.flag2) {
-                    SetStep(0xC);
+                    SetStep(KARA_RAVEN_ATTACK);
                 }
             }
             break;
         }
         break;
 
-    case 3:
+    case KARA_FLYING:
         if (!self->step_s) {
             self->ext.karasuman.timer = 48;
             self->velocityY = 0;
             self->step_s++;
         }
-        AnimateEntity(D_us_801811A8, self);
+        AnimateEntity(anim_flapping, self);
         MoveEntity();
         if (GetSideToPlayer() & 1) {
             self->velocityX -= FIX(1.0 / 64.0);
@@ -217,17 +212,17 @@ void EntityKarasuman(Entity* self) {
 
         if (!--self->ext.karasuman.timer) {
             if (self->ext.karasuman.flag0) {
-                SetStep(8);
+                SetStep(KARA_ORB_ATTACK);
             } else {
-                SetStep(6);
+                SetStep(KARA_FEATHER_ATTACK);
             }
             self->ext.karasuman.flag0 ^= 1;
         }
         break;
-    case 6:
+    case KARA_FEATHER_ATTACK:
         switch (self->step_s) {
         case 0:
-            if (AnimateEntity(D_us_801811CC, self) == 0) {
+            if (AnimateEntity(anim_4wings_featherattack, self) == 0) {
                 self->ext.karasuman.timer = 48;
                 SetSubStep(1);
             }
@@ -249,14 +244,14 @@ void EntityKarasuman(Entity* self) {
             }
             break;
         case 2:
-            if (AnimateEntity(D_us_801811D8, self) == 0) {
-                SetStep(7);
+            if (AnimateEntity(anim_end_featherattack, self) == 0) {
+                SetStep(KARA_DESCEND);
                 self->step_s = 2;
             }
             break;
         }
         break;
-    case 7:
+    case KARA_DESCEND:
         switch (self->step_s) {
         case 0:
             self->velocityX = 0;
@@ -264,7 +259,7 @@ void EntityKarasuman(Entity* self) {
             self->step_s++;
             // fallthrough
         case 1:
-            if (AnimateEntity(D_us_801811B8, self) == 0) {
+            if (AnimateEntity(anim_relax_wings_flying, self) == 0) {
                 SetSubStep(2);
             }
             break;
@@ -276,18 +271,18 @@ void EntityKarasuman(Entity* self) {
             }
             break;
         case 3:
-            if (AnimateEntity(D_us_801811C0, self) == 0) {
-                SetStep(4);
-                SetStep(0xA);
+            if (AnimateEntity(anim_landing, self) == 0) {
+                SetStep(KARA_RISE); // This is dumb, we override it immediately
+                SetStep(KARA_GATHER_RAVENS);
             }
             break;
         }
         break;
-    case 8:
+    case KARA_ORB_ATTACK:
         switch (self->step_s) {
         case 0:
             self->ext.karasuman.flag1 = 0;
-            if (AnimateEntity(D_us_801811E0, self) == 0) {
+            if (AnimateEntity(anim_prep_orbs, self) == 0) {
                 SetSubStep(1);
             }
             break;
@@ -306,7 +301,7 @@ void EntityKarasuman(Entity* self) {
             self->step_s++;
             // fallthrough
         case 2:
-            AnimateEntity(D_us_801811E8, self);
+            AnimateEntity(anim_flashing_make_orbs, self);
             if (!(self->ext.karasuman.timer & 7)) {
                 PlaySfxPositional(SFX_RAPID_SYNTH_BUBBLE_SHORT);
             }
@@ -321,7 +316,7 @@ void EntityKarasuman(Entity* self) {
             }
             break;
         case 3:
-            if (AnimateEntity(D_us_801811F0, self) == 0) {
+            if (AnimateEntity(anim_wings_low, self) == 0) {
                 self->step_s++;
             }
             // fallthrough
@@ -338,15 +333,15 @@ void EntityKarasuman(Entity* self) {
             self->scaleX = self->scaleY += 8;
             if (self->scaleX > 256) {
                 self->drawFlags = ENTITY_DEFAULT;
-                SetStep(7);
+                SetStep(KARA_DESCEND);
             }
             break;
         }
         break;
-    case 10:
+    case KARA_GATHER_RAVENS:
         switch (self->step_s) {
         case 0:
-            if (AnimateEntity(D_us_8018122C, self) == 0) {
+            if (AnimateEntity(anim_prep_ravens, self) == 0) {
                 SetSubStep(1);
             }
             break;
@@ -375,12 +370,12 @@ void EntityKarasuman(Entity* self) {
             }
             break;
         case 3:
-            if (AnimateEntity(D_us_80181238, self) == 0) {
-                SetStep(4);
+            if (AnimateEntity(anim_relax_wings_ground, self) == 0) {
+                SetStep(KARA_RISE);
             }
         }
         break;
-    case 12:
+    case KARA_RAVEN_ATTACK:
         switch (self->step_s) {
         case 0:
             self->ext.karasuman.flag2 = 0;
@@ -388,7 +383,7 @@ void EntityKarasuman(Entity* self) {
             self->step_s++;
             // fallthrough
         case 1:
-            if (AnimateEntity(D_us_80181240, self) == 0) {
+            if (AnimateEntity(anim_turn_ravens, self) == 0) {
                 self->ext.karasuman.timer = 96;
                 if (self->facingLeft) {
                     self->velocityX = FIX(-2.0);
@@ -421,13 +416,13 @@ void EntityKarasuman(Entity* self) {
             }
             break;
         case 3:
-            if (AnimateEntity(D_us_8018124C, self) == 0) {
-                SetStep(3);
+            if (AnimateEntity(anim_finish_ravens, self) == 0) {
+                SetStep(KARA_FLYING);
             }
             break;
         }
         break;
-    case 14:
+    case KARA_FLINCH:
         if (!self->step_s) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             if (self->facingLeft) {
@@ -455,11 +450,11 @@ void EntityKarasuman(Entity* self) {
         self->velocityX -= self->velocityX / 16;
         self->velocityY -= self->velocityY / 16;
 
-        if (AnimateEntity(D_us_80181264, self) == 0) {
-            SetStep(7);
+        if (AnimateEntity(anim_flinch, self) == 0) {
+            SetStep(KARA_DESCEND);
         }
         break;
-    case 16:
+    case KARA_DEATH:
         switch (self->step_s) {
         case 0:
             g_BossFlag |= 2;
@@ -480,7 +475,7 @@ void EntityKarasuman(Entity* self) {
             self->step_s++;
             // fallthrough
         case 1:
-            if ((AnimateEntity(D_us_80181274, self) == 0) &&
+            if ((AnimateEntity(anim_death, self) == 0) &&
                 (UnkCollisionFunc3(D_us_8018115C) & 1)) {
                 self->step_s++;
             }
@@ -593,11 +588,11 @@ void EntityKarasumanFeatherAttack(Entity* self) {
             self->facingLeft = true;
         }
 
-        angle = (Random() * 4) - FLT(0.125);
+        angle = (Random() * 4) - ROT(45);
         self->rotate = angle;
         angle = self->rotate;
         if (!self->facingLeft) {
-            angle = FLT(0.5) - angle;
+            angle = ROT(180) - angle;
         }
         self->velocityX = 96 * rcos(angle);
         self->velocityY = -96 * rsin(angle);
@@ -648,7 +643,7 @@ void EntityKarasumanOrbAttack(Entity* self) {
         // fallthrough
 
     case 2:
-        AnimateEntity(D_us_80181200, self);
+        AnimateEntity(anim_orb, self);
         entity = self->ext.karasuman.parent;
         if (entity->ext.karasuman.flag1) {
             self->step++;
@@ -683,12 +678,12 @@ void EntityKarasumanOrbAttack(Entity* self) {
 
     case 5:
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
-        AnimateEntity(D_us_80181200, self);
+        AnimateEntity(anim_orb, self);
         MoveEntity();
         break;
 
     case 6:
-        AnimateEntity(D_us_80181200, self);
+        AnimateEntity(anim_orb, self);
         entity = &PLAYER;
         self->posX.i.hi = entity->posX.i.hi;
         self->posY.i.hi = entity->posY.i.hi;
@@ -728,7 +723,7 @@ void EntityKarasumanRavenAttack(Entity* self) {
 
     case 1:
         MoveEntity();
-        AnimateEntity(D_us_80181254, self);
+        AnimateEntity(anim_raven, self);
         entity = &PLAYER;
         if (entity->posY.i.hi < self->posY.i.hi) {
             self->velocityY -= FIX(1.0 / 32.0);
@@ -780,7 +775,7 @@ void EntityKarasumanRavenAttack(Entity* self) {
             self->facingLeft = 0;
         }
         MoveEntity();
-        AnimateEntity(D_us_80181254, self);
+        AnimateEntity(anim_raven, self);
         offsetX = entity->posX.i.hi - self->posX.i.hi;
         offsetY = entity->posY.i.hi - self->posY.i.hi;
         opacity = SquareRoot0(SQ(offsetX) + SQ(offsetY));
@@ -878,7 +873,7 @@ void EntityKarasumanRavenAbsorb(Entity* self) {
 
     case 1:
         MoveEntity();
-        AnimateEntity(D_us_80181254, self);
+        AnimateEntity(anim_raven, self);
         break;
 
     case 4:
