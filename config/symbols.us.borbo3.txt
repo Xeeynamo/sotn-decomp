@@ -13,3 +13,4 @@ HitDetection = 0x801935CC;
 InitRoomEntities = 0x801955E4;
 UpdateRoomPosition = 0x8019575C;
 rooms_layers = 0x80180100;
+spriteBanks = 0x8018002C;
