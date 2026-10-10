@@ -34,7 +34,7 @@ bool func_us_801C6040(s32 arg0) {
     if (arg0 & 0x10000) {
         if (DOPPLEGANGER.velocityY < FIX(3.0 / 8.0) &&
             DOPPLEGANGER.velocityY > -FIX(1.0 / 8.0) && !(g_Dop.unk44 & 0x20) &&
-            (g_Dop.padPressed & 0x40)) {
+            (g_Dop.padPressed & PAD_CROSS)) {
             DOPPLEGANGER.velocityY += FIX(563.0 / 16384.0);
         } else {
 
@@ -124,27 +124,27 @@ bool func_us_801C6040(s32 arg0) {
         return true;
     }
 
-    if ((arg0 & 0x1000) && (g_Dop.padTapped & 0xA0) && func_us_801C5CF8()) {
+    if ((arg0 & 0x1000) && (g_Dop.padTapped & (PAD_SQUARE | PAD_CIRCLE)) && func_us_801C5CF8()) {
         return true;
     }
 
     if (!(g_Dop.unk46 & 0x8000)) {
-        if ((arg0 & 0x10) && (g_Dop.padTapped & 0x40)) {
+        if ((arg0 & 0x10) && (g_Dop.padTapped & PAD_CROSS)) {
             func_us_801C58E4();
             return true;
         }
 
-        if ((arg0 & 0x20) && (g_Dop.padTapped & 0x40) && !(g_Dop.unk44 & 1)) {
+        if ((arg0 & 0x20) && (g_Dop.padTapped & PAD_CROSS) && !(g_Dop.unk44 & 1)) {
             func_us_801C5990();
             return true;
         }
 
-        if ((arg0 & 0x2000) && (g_Dop.padPressed & 0x4000)) {
+        if ((arg0 & 0x2000) && (g_Dop.padPressed & PAD_DOWN)) {
             func_8010E470(2, 0U);
             return true;
         }
 
-        if ((arg0 & 0x40000) && (g_Dop.padTapped & 0x10) &&
+        if ((arg0 & 0x40000) && (g_Dop.padTapped & PAD_TRIANGLE) &&
             DOPPLEGANGER.ext.player.anim != 0xDB) {
             func_us_801C5FDC();
             return true;
