@@ -1278,6 +1278,12 @@ files:
     asset_path: assets/boss/bo4
     src_path: src/boss/bo4
     splat_config_path: config/splat.pspeu.bobo4.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x30C70, blueprintsdef, blueprints, DopBlueprints, EntityID]
+          - [0x30F24, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo5.bin
     asset_path: assets/boss/bo5
     src_path: src/boss/bo5
