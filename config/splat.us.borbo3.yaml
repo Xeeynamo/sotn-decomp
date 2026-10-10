@@ -79,6 +79,7 @@ segments:
       - [0x1179C, c, rbo3]
       - [0x12B38, c, unk_12B38]
       - [0x12D64, c, 12D64]
+      - [0x13050, c, unk_13050]
       - [0x13198, c, st_update]
       - [0x135cc, c, collision]
       - [0x14d88, c, create_entity]
