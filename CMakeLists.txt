@@ -1026,6 +1026,7 @@ SET(SOURCE_FILES_BOSS_BO4
     src/boss/bo4/create_entity.c
     src/boss/bo4/doors.c
     src/boss/bo4/dop_anim.c
+    src/boss/bo4/dop_collision.c
     src/boss/bo4/doppleganger.c
     src/boss/bo4/doppleganger_anim.c
     src/boss/bo4/d_prize_drops.c
