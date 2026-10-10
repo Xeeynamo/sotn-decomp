@@ -1,25 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../rno4/rno4.h"
+#include "rno4.h"
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_3B78", EntityRdaiUnk33);
-
-#include "../e_imp_death_particle.h"
-
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_3B78", func_us_801BBE58_from_rnz1);
-
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_3B78", func_us_801BC650_from_rnz1);
-
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_3B78", func_us_801BCA5C_from_rnz1);
-
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_3B78", func_us_801BCB9C_from_rnz1);
-
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_3B78", func_us_801BCD80_from_rnz1);
-
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_3B78", func_us_801BCE4C_from_rnz1);
-
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_3B78", func_us_801BCFC8_from_rnz1);
-
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_3B78", StepTowards);
+INCLUDE_ASM("st/rno4/nonmatchings/unk_55D5C", StepTowards);
 
 void func_us_801D5DC8(Primitive* prim) {
     s32 yPos;
@@ -45,8 +27,6 @@ void func_us_801D5DC8(Primitive* prim) {
     }
 }
 
-extern Primitive* FindFirstUnkPrim(Primitive*);
-
 extern EInit g_EInitCaveTroll;
 extern s16 D_us_80182344[];
 extern u8 D_us_80182364[];
@@ -56,6 +36,8 @@ extern u8 D_us_80182384[];
 extern u8 D_us_8018238C[];
 extern s8 D_us_801823C0[][4];
 extern u8 D_us_801823D4[];
+
+// INCLUDE_ASM("st/rno4/nonmatchings/unk_55D5C", func_us_801D5E90);
 
 void func_us_801D5E90(Entity* self) {
     Collider sp3C;
@@ -76,9 +58,7 @@ void func_us_801D5E90(Entity* self) {
     ;
     if (self->flags & FLAG_DEAD) {
         PlaySfxPositional(SFX_QUICK_STUTTER_EXPLODE_B);
-        // s2 = AllocEntity(&g_Entities[0xE0], D_80097C98); // D_80097C98
-        s2 = AllocEntity(
-            &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]); // FAKE!!
+        s2 = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (s2) {
             CreateEntityFromEntity(E_EXPLOSION, self, s2);
             s2->params = 2;
@@ -90,7 +70,7 @@ void func_us_801D5E90(Entity* self) {
     case 0x0:
         InitializeEntity(g_EInitCaveTroll);
         self->animCurFrame = 1;
-        s7 = g_api_AllocPrimitives(0x11, 0x20);
+        s7 = g_api.AllocPrimitives(0x11, 0x20);
         if (s7 == (-1)) {
             DestroyEntity(self);
             return;
@@ -149,13 +129,13 @@ void func_us_801D5E90(Entity* self) {
             };
             s4 = self->posX.i.hi;
             s6 = self->posY.i.hi + 0x19;
-            g_api_CheckCollision(s4, s6, &sp3C, 0);
+            g_api.CheckCollision(s4, s6, &sp3C, 0);
             if (sp3C.effects & EFFECT_SOLID) {
                 PlaySfxPositional(SFX_STOMP_HARD_D);
                 s1 = sp3C.unk18;
                 s4 = self->posX.i.hi;
                 s6 = self->posY.i.hi + 0x11;
-                g_api_CheckCollision(s4, s6, &sp3C, 0);
+                g_api.CheckCollision(s4, s6, &sp3C, 0);
                 if (sp3C.effects & EFFECT_SOLID) {
                     SetSubStep(3);
                 } else {
@@ -263,7 +243,7 @@ void func_us_801D5E90(Entity* self) {
             break;
 
         case 6:
-            s2 = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            s2 = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
             if (s2) {
                 CreateEntityFromEntity(E_UNK_41, self, s2);
                 s2->facingLeft = self->facingLeft;
@@ -330,7 +310,7 @@ void func_us_801D5E90(Entity* self) {
             break;
 
         case 2:
-            s2 = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            s2 = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
             if (s2) {
                 PlaySfxPositional(SFX_RNO4_MAGIC_GLASS_BREAK);
                 CreateEntityFromEntity(E_UNK_42, self, s2);
@@ -361,7 +341,7 @@ void func_us_801D5E90(Entity* self) {
         break;
 
     case 0xFF:
-        FntPrint("charal %x\n", self->animCurFrame);
+        FntPrint("????", self->animCurFrame);
         if (g_pads[1].pressed & 0x8000) {
             if (self->params) {
                 break;
@@ -371,7 +351,7 @@ void func_us_801D5E90(Entity* self) {
         } else {
             self->params = 0;
         }
-        if (g_pads[1].pressed & PAD_CIRCLE) {
+        if (g_pads[1].pressed & 0x20) {
             if (self->step_s) {
                 break;
             }
@@ -523,4 +503,4 @@ void func_us_801D68E0(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_3B78", func_us_801D6B8C);
+INCLUDE_ASM("st/rno4/nonmatchings/unk_55D5C", func_us_801D6B8C);
