@@ -3,7 +3,7 @@
 
 static u8 anim_1[] = {4, 1, 4, 2, 0, 0};
 static u8 anim_2[] = {4, 0, 4, 0, 0};
-static u8 *g_eBreakableAnimations[8] = {anim_1, anim_2};
+static u8* g_eBreakableAnimations[8] = {anim_1, anim_2};
 static u8 g_eBreakableHitboxes[8] = {8, 8};
 static u8 g_eBreakableExplosionTypes[8] = {0, 0};
 static u16 g_eBreakableanimSets[8] = {ANIMSET_DRA(3), ANIMSET_DRA(3)};
