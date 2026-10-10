@@ -243,7 +243,7 @@ void func_us_801D511C(Entity* self) {
         return;
 
     case 16:
-        if (g_pads[1].pressed & 0x8000) {
+        if (g_pads[1].pressed & PAD_SQUARE) {
             if (self->params) {
                 break;
             }
@@ -252,7 +252,7 @@ void func_us_801D511C(Entity* self) {
         } else {
             self->params = 0;
         }
-        if (g_pads[1].pressed & 0x2000) {
+        if (g_pads[1].pressed & PAD_CIRCLE) {
             if (self->step_s) {
                 break;
             }

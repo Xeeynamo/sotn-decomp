@@ -243,9 +243,24 @@ void func_us_801D511C(Entity* self) {
         return;
 
     case 16:
-#define PAD2_ANIM_DEBUG_PRINT()
-#include "../../st/pad2_anim_debug.h"
-#undef PAD2_ANIM_DEBUG_PRINT
+        if (g_pads[1].pressed & PAD_SQUARE) {
+            if (self->params) {
+                break;
+            }
+            self->animCurFrame++;
+            self->params |= 1;
+        } else {
+            self->params = 0;
+        }
+        if (g_pads[1].pressed & PAD_CIRCLE) {
+            if (self->step_s) {
+                break;
+            }
+            self->animCurFrame--;
+            self->step_s |= 1;
+        } else {
+            self->step_s = 0;
+        }
     }
 }
 
