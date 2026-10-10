@@ -27,18 +27,11 @@ extern s8 D_us_80180648[];
 extern u8 D_us_80180670[];
 extern s32 D_us_80180728;
 
-#ifdef VERSION_PSP
-char D_pspeu_09254890[] = "charal %x\n";
-#endif
-
-#ifdef VERSION_PSP
-INCLUDE_ASM("boss/rbo3/nonmatchings/rbo3", EntityMedusa);
-#else
 void EntityMedusa(Entity* self) {
     Entity* entity;
-    s16 rotate;
     s32 x;
     s32 y;
+    s32 side;
     s32 i;
     s8* rect;
 
@@ -74,7 +67,7 @@ void EntityMedusa(Entity* self) {
 
     case 3:
         AnimateEntity(D_us_801805FC, self);
-        if (self->step_s == 0) {
+        if (!self->step_s) {
             self->ext.GS_Props.timer = 64;
             self->step_s++;
         }
@@ -89,7 +82,7 @@ void EntityMedusa(Entity* self) {
         }
         MoveEntity();
 
-        if (self->facingLeft != self->ext.GS_Props.attackMode) {
+        if (self->facingLeft ^ self->ext.GS_Props.attackMode) {
             self->velocityX = -FIX(1.0 / 2.0);
         } else {
             self->velocityX = FIX(1.0 / 2.0);
@@ -107,7 +100,13 @@ void EntityMedusa(Entity* self) {
         }
 
         if (!--self->ext.GS_Props.timer) {
-            GetSideToPlayer();
+            x = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
+            entity = &PLAYER;
+            if (!self->facingLeft) {
+                x = 0x200 - x;
+            }
+            x = GetSideToPlayer();
+            side = (x & 1) ^ 1;
             if (GetDistanceToPlayerX() > 64) {
                 SetStep(4);
             } else {
@@ -116,7 +115,7 @@ void EntityMedusa(Entity* self) {
         }
         break;
     case 5:
-        if (self->step_s == 0) {
+        if (!self->step_s) {
             if (Random() & 1) {
                 PlaySfxPositional(SFX_MEDUSA_ATTACK_A);
             } else {
@@ -132,7 +131,7 @@ void EntityMedusa(Entity* self) {
         }
         break;
     case 4:
-        if (self->step_s == 0) {
+        if (!self->step_s) {
             if (!(Random() & 3)) {
                 PlaySfxPositional(SFX_MEDUSA_STONE);
             }
@@ -145,7 +144,7 @@ void EntityMedusa(Entity* self) {
             }
         }
 
-        if (self->pose == 4 && self->poseTimer == 0) {
+        if (!self->poseTimer && self->pose == 4) {
             entity = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
             if (entity != NULL) {
                 CreateEntityFromEntity(E_ID(UNK_24), self, entity);
@@ -155,20 +154,20 @@ void EntityMedusa(Entity* self) {
                 } else {
                     entity->posX.i.hi += 13;
                 }
-                entity->posY.i.hi = entity->posY.i.hi - 28;
+                entity->posY.i.hi -= 28;
                 PlaySfxPositional(SFX_BAT_ECHO_B);
             }
         }
         break;
     case 8:
-        if (self->step_s == 0) {
+        if (!self->step_s) {
             PlaySfxPositional(SFX_MEDUSA_VENOM);
             self->step_s++;
         }
         if (AnimateEntity(D_us_80180618, self) == 0) {
             SetStep(3);
         }
-        if (self->pose == 3 && self->poseTimer == 0) {
+        if (!self->poseTimer && self->pose == 3) {
             // This sound is never heard because it is immediately interrupted
             // by the SFX_ELECTRICITY sound call below
             PlaySfxPositional(SFX_SCIFI_BLAST);
@@ -178,7 +177,7 @@ void EntityMedusa(Entity* self) {
                     CreateEntityFromEntity(E_ID(UNK_26), self, entity);
                     entity->rotate = i * 1024 - 512;
                     if (!self->facingLeft) {
-                        entity->rotate = (i * 1024) + 1536;
+                        entity->rotate += 0x800;
                     }
                     entity->posY.i.hi -= 16;
                     entity->zPriority = self->zPriority - 2;
@@ -187,7 +186,7 @@ void EntityMedusa(Entity* self) {
         }
         break;
     case 6:
-        if (self->step_s == 0) {
+        if (!self->step_s) {
             if (Random() & 1) {
                 PlaySfxPositional(SFX_MEDUSA_PAIN_A);
             } else {
@@ -205,8 +204,8 @@ void EntityMedusa(Entity* self) {
         switch (self->step_s) {
         case 0:
             PlaySfxPositional(SFX_MEDUSA_DEATH);
-            self->hitboxState = 0;
             D_us_80180728 |= 2;
+            self->hitboxState = 0;
             self->step_s++;
             // fallthrough
         case 1:
@@ -225,7 +224,7 @@ void EntityMedusa(Entity* self) {
                 CreateEntityFromEntity(E_ID(UNK_27), self, entity);
                 entity->params = 0;
                 entity->zPriority = self->zPriority + 1;
-                entity->posX.i.hi -= 16 - (Random() & 31);
+                entity->posX.i.hi += (Random() & 31) - 16;
                 entity->posY.i.hi += 24;
             }
             if (!(self->ext.GS_Props.timer & 0xF)) {
@@ -238,6 +237,9 @@ void EntityMedusa(Entity* self) {
                 self->step_s++;
             }
             break;
+
+        case 3:
+            break;
         }
         break;
 
@@ -245,9 +247,9 @@ void EntityMedusa(Entity* self) {
 #include "../../st/pad2_anim_debug.h"
     }
 
-    x = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
-    rotate = self->posY.i.hi;
-    y = rotate + g_Tilemap.scrollY.i.hi;
+    entity = self;
+    x = entity->posX.i.hi + g_Tilemap.scrollX.i.hi;
+    y = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
     if (self->velocityX < 0) {
         if (x < 128) {
             self->posX.i.hi = 128 - g_Tilemap.scrollX.i.hi;
@@ -264,7 +266,6 @@ void EntityMedusa(Entity* self) {
     self->hitboxWidth = *rect++;
     self->hitboxHeight = *rect++;
 }
-#endif
 
 extern EInit D_us_80180498;
 
