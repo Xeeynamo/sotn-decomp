@@ -44,7 +44,7 @@ segments:
       - [0x2C, .data, sprite_banks]
       - [0x8C, .data, palette_def]
       - [0xD0, .data, layers]
-      - [0x108, data]
+      - [0x108, .data, graphics_banks]
       - [0x1EC, data, e_laydef]
       - [0x390, .data, e_init]
       - [0x4C8, .data, background_block_init]
@@ -63,7 +63,8 @@ segments:
       - [0x126C, data]
       - [0x1288, .data, e_life_up]
       - [0x12DC, .data, e_clouds]
-      - [0x1414, data] # begin RBO3_pStObjLayoutHorizontal ptr data
+      - [0x1414, data]
+      - [0x152C, .data, stage_data]
       - [0x7350, .data, pal_unk]
       - [0x7630, .data, tilemaps]
       - [0x10260, .data, gen/us/sprites]
