@@ -13,7 +13,6 @@ EntityMedusa = 0x092460E0;
 func_us_80192998 = 0x09248188;
 g_EInitParticle = 0x0924A5E0;
 g_EInitMedusa = 0x0924A640;
-rooms = 0x0924A690;
 D_psp_E_UNK_27 = 0x09254D38;
 D_psp_E_UNK_26 = 0x09254D40;
 D_psp_E_UNK_25 = 0x09254D48;

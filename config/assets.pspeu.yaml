@@ -1328,6 +1328,8 @@ files:
           - [0x12DA0, paldef, palette_def]
           - [0x12DC8, gfx_banks, psp/graphics_banks]
           - [0x12E90, skip]
+          - [0x13010, rooms, rooms]
+          - [0x13030, skip]
           - [0x130B0, cmpgfx, D_us_80181E14, 128, 128, 4]
           - [0x13AA0, cmpgfx, D_us_80182804, 128, 128, 4]
           - [0x14808, cmpgfx, D_us_8018356C, 128, 128, 4]
