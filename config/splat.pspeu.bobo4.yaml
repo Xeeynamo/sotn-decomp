@@ -76,6 +76,7 @@ segments:
       - [0x28008, .data, bo4/e_room_fg]
       - [0x280A8, .data, bo4/doors]
       - [0x281A8, data]
+      - [0x2BB38, .data, bo4/palette_def]
       - [0x2BBA0, .data, bo4/graphics_banks]
       - [0x2BC10, .data, bo4/e_red_door_tiles]
       - [0x2BC30, .data, bo4/e_init]
