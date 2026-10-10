@@ -1,74 +1,74 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "tek.h"
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C3468);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", DestroyEntity);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C34D4);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", DestroyEntitiesFromIndex);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C3550);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", PreventEntityFromRespawning);
 
 INCLUDE_ASM("st/tek/nonmatchings/st_common", AnimateEntity);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C3650);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", UnkAnimFunc);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C3768);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", GetDistanceToPlayerX);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C37A4);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", GetDistanceToPlayerY);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C37D8);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", GetSideToPlayer);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C381C);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", MoveEntity);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C384C);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", FallEntity);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C3878);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", func_8019214C);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C38BC);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", UnkCollisionFunc3);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C3B34);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", func_80192408);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C3D44);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", UnkCollisionFunc2);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C3F2C);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", AllocEntity);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C3F8C);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", GetSineScaled);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C3FB8);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", GetSine);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C3FD4);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", SetEntityVelocityFromAngle);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C4040);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", Ratan2Shifted);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C4078);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", GetAngleBetweenEntitiesShifted);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C40C0);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", GetAnglePointToEntityShifted);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C4108);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", AdjustValueWithinThreshold);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C4160);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", UnkEntityFunc0);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C41EC);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", Ratan2);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C421C);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", GetAngleBetweenEntities);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C4254);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", GetAnglePointToEntity);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C429C);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", LimitAngleChange);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C42F4);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", SetStep);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C4314);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", SetSubStep);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C4330);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", EntityExplosionSpawn);
 
 INCLUDE_ASM("st/tek/nonmatchings/st_common", InitializeEntity);
 
 INCLUDE_ASM("st/tek/nonmatchings/st_common", EntityDummy);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C44F4);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", UnkCollisionFunc);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C461C);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", CheckFieldCollision);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C4774);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", GetPlayerCollisionWith);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C4A3C);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", ReplaceBreakableWithItemDrop);
