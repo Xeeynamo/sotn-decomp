@@ -2636,8 +2636,8 @@
 | rno0       | func_pspeu_09253148               |       39 |          2 |        |       |     |
 | rno1       | func_pspeu_09238598               |       39 |          2 |        |       |     |
 | rno1       | func_pspeu_09238620               |       39 |          2 |        |       |     |
-| rno2       | CreateEntityFromCurrentEntity     |       39 |          2 |        |       |     |
 | rno2       | CreateEntityFromEntity            |       39 |          2 |        |       |     |
+| rno2       | func_pspeu_0923AC48               |       39 |          2 |        |       |     |
 | rno2       | GetAngleBetweenEntitiesShifted    |       39 |          2 |        |       |     |
 | rno3       | func_pspeu_09238598               |       39 |          2 |        |       |     |
 | rno3       | func_pspeu_09238620               |       39 |          2 |        |       |     |
@@ -7372,7 +7372,7 @@
 | nz1        | func_pspeu_0924F9A0               |      186 |         20 |        |       |     |
 | rare       | func_pspeu_0924A108               |      186 |         20 |        |       |     |
 | rcat       | func_pspeu_09249218               |      186 |         20 |        |       |     |
-| rchi       | UnkCollisionFunc3                 |      186 |         20 |        |       |     |
+| rchi       | func_pspeu_09246D70               |      186 |         20 |        |       |     |
 | rdai       | UnkCollisionFunc3                 |      186 |         20 |        |       |     |
 | rlib       | UnkCollisionFunc3                 |      186 |         20 |        |       |     |
 | rno0       | func_pspeu_09252A30               |      186 |         20 |        |       |     |
@@ -7504,7 +7504,7 @@
 | nz1        | func_pspeu_0924FC58               |      200 |         20 |        |       |     |
 | rare       | func_pspeu_0924A3C0               |      200 |         20 |        |       |     |
 | rcat       | func_pspeu_092494D0               |      200 |         20 |        |       |     |
-| rchi       | UnkCollisionFunc2                 |      200 |         20 |        |       |     |
+| rchi       | func_pspeu_09247028               |      200 |         20 |        |       |     |
 | rdai       | UnkCollisionFunc2                 |      200 |         20 |        |       |     |
 | rlib       | UnkCollisionFunc2                 |      200 |         20 |        |       |     |
 | rno0       | func_pspeu_09252CE8               |      200 |         20 |        |       |     |
@@ -7746,7 +7746,7 @@
 | nz0        | func_pspeu_092380B0               |      233 |         25 |        |       |     |
 | nz1        | func_pspeu_0924CC20               |      233 |         25 |        |       |     |
 | rno3       | func_pspeu_09255960               |      233 |         25 |        |       |     |
-| rno2       | EntityMalachiBall                 |      233 |         33 |        |       |     |
+| rno2       | func_pspeu_092450F0               |      233 |         33 |        |       |     |
 |            | func_092ECD88                     |      234 |         25 |        |       |     |
 | tt_006     | func_pspeu_092ECD88               |      234 |         25 |        |       |     |
 | rlib       | func_pspeu_09248E38               |      234 |         29 |        |       |     |
@@ -7837,7 +7837,7 @@
 | dra        | func_psp_090FA828                 |      245 |         39 | Yes    |       |     |
 | dre        | func_pspeu_0924C750               |      246 |         18 |        |       |     |
 | nz0        | func_pspeu_0923A3F8               |      246 |         21 |        |       |     |
-| rno2       | EnittyMalachiShooter              |      246 |         34 |        |       |     |
+| rno2       | func_pspeu_09244D68               |      246 |         34 |        |       |     |
 | rnz1       | func_pspeu_092565E0               |      246 |         35 |        |       |     |
 | dra        | func_psp_09112AC8                 |      246 |         41 |        |       |     |
 | no4        | func_pspeu_09237BE8               |      247 |          1 |        |       |     |
@@ -9838,7 +9838,7 @@
 | bo4        | func_pspeu_09246210_from_rbo5     |     1145 |        155 | Yes    |       |     |
 | rwrp       | func_pspeu_09245270               |     1149 |         91 | Yes    |       |     |
 | np3        | EntitySlogra                      |     1154 |        213 |        |       |     |
-| rchi       | EntitySlogra                      |     1161 |        212 |        |       |     |
+| rchi       | func_pspeu_092386A8               |     1161 |        212 |        |       |     |
 | st0        | func_pspeu_09244A80               |     1164 |         88 | Yes    |       |     |
 | np3        | EntityRelicOrb                    |     1166 |         87 | Yes    |       |     |
 | rnz0       | func_pspeu_09248098               |     1166 |         87 | Yes    |       |     |
@@ -10003,7 +10003,7 @@
 | no2        | func_pspeu_092515D0               |     1369 |        212 | Yes    |       |     |
 | no2        | func_pspeu_09257ED8               |     1372 |        125 | Yes    |       |     |
 | rno0       | func_pspeu_09257C38               |     1381 |        212 | Yes    |       |     |
-| rno2       | EntitySealedDoor                  |     1382 |        125 | Yes    |       |     |
+| rno2       | func_pspeu_09254080               |     1382 |        125 | Yes    |       |     |
 | np3        | EntityGurkha                      |     1391 |        212 | Yes    |       |     |
 | no3        | func_pspeu_09252EF8               |     1392 |        193 | Yes    |       |     |
 | main       | 3C524.rodata                      |     1395 |          0 | Yes    |       |     |
@@ -10021,7 +10021,7 @@
 | cen        | func_pspeu_09261EC0               |     1476 |        197 |        |       |     |
 | rbo6       | func_us_8019DB9C                  |     1490 |        206 |        |       |     |
 | rbo5       | func_pspeu_092471B8               |     1491 |        252 | Yes    |       |     |
-| rno2       | EntityMalachi                     |     1513 |        213 | Yes    |       |     |
+| rno2       | func_pspeu_09243770               |     1513 |        213 | Yes    |       |     |
 | dra        | func_psp_09114A38                 |     1516 |        244 |        |       |     |
 | rno2       | EntityKarasuman                   |     1521 |        253 | Yes    |       |     |
 | dra        | func_psp_090FD268                 |     1538 |        105 |        |       |     |
