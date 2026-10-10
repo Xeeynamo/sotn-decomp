@@ -1057,7 +1057,6 @@ SET(SOURCE_FILES_BOSS_BO4
     src/boss/bo4/st_update.c
     src/boss/bo4/stage_data.c
     src/boss/bo4/unk_365FC.c
-    src/boss/bo4/unk_45354.c
     src/boss/bo4/unk_45648.c
     src/boss/bo4/unk_46040.c
     src/boss/bo4/unk_465F0.c

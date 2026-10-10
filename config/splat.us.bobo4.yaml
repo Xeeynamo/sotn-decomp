@@ -108,7 +108,6 @@ segments:
       - [0x41A38, c, doppleganger]
       - [0x438C0, c, dop_collision]
       - [0x44958, c, dop_anim]
-      - [0x45354, c, unk_45354]
       - [0x45648, c, unk_45648]
       - [0x46040, c, unk_46040]
       - [0x465F0, c, unk_465F0]
