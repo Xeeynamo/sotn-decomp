@@ -111,7 +111,6 @@ static u8 D_us_801812B8[] = {
     8, 8, 8, 1, 1, 10, 7, 7, 7, 5, 11, 11, 11, 11, 11, 12, 10, 13, 13, 14,
 };
 
-
 void EntityKarasuman(Entity* self) {
     Entity* entity;
     s32 i;
@@ -221,7 +220,7 @@ void EntityKarasuman(Entity* self) {
                     entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (entity != NULL) {
                         CreateEntityFromEntity(
-                            E_ID(KARASUMAN_FEATHER_ATTACK), self, entity);
+                            E_KARASUMAN_FEATHER_ATTACK, self, entity);
                         entity->posY.i.hi -= 28;
                     }
                 }
@@ -278,7 +277,7 @@ void EntityKarasuman(Entity* self) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(
-                        E_ID(KARASUMAN_ORB_ATTACK), self, entity);
+                        E_KARASUMAN_ORB_ATTACK, self, entity);
                     entity->params = i;
                     entity->ext.karasuman.parent = self;
                     entity->zPriority = self->zPriority + 1;
@@ -343,7 +342,7 @@ void EntityKarasuman(Entity* self) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(
-                        E_ID(KARASUMAN_RAVEN_ATTACK), self, entity);
+                        E_KARASUMAN_RAVEN_ATTACK, self, entity);
                     entity->ext.karasuman.parent = self;
                     entity->params = 1;
                 }
@@ -393,7 +392,7 @@ void EntityKarasuman(Entity* self) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(
-                        E_ID(KARASUMAN_RAVEN_ATTACK), self, entity);
+                        E_KARASUMAN_RAVEN_ATTACK, self, entity);
                     entity->facingLeft = self->facingLeft;
                     entity->ext.karasuman.parent = self;
                 }
@@ -423,7 +422,7 @@ void EntityKarasuman(Entity* self) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(
-                        E_ID(KARASUMAN_FEATHER), self, entity);
+                        E_KARASUMAN_FEATHER, self, entity);
                     if (Random() & 1) {
                         entity->zPriority = self->zPriority + 1;
                     } else {
@@ -450,7 +449,7 @@ void EntityKarasuman(Entity* self) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[256]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(
-                        E_ID(KARASUMAN_FEATHER), self, entity);
+                        E_KARASUMAN_FEATHER, self, entity);
                     if (Random() & 1) {
                         entity->zPriority = self->zPriority + 1;
                     } else {
@@ -471,7 +470,7 @@ void EntityKarasuman(Entity* self) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 CreateEntityFromEntity(
-                    E_ID(KARASUMAN_RAVEN_ABSORB), self, entity);
+                    E_KARASUMAN_RAVEN_ABSORB, self, entity);
                 entity->params = 1;
                 entity->zPriority = self->zPriority + 1;
             }
@@ -483,7 +482,7 @@ void EntityKarasuman(Entity* self) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[256]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(
-                        E_ID(KARASUMAN_RAVEN_ABSORB), self, entity);
+                        E_KARASUMAN_RAVEN_ABSORB, self, entity);
                     entity->facingLeft = Random() & 1;
                     entity->params = 0;
                     entity->zPriority = self->zPriority + 1;
@@ -509,7 +508,7 @@ void EntityKarasuman(Entity* self) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[256]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(
-                        E_ID(EXPLOSION), self, entity);
+                        E_EXPLOSION, self, entity);
                     entity->facingLeft = Random() & 1;
                     entity->zPriority = self->zPriority + 1;
                     entity->posY.i.hi += 32;
@@ -610,11 +609,12 @@ void EntityKarasumanOrbAttack(Entity* self) {
         if (entity->ext.karasuman.flag1) {
             self->step++;
         }
-            if(entity->entityId != E_KARASUMAN || entity->flags & FLAG_DEAD){
-                DestroyEntity(self);
-                return;
-            }
-        
+        #ifndef VERSION_PSP
+        if(entity->entityId != E_KARASUMAN || entity->flags & FLAG_DEAD){
+            DestroyEntity(self);
+            return;
+        }
+        #endif
         break;
 
     case 3:
@@ -727,7 +727,7 @@ void EntityKarasumanRavenAttack(Entity* self) {
 
     case 10:
         entity = self->ext.karasuman.parent;
-        if (entity->entityId != E_ID(KARASUMAN)) {
+        if (entity->entityId != E_KARASUMAN) {
             DestroyEntity(self);
             return;
         }
