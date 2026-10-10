@@ -32,11 +32,9 @@ void func_us_801C5354(s32 resetAnims, s32 arg1) {
     }
 }
 
-#ifndef VERSION_PC
 static void ForceAfterImageOn(void) UNUSED {
     g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.index = 0;
 }
-#endif
 
 void EnableAfterImage(void) {
     g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.resetFlag =
@@ -53,9 +51,7 @@ void func_us_801C5430(s16 a0, s16 minTime) {
     }
 }
 
-#ifndef VERSION_PC
 #include "../../decelerate.h"
-#endif
 
 s32 CheckMoveDirection(void) {
     if (g_Dop.unk44 & 2) {
@@ -95,9 +91,7 @@ s32 func_us_801C55A8(s32 minX, s32 maxX) {
     return false;
 }
 
-#ifndef VERSION_PC
 #include "../../set_speed_x.h"
-#endif
 
 void DopSetVelocity(s32 velocityX) {
     if (DOPPLEGANGER.entityRoomIndex == 1) {

@@ -24,9 +24,7 @@ extern s32 D_us_801805A0;
 extern u_long D_us_801D421C[];
 extern s32 D_us_801D4A1C;
 
-#ifndef VERSION_PC
 #include "../../get_free_entity.h"
-#endif
 
 // this is the same as unionD_800ACFB4 in DRA
 typedef union {
@@ -3026,7 +3024,6 @@ void EntityHitByIce(Entity* self) {
 
 mistStruct D_us_801D3DA0[16];
 
-#ifndef VERSION_PC
 void func_80121F14(s32 velocityX, s32 velocityY) UNUSED {
     mistStruct* ptr = D_us_801D3DA0;
     s32 i;
@@ -3036,7 +3033,6 @@ void func_80121F14(s32 velocityX, s32 velocityY) UNUSED {
         ptr->posY.val += velocityY;
     }
 }
-#endif
 
 s16 D_us_801D3EE0;
 STATIC_PAD_BSS(2);
