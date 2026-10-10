@@ -96,13 +96,13 @@ void EntityKarasumanFeather(Entity* self) {
 
 void EntityKarasumanRavenAbsorb(Entity* self) {
     s16 angle;
-    extern u16 D_us_80180940;
+    extern u16 g_EInitKarasumanRavenAttack;
 
     extern AnimationFrame g_KarasumanRavenAbsorbAnim[];
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_us_80180940);
+        InitializeEntity(&g_EInitKarasumanRavenAttack);
         self->blendMode = BLEND_TRANSP;
         self->drawFlags = ENTITY_ROTATE;
         self->hitboxState = 0;

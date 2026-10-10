@@ -540,7 +540,7 @@ void EntityKarasuman(Entity* self) {
     self->hitboxHeight = *frameProperty++;
 }
 
-extern u16 D_us_80180928;
+extern EInit D_us_80180928;
 
 void EntityKarasumanFeatherAttack(Entity* self) {
     Entity* entity;
@@ -548,7 +548,7 @@ void EntityKarasumanFeatherAttack(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_us_80180928);
+        InitializeEntity(D_us_80180928);
         self->animCurFrame = 0x3B;
         self->drawFlags |= ENTITY_ROTATE;
 
@@ -661,16 +661,121 @@ void EntityKarasumanOrbAttack(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno2/nonmatchings/e_karasuman", EntityKarasumanRavenAttack);
+extern EInit g_EInitKarasumanRavenAttack;
+
+void EntityKarasumanRavenAttack(Entity* self) {
+    Entity* entity;
+    s32 offsetX;
+    s32 offsetY;
+    s32 opacity;
+    s16 angle;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitKarasumanRavenAttack);
+        if (self->params) {
+            self->hitboxState = 0;
+            self->step = 8;
+            return;
+        }
+        self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
+        angle = ((Random() & 0x1F) * 0x10) + ROT(22.5);
+        self->rotate = -angle;
+        if (!self->facingLeft) {
+            angle = FLT(0.5) - angle;
+        }
+        self->velocityX = rcos(angle) * 0x38;
+        self->velocityY = rsin(angle) * 0x38;
+        // fallthrough
+
+    case 1:
+        MoveEntity();
+        AnimateEntity(g_KarasumanRavenAbsorbAnim, self);
+        entity = &PLAYER;
+        if (entity->posY.i.hi < self->posY.i.hi) {
+            self->velocityY -= FIX(1.0 / 32.0);
+        }
+        if (self->flags & FLAG_DEAD) {
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (entity != NULL) {
+                CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                entity->params = 1;
+            }
+            DestroyEntity(self);
+        }
+        break;
+
+    case 8:
+        self->palette = PAL_FLAG(PAL_FILL_WHITE);
+        self->drawFlags = ENTITY_OPACITY;
+        self->opacity = 0;
+        self->blendMode = BLEND_TRANSP | BLEND_SUB;
+        entity = self->ext.karasuman.parent;
+        angle = Random() * 16;
+        self->posX.i.hi += FLT_TO_I(128 * rcos(angle));
+        self->posY.i.hi += FLT_TO_I(128 * rsin(angle));
+        self->step++;
+        // fallthrough
+
+    case 9:
+        if (self->opacity < 32) {
+            self->opacity += 2;
+        } else {
+            self->step++;
+        }
+        break;
+
+    case 10:
+        entity = self->ext.karasuman.parent;
+        if (entity->entityId != E_ID(KARASUMAN)) {
+            DestroyEntity(self);
+            return;
+        }
+        angle = GetAngleBetweenEntities(self, entity);
+        angle = LimitAngleChange(64, self->ext.karasuman.angle, angle);
+        self->velocityX = 64 * rcos(angle);
+        self->velocityY = 64 * rsin(angle);
+        self->ext.karasuman.angle = angle;
+        if (self->velocityX > 0) {
+            self->facingLeft = 1;
+        } else {
+            self->facingLeft = 0;
+        }
+        MoveEntity();
+        AnimateEntity(g_KarasumanRavenAbsorbAnim, self);
+        offsetX = entity->posX.i.hi - self->posX.i.hi;
+        offsetY = entity->posY.i.hi - self->posY.i.hi;
+        opacity = SquareRoot0(SQ(offsetX) + SQ(offsetY));
+
+        self->opacity = opacity / 4;
+        if (opacity < 16) {
+            DestroyEntity(self);
+            return;
+        }
+
+        if (!entity->ext.karasuman.flag2) {
+            self->step++;
+        }
+        break;
+
+    case 11:
+        self->opacity -= 8;
+        if (self->opacity > 240) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
+
+extern EInit D_us_8018094C;
 
 void EntityKarasumanFeather(Entity* self) {
-    extern u16 D_us_8018094C;
     s16 angle;
     s32 scale;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_us_8018094C);
+        InitializeEntity(D_us_8018094C);
         self->animCurFrame = 63;
         self->drawFlags = ENTITY_ROTATE;
         self->facingLeft = Random() & 1;
@@ -710,12 +815,10 @@ void EntityKarasumanFeather(Entity* self) {
 
 void EntityKarasumanRavenAbsorb(Entity* self) {
     s16 angle;
-    extern u16 D_us_80180940;
-
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_us_80180940);
+        InitializeEntity(g_EInitKarasumanRavenAttack);
         self->blendMode = BLEND_TRANSP;
         self->drawFlags = ENTITY_ROTATE;
         self->hitboxState = 0;
