@@ -1,4 +1,3 @@
-PrizeDrops = 0x801805F0;
 Update = 0x801931C8;
 UpdateStageEntities = 0x801934C4;
 HitDetection = 0x801935CC;
