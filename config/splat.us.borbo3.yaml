@@ -106,6 +106,6 @@ segments:
       - [0x1EA44, c, e_life_up]
       - [0x1F2F8, c, e_clouds]
       - [0x1F978, .bss, create_entity]
-      - [0x1F988, bss]
-      - [0x205F0, .bss, e_collect]
+      - [0x1F988, .bss, bss]
+      - [0x205F0, .bss, st_update]
   - [0x20630]
