@@ -1875,9 +1875,9 @@ files:
           - [0x394, skip]
           - [0x126C, rooms, rooms]
           - [0x1288, skip]
-          - [0x7350, palette, D_80187350, 16] # 0x2E0
-          - [0x7550, palette, D_80187550, 16]
-          - [0x7610, palette, D_80187610, 16] # 0x220
+          - [0x7350, palette, D_us_80187350, 16] # 0x2E0
+          - [0x7550, palette, D_us_80187550, 16]
+          - [0x7610, palette, D_us_80187610, 16] # 0x220
           - [0x7630, skip]
   - target: disks/us/BOSS/RBO4/RBO4.BIN
     asset_path: assets/boss/rbo4
