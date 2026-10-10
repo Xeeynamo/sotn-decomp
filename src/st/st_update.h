@@ -41,9 +41,7 @@ s32 Random(void) {
 void Update(void) {
     s16 x, y;
     Entity* e;
-#ifndef STAGE_IS_TEK
     s32 flags;
-#endif
     s16 iFramePalette;
 
     for (x = 0; x < LEN(g_ItemIconSlots); x++) {
@@ -65,6 +63,7 @@ void Update(void) {
 
         if (e->step) {
 #ifndef STAGE_IS_TEK
+            // TEK uses `e->flags`, recent build cache result in `flags`
             flags = e->flags;
 #endif
             if (UPDATE_FLAGS & FLAG_DESTROY_IF_OUT_OF_CAMERA) {
