@@ -10,7 +10,12 @@ extern s32 E_ID(UNK_27);
 #endif
 
 extern EInit g_EInitMedusa;
+#ifdef VERSION_PSP
+extern u8 D_us_801805F0[];
+#else
 extern u8 PrizeDrops[];
+#define D_us_801805F0 PrizeDrops
+#endif
 extern u8 D_us_801805FC[];
 extern u8 D_us_8018060C[];
 extern u8 D_us_80180618[];
@@ -21,6 +26,13 @@ extern s8 D_us_80180648[];
 extern u8 D_us_80180670[];
 extern s32 D_us_80180728;
 
+#ifdef VERSION_PSP
+char D_pspeu_09254890[] = "charal %x\n";
+#endif
+
+#ifdef VERSION_PSP
+INCLUDE_ASM("boss/rbo3_psp/nonmatchings/rbo3/rbo3", EntityMedusa);
+#else
 void EntityMedusa(Entity* self) {
     Entity* entity;
     s16 rotate;
@@ -53,7 +65,7 @@ void EntityMedusa(Entity* self) {
 
     case 2:
         // n.b.! AnimateEntity is not declared
-        if (!AnimateEntity(PrizeDrops, self)) {
+        if (!AnimateEntity(D_us_801805F0, self)) {
             self->hitboxState = 3;
             SetStep(3);
         }
@@ -249,9 +261,13 @@ void EntityMedusa(Entity* self) {
     self->hitboxWidth = *rect++;
     self->hitboxHeight = *rect++;
 }
+#endif
 
 extern EInit D_us_80180498;
 
+#ifdef VERSION_PSP
+INCLUDE_ASM("boss/rbo3_psp/nonmatchings/rbo3/rbo3", func_us_80192020);
+#else
 void func_us_80192020(Entity* self) {
     Primitive* prim;
     s32 posX, posY;
@@ -342,11 +358,15 @@ void func_us_80192020(Entity* self) {
         break;
     }
 }
+#endif
 
 extern EInit D_us_8018048C;
 extern s8 D_us_80180684[];
 extern u8 D_us_801806B0[];
 
+#ifdef VERSION_PSP
+INCLUDE_ASM("boss/rbo3_psp/nonmatchings/rbo3/rbo3", func_us_801922EC);
+#else
 void func_us_801922EC(Entity* self) {
     Entity* prev;
     s32 animCurFrame;
@@ -383,9 +403,13 @@ void func_us_801922EC(Entity* self) {
         DestroyEntity(self);
     }
 }
+#endif
 
 extern EInit D_us_801804A4;
 
+#ifdef VERSION_PSP
+INCLUDE_ASM("boss/rbo3_psp/nonmatchings/rbo3/rbo3", func_us_801923DC);
+#else
 void func_us_801923DC(Entity* self) {
     const int PrimCount = 13;
     s32 i;
@@ -436,7 +460,7 @@ void func_us_801923DC(Entity* self) {
             prim = prim->next;
         }
 
-        offsets = &self->ext.medusaUnk1A.offsets;
+        offsets = self->ext.medusaUnk1A.offsets;
         for (i = 0; i < (PrimCount + 1); i++) {
             offsets[0] = self->posX.i.hi;
             offsets[1] = self->posY.i.hi;
@@ -564,3 +588,4 @@ void func_us_801923DC(Entity* self) {
         }
     }
 }
+#endif
