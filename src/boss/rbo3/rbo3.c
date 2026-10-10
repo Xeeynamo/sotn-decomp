@@ -424,9 +424,6 @@ void func_us_801922EC(Entity* self) {
 
 extern EInit D_us_801804A4;
 
-#ifdef VERSION_PSP
-INCLUDE_ASM("boss/rbo3/nonmatchings/rbo3", func_us_801923DC);
-#else
 void func_us_801923DC(Entity* self) {
     const int PrimCount = 13;
     s32 i;
@@ -605,4 +602,3 @@ void func_us_801923DC(Entity* self) {
         }
     }
 }
-#endif
