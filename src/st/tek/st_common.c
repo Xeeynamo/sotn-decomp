@@ -7,7 +7,7 @@ INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C34D4);
 
 INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C3550);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C3598);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", AnimateEntity);
 
 INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C3650);
 
@@ -61,7 +61,7 @@ INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C4314);
 
 INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C4330);
 
-INCLUDE_ASM("st/tek/nonmatchings/st_common", func_801C43D0);
+INCLUDE_ASM("st/tek/nonmatchings/st_common", InitializeEntity);
 
 INCLUDE_ASM("st/tek/nonmatchings/st_common", EntityDummy);
 

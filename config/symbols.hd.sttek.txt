@@ -1,11 +1,13 @@
+g_EInitCommon = 0x801809D4;
 EntityBackgroundBlock = 0x801BEE30;
 EntityLockCamera = 0x801BEFC8;
 EntityBreakable = 0x801BF424;
 EntityDamageDisplay = 0x801C08EC;
 EntityRedDoor = 0x801C1B6C;
-EntityRoomForeground = 0x801C2788;
 EntitySoulStealOrb = 0x801C2C28;
 EntityEnemyBlood = 0x801C3004;
+AnimateEntity = 0x801C3598;
+InitializeEntity = 0x801C43D0;
 EntityDummy = 0x801C44CC;
 EntityPrizeDrop = 0x801C5088;
 EntityExplosion = 0x801C58C0;
