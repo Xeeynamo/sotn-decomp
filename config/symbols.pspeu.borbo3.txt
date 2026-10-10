@@ -11,7 +11,6 @@ SetStep = 0x09244850;
 InitializeEntity = 0x092448A0;
 EntityMedusa = 0x092460E0;
 func_us_80192998 = 0x09248188;
-gfxBanks = 0x0924A4C8;
 g_EInitParticle = 0x0924A5E0;
 g_EInitMedusa = 0x0924A640;
 rooms = 0x0924A690;
