@@ -1282,6 +1282,16 @@ files:
       - start: 0x80
         vram: 0x09237700
         assets:
+          - [0x2BB20, layers, layers]
+          - [0x2BB38, skip]
+          - [0x2BBA0, gfx_banks, graphics_banks]
+          - [0x2BC10, skip]
+          - [0x2BD98, rooms, rooms]
+          - [0x2BDB8, skip]
+          - [0x2BE18, cmpgfx, D_801ABEA0, 128, 128, 4]
+          - [0x2C0F8, cmpgfx, D_801AC180, 128, 128, 4]
+          - [0x2C200, palette, D_us_801AC288, 16]
+          - [0x2C5E0, skip]
           - [0x30C70, blueprintsdef, blueprints, DopBlueprints, EntityID]
           - [0x30F24, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo5.bin
