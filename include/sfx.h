@@ -349,6 +349,13 @@ enum Sfx {
     SFX_GOLD_PICKUP = 0x69D,
     SFX_WEAPON_HIT_A = 0x6DB
 };
+#elif defined(STAGE_IS_TEK)
+// TEK links against a different build of the game with its own sfx IDs.
+// Only the sfx referenced by the TEK sources are listed here.
+enum Sfx {
+    SFX_DOOR_CLOSE_A = 0x50A,
+    SFX_DOOR_OPEN = 0x50C,
+};
 #else
 enum Sfx {
     // SEQ music tracks

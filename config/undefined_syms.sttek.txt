@@ -18,3 +18,6 @@ g_Tilemap = 0x80082890;
 g_randomNext = 0x800A70A0;
 g_ScrollDeltaX = 0x800A70EC;
 g_ScrollDeltaY = 0x800A70F0;
+g_Player = 0x800823F0;
+rcos = 0x80017B04;
+rsin = 0x80017A38;
