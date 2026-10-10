@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../bo4/bo4.h"
+#include "bo4.h"
 
 #include "../../st/pfn_entity_update.h"
 
