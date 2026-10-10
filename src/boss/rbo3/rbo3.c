@@ -275,9 +275,6 @@ void func_us_80192020(Entity* self) {
     Entity* player;
     s32 var_a2;
     s16 angle;
-#ifndef VERSION_PSP
-    u16 var_v0;
-#endif
 
     if (self->flags & FLAG_DEAD) {
         SetStep(2);
@@ -312,27 +309,12 @@ void func_us_80192020(Entity* self) {
 
         angle = ratan2(posY, posX);
         if (self->facingLeft) {
-#ifdef VERSION_PSP
-            if (angle > 0) {
-                if (angle < FLT(3.0 / 8.0)) {
-                    angle = FLT(3.0 / 8.0);
-                }
-            }
-            if (angle < 0) {
-                if (angle > FLT(-3.0 / 8.0)) {
-                    angle = FLT(-3.0 / 8.0);
-                }
-            }
-#else
-            var_v0 = angle - 1;
-            if (var_v0 < (FLT(3.0 / 8.0) - 1)) {
+            if (angle > 0 && angle < FLT(3.0 / 8.0)) {
                 angle = FLT(3.0 / 8.0);
             }
-            var_v0 = angle + FLT(3.0 / 8.0) - 1;
-            if (var_v0 < FLT(3.0 / 8.0) - 1) {
+            if (angle < 0 && angle > FLT(-3.0 / 8.0)) {
                 angle = FLT(-3.0 / 8.0);
             }
-#endif
         } else {
             if (angle > FLT(1.0 / 8.0)) {
                 angle = FLT(1.0 / 8.0);
@@ -353,13 +335,9 @@ void func_us_80192020(Entity* self) {
 
         var_a2 = 0;
         if (self->velocityX > 0) {
-#ifdef VERSION_PSP
             if (posX > 288) {
                 var_a2 = 1;
             }
-#else
-            var_a2 = (posX <= 288) ^ 1;
-#endif
         } else if (posX < -32) {
             var_a2 = 1;
         }
