@@ -1460,6 +1460,9 @@ files:
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_010.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_011.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_012.bin
+    asset_path: assets/weapon
+    src_path: src/weapon
+    splat_config_path: config/splat.pspeu.w1_012.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_013.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_014.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_015.bin
