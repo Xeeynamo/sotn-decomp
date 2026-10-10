@@ -121,6 +121,26 @@ extern s32 E_ID(KARASUMAN_FEATHER);
 extern s32 E_ID(KARASUMAN_RAVEN_ABSORB);
 #endif
 
+typedef enum {
+    KARA_INIT,
+    KARA_WAIT,
+    KARA_WAKEUP,
+    KARA_3,
+    KARA_4,
+    KARA_5,
+    KARA_6,
+    KARA_7,
+    KARA_8,
+    KARA_9,
+    KARA_10,
+    KARA_11,
+    KARA_12,
+    KARA_13,
+    KARA_14,
+    KARA_15,
+    KARA_16
+} KaraSteps;
+
 void EntityKarasuman(Entity* self) {
     Entity* entity;
     s32 i;
@@ -129,26 +149,26 @@ void EntityKarasuman(Entity* self) {
     s8* frameProperty;
 
     if (self->hitFlags & 3 && self->step & 1) {
-        SetStep(14);
+        SetStep(KARA_14);
     }
     if (self->flags & FLAG_DEAD && self->step < 16) {
-        SetStep(16);
+        SetStep(KARA_16);
     }
 
     switch (self->step) {
-    case 0:
+    case KARA_INIT:
         InitializeEntity(g_EInitKarasuman);
         self->flags &= ~(FLAG_UNK_800 | FLAG_UNK_400);
         self->animCurFrame = 1;
         // fallthrough
 
-    case 1:
+    case KARA_WAIT:
         if (UnkCollisionFunc3(D_us_8018115C) & 1) {
-            SetStep(2);
+            SetStep(KARA_WAKEUP);
         }
         break;
 
-    case 2:
+    case KARA_WAKEUP:
         switch (self->step_s) {
         case 0:
             AnimateEntity(D_us_80181174, self);
@@ -158,12 +178,12 @@ void EntityKarasuman(Entity* self) {
             break;
         case 1:
             if (AnimateEntity(D_us_8018117C, self) == 0) {
-                SetStep(4);
+                SetStep(KARA_4);
             }
             break;
         }
         break;
-    case 4:
+    case KARA_4:
         switch (self->step_s) {
         case 0:
             if (AnimateEntity(D_us_80181194, self) == 0) {
@@ -176,16 +196,16 @@ void EntityKarasuman(Entity* self) {
             MoveEntity();
             self->velocityY += FIX(0.125);
             if (AnimateEntity(D_us_801811A0, self) == 0) {
-                SetStep(3);
+                SetStep(KARA_3);
                 if (self->ext.karasuman.flag2) {
-                    SetStep(0xC);
+                    SetStep(KARA_12);
                 }
             }
             break;
         }
         break;
 
-    case 3:
+    case KARA_3:
         if (!self->step_s) {
             self->ext.karasuman.timer = 48;
             self->velocityY = 0;
@@ -210,14 +230,14 @@ void EntityKarasuman(Entity* self) {
 
         if (!--self->ext.karasuman.timer) {
             if (self->ext.karasuman.flag0) {
-                SetStep(8);
+                SetStep(KARA_8);
             } else {
-                SetStep(6);
+                SetStep(KARA_6);
             }
             self->ext.karasuman.flag0 ^= 1;
         }
         break;
-    case 6:
+    case KARA_6:
         switch (self->step_s) {
         case 0:
             if (AnimateEntity(D_us_801811CC, self) == 0) {
@@ -243,13 +263,13 @@ void EntityKarasuman(Entity* self) {
             break;
         case 2:
             if (AnimateEntity(D_us_801811D8, self) == 0) {
-                SetStep(7);
+                SetStep(KARA_7);
                 self->step_s = 2;
             }
             break;
         }
         break;
-    case 7:
+    case KARA_7:
         switch (self->step_s) {
         case 0:
             self->velocityX = 0;
@@ -270,13 +290,13 @@ void EntityKarasuman(Entity* self) {
             break;
         case 3:
             if (AnimateEntity(D_us_801811C0, self) == 0) {
-                SetStep(4);
-                SetStep(0xA);
+                SetStep(KARA_4);
+                SetStep(KARA_10);
             }
             break;
         }
         break;
-    case 8:
+    case KARA_8:
         switch (self->step_s) {
         case 0:
             self->ext.karasuman.flag1 = 0;
@@ -331,12 +351,12 @@ void EntityKarasuman(Entity* self) {
             self->scaleX = self->scaleY += 8;
             if (self->scaleX > 256) {
                 self->drawFlags = ENTITY_DEFAULT;
-                SetStep(7);
+                SetStep(KARA_7);
             }
             break;
         }
         break;
-    case 10:
+    case KARA_10:
         switch (self->step_s) {
         case 0:
             if (AnimateEntity(D_us_8018122C, self) == 0) {
@@ -369,11 +389,11 @@ void EntityKarasuman(Entity* self) {
             break;
         case 3:
             if (AnimateEntity(D_us_80181238, self) == 0) {
-                SetStep(4);
+                SetStep(KARA_4);
             }
         }
         break;
-    case 12:
+    case KARA_12:
         switch (self->step_s) {
         case 0:
             self->ext.karasuman.flag2 = 0;
@@ -415,12 +435,12 @@ void EntityKarasuman(Entity* self) {
             break;
         case 3:
             if (AnimateEntity(D_us_8018124C, self) == 0) {
-                SetStep(3);
+                SetStep(KARA_3);
             }
             break;
         }
         break;
-    case 14:
+    case KARA_14:
         if (!self->step_s) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             if (self->facingLeft) {
@@ -449,10 +469,10 @@ void EntityKarasuman(Entity* self) {
         self->velocityY -= self->velocityY / 16;
 
         if (AnimateEntity(D_us_80181264, self) == 0) {
-            SetStep(7);
+            SetStep(KARA_7);
         }
         break;
-    case 16:
+    case KARA_16:
         switch (self->step_s) {
         case 0:
             g_BossFlag |= 2;
