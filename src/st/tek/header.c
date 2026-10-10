@@ -2,7 +2,7 @@
 #include "tek.h"
 
 void Update(void);
-void func_801BF9B0(void);
+void HitDetection(void);
 void func_801C1950(void);
 void func_801C17D8(s32 layoutId);
 extern RoomHeader D_80182EA4[];
@@ -15,7 +15,7 @@ void UpdateStageEntities(void);
 
 AbbreviatedOverlay g_Overlay = {
     .Update = Update,
-    .HitDetection = func_801BF9B0,
+    .HitDetection = HitDetection,
     .UpdateRoomPosition = func_801C1950,
     .InitRoomEntities = func_801C17D8,
     .rooms = D_80182EA4,

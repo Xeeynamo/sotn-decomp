@@ -7,6 +7,7 @@ EntityBackgroundBlock = 0x801BEE30;
 EntityLockCamera = 0x801BEFC8;
 EntityBreakable = 0x801BF424;
 Random = 0x801BF574;
+HitDetection = 0x801BF9B0;
 EntityDamageDisplay = 0x801C08EC;
 EntityRedDoor = 0x801C1B6C;
 BottomCornerText = 0x801C2850;
