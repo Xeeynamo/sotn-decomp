@@ -14,85 +14,66 @@ static s16 D_us_8018116C[] UNUSED = {
     0,
 };
 
-static AnimateEntityFrame anim_breathing[] = {
-    {30, 1}, {30, 2}, POSE_LOOP(0)
-};
+static AnimateEntityFrame anim_breathing[] = {{30, 1}, {30, 2}, POSE_LOOP(0)};
 
 static AnimateEntityFrame anim_unfurl_wings[] = {
-    {8, 1}, {6, 3}, {4, 4}, {4, 47}, {1, 10}, {1, 48}, {16, 10}, {6, 9}, {6, 47}, {4, 4}, POSE_END
-};
+    {8, 1},   {6, 3}, {4, 4},  {4, 47}, {1, 10}, {1, 48},
+    {16, 10}, {6, 9}, {6, 47}, {4, 4},  POSE_END};
 
 static AnimateEntityFrame anim_begin_jump[] = {
-    {2, 4}, {8, 5}, {8, 6}, {3, 5}, POSE_END
-};
+    {2, 4}, {8, 5}, {8, 6}, {3, 5}, POSE_END};
 
-static AnimateEntityFrame anim_rising[] = {
-    {8, 7}, {8, 8}, {2, 15}, POSE_END
-};
+static AnimateEntityFrame anim_rising[] = {{8, 7}, {8, 8}, {2, 15}, POSE_END};
 
 static AnimateEntityFrame anim_flapping[] = {
-    {8, 15}, {8, 16}, {8, 17}, {8, 18}, {8, 19}, {8, 20}, {8, 21}, POSE_LOOP(0)
-};
+    {8, 15}, {8, 16}, {8, 17}, {8, 18},
+    {8, 19}, {8, 20}, {8, 21}, POSE_LOOP(0)};
 
 static AnimateEntityFrame anim_relax_wings_flying[] = {
-    {8, 15}, {8, 7}, POSE_END
-};
+    {8, 15}, {8, 7}, POSE_END};
 
 static AnimateEntityFrame anim_landing[] = {
-    {8, 5}, {8, 6}, {8, 5}, {8, 4}, POSE_END
-};
+    {8, 5}, {8, 6}, {8, 5}, {8, 4}, POSE_END};
 
 static AnimateEntityFrame anim_4wings_featherattack[] = {
-    {4, 11}, {2, 12}, {1, 13}, {1, 12}, POSE_END
-};
+    {4, 11}, {2, 12}, {1, 13}, {1, 12}, POSE_END};
 
 static AnimateEntityFrame anim_end_featherattack[] = {
-    {4, 11}, {4, 7}, POSE_END
-};
+    {4, 11}, {4, 7}, POSE_END};
 
 static AnimateEntityFrame anim_prep_orbs[] = {
-    {16, 15}, {4, 22}, {2, 23}, POSE_END
-};
+    {16, 15}, {4, 22}, {2, 23}, POSE_END};
 
 static AnimateEntityFrame anim_flashing_make_orbs[] = {
-    {1, 23}, {1, 24}, {1, 25}, POSE_LOOP(0)
-};
+    {1, 23}, {1, 24}, {1, 25}, POSE_LOOP(0)};
 
 static AnimateEntityFrame anim_wings_low[] = {
-    {4, 23}, {4, 26}, {4, 27}, {6, 28}, {16, 29}, {8, 21}, POSE_END
-};
+    {4, 23}, {4, 26}, {4, 27}, {6, 28}, {16, 29}, {8, 21}, POSE_END};
 
 static AnimateEntityFrame anim_orb[] = {
-    {10, 30}, {1, 31}, {1, 32}, {1, 33}, {1, 34}, {1, 30}, {1, 35}, {1, 36}, {1, 37}, {1, 38}, {1, 30}, {1, 39}, {1, 40}, {1, 41}, {1, 42}, {1, 30}, {1, 43}, {1, 44}, {1, 45}, {1, 46}, POSE_LOOP(0)
-};
+    {10, 30}, {1, 31}, {1, 32}, {1, 33}, {1, 34}, {1, 30}, {1, 35},
+    {1, 36},  {1, 37}, {1, 38}, {1, 30}, {1, 39}, {1, 40}, {1, 41},
+    {1, 42},  {1, 30}, {1, 43}, {1, 44}, {1, 45}, {1, 46}, POSE_LOOP(0)};
 
 static AnimateEntityFrame anim_prep_ravens[] = {
-    {24, 4}, {8, 47}, {1, 10}, {1, 48}, {1, 10}, POSE_END
-};
+    {24, 4}, {8, 47}, {1, 10}, {1, 48}, {1, 10}, POSE_END};
 
 static AnimateEntityFrame anim_relax_wings_ground[] = {
-    {8, 9}, {8, 47}, POSE_END
-};
+    {8, 9}, {8, 47}, POSE_END};
 
 static AnimateEntityFrame anim_turn_ravens[] = {
-    {16, 15}, {8, 14}, {32, 49}, {2, 50}, {2, 51}, POSE_END
-};
+    {16, 15}, {8, 14}, {32, 49}, {2, 50}, {2, 51}, POSE_END};
 
 static AnimateEntityFrame anim_finish_ravens[] = {
-    {8, 52}, {8, 53}, {8, 14}, POSE_END
-};
+    {8, 52}, {8, 53}, {8, 14}, POSE_END};
 
 static AnimateEntityFrame anim_raven[] = {
-    {4, 54}, {4, 55}, {4, 56}, {4, 57}, {4, 58}, {4, 56}, POSE_LOOP(0)
-};
+    {4, 54}, {4, 55}, {4, 56}, {4, 57}, {4, 58}, {4, 56}, POSE_LOOP(0)};
 
 static AnimateEntityFrame anim_flinch[] = {
-    {1, 53}, {3, 49}, {2, 52}, {1, 50}, {1, 51}, {24, 60}, POSE_END
-};
+    {1, 53}, {3, 49}, {2, 52}, {1, 50}, {1, 51}, {24, 60}, POSE_END};
 
-static AnimateEntityFrame anim_death[] = {
-    {4, 51}, {24, 60}, POSE_END
-};
+static AnimateEntityFrame anim_death[] = {{4, 51}, {24, 60}, POSE_END};
 
 static FrameProperty D_us_8018127C[] = {
     {0x00, 0x00, 0x00, 0x00}, {0x00, 0x08, 0x04, 0x17},
@@ -440,8 +421,7 @@ void EntityKarasuman(Entity* self) {
             for (i = 0; i < 8; i++) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(
-                        E_KARASUMAN_FEATHER, self, entity);
+                    CreateEntityFromEntity(E_KARASUMAN_FEATHER, self, entity);
                     if (Random() & 1) {
                         entity->zPriority = self->zPriority + 1;
                     } else {
@@ -467,8 +447,7 @@ void EntityKarasuman(Entity* self) {
             for (i = 0; i < 32; i++) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(
-                        E_KARASUMAN_FEATHER, self, entity);
+                    CreateEntityFromEntity(E_KARASUMAN_FEATHER, self, entity);
                     if (Random() & 1) {
                         entity->zPriority = self->zPriority + 1;
                     } else {
@@ -488,8 +467,7 @@ void EntityKarasuman(Entity* self) {
         case 2:
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(
-                    E_KARASUMAN_RAVEN_ABSORB, self, entity);
+                CreateEntityFromEntity(E_KARASUMAN_RAVEN_ABSORB, self, entity);
                 entity->params = 1;
                 entity->zPriority = self->zPriority + 1;
             }
@@ -497,7 +475,7 @@ void EntityKarasuman(Entity* self) {
             self->step_s++;
             // fallthrough
         case 3:
-            if ((self->ext.karasuman.timer & 0x1)) {
+            if (self->ext.karasuman.timer & 0x1) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[256]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(
@@ -522,12 +500,11 @@ void EntityKarasuman(Entity* self) {
             }
             break;
         case 4:
-            if((g_Timer & 0xF) == 0){
+            if ((g_Timer & 0xF) == 0) {
                 PlaySfxPositional(SFX_FIREBALL_SHOT_B);
                 entity = AllocEntity(&g_Entities[160], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(
-                        E_EXPLOSION, self, entity);
+                    CreateEntityFromEntity(E_EXPLOSION, self, entity);
                     entity->facingLeft = Random() & 1;
                     entity->zPriority = self->zPriority + 1;
                     entity->posY.i.hi += 32;
@@ -626,12 +603,12 @@ void EntityKarasumanOrbAttack(Entity* self) {
         if (entity->ext.karasuman.flag1) {
             self->step++;
         }
-        #ifndef VERSION_PSP
-        if(entity->entityId != E_KARASUMAN || entity->flags & FLAG_DEAD){
+#ifndef VERSION_PSP
+        if (entity->entityId != E_KARASUMAN || entity->flags & FLAG_DEAD) {
             DestroyEntity(self);
             return;
         }
-        #endif
+#endif
         break;
 
     case 3:
