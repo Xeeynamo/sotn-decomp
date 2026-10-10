@@ -468,7 +468,6 @@ s16 D_us_8018133C[] = {
 };
 
 #ifdef VERSION_PSP
-// referenced by the PSP asm until this function matches
 char D_pspeu_0926B178[] = "dam_kind:%04x\n";
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_465F0", DopplegangerHandleDamage);
 #else

@@ -100,12 +100,12 @@ void EntityUnkId1B(Entity* self) {
     case 2:
 #ifdef VERSION_PSP
         if (!self->params) {
-#endif
             g_Player.padSim = PAD_NONE;
             g_Player.demo_timer = 4;
-
-#ifdef VERSION_PSP
         }
+#else
+        g_Player.padSim = PAD_NONE;
+        g_Player.demo_timer = 4;
 #endif
         // undeclared AnimateEntity
         if (!AnimateEntity(D_us_80180668, self)) {
@@ -117,12 +117,12 @@ void EntityUnkId1B(Entity* self) {
     case 3:
 #ifdef VERSION_PSP
         if (!self->params) {
-#endif
             g_Player.padSim = 0;
             g_Player.demo_timer = 0x18;
-
-#ifdef VERSION_PSP
         }
+#else
+        g_Player.padSim = 0;
+        g_Player.demo_timer = 0x18;
 #endif
         MoveEntity();
         self->velocityY += FIX(0.125);
