@@ -46,6 +46,7 @@ segments:
       - [0x6C8, data]
       - [0x6F8, .data, e_lock_camera]
       - [0x778, data]
+      - [0x8C4, .data, e_bat]
       - [0x8FC, .data, st_update]
       - [0x948, .data, collision]
       - [0xD08, .data, e_red_door]
@@ -54,7 +55,8 @@ segments:
       - [0x1274, .data, e_misc]
       - [0x132C, .data, e_particles]
       - [0x13AC, .data, e_room_fg]
-      - [0x1438, data]
+      - [0x1438, .data, e_slogra]
+      - [0x161C, data] # gaibon
       - [0x1754, .data, e_gaibon]
       - [0x1780, .data, e_thornweed]
       - [0x1838, data]
