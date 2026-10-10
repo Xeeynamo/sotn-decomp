@@ -336,7 +336,7 @@ void DopCheckWallRight(void) {
     s16* dopX;
     s32 effects;
     s32 i;
-    u32* pVramFlag;
+    s32* pVramFlag;
 
     s16 offsetX, offsetY;
 
@@ -409,7 +409,7 @@ void DopCheckWallLeft(void) {
     s16* dopX;
     s32 effects;
     s32 i;
-    u32* pVramFlag;
+    s32* pVramFlag;
 
     s16 offsetX, offsetY;
     dopY = &DOPPLEGANGER.posY.i.hi;
