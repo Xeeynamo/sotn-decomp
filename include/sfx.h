@@ -355,6 +355,8 @@ enum Sfx {
 enum Sfx {
     SFX_DOOR_CLOSE_A = 0x50A,
     SFX_DOOR_OPEN = 0x50C,
+    SFX_CANDLE_HIT = 0x526,
+    SFX_BREAKABLE_HIT_ALT = 0x668,
 };
 #else
 enum Sfx {

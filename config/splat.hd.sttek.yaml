@@ -42,7 +42,7 @@ segments:
       - [0xC8C, .data, e_red_door_tiles]
       - [0xCBC, .data, e_room_bg]
       - [0xD84, .data, e_lock_camera]
-      - [0xDF4, data]
+      - [0xDF4, .data, e_breakable]
       - [0xE8C, .data, st_update]
       - [0xED4, data]
       - [0xF48, .data, st_collision]
