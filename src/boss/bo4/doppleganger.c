@@ -121,7 +121,8 @@ void EntityDoppleganger10(void) {
             D_us_801805A0 |= 2;
             step = DOPPLEGANGER.step;
             step_s = DOPPLEGANGER.step_s;
-            damage.effects = D_us_8018120C[g_CurrentEntity->nFramesInvincibility];
+            damage.effects =
+                D_us_8018120C[g_CurrentEntity->nFramesInvincibility];
             SetDopplegangerStep(Dop_Kill);
         } else {
             for (i = 0; i < LEN(g_Dop.timers); i++) {
@@ -210,7 +211,7 @@ void EntityDoppleganger10(void) {
                     }
 
                     i = 3;
-                    if (damage.effects & 0x200) {
+                    if (damage.effects & EFFECT_UNK_0200) {
                         i = 7;
                     }
 
