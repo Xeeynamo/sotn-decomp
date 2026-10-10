@@ -15,91 +15,84 @@ static s16 D_us_8018116C[] UNUSED = {
     0,
 };
 
-static u8 D_us_80181174[] = {
-    0x1E, 0x01, 0x1E, 0x02, 0x00, 0x00, 0x00, 0x00,
+static AnimateEntityFrame D_us_80181174[] = {
+    {30, 1}, {30, 2}, POSE_LOOP(0)
 };
 
-static u8 D_us_8018117C[] = {
-    0x08, 0x01, 0x06, 0x03, 0x04, 0x04, 0x04, 0x2F, 0x01, 0x0A, 0x01,
-    0x30, 0x10, 0x0A, 0x06, 0x09, 0x06, 0x2F, 0x04, 0x04, 0xFF,
+static AnimateEntityFrame D_us_8018117C[] = {
+    {8, 1}, {6, 3}, {4, 4}, {4, 47}, {1, 10}, {1, 48}, {16, 10}, {6, 9}, {6, 47}, {4, 4}, POSE_END
 };
 
-static u8 D_us_80181194[] = {
-    2, 4, 8, 5, 8, 6, 3, 5, 0xFF,
+static AnimateEntityFrame D_us_80181194[] = {
+    {2, 4}, {8, 5}, {8, 6}, {3, 5}, POSE_END
 };
 
-static u8 D_us_801811A0[] = {
-    8, 7, 8, 8, 2, 15, 0xFF,
+static AnimateEntityFrame D_us_801811A0[] = {
+    {8, 7}, {8, 8}, {2, 15}, POSE_END
 };
 
-static u8 D_us_801811A8[] = {
-    8, 15, 8, 16, 8, 17, 8, 18, 8, 19, 8, 20, 8, 21, 0, 0,
+static AnimateEntityFrame D_us_801811A8[] = {
+    {8, 15}, {8, 16}, {8, 17}, {8, 18}, {8, 19}, {8, 20}, {8, 21}, POSE_LOOP(0)
 };
 
-static u8 D_us_801811B8[] = {
-    8, 15, 8, 7, 0xFF,
+static AnimateEntityFrame D_us_801811B8[] = {
+    {8, 15}, {8, 7}, POSE_END
 };
 
-static u8 D_us_801811C0[] = {
-    0x08, 0x05, 0x08, 0x06, 0x08, 0x05, 0x08, 0x04, 0xFF,
+static AnimateEntityFrame D_us_801811C0[] = {
+    {8, 5}, {8, 6}, {8, 5}, {8, 4}, POSE_END
 };
 
-static u8 D_us_801811CC[] = {
-    0x04, 0x0B, 0x02, 0x0C, 0x01, 0x0D, 0x01, 0x0C, 0xFF,
+static AnimateEntityFrame D_us_801811CC[] = {
+    {4, 11}, {2, 12}, {1, 13}, {1, 12}, POSE_END
 };
 
-static u8 D_us_801811D8[] = {
-    0x04, 0x0B, 0x04, 0x07, 0xFF,
+static AnimateEntityFrame D_us_801811D8[] = {
+    {4, 11}, {4, 7}, POSE_END
 };
 
-static u8 D_us_801811E0[] = {
-    0x10, 0x0F, 0x04, 0x16, 0x02, 0x17, 0xFF,
+static AnimateEntityFrame D_us_801811E0[] = {
+    {16, 15}, {4, 22}, {2, 23}, POSE_END
 };
 
-static u8 D_us_801811E8[] = {
-    0x01, 0x17, 0x01, 0x18, 0x01, 0x19, 0x00,
+static AnimateEntityFrame D_us_801811E8[] = {
+    {1, 23}, {1, 24}, {1, 25}, POSE_LOOP(0)
 };
 
-static u8 D_us_801811F0[] = {
-    0x04, 0x17, 0x04, 0x1A, 0x04, 0x1B, 0x06,
-    0x1C, 0x10, 0x1D, 0x08, 0x15, 0xFF,
+static AnimateEntityFrame D_us_801811F0[] = {
+    {4, 23}, {4, 26}, {4, 27}, {6, 28}, {16, 29}, {8, 21}, POSE_END
 };
 
-static u8 D_us_80181200[] = {
-    0x0A, 0x1E, 0x01, 0x1F, 0x01, 0x20, 0x01, 0x21, 0x01, 0x22, 0x01,
-    0x1E, 0x01, 0x23, 0x01, 0x24, 0x01, 0x25, 0x01, 0x26, 0x01, 0x1E,
-    0x01, 0x27, 0x01, 0x28, 0x01, 0x29, 0x01, 0x2A, 0x01, 0x1E, 0x01,
-    0x2B, 0x01, 0x2C, 0x01, 0x2D, 0x01, 0x2E, 0x00,
+static AnimateEntityFrame D_us_80181200[] = {
+    {10, 30}, {1, 31}, {1, 32}, {1, 33}, {1, 34}, {1, 30}, {1, 35}, {1, 36}, {1, 37}, {1, 38}, {1, 30}, {1, 39}, {1, 40}, {1, 41}, {1, 42}, {1, 30}, {1, 43}, {1, 44}, {1, 45}, {1, 46}, POSE_LOOP(0)
 };
 
-static u8 D_us_8018122C[] = {
-    0x18, 0x04, 0x08, 0x2F, 0x01, 0x0A, 0x01, 0x30, 0x01, 0x0A, 0xFF,
+static AnimateEntityFrame D_us_8018122C[] = {
+    {24, 4}, {8, 47}, {1, 10}, {1, 48}, {1, 10}, POSE_END
 };
 
-static u8 D_us_80181238[] = {
-    0x08, 0x09, 0x08, 0x2F, 0xFF,
+static AnimateEntityFrame D_us_80181238[] = {
+    {8, 9}, {8, 47}, POSE_END
 };
 
-static u8 D_us_80181240[] = {
-    0x10, 0x0F, 0x08, 0x0E, 0x20, 0x31, 0x02, 0x32, 0x02, 0x33, 0xFF,
+static AnimateEntityFrame D_us_80181240[] = {
+    {16, 15}, {8, 14}, {32, 49}, {2, 50}, {2, 51}, POSE_END
 };
 
-static u8 D_us_8018124C[] = {
-    0x08, 0x34, 0x08, 0x35, 0x08, 0x0E, 0xFF,
+static AnimateEntityFrame D_us_8018124C[] = {
+    {8, 52}, {8, 53}, {8, 14}, POSE_END
 };
 
-static u8 D_us_80181254[] = {
-    0x04, 0x36, 0x04, 0x37, 0x04, 0x38, 0x04, 0x39,
-    0x04, 0x3A, 0x04, 0x38, 0x00, 0x00, 0x00, 0x00,
+static AnimateEntityFrame g_KarasumanRavenAbsorbAnim[] = {
+    {4, 54}, {4, 55}, {4, 56}, {4, 57}, {4, 58}, {4, 56}, POSE_LOOP(0)
 };
 
-static u8 D_us_80181264[] = {
-    0x01, 0x35, 0x03, 0x31, 0x02, 0x34, 0x01,
-    0x32, 0x01, 0x33, 0x18, 0x3C, 0xFF,
+static AnimateEntityFrame D_us_80181264[] = {
+    {1, 53}, {3, 49}, {2, 52}, {1, 50}, {1, 51}, {24, 60}, POSE_END
 };
 
-static u8 D_us_80181274[] = {
-    0x04, 0x33, 0x18, 0x3C, 0xFF,
+static AnimateEntityFrame D_us_80181274[] = {
+    {4, 51}, {24, 60}, POSE_END
 };
 
 static FrameProperty D_us_8018127C[] = {
@@ -728,7 +721,7 @@ void EntityKarasumanRavenAttack(Entity* self) {
 
     case 1:
         MoveEntity();
-        AnimateEntity(D_us_80181254, self);
+        AnimateEntity(g_KarasumanRavenAbsorbAnim, self);
         entity = &PLAYER;
         if (entity->posY.i.hi < self->posY.i.hi) {
             self->velocityY -= FIX(1.0 / 32.0);
@@ -780,7 +773,7 @@ void EntityKarasumanRavenAttack(Entity* self) {
             self->facingLeft = 0;
         }
         MoveEntity();
-        AnimateEntity(D_us_80181254, self);
+        AnimateEntity(g_KarasumanRavenAbsorbAnim, self);
         offsetX = entity->posX.i.hi - self->posX.i.hi;
         offsetY = entity->posY.i.hi - self->posY.i.hi;
         opacity = SquareRoot0(SQ(offsetX) + SQ(offsetY));
@@ -878,7 +871,7 @@ void EntityKarasumanRavenAbsorb(Entity* self) {
 
     case 1:
         MoveEntity();
-        AnimateEntity(D_us_80181254, self);
+        AnimateEntity(g_KarasumanRavenAbsorbAnim, self);
         break;
 
     case 4:
