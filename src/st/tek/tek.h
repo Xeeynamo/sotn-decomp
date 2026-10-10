@@ -5,6 +5,10 @@
 
 #include <stage.h>
 
+// TEK uses the same entity freeze flag that the beta MAD has in st_update.h
+extern s32 D_800A6C18;
+#define D_80096ED0_mad D_800A6C18
+
 enum Palettes {
     PAL_NONE = 0,
     PAL_DODO_BIRD = 0x200,
