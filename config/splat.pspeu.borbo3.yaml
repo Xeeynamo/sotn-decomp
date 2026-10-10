@@ -81,6 +81,7 @@ segments:
       - [0x11BB0, .data, rbo3/collision]
       - [0x11F88, .data, rbo3/e_room_fg]
       - [0x12028, data, '12028']
+      - [0x12E90, .data, rbo3/e_red_door_tiles]
       - [0x12EC0, data, rbo3/e_init]
       - [0x13010, data]
       - [0x13080, .data, rbo3/unk_11438]
