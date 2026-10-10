@@ -15,11 +15,7 @@ static u8 g_eRedDoorUV[][8] = {
     {0xA8, 0x88, 0xA8, 0x88, 0x21, 0x21, 0x5F, 0x5F},
 };
 
-#ifdef STAGE_IS_TEK
-// TEK has this function in create_entity.c
-extern bool EntityIsNearPlayer(Entity* self);
-#else
-static bool EntityIsNearPlayer(Entity* self) {
+static int EntityIsNearPlayer(Entity* self) {
     s16 distanceX;
     s16 diffX;
     s16 distanceY;
@@ -27,19 +23,22 @@ static bool EntityIsNearPlayer(Entity* self) {
 
     diffX = PLAYER.posX.i.hi - self->posX.i.hi;
     distanceX = abs(diffX);
+#ifdef STAGE_IS_TEK
+    if (distanceX > 24) {
+#else
     if (distanceX > 16) {
-        return false;
+#endif
+        return 0;
     }
 
     diffY = PLAYER.posY.i.hi - self->posY.i.hi;
     distanceY = abs(diffY);
     if (distanceY > 32) {
-        return false;
+        return 0;
     }
 
-    return true;
+    return 1;
 }
-#endif
 
 // params: (& 0x100) Opens to the right
 //         (& 0xFF) Index into map-specific tiles (g_eRedDoorTiles)
