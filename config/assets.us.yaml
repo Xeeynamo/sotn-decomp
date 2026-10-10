@@ -1865,20 +1865,34 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
-          - [0x2C, sprite_banks, sprite_banks]
+          - [0x2C, sprite_banks, us/sprite_banks]
           - [0x8C, skip]
           - [0xAC, paldef, palette_def]
           - [0xD0, skip]
           - [0xE0, layers, layers]
-          - [0x108, skip]
+          - [0x108, gfx_banks, us/graphics_banks]
           - [0x1EC, layout, entity_layouts]
           - [0x394, skip]
           - [0x126C, rooms, rooms]
           - [0x1288, skip]
-          - [0x7350, palette, D_80187350, 16] # 0x2E0
-          - [0x7550, palette, D_80187550, 16]
-          - [0x7610, palette, D_80187610, 16] # 0x220
+          - [0x152C, cmpgfx, D_us_8018152C, 128, 128, 4]
+          - [0x1870, cmpgfx, D_us_80181870, 128, 128, 4]
+          - [0x1E14, cmpgfx, D_us_80181E14, 128, 128, 4]
+          - [0x2804, cmpgfx, D_us_80182804, 128, 128, 4]
+          - [0x356C, cmpgfx, D_us_8018356C, 128, 128, 4]
+          - [0x4268, cmpgfx, D_us_80184268, 128, 128, 4]
+          - [0x4EA0, cmpgfx, D_us_80184EA0, 128, 128, 4]
+          - [0x53BC, cmpgfx, D_us_801853BC, 128, 128, 4]
+          - [0x5D68, cmpgfx, D_us_80185D68, 128, 128, 4]
+          - [0x6C60, cmpgfx, D_us_80186C60, 128, 128, 4]
+          - [0x7350, palette, D_us_80187350, 16] # 0x2E0
+          - [0x7550, palette, D_us_80187550, 16]
+          - [0x7610, palette, D_us_80187610, 16] # 0x220
           - [0x7630, skip]
+          - [0x7E30, tiledef, rload] # 0x100 tiles per section
+          - [0x8240, skip]
+          - [0xC250, tiledef, rsave] # 0x1000 tiles per section
+          - [0x10260, skip]
   - target: disks/us/BOSS/RBO4/RBO4.BIN
     asset_path: assets/boss/rbo4
     src_path: src/boss/rbo4

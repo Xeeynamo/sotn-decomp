@@ -2,8 +2,10 @@
 
 #include "rbo3.h"
 extern EInit D_us_801804BC;
-extern s32 D_us_8018072C;
-extern u32 D_psp_09254D28;
+s32 D_us_8018072C = 0;
+#ifdef VERSION_PSP
+extern s32 E_ID(UNK_29);
+#endif
 
 void func_us_80192D64(Entity* self) {
     s32 i;
@@ -31,11 +33,7 @@ void func_us_80192D64(Entity* self) {
         }
 
         next = self + 1;
-#ifdef VERSION_PSP
-        CreateEntityFromEntity(D_psp_09254D28, self, next);
-#else
-        CreateEntityFromEntity(UNK_ENTITY_29, self, self + 1);
-#endif
+        CreateEntityFromEntity(E_ID(UNK_29), self, next);
 
         next->params = 2;
         next->posY.i.hi = 96;
@@ -123,48 +121,5 @@ void func_us_80192D64(Entity* self) {
         break;
     case 11:
         break;
-    }
-}
-
-extern EInit g_EInitInteractable;
-
-void func_us_80193050(Entity* self) {
-    Primitive* prim;
-    s16 primIndex;
-    s32 x;
-
-    if (self->step != 0) {
-        return;
-    }
-
-    InitializeEntity(g_EInitInteractable);
-    primIndex = g_api.AllocPrimitives(PRIM_GT4, 5);
-
-    if (primIndex == -1) {
-        DestroyEntity(self);
-        return;
-    }
-
-    prim = &g_PrimBuf[primIndex];
-    self->primIndex = primIndex;
-    self->flags |= FLAG_HAS_PRIMS;
-    x = 0;
-
-    while (prim != NULL) {
-        prim->x0 = prim->x2 = x;
-        x += 62;
-        prim->x1 = prim->x3 = x;
-        prim->tpage = 0xF;
-        prim->clut = 0xC5;
-        prim->u0 = prim->u2 = 65;
-        prim->u1 = prim->u3 = 127;
-        prim->v0 = prim->v1 = 169;
-        prim->v2 = prim->v3 = 198;
-        prim->y0 = prim->y1 = 64;
-        prim->y2 = prim->y3 = 18;
-        prim->priority = 0x10;
-        prim->drawMode = DRAW_DEFAULT;
-
-        prim = prim->next;
     }
 }

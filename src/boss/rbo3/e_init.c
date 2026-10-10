@@ -1,9 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo3.h"
 
-extern s16* D_us_801814A0[];
-s16* D_us_80180390[] = {D_us_801814A0};
-
 void EntityBreakable(Entity* self);
 void EntityExplosion(Entity* self);
 void EntityPrizeDrop(Entity* self);

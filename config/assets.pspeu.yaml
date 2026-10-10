@@ -1318,6 +1318,30 @@ files:
     asset_path: assets/boss/rbo3
     src_path: src/boss/rbo3
     splat_config_path: config/splat.pspeu.borbo3.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          - [0x12D18, sprite_banks, psp/sprite_banks]
+          - [0x12D78, layers, layers]
+          - [0x12DA0, paldef, palette_def]
+          - [0x12DC8, gfx_banks, psp/graphics_banks]
+          - [0x12E90, skip]
+          - [0x13010, rooms, rooms]
+          - [0x13030, skip]
+          - [0x130B0, cmpgfx, D_us_80181E14, 128, 128, 4]
+          - [0x13AA0, cmpgfx, D_us_80182804, 128, 128, 4]
+          - [0x14808, cmpgfx, D_us_8018356C, 128, 128, 4]
+          - [0x15508, cmpgfx, D_us_80184268, 128, 128, 4]
+          - [0x16140, cmpgfx, D_us_80184EA0, 128, 128, 4]
+          - [0x16660, cmpgfx, D_us_801853BC, 128, 128, 4]
+          - [0x17010, cmpgfx, D_us_80185D68, 128, 128, 4]
+          - [0x17F08, cmpgfx, D_us_80186C60, 128, 128, 4]
+          - [0x185F8, palette, D_us_80187350, 16]
+          - [0x187F8, palette, D_us_80187550, 16]
+          - [0x188B8, palette, D_us_80187610, 16]
+          - [0x188D8, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo4.bin
     asset_path: assets/boss/rbo4
     src_path: src/boss/rbo4
