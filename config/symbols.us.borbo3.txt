@@ -12,3 +12,4 @@ UpdateStageEntities = 0x801934C4;
 HitDetection = 0x801935CC;
 InitRoomEntities = 0x801955E4;
 UpdateRoomPosition = 0x8019575C;
+rooms_layers = 0x80180100;

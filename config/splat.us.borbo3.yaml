@@ -41,6 +41,8 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, data, header]
+      - [0xD0, .data, layers]
+      - [0x108, data]
       - [0x1EC, data, e_laydef]
       - [0x390, .data, e_init]
       - [0x4C8, .data, background_block_init]
@@ -61,7 +63,8 @@ segments:
       - [0x12DC, .data, e_clouds]
       - [0x1414, data] # begin RBO3_pStObjLayoutHorizontal ptr data
       - [0x7350, .data, pal_unk]
-      - [0x7630, data]
+      - [0x7630, .data, tilemaps]
+      - [0x10260, data]
       - [0x10E80, .rodata, unk_11438]
       - [0x10EE4, .rodata, e_medusa]
       - [0x10EF0, .rodata, unk_12B38]
