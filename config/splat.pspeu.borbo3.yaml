@@ -86,6 +86,8 @@ segments:
       - [0x13010, data]
       - [0x13080, .data, rbo3/unk_11438]
       - [0x130B0, data]
+      - [0x185F8, .data, rbo3/pal_unk]
+      - [0x188D8, data]
       - [0x1D0E8, .data, rbo3/header]
       - [0x1D118, data]
       - [0x1D210, .data, rbo3/rbo3]
