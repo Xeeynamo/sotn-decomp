@@ -90,6 +90,7 @@ segments:
       - [0x5A7D0, c, e_thornweed_corpseweed]
       - [0x5BD0C, c, prim_helpers]
       - [0x5C544, c, e_spectral_sword_no2]
-      - [0x5D8CC, bss, tek]
+      - [0x5D8CC, .bss, create_entity]
+      - [0x5D8DC, bss, tek]
       - [0x5DF48, .bss, st_update]
   - [0x5DF88]
