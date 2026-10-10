@@ -42,7 +42,7 @@ segments:
     subsegments:
       - [0x0, data, header]
       - [0x2C, .data, sprite_banks]
-      - [0x8C, data]
+      - [0x8C, .data, palette_def]
       - [0xD0, .data, layers]
       - [0x108, data]
       - [0x1EC, data, e_laydef]
