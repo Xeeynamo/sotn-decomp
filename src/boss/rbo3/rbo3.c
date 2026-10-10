@@ -7,6 +7,7 @@ extern s32 E_ID(UNK_24);
 extern s32 E_ID(UNK_25);
 extern s32 E_ID(UNK_26);
 extern s32 E_ID(UNK_27);
+extern s32 E_ID(MEDUSA);
 #endif
 
 extern EInit g_EInitMedusa;
@@ -265,16 +266,16 @@ void EntityMedusa(Entity* self) {
 
 extern EInit D_us_80180498;
 
-#ifdef VERSION_PSP
-INCLUDE_ASM("boss/rbo3/nonmatchings/rbo3", func_us_80192020);
-#else
 void func_us_80192020(Entity* self) {
     Primitive* prim;
     s32 posX, posY;
-    s16 primIndex;
+    s32 primIndex;
+    Entity* player;
     s32 var_a2;
     s16 angle;
+#ifndef VERSION_PSP
     u16 var_v0;
+#endif
 
     if (self->flags & FLAG_DEAD) {
         SetStep(2);
@@ -289,23 +290,38 @@ void func_us_80192020(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        prim = &g_PrimBuf[primIndex];
-        self->primIndex = primIndex;
-        self->ext.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.prim = prim;
         prim->x0 = prim->x1 = self->posX.i.hi;
         prim->y0 = prim->y1 = self->posY.i.hi;
         prim->r0 = 255;
         prim->g0 = 64;
         prim->b0 = 128;
-        prim->b1 = prim->g1 = prim->r1 = 0;
+        prim->r1 = 0;
+        prim->g1 = 0;
+        prim->b1 = 0;
         prim->priority = self->zPriority;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
-        posX = PLAYER.posX.i.hi - self->posX.i.hi;
-        posY = PLAYER.posY.i.hi - self->posY.i.hi;
+        player = &PLAYER;
+        posX = player->posX.i.hi - self->posX.i.hi;
+        posY = player->posY.i.hi - self->posY.i.hi;
 
         angle = ratan2(posY, posX);
         if (self->facingLeft) {
+#ifdef VERSION_PSP
+            if (angle > 0) {
+                if (angle < FLT(3.0 / 8.0)) {
+                    angle = FLT(3.0 / 8.0);
+                }
+            }
+            if (angle < 0) {
+                if (angle > FLT(-3.0 / 8.0)) {
+                    angle = FLT(-3.0 / 8.0);
+                }
+            }
+#else
             var_v0 = angle - 1;
             if (var_v0 < (FLT(3.0 / 8.0) - 1)) {
                 angle = FLT(3.0 / 8.0);
@@ -314,6 +330,7 @@ void func_us_80192020(Entity* self) {
             if (var_v0 < FLT(3.0 / 8.0) - 1) {
                 angle = FLT(-3.0 / 8.0);
             }
+#endif
         } else {
             if (angle > FLT(1.0 / 8.0)) {
                 angle = FLT(1.0 / 8.0);
@@ -334,7 +351,13 @@ void func_us_80192020(Entity* self) {
 
         var_a2 = 0;
         if (self->velocityX > 0) {
+#ifdef VERSION_PSP
+            if (posX > 288) {
+                var_a2 = 1;
+            }
+#else
             var_a2 = (posX <= 288) ^ 1;
+#endif
         } else if (posX < -32) {
             var_a2 = 1;
         }
@@ -352,25 +375,21 @@ void func_us_80192020(Entity* self) {
         break;
 
     case 2:
-        if (PrimDecreaseBrightness(self->ext.prim, 16) == 0) {
+        prim = self->ext.prim;
+        if (PrimDecreaseBrightness(prim, 16) == 0) {
             DestroyEntity(self);
         }
         break;
     }
 }
-#endif
 
 extern EInit D_us_8018048C;
 extern s8 D_us_80180684[];
 extern u8 D_us_801806B0[];
 
-#ifdef VERSION_PSP
-INCLUDE_ASM("boss/rbo3/nonmatchings/rbo3", func_us_801922EC);
-#else
 void func_us_801922EC(Entity* self) {
     Entity* prev;
     s32 animCurFrame;
-    u8* indexes;
     s8* rect;
 
     if (!self->step) {
@@ -390,20 +409,18 @@ void func_us_801922EC(Entity* self) {
     }
 
     animCurFrame = prev->animCurFrame;
-    indexes = D_us_801806B0;
     rect = D_us_80180684;
-    rect += indexes[animCurFrame] * 4;
+    rect += D_us_801806B0[animCurFrame] * 4;
 
     self->hitboxOffX = *rect++;
     self->hitboxOffY = *rect++;
     self->hitboxWidth = *rect++;
     self->hitboxHeight = *rect++;
 
-    if (prev->entityId != 23) {
+    if (prev->entityId != E_ID(MEDUSA)) {
         DestroyEntity(self);
     }
 }
-#endif
 
 extern EInit D_us_801804A4;
 
