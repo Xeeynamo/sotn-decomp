@@ -6,9 +6,6 @@ extern EInit g_EInitParticle;
 extern EntityConfig D_us_8018071C[];
 
 // Entity ID 0x1B
-#ifdef VERSION_PSP
-INCLUDE_ASM("boss/rbo3/nonmatchings/unk_12998", func_us_80192998);
-#else
 void func_us_80192998(Entity* self) {
     s32 params;
     EntityConfig* obj;
@@ -46,16 +43,11 @@ void func_us_80192998(Entity* self) {
             self->step_s++;
         }
         MoveEntity();
-        self->velocityY += self->ext.e_80192998.accelY;
-#ifdef VERSION_PSP
-        self->opacity--;
-#else
-        self->opacity += 255;
-#endif
+        self->velocityY += (s32)self->ext.e_80192998.accelY;
+        self->opacity -= 1;
         if (!AnimateEntity(self->ext.e_80192998.anim, self)) {
             DestroyEntity(self);
         }
         break;
     }
 }
-#endif
