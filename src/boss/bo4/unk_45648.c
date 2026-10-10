@@ -6,26 +6,20 @@ extern PlayerState g_Dop;
 s32 CheckMoveDirection(void);
 void SetSpeedX(s32 speed);
 
-u8 D_us_80181318[][2] = {
-    {0x00, 0x11},
-    {0x04, 0x15},
-    {0x01, 0x10},
-    {0x03, 0x23},
+static u8 D_us_80181318[] = {
+    /* 0 */ 0x00, 0x11,
+    /* 1 */ 0x04, 0x15,
+    /* 2 */ 0x01, 0x10,
+    /* 3 */ 0x03, 0x23,
 };
 
-#ifdef VERSION_PSP
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45648", func_8010E470);
-#else
-void func_8010E470(s32 arg0, s32 velocityX) {
-    s32 unused_stack[2];
-
+void func_8010E470(s32 index, s32 velocityX) {
     DOPPLEGANGER.velocityX = velocityX;
     DOPPLEGANGER.velocityY = 0;
     DOPPLEGANGER.step = Dop_Crouch;
-    DOPPLEGANGER.step_s = D_us_80181318[arg0][0];
-    SetDopplegangerAnim(D_us_80181318[arg0][1]);
+    DOPPLEGANGER.step_s = (s32)D_us_80181318[index * 2 + 0];
+    SetDopplegangerAnim(D_us_80181318[index * 2 + 1]);
 }
-#endif
 
 static u8 D_us_80181320[] = {
     0x04, 0x05, 0x0A, 0x0B, 0x0E, 0x0F, 0x1D, 0x1E, 0x04, 0x03, 0x00, 0x00,
