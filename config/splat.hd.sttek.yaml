@@ -43,6 +43,8 @@ segments:
       - [0xF70, .data, e_room_fg]
       - [0xFB8, data]
       - [0x3E740, rodata, tek]
+      - [0x3EDBC, .rodata, prim_helpers]
+      - [0x3EDC4, rodata]
       - [0x3EE30, c, e_room_bg]
       - [0x3EF44, c, e_lock_camera]
       - [0x3F424, c, e_breakable]

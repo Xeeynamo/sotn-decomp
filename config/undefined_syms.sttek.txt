@@ -1,3 +1,13 @@
 g_api = 0x8004C4D0;
 g_PrimBuf = 0x800967E8;
 g_unkGraphicsStruct = 0x800A6BF0;
+RotMatrix = 0x80019448;
+RotMatrixX = 0x80019968;
+RotMatrixY = 0x80019B08;
+RotMatrixZ = 0x80019CA8;
+ScaleMatrix = 0x80018AA8;
+SetGeomOffset = 0x80018DD8;
+SetGeomScreen = 0x80018DF8;
+SetRotMatrix = 0x80018BD8;
+SetTransMatrix = 0x80018C68;
+TransMatrix = 0x80018A78;
