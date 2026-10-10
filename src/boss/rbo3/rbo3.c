@@ -2,6 +2,14 @@
 
 #include "rbo3.h"
 
+#ifdef VERSION_PSP
+extern s32 E_ID(UNK_24);
+extern s32 E_ID(UNK_25);
+extern s32 E_ID(UNK_26);
+extern s32 E_ID(UNK_27);
+extern s32 E_ID(LIFE_UP_SPAWN);
+#endif
+
 void func_us_80191438(Entity* self) {
     s16 params;
     s16 y;
@@ -170,7 +178,7 @@ void EntityMedusa(Entity* self) {
         InitializeEntity(g_EInitMedusa);
         self->animCurFrame = 1;
         self->hitboxState = 0;
-        CreateEntityFromEntity(UNK_ENTITY_25, self, self + 1);
+        CreateEntityFromEntity(E_ID(UNK_25), self, self + 1);
         SetStep(1);
         // fallthrough
 
@@ -263,7 +271,7 @@ void EntityMedusa(Entity* self) {
         if (self->pose == 4 && self->poseTimer == 0) {
             entity = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
             if (entity != NULL) {
-                CreateEntityFromEntity(UNK_ENTITY_24, self, entity);
+                CreateEntityFromEntity(E_ID(UNK_24), self, entity);
                 entity->facingLeft = self->facingLeft;
                 if (self->facingLeft) {
                     entity->posX.i.hi -= 13;
@@ -290,7 +298,7 @@ void EntityMedusa(Entity* self) {
             for (i = 0; i < 2; i++) {
                 entity = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(UNK_ENTITY_26, self, entity);
+                    CreateEntityFromEntity(E_ID(UNK_26), self, entity);
                     entity->rotate = i * 1024 - 512;
                     if (!self->facingLeft) {
                         entity->rotate = (i * 1024) + 1536;
@@ -337,7 +345,7 @@ void EntityMedusa(Entity* self) {
         case 2:
             entity = AllocEntity(&g_Entities[0xC0], &g_Entities[0x100]);
             if (entity != NULL) {
-                CreateEntityFromEntity(UNK_ENTITY_27, self, entity);
+                CreateEntityFromEntity(E_ID(UNK_27), self, entity);
                 entity->params = 0;
                 entity->zPriority = self->zPriority + 1;
                 entity->posX.i.hi -= 16 - (Random() & 31);
@@ -803,12 +811,7 @@ void func_us_80192B38(Entity* self) {
         if (entity == NULL) {
             break;
         }
-#ifdef VERSION_PSP
-        // n.b.! CreateEntityFromEntity cannot be defined
-        CreateEntityFromEntity(D_psp_09254D20, self, entity);
-#else
-        CreateEntityFromEntity(UNK_ENTITY_30, self, entity);
-#endif
+        CreateEntityFromEntity(E_ID(LIFE_UP_SPAWN), self, entity);
         entity->posX.i.hi = x;
         entity->posY.i.hi = y;
         entity->params = 0x11;

@@ -3,7 +3,9 @@
 #include "rbo3.h"
 extern EInit D_us_801804BC;
 extern s32 D_us_8018072C;
-extern u32 D_psp_09254D28;
+#ifdef VERSION_PSP
+extern s32 E_ID(UNK_29);
+#endif
 
 void func_us_80192D64(Entity* self) {
     s32 i;
@@ -31,11 +33,7 @@ void func_us_80192D64(Entity* self) {
         }
 
         next = self + 1;
-#ifdef VERSION_PSP
-        CreateEntityFromEntity(D_psp_09254D28, self, next);
-#else
-        CreateEntityFromEntity(UNK_ENTITY_29, self, self + 1);
-#endif
+        CreateEntityFromEntity(E_ID(UNK_29), self, next);
 
         next->params = 2;
         next->posY.i.hi = 96;
