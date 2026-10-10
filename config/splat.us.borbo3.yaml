@@ -77,6 +77,7 @@ segments:
       - [0x11304, c, e_breakable]
       - [0x11438, c, unk_11438]
       - [0x1179C, c, rbo3]
+      - [0x12998, c, unk_12998]
       - [0x12B38, c, unk_12B38]
       - [0x12D64, c, 12D64]
       - [0x13050, c, unk_13050]
