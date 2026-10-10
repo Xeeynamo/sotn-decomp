@@ -93,7 +93,7 @@ segments:
       - [0x1D118, .data, e_medusa]
       - [0x1D220, .data, background_block_init]
       - [0x1D240, .data, e_lock_camera]
-      - [0x1D2B8, data]
+      - [0x1D2B8, .data, unk_12998]
       - [0x1D2E8, .data, e_clouds]
       - [0x1D418, data, 1D418]
       - [0x1D480, .rodata, e_life_up]
