@@ -47,7 +47,7 @@ segments:
       - [0x4E0, .data, e_red_door_tiles]
       - [0x510, .data, e_lock_camera]
       - [0x590, data] # e_breakable
-      - [0x5F0, data, rbo3] # medusa
+      - [0x5F0, data, e_medusa] # medusa
       - [0x730, .data, st_update]
       - [0x77C, .data, collision]
       - [0xB3C, .data, e_red_door] # e_red_door
@@ -63,7 +63,7 @@ segments:
       - [0x7350, .data, pal_unk]
       - [0x7630, data]
       - [0x10E80, .rodata, unk_11438]
-      - [0x10EE4, .rodata, rbo3]
+      - [0x10EE4, .rodata, e_medusa]
       - [0x10EF0, .rodata, unk_12B38]
       - [0x10F0C, .rodata, 12D64]
       - [0x10F3C, .rodata, e_red_door]
@@ -76,7 +76,7 @@ segments:
       - [0x11148, c, e_lock_camera]
       - [0x11304, c, e_breakable]
       - [0x11438, c, unk_11438]
-      - [0x1179C, c, rbo3]
+      - [0x1179C, c, e_medusa]
       - [0x12998, c, unk_12998]
       - [0x12B38, c, unk_12B38]
       - [0x12D64, c, 12D64]

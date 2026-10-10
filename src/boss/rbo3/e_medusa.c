@@ -177,7 +177,7 @@ void EntityMedusa(Entity* self) {
                     CreateEntityFromEntity(E_ID(UNK_26), self, entity);
                     entity->rotate = i * 1024 - 512;
                     if (!self->facingLeft) {
-                        entity->rotate += 0x800;
+                        entity->rotate += ROT(180);
                     }
                     entity->posY.i.hi -= 16;
                     entity->zPriority = self->zPriority - 2;
