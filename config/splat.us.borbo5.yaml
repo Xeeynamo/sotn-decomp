@@ -110,6 +110,7 @@ segments:
       - [0x45650, c, unk_45650]
       - [0x45C00, c, unk_45C00]
       - [0x4907C, c, unk_4907C]
+      - [0x502F8, c, unk_502F8]
       - [0x515F0, c, prim_helpers]
       - [0x51E20, c, e_life_up]
       - [0x526D4, .bss, doors]
