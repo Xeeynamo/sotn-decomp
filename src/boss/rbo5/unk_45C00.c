@@ -2,6 +2,20 @@
 #include "rbo5.h"
 #include "../../dra/subwpn_dagger.h"
 
+// Used in dra/7E4BC, dra/bss, rbo5/unk_4907C, bo4/unk_465F0
+typedef struct {
+    f32 posX;
+    f32 posY;
+    s16 angle1;
+    s16 angle2;
+    s16 size;
+    s16 xOffset;
+    s16 yOffset;
+    s16 pad;
+} mistStruct; // size = 0x14
+
+Entity* CreateEntFactoryFromEntity(Entity* source, u32 factoryParams, s16 arg2);
+
 extern PlayerState g_Dop;
 
 void func_us_801C4954(s32 resetAnims, s32 arg1);
@@ -16,11 +30,11 @@ void SetSpeedX(s32 speed);
 void SetDopplegangerAnim(s32 anim);
 
 void func_80111CC0(void) {
-    if (g_Dop.timers[1] != 0) {
+    if (g_Dop.timers[ALU_T_CURSE]) {
         CreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x17), 0);
     }
-    if (g_Dop.timers[0] != 0) {
+    if (g_Dop.timers[ALU_T_POISON]) {
         CreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x16), 0);
     }
@@ -113,7 +127,7 @@ void DopplegangerStepWalk(void) {
 
 static s16 D_us_801813C0[] = {
     1,
-    0x1f,
+    31,
     0,
     27,
 };
@@ -124,7 +138,7 @@ void DopplegangerStepJump(void) {
 
     DecelerateX(FIX(1.0 / 16.0));
     if (DOPPLEGANGER.velocityY < FIX(-1)) {
-        if (!(g_Dop.unk44 & 0x40) && !(g_Dop.padPressed & 0x40)) {
+        if (!(g_Dop.unk44 & 0x40) && !(g_Dop.padPressed & PAD_CROSS)) {
             DOPPLEGANGER.velocityY = FIX(-1);
         }
         if (g_Dop.vram_flag & TOUCHING_CEILING) {
@@ -211,7 +225,7 @@ void DopplegangerStepCrouch(void) {
     u8 _pad[40]; // any size between 33-40 (inclusive);
 
     var_s0 = 0;
-    // n.b.! much of this code is copied from `func_us_801C6654`,
+    // n.b.! much of this code is copied from `DopplegangerStepStand`,
     // but this variable is not used in this version of the function
     anim = 0;
     if (g_Dop.vram_flag & IN_AIR_OR_EDGE) {
@@ -241,8 +255,8 @@ void DopplegangerStepCrouch(void) {
                 var_s0 = 0x20;
             }
             break;
-        case 3:
         case 4:
+        case 3:
             if (DOPPLEGANGER.poseTimer < 0) {
                 var_s0 = 0x20;
             }
@@ -303,14 +317,20 @@ void DopplegangerStepCrouch(void) {
     }
 }
 
-void func_us_801C648C(s32 arg0) {
-    s32 move = DOPPLEGANGER.facingLeft != 0 ? -3 : 3;
+// n.b.! this is the same as bo4/unk_465F0.c
+
+void func_us_801C648C(u16 arg0) {
+    s16 move = 3;
+
+    if (DOPPLEGANGER.facingLeft) {
+        move = -move;
+    }
 
     DOPPLEGANGER.posY.i.hi -= 22;
-    DOPPLEGANGER.posX.i.hi = move + DOPPLEGANGER.posX.i.hi;
+    DOPPLEGANGER.posX.i.hi += move;
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_4, 1), 0);
-    DOPPLEGANGER.posY.i.hi = DOPPLEGANGER.posY.i.hi + 22;
-    DOPPLEGANGER.posX.i.hi = DOPPLEGANGER.posX.i.hi - move;
+    DOPPLEGANGER.posY.i.hi += 22;
+    DOPPLEGANGER.posX.i.hi -= move;
 
     if (arg0 & 1) {
         g_api.ShakeCamera(SHAKE_Y_SMALL2);
@@ -322,6 +342,14 @@ void func_us_801C648C(s32 arg0) {
     }
 }
 
+void SetDopplegangerAnim(s32 anim);
+bool func_us_801C5650(s32 branchFlags);
+
+extern PlayerState g_Dop;
+
+#ifdef VERSION_PSP
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5/unk_45C00", DopplegangerStepHighJump);
+#else
 void DopplegangerStepHighJump(void) {
     s32 temp;
     s32 var_s1;
@@ -403,6 +431,7 @@ void DopplegangerStepHighJump(void) {
         DOPPLEGANGER.step = Dop_Jump;
     }
 }
+#endif
 
 s32 func_80113E68(void) {
     s16 rnd = rand() & PSP_RANDMASK;
@@ -410,22 +439,24 @@ s32 func_80113E68(void) {
     return rnd % 16;
 }
 
-void func_us_801C68CC(void) {
+void func_8010FAF4();
+
+// similar to DRA's func_80113EE0
+static void func_us_801C68CC(void) {
+    DOPPLEGANGER.pose = DOPPLEGANGER.poseTimer = 0;
     DOPPLEGANGER.animSet = ANIMSET_OVL(1);
-    DOPPLEGANGER.drawFlags &= ENTITY_BLINK | ENTITY_MASK_B | ENTITY_MASK_G |
-                              ENTITY_MASK_R | ENTITY_SCALEY | ENTITY_SCALEX;
-    DOPPLEGANGER.poseTimer = 0;
-    DOPPLEGANGER.pose = 0;
     DOPPLEGANGER.blendMode = BLEND_NO;
     g_Dop.unk44 = 0;
     g_Dop.unk46 = 0;
+    DOPPLEGANGER.drawFlags &= ENTITY_BLINK | ENTITY_MASK_B | ENTITY_MASK_G |
+                              ENTITY_MASK_R | ENTITY_SCALEY | ENTITY_SCALEX;
     DOPPLEGANGER.rotate = 0;
     if (g_Entities[STAGE_ENTITY_START + 16].entityId == E_MIST) {
         func_8010FAF4();
     }
 }
 
-void func_us_801C6950(void) {
+static void func_us_801C6950(void) {
     if (DOPPLEGANGER.posX.i.hi <= PLAYER.posX.i.hi) {
         DOPPLEGANGER.entityRoomIndex = 0;
     } else {
@@ -433,11 +464,15 @@ void func_us_801C6950(void) {
     }
 }
 
-static s16 D_us_801813C8[] = {
+s16 D_us_801813C8[] = {
     SFX_VO_DOP_YELL,   SFX_VO_DOP_PAIN_F, SFX_VO_DOP_PAIN_E, SFX_VO_DOP_PAIN_D,
     SFX_VO_DOP_PAIN_C, SFX_VO_DOP_PAIN_B, SFX_VO_DOP_PAIN_A,
 };
 
+#ifdef VERSION_PSP
+char D_pspeu_09262FE8[] = "dam_kind:%04x\n";
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5/unk_45C00", DopplegangerHandleDamage);
+#else
 void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
     s32 sfxIndex;
 
@@ -497,7 +532,7 @@ void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
         }
 
         g_Dop.damagePalette = PAL_FLAG(PAL_CC_RED_EFFECT_A);
-        g_Dop.timers[2] = 6;
+        g_Dop.timers[ALU_T_HITEFFECT] = 6;
         g_api.PlaySfx(D_us_801813C8[sfxIndex]);
 
         if (damage->effects & EFFECT_UNK_8000) {
@@ -507,14 +542,14 @@ void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
             g_Dop.damagePalette = PAL_FLAG(PAL_CC_FIRE_EFFECT);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_17, 1), 0);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_18, 0), 0);
-            g_Dop.timers[2] = 0x10;
+            g_Dop.timers[ALU_T_HITEFFECT] = 0x10;
         } else if (damage->effects & EFFECT_UNK_0100) {
-            g_Dop.timers[1] = 0x400;
+            g_Dop.timers[ALU_T_CURSE] = 0x400;
             g_Dop.damagePalette = PAL_FLAG(PAL_CC_CURSE_EFFECT);
             CreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 23), 0);
         } else if (damage->effects & EFFECT_SOLID_FROM_BELOW) {
-            g_Dop.timers[0] = 0x400;
+            g_Dop.timers[ALU_T_POISON] = 0x400;
             g_Dop.damagePalette = PAL_FLAG(PAL_CC_DARK_EFFECT);
             CreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 22), 0);
@@ -522,25 +557,25 @@ void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_45, 0), 0);
             CreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x46), 0);
-            g_Dop.timers[2] = 0x18;
+            g_Dop.timers[ALU_T_HITEFFECT] = 0x18;
             g_Dop.damagePalette = PAL_FLAG(0x202);
         } else if (damage->effects & EFFECT_UNK_2000) {
             CreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_HIT_BY_ICE, 0), 0);
-            g_Dop.timers[2] = 0xC;
+            g_Dop.timers[ALU_T_HITEFFECT] = 0xC;
             g_Dop.damagePalette = PAL_FLAG(PAL_CC_BLUE_EFFECT_A);
             DOPPLEGANGER.ext.player.anim = 0x2E;
         } else if (damage->effects & EFFECT_UNK_1000) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_114, 0), 0);
             CreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x63), 0);
-            g_Dop.timers[2] = 8;
+            g_Dop.timers[ALU_T_HITEFFECT] = 8;
             g_Dop.damagePalette = PAL_FLAG(PAL_CC_DARK_EFFECT);
         } else if (damage->effects & EFFECT_UNK_0800) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_113, 0), 0);
             CreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x62), 0);
-            g_Dop.timers[2] = 16;
+            g_Dop.timers[ALU_T_HITEFFECT] = 16;
             g_Dop.damagePalette = PAL_FLAG(PAL_CC_DARK_EFFECT);
         } else if (!(damage->effects &
                      (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
@@ -576,6 +611,7 @@ void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
         break;
     }
 }
+#endif
 
 extern s32 D_us_801805B8;
 static s32 D_us_801D3308;
@@ -584,6 +620,8 @@ static s32 D_us_801D3310;
 static s32 D_us_801D3314;
 extern u_long D_us_801D37EC[];
 extern RECT D_us_80182064;
+
+void func_80118C28(s32 arg0);
 
 void DopplegangerStepKill(DamageParam* damage, s16 dopStep, s16 arg2) {
     s32 i;
@@ -603,7 +641,7 @@ void DopplegangerStepKill(DamageParam* damage, s16 dopStep, s16 arg2) {
         if (dopStep == Dop_StatusStone) {
             ent = &DOPPLEGANGER + 16;
             for (j = 16; j < 64; j++, ent++) {
-                // Entity 32 appears to be EntityDopplegangerDissolves
+                // Entity 32 appears to be EntityPlayerDissolves
                 if (ent->entityId == 32) {
                     g_api.PlaySfx(SFX_VO_DOP_DEATH);
                     DOPPLEGANGER.step_s = 16;
@@ -658,7 +696,7 @@ void DopplegangerStepKill(DamageParam* damage, s16 dopStep, s16 arg2) {
             if (plDraw->r0 < 248) {
                 plDraw->r0++;
             }
-            if (plDraw->b0 >= 9) {
+            if (plDraw->b0 > 8) {
                 plDraw->b0--;
             }
 
@@ -698,7 +736,7 @@ void DopplegangerStepKill(DamageParam* damage, s16 dopStep, s16 arg2) {
         break;
     case 2:
         for (i = 0; i < 4; i++) {
-            s2 = data = (u8*)&D_us_801D37EC[0];
+            s2 = data = (u8*)D_us_801D37EC;
             s2 += ((D_us_801D3308 >> 1) & 7);
             s2 += ((D_us_801D3308 & 0xFF) >> 4) << 5;
             for (j = 0; j < 16; j++) {
@@ -758,31 +796,33 @@ void DopplegangerStepKill(DamageParam* damage, s16 dopStep, s16 arg2) {
 
 extern AnimationFrame D_us_80183B98[];
 
-bool BatFormFinished(void) {
-    if (DOPPLEGANGER.step_s == 0 || !(g_Dop.padTapped & 8)) {
+s32 BatFormFinished(void) {
+    if (DOPPLEGANGER.step_s == 0) {
         return false;
     }
-
-    SetDopplegangerStep(10);
-    SetDopplegangerAnim(202);
-    D_us_80183B98[0].pose = 6;
-    DOPPLEGANGER.palette = PAL_FLAG(0x20D);
-    g_Dop.unk66 = 0;
-    g_Dop.unk68 = 0;
-    CreateEntFactoryFromEntity(
-        g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x21), 0);
-    DOPPLEGANGER.velocityY >>= 1;
-    return true;
+    if (g_Dop.padTapped & PAD_R1) {
+        SetDopplegangerStep(10);
+        SetDopplegangerAnim(202);
+        D_us_80183B98[0].pose = 6;
+        DOPPLEGANGER.palette = PAL_FLAG(0x20D);
+        g_Dop.unk66 = 0;
+        g_Dop.unk68 = 0;
+        CreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x21), 0);
+        DOPPLEGANGER.velocityY >>= 1;
+        return true;
+    }
+    return false;
 }
 
 void func_8011690C(s16 arg0) {
     if (DOPPLEGANGER.rotate < arg0) {
         DOPPLEGANGER.rotate += 16;
-        if (arg0 < DOPPLEGANGER.rotate) {
+        if (DOPPLEGANGER.rotate > arg0) {
             DOPPLEGANGER.rotate = arg0;
         }
     }
-    if (arg0 < DOPPLEGANGER.rotate) {
+    if (DOPPLEGANGER.rotate > arg0) {
         DOPPLEGANGER.rotate -= 16;
         if (DOPPLEGANGER.rotate < arg0) {
             DOPPLEGANGER.rotate = arg0;
@@ -798,9 +838,12 @@ static s32 CheckWingSmashInput(void) {
     return false;
 }
 
-static s32 g_WingSmashTimer;
+s32 g_WingSmashTimer;
 extern s32 D_us_801D3FEC;
 
+#ifdef VERSION_PSP
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5/unk_45C00", ControlBatForm);
+#else
 void ControlBatForm(void) {
     Entity* newEntity;
     s32 pressingCross;
@@ -1111,6 +1154,7 @@ void ControlBatForm(void) {
         }
     }
 }
+#endif
 
 extern s16 g_DopSensorsCeilingDefault[];
 extern s16 g_DopSensorsFloorDefault[];
@@ -1175,12 +1219,15 @@ void DopplegangerStepUnmorphBat(void) {
 }
 
 s32 func_us_801C84F4(void) {
-    if ((DOPPLEGANGER.step_s == 0) || !(g_Dop.padTapped & PAD_R2)) {
+    if (DOPPLEGANGER.step_s == 0) {
         return false;
     }
-    CheckMoveDirection();
-    SetDopplegangerStep(15);
-    return true;
+    if (g_Dop.padTapped & PAD_R2) {
+        CheckMoveDirection();
+        SetDopplegangerStep(15);
+        return true;
+    }
+    return false;
 }
 
 void ControlMistForm(void) {
@@ -1192,7 +1239,7 @@ void ControlMistForm(void) {
         case 0:
             CheckMoveDirection();
             g_Dop.unk44 = g_Dop.unk46 = g_Dop.unk48 = 0;
-            g_api.func_800EA5E4(0x8003U);
+            g_api.func_800EA5E4(ANIMSET_OVL(3));
             func_8010FAF4();
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_73, 0), 0);
             if (DOPPLEGANGER.velocityX > 0) {
@@ -1334,8 +1381,8 @@ void ControlMistForm(void) {
 
 void DopplegangerStepUnmorphMist(void) {
     s32 i;
-    s32 count;
     u8 _pad[40];
+    s32 count;
 
     if ((g_Dop.vram_flag & TOUCHING_GROUND) && DOPPLEGANGER.velocityY > 0) {
         DOPPLEGANGER.velocityY = 0;
@@ -1368,7 +1415,7 @@ void DopplegangerStepUnmorphMist(void) {
     if (count == 8) {
         DOPPLEGANGER.animSet = ANIMSET_OVL(1);
         SetDopplegangerAnim(0xCB);
-        if (DOPPLEGANGER.step_s != 0) {
+        if (DOPPLEGANGER.step_s) {
             SetDopplegangerAnim(0xCC);
         }
 
@@ -1424,8 +1471,8 @@ void DopplegangerStepStone(s32 arg0) {
         DOPPLEGANGER.palette = PAL_FLAG(PAL_CC_STONE_EFFECT);
         // This unique pain grunt doesn't have an Alucard equivalent
         g_api.PlaySfx(SFX_VO_DOP_PAIN_F);
+        g_Dop.timers[ALU_T_HITEFFECT] = 0;
         g_Dop.unk5E = 8;
-        g_Dop.timers[2] = 0;
         DOPPLEGANGER.step_s = 1;
         break;
 
@@ -1438,7 +1485,7 @@ void DopplegangerStepStone(s32 arg0) {
             g_api.ShakeCamera(SHAKE_Y_SMALL);
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_39, 0), 0);
-            if (g_Dop.unk6A == 0) {
+            if (g_Dop.unk6A <= 0) {
                 D_us_801D3320 = 0x20;
             }
             DOPPLEGANGER.palette = PAL_FLAG(PAL_UNK_19E);
@@ -1449,7 +1496,7 @@ void DopplegangerStepStone(s32 arg0) {
         break;
 
     case 2:
-        if (g_Dop.unk6A == 0) {
+        if (g_Dop.unk6A <= 0) {
             if (--D_us_801D3320 == 0) {
                 DOPPLEGANGER.step = Dop_Kill;
                 g_api.PlaySfx(SFX_VO_DOP_DEATH);
@@ -1463,8 +1510,8 @@ void DopplegangerStepStone(s32 arg0) {
 
         if ((g_Dop.padTapped & PAD_DIRECTION_MASK) || arg0 != 0) {
             g_Dop.padTapped |= PAD_DIRECTION_MASK;
-            DOPPLEGANGER.poseTimer = 16;
             g_Dop.unk5E--;
+            DOPPLEGANGER.poseTimer = 16;
             g_api.PlaySfx(SFX_STONE_MOVE_B);
 
             if (g_Dop.unk5E == 0) {
@@ -1475,19 +1522,14 @@ void DopplegangerStepStone(s32 arg0) {
                 DOPPLEGANGER.step = Dop_Hit;
                 DOPPLEGANGER.step_s = 8;
                 DOPPLEGANGER.palette = PAL_FLAG(0x200);
-            } else {
-                func_us_801C4A30(1, 4);
-                DOPPLEGANGER.step_s = 3;
-                CreateEntFactoryFromEntity(
-                    g_CurrentEntity, FACTORY(BP_13, 3), 0);
-                CreateEntFactoryFromEntity(
-                    g_CurrentEntity, FACTORY(BP_31, 3), 0);
-                DOPPLEGANGER.palette = PAL_FLAG(PAL_UNK_19E);
+                break;
             }
-        } else {
-            DOPPLEGANGER.palette = PAL_FLAG(PAL_UNK_19E);
+            func_us_801C4A30(1, 4);
+            DOPPLEGANGER.step_s = 3;
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_13, 3), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_31, 3), 0);
         }
-
+        DOPPLEGANGER.palette = PAL_FLAG(PAL_UNK_19E);
         break;
 
     case 3:
@@ -1500,10 +1542,10 @@ void DopplegangerStepStone(s32 arg0) {
             DOPPLEGANGER.rotPivotX = 0;
             DOPPLEGANGER.drawFlags |= ENTITY_ROTATE;
             DOPPLEGANGER.rotate = D_us_801813D8[DOPPLEGANGER.poseTimer] >> 0x4;
-            if (DOPPLEGANGER.rotate == 0) {
-                DOPPLEGANGER.rotPivotY = 24;
-            } else {
+            if (DOPPLEGANGER.rotate) {
                 DOPPLEGANGER.rotPivotY = 20;
+            } else {
+                DOPPLEGANGER.rotPivotY = 24;
             }
         }
         DOPPLEGANGER.palette = PAL_FLAG(PAL_UNK_19E);
