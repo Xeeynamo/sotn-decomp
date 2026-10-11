@@ -330,7 +330,7 @@ static void UpdatePrimWhenAlucardIsBat(Entity* entity) {
     prim->y2 = prim->y3 = prim->y0 + g_BatSpriteData[frame].height;
 }
 
-#define RandBeta(x) ((s32 (*)(s32))rand)(x)
+#define RandBeta(x) ((s32(*)(s32))rand)(x)
 
 // has some differences with TT_000
 static void SwitchModeInitialize(Entity* self) {
