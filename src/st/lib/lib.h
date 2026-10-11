@@ -49,7 +49,7 @@ typedef enum EntityID {
     /* 0x19 */ E_ID_19,
     /* 0x1A */ E_ID_1A,
     /* 0x1B */ E_ID_1B,
-    /* 0x1C */ E_FLYING_ZOMBIE1,
+    /* 0x1C */ E_FLYING_ZOMBIE_TORSO,
     /* 0x1D */ E_BLOOD_DRIPS,
     /* 0x1E */ E_BLOOD_SPLATTER,
     /* 0x1F */ E_ID_1F,
@@ -119,8 +119,8 @@ extern EInit g_EInitLockCamera;
 extern EInit g_EInitCommon;
 extern EInit g_EInitDamageNum;
 extern EInit g_EInitBloodyZombie;
-extern EInit g_EInitFlyingZombie2;
-extern EInit g_EInitFlyingZombie1;
+extern EInit g_EInitFlyingZombie;
+extern EInit g_EInitFlyingZombieTorso;
 // extern EInit D_us_80180890;
 extern EInit g_EInitDhuron;
 extern EInit D_us_801808A8;

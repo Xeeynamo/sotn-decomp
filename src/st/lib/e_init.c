@@ -27,8 +27,8 @@ void EntityBackgroundFurniture(Entity* self);
 void EntityBackgroundShadow(Entity* self);
 void func_us_801AFA80(Entity* self);
 void func_us_801AE8E8(Entity* self);
-void EntityFlyingZombie2(Entity* self);
-void EntityFlyingZombie1(Entity* self);
+void EntityFlyingZombie(Entity* self);
+void EntityFlyingZombieTorso(Entity* self);
 void EntityBloodDrips(Entity* self);
 void EntityBloodSplatter(Entity* self);
 void EntityLesserDemon(Entity* self);
@@ -110,8 +110,8 @@ PfnEntityUpdate EntityUpdates[] = {
     /* 0x17 */ EntityBackgroundShadow,
     /* 0x18 */ func_us_801AFA80,
     /* 0x19 */ func_us_801AE8E8,
-    /* 0x1A */ EntityFlyingZombie2,
-    /* 0x1B */ EntityFlyingZombie1,
+    /* 0x1A */ EntityFlyingZombie,
+    /* 0x1B */ EntityFlyingZombieTorso,
     /* 0x1C */ EntityBloodDrips,
     /* 0x1D */ EntityBloodSplatter,
     /* 0x1E */ EntityLesserDemon,
@@ -183,8 +183,8 @@ EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
 
 EInit g_EInitBloodyZombie = {ANIMSET_OVL(5), 0x01, 0x48, PAL_BLOODY_ZOMBIE, ENEMY_BLOODY_ZOMBIE};
-EInit g_EInitFlyingZombie2 = {ANIMSET_OVL(6), 0x01, 0x49, PAL_FLYING_ZOMBIE, ENEMY_FLYING_ZOMBIE_2};
-EInit g_EInitFlyingZombie1 = {ANIMSET_OVL(6), 0x00, 0x49, PAL_FLYING_ZOMBIE, ENEMY_FLYING_ZOMBIE_1};
+EInit g_EInitFlyingZombie = {ANIMSET_OVL(6), 0x01, 0x49, PAL_FLYING_ZOMBIE, ENEMY_FLYING_ZOMBIE_2};
+EInit g_EInitFlyingZombieTorso = {ANIMSET_OVL(6), 0x00, 0x49, PAL_FLYING_ZOMBIE, ENEMY_FLYING_ZOMBIE_1};
 EInit D_us_80180890 = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
 
 EInit g_EInitDhuron = {ANIMSET_OVL(3), 0x01, 0x4D, PAL_DHURON, ENEMY_DHURON};
