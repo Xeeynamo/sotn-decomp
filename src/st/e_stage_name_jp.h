@@ -2,6 +2,13 @@
 
 extern EInit g_EInitInteractable;
 
+#ifdef STAGE_IS_TEK
+void DpqColor(CVECTOR* v0, long p, CVECTOR* v1);
+long VectorNormalS(VECTOR* v0, SVECTOR* v1);
+
+#include "stage_name_dissolver.h"
+#endif
+
 #ifndef STAGE_FLAG
 #define STAGE_FLAG NULL_STAGE_FLAG
 #endif
@@ -44,6 +51,14 @@ enum StageNameSteps {
     STAGE_NAME_WAIT = 2,
     STAGE_NAME_WIPE_AWAY = 18,
     STAGE_NAME_SET_FLAG = 32,
+#ifdef STAGE_IS_TEK
+    STAGE_NAME_RENDER_COLORS = 2,
+    STAGE_NAME_RENDER_ZOOM = 3,
+    STAGE_NAME_RENDER_DRUM = 4,
+    STAGE_NAME_FADE_AWAY = 16,
+    STAGE_NAME_DISSOLVE = 17,
+    STAGE_NAME_RENDER_CUBE = 33,
+#endif
 };
 
 enum StageNameSubSteps {
@@ -76,10 +91,59 @@ static void LoadStageNameGraphics(void) {
 }
 #endif
 
+#ifdef STAGE_IS_TEK
+static SVECTOR corner_top_left = {-64, -11, 0};
+static SVECTOR corner_top_right = {64, -11, 0};
+static SVECTOR corner_bottom_left = {-64, 28, 0};
+static SVECTOR corner_bottom_right = {64, 28, 0};
+
+static VECTOR cube_normals[] = {
+    {FLT(1.0), FLT(1.0), FLT(0.0)},    {FLT(1.0), FLT(0.5), FLT(0.0)},
+    {FLT(0.5), FLT(0.5), FLT(0.5)},    {FLT(0.5), FLT(0.25), FLT(0.5)},
+    {FLT(0.0), FLT(0.25), FLT(1.0)},   {FLT(0.0), FLT(-0.25), FLT(1.0)},
+    {FLT(-0.5), FLT(-0.25), FLT(0.5)}, {FLT(-0.5), FLT(-0.5), FLT(0.5)},
+    {FLT(-1.0), FLT(-0.5), FLT(0.0)},  {FLT(-1.0), FLT(-1.0), FLT(0.0)},
+};
+
+static VECTOR* cube_face_normals[] = {
+    &cube_normals[0], &cube_normals[2], &cube_normals[1], &cube_normals[3],
+    &cube_normals[2], &cube_normals[4], &cube_normals[3], &cube_normals[5],
+    &cube_normals[4], &cube_normals[6], &cube_normals[5], &cube_normals[7],
+    &cube_normals[6], &cube_normals[8], &cube_normals[7], &cube_normals[9],
+};
+
+static MATRIX cube_color_matrix = {{{FLT(0.0), FLT(0.0), FLT(2.0)},
+                                    {FLT(0.0), FLT(0.0), FLT(1.0)},
+                                    {FLT(0.0), FLT(0.0), FLT(0.0)}}};
+
+static SVECTOR points_left = {-64, 0, -20};
+static SVECTOR points_right = {64, 0, -20};
+static SVECTOR normal = {FLT(0.0), FLT(0.0), FLT(1.0)};
+static MATRIX color_matrix = {{{FLT(0.0), FLT(-0.5), FLT(0.5)},
+                               {FLT(0.0), FLT(0.0), FLT(1.0)},
+                               {FLT(0.0), FLT(0.5), FLT(0.5)}}};
+static SVECTOR no_rotation = {0, 0, 0};
+#endif
+
 // This is the banner version which "shutter opens" and wipes away to the left.
 // psp prims 8-183 and hd prims 6-181 seem to be completely unused
 void EntityStageNamePopup(Entity* self) {
-#if defined(VERSION_HD) || defined(VERSION_BETA)
+#if defined(STAGE_IS_TEK)
+    SVECTOR rotVector;
+    VECTOR transVector;
+    MATRIX mtx;
+    VECTOR unusedVector; // never read, but the target keeps its stack slot
+    MATRIX lightMtx;
+    SVECTOR unusedSVector; // same as unusedVector
+    CVECTOR color;
+    SVECTOR normalVector;
+    s32 leftSideX[5];
+    s32 rightSideX[5];
+    CVECTOR colors[5];
+    s16 z[5];
+    s32 p, flag;
+#elif defined(VERSION_HD) || defined(VERSION_BETA)
+    // the TEK locals above, unused once the other effects were removed
     u8 padding[0xD8];
 #endif
     Primitive* prim;
@@ -89,6 +153,10 @@ void EntityStageNamePopup(Entity* self) {
     s16 starRightX;
     s16 starTopY;
     s16 boxRightX;
+#ifdef STAGE_IS_TEK
+    s16* rotSlicePtr;
+    VECTOR** normals;
+#endif
 
 #ifdef STAGE_NAME_LOAD_GFX
     if (D_psp_091CE570) {
@@ -98,10 +166,12 @@ void EntityStageNamePopup(Entity* self) {
 
     switch (self->step) {
     case STAGE_NAME_INIT:
+#ifndef STAGE_IS_TEK
         if (g_CastleFlags[STAGE_FLAG]) {
             DestroyEntity(self);
             return;
         }
+#endif
 #ifdef STAGE_NAME_LOAD_GFX
         LoadStageNameGraphics();
 #endif
@@ -247,6 +317,99 @@ void EntityStageNamePopup(Entity* self) {
         prim->priority = 176;
         prim->drawMode = DRAW_TRANSP | DRAW_TPAGE | DRAW_COLORS;
         prim = prim->next;
+#ifdef STAGE_IS_TEK
+        self->ext.stpopupj.firstRowPrim = prim;
+        for (i = 0; i < 40; i++) {
+            prim->tpage = 17;
+            prim->clut = PAL_UNK_19F;
+            prim->x2 = prim->x0 = 64;
+            prim->y1 = prim->y0 = i + 157;
+            prim->x3 = prim->x1 = 192;
+            prim->y3 = prim->y2 = i + 158;
+            prim->u2 = prim->u0 = 0;
+            prim->v0 = prim->v1 = i;
+            prim->u1 = prim->u3 = 128;
+            prim->v2 = prim->v3 = i + 1;
+            prim->r0 = 120;
+            prim->g0 = 120;
+            prim->b0 = 168;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
+            prim->priority = 192;
+            prim->drawMode = DRAW_HIDE | DRAW_COLORS;
+            prim = prim->next;
+        }
+
+        self->ext.stpopupj.firstColumnPrim = prim;
+        for (i = 0; i < 4; i++) {
+            prim->tpage = 17;
+            prim->clut = PAL_UNK_19F;
+            prim->x2 = prim->x0 = i * 32 + 64;
+            prim->x3 = prim->x1 = prim->x0 + 32;
+            prim->y1 = prim->y0 = 157;
+            prim->y3 = prim->y2 = 196;
+            prim->u2 = prim->u0 = i * 32;
+            prim->u1 = prim->u3 = prim->u0 + 32;
+            prim->v0 = prim->v1 = 0;
+            prim->v2 = prim->v3 = 39;
+            prim->r0 = 120;
+            prim->g0 = 120;
+            prim->b0 = 168;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
+            prim->priority = 192;
+            prim->drawMode = DRAW_HIDE | DRAW_COLORS;
+            prim = prim->next;
+        }
+
+        self->ext.stpopupj.firstRollingTextPrim = prim;
+        for (i = 0; i < 4; i++) {
+            prim->tpage = 17;
+            prim->clut = PAL_UNK_19F;
+            prim->x2 = prim->x0 = 64;
+            prim->x3 = prim->x1 = 192;
+            prim->y1 = prim->y0 = i * 10 + 157;
+            prim->y3 = prim->y2 = prim->y0 + 10;
+            prim->u2 = prim->u0 = 0;
+            prim->u1 = prim->u3 = 128;
+            prim->v0 = prim->v1 = i * 10;
+            prim->v2 = prim->v3 = i * 10 + 10;
+            prim->r0 = 120;
+            prim->g0 = 120;
+            prim->b0 = 168;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
+            prim->priority = 192;
+            prim->drawMode = DRAW_HIDE | DRAW_COLORS;
+            prim = prim->next;
+        }
+
+        self->ext.stpopupj.firstPixelColumnPrim = prim;
+        for (i = 0; i < 128; i++) {
+            prim->tpage = 17;
+            prim->clut = PAL_UNK_19F;
+            prim->x2 = prim->x0 = i + 64;
+            prim->x3 = prim->x1 = prim->x0 + 1;
+            prim->y1 = prim->y0 = 157;
+            prim->y3 = prim->y2 = 196;
+            prim->u2 = prim->u0 = i;
+            prim->u1 = prim->u3 = prim->u0 + 1;
+            prim->v0 = prim->v1 = 0;
+            prim->v2 = prim->v3 = 39;
+            prim->r0 = 120;
+            prim->g0 = 120;
+            prim->b0 = 168;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
+            prim->priority = 192;
+            prim->drawMode = DRAW_HIDE | DRAW_COLORS;
+            prim = prim->next;
+        }
+#endif
         self->step = STAGE_NAME_RENDER;
     case STAGE_NAME_RENDER:
         switch (self->step_s) {
@@ -413,6 +576,517 @@ void EntityStageNamePopup(Entity* self) {
             break;
         }
         break;
+#ifdef STAGE_IS_TEK
+    case STAGE_NAME_RENDER_COLORS:
+        switch (self->step_s) {
+        case 0:
+            prim = self->ext.stpopupj.firstTextPrim;
+            for (i = 0; i < 2; i++) {
+                prim->r0 = prim->b0 = prim->g0 = 0;
+                prim->x3 = prim->x1 = i * 3 + 192;
+                prim->x0 = prim->x2 = i * 3 + 192;
+                prim->u0 = prim->u2 = 128;
+                prim->v0 = prim->v1 = 39;
+                prim->y3 = prim->y2 = prim->y1 = prim->y0 = i * 2 + 196;
+                LOW(prim->r1) = LOW(prim->r0);
+                LOW(prim->r2) = LOW(prim->r0);
+                LOW(prim->r3) = LOW(prim->r0);
+                prim = prim->next;
+            }
+            prim = self->ext.stpopupj.boxPrim;
+            prim->x0 = prim->x2 = 128;
+            prim->x1 = prim->x3 = 128;
+            prim->y0 = prim->y1 = 176;
+            prim->y2 = prim->y3 = 176;
+            self->step_s++;
+            break;
+        case 1:
+            primsSet = 0;
+            prim = self->ext.stpopupj.boxPrim;
+            if (prim->y0 > 155) {
+                prim->y0 -= 4;
+                prim->y1 = prim->y0;
+                prim->y2 += 4;
+                prim->y3 = prim->y2;
+                primsSet |= 1;
+            }
+            if (prim->x0 > 16) {
+                prim->x0 -= 8;
+                prim->x2 = prim->x0;
+                prim->x1 += 8;
+                prim->x3 = prim->x1;
+                primsSet |= 1;
+            }
+            if (!primsSet) {
+                self->ext.stpopupj.timer = 0;
+                self->ext.stpopupj.unk8C = 1;
+                self->step_s++;
+                prim = self->ext.stpopupj.firstStarPrim;
+                prim->drawMode =
+                    DRAW_TRANSP | DRAW_TPAGE | DRAW_TPAGE2 | DRAW_COLORS;
+            }
+            break;
+        case 2:
+            prim = self->ext.stpopupj.firstTextPrim;
+            prim->v1 += 0xFF;
+            prim->u2 -= 2;
+            if (prim->v1 > 240) {
+                prim->v1 = 0;
+                self->step_s++;
+            }
+            prim->v0 = prim->v1;
+            break;
+        case 3:
+            prim = self->ext.stpopupj.firstTextPrim;
+            prim->u2 -= 2;
+            prim->u0 -= 2;
+            if (prim->u2 > 240) {
+                prim->u2 = 0;
+                self->step_s++;
+            }
+            break;
+        case 4:
+            prim = self->ext.stpopupj.firstTextPrim;
+            prim->u0 -= 2;
+            if (prim->u0 > 240) {
+                prim->u0 = 0;
+                self->step_s++;
+            }
+            break;
+        case 5:
+            break;
+        }
+        prim = self->ext.stpopupj.firstTextPrim;
+        prim->x0 = prim->x3 + (prim->u0 - prim->u3);
+        prim->x1 = prim->x3 + (prim->u1 - prim->u3);
+        prim->x2 = prim->x3 + (prim->u2 - prim->u3);
+        prim->y0 = prim->y3 + (prim->v0 - prim->v3);
+        prim->y1 = prim->y3 + (prim->v1 - prim->v3);
+        prim->y2 = prim->y3 + (prim->v2 - prim->v3);
+        if (self->ext.stpopupj.unk8C) {
+            if (++self->ext.stpopupj.timer > 16) {
+                self->ext.stpopupj.unk8C++;
+                if (self->ext.stpopupj.unk8C > 4) {
+                    self->ext.stpopupj.unk8C = 4;
+                }
+                self->ext.stpopupj.timer = 0;
+            }
+        }
+        prim = self->ext.stpopupj.firstTextPrim;
+        switch (self->ext.stpopupj.unk8C) {
+        case 4:
+            if (prim->g0 > 128) {
+                if (prim->b0 > 128) {
+                    if (prim->r0 > 128) {
+                        self->step = STAGE_NAME_SET_FLAG;
+                        self->ext.stpopupj.unk8C = 0;
+                        self->ext.stpopupj.timer = 64;
+                    } else {
+                        prim->r0 += 4;
+                    }
+                } else {
+                    prim->b0 += 4;
+                }
+            } else {
+                prim->g0 += 4;
+            }
+        case 3:
+            if (prim->b2 > 128) {
+                if (prim->r2 > 128) {
+                    if (prim->g2 <= 128) {
+                        prim->g2 += 4;
+                    }
+                } else {
+                    prim->r2 += 4;
+                }
+            } else {
+                prim->b2 += 4;
+            }
+        case 2:
+            if (prim->g1 > 128) {
+                if (prim->r1 > 128) {
+                    if (prim->b1 <= 128) {
+                        prim->b1 += 4;
+                    }
+                } else {
+                    prim->r1 += 4;
+                }
+            } else {
+                prim->g1 += 4;
+            }
+        case 1:
+            if (prim->r3 > 128) {
+                if (prim->g3 > 128) {
+                    if (prim->b3 <= 128) {
+                        prim->b3 += 4;
+                    }
+                } else {
+                    prim->g3 += 4;
+                }
+            } else {
+                prim->r3 += 4;
+            }
+            break;
+        case 0:
+            break;
+        }
+        break;
+    case STAGE_NAME_RENDER_ZOOM:
+        switch (self->step_s) {
+        case 0:
+            self->ext.stpopupj.depth = 0x1400;
+            prim = self->ext.stpopupj.firstTextPrim;
+            prim->drawMode =
+                DRAW_TRANSP | DRAW_TPAGE | DRAW_TPAGE2 | DRAW_COLORS;
+            prim = self->ext.stpopupj.boxPrim;
+            prim->x0 = prim->x2 = 128;
+            prim->x1 = prim->x3 = 128;
+            prim->y0 = prim->y1 = 176;
+            prim->y2 = prim->y3 = 176;
+            self->step_s++;
+            break;
+        case 1:
+            primsSet = 0;
+            prim = self->ext.stpopupj.boxPrim;
+            if (prim->y0 > 155) {
+                prim->y0 -= 4;
+                prim->y1 = prim->y0;
+                prim->y2 += 4;
+                prim->y3 = prim->y2;
+                primsSet |= 1;
+            }
+            if (prim->x0 > 16) {
+                prim->x0 -= 8;
+                prim->x2 = prim->x0;
+                prim->x1 += 8;
+                prim->x3 = prim->x1;
+                primsSet |= 1;
+            }
+            if (!primsSet) {
+                self->ext.stpopupj.depth = 0x1400;
+                self->ext.stpopupj.timer = 0;
+                self->step_s++;
+            }
+            break;
+        case 2:
+            if (self->ext.stpopupj.depth != 0x400) {
+                self->ext.stpopupj.depth -= 0x40;
+            } else {
+                self->step_s++;
+            }
+            break;
+        case 3:
+            self->step_s++;
+            break;
+        case 4:
+            self->step = STAGE_NAME_SET_FLAG;
+            self->ext.stpopupj.unk8C = 0;
+            self->ext.stpopupj.timer = 64;
+            break;
+        }
+        prim = self->ext.stpopupj.firstTextPrim;
+        SetGeomScreen(0x400);
+        rotVector.vx = 0;
+        rotVector.vy = 0;
+        rotVector.vz = 0;
+        RotMatrix(&no_rotation, &mtx);
+        transVector.vx = 0;
+        transVector.vy = 0;
+        transVector.vz = self->ext.stpopupj.depth;
+        TransMatrix(&mtx, &transVector);
+        SetRotMatrix(&mtx);
+        SetTransMatrix(&mtx);
+        color.r = 120;
+        color.g = 120;
+        color.b = 168;
+        color.cd = prim->type;
+        SetFarColor(0, 0, 0);
+        SetFogNear(0x400, 0x400);
+        SetGeomOffset(128, 176);
+        RotTransPers4(
+            &corner_top_left, &corner_top_right, &corner_bottom_left,
+            &corner_bottom_right, (long*)&prim->x0, (long*)&prim->x1,
+            (long*)&prim->x2, (long*)&prim->x3, (long*)&p, (long*)&flag);
+        DpqColor(&color, p, (CVECTOR*)&prim->r0);
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
+        return;
+    case STAGE_NAME_RENDER_DRUM:
+        switch (self->step_s) {
+        case 0:
+            prim = self->ext.stpopupj.firstTextPrim;
+            prim->drawMode = DRAW_HIDE;
+            prim = self->ext.stpopupj.firstRollingTextPrim;
+            for (i = 0; i < 4; i++) {
+                prim->drawMode =
+                    DRAW_TRANSP | DRAW_TPAGE | DRAW_TPAGE2 | DRAW_COLORS;
+                prim = prim->next;
+            }
+            prim = self->ext.stpopupj.boxPrim;
+            prim->x0 = prim->x2 = 128;
+            prim->x1 = prim->x3 = 128;
+            prim->y0 = prim->y1 = 176;
+            prim->y2 = prim->y3 = 176;
+            self->ext.stpopupj.depth = 0x414;
+            self->ext.stpopupj.rotationSlices[0] = ROT(-270);
+            self->ext.stpopupj.rotationSlices[1] = ROT(-270);
+            self->ext.stpopupj.rotationSlices[2] = ROT(-270);
+            self->ext.stpopupj.rotationSlices[3] = ROT(-270);
+            self->ext.stpopupj.rotationSlices[4] = ROT(-270);
+            self->step_s++;
+            break;
+        case 1:
+            primsSet = 0;
+            prim = self->ext.stpopupj.boxPrim;
+            if (prim->y0 > 155) {
+                prim->y0 -= 4;
+                prim->y1 = prim->y0;
+                prim->y2 += 4;
+                prim->y3 = prim->y2;
+                primsSet |= 1;
+            }
+            if (prim->x0 > 16) {
+                prim->x0 -= 8;
+                prim->x2 = prim->x0;
+                prim->x1 += 8;
+                prim->x3 = prim->x1;
+                primsSet |= 1;
+            }
+            if (!primsSet) {
+                self->ext.stpopupj.timer = 0;
+                self->step_s++;
+            }
+            break;
+        case 2:
+            if (self->ext.stpopupj.rotationSlices[4] < ROT(90)) {
+                self->ext.stpopupj.rotationSlices[4] += 64;
+            } else {
+                self->ext.stpopupj.rotationSlices[4] = ROT(90);
+            }
+            if (self->ext.stpopupj.rotationSlices[4] > ROT(-225)) {
+                if (self->ext.stpopupj.rotationSlices[3] < 341) {
+                    self->ext.stpopupj.rotationSlices[3] += 62;
+                } else {
+                    self->ext.stpopupj.rotationSlices[3] = 341;
+                }
+            }
+            if (self->ext.stpopupj.rotationSlices[3] > ROT(-225)) {
+                if (self->ext.stpopupj.rotationSlices[2] < 0) {
+                    self->ext.stpopupj.rotationSlices[2] += 60;
+                } else {
+                    self->ext.stpopupj.rotationSlices[2] = 0;
+                }
+            }
+            if (self->ext.stpopupj.rotationSlices[2] > ROT(-225)) {
+                if (self->ext.stpopupj.rotationSlices[1] < -341) {
+                    self->ext.stpopupj.rotationSlices[1] += 58;
+                } else {
+                    self->ext.stpopupj.rotationSlices[1] = -341;
+                }
+            }
+            if (self->ext.stpopupj.rotationSlices[1] > ROT(-225)) {
+                if (self->ext.stpopupj.rotationSlices[0] < ROT(-90)) {
+                    self->ext.stpopupj.rotationSlices[0] += 56;
+                } else {
+                    self->ext.stpopupj.rotationSlices[0] = ROT(-90);
+                    self->ext.stpopupj.timer = 64;
+                    self->step_s++;
+                }
+            }
+            break;
+        case 3:
+            if (!--self->ext.stpopupj.timer) {
+                rotSlicePtr = self->ext.stpopupj.rotationSlices;
+                for (i = 0; i < 5; i++) {
+                    *rotSlicePtr -= ROT(720);
+                    rotSlicePtr++;
+                }
+                self->step_s++;
+            }
+            break;
+        case 4:
+            rotSlicePtr = self->ext.stpopupj.rotationSlices;
+            for (i = 0; i < 5; i++) {
+                *rotSlicePtr += 48;
+                rotSlicePtr++;
+            }
+            self->ext.stpopupj.depth += 32;
+            if (self->ext.stpopupj.rotationSlices[4] > 0) {
+                prim = self->ext.stpopupj.firstRollingTextPrim;
+                for (i = 0; i < 4; i++) {
+                    prim->drawMode = DRAW_HIDE;
+                    prim = prim->next;
+                }
+                self->step_s++;
+            }
+            break;
+        case 5:
+            prim = self->ext.stpopupj.boxPrim;
+            prim->y1 = prim->y0 += 2;
+            prim->y3 = prim->y2 -= 2;
+            if (prim->y0 > prim->y2) {
+                DestroyEntity(self);
+                return;
+            }
+            break;
+        }
+        prim = self->ext.stpopupj.firstRollingTextPrim;
+        rotSlicePtr = self->ext.stpopupj.rotationSlices;
+        SetGeomScreen(0x400);
+        transVector.vx = 0;
+        transVector.vy = 0;
+        transVector.vz = self->ext.stpopupj.depth;
+        TransMatrix(&mtx, &transVector);
+        SetTransMatrix(&mtx);
+        color.r = 120;
+        color.g = 120;
+        color.b = 168;
+        color.cd = prim->type;
+        SetColorMatrix(&color_matrix);
+        SetBackColor(0x40, 0x40, 0x40);
+        SetGeomOffset(128, 176);
+        for (i = 0; i < 5; i++) {
+            rotVector.vx = *rotSlicePtr;
+            rotVector.vy = 0;
+            rotVector.vz = 0;
+            RotMatrix(&rotVector, &mtx);
+            SetRotMatrix(&mtx);
+            RotMatrix(&rotVector, &lightMtx);
+            SetLightMatrix(&lightMtx);
+            z[i] = RotTransPers(
+                &points_left, (long*)&leftSideX[i], (long*)&p, (long*)&flag);
+            z[i] = RotTransPers(
+                &points_right, (long*)&rightSideX[i], (long*)&p, (long*)&flag);
+            NormalColorCol(&normal, &color, &colors[i]);
+            rotSlicePtr++;
+        }
+        prim = self->ext.stpopupj.firstRollingTextPrim;
+        rotSlicePtr = self->ext.stpopupj.rotationSlices;
+        for (i = 0; i < 4; i++) {
+            LOW(prim->x0) = leftSideX[i];
+            LOW(prim->x1) = rightSideX[i];
+            LOW(prim->x2) = leftSideX[i + 1];
+            LOW(prim->x3) = rightSideX[i + 1];
+            rotSlicePtr++;
+            if (*rotSlicePtr > 0) {
+                prim->x2 = prim->x0 = 64;
+                prim->x3 = prim->x1 = 192;
+            }
+            LOW(prim->r0) = LOW(colors[i]);
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(colors[i + 1]);
+            LOW(prim->r3) = LOW(prim->r2);
+            prim = prim->next;
+        }
+        return;
+    case STAGE_NAME_FADE_AWAY:
+        switch (self->step_s) {
+        case 0:
+            prim = self->ext.stpopupj.firstTextPrim;
+            prim->drawMode =
+                DRAW_TRANSP | DRAW_TPAGE | DRAW_TPAGE2 | DRAW_COLORS;
+            prim = prim->next;
+            prim->drawMode =
+                DRAW_TRANSP | DRAW_TPAGE | DRAW_TPAGE2 | DRAW_COLORS;
+            self->step_s++;
+            return;
+        case 1:
+            PrimDecreaseBrightness(self->ext.stpopupj.firstTextPrim, 3);
+            primsSet = PrimDecreaseBrightness(self->ext.stpopupj.boxPrim, 6);
+            if (!primsSet) {
+                self->step_s++;
+            }
+            break;
+        case 2:
+            prim = self->ext.stpopupj.boxPrim;
+            prim->g0 = prim->b0 = prim->r0 += 1;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
+            primsSet =
+                PrimDecreaseBrightness(self->ext.stpopupj.firstTextPrim, 3);
+            if (!primsSet) {
+                self->step_s++;
+            }
+            break;
+        case 3:
+            prim = self->ext.stpopupj.boxPrim;
+            prim->y1 = prim->y0 += 2;
+            prim->y3 = prim->y2 -= 2;
+            if (prim->y0 > prim->y2) {
+                DestroyEntity(self);
+                return;
+            }
+            break;
+        }
+        break;
+    case STAGE_NAME_DISSOLVE:
+        switch (self->step_s) {
+        case 0:
+            prim = self->ext.stpopupj.firstTextPrim;
+            prim->drawMode = DRAW_HIDE;
+            prim = self->ext.stpopupj.firstRowPrim;
+            for (i = 0; i < 20; i++) {
+                prim->b0 = prim->g0 = prim->r0 = 128;
+                LOW(prim->r1) = LOW(prim->r0);
+                LOW(prim->r2) = LOW(prim->r0);
+                LOW(prim->r3) = LOW(prim->r0);
+                prim->p1 = i * 4;
+                prim->p2 = Random() & 3;
+                prim->p3 = 0;
+                prim->drawMode =
+                    DRAW_TRANSP | DRAW_TPAGE | DRAW_TPAGE2 | DRAW_COLORS;
+                prim = prim->next;
+            }
+            for (i = 0; i < 20; i++) {
+                prim->b0 = prim->g0 = prim->r0 = 128;
+                LOW(prim->r1) = LOW(prim->r0);
+                LOW(prim->r2) = LOW(prim->r0);
+                LOW(prim->r3) = LOW(prim->r0);
+                prim->p1 = -((20 - i) * 4);
+                prim->p2 = Random() & 3;
+                prim->drawMode =
+                    DRAW_TRANSP | DRAW_TPAGE | DRAW_TPAGE2 | DRAW_COLORS;
+                prim->p3 = 0;
+                prim = prim->next;
+            }
+            self->ext.stpopupj.timer = 112;
+            self->step_s++;
+            return;
+        case 1:
+            prim = self->ext.stpopupj.firstRowPrim;
+            while (prim != NULL) {
+                StageNamePopupDissolver(prim);
+                prim = prim->next;
+            }
+            if (!--self->ext.stpopupj.timer) {
+                self->step_s++;
+            }
+            break;
+        case 2:
+            prim = self->ext.stpopupj.firstRowPrim;
+            while (prim != NULL) {
+                StageNamePopupDissolver(prim);
+                prim = prim->next;
+            }
+            prim = self->ext.stpopupj.boxPrim;
+            prim->y0 += 2;
+            prim->y1 = prim->y0;
+            prim->y2 -= 2;
+            prim->y3 = prim->y2;
+            prim->x0 -= 2;
+            prim->x1 += 2;
+            prim->x2 -= 2;
+            prim->x3 += 2;
+            if (prim->y2 < prim->y0) {
+                DestroyEntity(self);
+                return;
+            }
+            break;
+        }
+        break;
+#endif
     case STAGE_NAME_WIPE_AWAY:
         if (self->step_s != 0) {
             (void)1;
@@ -481,10 +1155,78 @@ void EntityStageNamePopup(Entity* self) {
         break;
     case STAGE_NAME_SET_FLAG:
         if (!--self->ext.stpopupj.timer) {
+#ifndef STAGE_IS_TEK
             g_CastleFlags[STAGE_FLAG] = true;
+#endif
             self->step_s = 0;
             self->step = STAGE_NAME_WIPE_AWAY;
         }
         break;
+#ifdef STAGE_IS_TEK
+    case STAGE_NAME_RENDER_CUBE:
+        switch (self->step_s) {
+        case 0:
+            prim = self->ext.stpopupj.firstTextPrim;
+            prim->drawMode = DRAW_HIDE;
+            prim = self->ext.stpopupj.firstColumnPrim;
+            for (i = 0; i < 4; i++) {
+                prim->drawMode = DRAW_COLORS;
+                prim = prim->next;
+            }
+            self->ext.stpopupj.rotation.vx = 0;
+            self->ext.stpopupj.rotation.vy = ROT(-180);
+            self->ext.stpopupj.rotation.vz = 0;
+            self->step_s++;
+            break;
+        case 1:
+            // the target really stores vx back unchanged
+            self->ext.stpopupj.rotation.vx = self->ext.stpopupj.rotation.vx;
+            if ((self->ext.stpopupj.rotation.vy += 32) == ROT(180)) {
+                self->step_s++;
+            }
+            break;
+        case 2:
+            prim = self->ext.stpopupj.firstTextPrim;
+            prim->drawMode = DRAW_COLORS;
+            prim = self->ext.stpopupj.firstColumnPrim;
+            for (i = 0; i < 4; i++) {
+                prim->drawMode = DRAW_HIDE;
+                prim = prim->next;
+            }
+            self->step_s = 0;
+            self->step = STAGE_NAME_FADE_AWAY;
+            break;
+        }
+        prim = self->ext.stpopupj.firstColumnPrim;
+        SetGeomScreen(0x400);
+        rotVector.vx = self->ext.stpopupj.rotation.vx;
+        rotVector.vy = self->ext.stpopupj.rotation.vy;
+        rotVector.vz = self->ext.stpopupj.rotation.vz;
+        color.r = 160;
+        color.g = 160;
+        color.b = 176;
+        color.cd = prim->type;
+        RotMatrix(&no_rotation, &lightMtx);
+        RotMatrixX(rotVector.vx, &lightMtx);
+        RotMatrixY(rotVector.vy, &lightMtx);
+        SetLightMatrix(&lightMtx);
+        SetColorMatrix(&cube_color_matrix);
+        SetBackColor(0x40, 0x40, 0x40);
+        SetGeomOffset(128, 176);
+        normals = cube_face_normals;
+        for (i = 0; i < 4; i++) {
+            VectorNormalS(normals[0], &normalVector);
+            NormalColorCol(&normalVector, &color, (CVECTOR*)&prim->r0);
+            VectorNormalS(normals[1], &normalVector);
+            NormalColorCol(&normalVector, &color, (CVECTOR*)&prim->r1);
+            VectorNormalS(normals[2], &normalVector);
+            NormalColorCol(&normalVector, &color, (CVECTOR*)&prim->r2);
+            VectorNormalS(normals[3], &normalVector);
+            NormalColorCol(&normalVector, &color, (CVECTOR*)&prim->r3);
+            normals += 4;
+            prim = prim->next;
+        }
+        break;
+#endif
     }
 }

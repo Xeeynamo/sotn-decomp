@@ -7,7 +7,7 @@ extern EInit g_EInitObtainable;
 // this is how the original source code worked
 void MoveEntity(Entity*);
 
-#if defined(VERSION_HD)
+#if defined(VERSION_HD) && !defined(STAGE_IS_TEK)
 static u32 padding = 0;
 #endif
 
@@ -16,17 +16,31 @@ u16 g_ESoulStealOrbAngles[] = {
 };
 
 s16 g_ESoulStealOrbSprt[] = {
-    // clang-format off
+// clang-format off
+#ifdef STAGE_IS_TEK
+    -3,  -3,  8,  8,  80,  104, 88,  112,
+    -3,  -3,  8,  8,  72,  104, 80,  112,
+    -7,  -7,  16, 15, 72,  112, 88,  127,
+    -11, -11, 24, 23, 0,   104, 24,  127,
+    -11, -11, 24, 23, 24,  104, 48,  127,
+    -11, -11, 24, 23, 48,  104, 72,  127,
+#else
     -3,  -3,  8,  8,  208, 104, 216, 112,
     -3,  -3,  8,  8,  200, 104, 208, 112,
     -7,  -7,  16, 15, 200, 112, 216, 127,
     -11, -11, 24, 23, 128, 104, 152, 127,
     -11, -11, 24, 23, 152, 104, 176, 127,
     -11, -11, 24, 23, 176, 104, 200, 127,
+#endif
     // clang-format on
 };
 
+#ifdef STAGE_IS_TEK
+u8 g_ESoulStealOrbAnim[] = {
+    5, 1, 4, 2, 3, 3, 3, 4, 3, 5, 3, 6, 3, 3, 5, 2, 7, 1, 0, 0};
+#else
 u8 g_ESoulStealOrbAnim[] = {4, 2, 3, 3, 3, 4, 3, 5, 3, 6, 3, 3, 0, 0};
+#endif
 
 #ifdef VERSION_PSP
 #include "e_particles_maria.h"
@@ -113,8 +127,24 @@ void EntitySoulStealOrb(Entity* self) {
         MoveEntity(self);
         prim = &g_PrimBuf[self->primIndex];
         AnimateEntity(g_ESoulStealOrbAnim, self);
+#ifdef STAGE_IS_TEK
+        // the involvement of ITEM_KARMA_COIN is speculative, since TEK does not
+        // suggest what was the real item at 0x18.
+        if (g_Status.equipment[0] == ITEM_KARMA_COIN) {
+            prim->clut = 0x113;
+            direction = 0;
+        } else if (g_Status.equipment[1] == ITEM_KARMA_COIN) {
+            prim->clut = 0x133;
+            direction = 0x80;
+        } else {
+            DestroyEntity(self);
+            return;
+        }
+        prim->tpage = 0x19;
+#else
         prim->tpage = 0x18;
         prim->clut = PAL_UNK_194;
+#endif
         angle = self->animCurFrame;
         angle = (angle - 1) << 3;
 
@@ -123,10 +153,17 @@ void EntitySoulStealOrb(Entity* self) {
         prim->y0 = prim->y1 = self->posY.i.hi + *spr++;
         prim->x1 = prim->x3 = prim->x0 + *spr++;
         prim->y2 = prim->y3 = prim->y0 + *spr++;
+#ifdef STAGE_IS_TEK
+        prim->u0 = prim->u2 = *spr++ - 0x80;
+        prim->v0 = prim->v1 = direction + *spr++;
+        prim->u1 = prim->u3 = *spr++ - 0x80;
+        prim->v2 = prim->v3 = direction + *spr;
+#else
         prim->u0 = prim->u2 = *spr++;
         prim->v0 = prim->v1 = *spr++;
         prim->u1 = prim->u3 = *spr++;
         prim->v2 = prim->v3 = *spr;
+#endif
         prim->priority = self->zPriority;
         prim->drawMode = DRAW_DEFAULT;
         break;
@@ -235,12 +272,16 @@ void EntityEnemyBlood(Entity* self) {
                     if (!g_Player.healKind) {
                         g_Player.healKind = 1;
                         g_Player.healAmount = 8;
+#ifndef STAGE_IS_TEK
                         if (g_api.CheckEquipmentItemCount(
                                 ITEM_BLOODSTONE, EQUIP_ACCESSORY)) {
                             g_Player.healAmount *= 2;
                         }
+#endif
                     }
+#ifndef STAGE_IS_TEK
                     g_Player.unk10++;
+#endif
                     self->hitboxState = 0;
                 }
             }
