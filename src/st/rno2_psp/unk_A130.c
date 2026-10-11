@@ -9,28 +9,38 @@ extern AnimateEntityFrame D_pspeu_09258C08[];
 extern s16 D_pspeu_09258C10[][4];
 extern EInit g_EInitGhostDancer;
 
+typedef enum{
+    GD_INIT,
+    GD_GROUND_DETECT,
+    GD_IDLE,
+    GD_TURN_AROUND,
+    GD_LEAP,
+    GD_5_UNUSED,
+    GD_DEATHPARTS
+} GD_Steps;
+
 void EntityGhostDancer(Entity* self) {
     Entity* other;
-    s16* temp_s1;
-    s32 var_s3;
+    s16* deathPartsParams;
+    s32 coll;
     s32 i;
 
     if (self->flags & FLAG_DEAD) {
         for (i = 0; i < 6; i++) {
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
-                temp_s1 = D_pspeu_09258C10[i];
+                deathPartsParams = D_pspeu_09258C10[i];
                 CreateEntityFromEntity(E_GHOST_DANCER, self, other);
                 other->facingLeft = self->facingLeft;
                 other->params = (i + 0x100);
                 if (self->facingLeft) {
-                    other->posX.i.hi -= *temp_s1++;
+                    other->posX.i.hi -= *deathPartsParams++;
                 } else {
-                    other->posX.i.hi += *temp_s1++;
+                    other->posX.i.hi += *deathPartsParams++;
                 }
-                other->posY.i.hi += *temp_s1++;
-                other->ext.ghostDancer.unk84 = *temp_s1++;
-                other->ext.ghostDancer.unk80 = *temp_s1++;
+                other->posY.i.hi += *deathPartsParams++;
+                other->ext.ghostDancer.unk84 = *deathPartsParams++;
+                other->ext.ghostDancer.unk80 = *deathPartsParams++;
                 other->velocityY = (Random() & 0x1F) * -0x1000;
                 other->velocityX = (Random() & 0x3F) * 0xC00;
                 if (((GetSideToPlayer() & 1) ^ 1) != 0) {
@@ -47,8 +57,8 @@ void EntityGhostDancer(Entity* self) {
         DestroyEntity(self);
         return;
     }
-    switch (self->step) { /* switch 1 */
-    case 0:               /* switch 1 */
+    switch (self->step) { 
+    case GD_INIT:               
         InitializeEntity(g_EInitGhostDancer);
         self->hitboxOffY = 2;
         if (Random() & 1) {
@@ -60,54 +70,54 @@ void EntityGhostDancer(Entity* self) {
             self->hitboxState = 0;
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_UNK_00200000 |
                            FLAG_UNK_2000;
-            self->step = 6;
+            self->step = GD_DEATHPARTS;
             return;
         }
         self->animCurFrame = 1;
         self->ext.ghostDancer.unk80 = 0;
         return;
-    case 1: /* switch 1 */
+    case GD_GROUND_DETECT: 
         if (UnkCollisionFunc3(D_pspeu_09258BD0) & 1) {
             self->step += 1;
         }
         break;
-    case 2: /* switch 1 */
+    case GD_IDLE: 
         if (self->facingLeft) {
             self->velocityX = FIX(1.5);
         } else {
             self->velocityX = FIX(-1.5);
         }
-        var_s3 = UnkCollisionFunc2(D_pspeu_09258BE0);
-        if (var_s3 == 0x80) {
-            SetStep(4);
+        coll = UnkCollisionFunc2(D_pspeu_09258BE0);
+        if (coll == 0x80) {
+            SetStep(GD_LEAP);
         }
-        if (var_s3 == 0xFF) {
-            SetStep(3);
+        if (coll == 0xFF) {
+            SetStep(GD_TURN_AROUND);
         }
         if (AnimateEntity(D_pspeu_09258BE8, self) == 0) {
             if (self->facingLeft == (GetSideToPlayer() & 1)) {
-                SetStep(3);
+                SetStep(GD_TURN_AROUND);
             }
         }
         if (!self->ext.ghostDancer.unk80) {
             if ((self->facingLeft ^ (GetSideToPlayer() & 1)) &&
                 (GetDistanceToPlayerX() < 0x40)) {
-                SetStep(4);
+                SetStep(GD_LEAP);
             }
         } else {
             self->ext.ghostDancer.unk80--;
         }
         break;
-    case 3: /* switch 1 */
+    case GD_TURN_AROUND: 
         if (AnimateEntity(D_pspeu_09258BF8, self) == 0) {
             self->facingLeft ^= 1;
             self->animCurFrame = 1;
-            SetStep(2);
+            SetStep(GD_IDLE);
         }
         break;
-    case 4:                     /* switch 1 */
-        switch (self->step_s) { /* switch 2; irregular */
-        case 0:                 /* switch 2 */
+    case GD_LEAP:                     
+        switch (self->step_s) {
+        case 0:                 
             self->hitboxWidth = 8;
             self->hitboxHeight = 0xF;
             self->hitboxOffX = -2;
@@ -116,7 +126,7 @@ void EntityGhostDancer(Entity* self) {
                 self->step_s += 1;
             }
             break;
-        case 1: /* switch 2 */
+        case 1: 
             if (self->facingLeft) {
                 self->velocityX = FIX(2.0);
             } else {
@@ -129,7 +139,7 @@ void EntityGhostDancer(Entity* self) {
             self->hitboxOffY = -8;
             self->step_s += 1;
             /* fallthrough */
-        case 2: /* switch 2 */
+        case 2: 
             self->rotate -= ROT(1.40625);
             if (UnkCollisionFunc3(D_pspeu_09258BD0) & 1) {
                 PlaySfxPositional(SFX_STOMP_HARD_C);
@@ -140,18 +150,18 @@ void EntityGhostDancer(Entity* self) {
                 self->step_s += 1;
             }
             break;
-        case 3: /* switch 2 */
+        case 3: 
             if (!--self->ext.ghostDancer.unk80) {
                 self->hitboxWidth = 5;
                 self->hitboxHeight = 0x19;
                 self->hitboxOffX = 0;
                 self->hitboxOffY = 2;
                 self->ext.ghostDancer.unk80 = 0x20;
-                SetStep(2);
+                SetStep(GD_IDLE);
             }
         }
         break;
-    case 6: /* switch 1 */
+    case GD_DEATHPARTS: 
         MoveEntity();
         self->velocityY += FIX(0.125);
         self->rotate += self->ext.ghostDancer.unk84;
