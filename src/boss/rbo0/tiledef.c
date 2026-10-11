@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo0.h"
 
+#include "gen/rbo0_tilemap_0.h"
 #include "gen/rbo0_tiledef_rbo0.h"

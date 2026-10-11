@@ -15,9 +15,8 @@ static AnimateEntityFrame frames[] = {
 // this may be a bug, not sure how this can also be used for PrizeDrops
 AnimateEntityFrame PrizeDrops[] = {
 #endif
-    {.duration = 5, .pose = 0x04}, {.duration = 5, .pose = 0x05},
-    {.duration = 5, .pose = 0x06}, {.duration = 5, .pose = 0x07},
-    {.duration = 5, .pose = 0x08}, POSE_LOOP(0),
+    POSE(5, 0x04, 0), POSE(5, 0x05, 0), POSE(5, 0x06, 0),
+    POSE(5, 0x07, 0), POSE(5, 0x08, 0), POSE_LOOP(0),
 };
 // Torches are scaled slightly smaller based on params
 // to appear further in the background.
