@@ -1366,6 +1366,12 @@ files:
     asset_path: assets/boss/rbo5
     src_path: src/boss/rbo5
     splat_config_path: config/splat.pspeu.borbo5.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x2BE28, blueprintsdef, blueprints, DopBlueprints, EntityID]
+          - [0x2C0DC, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo6.bin
     asset_path: assets/boss/rbo6
     src_path: src/boss/rbo6
