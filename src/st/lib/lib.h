@@ -49,7 +49,7 @@ typedef enum EntityID {
     /* 0x19 */ E_ID_19,
     /* 0x1A */ E_ID_1A,
     /* 0x1B */ E_ID_1B,
-    /* 0x1C */ E_ID_1C,
+    /* 0x1C */ E_FLYING_ZOMBIE1,
     /* 0x1D */ E_BLOOD_DRIPS,
     /* 0x1E */ E_BLOOD_SPLATTER,
     /* 0x1F */ E_ID_1F,
