@@ -58,55 +58,55 @@ extern s8 D_us_801823C0[][4];
 extern u8 D_us_801823D4[];
 
 void func_us_801D5E90(Entity* self) {
-    Collider sp3C;
-    Primitive* s0;
-    Primitive* t;
-    s32 s1;
-    Entity* s2;
-    s32 s4;
-    s32 st;
-    s16 s3;
-    s32 s6;
-    s32 s7;
-    s16 t16;
-    s8* s32_p_0;
-    Entity* new_var;
-    Entity* sp38;
-    ;
-    ;
+    Collider collider;
+    Primitive* prim;
+    Entity* explosion;
+    Entity* player;
+    s8* frameParts;
+
+    s32 primIndex;
+    s32 genericInt;
+    s32 posX;
+    s32 posY;
+    s32 radius;
+    s16 angle;
+
     if (self->flags & FLAG_DEAD) {
         PlaySfxPositional(SFX_QUICK_STUTTER_EXPLODE_B);
-        // s2 = AllocEntity(&g_Entities[0xE0], D_80097C98); // D_80097C98
-        s2 = AllocEntity(
-            &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]); // FAKE!!
-        if (s2) {
-            CreateEntityFromEntity(E_EXPLOSION, self, s2);
-            s2->params = 2;
+        explosion = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (explosion) {
+            CreateEntityFromEntity(E_EXPLOSION, self, explosion);
+            explosion->params = 2;
         }
         DestroyEntity(self);
         return;
-    };
+    }
+
     switch (self->step) {
     case 0x0:
         InitializeEntity(g_EInitCaveTroll);
         self->animCurFrame = 1;
-        s7 = g_api_AllocPrimitives(0x11, 0x20);
-        if (s7 == (-1)) {
+
+        primIndex = g_api.AllocPrimitives(0x11, 0x20);
+        if (primIndex == -1) {
             DestroyEntity(self);
             return;
         }
+
         self->flags |= FLAG_HAS_PRIMS;
-        self->primIndex = s7;
-        s0 = &g_PrimBuf[s7];
-        self->ext.et_801D5E90.prim7C = s0;
-        while (s0) {
-            s0->u0 = (s0->v0 = 1);
-            s0->r0 = 0x80;
-            s0->g0 = 0x80;
-            s0->b0 = 0xC0;
-            s0->priority = self->zPriority + 1;
-            s0->drawMode = DRAW_HIDE;
-            s0 = s0->next;
+        self->primIndex = primIndex;
+
+        prim = &g_PrimBuf[primIndex];
+        self->ext.et_801D5E90.prim7C = prim;
+
+        while (prim) {
+            prim->u0 = (prim->v0 = 1);
+            prim->r0 = 0x80;
+            prim->g0 = 0x80;
+            prim->b0 = 0xC0;
+            prim->priority = self->zPriority + 1;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
         }
 
         break;
@@ -116,7 +116,6 @@ void func_us_801D5E90(Entity* self) {
             SetStep(2);
         }
         break;
-        ;
 
     case 0x2:
         if (GetDistanceToPlayerX() < 0x60) {
@@ -127,11 +126,11 @@ void func_us_801D5E90(Entity* self) {
     case 0x3:
         switch (self->step_s) {
         case 0:
-            self->velocityY = 0xfffe0000;
+            self->velocityY = FIX(-2.0);
             if (self->facingLeft) {
                 self->velocityX = FIX(1.5);
             } else {
-                self->velocityX = 0xfffe8000;
+                self->velocityX = FIX(-1.5);
             }
             self->step_s += 1;
 
@@ -141,38 +140,44 @@ void func_us_801D5E90(Entity* self) {
             if (self->velocityY < 0) {
                 self->animCurFrame = 2;
             }
-            if (self->velocityY > (-0x8000)) {
+            if (self->velocityY > FIX(-0.5)) {
                 self->animCurFrame = 3;
             }
             if (self->velocityY > FIX(0.5)) {
                 self->animCurFrame = 4;
             };
-            s4 = self->posX.i.hi;
-            s6 = self->posY.i.hi + 0x19;
-            g_api_CheckCollision(s4, s6, &sp3C, 0);
-            if (sp3C.effects & EFFECT_SOLID) {
+            posX = self->posX.i.hi;
+            posY = self->posY.i.hi + 0x19;
+
+            g_api.CheckCollision(posX, posY, &collider, 0);
+
+            if (collider.effects & EFFECT_SOLID) {
                 PlaySfxPositional(SFX_STOMP_HARD_D);
-                s1 = sp3C.unk18;
-                s4 = self->posX.i.hi;
-                s6 = self->posY.i.hi + 0x11;
-                g_api_CheckCollision(s4, s6, &sp3C, 0);
-                if (sp3C.effects & EFFECT_SOLID) {
+                genericInt = collider.unk18;
+                posX = self->posX.i.hi;
+                posY = self->posY.i.hi + 0x11;
+
+                g_api.CheckCollision(posX, posY, &collider, 0);
+
+                if (collider.effects & EFFECT_SOLID) {
                     SetSubStep(3);
                 } else {
-                    self->posY.i.hi += s1;
-                    s1 = (GetSideToPlayer() & 0x1) ^ 0x1;
-                    s4 = GetDistanceToPlayerX();
-                    if ((s1 != self->facingLeft) && (0x40 < s4)) {
+                    self->posY.i.hi += genericInt;
+                    genericInt = (GetSideToPlayer() & 0x1) ^ 0x1;
+                    posX = GetDistanceToPlayerX();
+
+                    if ((genericInt != self->facingLeft) && (0x40 < posX)) {
                         SetSubStep(3);
                     } else {
                         SetSubStep(2);
                     }
-                    if ((0x80 > s4) && (s4 > 0x20)) {
-                        s1 = Random();
-                        if (!(s1 & 1)) {
+
+                    if ((0x80 > posX) && (posX > 0x20)) {
+                        genericInt = Random();
+                        if (!(genericInt & 1)) {
                             SetStep(4);
                         }
-                        if ((s1 < 3) || (self->hitPoints < 0x10)) {
+                        if ((genericInt < 3) || (self->hitPoints < 0x10)) {
                             SetStep(5);
                         }
                     }
@@ -181,18 +186,17 @@ void func_us_801D5E90(Entity* self) {
             break;
 
         case 2:
-            if (AnimateEntity(D_us_80182364, self) == 0) {
+            if (!AnimateEntity(D_us_80182364, self)) {
                 SetSubStep(0);
             }
             break;
 
-        case 3: {
-            if (AnimateEntity(D_us_8018236C, self) == 0) {
+        case 3:
+            if (!AnimateEntity(D_us_8018236C, self)) {
                 self->facingLeft ^= 0x1;
                 self->animCurFrame = 2;
                 SetSubStep(0);
             }
-        }
         }
 
         break;
@@ -200,18 +204,17 @@ void func_us_801D5E90(Entity* self) {
     case 0x4: {
         switch (self->step_s) {
         case 0:
-            s1 = (GetSideToPlayer() & 1) ^ 1;
-            if (self->facingLeft == s1) {
+            genericInt = (GetSideToPlayer() & 1) ^ 1;
+            if (self->facingLeft == genericInt) {
                 SetSubStep(2);
                 break;
             }
-            {
-            case 1:
-                if (AnimateEntity(D_us_8018236C, self, s2) == 0) {
-                    self->facingLeft ^= 0x1;
-                    self->animCurFrame = 1;
-                    SetSubStep(2);
-                }
+
+        case 1:
+            if (!AnimateEntity(D_us_8018236C, self, explosion)) {
+                self->facingLeft ^= 0x1;
+                self->animCurFrame = 1;
+                SetSubStep(2);
             }
             break;
 
@@ -234,53 +237,60 @@ void func_us_801D5E90(Entity* self) {
             break;
 
         case 4:
-            sp38 = g_Entities;
-            s3 = GetAngleBetweenEntities(self, sp38);
-            s3 -= 0x400;
-            s3 &= 0xfff;
+            player = g_Entities;
+            angle = GetAngleBetweenEntities(self, player);
+            angle -= 0x400;
+            angle &= 0xfff;
+
             if (self->facingLeft) {
-                s3 = 0x1000 - s3;
+                angle = 0x1000 - angle;
             }
-            if (s3 & 0x800) {
+
+            if (angle & 0x800) {
                 SetSubStep(8);
+                break;
             } else {
-                self->ext.et_801D5E90.unk8C = s3;
+                self->ext.et_801D5E90.unk8C = angle;
                 self->animCurFrame = 0x14;
                 self->velocityY = 0;
                 self->rotate = 0;
                 self->drawFlags |= ENTITY_ROTATE;
                 self->ext.et_801D5E90.unk91 = 1;
                 self->step_s++;
-            case 5:
-                FntPrint("angle %x\n", self->ext.et_801D5E90.unk8C);
+            }
 
-                s3 = self->ext.et_801D5E90.unk8C;
-                s3 -= 0x380;
-                if (StepTowards(&self->rotate, s3, 0x28)) {
-                    self->step_s += 1;
-                }
+        case 5:
+            FntPrint("angle %x\n", self->ext.et_801D5E90.unk8C);
+
+            angle = self->ext.et_801D5E90.unk8C;
+            angle -= 0x380;
+            if (StepTowards(&self->rotate, angle, 0x28)) {
+                self->step_s += 1;
             }
             break;
 
         case 6:
-            s2 = AllocEntity(&g_Entities[160], &g_Entities[192]);
-            if (s2) {
-                CreateEntityFromEntity(E_UNK_41, self, s2);
-                s2->facingLeft = self->facingLeft;
-                s3 = self->ext.et_801D5E90.unk8C;
+            explosion = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
+            if (explosion) {
+                CreateEntityFromEntity(E_UNK_41, self, explosion);
+                explosion->facingLeft = self->facingLeft;
+                angle = self->ext.et_801D5E90.unk8C;
+
                 if (self->facingLeft) {
-                    s2->posX.i.hi += (rsin(s3) * 9) >> 12;
+                    explosion->posX.i.hi += (rsin(angle) * 9) >> 12;
                 } else {
-                    ;
-                    s2->posX.i.hi -= (rsin(s3) * 9) >> 12;
+                    explosion->posX.i.hi -= (rsin(angle) * 9) >> 12;
                 }
-                s2->posY.i.hi += (9 * rcos(s3)) >> 0xc;
-                s2->ext.et_801D5E90.unk8C = s3;
-                s2->ext.et_801D5E90.ent9C = self;
+
+                explosion->posY.i.hi += (9 * rcos(angle)) >> 0xc;
+                explosion->ext.et_801D5E90.unk8C = angle;
+                explosion->ext.et_801D5E90.ent9C = self;
             }
+
             self->ext.et_801D5E90.unk80 = 0x40;
             PlaySfxPositional(SFX_GUARD_TINK);
             self->step_s += 1;
+
             break;
 
         case 7:
@@ -296,47 +306,48 @@ void func_us_801D5E90(Entity* self) {
             if (UnkCollisionFunc3(D_us_80182344) & 1) {
                 PlaySfxPositional(SFX_STOMP_HARD_C);
                 self->drawFlags = ENTITY_DEFAULT;
-                s6 = 9;
-                SetSubStep(s6);
+                posY = 9;
+                SetSubStep(posY);
                 self->pose = 1;
             }
             break;
 
         case 9:
-            if (AnimateEntity(D_us_80182364, self) == 0) {
-                s1 = SetStep(3);
+            if (!AnimateEntity(D_us_80182364, self)) {
+                genericInt = SetStep(3);
             }
             break;
         }
 
-    } break;
+    } break; // case 0x4
 
     case 0x5:
-        s4 = self->step_s;
-        switch (s4) {
+        switch (self->step_s) {
         case 0:
             self->ext.et_801D5E90.unk90 = 0;
-            s1 = (GetSideToPlayer() & 0x1) ^ 0x1;
-            if (self->facingLeft == s1) {
+            genericInt = (GetSideToPlayer() & 0x1) ^ 0x1;
+
+            if (self->facingLeft == genericInt) {
                 SetSubStep(2);
-            } else {
-            case 1:
-                if (AnimateEntity(D_us_8018236C, self, s2) == 0) {
-                    self->facingLeft ^= 0x1;
-                    self->animCurFrame = 1;
-                    SetSubStep(2);
-                }
+                break;
+            }
+
+        case 1:
+            if (!AnimateEntity(D_us_8018236C, self, explosion)) {
+                self->facingLeft ^= 0x1;
+                self->animCurFrame = 1;
+                SetSubStep(2);
             }
             break;
 
         case 2:
-            s2 = AllocEntity(&g_Entities[160], &g_Entities[192]);
-            if (s2) {
+            explosion = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
+            if (explosion) {
                 PlaySfxPositional(SFX_RNO4_MAGIC_GLASS_BREAK);
-                CreateEntityFromEntity(E_UNK_42, self, s2);
-                s2->facingLeft = self->facingLeft;
-                s2->zPriority = self->zPriority + 1;
-                s2->ext.et_801D5E90.ent9C = self;
+                CreateEntityFromEntity(E_UNK_42, self, explosion);
+                explosion->facingLeft = self->facingLeft;
+                explosion->zPriority = self->zPriority + 1;
+                explosion->ext.et_801D5E90.ent9C = self;
                 SetSubStep(3);
             } else {
                 SetStep(3);
@@ -344,7 +355,7 @@ void func_us_801D5E90(Entity* self) {
             }
 
         case 3:
-            if (AnimateEntity(D_us_80182374, self) == 0) {
+            if (!AnimateEntity(D_us_80182374, self)) {
                 self->ext.et_801D5E90.unk90 = 1U;
                 SetSubStep(4);
             }
@@ -357,12 +368,11 @@ void func_us_801D5E90(Entity* self) {
             }
             break;
         }
-
-        break;
+        break; // case 0x5
 
     case 0xFF:
         FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & 0x8000) {
+        if (g_pads[1].pressed & PAD_SQUARE) {
             if (self->params) {
                 break;
             }
@@ -382,145 +392,50 @@ void func_us_801D5E90(Entity* self) {
         }
     }
 
-    s32_p_0 = &D_us_801823C0[0][0];
-    s1 = D_us_801823D4[self->animCurFrame];
-    s32_p_0 = s32_p_0;
-    s32_p_0 = s32_p_0 + (s1 * 4);
-    self->hitboxOffX = *(s32_p_0++);
-    self->hitboxOffY = *(s32_p_0++);
-    self->hitboxWidth = *(s32_p_0++);
-    self->hitboxHeight = *(s32_p_0++);
+    frameParts = &D_us_801823C0[0][0];
+    genericInt = D_us_801823D4[self->animCurFrame];
+    frameParts = frameParts;
+    frameParts = frameParts + (genericInt * 4);
+
+    self->hitboxOffX = *(frameParts++);
+    self->hitboxOffY = *(frameParts++);
+    self->hitboxWidth = *(frameParts++);
+    self->hitboxHeight = *(frameParts++);
+
     if (self->ext.et_801D5E90.unk91) {
-        s0 = self->ext.et_801D5E90.prim7C;
-        s0 = FindFirstUnkPrim(s0);
-        if (s0) {
-            s4 = self->posX.i.hi;
-            s6 = self->posY.i.hi;
-            s3 = Random() << 4;
-            st = Random() & 0x1F;
-            s4 += (st * rcos(s3)) >> 12;
-            s6 += (st * rsin(s3)) >> 0xc;
-            s0->x0 = s4;
-            s0->y0 = s6;
-            s0->p2 = 0;
-            s0->p3 = 1;
+        prim = self->ext.et_801D5E90.prim7C;
+        prim = FindFirstUnkPrim(prim);
+        if (prim) {
+            posX = self->posX.i.hi;
+            posY = self->posY.i.hi;
+            angle = Random() << 4;
+            radius = Random() & 0x1F;
+            posX += (radius * rcos(angle)) >> 12;
+            posY += (radius * rsin(angle)) >> 12;
+            prim->x0 = posX;
+            prim->y0 = posY;
+            prim->p2 = 0;
+            prim->p3 = 1;
         }
     }
-    s0 = self->ext.et_801D5E90.prim7C;
-    while (s0) {
-        if (s0->p3) {
-            func_us_801D5DC8(s0);
+
+    prim = self->ext.et_801D5E90.prim7C;
+    while (prim) {
+        if (prim->p3) {
+            func_us_801D5DC8(prim);
         }
 
         // This might be a fake, at the very least it's very unconventional
         // to cast a pointer to s32 first and then to Primitve* later
-        s1 = (s32)s0->next;
-        if (!s1) {
-            s0->x0 = 0;
-            s0->y0 = 0;
-            s0->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+        // But seeing as genericInt is an all-purpose variable anyways,
+        // it might just be true
+        genericInt = (s32)prim->next;
+        if (!genericInt) {
+            prim->x0 = 0;
+            prim->y0 = 0;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
         }
-        s0 = (Primitive*)s1;
+        prim = (Primitive*)genericInt;
     }
 }
-
-extern u16 D_us_80180B6C;
-
-void func_us_801D68E0(Entity* self) {
-    Primitive* prim;
-    Entity* ent;
-    s32 xPosition;
-    s32 primIndex;
-    s32 yPosition;
-    s16 angle;
-
-    if (self->hitFlags && !(self->hitFlags & 0x80)) {
-        self->hitboxState = 0;
-        SetStep(2);
-    }
-
-    switch (self->step) {
-    case 0:
-        InitializeEntity(&D_us_80180B6C);
-        primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
-
-        if (primIndex == -1) {
-            DestroyEntity(self);
-            return;
-        }
-
-        self->flags |= FLAG_HAS_PRIMS;
-        self->primIndex = primIndex;
-        prim = &g_PrimBuf[primIndex];
-        self->ext.et_801D68E0.unk7C = prim;
-
-        prim->x0 = (prim->x1 = self->posX.i.hi);
-        prim->y0 = (prim->y1 = self->posY.i.hi);
-        prim->r0 = 0xFF;
-        prim->g0 = 0x60;
-        prim->b0 = 0x60;
-        prim->r1 = 0x80;
-        prim->g1 = 0x40;
-        prim->b1 = 0x40;
-        prim->priority = self->zPriority;
-        prim->drawMode =
-            DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
-
-        angle = self->ext.et_801D68E0.unk8C;
-
-        if (self->facingLeft) {
-            angle = -angle;
-        }
-
-        self->velocityX = rsin((s32)angle) * (-0x80);
-        self->velocityY = rcos((s32)angle) << 7;
-        self->ext.et_801D68E0.unk80 = 0x20;
-
-    case 1:
-        MoveEntity();
-
-        prim = self->ext.et_801D68E0.unk7C;
-        xPosition = (prim->x0 = self->posX.i.hi);
-        yPosition = (prim->y0 = self->posY.i.hi);
-
-        if (!(self->ext.et_801D68E0.unk80 -= 1)) {
-            self->step = 2;
-        }
-
-        break;
-
-    case 2:
-        self->velocityX = -self->velocityX;
-        self->velocityY = -self->velocityY;
-        self->step++;
-
-    case 3:
-        MoveEntity();
-
-        prim = self->ext.et_801D68E0.unk7C;
-        xPosition = (prim->x0 = self->posX.i.hi);
-        yPosition = (prim->y0 = self->posY.i.hi);
-
-        prim = self->ext.et_801D68E0.unk7C;
-        xPosition -= prim->x1;
-        yPosition -= prim->y1;
-
-        if ((abs(xPosition) < 8) && (abs(yPosition) < 8)) {
-            DestroyEntity(self);
-        }
-    }
-
-    ent = self->ext.et_801D68E0.unk9C;
-#if defined(VERSION_PSP) || defined(FIX_UB)
-    // Non-PSX versions fix a null pointer here
-    if (ent != NULL) {
-#else
-    if (1) {
-#endif
-        if (ent->entityId != 0x40) {
-            DestroyEntity(self);
-        }
-    }
-}
-
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_3B78", func_us_801D6B8C);
