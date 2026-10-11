@@ -3,21 +3,22 @@
 
 extern PlayerState g_Dop;
 
-static u8 D_us_801813A4[][2] = {
-    {0, 17},
-    {4, 21},
-    {1, 16},
-    {3, 35},
+s32 CheckMoveDirection(void);
+void SetSpeedX(s32 speed);
+
+static u8 D_us_801813A4[] = {
+    /* 0 */ 0x00, 0x11,
+    /* 1 */ 0x04, 0x15,
+    /* 2 */ 0x01, 0x10,
+    /* 3 */ 0x03, 0x23,
 };
 
-void func_8010E470(s32 arg0, s32 velocityX) {
-    s32 unused_stack[2];
-
+void func_8010E470(s32 index, s32 velocityX) {
     DOPPLEGANGER.velocityX = velocityX;
     DOPPLEGANGER.velocityY = 0;
     DOPPLEGANGER.step = Dop_Crouch;
-    DOPPLEGANGER.step_s = D_us_801813A4[arg0][0];
-    SetDopplegangerAnim(D_us_801813A4[arg0][1]);
+    DOPPLEGANGER.step_s = (s32)D_us_801813A4[index * 2 + 0];
+    SetDopplegangerAnim(D_us_801813A4[index * 2 + 1]);
 }
 
 static u8 D_us_801813AC[] = {
@@ -72,9 +73,9 @@ void func_8010E570(s32 arg0) {
 void func_8010E6AC(bool forceAnim13) {
     bool atLedge;
 
-    atLedge = 0;
+    atLedge = false;
     if (g_Dop.vram_flag & IN_AIR_OR_EDGE) {
-        atLedge = 1;
+        atLedge = true;
     }
 
     SetSpeedX(FIX(1.5));
@@ -122,8 +123,8 @@ void func_us_801C4EE4(void) {
 }
 
 void func_us_801C4F90(void) {
-    DOPPLEGANGER.velocityY = FIX(-4.25);
     g_Dop.unk44 |= 0x21;
+    DOPPLEGANGER.velocityY = FIX(-4.25);
     SetDopplegangerAnim(0x20);
     DOPPLEGANGER.step_s = 0;
 }
@@ -133,16 +134,16 @@ void func_us_801C4FDC(void) {
     if (g_Dop.prev_step != 2) {
         SetDopplegangerAnim(0x1C);
     }
+    DOPPLEGANGER.velocityX = 0;
     DOPPLEGANGER.velocityY = FIX(2.0);
     g_Dop.timers[ALU_T_5] = 8;
     g_Dop.timers[ALU_T_6] = 8;
-    DOPPLEGANGER.velocityX = 0;
     g_Dop.unk44 = 0x10;
 }
 
 void func_us_801C504C(void) {
     if (CheckMoveDirection() != 0) {
-        SetSpeedX(FIX(3));
+        SetSpeedX(0x30000);
     } else {
         DOPPLEGANGER.velocityX = 0;
     }
@@ -180,12 +181,13 @@ s32 func_us_801C5168(void) {
     s32 targetCount;
     s32 animBase;
     s32 playerAnimOffset;
-    s32 animOffset;
+    s32 var_s4;
 
     playerAnimOffset = 0;
     if (!(g_Dop.padPressed & PAD_UP)) {
         return 1;
     }
+
     if (g_Dop.vram_flag & IN_AIR_OR_EDGE) {
         playerAnimOffset = 1;
     }
@@ -204,7 +206,7 @@ s32 func_us_801C5168(void) {
     CreateEntFactoryFromEntity(
         g_CurrentEntity, FACTORY(BP_REBOUND_STONE, 0), 0);
 
-    g_Dop.timers[10] = 4;
+    g_Dop.timers[ALU_T_USE_SUBWPN] = 4;
     if (DOPPLEGANGER.step_s >= 0x40) {
         return 0;
     }
@@ -212,22 +214,22 @@ s32 func_us_801C5168(void) {
     animBase = 0x5D;
     switch (DOPPLEGANGER.step) {
     case Dop_Stand:
-        animOffset = playerAnimOffset;
-        SetDopplegangerAnim(animBase + animOffset);
+        var_s4 = playerAnimOffset;
+        SetDopplegangerAnim(animBase + var_s4);
         break;
     case Dop_Crouch:
-        animOffset = 2;
+        var_s4 = 2;
         if (DOPPLEGANGER.step_s == 2) {
-            animOffset = playerAnimOffset;
+            var_s4 = playerAnimOffset;
             SetDopplegangerStep(1);
         }
-        SetDopplegangerAnim(animBase + animOffset);
+        SetDopplegangerAnim(animBase + var_s4);
         break;
     }
     return 0;
 }
 
-void func_8010ED54(u8 anim) {
+static void func_8010ED54(u8 anim) UNUSED {
     DOPPLEGANGER.velocityX = DOPPLEGANGER.velocityY = 0;
     SetDopplegangerStep(16);
     SetDopplegangerAnim(anim);
@@ -237,7 +239,7 @@ void func_8010ED54(u8 anim) {
 
 s32 func_us_801C52F8(void) {
     s32 defaultAnimOffset;
-    s32 deltaX;
+    s32 attackPressed;
     s16 animOffset;
     s16 animBase;
 
@@ -246,6 +248,7 @@ s32 func_us_801C52F8(void) {
         defaultAnimOffset = 1;
     }
 
+    attackPressed = g_Dop.padTapped & (PAD_SQUARE | PAD_CIRCLE);
     animBase = func_us_801C5168();
 
     if (!animBase) {
@@ -286,9 +289,7 @@ s32 func_us_801C52F8(void) {
         return 1;
     }
 
-    deltaX = abs(DOPPLEGANGER.posX.i.hi - PLAYER.posX.i.hi);
-
-    if (deltaX > 36) {
+    if (abs(DOPPLEGANGER.posX.i.hi - PLAYER.posX.i.hi) > 36) {
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_48, 0), 0);
         DOPPLEGANGER.step_s = 0x41;
         g_Dop.unk46 = 0x8002;
