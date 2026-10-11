@@ -86,7 +86,6 @@ static s32 D_us_80181298[] = {
     FIX(1.0 / 2048.0),
 };
 
-#include "../dop_sensors.h"
 #include "../dop_check_st_collision.h"
 
 extern s32 D_us_801805B8;
@@ -1030,5 +1029,3 @@ void EntityUnkId16(Entity* self) {
     }
     g_Dop.unk6C = g_Dop.unk6A;
 }
-
-#include "../dop_collision.h"
