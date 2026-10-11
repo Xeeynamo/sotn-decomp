@@ -5,7 +5,7 @@
 
 extern PlayerState g_Dop;
 
-// n.b.! the code below is the same as rbo5/unk_44954.c
+// n.b.! the code below is the same as rbo5/dop_anim.c
 
 // may be equivalent func_8010DFF0 in DRA
 void func_us_801C5354(s32 resetAnims, s32 arg1) {

@@ -2,7 +2,7 @@
 #include "bo4.h"
 #include "../../dra/subwpn_dagger.h"
 
-// Used in dra/7E4BC, dra/bss, rbo5/unk_4648C, bo4/unk_465F0
+// Used in dra/7E4BC, dra/bss, rbo5/unk_4907C, bo4/unk_465F0
 typedef struct {
     f32 posX;
     f32 posY;
@@ -317,7 +317,7 @@ void DopplegangerStepCrouch(void) {
     }
 }
 
-// n.b.! this is the same as rbo5/unk_4648C.c
+// n.b.! this is the same as rbo5/unk_45C00.c
 
 void func_us_801C6E7C(u16 arg0) {
     s16 move = 3;
