@@ -10,6 +10,10 @@
 enum Palettes {
     PAL_NONE,
     PAL_BREAKABLE_DEBRIS = 0x159,
+    PAL_SLOGRA = 0x200,
+    PAL_GAIBON = 0x203,
+    PAL_THORNWEED_CORPSEWEED = 0x20B,
+    PAL_BAT = 0x240,
 };
 
 typedef enum EntityID {

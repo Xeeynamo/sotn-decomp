@@ -38,8 +38,9 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityWarpRoom,        EntityWarpSmallRocks,
 };
 
-EInit g_EInitBreakable = {ANIMSET_OVL(1), 0, 0x00, 0x000, 0};
+// clang-format off
+EInit g_EInitBreakable = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_BREAKABLE};
 #include "../e_init_common.h"
-EInit g_EInitEnemy3 = {ANIMSET_OVL(1), 0, 0x00, 0x000, 3};
-EInit g_EInitReverseSmallRocks = {ANIMSET_OVL(11), 1, 0x48, 0x21A, 97};
-EInit g_EInitSmallRocks = {ANIMSET_OVL(1), 0, 0x00, 0x000, 5};
+EInit g_EInitEnemy3 = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitReverseSmallRocks = {ANIMSET_OVL(11), 0x01, 0x48, PAL_SMALL_ROCKS, ENEMY_PLATE_LORD};
+EInit g_EInitSmallRocks = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};

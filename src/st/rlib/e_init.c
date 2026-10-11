@@ -89,24 +89,24 @@ PfnEntityUpdate EntityUpdates[] = {
 
 // clang-format off
 // animSet, animCurFrame, unk5A, palette, enemyID
-EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0, 0, 0x000};
-EInit g_EInitObtainable = {ANIMSET_DRA(3), 0, 0, 0, 0x001};
-EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0, 0, 0x002};
-EInit g_EInitSpawner = {ANIMSET_DRA(0), 0, 0, 0, 0x004};
-EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0, 0, 0x005};
-EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, 0, 0x002};
-EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, 0, 0x001};
-EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
-EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
-EInit g_EInitLion = {ANIMSET_OVL(3), 1, 80, 512, 0x106};
-EInit D_us_8018064C = {ANIMSET_OVL(0), 0, 0, 0, 0x107};
-EInit D_us_80180658 = {ANIMSET_OVL(3), 0, 80, 512, 0x002};
-EInit g_EInitTinman = {ANIMSET_OVL(4), 1, 83, 518, 0x108};
-EInit D_us_80180670 = {ANIMSET_OVL(4), 5, 83, 518, 0x109};
-EInit D_us_8018067C = {ANIMSET_OVL(4), 0, 83, 518, 0x10A};
-EInit D_us_80180688 = {ANIMSET_OVL(4), 0, 83, 518, 0x002};
-EInit g_EInitScarecrow = {ANIMSET_OVL(5), 0, 84, 542, 0x142};
-EInit D_us_801806A0 = {ANIMSET_OVL(5), 0, 84, 542, 0x005};
-EInit g_EInitSchmoo = {ANIMSET_OVL(5), 8, 84, 539, 0x143};
-EInit D_us_801806B8 = {ANIMSET_OVL(6), 0, 80, 527, 0x005};
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_BREAKABLE};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitParticle = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitSpawner = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_SPAWNER};
+EInit g_EInitInteractable = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitLion = {ANIMSET_OVL(3), 0x01, 0x50, PAL_LION, ENEMY_LION};
+EInit D_us_8018064C = {ANIMSET_OVL(0), 0x00, 0x00, PAL_NONE, ENEMY_LION_UNK_107};
+EInit D_us_80180658 = {ANIMSET_OVL(3), 0x00, 0x50, PAL_LION, ENEMY_PARTICLE};
+EInit g_EInitTinman = {ANIMSET_OVL(4), 0x01, 0x53, PAL_TIN_MAN, ENEMY_TIN_MAN};
+EInit D_us_80180670 = {ANIMSET_OVL(4), 0x05, 0x53, PAL_TIN_MAN, ENEMY_TIN_MAN_UNK_109};
+EInit D_us_8018067C = {ANIMSET_OVL(4), 0x00, 0x53, PAL_TIN_MAN, ENEMY_TIN_MAN_UNK_10A};
+EInit D_us_80180688 = {ANIMSET_OVL(4), 0x00, 0x53, PAL_TIN_MAN, ENEMY_PARTICLE};
+EInit g_EInitScarecrow = {ANIMSET_OVL(5), 0x00, 0x54, PAL_SCARECROW, ENEMY_SCARECROW};
+EInit D_us_801806A0 = {ANIMSET_OVL(5), 0x00, 0x54, PAL_SCARECROW, ENEMY_INTERACTABLE};
+EInit g_EInitSchmoo = {ANIMSET_OVL(5), 0x08, 0x54, PAL_SCHMOO, ENEMY_SCHMOO};
+EInit D_us_801806B8 = {ANIMSET_OVL(6), 0x00, 0x50, PAL_UNK_20F, ENEMY_INTERACTABLE};
 // clang-format on

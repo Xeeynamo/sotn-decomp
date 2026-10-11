@@ -4,7 +4,7 @@
 
 #define STAGE_IS_NO2
 
-enum Palette {
+enum Palettes {
     PAL_NONE = 0,
     PAL_SPIKES_DUST = 0x161,
     PAL_SKELERANG = 0x200,

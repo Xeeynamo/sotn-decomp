@@ -6,7 +6,7 @@
 #define STAGE_IS_DAI
 
 // Used for cluts and in g_EInits
-enum Palette {
+enum Palettes {
     PAL_NONE = 0,
     PAL_STAINED_GLASS = 0xE,
     PAL_STAINED_GLASS_BG = 0xF,

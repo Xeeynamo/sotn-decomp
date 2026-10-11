@@ -81,22 +81,22 @@ PfnEntityUpdate EntityUpdates[] = {
 
 // clang-format off
 // animSet, animCurFrame, unk5A, palette, enemyID
-EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0, 0, 0x000};
-EInit g_EInitObtainable = {ANIMSET_DRA(3), 0, 0, 0, 0x001};
-EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0, 0, 0x002};
-EInit g_EInitSpawner = {ANIMSET_DRA(0), 0, 0, 0, 0x004};
-EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0, 0, 0x005};
-EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, 0, 0x002};
-EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, 0, 0x001};
-EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
-EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
-EInit g_EInitBossDoor = {ANIMSET_OVL(1), 0, 0, 0, 0x005};
-EInit g_EInitUnused80180B04 = {ANIMSET_DRA(0), 0, 0, 0, 0x005};
-EInit g_EInitGranfaloonCore = {ANIMSET_OVL(3), 0, 72, PAL_BASE, 0x127};
-EInit g_EInitTentacle = {ANIMSET_OVL(3), 0, 72, PAL_BASE, 0x005};
-EInit g_EInitHomingLaser = {ANIMSET_OVL(3), 0, 72, PAL_BASE, 0x12A};
-EInit D_us_80180B34 = {ANIMSET_DRA(0), 0, 0, 0, 0x12A};
-EInit g_EInitGranfaloonShell = {ANIMSET_OVL(3), 0, 72, PAL_BASE, 0x128};
-EInit g_EInitShellDeadPiece = {ANIMSET_OVL(3), 0, 72, PAL_BASE, 0x005};
-EInit g_EInitGrafaloonZombie = {ANIMSET_OVL(3), 0, 72, PAL_BASE, 0x129};
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_BREAKABLE};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitParticle = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitSpawner = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_SPAWNER};
+EInit g_EInitInteractable = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitBossDoor = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitUnused80180B04 = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitGranfaloonCore = {ANIMSET_OVL(3), 0x00, 0x48, PAL_BASE, ENEMY_GRANFALOON};
+EInit g_EInitTentacle = {ANIMSET_OVL(3), 0x00, 0x48, PAL_BASE, ENEMY_INTERACTABLE};
+EInit g_EInitHomingLaser = {ANIMSET_OVL(3), 0x00, 0x48, PAL_BASE, ENEMY_GRANFALOON_HOMING_LASER};
+EInit D_us_80180B34 = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_GRANFALOON_HOMING_LASER};
+EInit g_EInitGranfaloonShell = {ANIMSET_OVL(3), 0x00, 0x48, PAL_BASE, ENEMY_GRANFALOON_SHELL};
+EInit g_EInitShellDeadPiece = {ANIMSET_OVL(3), 0x00, 0x48, PAL_BASE, ENEMY_INTERACTABLE};
+EInit g_EInitGrafaloonZombie = {ANIMSET_OVL(3), 0x00, 0x48, PAL_BASE, ENEMY_GRANFALOON_ZOMBIE};
 // clang-format on

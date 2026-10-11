@@ -99,18 +99,18 @@ PfnEntityUpdate EntityUpdates[] = {
 
 // clang-format off
 // animSet, animCurFrame, unk5A, palette, enemyID
-EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0, 0, 0x000};
-EInit g_EInitObtainable = {ANIMSET_DRA(3), 0, 0, 0, 0x001};
-EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0, 0, 0x002};
-EInit g_EInitSpawner = {ANIMSET_DRA(0), 0, 0, 0, 0x004};
-EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0, 0, 0x005};
-EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, 0, 0x002};
-EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, 0, 0x001};
-EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
-EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
-EInit g_EInitUnused801804C0 = {ANIMSET_OVL(1), 43, 72, 512, 0x003};
-EInit g_EInitEnvironment = {ANIMSET_OVL(1), 0, 0, 0, 0x005};
-EInit g_EInitHippogryph = {ANIMSET_OVL(3), 0, 72, 512, 0x12C};
-EInit D_us_801804E4 = {ANIMSET_OVL(3), 104, 72, 512, 0x12D};
-EInit D_us_801804F0 = {ANIMSET_DRA(0), 0, 0, 0, 0x12E};
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_BREAKABLE};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitParticle = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitSpawner = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_SPAWNER};
+EInit g_EInitInteractable = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitUnused801804C0 = {ANIMSET_OVL(1), 0x2B, 0x48, PAL_HIPPOGRYPH, ENEMY_COMMON};
+EInit g_EInitEnvironment = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitHippogryph = {ANIMSET_OVL(3), 0x00, 0x48, PAL_HIPPOGRYPH, ENEMY_HIPPOGRYPH};
+EInit D_us_801804E4 = {ANIMSET_OVL(3), 0x68, 0x48, PAL_HIPPOGRYPH, ENEMY_HIPPOGRYPH_UNK_12D};
+EInit D_us_801804F0 = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_HIPPOGRYPH_FIRE_DAMAGE_HITBOX};
 // clang-format on

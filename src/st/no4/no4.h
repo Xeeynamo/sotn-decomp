@@ -3,6 +3,18 @@
 
 #define STAGE_IS_NO4
 
+enum Palettes {
+    PAL_NONE = 0,
+    PAL_SPEAR_GUARD = 0x201,
+    PAL_TOAD_FROG = 0x204,
+    PAL_FISHHEAD = 0x206,
+    PAL_BAT = 0x216,
+    PAL_FROZEN_SHADE = 0x219,
+    PAL_BONE_ARCHER = 0x21A,
+    PAL_KILLER_FISH = 0x21B,
+    PAL_SKELETON_APE = 0x21D,
+};
+
 typedef enum EntityID {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_BREAKABLE,

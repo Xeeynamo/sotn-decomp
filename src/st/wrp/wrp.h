@@ -1,6 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
+enum Palettes {
+    PAL_NONE = 0,
+    PAL_SMALL_ROCKS = 0x21A,
+};
+
 typedef enum EntityID {
     E_NONE,
     E_BREAKABLE,

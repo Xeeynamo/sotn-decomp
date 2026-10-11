@@ -8,6 +8,7 @@
 
 enum Palettes {
     PAL_NONE,
+    PAL_SMALL_ROCKS = 0x2E8,
 };
 
 enum EntityID {

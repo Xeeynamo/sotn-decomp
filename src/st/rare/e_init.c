@@ -90,31 +90,32 @@ PfnEntityUpdate EntityUpdates[] = {
 };
 
 // animSet, animCurFrame, unk5A, palette, enemyID
-EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0, 0, 0x000};
-EInit g_EInitObtainable = {ANIMSET_DRA(3), 0, 0, 0, 0x001};
-EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0, 0, 0x002};
-EInit g_EInitSpawner = {ANIMSET_DRA(0), 0, 0, 0, 0x004};
-EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0, 0, 0x005};
-EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, 0, 0x002};
-EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, 0, 0x001};
-EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
-EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
+// clang-format off
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_BREAKABLE};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitParticle = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitSpawner = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_SPAWNER};
+EInit g_EInitInteractable = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
 
-EInit g_EInitEnvironmentBreakable = {ANIMSET_OVL(1), 0, 0, 0, 0x005};
-EInit g_EInitEnvironment = {ANIMSET_OVL(2), 0, 0, 0, 0x005};
+EInit g_EInitEnvironmentBreakable = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitEnvironment = {ANIMSET_OVL(2), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
 
-EInit g_EInitMinotaur = {ANIMSET_OVL(3), 1, 72, 0x200, 0x182};
-EInit g_EInitMinotaurAttackHitbox = {ANIMSET_OVL(3), 0, 72, 0x200, 0x183};
-EInit g_EInitMinotaurFireball = {ANIMSET_DRA(2), 1, 0, 0, 0x002};
-EInit g_EInitMinotaurSpitLiquid = {ANIMSET_DRA(2), 1, 0, 0, 0x184};
+EInit g_EInitMinotaur = {ANIMSET_OVL(3), 0x01, 0x48, PAL_MINOTAUR, ENEMY_MINOTAUR};
+EInit g_EInitMinotaurAttackHitbox = {ANIMSET_OVL(3), 0x00, 0x48, PAL_MINOTAUR, ENEMY_MINOTAUR_ATTACK_HITBOX};
+EInit g_EInitMinotaurFireball = {ANIMSET_DRA(2), 0x01, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitMinotaurSpitLiquid = {ANIMSET_DRA(2), 0x01, 0x00, PAL_NONE, ENEMY_MINOTAUR_SPIT_LIQUID};
 
-EInit g_EInitWerewolf = {ANIMSET_OVL(4), 1, 80, 0x229, 0x185};
-EInit g_EInitWerewolfAttackHitbox = {ANIMSET_OVL(4), 0, 80, 0x229, 0x186};
-EInit g_EInitWerewolfEnergyWave = {ANIMSET_OVL(4), 54, 80, 0x229, 0x187};
+EInit g_EInitWerewolf = {ANIMSET_OVL(4), 0x01, 0x50, PAL_WEREWOLF, ENEMY_WEREWOLF_RARE};
+EInit g_EInitWerewolfAttackHitbox = {ANIMSET_OVL(4), 0x00, 0x50, PAL_WEREWOLF, ENEMY_WEREWOLF_RARE_ATTACK_HITBOX};
+EInit g_EInitWerewolfEnergyWave = {ANIMSET_OVL(4), 0x36, 0x50, PAL_WEREWOLF, ENEMY_WEREWOLF_RARE_ENERGY_WAVE};
 
-EInit g_EInitAzaghal = {ANIMSET_OVL(0), 0, 0, 0, 0x0E0};
+EInit g_EInitAzaghal = {ANIMSET_OVL(0), 0x00, 0x00, PAL_NONE, ENEMY_AZAGHAL};
 
 // nb. Main White Dragon entity uses a g_EInitSpawner to initialise
-EInit g_EInitWhiteDragonFlameBreath = {ANIMSET_DRA(14), 0, 121, 0x2E2, 0x02C};
+EInit g_EInitWhiteDragonFlameBreath = {ANIMSET_DRA(14), 0x00, 0x79, PAL_WHITE_DRAGON_FLAME_BREATH, ENEMY_WHITE_DRAGON_FLAME_BREATH};
 
-EInit g_EInitStoneSkull = {ANIMSET_OVL(7), 0, 73, 0x228, 0x180};
+EInit g_EInitStoneSkull = {ANIMSET_OVL(7), 0x00, 0x49, PAL_STONE_SKULL, ENEMY_STONE_SKULL};

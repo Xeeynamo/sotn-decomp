@@ -111,23 +111,23 @@ PfnEntityUpdate EntityUpdates[] = {
 
 // clang-format off
 // animSet, animCurFrame, unk5A, palette, enemyID
-EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0, 0, 0x000};
-EInit g_EInitObtainable = {ANIMSET_DRA(3), 0, 0, 0, 0x001};
-EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0, 0, 0x002};
-EInit g_EInitSpawner = {ANIMSET_DRA(0), 0, 0, 0, 0x004};
-EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0, 0, 0x005};
-EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, 0, 0x002};
-EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, 0, 0x001};
-EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
-EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
-EInit g_EInitEnvironment = {ANIMSET_OVL(1), 0, 0, 0, 0x005};
-EInit g_Rbo3DoorInit = {ANIMSET_OVL(2), 0, 0, 0, 0x005};
-EInit g_EInitRdaiUnk1F = {ANIMSET_OVL(3), 0, 72, 530, 0x005};
-EInit g_EInitArcher = {ANIMSET_OVL(3), 0, 72, 530, 0x131};
-EInit D_us_80180884 = {ANIMSET_OVL(3), 0, 72, 530, 0x132};
-EInit D_us_80180890 = {ANIMSET_OVL(3), 0, 72, 530, 0x002};
-EInit g_EInitSpectralSwordRDAI = {ANIMSET_OVL(4), 0, 81, 533, 0x08A};
-EInit g_EInitSpectralSwordAura = {ANIMSET_OVL(4), 0, 81, 533, 0x002};
-EInit g_EInitSpear = {ANIMSET_OVL(4), 0, 81, 533, 0x08B};
-EInit g_EInitShield = {ANIMSET_OVL(4), 0, 81, 533, 0x08C};
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_BREAKABLE};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitParticle = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitSpawner = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_SPAWNER};
+EInit g_EInitInteractable = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitEnvironment = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_Rbo3DoorInit = {ANIMSET_OVL(2), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitRdaiUnk1F = {ANIMSET_OVL(3), 0x00, 0x48, PAL_ARCHER, ENEMY_INTERACTABLE};
+EInit g_EInitArcher = {ANIMSET_OVL(3), 0x00, 0x48, PAL_ARCHER, ENEMY_ARCHER};
+EInit D_us_80180884 = {ANIMSET_OVL(3), 0x00, 0x48, PAL_ARCHER, ENEMY_ARCHER_UNK_132};
+EInit D_us_80180890 = {ANIMSET_OVL(3), 0x00, 0x48, PAL_ARCHER, ENEMY_PARTICLE};
+EInit g_EInitSpectralSwordRDAI = {ANIMSET_OVL(4), 0x00, 0x51, PAL_SPECTRAL_SWORD, ENEMY_SPECTRAL_SWORD_RDAI};
+EInit g_EInitSpectralSwordAura = {ANIMSET_OVL(4), 0x00, 0x51, PAL_SPECTRAL_SWORD, ENEMY_PARTICLE};
+EInit g_EInitSpear = {ANIMSET_OVL(4), 0x00, 0x51, PAL_SPECTRAL_SWORD, ENEMY_SPEAR};
+EInit g_EInitShield = {ANIMSET_OVL(4), 0x00, 0x51, PAL_SPECTRAL_SWORD, ENEMY_SHIELD};
 // clang-format on

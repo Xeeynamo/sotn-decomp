@@ -99,7 +99,7 @@ void EntityElevator(Entity* self) {
             prim = &g_PrimBuf[primIndex];
             self->ext.cenElevator.prim = prim;
             prim->tpage = 0x12;
-            prim->clut = PAL_240;
+            prim->clut = PAL_ELEVATOR;
             prim->u0 = prim->u2 = 0x28;
             prim->u1 = prim->u3 = 0x38;
             prim->v0 = prim->v1 = 0x28;
@@ -110,7 +110,7 @@ void EntityElevator(Entity* self) {
             prim = prim->next;
             while (prim != NULL) {
                 prim->tpage = 0x12;
-                prim->clut = PAL_240;
+                prim->clut = PAL_ELEVATOR;
                 prim->priority = 0x6A;
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;

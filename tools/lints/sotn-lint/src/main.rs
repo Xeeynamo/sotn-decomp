@@ -1,5 +1,6 @@
 use std::fs::File;
 use std::io::{BufRead, BufReader, Write};
+use std::path::Path;
 use std::process::ExitCode;
 
 mod attackelement;
@@ -9,8 +10,10 @@ mod collider_effects;
 mod blendmodes;
 mod drawflags;
 mod drawmodes;
+mod einit;
 mod enum_line_transformer;
 mod enum_statement;
+mod file_transformer;
 mod fixed;
 mod flags;
 mod item_drops;
@@ -30,6 +33,8 @@ use blendmodes::BlendModeTransformer;
 use collider_effects::ColliderEffectsTransformer;
 use drawflags::DrawFlagsTransformer;
 use drawmodes::DrawModeTransformer;
+use einit::EInitTransformer;
+use file_transformer::FileTransformer;
 use fixed::FixedTransformer;
 use flags::FlagsTransformer;
 use item_drops::ItemDropsTransformer;
@@ -50,21 +55,36 @@ use vram_flag::PlayerVramFlagTransformer;
 
 fn transform_file(
     file_path: &str,
+    file_transformers: &Vec<Box<dyn FileTransformer>>,
     transformers: &Vec<Box<dyn LineTransformer>>,
     linters: &Vec<Box<dyn Linter>>,
 ) -> (usize, bool) {
     let mut alterations = 0;
     let mut lines = Vec::new();
-    let mut original_lines = Vec::new();
-    let mut i = 0;
     let mut lint_passed = true;
 
     let file = File::open(file_path).expect("Unable to open file");
     let reader = BufReader::new(file);
-    for line in reader.lines() {
-        i += 1;
-        let mut line_str = line.unwrap();
-        original_lines.push(line_str.clone());
+    let original_lines: Vec<String> = reader.lines().map(|line| line.unwrap()).collect();
+
+    // File transformers may change the number of lines, so they go first and
+    // the line transformers work on their output.
+    let mut restructured_lines = original_lines.clone();
+    for transformer in file_transformers {
+        restructured_lines = transformer.transform_file(Path::new(file_path), restructured_lines);
+    }
+    if restructured_lines != original_lines {
+        alterations += 1;
+        println!(
+            "{}: {} lines -> {} lines",
+            file_path,
+            original_lines.len(),
+            restructured_lines.len()
+        );
+    }
+
+    for (i, line) in restructured_lines.iter().enumerate() {
+        let mut line_str = line.clone();
 
         if !line_str.contains("sotn-lint-ignore") {
             for transformer in transformers {
@@ -75,7 +95,13 @@ fn transform_file(
                 match linter.check_line(&line_str) {
                     Ok(_) => (),
                     Err(msg) => {
-                        eprintln!("{}:{} \x1b[31m{}\x1b[0m -> {}", file_path, i, msg, line_str);
+                        eprintln!(
+                            "{}:{} \x1b[31m{}\x1b[0m -> {}",
+                            file_path,
+                            i + 1,
+                            msg,
+                            line_str
+                        );
                         lint_passed = false;
                     }
                 }
@@ -85,16 +111,12 @@ fn transform_file(
         lines.push(line_str);
     }
 
-    if let Some(_) = original_lines
-        .iter()
-        .zip(lines.iter())
-        .position(|(a, b)| a != b)
-    {
+    if lines != original_lines {
         let mut file = File::create(file_path).expect("Unable to create file");
         for (i, line) in lines.iter().enumerate() {
-            if lines[i] != original_lines[i] {
+            if lines[i] != restructured_lines[i] {
                 alterations += 1;
-                println!("{}:{} {} -> {}", file_path, i, original_lines[i], lines[i]);
+                println!("{}:{} {} -> {}", file_path, i, restructured_lines[i], lines[i]);
             }
             writeln!(file, "{}", line).expect("Unable to write line to file");
         }
@@ -138,6 +160,8 @@ fn process_directory(dir_path: &str) -> bool {
         Box::new(PaletteIndicesTransformer::new()),
     ];
 
+    let file_transformers: Vec<Box<dyn FileTransformer>> = vec![Box::new(EInitTransformer::new())];
+
     let linters: Vec<Box<dyn Linter>> = vec![
         Box::new(EntityRangeLinter),
         Box::new(LocalExternLinter),
@@ -165,8 +189,12 @@ fn process_directory(dir_path: &str) -> bool {
                         && (item_path.to_string_lossy().ends_with(".c")
                             || item_path.to_string_lossy().ends_with(".h"))
                     {
-                        let (_, passed) =
-                            transform_file(&item_path.to_string_lossy(), &transformers, &linters);
+                        let (_, passed) = transform_file(
+                            &item_path.to_string_lossy(),
+                            &file_transformers,
+                            &transformers,
+                            &linters,
+                        );
 
                         lint_passed &= passed
                     } else if item_path.is_dir() {
