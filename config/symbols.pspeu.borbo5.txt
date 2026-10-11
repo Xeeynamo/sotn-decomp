@@ -61,6 +61,7 @@ cluts = 0x09266540;
 gfxBanks = 0x09266570;
 g_RedDoorTiles = 0x092665C0;
 EntityUpdates = 0x092665E0;
+g_EInitBreakable = 0x09266658;
 g_EInitObtainable = 0x09266668;
 g_EInitParticle = 0x09266678;
 g_EInitInteractable = 0x09266688;
