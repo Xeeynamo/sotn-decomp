@@ -1395,7 +1395,7 @@ add_overlay(mad ${SOURCE_FILES_STAGE_MAD})
 add_overlay(bo1 ${SOURCE_FILES_BOSS_BO1})
 add_overlay(rcen ${SOURCE_FILES_STAGE_RCEN})
 
-foreach(id 000 002 007 008 012 034 035 037 040 041 043 045 046 050 051 052)
+foreach(id 000 002 007 008 010 012 034 035 037 040 041 043 045 046 050 051 052)
     add_overlay(w0_${id} src/weapon/w_${id}.c)
     target_compile_definitions(${w0_${id}_COMPILE_TARGET} PRIVATE WEAPON0)
     add_overlay(w1_${id} src/weapon/w_${id}.c)
