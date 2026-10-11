@@ -1,15 +1,1 @@
-CreateEntityFromEntity = 0x09238620;
-Random = 0x0923B4B0;
-PlaySfxPositional = 0x09241770;
-DestroyEntity = 0x092441B0;
-AnimateEntity = 0x092442D0;
-GetDistanceToPlayerX = 0x09244440;
-GetSideToPlayer = 0x092444B0;
-MoveEntity = 0x09244538;
-AllocEntity = 0x092445C0;
-SetStep = 0x09244850;
-InitializeEntity = 0x092448A0;
-D_psp_E_UNK_27 = 0x09254D38;
-D_psp_E_UNK_26 = 0x09254D40;
-D_psp_E_UNK_25 = 0x09254D48;
-D_psp_E_UNK_24 = 0x09254D50;
+
