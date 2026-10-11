@@ -9253,7 +9253,7 @@
 | rdai       | func_us_801C17E8                  |      574 |         83 |        |       |     |
 | cat        | func_pspeu_09243F28               |      580 |         75 | Yes    |       |     |
 | lib        | func_psp_09240860                 |      580 |         75 | Yes    |       |     |
-| rno2       | EntityFlyingZombie1               |      580 |         75 | Yes    |       |     |
+| rno2       | EntityFlyingZombieTorso           |      580 |         75 | Yes    |       |     |
 | dra        | func_psp_0911D490                 |      582 |         49 | Yes    |       |     |
 |            | func_pspeu_09249728               |      582 |         60 |        |       |     |
 | rbo5       | func_pspeu_09253620               |      582 |         60 |        |       |     |
@@ -9575,7 +9575,7 @@
 | rcat       | func_pspeu_09246780               |      791 |        122 |        |       |     |
 |            | func_092E92F8                     |      792 |         43 |        |       |     |
 | tt_006     | func_pspeu_092E92F8               |      792 |         43 |        |       |     |
-| rno2       | EntityFlyingZombie2               |      795 |        114 |        |       |     |
+| rno2       | EntityFlyingZombie                |      795 |        114 |        |       |     |
 | no2        | func_pspeu_0923D188               |      795 |        116 | Yes    |       |     |
 | rnz1       | func_pspeu_0923D278               |      795 |        116 | Yes    |       |     |
 |            | func_pspeu_0925E010               |      797 |         57 |        |       |     |
