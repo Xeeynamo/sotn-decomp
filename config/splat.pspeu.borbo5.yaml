@@ -65,7 +65,7 @@ segments:
       - [0x28310, c, rbo5/e_lock_camera]
       - [0x28570, c, rbo5_psp/func_us_801c0b9c_from_no1]
       - [0x28B80, .data, rbo5/e_life_up]
-      - [0x28BD0, data, 28BD0]
+      - [0x28BD0, .data, rbo5/e_red_door]
       - [0x28BE8, .data, rbo5/st_update]
       - [0x28C18, data, 28C18]
       - [0x28C18, .data, rbo5/e_particles]

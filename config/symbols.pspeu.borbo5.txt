@@ -55,7 +55,6 @@ EntityBreakable = 0x0925F730;
 EntityBackgroundBlock = 0x0925F8B0;
 EntityLockCamera = 0x0925F990;
 func_us_801C0B9C_from_no1 = 0x0925FBF0;
-g_eRedDoorUV = 0x09260250;
 spriteBanks = 0x09266460;
 rooms_layers = 0x092664E0;
 cluts = 0x09266540;
