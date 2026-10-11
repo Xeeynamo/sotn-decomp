@@ -242,7 +242,7 @@ void UnkPolyFunc0(Primitive* prim) {
     prim->next->drawMode = DRAW_HIDE;
 }
 
-#if !defined(VERSION_BETA)
+#if !defined(VERSION_BETA) && !defined(STAGE_IS_TEK)
 s32 PrimDecreaseBrightness(Primitive2* prim, u8 amount) {
     s32 isEnd;
     s32 i, j;

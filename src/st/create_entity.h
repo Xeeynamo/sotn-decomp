@@ -236,8 +236,8 @@ static void CreateEntitiesToTheLeft(s16 posX) {
         FindFirstEntityToTheLeft(posX - g_ScrollDeltaX);
         g_LayoutObjPosHorizontal = LAYOUT_OBJ_POSITION_BACKWARD;
     }
-// MAD only runs once to create one entity to the left.
-#if !defined(VERSION_BETA)
+// MAD and TEK only run once to create one entity to the left.
+#if !defined(VERSION_BETA) && !defined(STAGE_IS_TEK)
     while (true) {
 #else
     if (true) {

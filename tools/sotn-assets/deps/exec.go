@@ -142,11 +142,17 @@ func GenSaturnNinja() error {
 	}).Run()
 }
 
+const ninjaStampFile = "build.ninja.version"
 
 func GenNinja(args ...string) error {
 	binPath, err := venvPython()
 	if err != nil {
 		return err
+	}
+	if len(args) == 0 {
+		if err := os.Remove(ninjaStampFile); err != nil && !os.IsNotExist(err) {
+			return err
+		}
 	}
 	return (&exec.Cmd{
 		Path:   binPath,

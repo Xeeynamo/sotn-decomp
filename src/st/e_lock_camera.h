@@ -100,8 +100,8 @@ void EntityLockCamera(Entity* self) {
 
     switch (self->params) {
     case 4:
-#ifdef STAGE_IS_NO0
-        self->ext.lockCamera.unk8A = 1U;
+#if defined(STAGE_IS_NO0) || defined(STAGE_IS_TEK)
+        self->ext.lockCamera.unk8A = 1;
 #endif
         break;
     }
