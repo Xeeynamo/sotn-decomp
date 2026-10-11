@@ -318,7 +318,6 @@ extern DopWeaponAnimation D_us_80184304[];
 
 // Similar to DRA's EntityUnarmedAttack
 void DopplegangerUnarmedAttack(Entity* self) {
-    EInit* var_a0;
     s16 animIndex;
     DopWeaponAnimation* anim;
 
@@ -336,13 +335,13 @@ void DopplegangerUnarmedAttack(Entity* self) {
     }
 
     if (self->step == 0) {
-        var_a0 = &D_us_80180454;
-        if (animIndex != 0) {
-            var_a0 = &D_us_80180460;
+        if (animIndex) {
+            InitializeEntity(D_us_80180460);
+        } else {
+            InitializeEntity(D_us_80180454);
         }
-        InitializeEntity(*var_a0);
         if (g_Dop.status & PLAYER_STATUS_POISON) {
-            self->attack /= 2;
+            self->attack = self->attack / 2;
         }
         self->zPriority = DOPPLEGANGER.zPriority - 2;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;

@@ -60,6 +60,7 @@ segments:
       - [0xC9D8, c, rbo5/st_common]
       - [0xDA08, c, rbo5/prim_helpers]
       - [0xE148, c, rbo5_psp/unk_E148]
+      - [0x19240, c, rbo5/unk_502F8]
       - [0x1ACA0, c, rbo5/unk_4907C]
       - [0x25388, c, rbo5/doors]
       - [0x27F60, c, rbo5/st_init_psp]
