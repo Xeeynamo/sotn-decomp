@@ -1913,6 +1913,8 @@ files:
           - [0x340, skip]
           - [0x1258, rooms, rooms]
           - [0x1274, skip]
+          - [0x153C, blueprintsdef, blueprints, DopBlueprints, EntityID]
+          - [0x17F0, skip]
           - [0x2BF78, cmpgfx, D_801ABF78, 128, 128, 4]
           - [0x2C258, cmpgfx, D_801AC258, 128, 128, 4]
           - [0x2C360, palette, D_us_801AC360, 16]

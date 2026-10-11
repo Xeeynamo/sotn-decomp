@@ -1,4 +1,3 @@
-D_800AD57C = 0x80181834;
 g_DopAnimationFrames = 0x801840B0;
 g_SpriteSheet = 0x80184434;
 g_PlOvlDopBatSpritesheet = 0x801AAE4C;

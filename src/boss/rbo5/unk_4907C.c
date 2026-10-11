@@ -2,7 +2,7 @@
 #include "rbo5.h"
 #include "../../dra/subwpn_dagger.h"
 
-// Used in dra/7E4BC, dra/bss, rbo5/unk_4648C, bo4/unk_46E7C
+// Used in dra/7E4BC, dra/bss, rbo5/unk_4907C, bo4/unk_49A6C
 typedef struct {
     f32 posX;
     f32 posY;
@@ -14,18 +14,24 @@ typedef struct {
     s16 pad;
 } mistStruct; // size = 0x14
 
-extern u_long D_us_801D37EC[];
-extern RECT D_us_80182064;
+Entity* CreateEntFactoryFromEntity(Entity* source, u32 factoryParams, s16 arg2);
+void SetDopplegangerAnim(u8 anim);
+bool func_us_801C5650(s32 branchFlags);
+void func_8010FAF4();
 
-#ifndef VERSION_PC
+extern PlayerState g_Dop;
+extern s32 D_us_801805B8;
+extern u_long D_us_801D37EC[];
+extern s32 D_us_801D3FEC;
+
 #include "../../get_free_entity.h"
-#endif
 
 // this is the same as unionD_800ACFB4 in DRA
 typedef union {
     u8 rawBytes[4];
     AnimationFrame af;
 } unionD_us_801813F8;
+static AnimationFrame* g_DopEmptyAnimGroup[ZERO_LEN] = {};
 static unionD_us_801813F8 D_us_801813F8[] = {
     {.rawBytes =
          {
@@ -266,7 +272,7 @@ void DopEntityHitByHoly(Entity* self) {
     }
 }
 
-void PrintDummySet(void) { FntPrint("dummy set\n"); }
+void PrintDummySet(Entity* self) { FntPrint("dummy set\n"); }
 
 void func_us_801C98BC(Entity*);
 void EntitySmokePuff(Entity*);
@@ -373,7 +379,7 @@ void func_us_801C9624(void) {
                 DestroyEntity(g_CurrentEntity);
             } else {
                 if (entity->flags & FLAG_UNK_20000000) {
-                    UpdateAnim(0, &D_us_801813F8[0].af);
+                    UpdateAnim(0, g_DopEmptyAnimGroup);
                 }
                 entity->flags |= FLAG_NOT_AN_ENEMY;
             }
@@ -418,8 +424,25 @@ Entity* CreateEntFactoryFromEntity(
 
 Entity* GetFreeEntityReverse(s16 start, s16 end);
 
-extern FactoryBlueprint D_us_8018153C[];
-extern u8 D_us_801817F0[NUM_BLUEPRINT_KIND][2];
+#define B_MAKE(entityId, amount, nPerCycle, isNonCritical, incParamsKind,      \
+               timerCycle, kind, origin, timerDelay)                           \
+    {(entityId),                                                               \
+     (amount),                                                                 \
+     ((nPerCycle) & 0x3F) | ((!!(incParamsKind)) << 6) |                       \
+         ((!!(isNonCritical)) << 7),                                           \
+     (timerCycle),                                                             \
+     ((kind) & 0xF) | (((origin) & 0xF) << 3),                                 \
+     timerDelay}
+
+static FactoryBlueprint D_us_8018153C[] = {
+#include "gen/blueprints.h"
+};
+STATIC_ASSERT(LEN(D_us_8018153C) == NUM_BLUEPRINTS, "bp array wrong size");
+static u8 D_us_801817F0[NUM_BLUEPRINT_KIND][2] = {
+    {0x60, 0x8F}, {0x51, 0x6F}, {0x60, 0x6F}, {0x50, 0x50}, {0x5C, 0x5F},
+    {0x59, 0x5F}, {0x51, 0x5F}, {0x51, 0x8F}, {0x51, 0x7F}, {0x6F, 0x6F},
+
+};
 
 void func_us_801C98BC(Entity* self) {
     Entity* newEntity;
@@ -567,7 +590,8 @@ void func_us_801C98BC(Entity* self) {
 extern EInit D_us_80180448;
 
 void func_us_801C9D58(Entity* self) {
-    if (DOPPLEGANGER.step != Dop_MorphBat || DOPPLEGANGER.step_s != 3) {
+    if (DOPPLEGANGER.step_s != Dop_Crouch ||
+        DOPPLEGANGER.step != Dop_MorphBat) {
         DestroyEntity(self);
         return;
     }
@@ -575,7 +599,7 @@ void func_us_801C9D58(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(D_us_80180448);
         if (g_Dop.status & PLAYER_STATUS_POISON) {
-            self->attack /= 2;
+            self->attack = self->attack / 2;
         }
         self->hitboxOffX = 4;
         self->step++;
@@ -588,13 +612,33 @@ void func_us_801C9D58(Entity* self) {
     self->posX.i.hi = DOPPLEGANGER.posX.i.hi;
 }
 
-extern u8 D_us_801818A8[10];
-extern s16 D_us_80181804[];
-extern AnimationFrame D_800AD57C[];
-extern u8 D_us_80181898[NUM_VERTICAL_SENSORS * 2];
-extern s16 D_us_80181828[];
-extern s32 D_us_80181810[];
-extern Point16 g_DopSensorsWall[NUM_VERTICAL_SENSORS * 2]; // g_SensorsWall
+static s16 D_us_80181804[] = {
+    0, -4, -8, -12, -16, -20,
+};
+static s32 D_us_80181810[] = {
+    FIX(-0.1875), FIX(-0.25), FIX(-0.375), FIX(-0.5), FIX(-0.625), FIX(-0.75),
+};
+static s16 D_us_80181828[] = {
+    0x30, 0x40, 0x50, 0x60, 0x70, 0x80,
+};
+static AnimationFrame D_800AD57C[] = {
+    POSE(1, 1, 0),  POSE(1, 2, 0),  POSE(1, 3, 0),  POSE(1, 4, 0),
+    POSE(1, 5, 0),  POSE(1, 6, 0),  POSE(1, 7, 0),  POSE(1, 8, 0),
+    POSE(1, 9, 0),  POSE(1, 10, 0), POSE(1, 11, 0), POSE(1, 12, 0),
+    POSE(1, 13, 0), POSE(1, 14, 0), POSE(1, 15, 0), POSE(1, 16, 0),
+    POSE(1, 17, 0), POSE(1, 18, 0), POSE(1, 19, 0), POSE(1, 20, 0),
+    POSE(1, 21, 0), POSE(1, 22, 0), POSE(1, 23, 0), POSE(1, 24, 0),
+    POSE_END,
+};
+
+static u8 D_us_80181898[NUM_VERTICAL_SENSORS * 2] = {
+    2, 9, 3, 10, 1, 8, 4, 11, 0, 7, 5, 12, 6, 13,
+};
+
+static u8 D_us_801818A8[10] = {
+    2, 9, 3, 10, 4, 11, 5, 12, 6, 13,
+};
+extern Point16 g_DopSensorsWall[NUM_VERTICAL_SENSORS * 2];
 
 void EntitySmokePuff(Entity* self) {
     byte stackpad[40];
@@ -729,7 +773,12 @@ void EntitySmokePuff(Entity* self) {
 }
 
 static s32 D_us_801D3374;
-extern AnimationFrame D_us_801818B4[];
+static AnimationFrame D_us_801818B4[14] = {
+    POSE(2, 1, 0),  POSE(2, 2, 0),  POSE(2, 3, 0),  POSE(2, 4, 0),
+    POSE(2, 5, 0),  POSE(2, 6, 0),  POSE(2, 7, 0),  POSE(2, 8, 0),
+    POSE(2, 9, 0),  POSE(2, 10, 0), POSE(2, 11, 0), POSE(2, 12, 0),
+    POSE(2, 13, 0), POSE_END,
+};
 
 void DopEntityHitByDark(Entity* self) {
     switch (self->step) {
@@ -790,13 +839,456 @@ static bool func_8011BD48(Entity* entity) {
 
 extern AluFrame* D_us_801B0B50[];
 extern s16* D_us_801B1674[];
-extern s16 D_us_8018192C[42][10];
-extern s32 D_us_801818EC[];
+
+s32 D_us_801818EC[16] = {0};
+s16 D_us_8018192C[36][10] = {
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x015F,
+        0x0100,
+        0x0100,
+        0x0100,
+        0x0060,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0002,
+        0x0006,
+        0x015F,
+        0x0100,
+        0x0100,
+        0x0100,
+        0x0010,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x015F,
+        0x0100,
+        0x0400,
+        0x0400,
+        0x0010,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x015F,
+        0x7100,
+        0x0100,
+        0x7000,
+        0x0010,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x015F,
+        0x7100,
+        0x7000,
+        0x0100,
+        0x0010,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x015F,
+        0x0100,
+        0x7000,
+        0x0200,
+        0x0010,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x015F,
+        0x0100,
+        0x7000,
+        0x0100,
+        0x7001,
+        0x0031,
+        0x0100,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x015F,
+        0x0100,
+        0x0100,
+        0x7000,
+        0x0070,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x0203,
+        0x0200,
+        0x0200,
+        0x0080,
+        0x0060,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x015F,
+        0x0100,
+        0x0100,
+        0x0100,
+        0x0010,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0002,
+        0x0006,
+        0x015F,
+        0x0100,
+        0x0100,
+        0x0100,
+        0x0060,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x015F,
+        0x0100,
+        0x7000,
+        0x0100,
+        0x0010,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x015F,
+        0x7100,
+        0x0100,
+        0x7000,
+        0x0010,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x015F,
+        0x7100,
+        0x7000,
+        0x0100,
+        0x0010,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x015F,
+        0x0400,
+        0x0100,
+        0x0400,
+        0x7004,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x015F,
+        0x0100,
+        0x7000,
+        0x0200,
+        0x7006,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x015F,
+        0x0100,
+        0x0100,
+        0x7000,
+        0x0010,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x0203,
+        0x7400,
+        0x0080,
+        0x7400,
+        0x0060,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x015F,
+        0x0200,
+        0x0100,
+        0x0400,
+        0x7003,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x0166,
+        0x0100,
+        0x0100,
+        0x0100,
+        0x7005,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x015F,
+        0x0100,
+        0x0100,
+        0x0100,
+        0x0010,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x015F,
+        0x00C0,
+        0x00C0,
+        0x0100,
+        0x0010,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0008,
+        0x0000,
+        0x0004,
+        0x0168,
+        0x0100,
+        0x0100,
+        0x0100,
+        0x7002,
+        0x0051,
+        0x0100,
+    },
+    {
+        0x0000,
+        0x0002,
+        0x0009,
+        0x0165,
+        0x0100,
+        0x0100,
+        0x0100,
+        0x7000,
+        0x0051,
+        0x0180,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x015F,
+        0x0200,
+        0x0800,
+        0x0800,
+        0x7007,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x015F,
+        0x0200,
+        0x0100,
+        0x0200,
+        0x7005,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x015F,
+        0x0100,
+        0x0100,
+        0x0100,
+        0x7005,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x015F,
+        0x0100,
+        0x0100,
+        0x0100,
+        0x7008,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x015F,
+        0x0100,
+        0x0100,
+        0x0100,
+        0x7009,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x015F,
+        0x0100,
+        0x0100,
+        0x0100,
+        0x700A,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x015F,
+        0x0100,
+        0x0100,
+        0x7000,
+        0x0010,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x015F,
+        0x0400,
+        0x0100,
+        0x0400,
+        0x0010,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x0200,
+        0x0040,
+        0x0040,
+        0x0040,
+        0x0010,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x0200,
+        0x0040,
+        0x0040,
+        0x0040,
+        0x0010,
+        0x0031,
+        0x0200,
+    },
+    {
+        0x0008,
+        0x0000,
+        0x0008,
+        0x0165,
+        0x0100,
+        0x0100,
+        0x0100,
+        0x7007,
+        0x0051,
+        0x0200,
+    },
+    {
+        0x0000,
+        0x0000,
+        0x0000,
+        0x0168,
+        0x7100,
+        0x7100,
+        0x0200,
+        0x7007,
+        0x0031,
+        0x0200,
+    },
+};
+
+#ifdef VERSION_PSP
+extern u8** g_SpriteSheet;
+extern u8** g_PlOvlDopBatSpritesheet;
+#else
 extern u8* g_SpriteSheet[];
-extern s32 D_us_80181BFC;
-extern u8** g_PlOvlDopBatSpritesheet[1];
+extern u8** g_PlOvlDopBatSpritesheet[];
+#endif
+s32 D_us_80181BFC = 0;
 
 // player turns white for some sort of status effect
+#ifdef VERSION_PSP
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5/unk_4907C", EntityDopplegangerBlinkWhite);
+#else
 void EntityDopplegangerBlinkWhite(Entity* self) {
     Primitive* prim;
     u8 var_s7;
@@ -854,7 +1346,7 @@ void EntityDopplegangerBlinkWhite(Entity* self) {
     self->posX.i.hi = DOPPLEGANGER.posX.i.hi;
     self->facingLeft = DOPPLEGANGER.facingLeft;
     if (DOPPLEGANGER.animSet == (s16)ANIMSET_OVL(1)) {
-        sp5c = D_us_801B0B50[DOPPLEGANGER.animCurFrame & 0x7FFF];
+        sp5c = (s16*)D_us_801B0B50[DOPPLEGANGER.animCurFrame & 0x7FFF];
     }
     if (DOPPLEGANGER.animSet == (s16)ANIMSET_OVL(2)) {
         sp5c = D_us_801B1674[DOPPLEGANGER.animCurFrame & 0x7FFF];
@@ -874,7 +1366,7 @@ void EntityDopplegangerBlinkWhite(Entity* self) {
         sp58 = g_SpriteSheet[sp72];
     }
     if (DOPPLEGANGER.animSet == (s16)ANIMSET_OVL(2)) {
-        sp58 = (g_PlOvlDopBatSpritesheet)[sp72];
+        sp58 = g_PlOvlDopBatSpritesheet[sp72];
     }
 
     var_s7 = 4;
@@ -948,7 +1440,7 @@ void EntityDopplegangerBlinkWhite(Entity* self) {
             self->ext.playerBlink.unk80 = 8;
             switch ((u32)sp4c[7]) {
             case 0x7000:
-                if (g_Dop.timers[1] == 0) {
+                if (g_Dop.timers[ALU_T_CURSE] == 0) {
                     self->step++;
                 }
                 break;
@@ -1240,9 +1732,198 @@ void EntityDopplegangerBlinkWhite(Entity* self) {
         func_us_801C4A30(1, 0xA);
     }
 }
+#endif
 
-extern s16 D_us_80181C00[24][5];
+s16 D_us_80181C00[23][5] = {
+    {
+        0x0000,
+        0x00FF,
+        0x00FF,
+        0x0103,
+        0x0031,
+    },
 
+    {
+        0x00FF,
+        0x007F,
+        0x001F,
+        0x0103,
+        0x0031,
+    },
+
+    {
+        0x003F,
+        0x001F,
+        0x00FF,
+        0x0103,
+        0x0031,
+    },
+
+    {
+        0x0000,
+        0x003F,
+        0x001F,
+        0x0103,
+        0x0031,
+    },
+
+    {
+        0x003F,
+        0x003F,
+        0x003F,
+        0x0103,
+        0x0031,
+    },
+
+    {
+        0x00FF,
+        0x003F,
+        0x003F,
+        0x0103,
+        0x0031,
+    },
+
+    {
+        0x001F,
+        0x003F,
+        0x007F,
+        0x0103,
+        0x0031,
+    },
+
+    {
+        0x007F,
+        0x003F,
+        0x000F,
+        0x0103,
+        0x0031,
+    },
+
+    {
+        0x00FF,
+        0x007F,
+        0x001F,
+        0x0103,
+        0x0031,
+    },
+
+    {
+        0x007F,
+        0x007F,
+        0x000F,
+        0x0103,
+        0x0031,
+    },
+
+    {
+        0x000F,
+        0x000F,
+        0x007F,
+        0x0103,
+        0x0031,
+    },
+
+    {
+        0x003F,
+        0x003F,
+        0x003F,
+        0x0103,
+        0x0031,
+    },
+
+    {
+        0x007F,
+        0x000F,
+        0x007F,
+        0x0103,
+        0x0031,
+    },
+
+    {
+        0x000F,
+        0x00FF,
+        0x002F,
+        0x0103,
+        0x0031,
+    },
+
+    {
+        0x002F,
+        0x00FF,
+        0x002F,
+        0x0103,
+        0x0031,
+    },
+
+    {
+        0x005F,
+        0x000F,
+        0x005F,
+        0x0103,
+        0x0031,
+    },
+
+    {
+        0x007F,
+        0x003F,
+        0x000F,
+        0x0103,
+        0x0031,
+    },
+
+    {
+        0x00FF,
+        0x000F,
+        0x000F,
+        0x0103,
+        0x0031,
+    },
+
+    {
+        0x007F,
+        0x003F,
+        0x003F,
+        0x0103,
+        0x0031,
+    },
+
+    {
+        0x0000,
+        0x00FF,
+        0x00FF,
+        0x0103,
+        0x0031,
+    },
+
+    {
+        0x00FF,
+        0x003F,
+        0x003F,
+        0x0103,
+        0x0031,
+    },
+
+    {
+        0x00FF,
+        0x003F,
+        0x003F,
+        0x0103,
+        0x0031,
+    },
+
+    {
+        0x007F,
+        0x007F,
+        0x007F,
+        0x0103,
+        0x0031,
+    },
+
+};
+
+#ifdef VERSION_PSP
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5/unk_4907C", EntityDopplegangerOutline);
+#else
 void EntityDopplegangerOutline(Entity* self) {
     s16* animFramePtr;
     u8* spritesheetPtr;
@@ -1274,9 +1955,9 @@ void EntityDopplegangerOutline(Entity* self) {
     self->posX.i.hi = DOPPLEGANGER.posX.i.hi;
     self->posY.i.hi = DOPPLEGANGER.posY.i.hi;
     self->facingLeft = DOPPLEGANGER.facingLeft;
-    animFramePtr = D_us_801B0B50[DOPPLEGANGER.animCurFrame & INT16_MAX];
+    animFramePtr = (s16*)D_us_801B0B50[DOPPLEGANGER.animCurFrame & INT16_MAX];
     spriteIdx = *animFramePtr++;
-    spriteIdx &= 0x7FFF;
+    spriteIdx &= INT16_MAX;
     selfX = self->posX.i.hi;
     selfY = self->posY.i.hi;
     spritesheetPtr = ((u8**)g_SpriteSheet)[spriteIdx];
@@ -1488,19 +2169,18 @@ void EntityDopplegangerOutline(Entity* self) {
         }
         prim->v0 = prim->v1 = one;
         prim->v2 = prim->v3 = one + height;
-        g_api.func_800EB758(self->posX.i.hi, self->posY.i.hi, self,
-                            self->drawFlags, prim, (u16)self->facingLeft);
-        prim->r0 = prim->r1 = prim->r2 = prim->r3 =
-            primData[0] * self->ext.playerOutline.brightness / 256;
-        prim->g0 = prim->g1 = prim->g2 = prim->g3 =
-            primData[1] * self->ext.playerOutline.brightness / 256;
-        prim->b0 = prim->b1 = prim->b2 = prim->b3 =
-            primData[2] * self->ext.playerOutline.brightness / 256;
+        g_api.func_800EB758(
+            self->posX.i.hi, self->posY.i.hi, self, self->drawFlags,
+            (POLY_GT4*)prim, (u16)self->facingLeft);
+        PRED(prim) = primData[0] * self->ext.playerOutline.brightness / 256;
+        PGRN(prim) = primData[1] * self->ext.playerOutline.brightness / 256;
+        PBLU(prim) = primData[2] * self->ext.playerOutline.brightness / 256;
         prim->priority = DOPPLEGANGER.zPriority + 2;
         prim = prim->next;
     }
     func_us_801C4954(1, 1);
 }
+#endif
 
 void EntityGravityBootBeam(Entity* self) {
     Primitive* prim;
@@ -1615,10 +2295,76 @@ void EntityWingSmashTrail(Entity* self) {
     }
 }
 
-extern unkStr_8011E4BC* D_us_80181D98[];
+static unkStr_8011E4BC D_us_80181CE8 = {
+    0x08, 0x7F,   0x7F,   0x7F,   0x02,
+    0x02, 0x0002, 0x0033, 0x0000, FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS,
+};
+
+static unkStr_8011E4BC D_us_80181CF8 = {
+    0x10,   0x7F,
+    0x7F,   0x7F,
+    0x01,   0x01,
+    0x0002, 0x0033,
+    0x0001, FLAG_UNK_10000000 | FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS,
+};
+
+static unkStr_8011E4BC D_us_80181D08 = {
+    0x08, 0x7F,   0x7F,   0x7F,   0x01,
+    0x01, 0x0002, 0x0033, 0x0000, FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS,
+};
+
+static unkStr_8011E4BC D_us_80181D18 = {
+    0x08, 0x4F,   0x4F,   0x4F,   0x01,
+    0x01, 0x0004, 0x0002, 0x0002, FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS,
+};
+
+static unkStr_8011E4BC D_us_80181D28 = {
+    0x0A, 0xC0,   0x60,   0x00,   0x01,
+    0x01, 0x0004, 0x0033, 0x0003, FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS,
+};
+
+static unkStr_8011E4BC D_us_80181D38 = {
+    0x0c, 0x7f,   0x00,   0x00,   0x02,
+    0x02, 0x0002, 0x0002, 0x0004, FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS,
+};
+
+static unkStr_8011E4BC D_us_80181D48 = {
+    0x08, 0x3F,   0xF0,   0x3F,   0x01,
+    0x01, 0x0004, 0x0073, 0x0003, FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS,
+};
+
+static unkStr_8011E4BC D_us_80181D58 = {
+    0x1E, 0x3F,   0x3F,   0x3F,   0x01,
+    0x01, 0x0004, 0x0002, 0x0008, FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS,
+};
+
+static unkStr_8011E4BC D_us_80181D68 = {
+    0x10, 0x7F,   0x7F,   0x7F,   0x01,
+    0x01, 0x0002, 0x0033, 0x0009, FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS,
+};
+
+static unkStr_8011E4BC D_us_80181D78 UNUSED = {
+    0x0A, 0xC0,   0xC0,   0x3F,   0x01,
+    0x01, 0xFFFE, 0x0033, 0x000A, FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS,
+};
+
+static unkStr_8011E4BC D_us_80181D88 = {
+    0x04, 0xC0,   0x60,   0x00,   0x01,
+    0x01, 0x0004, 0x0033, 0x0003, FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS,
+};
+
+unkStr_8011E4BC* D_us_80181D98[] = {
+    &D_us_80181CE8, &D_us_80181CF8, &D_us_80181D08, &D_us_80181D18,
+    &D_us_80181D28, &D_us_80181D38, &D_us_80181D38, &D_us_80181D48,
+    &D_us_80181D58, &D_us_80181D68, &D_us_80181D88, &D_us_80181D88,
+};
+
 extern s32 D_us_801D36E8[32];
 extern s32 D_us_801D3768[32];
 
+#ifdef VERSION_PSP
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5/unk_4907C", func_us_801CC788);
+#else
 void func_us_801CC788(Entity* self) {
     byte stackpad[0x28];
     FakePrim* tilePrim;
@@ -1791,8 +2537,7 @@ void func_us_801CC788(Entity* self) {
             case 9:
                 tilePrim->posY.val += tilePrim->velocityY.val;
                 tilePrim->posX.val += tilePrim->velocityX.val;
-                tilePrim->velocityY.val =
-                    (tilePrim->velocityY.val + FIX(5.0 / 32.0));
+                tilePrim->velocityY.val += FIX(5.0 / 32.0);
                 tilePrim->r0 -= 3;
                 tilePrim->g0 -= 3;
                 tilePrim->b0 -= 3;
@@ -1808,8 +2553,7 @@ void func_us_801CC788(Entity* self) {
                 }
                 tilePrim->posX.val += tilePrim->velocityX.val;
                 tilePrim->posY.val += tilePrim->velocityY.val;
-                tilePrim->velocityY.val =
-                    (tilePrim->velocityY.val + FIX(5.0 / 64.0));
+                tilePrim->velocityY.val += FIX(5.0 / 64.0);
                 break;
             case 3:
                 tilePrim->posY.val += tilePrim->velocityY.val;
@@ -1838,9 +2582,19 @@ void func_us_801CC788(Entity* self) {
         break;
     }
 }
+#endif
 
-extern AnimationFrame D_us_80181DC8[];
-extern AnimationFrame D_us_80181E04[];
+static AnimationFrame D_us_80181DC8[] = {
+    POSE(2, 1, 0), POSE(2, 2, 0), POSE(2, 3, 0), POSE(2, 4, 0), POSE(2, 5, 0),
+    POSE(2, 4, 0), POSE(2, 3, 0), POSE(2, 4, 0), POSE(2, 3, 0), POSE(2, 4, 0),
+    POSE(2, 5, 0), POSE(1, 6, 0), POSE(1, 7, 0), POSE(1, 8, 0), POSE_END,
+};
+static AnimationFrame D_us_80181E04[] = {
+    POSE(1, 0x09, 0), POSE(2, 0x0A, 0), POSE(2, 0x0B, 0), POSE(2, 0x0C, 0),
+    POSE(2, 0x0D, 0), POSE(2, 0x0E, 0), POSE(2, 0x0F, 0), POSE(2, 0x10, 0),
+    POSE(2, 0x11, 0), POSE(2, 0x12, 0), POSE(3, 0x13, 0), POSE(4, 0x14, 0),
+    POSE_END,
+};
 
 void func_8011EDA8(Entity* self) {
     s16 paramsLo = self->params & 0xFF;
@@ -1898,7 +2652,7 @@ void func_8011EDA8(Entity* self) {
         if ((self->pose == 8) && (self->anim != D_800AD57C)) {
             self->blendMode = BLEND_TRANSP;
             if (!(paramsLo & 1) && (self->poseTimer == 1)) {
-                CreateEntFactoryFromEntity(self, FACTORY(4, 4), 0);
+                CreateEntFactoryFromEntity(self, FACTORY(BP_4, 4), 0);
             }
         }
 
@@ -1913,7 +2667,7 @@ void func_8011EDA8(Entity* self) {
     }
 }
 
-extern u16 D_us_80181E38[2];
+static u16 D_us_80181E38[2] = {0x194, 0x199};
 
 void DopEntityHitByLightning(Entity* self) {
     s16 xBase;
@@ -2055,8 +2809,50 @@ void DopEntityHitByLightning(Entity* self) {
 }
 
 // player gets frozen
-extern Point16* D_us_80181E84[];
 
+static Point16 D_us_80181E3C = {0xFFFE, 0xFFE8};
+static Point16 D_us_80181E40 = {0x0000, 0xFFF8};
+static Point16 D_us_80181E44 = {0x0002, 0x0008};
+static Point16 D_us_80181E48 = {0x0000, 0x0018};
+static Point16 D_us_80181E4C = {0x0006, 0xFFF4};
+static Point16 D_us_80181E50 = {0x0008, 0x0000};
+static Point16 D_us_80181E54 = {0x0007, 0x000C};
+static Point16 D_us_80181E58 = {0xFFF8, 0xFFF4};
+static Point16 D_us_80181E5C = {0xFFF7, 0x0000};
+static Point16 D_us_80181E60 = {0xFFF9, 0x000C};
+static Point16 D_us_80181E64 = {0xFFF2, 0xFFFA};
+static Point16 D_us_80181E68 = {0xFFF1, 0x0007};
+static Point16 D_us_80181E6C = {0x000D, 0xFFF9};
+static Point16 D_us_80181E70 = {0x0010, 0x0008};
+static Point16 D_us_80181E74 = {0xFFF9, 0xFFEA};
+static Point16 D_us_80181E78 = {0x0006, 0xFFEB};
+static Point16 D_us_80181E7C = {0xFFF8, 0x0015};
+static Point16 D_us_80181E80 = {0x0007, 0x0016};
+
+Point16* D_us_80181E84[] = {
+    &D_us_80181E3C, &D_us_80181E4C, &D_us_80181E40, &D_us_80181E4C,
+    &D_us_80181E50, &D_us_80181E40, &D_us_80181E50, &D_us_80181E44,
+    &D_us_80181E40, &D_us_80181E50, &D_us_80181E54, &D_us_80181E44,
+    &D_us_80181E54, &D_us_80181E48, &D_us_80181E44, &D_us_80181E44,
+    &D_us_80181E48, &D_us_80181E60, &D_us_80181E44, &D_us_80181E60,
+    &D_us_80181E5C, &D_us_80181E40, &D_us_80181E44, &D_us_80181E5C,
+    &D_us_80181E40, &D_us_80181E5C, &D_us_80181E58, &D_us_80181E40,
+    &D_us_80181E58, &D_us_80181E3C, &D_us_80181E4C, &D_us_80181E6C,
+    &D_us_80181E50, &D_us_80181E6C, &D_us_80181E70, &D_us_80181E50,
+    &D_us_80181E70, &D_us_80181E54, &D_us_80181E50, &D_us_80181E58,
+    &D_us_80181E5C, &D_us_80181E64, &D_us_80181E5C, &D_us_80181E68,
+    &D_us_80181E64, &D_us_80181E5C, &D_us_80181E60, &D_us_80181E68,
+    &D_us_80181E3C, &D_us_80181E58, &D_us_80181E74, &D_us_80181E3C,
+    &D_us_80181E78, &D_us_80181E4C, &D_us_80181E48, &D_us_80181E7C,
+    &D_us_80181E60, &D_us_80181E54, &D_us_80181E80, &D_us_80181E48,
+    &D_us_80181E74, &D_us_80181E58, &D_us_80181E64, &D_us_80181E78,
+    &D_us_80181E6C, &D_us_80181E4C, &D_us_80181E68, &D_us_80181E60,
+    &D_us_80181E7C, &D_us_80181E70, &D_us_80181E80, &D_us_80181E54,
+};
+
+#ifdef VERSION_PSP
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5/unk_4907C", EntityHitByIce);
+#else
 void EntityHitByIce(Entity* self) {
     s32 i;
     s16 xShift;
@@ -2224,10 +3020,11 @@ void EntityHitByIce(Entity* self) {
         }
     }
 }
+#endif
 
-static mistStruct D_us_801D3378[16];
+mistStruct D_us_801D3378[16];
 
-void func_80121F14(s32 velocityX, s32 velocityY) {
+void func_80121F14(s32 velocityX, s32 velocityY) UNUSED {
     mistStruct* ptr = D_us_801D3378;
     s32 i;
 
@@ -2237,11 +3034,41 @@ void func_80121F14(s32 velocityX, s32 velocityY) {
     }
 }
 
-extern Primitive D_us_801D34D8[8];
-extern u32 D_us_80182024[8];
-extern u32 D_us_80182044[8];
+s16 D_us_801D34B8;
+STATIC_PAD_BSS(2);
+s16 D_us_801D34BC;
+STATIC_PAD_BSS(2);
+s16 D_us_801D34C0;
+STATIC_PAD_BSS(2);
+s16 D_us_801D34C4;
+STATIC_PAD_BSS(2);
+s16 D_us_801D34C8;
+STATIC_PAD_BSS(2);
+s16 D_us_801D34CC;
+STATIC_PAD_BSS(2);
+s16 D_us_801D34D0;
+STATIC_PAD_BSS(2);
+s16 D_us_801D34D4;
+STATIC_PAD_BSS(2);
 
-Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
+Primitive D_us_801D34D8[8];
+
+s16 D_us_80181FA4[] = {
+    0x48, 0x48, 0x48, 0x44, 0x44, 0x40, 0x40, 0x3C, 0x40, 0x40, 0x44,
+    0x48, 0x4C, 0x50, 0x58, 0x60, 0x60, 0x58, 0x50, 0x4C, 0x48, 0x44,
+    0x40, 0x40, 0x3C, 0x40, 0x40, 0x44, 0x44, 0x48, 0x48, 0x48,
+};
+
+s16 D_us_80181FE4[] = {
+    -1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,  0,
+    0,  0,  0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, -1,
+};
+
+u32 D_us_80182024[8] = {7, 0, 1, 2, 3, 4, 5, 6};
+u32 D_us_80182044[8] = {2, 1, 0, 7, 6, 5, 4, 3};
+
+static Primitive* func_80121F58(
+    bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
     s32 primU0;
     s32 tempU;
     s32 tempV;
@@ -2341,28 +3168,14 @@ Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
     return arg2;
 }
 
-static s16 D_us_801D34B8;
-STATIC_PAD_BSS(2);
-static s16 D_us_801D34BC;
-STATIC_PAD_BSS(2);
-static s16 D_us_801D34C0;
-STATIC_PAD_BSS(2);
-static s16 D_us_801D34C4;
-STATIC_PAD_BSS(2);
-static s16 D_us_801D34C8;
-STATIC_PAD_BSS(2);
-static s16 D_us_801D34CC;
-STATIC_PAD_BSS(2);
-static s16 D_us_801D34D0;
-STATIC_PAD_BSS(2);
-static s16 D_us_801D34D4;
-STATIC_PAD_BSS(2);
-extern s32 D_us_801D3678;
-extern s16 D_us_80181FA4[];
-extern s16 D_us_80181FE4[];
-extern s32 D_us_801D367C;
+s32 D_us_801D3678;
+s32 D_us_801D367C;
+STATIC_PAD_BSS(0x68);
 
 // spawns mist (player transform)
+#ifdef VERSION_PSP
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5/unk_4907C", EntityMist);
+#else
 void EntityMist(Entity* self) {
     Primitive* prim;
     Primitive* mistPrim;
@@ -2776,11 +3589,23 @@ void EntityMist(Entity* self) {
 block_147:
     self->facingLeft = DOPPLEGANGER.facingLeft;
 }
+#endif
 
-extern RECT D_us_8018206C;
+RECT D_us_80182064 = {0, 0x100, 0x10, 0x40};
+static RECT D_us_8018206C = {0x20, 0x100, 0x10, 0x40};
+
 extern s32 D_us_801D43C0;
 extern s32 D_us_801D43C4;
-extern u8 D_us_80182074[][8];
+static u8 D_us_80182074[][8] = {
+    {0x00, 0x11, 0x21, 0x22, 0x32, 0x43, 0x44, 0x54},
+    {0x90, 0x91, 0x82, 0x83, 0x94, 0xA5, 0xB6, 0xB7},
+    {0xC7, 0xD8, 0xE8, 0xF7, 0xE9, 0xEA, 0xEB, 0xEC},
+    {0x7F, 0x7E, 0x7D, 0x8C, 0x9B, 0xAA, 0xB9, 0xA8},
+    {0x07, 0x17, 0x27, 0x38, 0x47, 0x57, 0x56, 0x58},
+    {0x7A, 0x6B, 0x5C, 0x4D, 0x3E, 0x2D, 0x1C, 0x0C},
+    {0xE0, 0xF1, 0xF2, 0xF3, 0xF4, 0xE4, 0xF5, 0xF6},
+    {0xB9, 0xC9, 0xCA, 0xCB, 0xCC, 0xDD, 0xEE, 0xEF},
+};
 extern s32 g_stone_flag;
 
 // player dissolves into pixels
@@ -2797,7 +3622,7 @@ void EntityDopplegangerDissolves(Entity* self) {
     s16 yPivot;
     s16 width;
     s16 height;
-    s16 sp42;
+    u_long* data;
     s32 sp3C;
     s16* sp38;
     Primitive* prim;
@@ -2808,7 +3633,7 @@ void EntityDopplegangerDissolves(Entity* self) {
     s16 s5;
     s32 s6;
     s16 s7;
-    u_long* data;
+    s16 sp42;
     u8* plSprite;
 
     s32 xBase, yBase, angle, tangent;
@@ -2958,7 +3783,7 @@ void EntityDopplegangerDissolves(Entity* self) {
 
         LoadImage(&D_us_8018206C, data);
         if (--self->ext.dissolve.unk7C <= 0) {
-            if ((DOPPLEGANGER.step == Dop_Kill) || g_Dop.unk6A == 0) {
+            if ((DOPPLEGANGER.step == Dop_Kill) || g_Dop.unk6A <= 0) {
                 if (self->ext.dissolve.unk7C < -0x1F) {
                     g_stone_flag = 2;
                     DestroyEntity(self);
@@ -2973,8 +3798,6 @@ void EntityDopplegangerDissolves(Entity* self) {
     after_loop:
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < PrimCount; i++) {
-            // prim->drawMode &= DRAW_UNK_200;
-            // prim->drawMode |= DRAW_UNK02;
             if (prim->r0 == 0) {
                 if (--prim->g0 == 0) {
                     prim->r0++;
@@ -3032,3 +3855,7 @@ void EntityDopplegangerDissolves(Entity* self) {
     }
     func_us_801C4954(1, 1);
 }
+
+#ifdef VERSION_PSP
+u_long D_us_801D37EC[0x200];
+#endif
