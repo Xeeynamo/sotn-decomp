@@ -106,6 +106,7 @@ segments:
       - [0x42EC0, c, dop_collision]
       - [0x43F58, c, dop_anim]
       - [0x44C48, c, unk_44C48]
+      - [0x45650, c, unk_45650]
       - [0x45C00, c, unk_45C00]
       - [0x4648C, c, unk_4648C]
       - [0x515F0, c, prim_helpers]
