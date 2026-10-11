@@ -1065,7 +1065,7 @@
 | rbo2       | Random                            |       21 |          1 |        |       |     |
 | rbo2       | func_pspeu_0923D010               |       21 |          1 |        |       |     |
 |            | func_pspeu_0923D010               |       21 |          1 |        |       |     |
-|            | Random                            |       21 |          1 |        |       |     |
+|            | func_pspeu_0923B4B0               |       21 |          1 |        |       |     |
 | rbo4       | SetSubStep                        |       21 |          1 |        |       |     |
 | rbo4       | Random                            |       21 |          1 |        |       |     |
 | rbo4       | func_pspeu_0923D010               |       21 |          1 |        |       |     |
@@ -1380,8 +1380,8 @@
 | rbo1       | SetStep                           |       25 |          1 |        |       |     |
 | rbo2       | MoveEntity                        |       25 |          1 |        |       |     |
 | rbo2       | SetStep                           |       25 |          1 |        |       |     |
-|            | MoveEntity                        |       25 |          1 |        |       |     |
-|            | SetStep                           |       25 |          1 |        |       |     |
+|            | func_pspeu_09244538               |       25 |          1 |        |       |     |
+|            | func_pspeu_09244850               |       25 |          1 |        |       |     |
 | rbo4       | MoveEntity                        |       25 |          1 |        |       |     |
 | rbo4       | SetStep                           |       25 |          1 |        |       |     |
 | rbo5       | MoveEntity                        |       25 |          1 |        |       |     |
@@ -2091,7 +2091,7 @@
 | bo7        | GetDistanceToPlayerX              |       34 |          2 |        |       |     |
 | rbo0       | func_pspeu_0924E490               |       34 |          2 |        |       |     |
 | rbo2       | GetDistanceToPlayerX              |       34 |          2 |        |       |     |
-|            | GetDistanceToPlayerX              |       34 |          2 |        |       |     |
+|            | func_pspeu_09244440               |       34 |          2 |        |       |     |
 | rbo4       | GetDistanceToPlayerX              |       34 |          2 |        |       |     |
 | rbo5       | GetDistanceToPlayerX              |       34 |          2 |        |       |     |
 | rbo7       | GetDistanceToPlayerX              |       34 |          2 |        |       |     |
@@ -2408,7 +2408,7 @@
 | rbo0       | func_pspeu_0924E8C8               |       37 |          6 |        |       |     |
 | rbo1       | AllocEntity                       |       37 |          6 |        |       |     |
 | rbo2       | AllocEntity                       |       37 |          6 |        |       |     |
-|            | AllocEntity                       |       37 |          6 |        |       |     |
+|            | func_pspeu_092445C0               |       37 |          6 |        |       |     |
 | rbo4       | AllocEntity                       |       37 |          6 |        |       |     |
 | rbo5       | AllocEntity                       |       37 |          6 |        |       |     |
 | rbo6       | AllocEntity                       |       37 |          6 |        |       |     |
@@ -2564,8 +2564,8 @@
 | rbo1       | CreateEntityFromEntity            |       39 |          2 |        |       |     |
 | rbo2       | CreateEntityFromCurrentEntity     |       39 |          2 |        |       |     |
 | rbo2       | CreateEntityFromEntity            |       39 |          2 |        |       |     |
-|            | CreateEntityFromEntity            |       39 |          2 |        |       |     |
 |            | func_pspeu_09238598               |       39 |          2 |        |       |     |
+|            | func_pspeu_09238620               |       39 |          2 |        |       |     |
 | rbo4       | CreateEntityFromCurrentEntity     |       39 |          2 |        |       |     |
 | rbo4       | CreateEntityFromEntity            |       39 |          2 |        |       |     |
 | rbo5       | CreateEntityFromCurrentEntity     |       39 |          2 |        |       |     |
@@ -2817,7 +2817,7 @@
 | rbo0       | func_pspeu_0924E500               |       41 |          3 |        |       |     |
 | rbo1       | GetSideToPlayer                   |       41 |          3 |        |       |     |
 | rbo2       | GetSideToPlayer                   |       41 |          3 |        |       |     |
-|            | GetSideToPlayer                   |       41 |          3 |        |       |     |
+|            | func_pspeu_092444B0               |       41 |          3 |        |       |     |
 | rbo4       | GetSideToPlayer                   |       41 |          3 |        |       |     |
 | rbo5       | func_pspeu_09244358               |       41 |          3 |        |       |     |
 | rbo6       | GetSideToPlayer                   |       41 |          3 |        |       |     |
@@ -3249,7 +3249,7 @@
 | rbo0       | func_pspeu_0924E200               |       46 |          5 |        |       |     |
 | rbo1       | DestroyEntity                     |       46 |          5 |        |       |     |
 | rbo2       | DestroyEntity                     |       46 |          5 |        |       |     |
-|            | DestroyEntity                     |       46 |          5 |        |       |     |
+|            | func_pspeu_092441B0               |       46 |          5 |        |       |     |
 | rbo4       | DestroyEntity                     |       46 |          5 |        |       |     |
 | rbo5       | DestroyEntity                     |       46 |          5 |        |       |     |
 | rbo6       | DestroyEntity                     |       46 |          5 |        |       |     |
@@ -5646,7 +5646,7 @@
 | rbo0       | func_pspeu_0924B7C0               |       97 |         12 |        |       |     |
 | rbo1       | PlaySfxPositional                 |       97 |         12 |        |       |     |
 | rbo2       | PlaySfxPositional                 |       97 |         12 |        |       |     |
-|            | PlaySfxPositional                 |       97 |         12 |        |       |     |
+|            | func_pspeu_09241770               |       97 |         12 |        |       |     |
 | rbo4       | PlaySfxPositional                 |       97 |         12 |        |       |     |
 | rbo6       | PlaySfxPositional                 |       97 |         12 |        |       |     |
 | rbo7       | PlaySfxPositional                 |       97 |         12 |        |       |     |
@@ -5831,7 +5831,7 @@
 | rbo0       | func_pspeu_0924E320               |      101 |          7 |        |       |     |
 | rbo1       | AnimateEntity                     |      101 |          7 |        |       |     |
 | rbo2       | AnimateEntity                     |      101 |          7 |        |       |     |
-|            | AnimateEntity                     |      101 |          7 |        |       |     |
+|            | func_pspeu_092442D0               |      101 |          7 |        |       |     |
 | rbo4       | AnimateEntity                     |      101 |          7 |        |       |     |
 | rbo5       | AnimateEntity                     |      101 |          7 |        |       |     |
 | rbo6       | AnimateEntity                     |      101 |          7 |        |       |     |
@@ -6307,7 +6307,7 @@
 | rbo0       | func_pspeu_0924EBE8               |      112 |          2 |        |       |     |
 | rbo1       | InitializeEntity                  |      112 |          2 |        |       |     |
 | rbo2       | InitializeEntity                  |      112 |          2 |        |       |     |
-|            | InitializeEntity                  |      112 |          2 |        |       |     |
+|            | func_pspeu_092448A0               |      112 |          2 |        |       |     |
 | rbo4       | InitializeEntity                  |      112 |          2 |        |       |     |
 | rbo5       | InitializeEntity                  |      112 |          2 |        |       |     |
 | rbo6       | InitializeEntity                  |      112 |          2 |        |       |     |
