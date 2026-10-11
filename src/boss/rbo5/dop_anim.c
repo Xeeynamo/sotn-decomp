@@ -23,14 +23,14 @@ void func_us_801C4954(s32 resetAnims, s32 arg1) {
     g_Entities[E_ID_41].ext.disableAfterImage.index = MaxAfterImageIndex;
     if (arg1 != 0) {
         if (arg1 < 4) {
-            g_Dop.timers[15] = 4;
+            g_Dop.timers[ALU_T_15] = 4;
         } else {
-            g_Dop.timers[15] = arg1;
+            g_Dop.timers[ALU_T_15] = arg1;
         }
     }
 }
 
-void ForceAfterImageOn(void) {
+static void ForceAfterImageOn(void) UNUSED {
     g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.index = 0;
 }
 
@@ -41,9 +41,11 @@ void EnableAfterImage(void) {
         0;
 }
 
-void func_us_801C4A30(s16 a0, s16 a1) {
-    if (g_Dop.timers[ALU_T_INVINCIBLE_CONSUMABLES] <= a1) {
-        g_Dop.timers[ALU_T_INVINCIBLE_CONSUMABLES] = a1;
+// similar to DRA's func_8010E168. share's the function signature but
+// not the entity creation logic, a0 is ignored
+void func_us_801C4A30(s16 a0, s16 minTime) {
+    if (g_Dop.timers[ALU_T_INVINCIBLE_CONSUMABLES] <= minTime) {
+        g_Dop.timers[ALU_T_INVINCIBLE_CONSUMABLES] = minTime;
     }
 }
 
@@ -53,12 +55,13 @@ s32 CheckMoveDirection(void) {
     if (g_Dop.unk44 & 2) {
         return 0;
     }
-    if (DOPPLEGANGER.facingLeft == 1) {
+    if (DOPPLEGANGER.facingLeft == true) {
         if (g_Dop.padPressed & PAD_RIGHT) {
             DOPPLEGANGER.facingLeft = 0;
             g_Dop.unk4C = 1;
             return -1;
-        } else if (g_Dop.padPressed & PAD_LEFT) {
+        }
+        if (g_Dop.padPressed & PAD_LEFT) {
             return 1;
         }
     } else {

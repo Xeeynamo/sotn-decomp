@@ -129,6 +129,7 @@ EntityBreakable = 0x0925F730;
 EntityBackgroundBlock = 0x0925F8B0;
 EntityLockCamera = 0x0925F990;
 EntityUnkId1B = 0x0925FBF0;
+g_DopAnimationFrames = 0x09262EE0;
 g_DopSensorsCeilingCrouch = 0x09263078;
 g_DopSensorsFloorCrouch = 0x09263080;
 g_DopSensorsWallCrouch = 0x09263088;
