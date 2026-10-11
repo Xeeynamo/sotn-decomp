@@ -330,7 +330,7 @@ mod test {
     #[test]
     fn test_enum_entries_from_headers() {
         // neither header can go through the preprocessor on its own
-        let enemies = enum_entries(Path::new("../../../include/game.h"), "EnemyIds").unwrap();
+        let enemies = enum_entries(Path::new("../../../include/enemies.h"), "EnemyIds").unwrap();
         assert_eq!(enemies[0], ("ENEMY_BREAKABLE".to_string(), 0));
         let palettes = enum_entries(Path::new("../../../src/st/tek/tek.h"), "Palettes").unwrap();
         assert!(palettes.contains(&("PAL_DODO_BIRD".to_string(), 0x200)));

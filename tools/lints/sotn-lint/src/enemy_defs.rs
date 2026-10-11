@@ -21,14 +21,14 @@ pub struct EnemyDefsTransformer {
 
 impl EnemyDefsTransformer {
     pub fn new() -> Self {
-        Self::new_with_header_path("include/game.h")
+        Self::new_with_header_path("include/enemies.h")
     }
 
     fn new_with_header_path(path: &str) -> Self {
         let mut cached = ENEMY_IDS.lock().unwrap();
         if cached.is_none() {
             let mut names = HashMap::new();
-            for (name, value) in enum_entries(Path::new(path), "EnemyIds").expect("game.h") {
+            for (name, value) in enum_entries(Path::new(path), "EnemyIds").expect("enemies.h") {
                 names.entry(value).or_insert(name);
             }
             *cached = Some(names);
@@ -71,7 +71,7 @@ mod tests {
     use super::*;
 
     fn transform(line: &str) -> String {
-        EnemyDefsTransformer::new_with_header_path("../../../include/game.h").transform_line(line)
+        EnemyDefsTransformer::new_with_header_path("../../../include/enemies.h").transform_line(line)
     }
 
     #[test]

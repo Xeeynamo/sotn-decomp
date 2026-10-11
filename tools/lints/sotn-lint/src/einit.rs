@@ -14,7 +14,7 @@ const FORMAT_ON: &str = "// clang-format on";
 
 /// Names shared by every overlay.
 struct GlobalNames {
-    /// `EnemyIds` from game.h
+    /// `EnemyIds` from enemies.h
     enemies: HashMap<i64, String>,
     /// `PaletteIndices` from palettes.h, minus the values with several names
     palettes: HashMap<i64, String>,
@@ -40,7 +40,7 @@ impl EInitTransformer {
         let mut cached = GLOBAL_NAMES.lock().unwrap();
         if cached.is_none() {
             let dir = Path::new(dir);
-            let enemies = enum_entries(&dir.join("game.h"), "EnemyIds").expect("game.h");
+            let enemies = enum_entries(&dir.join("enemies.h"), "EnemyIds").expect("enemies.h");
             let palettes =
                 enum_entries(&dir.join("palettes.h"), "PaletteIndices").expect("palettes.h");
             *cached = Some(Arc::new(GlobalNames {
