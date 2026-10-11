@@ -1,15 +1,16 @@
-static s16 D_us_8018280C[] = {0, 23, 0, 4, 8, -4, -16, 0};
-static s16 D_us_8018281C[] = {0, 12, 0, 4, 8, -4, -16, 0};
-static s16 D_us_8018282C[] = {16, 8, 255, 0};
-static s16 D_us_80182834[] = {0, 23, 8, 0};
-static u8 D_us_8018283C[] = {20, 1, 20, 2, 20, 3, 20, 2, 0, 0};
-static u8 D_us_80182848[] = {24, 4, 24, 5, 24, 6, 24, 5, 0, 0};
-static u8 D_us_80182854[] = {24, 7, 24, 8, 24, 9, 24, 8, 0, 0};
-static u8 D_us_80182860[] = {18, 8, 18, 9, -1, 0};
-static u8 D_us_80182868[] = {8, 7, 8, 10, 4, 7, 32, 10, 0, 0};
-static u8 D_us_80182874[] = {8, 1, 8, 11, 8, 12, 8, 13, 4, 14, 2, 15, -1, 0};
-static u8 D_us_80182884[] = {2, 16, 2, 17, 0, 0};
-static u8 D_us_8018288C[] = {2, 18, 2, 19, 2, 18, 2, 19, 0, 0};
+// SPDX-License-Identifier: AGPL-3.0-or-later
+static s16 sensors1[] = {0, 23, 0, 4, 8, -4, -16, 0};
+static s16 sensors2[] = {0, 12, 0, 4, 8, -4, -16, 0};
+static s16 sensors3[] = {16, 8, 255, 0};
+static s16 sensors4[] = {0, 23, 8, 0};
+static AnimateEntityFrame D_us_8018283C[] = {{20, 1}, {20, 2}, {20, 3}, {20, 2}, POSE_LOOP(0)};
+static AnimateEntityFrame D_us_80182848[] = {{24, 4}, {24, 5}, {24, 6}, {24, 5}, POSE_LOOP(0)};
+static AnimateEntityFrame D_us_80182854[] = {{24, 7}, {24, 8}, {24, 9}, {24, 8}, POSE_LOOP(0)};
+static AnimateEntityFrame D_us_80182860[] = {{18, 8}, {18, 9}, POSE_END};
+static AnimateEntityFrame D_us_80182868[] = {{8, 7}, {8, 10}, {4, 7}, {32, 10}, POSE_LOOP(0)};
+static AnimateEntityFrame D_us_80182874[] = {{8, 1}, {8, 11}, {8, 12}, {8, 13}, {4, 14}, {2, 15}, POSE_END};
+static AnimateEntityFrame D_us_80182884[] = {{2, 16}, {2, 17}, POSE_LOOP(0)};
+static AnimateEntityFrame D_us_8018288C[] = {{2, 18}, {2, 19}, {2, 18}, {2, 19}, POSE_LOOP(0)};
 static s16 D_us_80182898[] = {0x040, 0x0E0, 0x200, 0x180};
 static s16 D_us_801828A0[] = {4,  3,  2,  2,  2,  1,  0,  0,  -1, -1, -1, -1,
                               -1, -1, -1, -1, -1, -1, -1, -1, -2, -2, -2, -2};
@@ -53,7 +54,7 @@ void EntityFlyingZombie2(Entity* self) {
 #endif
         /* fallthrough */
     case 1:
-        if (UnkCollisionFunc3(D_us_8018280C) & 1) {
+        if (UnkCollisionFunc3(sensors1) & 1) {
             self->step_s = 0;
             self->step++;
         }
@@ -73,8 +74,8 @@ void EntityFlyingZombie2(Entity* self) {
 
         case 1:
             AnimateEntity(D_us_8018283C, self);
-            UnkCollisionFunc2(D_us_80182834);
-            if (CheckColliderOffsets(D_us_8018282C, self->facingLeft)) {
+            UnkCollisionFunc2(sensors4);
+            if (CheckColliderOffsets(sensors3, self->facingLeft)) {
                 self->velocityX = 0;
             }
             if (self->ext.flyingZombie.unk7C++ > 0x80) {
@@ -199,8 +200,8 @@ void EntityFlyingZombie2(Entity* self) {
 
         case 1:
             AnimateEntity(D_us_80182854, self);
-            UnkCollisionFunc2(D_us_80182834);
-            if (CheckColliderOffsets(D_us_8018282C, self->facingLeft)) {
+            UnkCollisionFunc2(sensors4);
+            if (CheckColliderOffsets(sensors3, self->facingLeft)) {
                 self->velocityX = 0;
             }
             if (self->animCurFrame == 1) {
@@ -318,7 +319,7 @@ void EntityFlyingZombie1(Entity* self) {
             break;
 
         case 1:
-            if (UnkCollisionFunc3(D_us_8018281C) & 1) {
+            if (UnkCollisionFunc3(sensors2) & 1) {
                 tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (tempEntity != NULL) {
                     CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
