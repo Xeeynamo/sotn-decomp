@@ -15,12 +15,12 @@ void EntityGhostDancer(Entity* self) {
     s32 var_s3;
     s32 i;
 
-    if (self->flags & 0x100) {
-        for(i = 0; i < 6; i++) {
+    if (self->flags & FLAG_DEAD) {
+        for (i = 0; i < 6; i++) {
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
                 temp_s1 = D_pspeu_09258C10[i];
-                CreateEntityFromEntity(0x3C, self, other);
+                CreateEntityFromEntity(E_GHOST_DANCER, self, other);
                 other->facingLeft = self->facingLeft;
                 other->params = (i + 0x100);
                 if (self->facingLeft) {
@@ -29,8 +29,8 @@ void EntityGhostDancer(Entity* self) {
                     other->posX.i.hi += *temp_s1++;
                 }
                 other->posY.i.hi += *temp_s1++;
-                other->ext.ILLEGAL.s16[4] = *temp_s1++;
-                other->ext.ILLEGAL.s16[2] = *temp_s1++;
+                other->ext.ghostDancer.unk84 = *temp_s1++;
+                other->ext.ghostDancer.unk80 = *temp_s1++;
                 other->velocityY = (Random() & 0x1F) * -0x1000;
                 other->velocityX = (Random() & 0x3F) * 0xC00;
                 if (((GetSideToPlayer() & 1) ^ 1) != 0) {
@@ -40,41 +40,42 @@ void EntityGhostDancer(Entity* self) {
         }
         other = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (other != NULL) {
-            CreateEntityFromEntity(2, self, other);
+            CreateEntityFromEntity(E_EXPLOSION, self, other);
             other->params = 2;
         }
-        PlaySfxPositional(0x62A);
+        PlaySfxPositional(SFX_SKELETON_DEATH_B);
         DestroyEntity(self);
         return;
     }
-    switch (self->step) {                              /* switch 1 */
-    case 0:                                         /* switch 1 */
+    switch (self->step) { /* switch 1 */
+    case 0:               /* switch 1 */
         InitializeEntity(g_EInitGhostDancer);
         self->hitboxOffY = 2;
         if (Random() & 1) {
             self->palette += 1;
         }
         if (self->params & 0x100) {
-            self->drawFlags |= 4;
+            self->drawFlags |= ENTITY_ROTATE;
             self->animCurFrame = (self->params & 0xF) + 0x10;
             self->hitboxState = 0;
-            self->flags |= 0x80202000;
+            self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_UNK_00200000 |
+                           FLAG_UNK_2000;
             self->step = 6;
             return;
         }
         self->animCurFrame = 1;
-        self->ext.ILLEGAL.s16[2] = 0;
+        self->ext.ghostDancer.unk80 = 0;
         return;
-    case 1:                                         /* switch 1 */
+    case 1: /* switch 1 */
         if (UnkCollisionFunc3(D_pspeu_09258BD0) & 1) {
             self->step += 1;
         }
         break;
-    case 2:                                         /* switch 1 */
+    case 2: /* switch 1 */
         if (self->facingLeft) {
-            self->velocityX = 0x18000;
+            self->velocityX = FIX(1.5);
         } else {
-            self->velocityX = -0x18000;
+            self->velocityX = FIX(-1.5);
         }
         var_s3 = UnkCollisionFunc2(D_pspeu_09258BE0);
         if (var_s3 == 0x80) {
@@ -88,25 +89,25 @@ void EntityGhostDancer(Entity* self) {
                 SetStep(3);
             }
         }
-        if (!self->ext.ILLEGAL.s16[2]) {
-            if ((self->facingLeft ^ (GetSideToPlayer() & 1)) && 
+        if (!self->ext.ghostDancer.unk80) {
+            if ((self->facingLeft ^ (GetSideToPlayer() & 1)) &&
                 (GetDistanceToPlayerX() < 0x40)) {
                 SetStep(4);
             }
         } else {
-            self->ext.ILLEGAL.s16[2]--;
+            self->ext.ghostDancer.unk80--;
         }
         break;
-    case 3:                                         /* switch 1 */
+    case 3: /* switch 1 */
         if (AnimateEntity(D_pspeu_09258BF8, self) == 0) {
             self->facingLeft ^= 1;
             self->animCurFrame = 1;
             SetStep(2);
         }
         break;
-    case 4:                                         /* switch 1 */
-        switch (self->step_s) {                        /* switch 2; irregular */
-        case 0:                                     /* switch 2 */
+    case 4:                     /* switch 1 */
+        switch (self->step_s) { /* switch 2; irregular */
+        case 0:                 /* switch 2 */
             self->hitboxWidth = 8;
             self->hitboxHeight = 0xF;
             self->hitboxOffX = -2;
@@ -115,49 +116,49 @@ void EntityGhostDancer(Entity* self) {
                 self->step_s += 1;
             }
             break;
-        case 1:                                     /* switch 2 */
+        case 1: /* switch 2 */
             if (self->facingLeft) {
-                self->velocityX = 0x20000;
+                self->velocityX = FIX(2.0);
             } else {
-                self->velocityX = -0x20000;
+                self->velocityX = FIX(-2.0);
             }
-            self->velocityY = -0x68000;
-            self->drawFlags |= 4;
+            self->velocityY = FIX(-6.5);
+            self->drawFlags |= ENTITY_ROTATE;
             self->animCurFrame = 0xF;
-            self->rotate = 0x200;
+            self->rotate = ROT(45);
             self->hitboxOffY = -8;
             self->step_s += 1;
             /* fallthrough */
-        case 2:                                     /* switch 2 */
-            self->rotate -= 0x10;
+        case 2: /* switch 2 */
+            self->rotate -= ROT(1.40625);
             if (UnkCollisionFunc3(D_pspeu_09258BD0) & 1) {
-                PlaySfxPositional(0x648);
+                PlaySfxPositional(SFX_STOMP_HARD_C);
                 self->hitboxOffY = 0xD;
-                self->drawFlags = 0;
+                self->drawFlags = ENTITY_DEFAULT;
                 self->animCurFrame = 0xE;
-                self->ext.ILLEGAL.s16[2] = 0x10;
+                self->ext.ghostDancer.unk80 = 0x10;
                 self->step_s += 1;
             }
             break;
-        case 3:                                     /* switch 2 */
-            if (!--self->ext.ILLEGAL.s16[2]) {
+        case 3: /* switch 2 */
+            if (!--self->ext.ghostDancer.unk80) {
                 self->hitboxWidth = 5;
                 self->hitboxHeight = 0x19;
                 self->hitboxOffX = 0;
                 self->hitboxOffY = 2;
-                self->ext.ILLEGAL.s16[2] = 0x20;
+                self->ext.ghostDancer.unk80 = 0x20;
                 SetStep(2);
             }
         }
         break;
-    case 6:                                         /* switch 1 */
+    case 6: /* switch 1 */
         MoveEntity();
-        self->velocityY += 0x2000;
-        self->rotate += self->ext.ILLEGAL.s16[4];
-        if (!--self->ext.ILLEGAL.s16[2]) {
+        self->velocityY += FIX(0.125);
+        self->rotate += self->ext.ghostDancer.unk84;
+        if (!--self->ext.ghostDancer.unk80) {
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
-                CreateEntityFromEntity(2, self, other);
+                CreateEntityFromEntity(E_EXPLOSION, self, other);
                 other->params = 0;
             }
             DestroyEntity(self);

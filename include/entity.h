@@ -4505,6 +4505,13 @@ typedef struct {
 } ET_ShaftMeridianRings;
 
 typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ u16 : 16;
+    /* 0x84 */ s16 unk84;
+} ET_GhostDancer;
+
+typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 shootCooldown;
@@ -4916,6 +4923,7 @@ typedef union { // offset=0x7C
     ET_ShaftMeridianRings shaftMeridianRings;
     ET_Malachi malachi;
     ET_801A460C et_801A460C;
+    ET_GhostDancer ghostDancer;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);
