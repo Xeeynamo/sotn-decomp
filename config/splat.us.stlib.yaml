@@ -68,6 +68,7 @@ segments:
       - [0x23C0, .data, e_collect]
       - [0x2714, .data, e_bloody_zombie]
       - [0x280C, .data, e_flying_zombie]
+      - [0x28D0, data]
       - [0x28D4, .data, e_particles]
       - [0x2954, .data, e_dhuron]
       - [0x2AE0, .data, e_ectoplasm]

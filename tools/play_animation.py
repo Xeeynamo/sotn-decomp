@@ -133,16 +133,27 @@ def get_initializer_for_ent(anim_name, src_file, overlay):
         initlines = f.readlines()
     for line in initlines:
         if initName in line:
-            line = line.replace("PAL_NULL", "0")
-            initSet = re.findall(r"(?<={)[^}]*", line)[0].split(",")
+            # find the palette and swap it out
+            if pal_match := re.search(r"PAL_[^,]*", line):
+                pal_name = pal_match.group(0)
+                # now find that in the overlay .h file to pull it in
+                with open(f"src/st/{overlay}/{overlay}.h") as hfile:
+                    for hline in hfile:
+                        if pal_def := re.search(f"{pal_name} = ([^,]*)", hline):
+                            pal_value = pal_def.group(1)
+                            line = line.replace(pal_name, pal_value)
 
+            initSet = re.findall(r"(?<={)[^}]*", line)[0].split(",")
             if "ANIMSET_OVL" in initSet[0]:
                 arg = re.findall(r"(?<=\()[^\)]*", initSet[0])[0]
                 initSet[0] = hex(0x8000 | int(arg, 0))
             if "ANIMSET_DRA" in initSet[0]:
                 arg = re.findall(r"(?<=\()[^\)]*", initSet[0])[0]
                 initSet[0] = arg
-            return [int(x, 0) for x in initSet]
+
+            return [
+                int(x, 0) for x in initSet[:-1]
+            ]  # chop off the enemy num, we don't need it
 
 
 class AnimationShower:
@@ -315,7 +326,7 @@ def main(overlay, src_file, dump_filename):
         # To render an animation, we need to know the entity's animation set.
         # That comes from InitializeEntity. Get the entity's initializer.
         initializer = get_initializer_for_ent(active_anim[0], src_file, overlay)
-        anim_num, initframe, unk5A, palette, enemyNum = initializer
+        anim_num, initframe, unk5A, palette = initializer
         print(anim_num, palette)
 
         shower = AnimationShower(
