@@ -151,7 +151,9 @@ def get_initializer_for_ent(anim_name, src_file, overlay):
                 arg = re.findall(r"(?<=\()[^\)]*", initSet[0])[0]
                 initSet[0] = arg
 
-            return [int(x, 0) for x in initSet[:-1]] # chop off the enemy num, we don't need it
+            return [
+                int(x, 0) for x in initSet[:-1]
+            ]  # chop off the enemy num, we don't need it
 
 
 class AnimationShower:

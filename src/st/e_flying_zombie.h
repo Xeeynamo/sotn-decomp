@@ -8,21 +8,29 @@ static s16 sensors1[] = {0, 23, 0, 4, 8, -4, -16, 0};
 static s16 sensors2[] = {0, 12, 0, 4, 8, -4, -16, 0};
 static s16 sensors3[] = {16, 8, 255, 0};
 static s16 sensors4[] = {0, 23, 8, 0};
-static AnimateEntityFrame anim_walk[] = {{20, 1}, {20, 2}, {20, 3}, {20, 2}, POSE_LOOP(0)};
-static AnimateEntityFrame anim_flying[] = {{24, 4}, {24, 5}, {24, 6}, {24, 5}, POSE_LOOP(0)};
-static AnimateEntityFrame anim_legs_walk[] = {{24, 7}, {24, 8}, {24, 9}, {24, 8}, POSE_LOOP(0)};
-static AnimateEntityFrame anim_unused_legs_walk[] = {{18, 8}, {18, 9}, POSE_END};
-static AnimateEntityFrame anim_legs_waist_throb[] = {{8, 7}, {8, 10}, {4, 7}, {32, 10}, POSE_LOOP(0)};
-static AnimateEntityFrame anim_separation[] = {{8, 1}, {8, 11}, {8, 12}, {8, 13}, {4, 14}, {2, 15}, POSE_END};
+static AnimateEntityFrame anim_walk[] = {
+    {20, 1}, {20, 2}, {20, 3}, {20, 2}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_flying[] = {
+    {24, 4}, {24, 5}, {24, 6}, {24, 5}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_legs_walk[] = {
+    {24, 7}, {24, 8}, {24, 9}, {24, 8}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_unused_legs_walk[] = {
+    {18, 8}, {18, 9}, POSE_END};
+static AnimateEntityFrame anim_legs_waist_throb[] = {
+    {8, 7}, {8, 10}, {4, 7}, {32, 10}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_separation[] = {
+    {8, 1}, {8, 11}, {8, 12}, {8, 13}, {4, 14}, {2, 15}, POSE_END};
 static AnimateEntityFrame anim_torso_throb[] = {{2, 16}, {2, 17}, POSE_LOOP(0)};
-static AnimateEntityFrame anim_waist_throb_fast[] = {{2, 18}, {2, 19}, {2, 18}, {2, 19}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_waist_throb_fast[] = {
+    {2, 18}, {2, 19}, {2, 18}, {2, 19}, POSE_LOOP(0)};
 static s16 D_us_80182898[] = {0x040, 0x0E0, 0x200, 0x180};
-static s16 D_us_801828A0[] = {4,  3,  2,  2,  2,  1,  0,  0,  -1, -1, -1, -1,
-                              -1, -1, -1, -1, -1, -1, -1, -1, -2, -2, -2, -2};
+// Controls a rhythmic up/down movement
+static s16 hoverTable[] = {4,  3,  2,  2,  2,  1,  0,  0,  -1, -1, -1, -1,
+                           -1, -1, -1, -1, -1, -1, -1, -1, -2, -2, -2, -2};
 
 extern EInit g_EInitFlyingZombie;
 
-typedef enum{
+typedef enum {
     FZ_INIT,
     FZ_INIT_GROUND,
     FZ_WALK,
@@ -33,13 +41,13 @@ typedef enum{
     FZ_7
 } FlyingZombieSteps;
 
-typedef enum{
-    FZT_0,
-    FZT_1,
+typedef enum {
+    FZT_INIT,
+    FZT_ATTACHED,
     FZT_2,
     FZT_SEPARATION,
-    FZT_4,
-    FZT_5,
+    FZT_4_UNUSED,
+    FZT_DEATH,
     FZT_6,
     FZT_7,
     FZT_8,
@@ -175,13 +183,13 @@ void EntityFlyingZombie(Entity* self) {
             self->ext.flyingZombie.unk81 = 1;
             self->animCurFrame = 0x12;
             self->ext.flyingZombie.unk7C = 8;
-            self->ext.flyingZombie.unk7E = 0;
+            self->ext.flyingZombie.hoverIndex = 0;
             self->step_s++;
             break;
 
         case 1:
             if (!--self->ext.flyingZombie.unk7C) {
-                self->ext.flyingZombie.unk7E = 0;
+                self->ext.flyingZombie.hoverIndex = 0;
                 self->ext.flyingZombie.unk7C = 2;
                 self->step_s++;
             }
@@ -193,11 +201,12 @@ void EntityFlyingZombie(Entity* self) {
                 if (tempEntity != NULL) {
                     CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
                     tempEntity->params = 1;
-                    tempEntity->posY.i.hi -= self->ext.flyingZombie.unk7E * 8;
+                    tempEntity->posY.i.hi -=
+                        self->ext.flyingZombie.hoverIndex * 8;
                 }
                 self->ext.flyingZombie.unk7C = 6;
-                self->ext.flyingZombie.unk7E++;
-                if (self->ext.flyingZombie.unk7E > 1) {
+                self->ext.flyingZombie.hoverIndex++;
+                if (self->ext.flyingZombie.hoverIndex > 1) {
                     PlaySfxPositional(SFX_FM_STUTTER_EXPLODE);
                     DestroyEntity(TORSO);
                     SetStep(FZ_5);
@@ -288,24 +297,24 @@ void EntityFlyingZombieTorso(Entity* self) {
     s16 angle;
     s32 dx, dy;
 
-    if ((self->flags & FLAG_DEAD) && self->step > FZT_5) {
-        self->step = FZT_5;
+    if ((self->flags & FLAG_DEAD) && self->step > FZT_DEATH) {
+        self->step = FZT_DEATH;
         self->step_s = 0;
         self->hitboxState = 0;
-        self->ext.flyingZombie.unk7E = 0;
+        self->ext.flyingZombie.hoverIndex = 0;
         self->ext.flyingZombie.unk80 = 0;
         PlaySfxPositional(SFX_FLYING_ZOMBIE_DEATH);
         PlaySfxPositional(SFX_SMALL_FLAME_IGNITE);
     }
     switch (self->step) {
-    case FZT_0:
+    case FZT_INIT:
         InitializeEntity(g_EInitFlyingZombieTorso);
         self->hitboxOffX = -4;
         self->hitboxOffY = -14;
         self->ext.flyingZombie.unk80 = 0;
         break;
 
-    case FZT_1:
+    case FZT_ATTACHED:
         self->facingLeft = LEGS->facingLeft;
         if ((self->hitFlags & 3) || (self->flags & FLAG_DEAD)) {
             self->hitboxState = 0;
@@ -318,7 +327,8 @@ void EntityFlyingZombieTorso(Entity* self) {
             self->step++;
         }
         break;
-
+    case FZT_2:
+        break;
     case FZT_SEPARATION:
         self->hitboxState = 3;
         if (!self->step_s) {
@@ -333,7 +343,7 @@ void EntityFlyingZombieTorso(Entity* self) {
         }
         break;
 
-    case FZT_5:
+    case FZT_DEATH:
         switch (self->step_s) {
         case 0:
             tempEntity = &PLAYER;
@@ -452,10 +462,10 @@ void EntityFlyingZombieTorso(Entity* self) {
         self->posY.i.hi = LEGS->posY.i.hi;
     }
     if (self->ext.flyingZombie.unk80 && g_Timer % 3 == 0) {
-        self->posY.i.hi += D_us_801828A0[self->ext.flyingZombie.unk7E];
-        self->ext.flyingZombie.unk7E++;
-        if (self->ext.flyingZombie.unk7E > LEN(D_us_801828A0) - 1) {
-            self->ext.flyingZombie.unk7E = 0;
+        self->posY.i.hi += hoverTable[self->ext.flyingZombie.hoverIndex];
+        self->ext.flyingZombie.hoverIndex++;
+        if (self->ext.flyingZombie.hoverIndex > LEN(hoverTable) - 1) {
+            self->ext.flyingZombie.hoverIndex = 0;
             self->ext.flyingZombie.unk80 = 0;
         }
     }

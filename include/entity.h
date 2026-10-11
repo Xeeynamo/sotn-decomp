@@ -3003,7 +3003,7 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ u16 unk7C;
-    /* 0x7E */ u16 unk7E;
+    /* 0x7E */ u16 hoverIndex;
     /* 0x80 */ u8 unk80;
     /* 0x81 */ u8 unk81;
 } ET_FlyingZombie;

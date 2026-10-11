@@ -82,8 +82,8 @@ typedef enum EntityID {
     E_KARASUMAN_RAVEN_ATTACK,   // EntityKarasumanRavenAttack
     E_KARASUMAN_FEATHER,        // EntityKarasumanFeather
     E_KARASUMAN_RAVEN_ABSORB,   // EntityKarasumanRavenAbsorb
-    E_FLYING_ZOMBIE,           // EntityFlyingZombie
-    E_FLYING_ZOMBIE_TORSO,           // EntityFlyingZombieTorso
+    E_FLYING_ZOMBIE,            // EntityFlyingZombie
+    E_FLYING_ZOMBIE_TORSO,      // EntityFlyingZombieTorso
     E_BLOOD_DRIPS,              // EntityBloodDrips
     E_BLOOD_SPLATTER,           // EntityBloodSplatter
     E_AZAGHAL,                  // EntityAzaghal
