@@ -354,7 +354,7 @@ void EntityWarg(Entity* self) {
                     self->velocityX = FIX(-6.0);
                 }
                 g_api.PlaySfx(SFX_WARG_ATTACK);
-                enemy = &g_api.enemyDefs[176];
+                enemy = &g_api.enemyDefs[ENEMY_WARG_UNK_B0];
                 part->attackElement = enemy->attackElement;
                 part->attack = enemy->attack;
             }

@@ -250,7 +250,7 @@ void EntityFireWarg(Entity* self) {
             part->flags |= FLAG_SUPPRESS_STUN;
             self->enemyId = part->enemyId = 0x94;
             part->flags = self->flags;
-            enemyDefPtr = &g_api.enemyDefs[148];
+            enemyDefPtr = &g_api.enemyDefs[ENEMY_FIRE_WARG];
             self->hitPoints = enemyDefPtr->hitPoints;
             part->attack = self->attack;
             part->attack = self->attack;
@@ -485,15 +485,15 @@ void EntityFireWarg(Entity* self) {
                 if (var_s2 < 0) {
                     var_s2 += 0x3000;
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, -16, 38, ((Random() & 3) + 1), -4);
+                        self, 1, 1, -16, 38, (Random() & 3) + 1, -4);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 10, 38, ((Random() & 3) + 1), -4);
+                        self, 1, 1, 10, 38, (Random() & 3) + 1, -4);
                 } else {
                     var_s2 -= 0x3000;
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, -10, 38, ((Random() & 3) + 1), 4);
+                        self, 1, 1, -10, 38, (Random() & 3) + 1, 4);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 16, 38, ((Random() & 3) + 1), 4);
+                        self, 1, 1, 16, 38, (Random() & 3) + 1, 4);
                 }
                 self->velocityX = var_s2;
             }
@@ -548,7 +548,7 @@ void EntityFireWarg(Entity* self) {
                     self->velocityX = FIX(-8.0);
                 }
                 PlaySfxPositional(SFX_WARG_GROWL);
-                enemyDefPtr = &g_api.enemyDefs[149];
+                enemyDefPtr = &g_api.enemyDefs[ENEMY_FIRE_WARG_BITE];
                 part->attackElement = enemyDefPtr->attackElement;
                 part->attack = enemyDefPtr->attack;
             }
@@ -620,15 +620,15 @@ void EntityFireWarg(Entity* self) {
                 if (self->facingLeft) {
                     self->velocityX += FIX(0.125);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, -32, 38, ((Random() & 3) + 1), -4);
+                        self, 1, 1, -32, 38, (Random() & 3) + 1, -4);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 2, 38, ((Random() & 3) + 1), -4);
+                        self, 1, 1, 2, 38, (Random() & 3) + 1, -4);
                 } else {
                     self->velocityX -= FIX(0.125);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, -2, 38, ((Random() & 3) + 1), 4);
+                        self, 1, 1, -2, 38, (Random() & 3) + 1, 4);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 32, 38, ((Random() & 3) + 1), 4);
+                        self, 1, 1, 32, 38, (Random() & 3) + 1, 4);
                 }
             }
             if (!AnimateEntity(&D_8018295C, self)) {
@@ -715,15 +715,15 @@ void EntityFireWarg(Entity* self) {
                 if (self->velocityX < 0) {
                     self->velocityX += FIX(0.5);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 0, 38, ((Random() & 3) + 1), -4);
+                        self, 1, 1, 0, 38, (Random() & 3) + 1, -4);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 26, 38, ((Random() & 3) + 1), -4);
+                        self, 1, 1, 26, 38, (Random() & 3) + 1, -4);
                 } else {
                     self->velocityX -= FIX(0.5);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, -26, 38, ((Random() & 3) + 1), 4);
+                        self, 1, 1, -26, 38, (Random() & 3) + 1, 4);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 0, 38, ((Random() & 3) + 1), 4);
+                        self, 1, 1, 0, 38, (Random() & 3) + 1, 4);
                 }
             } else {
                 ent_s4->hitboxState = 0;
@@ -739,7 +739,7 @@ void EntityFireWarg(Entity* self) {
                 }
 
                 PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
-                enemyDefPtr = &g_api.enemyDefs[152];
+                enemyDefPtr = &g_api.enemyDefs[ENEMY_WARG_RIDER_UNK_98];
                 ent_s4->hitboxState = enemyDefPtr->hitboxState;
                 ent_s4->attackElement = enemyDefPtr->attackElement;
                 ent_s4->attack = (enemyDefPtr->attack * 3) / 2;
@@ -758,15 +758,15 @@ void EntityFireWarg(Entity* self) {
                 if (self->velocityX < 0) {
                     self->velocityX += FIX(0.5);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 0, 38, ((Random() & 3) + 1), -4);
+                        self, 1, 1, 0, 38, (Random() & 3) + 1, -4);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 26, 38, ((Random() & 3) + 1), -4);
+                        self, 1, 1, 26, 38, (Random() & 3) + 1, -4);
                 } else {
                     self->velocityX -= FIX(0.5);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, -26, 38, ((Random() & 3) + 1), 4);
+                        self, 1, 1, -26, 38, (Random() & 3) + 1, 4);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 0, 38, ((Random() & 3) + 1), 4);
+                        self, 1, 1, 0, 38, (Random() & 3) + 1, 4);
                 }
             } else {
                 ent_s4->hitboxState = 0;
@@ -782,7 +782,7 @@ void EntityFireWarg(Entity* self) {
                     self->velocityX = FIX(-4.0);
                 }
                 PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
-                enemyDefPtr = &g_api.enemyDefs[152];
+                enemyDefPtr = &g_api.enemyDefs[ENEMY_WARG_RIDER_UNK_98];
                 ent_s4->hitboxState = enemyDefPtr->hitboxState;
                 ent_s4->attackElement = enemyDefPtr->attackElement;
                 ent_s4->attack = enemyDefPtr->attack;

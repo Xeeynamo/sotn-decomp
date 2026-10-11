@@ -140,7 +140,8 @@ void EntitySlogra(Entity* self) {
             SetStep(SLOGRA_KNOCKBACK);
         }
         if (!self->ext.GS_Props.nearDeath) {
-            if ((self->hitPoints < g_api.enemyDefs[243].hitPoints / 4) &&
+            if ((self->hitPoints <
+                 g_api.enemyDefs[ENEMY_SLOGRA].hitPoints / 4) &&
                 (self->step != SLOGRA_LOSE_SPEAR)) {
                 self->hitboxState = 0;
                 PlaySfxPositional(SFX_SLOGRA_ROAR_DEFEAT);

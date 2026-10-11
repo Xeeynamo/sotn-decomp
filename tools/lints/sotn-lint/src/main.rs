@@ -11,6 +11,7 @@ mod blendmodes;
 mod drawflags;
 mod drawmodes;
 mod einit;
+mod enemy_defs;
 mod enum_line_transformer;
 mod enum_statement;
 mod file_transformer;
@@ -34,6 +35,7 @@ use collider_effects::ColliderEffectsTransformer;
 use drawflags::DrawFlagsTransformer;
 use drawmodes::DrawModeTransformer;
 use einit::EInitTransformer;
+use enemy_defs::EnemyDefsTransformer;
 use file_transformer::FileTransformer;
 use fixed::FixedTransformer;
 use flags::FlagsTransformer;
@@ -155,6 +157,7 @@ fn process_directory(dir_path: &str) -> bool {
         Box::new(vram_flag_transformer),
         Box::new(SfxLineTransformer::new()),
         Box::new(ItemDropsTransformer::new()),
+        Box::new(EnemyDefsTransformer::new()),
         // PAL_FLAG must wrap the value before PaletteIndices can name it
         Box::new(PaletteFlagTransformer),
         Box::new(PaletteIndicesTransformer::new()),
