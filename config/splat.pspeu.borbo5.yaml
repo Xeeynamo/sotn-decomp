@@ -96,7 +96,7 @@ segments:
       - [0x344F0, .bss, rbo5/e_collect]
       - [0x34508, bss, '34508']
       - [0x35830, .bss, rbo5/e_breakable]
-      - [0x35838, bss, '35838']
+      - [0x35838, .bss, rbo5/d_prize_drops]
       - [0x35840, .bss, rbo5/e_lock_camera]
       - [0x35848, bss, '35848']
   - [0x35880]

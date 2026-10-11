@@ -74,4 +74,3 @@ D_pspeu_09266768 = 0x09266768;
 D_pspeu_09266770 = 0x09266770;
 g_BossOverlay = 0x0926B3A0;
 BackgroundBlockInit = 0x0926B3F0;
-PrizeDrops = 0x0926CEB8;
