@@ -1065,6 +1065,50 @@ SET(SOURCE_FILES_BOSS_BO4
     src/boss/bo4/bss.c
 )
 
+SET(SOURCE_FILES_BOSS_RBO3
+    src/pc/bosses/boss_rbo3.c
+    src/boss/rbo3/header.c
+    src/boss/rbo3/sprite_banks.c
+    src/boss/rbo3/palette_def.c
+    src/boss/rbo3/layers.c
+    src/boss/rbo3/graphics_banks.c
+    src/boss/rbo3/gen/e_laydef.c
+    src/boss/rbo3/e_init.c
+    src/boss/rbo3/background_block_init.c
+    src/boss/rbo3/e_red_door_tiles.c
+    src/boss/rbo3/e_lock_camera.c
+    src/boss/rbo3/e_breakable.c
+    src/boss/rbo3/d_prize_drops.c
+    src/boss/rbo3/e_medusa.c
+    src/boss/rbo3/unk_12998.c
+    src/boss/rbo3/unk_12B38.c
+    src/boss/rbo3/12D64.c
+    src/boss/rbo3/st_update.c
+    src/boss/rbo3/collision.c
+    src/boss/rbo3/e_red_door.c
+    src/boss/rbo3/st_common.c
+    src/boss/rbo3/e_collect.c
+    src/boss/rbo3/e_misc.c
+    src/boss/rbo3/e_particles.c
+    src/boss/rbo3/e_room_fg.c
+    src/boss/rbo3/gen/rooms.c
+    src/boss/rbo3/e_life_up.c
+    src/boss/rbo3/e_clouds.c
+    src/boss/rbo3/gen/e_layout.c
+    src/boss/rbo3/stage_data.c
+    src/boss/rbo3/pal_unk.c
+    src/boss/rbo3/tilemaps.c
+    src/boss/rbo3/gen/us/sprites.c
+    src/boss/rbo3/unk_11438.c
+    src/boss/rbo3/e_stage_name.c
+    src/boss/rbo3/prim_helpers.c
+    src/boss/rbo3/e_room_bg.c
+    src/boss/rbo3/unk_13050.c
+    src/boss/rbo3/create_entity.c
+    src/boss/rbo3/popup.c
+    src/boss/rbo3/bss.c
+)
+
 set(SOURCE_FILES_STAGE_RWRP
     src/pc/stages/stage_rwrp.c
     src/st/rwrp/header.c
@@ -1348,6 +1392,7 @@ function(add_overlay name)
         src/dra
         src/pc
         src/st/${name}
+        src/boss/${name}
         tools/psyz/psyz/include
     )
 
@@ -1394,6 +1439,7 @@ add_overlay(lib ${SOURCE_FILES_STAGE_LIB})
 add_overlay(mad ${SOURCE_FILES_STAGE_MAD})
 add_overlay(bo1 ${SOURCE_FILES_BOSS_BO1})
 add_overlay(rcen ${SOURCE_FILES_STAGE_RCEN})
+add_overlay(rbo3 ${SOURCE_FILES_BOSS_RBO3})
 
 foreach(id 000 002 007 008 010 012 034 035 037 040 041 043 045 046 050 051 052)
     add_overlay(w0_${id} src/weapon/w_${id}.c)
