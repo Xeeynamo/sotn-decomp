@@ -88,7 +88,7 @@ void func_8010E6AC(bool forceAnim13) {
     } else {
         SetDopplegangerAnim(7);
         // Factory blueprint 1 has child 2, which is EntitySmokePuff
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(1, 5), 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_1, 5), 0);
     }
 
     if (g_Dop.unk4C) {
@@ -150,8 +150,9 @@ void func_us_801C504C(void) {
     DOPPLEGANGER.velocityY = FIX(-12);
     SetDopplegangerAnim(0x21);
     g_Dop.gravBootTimer = 0;
-    g_Dop.unk44 &= 0xFFFE;
-    CreateEntFactoryFromEntity(g_CurrentEntity, 2, 0);
+    g_Dop.unk44 &= ~1;
+    CreateEntFactoryFromEntity(
+        g_CurrentEntity, FACTORY(BP_GRAVITY_BOOT_BEAM, 0), 0);
 }
 
 static s16 D_us_801813B8[] = {
@@ -200,7 +201,8 @@ s32 func_us_801C5168(void) {
         }
     }
 
-    CreateEntFactoryFromEntity(g_CurrentEntity, 24, 0);
+    CreateEntFactoryFromEntity(
+        g_CurrentEntity, FACTORY(BP_REBOUND_STONE, 0), 0);
 
     g_Dop.timers[10] = 4;
     if (DOPPLEGANGER.step_s >= 0x40) {
@@ -229,7 +231,7 @@ void func_8010ED54(u8 anim) {
     DOPPLEGANGER.velocityX = DOPPLEGANGER.velocityY = 0;
     SetDopplegangerStep(16);
     SetDopplegangerAnim(anim);
-    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(61, 20), 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_61, 20), 0);
     g_Dop.unk48 = 0;
 }
 
@@ -259,7 +261,7 @@ s32 func_us_801C52F8(void) {
     }
 
     if (g_Dop.timers[1]) {
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x39, 1), 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_57, 1), 0);
 
         switch (DOPPLEGANGER.step) {
         case Dop_Stand:
@@ -287,7 +289,7 @@ s32 func_us_801C52F8(void) {
     deltaX = abs(DOPPLEGANGER.posX.i.hi - PLAYER.posX.i.hi);
 
     if (deltaX > 36) {
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x30, 0), 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_48, 0), 0);
         DOPPLEGANGER.step_s = 0x41;
         g_Dop.unk46 = 0x8002;
         g_Dop.unk54 = 0xD;
@@ -295,7 +297,7 @@ s32 func_us_801C52F8(void) {
     } else {
         g_Dop.unk46 = 0x8003;
         DOPPLEGANGER.step_s = 0x42;
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x30, 1), 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_48, 1), 0);
         g_Dop.unk54 = 8;
         animBase = 0xA7;
     }

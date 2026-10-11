@@ -75,7 +75,8 @@ void EntitySubwpnReboundStone(Entity* self) {
         break;
     case 1:
         if (self->flags & FLAG_DEAD) {
-            CreateEntFactoryFromEntity(self, BP_REBOUND_STONE_HIT, 0);
+            CreateEntFactoryFromEntity(
+                self, FACTORY(BP_REBOUND_STONE_HIT, 0), 0);
             g_api.PlaySfx(SFX_UI_SUBWEAPON_TINK);
             self->step = 2;
             break;
@@ -239,7 +240,8 @@ void EntitySubwpnReboundStone(Entity* self) {
 
     block_93:
         if (self->ext.reboundStone.unk82) {
-            CreateEntFactoryFromEntity(self, 10, 0);
+            CreateEntFactoryFromEntity(
+                self, FACTORY(BP_REBOUND_STONE_HIT, 0), 0);
             g_api.PlaySfx(SFX_UI_SUBWEAPON_TINK);
         }
         if (self->posX.i.hi < -0x40 || self->posX.i.hi > 0x140 ||

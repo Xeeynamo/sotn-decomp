@@ -78,7 +78,7 @@ void DopplegangerStepStand(void) {
             if (DOPPLEGANGER.pose < g_Dop.unk54) {
                 var_s0 = 0;
             } else {
-                g_Dop.unk46 &= 0x7FFF;
+                g_Dop.unk46 &= ~0x8000;
                 var_s0 = 0x1B;
                 if (DOPPLEGANGER.poseTimer < 0) {
                     var_s0 = 0xF;
@@ -165,7 +165,7 @@ void DopplegangerStepJump(void) {
             SetDopplegangerAnim(25);
         }
         if (moveDirection <= 0) {
-            g_Dop.unk44 &= 0xFFEF;
+            g_Dop.unk44 &= ~0x10;
         }
         if (DOPPLEGANGER.velocityY > 0) {
             if (DOPPLEGANGER.ext.player.anim != 27) {
@@ -180,7 +180,7 @@ void DopplegangerStepJump(void) {
             SetSpeedX(FIX(1.5));
         }
         if (moveDirection <= 0) {
-            g_Dop.unk44 &= 0xFFEF;
+            g_Dop.unk44 &= ~0x10;
         }
 
         break;
@@ -274,7 +274,7 @@ void DopplegangerStepCrouch(void) {
             if (DOPPLEGANGER.pose < g_Dop.unk54) {
                 var_s0 = 0;
             } else {
-                g_Dop.unk46 &= 0x7FFF;
+                g_Dop.unk46 &= ~0x8000;
                 var_s0 = 0xE;
                 if (DOPPLEGANGER.poseTimer < 0) {
                     var_s0 = 0x2E;
