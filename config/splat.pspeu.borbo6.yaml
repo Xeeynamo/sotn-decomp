@@ -78,6 +78,8 @@ segments:
       - [0x1D9A0, data]
       - [0x33D30, .data, rbo6/header]
       - [0x33D70, data]
+      - [0x344E0, .data, rbo6_psp/unk_185B0]
+      - [0x344F0, data]
       - [0x34600, .rodata, rbo6/e_red_door]
       - [0x34618, .rodata, rbo6/e_collect]
       - [0x34678, .rodata, rbo6_psp/unk_D4E8]
