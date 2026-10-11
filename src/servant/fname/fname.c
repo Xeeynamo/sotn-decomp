@@ -330,7 +330,7 @@ static void UpdatePrimWhenAlucardIsBat(Entity* entity) {
     prim->y2 = prim->y3 = prim->y0 + g_BatSpriteData[frame].height;
 }
 
-#define RandBeta(x) ((s32(*)(s32))rand)(x)
+#define RandBeta(x) ((s32 (*)(s32))rand)(x)
 
 // has some differences with TT_000
 static void SwitchModeInitialize(Entity* self) {
@@ -925,9 +925,7 @@ void UpdateBatBlueTrailEntities(Entity* self) {
                     positions[trailIndex].y - offsets[trailIndex] * YS / 256;
                 prim->y2 = prim->y3 =
                     positions[trailIndex].y + offsets[trailIndex] * YE / 256;
-                prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 =
-                    prim->g1 = prim->g2 = prim->g3 = prim->b0 = prim->b1 =
-                        prim->b2 = prim->b3 = fade[trailIndex];
+                PCOL(prim) = fade[trailIndex];
                 offsets[trailIndex] -= 8;
                 fade[trailIndex] -= 8;
                 if (fade[trailIndex] < 81) {
@@ -960,14 +958,9 @@ void UpdateBatBlueTrailEntities(Entity* self) {
                     positions[trailIndex].y - offsets[trailIndex] * YS / 256;
                 prim->y2 = prim->y3 =
                     positions[trailIndex].y + offsets[trailIndex] * YE / 256;
-                prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 =
-                    prim->g1 = prim->g2 = prim->g3 = prim->b0 = prim->b1 =
-                        prim->b2 = prim->b3 = fade[trailIndex];
-                // BUG - This is the same as the line above.  Sets these all
-                // again
-                prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 =
-                    prim->g1 = prim->g2 = prim->g3 = prim->b0 = prim->b1 =
-                        prim->b2 = prim->b3 = fade[trailIndex];
+                PCOL(prim) = fade[trailIndex];
+                // BUG! The same as the line above, sets these all again
+                PCOL(prim) = fade[trailIndex];
                 offsets[trailIndex] -= 8;
                 fade[trailIndex] -= 8;
                 if (fade[trailIndex] < 81) {
