@@ -2,3 +2,95 @@
 #include "rbo5.h"
 
 #include "../dop_anim.h"
+
+extern PlayerState g_Dop;
+
+// may be equivalent func_8010DFF0 in DRA
+void func_us_801C4954(s32 resetAnims, s32 arg1) {
+    Primitive* prim;
+
+    if (resetAnims) {
+        g_Entities[E_ID_41].ext.disableAfterImage.resetFlag = 1;
+        g_Entities[E_ID_41].animCurFrame = g_Entities[E_ID_42].animCurFrame =
+            g_Entities[E_ID_43].animCurFrame = 0;
+        prim = &g_PrimBuf[g_Entities[E_AFTERIMAGE_1].primIndex];
+        while (prim != NULL) {
+            prim->x1 = 0;
+            prim = prim->next;
+        }
+    }
+    g_Entities[E_ID_41].ext.disableAfterImage.disableFlag = 1;
+    g_Entities[E_ID_41].ext.disableAfterImage.index = MaxAfterImageIndex;
+    if (arg1 != 0) {
+        if (arg1 < 4) {
+            g_Dop.timers[15] = 4;
+        } else {
+            g_Dop.timers[15] = arg1;
+        }
+    }
+}
+
+void ForceAfterImageOn(void) {
+    g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.index = 0;
+}
+
+void EnableAfterImage(void) {
+    g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.resetFlag =
+        0;
+    g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.disableFlag =
+        0;
+}
+
+void func_us_801C4A30(s16 a0, s16 a1) {
+    if (g_Dop.timers[ALU_T_INVINCIBLE_CONSUMABLES] <= a1) {
+        g_Dop.timers[ALU_T_INVINCIBLE_CONSUMABLES] = a1;
+    }
+}
+
+#include "../../decelerate.h"
+
+s32 CheckMoveDirection(void) {
+    if (g_Dop.unk44 & 2) {
+        return 0;
+    }
+    if (DOPPLEGANGER.facingLeft == 1) {
+        if (g_Dop.padPressed & PAD_RIGHT) {
+            DOPPLEGANGER.facingLeft = 0;
+            g_Dop.unk4C = 1;
+            return -1;
+        } else if (g_Dop.padPressed & PAD_LEFT) {
+            return 1;
+        }
+    } else {
+        if (g_Dop.padPressed & PAD_RIGHT) {
+            return 1;
+        }
+        if (g_Dop.padPressed & PAD_LEFT) {
+            DOPPLEGANGER.facingLeft = 1;
+            g_Dop.unk4C = 1;
+            return -1;
+        }
+    }
+    return 0;
+}
+
+s32 func_us_801C4BA8(s32 minX, s32 maxX) {
+    if (DOPPLEGANGER.step == Dop_Stand &&
+        DOPPLEGANGER.step == DOPPLEGANGER.step_s) {
+        if (DOPPLEGANGER.posX.i.hi >= minX) {
+            if (maxX >= DOPPLEGANGER.posX.i.hi) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+#include "../../set_speed_x.h"
+
+void func_8010E3B8(s32 velocityX) {
+    if (DOPPLEGANGER.entityRoomIndex == 1) {
+        velocityX = -velocityX;
+    }
+    DOPPLEGANGER.velocityX = velocityX;
+}
