@@ -9,9 +9,6 @@ typedef struct {
     AnimateEntityFrame* frames;
 } Unk80180D98;
 
-#ifdef VERSION_PSP
-extern Unk80180D98 D_us_80180D98[];
-#else
 static AnimateEntityFrame D_us_80180D5C[] = {
     POSE(3, 0x01, 0), POSE(3, 0x02, 0), POSE(3, 0x03, 0), POSE(3, 0x04, 0),
     POSE(3, 0x05, 0), POSE(3, 0x06, 0), POSE(3, 0x07, 0), POSE(3, 0x08, 0),
@@ -35,7 +32,6 @@ Unk80180D98 D_us_80180D98[] = {
     {ANIMSET_DRA(14), 0x79, 0x06, 0x30, D_us_80180D5C},
     {ANIMSET_DRA(14), 0x79, 0x0E, 0x30, D_us_80180D5C},
 };
-#endif
 
 extern EInit g_EInitParticle;
 

@@ -16,15 +16,10 @@ bool func_us_80194338(s16* offsets) {
     return false;
 }
 
-#ifdef VERSION_PSP
 extern s32 D_us_801806AC;
-#else
-s32 D_us_801806AC = 0; // may be in a different file
-#endif
 s32 D_us_801806B0 = 0;
 s32 D_us_801806B4 = 0;
 
-#ifndef VERSION_PSP
 // clang-format off
 s8 D_us_801806B8[] = {
     0, 0, 0, 0,
@@ -102,10 +97,11 @@ u8 D_us_8018084C[] = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 24, 0, 8, 0, 0, 0,
+    0, 0, 0, 0, 0, 0,
 };
 // clang-format on
-#endif
+static s16 unused_0 UNUSED = 24;
+static s32 unused_1 UNUSED = 8;
 
 // main boss controller
 void EntityBoss(Entity* self) {

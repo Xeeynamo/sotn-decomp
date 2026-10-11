@@ -93,7 +93,6 @@ PfnEntityUpdate EntityUpdates[] = {
     EntitySummonAttack,
 };
 
-#ifndef VERSION_PSP
 // clang-format off
 EInit g_EInitBreakable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_BREAKABLE};
 EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
@@ -122,4 +121,3 @@ EInit D_us_8018053C = {ANIMSET_DRA(14), 0x00, 0x79, PAL_UNK_2E9, ENEMY_FAKE_SYPH
 EInit D_us_80180548 = {ANIMSET_OVL(5), 0x00, 0x57, PAL_UNK_2EF, ENEMY_FAKE_SYPHA_UNK_154};
 EInit D_us_80180554 = {ANIMSET_OVL(4), 0x00, 0x48, PAL_UNK_210, ENEMY_FAKE_SYPHA_UNK_155};
 // clang-format on
-#endif
