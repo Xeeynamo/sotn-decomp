@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rno2/rno2.h"
 
-extern s16 D_pspeu_09258BD0[];
-extern s16 D_pspeu_09258BE0[];
-extern AnimateEntityFrame D_pspeu_09258BE8[];
-extern AnimateEntityFrame D_pspeu_09258BF8[];
-extern AnimateEntityFrame D_pspeu_09258C08[];
-extern s16 D_pspeu_09258C10[][4];
+static s16 D_pspeu_09258BD0[] = {0, 29, 0, 4, 8, -4, -16, 0};
+static s16 D_pspeu_09258BE0[] = {0, 29, 6, 0, };
+static AnimateEntityFrame D_pspeu_09258BE8[] = {{4, 1}, {4, 2}, {4, 3}, {5, 4}, {5, 5}, {5, 6}, {5, 7}, POSE_LOOP(0)};
+static AnimateEntityFrame D_pspeu_09258BF8[] = {{3, 8}, {3, 9}, {3, 10}, {3, 11}, POSE_END};
+static AnimateEntityFrame D_pspeu_09258C08[] = {{4, 12}, {4, 13}, {4, 14}, POSE_END};
+static s16 D_pspeu_09258C10[][4] = {{0, 0, 64, 32}, {0, 0, 32, 18}, {0, 0, 48, 24}, {0, 0, 16, 12}, {0, 0, 64, 20}, {0, 0, 8, 16}};
 extern EInit g_EInitGhostDancer;
 
 typedef enum{

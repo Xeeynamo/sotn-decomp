@@ -79,7 +79,7 @@ segments:
       - [0x21050, .data, rno2/e_bloody_zombie]
       - [0x21090, .data, rno2/e_azaghal]
       - [0x21390, .data, rno2/e_karasuman]
-      - [0x21550, data]
+      - [0x21550, .data, rno2_psp/unk_A130]
       - [0x215C0, .data, rno2/e_red_door]
       - [0x215D8, .data, rno2/st_update]
       - [0x21608, .data, rno2/e_malachi]
