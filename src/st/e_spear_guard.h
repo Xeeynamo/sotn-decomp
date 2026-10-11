@@ -217,8 +217,10 @@ void EntitySpearGuard(Entity* self) {
             }
         }
         if (self->velocityX != 0) {
-            tempEntity->attack = g_api.enemyDefs[94].attack;
-            tempEntity->attackElement = g_api.enemyDefs[94].attackElement;
+            tempEntity->attack =
+                g_api.enemyDefs[ENEMY_SPEAR_GUARD_UNK_5E].attack;
+            tempEntity->attackElement =
+                g_api.enemyDefs[ENEMY_SPEAR_GUARD_UNK_5E].attackElement;
             if (self->velocityX > 0) {
                 self->velocityX -= FIX(0.25);
             } else {
@@ -251,8 +253,9 @@ void EntitySpearGuard(Entity* self) {
             anim = anim9;
         }
         tempVar = AnimateEntity(anim, self);
-        tempEntity->attack = g_api.enemyDefs[94].attack;
-        tempEntity->attackElement = g_api.enemyDefs[94].attackElement;
+        tempEntity->attack = g_api.enemyDefs[ENEMY_SPEAR_GUARD_UNK_5E].attack;
+        tempEntity->attackElement =
+            g_api.enemyDefs[ENEMY_SPEAR_GUARD_UNK_5E].attackElement;
         if (!tempVar) {
             SetStep(7);
             self->ext.spearGuard.unk7C = D_us_80182F10[Random() & 3];
@@ -291,8 +294,10 @@ void EntitySpearGuard(Entity* self) {
                 } else {
                     self->velocityX = FIX(-8.0);
                 }
-                tempEntity->attack = g_api.enemyDefs[95].attack;
-                tempEntity->attackElement = g_api.enemyDefs[95].attackElement;
+                tempEntity->attack =
+                    g_api.enemyDefs[ENEMY_SPEAR_GUARD_UNK_5F].attack;
+                tempEntity->attackElement =
+                    g_api.enemyDefs[ENEMY_SPEAR_GUARD_UNK_5F].attackElement;
                 tempEntity->hitboxState |= 2;
                 self->ext.spearGuard.unk90 = 1;
             }

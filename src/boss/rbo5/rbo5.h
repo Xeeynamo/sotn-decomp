@@ -6,16 +6,18 @@
 
 #define STAGE_IS_RBO5
 
+enum Palettes {
+    PAL_NONE,
+    PAL_UNK_210 = 0x210,
+    PAL_UNK_218 = 0x218,
+};
+
 #ifndef VERSION_PSP
 #include "../doppleganger.h"
 
 extern EInit g_EInitParticle;
 extern EInit g_EInitLockCamera;
 #else
-enum Palettes {
-    PAL_NONE,
-};
-
 typedef enum EntityID {
     E_NONE,
     E_BREAKABLE,            // EntityBreakable

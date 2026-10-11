@@ -28,8 +28,7 @@ type taskResult struct {
 
 func Format() error {
 	tasks := []task{
-		{"Formatting C", formatCSource},
-		{"Linting C", lintCSource},
+		{"Linting and formatting C", lintAndFormatCSource},
 		{"Formatting Python", formatPythonTools},
 		{"Formatting Splat Symbols", formatSplatSymbols},
 		{"Formatting License", formatLicense},
@@ -123,6 +122,14 @@ func formatCSource() error {
 
 func lintCSource() error {
 	return deps.SotnLint("src/")
+}
+
+func lintAndFormatCSource() error {
+	lintErr := lintCSource()
+	if err := formatCSource(); err != nil {
+		return err
+	}
+	return lintErr
 }
 
 func formatPythonTools() error {

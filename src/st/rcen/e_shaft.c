@@ -941,7 +941,7 @@ void EntityShaftAttackOrb(Entity* self) {
             }
 
             if (!result) {
-                enemyDef = &g_api.enemyDefs[0x163];
+                enemyDef = &g_api.enemyDefs[ENEMY_SHAFT_UNK_163];
                 self->attack = enemyDef->attack;
                 self->hitboxWidth = enemyDef->hitboxWidth;
                 self->hitboxHeight = enemyDef->hitboxHeight;
@@ -983,7 +983,7 @@ void EntityShaftAttackOrb(Entity* self) {
             }
 
             if (!--self->ext.rcenShaft.timer) {
-                enemyDef = &g_api.enemyDefs[0x160];
+                enemyDef = &g_api.enemyDefs[ENEMY_SHAFT_ORB];
                 self->attack = enemyDef->attack;
                 self->hitboxWidth = enemyDef->hitboxWidth;
                 self->hitboxHeight = enemyDef->hitboxHeight;

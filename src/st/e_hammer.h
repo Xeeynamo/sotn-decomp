@@ -762,13 +762,14 @@ void EntityGurkhaBodyParts(Entity* self) {
             angle = self->rotate;
             self->hitboxOffX = (rsin(angle) * -8) >> 0xC;
             self->hitboxOffY = (rcos(angle) * 8) >> 0xC;
-            self->attack = g_api.enemyDefs[192].attack;
-            self->attackElement = g_api.enemyDefs[192].attackElement;
+            self->attack = g_api.enemyDefs[ENEMY_BLADE_UNK_C0].attack;
+            self->attackElement =
+                g_api.enemyDefs[ENEMY_BLADE_UNK_C0].attackElement;
         } else {
             self->hitboxOffX = 0;
             self->hitboxOffY = 0;
-            self->attack = g_api.enemyDefs[190].attack;
-            self->attackElement = g_api.enemyDefs[190].attackElement;
+            self->attack = g_api.enemyDefs[ENEMY_BLADE].attack;
+            self->attackElement = g_api.enemyDefs[ENEMY_BLADE].attackElement;
         }
         break;
 

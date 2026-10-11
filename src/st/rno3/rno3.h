@@ -9,6 +9,12 @@
 
 enum Palettes {
     PAL_NONE,
+    PAL_FIRE_WARG = 0x200,
+    PAL_JACK_O_BONES = 0x20C,
+    PAL_NOVA_SKELETON = 0x214,
+    PAL_OROBOUROUS_DRAGON_RIDER = 0x231,
+    PAL_VENUS_WEED = 0x240,
+    PAL_DODO_BIRD = 0x26A,
 };
 
 typedef enum EntityID {

@@ -139,7 +139,7 @@ void EntityGaibon(Entity* self) {
     s32 speedLimit;
 
     if (self->step && !self->ext.GS_Props.nearDeath) {
-        if (self->hitPoints < g_api.enemyDefs[0xFE].hitPoints / 2) {
+        if (self->hitPoints < g_api.enemyDefs[ENEMY_GAIBON].hitPoints / 2) {
             self->ext.GS_Props.nearDeath = 1;
             SetStep(GAIBON_NEAR_DEATH);
         }

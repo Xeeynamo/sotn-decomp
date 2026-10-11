@@ -6,6 +6,14 @@
 
 #define STAGE_IS_ST0
 
+enum Palettes {
+    PAL_NONE = 0,
+    PAL_UNK_100 = 0x100,
+    PAL_DRACULA = 0x200,
+    PAL_GREATER_DEMON = 0x202,
+    PAL_SECRET_STAIRS = 0x228,
+};
+
 typedef enum EntityID {
     E_NONE,
     E_BREAKABLE,              // func_801A805C

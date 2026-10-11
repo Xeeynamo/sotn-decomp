@@ -4,6 +4,10 @@
 
 #include <stage.h>
 
+enum Palettes {
+    PAL_NONE = 0,
+};
+
 typedef enum EntityID {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_FACTORY,

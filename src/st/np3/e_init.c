@@ -187,40 +187,38 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityBladeWeapon,
 };
 
-EInit g_EInitBreakable = {ANIMSET_DRA(3), 0x00, 0x00, 0x000, 0x000};
-EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x00, 0x00, 0x000, 0x001};
-EInit g_EInitParticle = {ANIMSET_DRA(3), 0x00, 0x00, 0x000, 0x002};
-EInit g_EInitSpawner = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x004};
-EInit g_EInitInteractable = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x005};
-EInit g_EInitUnkId13 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x002};
-EInit g_EInitLockCamera = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x001};
-EInit g_EInitCommon = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
-EInit g_EInitDamageNum = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
-EInit g_EInitStInteractable = {ANIMSET_OVL(0x01), 0x00, 0x00, 0x000, 0x005};
-EInit g_EInitWaterObject = {ANIMSET_OVL(0x03), 0x01, 0x48, 0x28C, 0x01D};
-EInit g_EInitWaterSplash = {ANIMSET_OVL(0x03), 0x00, 0x48, 0x28C, 0x01E};
-EInit g_EInitMerman = {ANIMSET_OVL(0x04), 0x01, 0x4A, 0x2B2, 0x01B};
-EInit g_EInitMermanFireball = {ANIMSET_OVL(0x04), 0x00, 0x4A, 0x2B2, 0x01C};
-EInit g_EInitBoneScimitar = {ANIMSET_OVL(0x02), 0x01, 0x48, 0x2C5, 0x069};
-EInit g_EInitScimitarParts = {ANIMSET_OVL(0x02), 0x01, 0x48, 0x2C5, 0x002};
-EInit g_EInitBat = {ANIMSET_OVL(0x05), 0x00, 0x4C, 0x2C8, 0x040};
-EInit g_EInitZombie = {ANIMSET_OVL(0x07), 0x00, 0x4D, 0x2D3, 0x06E};
-EInit g_EInitOwlKnight = {ANIMSET_OVL(0x08), 0x10, 0x49, 0x2CB, 0x014};
-EInit g_EInitOwlKnightSword = {ANIMSET_OVL(0x08), 0x00, 0x49, 0x2CB, 0x015};
-EInit g_EInitOwl = {ANIMSET_OVL(0x08), 0x01, 0x49, 0x2CB, 0x016};
-EInit g_EInitBloodyZombie = {ANIMSET_OVL(0x09), 0x01, 0x4A, 0x2D6, 0x00D};
-EInit g_EInitSlograNP3 = {ANIMSET_OVL(0x0A), 0x00, 0x48, 0x2D9, 0x0F3};
-EInit g_EInitSlograSpearNP3 = {ANIMSET_OVL(0x0A), 0x00, 0x48, 0x2D9, 0x0F4};
-EInit g_EInitSlograProjectileNP3 = {
-    ANIMSET_OVL(0x0A), 0x00, 0x48, 0x2D9, 0x0F5};
-EInit g_EInitGaibonNP3 = {ANIMSET_OVL(0x0B), 0x00, 0x4C, 0x2E2, 0x0FE};
-EInit g_EInitGaibonProjectileNP3 = {
-    ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x0FF};
-EInit g_EInitGaibonLargeProjectile = {
-    ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x100};
-EInit g_EInitHammer = {ANIMSET_OVL(0x0C), 0x02, 0x4C, 0x2F0, 0x0BA};
-EInit g_EInitHammerWeapon = {ANIMSET_OVL(0x0C), 0x12, 0x4C, 0x2F0, 0x0BB};
-EInit g_EInitGurkha = {ANIMSET_OVL(0x0C), 0x02, 0x4C, 0x2ED, 0x0BC};
-EInit g_EInitGurkhaWeapon = {ANIMSET_OVL(0x0C), 0x14, 0x4C, 0x2ED, 0x0BD};
-EInit g_EInitBlade = {ANIMSET_OVL(0x0C), 0x02, 0x4C, 0x2EA, 0x0BE};
-EInit g_EInitBladeWeapon = {ANIMSET_OVL(0x0C), 0x13, 0x4C, 0x2EA, 0x0BF};
+// clang-format off
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_BREAKABLE};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitParticle = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitSpawner = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_SPAWNER};
+EInit g_EInitInteractable = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitStInteractable = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitWaterObject = {ANIMSET_OVL(3), 0x01, 0x48, PAL_MERMAN_2, ENEMY_MERMAN_2};
+EInit g_EInitWaterSplash = {ANIMSET_OVL(3), 0x00, 0x48, PAL_MERMAN_2, ENEMY_MERMAN_2_WATER_SPLASH};
+EInit g_EInitMerman = {ANIMSET_OVL(4), 0x01, 0x4A, PAL_MERMAN, ENEMY_MERMAN};
+EInit g_EInitMermanFireball = {ANIMSET_OVL(4), 0x00, 0x4A, PAL_MERMAN, ENEMY_MERMAN_FIREBALL};
+EInit g_EInitBoneScimitar = {ANIMSET_OVL(2), 0x01, 0x48, PAL_BONE_SCIMITAR, ENEMY_BONE_SCIMITAR};
+EInit g_EInitScimitarParts = {ANIMSET_OVL(2), 0x01, 0x48, PAL_BONE_SCIMITAR, ENEMY_PARTICLE};
+EInit g_EInitBat = {ANIMSET_OVL(5), 0x00, 0x4C, PAL_BAT, ENEMY_BAT};
+EInit g_EInitZombie = {ANIMSET_OVL(7), 0x00, 0x4D, PAL_ZOMBIE, ENEMY_ZOMBIE};
+EInit g_EInitOwlKnight = {ANIMSET_OVL(8), 0x10, 0x49, PAL_OWL_KNIGHT_OWL, ENEMY_OWL_KNIGHT};
+EInit g_EInitOwlKnightSword = {ANIMSET_OVL(8), 0x00, 0x49, PAL_OWL_KNIGHT_OWL, ENEMY_OWL_KNIGHT_SWORD};
+EInit g_EInitOwl = {ANIMSET_OVL(8), 0x01, 0x49, PAL_OWL_KNIGHT_OWL, ENEMY_OWL};
+EInit g_EInitBloodyZombie = {ANIMSET_OVL(9), 0x01, 0x4A, PAL_BLOODY_ZOMBIE, ENEMY_BLOODY_ZOMBIE};
+EInit g_EInitSlograNP3 = {ANIMSET_OVL(10), 0x00, 0x48, PAL_SLOGRA, ENEMY_SLOGRA};
+EInit g_EInitSlograSpearNP3 = {ANIMSET_OVL(10), 0x00, 0x48, PAL_SLOGRA, ENEMY_SLOGRA_SPEAR};
+EInit g_EInitSlograProjectileNP3 = {ANIMSET_OVL(10), 0x00, 0x48, PAL_SLOGRA, ENEMY_SLOGRA_PROJECTILE};
+EInit g_EInitGaibonNP3 = {ANIMSET_OVL(11), 0x00, 0x4C, PAL_GAIBON, ENEMY_GAIBON};
+EInit g_EInitGaibonProjectileNP3 = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_GAIBON_PROJECTILE};
+EInit g_EInitGaibonLargeProjectile = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_GAIBON_LARGE_PROJECTILE};
+EInit g_EInitHammer = {ANIMSET_OVL(12), 0x02, 0x4C, PAL_HAMMER, ENEMY_HAMMER};
+EInit g_EInitHammerWeapon = {ANIMSET_OVL(12), 0x12, 0x4C, PAL_HAMMER, ENEMY_HAMMER_WEAPON};
+EInit g_EInitGurkha = {ANIMSET_OVL(12), 0x02, 0x4C, PAL_GURKHA, ENEMY_GURKHA};
+EInit g_EInitGurkhaWeapon = {ANIMSET_OVL(12), 0x14, 0x4C, PAL_GURKHA, ENEMY_GURKHA_WEAPON};
+EInit g_EInitBlade = {ANIMSET_OVL(12), 0x02, 0x4C, PAL_BLADE, ENEMY_BLADE};
+EInit g_EInitBladeWeapon = {ANIMSET_OVL(12), 0x13, 0x4C, PAL_BLADE, ENEMY_BLADE_WEAPON};

@@ -9,4 +9,10 @@
 extern EInit g_EInitParticle;
 extern EInit g_EInitLockCamera;
 
+enum Palettes {
+    PAL_NONE = 0,
+    PAL_UNK_210 = 0x210,
+    PAL_UNK_211 = 0x211,
+};
+
 #endif // BO4_H

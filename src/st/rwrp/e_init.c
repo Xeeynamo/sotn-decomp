@@ -24,16 +24,18 @@ PfnEntityUpdate EntityUpdates[] = {
 };
 
 // *** Group here all the Entity Init ***
-EInit g_EInitBreakable = {ANIMSET_OVL(1), 0x00, 0x00, 0x0000, 0x000};
-EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x00, 0x00, 0x0000, 0x001};
-EInit g_EInitParticle = {ANIMSET_DRA(3), 0x00, 0x00, 0x0000, 0x002};
-EInit D_80180464 = {ANIMSET_DRA(0), 0x00, 0x00, 0x0000, 0x004};
-EInit g_EInitInteractable = {ANIMSET_DRA(0), 0x00, 0x00, 0x0000, 0x005};
-EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0x00, 0x00, 0x0000, 0x002};
-EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0x00, 0x00, 0x0000, 0x001};
-EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, 0x0000, 0x003};
-EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, 0x0000, 0x003};
-EInit D_801804AC = {ANIMSET_OVL(1), 0x00, 0x00, 0x0000, 0x003};
-EInit g_EInitReverseSmallRocks = {ANIMSET_OVL(1), 0x00, 0x00, 0x0000, 0x005};
-EInit g_EInitSmallRocks = {ANIMSET_OVL(2), 0x00, 0x00, 0x82E8, 0x005};
+// clang-format off
+EInit g_EInitBreakable = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_BREAKABLE};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitParticle = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit D_80180464 = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_SPAWNER};
+EInit g_EInitInteractable = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit D_801804AC = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitReverseSmallRocks = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitSmallRocks = {ANIMSET_OVL(2), 0x00, 0x00, PAL_FLAG(PAL_SMALL_ROCKS), ENEMY_INTERACTABLE};
+// clang-format on
 // ******

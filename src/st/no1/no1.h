@@ -6,9 +6,23 @@
 void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 
-enum Palette {
+enum Palettes {
     PAL_NONE = 0,
+    PAL_AXE_KNIGHT = 0x200,
+    PAL_UNK_207 = 0x207,
+    PAL_UNK_20A = 0x20A,
+    PAL_SKELETON = 0x212,
+    PAL_WERESKELETON = 0x213,
+    PAL_BONE_ARCHER = 0x215,
+    PAL_BONE_MUSKET = 0x216,
+    PAL_SWORD_LORD = 0x21A,
+    PAL_ARMOR_LORD = 0x21C,
     PAL_ARMOR_LORD_UNK = 0x220,
+    PAL_SPEAR_GUARD = 0x222,
+    PAL_SKELETON_APE = 0x225,
+    PAL_UNK_228 = 0x228,
+    PAL_MEDUSA_HEAD_BLUE = 0x22B,
+    PAL_MEDUSA_HEAD_YELLOW = 0x22C,
     PAL_BREAKABLE = 0x22D,
     PAL_BREAKABLE_DEBRIS = 0x231,
 };

@@ -8,6 +8,8 @@
 
 enum Palettes {
     PAL_NONE,
+    PAL_GALAMOTH = 0x200,
+    PAL_UNK_21B = 0x21B,
 };
 
 typedef enum EntityID {

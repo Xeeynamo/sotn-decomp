@@ -12,9 +12,14 @@
 
 #define STAGE_IS_CHI
 
-enum Palette {
+enum Palettes {
     PAL_NONE = 0,
     PAL_BREAKABLE_DEBRIS = 0x159,
+    PAL_GREMLIN = 0x200,
+    PAL_SALEM_WITCH = 0x204,
+    PAL_THORNWEED_CORPSEWEED = 0x206,
+    PAL_VENUS_WEED = 0x20A,
+    PAL_SALEM_WITCH_TRIBOLT = 0x2EB,
 };
 
 typedef enum {

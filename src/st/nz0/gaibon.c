@@ -135,7 +135,7 @@ void EntityGaibon(Entity* self) {
 
     if (self->step) {
         if (!self->ext.GS_Props.nearDeath) {
-            if (self->hitPoints < g_api.enemyDefs[0xFE].hitPoints / 2) {
+            if (self->hitPoints < g_api.enemyDefs[ENEMY_GAIBON].hitPoints / 2) {
                 self->ext.GS_Props.grabedAscending = 0;
                 self->ext.GS_Props.nearDeath = 1;
                 SetStep(GAIBON_NEAR_DEATH);

@@ -145,7 +145,7 @@ void EntityBloodSkeleton(Entity* self) {
             if (!animationResult) {
                 self->hitPoints = 0;
                 self->hitboxState = 3;
-                self->flags = g_api.enemyDefs[70].flags;
+                self->flags = g_api.enemyDefs[ENEMY_BLOOD_SKELETON].flags;
 #ifdef STAGE_IS_NZ0
                 self->flags &=
                     ~(FLAG_DESTROY_IF_OUT_OF_CAMERA |

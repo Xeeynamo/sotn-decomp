@@ -102,11 +102,12 @@ PfnEntityUpdate EntityUpdates[] = {
 #endif
 };
 
-EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0, 0x0, 0};
+// clang-format off
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_BREAKABLE};
 
 #include "../e_init_common.h"
 
-EInit g_EInitTOPCommon = {ANIMSET_OVL(1), 0, 0, 0, 5};
-EInit g_EInitFleaRider = {ANIMSET_OVL(3), 0, 0x4B, 0x206, 0x30};
-EInit g_EInitAxeKnight = {ANIMSET_OVL(7), 1, 0x50, 0x240, 6};
-EInit g_EInitAxeKnightAxe = {ANIMSET_OVL(7), 0x2F, 0x50, 0x240, 7};
+EInit g_EInitTOPCommon = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitFleaRider = {ANIMSET_OVL(3), 0x00, 0x4B, PAL_FLEA_RIDER, ENEMY_FLEA_RIDER};
+EInit g_EInitAxeKnight = {ANIMSET_OVL(7), 0x01, 0x50, PAL_AXE_KNIGHT, ENEMY_AXE_KNIGHT};
+EInit g_EInitAxeKnightAxe = {ANIMSET_OVL(7), 0x2F, 0x50, PAL_AXE_KNIGHT, ENEMY_AXE_KNIGHT_AXE};

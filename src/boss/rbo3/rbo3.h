@@ -7,6 +7,11 @@
 
 #define STAGE_IS_RBO3
 
+enum Palettes {
+    PAL_NONE = 0,
+    PAL_MEDUSA = 0x220,
+};
+
 typedef enum {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_BREAKABLE,
