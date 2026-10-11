@@ -62,7 +62,7 @@ segments:
       - [0xE148, c, rbo5_psp/unk_E148]
       - [0x27F60, c, rbo5_psp/st_init]
       - [0x280B0, c, rbo5/e_breakable]
-      - [0x28230, c, rbo5_psp/unk_28230]
+      - [0x28230, c, rbo5/e_room_bg]
       - [0x28310, c, rbo5/e_lock_camera]
       - [0x28570, c, rbo5_psp/func_us_801c0b9c_from_no1]
       - [0x28B80, .data, rbo5/e_life_up]
