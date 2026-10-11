@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rchi.h"
 
-#ifndef VERSION_PSP
-static AnimateEntityFrame AnimFrames_80180690[] = {0x40, 0x01, 0xFF, 0x00};
+static AnimateEntityFrame AnimFrames_80180690[] = {{64, 1}, POSE_END};
 static AnimateEntityFrame AnimFrames_80180694[] = {
-    0x02, 0x25, 0x02, 0x26, 0x02, 0x27, 0x02, 0x26, 0x00, 0x00, 0x00, 0x00};
+    {2, 37}, {2, 38}, {2, 39}, {2, 38}, POSE_LOOP(0),
+};
 
 ObjInit2 BackgroundBlockInit[] = {
     {
@@ -30,7 +30,6 @@ ObjInit2 BackgroundBlockInit[] = {
         .animFrames = (u8*)AnimFrames_80180694,
     },
 };
-#endif
 
 #define BG_BLOCK_NEEDS_SCALE
 #include "../e_room_bg.h"
