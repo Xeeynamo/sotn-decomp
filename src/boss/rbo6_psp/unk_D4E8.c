@@ -1,148 +1,367 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rbo6/rbo6.h"
 
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D4E8", EntityBreakable);
+extern EInit g_EInitBreakable;
+extern u8* D_pspeu_09256C38[];
+extern u8 D_pspeu_09256C58[];
+extern u16 D_pspeu_09256C60[];
+extern u8 D_pspeu_0926C040[];
+extern u8 D_pspeu_09256C70[];
+extern EInit g_EInitInteractable;
+extern s32 D_pspeu_0926C048;
+extern s32 D_pspeu_0926C050;
+extern s32 D_pspeu_0926C058;
+extern s32 E_ID(UNK_32);
 
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D4E8", DecreaseBrightness);
+void EntityBreakable(Entity* self) {
+    Entity* entity;
+    u16 breakableType;
 
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D4E8", func_us_801A4594);
+    breakableType = self->params >> 12;
+    if (self->step) {
+        AnimateEntity(D_pspeu_09256C38[breakableType], self);
+        if (self->hitParams) {
+            g_api.PlaySfx(SFX_CANDLE_HIT);
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (entity != NULL) {
+                CreateEntityFromCurrentEntity(E_EXPLOSION, entity);
+                entity->params = D_pspeu_0926C040[breakableType];
+            }
+            ReplaceBreakableWithItemDrop(self);
+        }
+    } else {
+        InitializeEntity(g_EInitBreakable);
+        self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 20;
+        self->blendMode = D_pspeu_09256C70[breakableType];
+        self->hitboxHeight = D_pspeu_09256C58[breakableType];
+        self->animSet = D_pspeu_09256C60[breakableType];
+    }
+}
 
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D4E8", func_us_801A4F14);
+s32 DecreaseBrightness(Primitive* prim, s32 brightnessOffset) {
+    s32 newColor;
+    s32 i;
+    s32 j;
+    u8* rgbVal;
+    u8* rPtr;
+    s32 ret;
 
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D4E8", func_us_801A367C);
+    ret = 0;
+    rPtr = &prim->r0;
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 3; j++) {
+            rgbVal = &rPtr[j];
+            newColor = *rgbVal;
+            newColor += brightnessOffset;
+            if (newColor > 0xFF) {
+                newColor = 0xFF;
+            } else {
+                ret |= 1;
+            }
+            *rgbVal = newColor;
+        }
+        rPtr += 0xC;
+    }
+    return ret;
+}
 
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D4E8", func_us_801A37B4);
+void func_us_801A4594(Entity* self) {
+    Primitive* prim;
+    s32 brightness;
+    Entity* entity;
+    s32 finished;
+    s32 primIndex;
 
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D4E8", func_us_801A399C);
-
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D4E8", func_us_801A3BE0);
-
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D4E8", func_us_801A4028);
-
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D4E8", func_us_801A9208_from_bo6);
-
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D4E8", func_us_8019DB9C);
-
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D4E8", func_us_8019EADC);
-
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D4E8", func_us_8019EE30);
-
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D4E8", func_us_8019F1CC);
-
-void func_us_8019FA78(Entity* self) {
-    extern u16 D_us_80180540;
-    extern u32 D_pspeu_0926C0A0;
-    extern s32 D_pspeu_0926C068;
-
-    self->palette = (u16)D_pspeu_0926C0A0;
+    FntPrint("end_step %x\n", self->step);
+    g_Player.padSim = 0;
+    g_Player.demo_timer = 0x80;
+    g_Player.status |= PLAYER_STATUS_UNK100000;
+    g_PauseAllowed = false;
+    g_unkGraphicsStruct.pauseEnemies = true;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_us_80180540);
-        self->animCurFrame = 0x11;
-        /* fall through */
+        InitializeEntity(g_EInitInteractable);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x20);
+        if (primIndex == -1) {
+            self->step = 0;
+            return;
+        }
+        LOW(self->flags) |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.et_801BA290.unk7C = prim;
+        while (prim != NULL) {
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+        if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
+            g_Player.padSim = 0;
+        } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
+            g_Player.padSim = PAD_WOLF;
+        } else if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
+            g_Player.padSim = PAD_BAT;
+        }
+        // fallthrough
     case 1:
-        self->animCurFrame = 0x11;
+        prim = self->ext.et_801BA290.unk7C;
+        prim->type = PRIM_GT4;
+        prim->tpage = 0x1A;
+        prim->clut = 0x19F;
+        prim->clut = 0x2E2;
+        prim->u0 = prim->u2 = 0;
+        prim->u1 = prim->u3 = 0x3F;
+        prim->v0 = prim->v1 = 0xC0;
+        prim->v2 = prim->v3 = 0xFF;
+        prim->x0 = prim->x2 = 0x80;
+        prim->x1 = prim->x3 = 0x80;
+        prim->y0 = prim->y1 = 0x80;
+        prim->y1 = prim->y3 = 0x80;
+        PGREY(prim, 0) = 0;
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
+        prim->priority = 0x90;
+        prim->drawMode =
+            DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+        prim = prim->next;
+        self->ext.et_801BA290.unk84 = prim;
+        prim->type = PRIM_G4;
+        prim->x0 = prim->x2 = 0;
+        prim->x1 = prim->x3 = 0x100;
+        prim->y0 = prim->y1 = 0x10;
+        prim->y2 = prim->y3 = 0xF0;
+        prim->priority = 0x50;
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+        self->ext.et_801BA290.unk88 = prim;
+        prim->type = PRIM_G4;
+        prim->x0 = prim->x2 = 0x40;
+        prim->x1 = prim->x3 = 0;
+        prim->y0 = prim->y1 = 0x10;
+        prim->y2 = prim->y3 = 0xF0;
+        prim->priority = 0x90;
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+        prim->type = PRIM_G4;
+        prim->x0 = prim->x2 = 0xC0;
+        prim->x1 = prim->x3 = 0x100;
+        prim->y0 = prim->y1 = 0x10;
+        prim->y2 = prim->y3 = 0xF0;
+        prim->priority = 0x90;
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+        self->ext.et_801BA290.unk8C = prim;
+        prim->type = PRIM_G4;
+        prim->x0 = prim->x2 = 0;
+        prim->x1 = prim->x3 = 0x100;
+        prim->y0 = prim->y1 = 0x10;
+        prim->y2 = prim->y3 = 0xF0;
+        prim->priority = 0x1FF;
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+        self->step++;
+        // fallthrough
+    case 2:
+        prim = self->ext.et_801BA290.unk7C;
+        prim->x0 = prim->x2 -= 3;
+        prim->x1 = prim->x3 += 3;
+        prim->y0 = prim->y1 -= 3;
+        prim->y2 = prim->y3 += 3;
+        brightness = prim->r0;
+        brightness += 8;
+        if (brightness > 0x60) {
+            brightness = 0x60;
+            self->ext.et_801BA290.unk80 = 0x10;
+            g_api.PlaySfx(SFX_WEAPON_APPEAR);
+            self->step++;
+        }
+        prim->g0 = prim->b0 = prim->r0 = brightness;
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
         break;
-    }
-
-    if (D_pspeu_0926C068 != 0) {
-        self->animCurFrame = 0;
-        self->hitboxState = 0;
-    }
-}
-
-void func_us_8019FB04(Entity* self) {
-    extern s32 D_pspeu_0926C0A0;
-    extern u8* D_pspeu_0926B500[];
-    extern s32 D_pspeu_0926C068;
-    extern Entity g_Entities[256];
-    extern u16 D_us_80180540;
-    extern void InitializeEntity(u16*);
-
-    u8* anim;
-    Entity* source;
-
-    self->palette = D_pspeu_0926C0A0;
-    switch (self->step) {
-    case 0:
-        InitializeEntity(&D_us_80180540);
-        /* fall through */
-    case 1:
-        anim = D_pspeu_0926B500[self->params];
-        AnimateEntity(anim, self);
-        source = &g_Entities[80];
-        self->posX.i.hi = source->posX.i.hi;
-        self->posY.i.hi = source->posY.i.hi;
+    case 3:
+        prim = self->ext.et_801BA290.unk7C;
+        if (self->ext.et_801BA290.unk80 & 1) {
+            prim->x0 = prim->x2 -= 1;
+            prim->x1 = prim->x3 += 1;
+            prim->y0 = prim->y1 -= 1;
+            prim->y2 = prim->y3 += 1;
+        }
+        if (!--self->ext.et_801BA290.unk80) {
+            self->step++;
+        }
         break;
-    }
-
-    if (D_pspeu_0926C068 != 0) {
-        self->animCurFrame = 0;
-        self->hitboxState = 0;
-    }
-}
-
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D4E8", func_us_8019FBC0);
-
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D4E8", func_us_8019FCB4);
-
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D4E8", func_us_801A01A4);
-
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D4E8", func_us_801A0710);
-
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D4E8", func_us_801A0860);
-
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D4E8", func_us_801A0AB4);
-
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D4E8", func_us_801A0DC0);
-
-void func_us_801A1150(Entity* self) {
-    extern u16 D_us_80180540;
-    extern u8 D_us_80180724;
-    extern u8 D_pspeu_0926B410;
-    s32 var_v0;
-
-    if (!self->step) {
-        InitializeEntity(&D_us_80180540);
-        self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
-        self->drawFlags |= ENTITY_OPACITY;
-        self->blendMode = BLEND_ADD | BLEND_TRANSP;
-    }
-    AnimateEntity(&D_pspeu_0926B410, self);
-    var_v0 = self->opacity;
-    var_v0 -= 2;
-    if (var_v0 < 0) {
-        var_v0 = 0;
-    }
-    self->opacity = (u8)var_v0;
-    if (var_v0 == 0) {
-        DestroyEntity(self);
-    }
-}
-
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D4E8", func_us_801A11DC);
-
-void func_us_801A1B38(Entity* self) {
-    Entity* real;
-
-    if (*(s32*)0x0926C060 & 1) {
-        DestroyEntity(self);
+    case 4:
+        prim = self->ext.et_801BA290.unk7C;
+        finished = PrimDecreaseBrightness(prim, 4);
+        if (!finished) {
+            prim->drawMode = DRAW_HIDE;
+            self->step++;
+        }
+        prim = self->ext.et_801BA290.unk84;
+        prim->drawMode = DRAW_COLORS;
+        prim->r0 += 4;
+        prim->g0 += 3;
+        prim->b0 += 2;
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
+        D_pspeu_0926C048 = 1;
+        // fallthrough
+    case 5:
+        prim = self->ext.et_801BA290.unk88;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
+        brightness = prim->r1;
+        if (brightness < 0xC0) {
+            brightness += 4;
+        } else {
+            self->step++;
+        }
+        prim->g1 = prim->b1 = prim->r1 = brightness;
+        LOW(prim->r3) = LOW(prim->r1);
+        prim = prim->next;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
+        prim->g1 = prim->b1 = prim->r1 = brightness;
+        LOW(prim->r3) = LOW(prim->r1);
+        if (self->step == 5 && D_pspeu_0926C048 < 4 && !(g_Timer & 0xF)) {
+            D_pspeu_0926C048++;
+        }
+        break;
+    case 6:
+        prim = self->ext.et_801BA290.unk84;
+        prim->drawMode = DRAW_COLORS;
+        if (prim->r0 < 0xA0) {
+            prim->r0 += 4;
+        }
+        if (prim->g0 < 0x80) {
+            prim->g0 += 3;
+        }
+        if (prim->g0 < 0x30) {
+            prim->b0 += 2;
+        }
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
+        finished = 1;
+        prim = self->ext.et_801BA290.unk88;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
+        brightness = prim->r1;
+        brightness++;
+        if (brightness > 0xFF) {
+            brightness = 0xFF;
+        }
+        prim->g1 = prim->b1 = prim->r1 = brightness;
+        LOW(prim->r3) = LOW(prim->r1);
+        if (prim->x0 < 0x80) {
+            prim->x0 = prim->x2 += 1;
+            finished = 0;
+        }
+        prim = prim->next;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
+        prim->g1 = prim->b1 = prim->r1 = brightness;
+        LOW(prim->r3) = LOW(prim->r1);
+        if (prim->x0 > 0x80) {
+            prim->x0 = prim->x2 -= 1;
+            finished = 0;
+        }
+        if (finished) {
+            self->step++;
+        }
+        break;
+    case 7:
+        finished = 0;
+        prim = self->ext.et_801BA290.unk88;
+        finished += DecreaseBrightness(prim, 2);
+        prim = prim->next;
+        finished += DecreaseBrightness(prim, 2);
+        D_pspeu_0926C058 = 0x80 - prim->r0 / 2;
+        entity = AllocEntity(&g_Entities[64], &g_Entities[256]);
+        if (entity != NULL) {
+            CreateEntityFromCurrentEntity(E_ID(UNK_32), entity);
+            brightness = Random();
+            if (brightness < 0x20) {
+                brightness += 0x60;
+            }
+            if (brightness > 0xE0) {
+                brightness -= 0x80;
+            }
+            entity->posX.i.hi = brightness;
+            entity->posY.i.hi = 0xF0;
+            entity->params = 0;
+        }
+        if (!finished) {
+            self->step++;
+        }
+        break;
+    case 8:
+        entity = &PLAYER;
+        if (entity->posX.i.hi > 0x80) {
+            D_pspeu_0926C050 = PAD_LEFT;
+        } else {
+            D_pspeu_0926C050 = PAD_RIGHT;
+        }
+        self->step++;
+        // fallthrough
+    case 9:
+        g_Player.padSim = D_pspeu_0926C050;
+        prim = self->ext.et_801BA290.unk8C;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
+        finished = DecreaseBrightness(prim, 4);
+        if (!finished) {
+            self->step++;
+        }
+        return;
+    case 10:
+        prim = self->ext.et_801BA290.unk8C;
+        prim->drawMode = DRAW_DEFAULT;
+        finished = PrimDecreaseBrightness(prim, 8);
+        if (!finished) {
+            self->step++;
+        }
+        return;
+    case 11:
+        g_PauseAllowed = true;
+        g_unkGraphicsStruct.pauseEnemies = false;
+        if (g_RoomCount > 0x736) {
+            D_800978B4 = 3;
+        } else {
+            D_800978B4 = 5;
+        }
+        g_GameState = Game_Ending;
+        g_GameStep = Play_Reset;
+        self->step++;
+        // fallthrough
+    case 12:
+        g_PauseAllowed = true;
+        g_unkGraphicsStruct.pauseEnemies = false;
         return;
     }
 
-    if (!self->step) {
-        InitializeEntity((u16*)((u8*)(void*)func_us_801A1B38 + 0x80F8));
-        self->blendMode = BLEND_ADD | BLEND_TRANSP;
-    }
-
-    AnimateEntity((u8*)((u8*)(void*)func_us_801A1B38 + 0x1E620), self);
-
-    real = self->ext.succubus.real;
-    self->posX.i.hi = real->posX.i.hi;
-    self->posY.i.hi = real->posY.i.hi + 0xC;
-
-    if (*(s32*)0x0926C098 == 5) {
-        DestroyEntity(self);
+    if (D_pspeu_0926C048) {
+        if (!(g_Timer & 7)) {
+            if (D_pspeu_0926C058) {
+                g_api.PlaySfxVolPan(SFX_MAGIC_SWITCH, D_pspeu_0926C058, 0);
+            } else {
+                g_api.PlaySfx(SFX_MAGIC_SWITCH);
+            }
+        }
+        if (!(g_Timer & 1)) {
+            entity = AllocEntity(&g_Entities[64], &g_Entities[256]);
+            if (entity != NULL) {
+                CreateEntityFromCurrentEntity(E_ID(UNK_32), entity);
+                brightness = Random();
+                if (brightness < 0x20) {
+                    brightness += 0x60;
+                }
+                if (brightness > 0xE0) {
+                    brightness -= 0x80;
+                }
+                entity->posX.i.hi = brightness;
+                entity->posY.i.hi = 0xF0;
+                entity->params = 0;
+            }
+        }
     }
 }
