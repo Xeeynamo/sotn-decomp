@@ -81,6 +81,7 @@ segments:
       - [0x1DC30, data]
       - [0x1DE88, .data, rbo7/e_lock_camera]
       - [0x1DF00, data, 1DF00]
+      - [0x1DF60, .data, rbo7_psp/func_us_801bab18_from_bo0]
       - [0x1DF80, .rodata, rbo7/e_life_up]
       - [0x1DFA0, .rodata, rbo7/e_red_door]
       - [0x1DFB8, .rodata, rbo7/e_collect]

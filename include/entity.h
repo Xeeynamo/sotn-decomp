@@ -3627,6 +3627,13 @@ typedef struct {
 } ET_Harpy;
 
 typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ u32 : 32;
+    /* 0x84 */ u16 : 16;
+    /* 0x86 */ u8 unk86;
+} ET_80195A8C;
+
+typedef struct {
     /* 0x7C */ Primitive* prim;
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 : 16;
@@ -4822,6 +4829,7 @@ typedef union { // offset=0x7C
     ET_ShaftOrb shaftOrb;
     ET_BoneArk boneArk;
     ET_Harpy harpy;
+    ET_80195A8C et_80195A8C;
     ET_CloakedKnight cloakedKnight;
     ET_CloakedKnightAura cloakedKnightAura;
     ET_CloakedKnightSword cloakedKnightSword;
