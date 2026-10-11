@@ -1,196 +1,196 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rbo5/rbo5.h"
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_092457C8);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_us_801C096C);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09245AD8);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", CheckStageCollision);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09246210);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", EntityDoppleganger40);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09247190);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_us_801C1DB0);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_092471B8);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_us_801C1DC8);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09248698);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", EntityUnkId16);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09248828);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_80111CC0);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09248898);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", DopplegangerStepStand);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09248B88);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", DopplegangerStepWalk);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09248BE8);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", DopplegangerStepJump);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09248F50);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", DopplegangerStepFall);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09248FA8);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", DopplegangerStepCrouch);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_80158B04);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_us_801C648C);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09249460);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", DopplegangerStepHighJump);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_092497C0);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_80113E68);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09249838);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_us_801C68CC);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_80159C04);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_us_801C6950);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09249910);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", DopplegangerHandleDamage);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09249FE8);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", DopplegangerStepKill);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924A948);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", BatFormFinished);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924AA18);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_8011690C);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924AAF0);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", CheckWingSmashInput);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924AB20);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", ControlBatForm);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924B918);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", DopplegangerStepUnmorphBat);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924BB78);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_us_801C84F4);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924BBE8);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", ControlMistForm);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924C200);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", DopplegangerStepUnmorphMist);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924C498);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", DopplegangerStepSwordWarp);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924C550);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", DopplegangerStepStone);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924C9C8);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_8010E470);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924CA58);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_8010E570);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924CBF0);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_8010E6AC);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924CD20);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_us_801C4EE4);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924CDE0);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_us_801C4F90);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924CE30);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_us_801C4FDC);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924CEB0);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_us_801C504C);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924CF50);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_us_801C5168);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924D108);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_us_801C52F8);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924D4E8);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_8010FAF4);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924D528);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_us_801C55EC);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", MarSetStep);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", SetDopplegangerStep);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", InitMariaAfterImage);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", InitPlayerAfterImage);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", DrawMariaAfterImage);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", DrawPlayerAfterImage);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924DCB8);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", SetDopplegangerAnim);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924DCF8);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_8010DA70);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924DE50);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", UpdateUnarmedAnim);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924DFB0);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", PlayAnimation);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924E260);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", UpdateAnim);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", MarDisableAfterImage);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_us_801C4954);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924E770);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", EnableAfterImage);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924E788);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_us_801C4A30);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", MarDecelerateX_0924E7C8);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", DecelerateX);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", MarDecelerateX_0924E868);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", DecelerateY);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", MarCheckFacing);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", CheckMoveDirection);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", MarSetSpeedX);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", SetSpeedX);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924EA50);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_8010E3B8);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0924EA98);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_us_801C5650);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", MarCheckFloor);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", DopCheckFloor);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", MarCheckCeiling);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", DopCheckCeiling);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09250260);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", DopCheckWallRight);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", MarCheckWallLeft);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", DopCheckWallLeft);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_092508C0);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", ReboundStoneBounce1);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09250948);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", ReboundStoneBounce2);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_092509D0);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", EntitySubwpnReboundStone);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_092514F0);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", DopplegangerUnarmedAttack);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09251748);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", EntitySubwpnKnife);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", MarGetFreeEntity);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", GetFreeEntity);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", MarGetFreeEntityReverse);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", GetFreeEntityReverse);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09252480);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_80118C28);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_8015FDB0);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_80119E78);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09252768);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", DopEntityHitByHoly);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09252B20);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", PrintDummySet);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09252B48);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_us_801C9624);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", MarCreateEntFactoryFromEntity);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", CreateEntFactoryFromEntity);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09252E78);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_us_801C98BC);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09253500);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_us_801C9D58);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09253620);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", EntitySmokePuff);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09253EA0);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", DopEntityHitByDark);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_maria_80162E9C);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_8011BD48);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09254180);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", EntityDopplegangerBlinkWhite);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09256258);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", EntityDopplegangerOutline);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09256D30);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", EntityGravityBootBeam);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_092570B8);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", EntityWingSmashTrail);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09257298);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_us_801CC788);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_maria_80161C2C);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_8011EDA8);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", MarEntityHitByLightning);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", DopEntityHitByLightning);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09258A50);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", EntityHitByIce);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09259480);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_80121F58);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_09259A20);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", EntityMist);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0925BA80);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", EntityDopplegangerDissolves);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0925CA08);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", EntityUnkId18);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_us_801BDA0C);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", EntityUnkId17);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0925D968);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", EntityUnkId1C);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0925DB68);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", EntityUnkId19);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_us_801BE2C8);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", EntityUnkId1A);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_092481F0_from_bo3);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_us_801B5004);
 
-INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", func_pspeu_0925EF30);
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5_psp/unk_E148", EntityUnkId1E);
