@@ -1,7 +1,1 @@
-spriteBanks = 0x8018002C;
-cluts = 0x801800D0;
-rooms_layers = 0x80180204;
-gfxBanks = 0x80180308;
-entityLayoutHorizontal = 0x8018034C;
-entityLayoutVertical = 0x80180420;
-rooms = 0x80181838;
+

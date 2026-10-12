@@ -39,6 +39,9 @@ static u8 blend_modes[] = {
 static s16 debris_offsets_y[] = {
     -4, -4, 3, -6, 2, 9, -4, 12, 0, 2, 0, 15, 0, 31};
 
+// nb. Stripped on PSP
+const char unused_debug_string[] = "candle_kind %x\n";
+
 void EntityBreakable(Entity* self) {
     u16 breakableType = self->params >> 12;
     Entity* entity;
