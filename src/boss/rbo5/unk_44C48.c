@@ -17,7 +17,7 @@ void func_8010E470(s32 index, s32 velocityX) {
     DOPPLEGANGER.velocityX = velocityX;
     DOPPLEGANGER.velocityY = 0;
     DOPPLEGANGER.step = Dop_Crouch;
-    DOPPLEGANGER.step_s = (s32)D_us_801813A4[index * 2 + 0];
+    DOPPLEGANGER.step_s = (s32)D_us_801813A4[index * 2 + 0]; // fake?
     SetDopplegangerAnim(D_us_801813A4[index * 2 + 1]);
 }
 
