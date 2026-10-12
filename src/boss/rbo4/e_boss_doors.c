@@ -1,10 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo4.h"
 
-#ifdef VERSION_PSP
-extern s32 E_ID(BOSS_DOORS);
-#endif
-
 extern EInit g_EInitBossDoor;
 
 // set by EntityBossFightManager while the fight is on

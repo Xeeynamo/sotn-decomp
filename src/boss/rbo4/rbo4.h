@@ -44,6 +44,21 @@ typedef enum EntityID {
     NUM_ENTITIES,
 };
 
+#ifdef VERSION_PSP
+extern s32 E_ID(BACKGROUND_BLOCK);
+extern s32 E_ID(LOCK_CAMERA);
+extern s32 E_ID(UNK_ID13);
+extern s32 E_ID(EXPLOSION_VARIANTS);
+extern s32 E_ID(GREY_PUFF);
+extern s32 E_ID(THE_CREATURE);
+extern s32 E_ID(THE_CREATURE_HEAD);
+extern s32 E_ID(THE_CREATURE_FLAMES);
+extern s32 E_ID(UNK_19);
+extern s32 E_ID(BOSS_FIGHT_MANAGER);
+extern s32 E_ID(BOSS_DOORS);
+extern s32 E_ID(LIFE_UP_SPAWN);
+#endif
+
 enum BossMgrState {
     BOSS_MGR_IDLE = 0,       // initial state, fight not yet engaged
     BOSS_MGR_FIGHT_ON = 1,   // boss battle started

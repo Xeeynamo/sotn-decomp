@@ -1,11 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo4.h"
 
-#ifdef VERSION_PSP
-extern s32 E_ID(UNK_19);
-extern s32 E_ID(LIFE_UP_SPAWN);
-#endif
-
 extern EInit g_EInitInteractable;
 s32 g_BossMgrState = BOSS_MGR_IDLE;
 extern s32 D_us_80180810;

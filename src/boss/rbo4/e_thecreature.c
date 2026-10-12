@@ -1,12 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo4.h"
 
-#ifdef VERSION_PSP
-extern s32 E_ID(THE_CREATURE);
-extern s32 E_ID(THE_CREATURE_HEAD);
-extern s32 E_ID(THE_CREATURE_FLAMES);
-#endif
-
 extern EInit g_EInitTheCreature;
 extern EInit g_EInitTheCreatureHead;
 extern s32 g_BossMgrState;
