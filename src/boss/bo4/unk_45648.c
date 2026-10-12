@@ -151,7 +151,7 @@ void func_us_801C5A4C(void) {
     DOPPLEGANGER.velocityY = FIX(-12);
     SetDopplegangerAnim(0x21);
     g_Dop.gravBootTimer = 0;
-    g_Dop.unk44 &= 0xFFFE;
+    g_Dop.unk44 &= ~1;
     CreateEntFactoryFromEntity(
         g_CurrentEntity, FACTORY(BP_GRAVITY_BOOT_BEAM, 0), 0);
 }

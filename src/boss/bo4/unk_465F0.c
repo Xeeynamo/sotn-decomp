@@ -2,7 +2,7 @@
 #include "bo4.h"
 #include "../../dra/subwpn_dagger.h"
 
-// Used in dra/7E4BC, dra/bss, rbo5/unk_4648C, bo4/unk_465F0
+// Used in dra/7E4BC, dra/bss, rbo5/unk_4907C, bo4/unk_465F0
 typedef struct {
     f32 posX;
     f32 posY;
@@ -78,7 +78,7 @@ void DopplegangerStepStand(void) {
             if (DOPPLEGANGER.pose < g_Dop.unk54) {
                 var_s0 = 0;
             } else {
-                g_Dop.unk46 &= 0x7FFF;
+                g_Dop.unk46 &= ~0x8000;
                 var_s0 = 0x1B;
                 if (DOPPLEGANGER.poseTimer < 0) {
                     var_s0 = 0xF;
@@ -165,7 +165,7 @@ void DopplegangerStepJump(void) {
             SetDopplegangerAnim(25);
         }
         if (moveDirection <= 0) {
-            g_Dop.unk44 &= 0xFFEF;
+            g_Dop.unk44 &= ~0x10;
         }
         if (DOPPLEGANGER.velocityY > 0) {
             if (DOPPLEGANGER.ext.player.anim != 27) {
@@ -180,7 +180,7 @@ void DopplegangerStepJump(void) {
             SetSpeedX(FIX(1.5));
         }
         if (moveDirection <= 0) {
-            g_Dop.unk44 &= 0xFFEF;
+            g_Dop.unk44 &= ~0x10;
         }
 
         break;
@@ -274,7 +274,7 @@ void DopplegangerStepCrouch(void) {
             if (DOPPLEGANGER.pose < g_Dop.unk54) {
                 var_s0 = 0;
             } else {
-                g_Dop.unk46 &= 0x7FFF;
+                g_Dop.unk46 &= ~0x8000;
                 var_s0 = 0xE;
                 if (DOPPLEGANGER.poseTimer < 0) {
                     var_s0 = 0x2E;
@@ -317,7 +317,7 @@ void DopplegangerStepCrouch(void) {
     }
 }
 
-// n.b.! this is the same as rbo5/unk_4648C.c
+// n.b.! this is the same as rbo5/unk_45C00.c
 
 void func_us_801C6E7C(u16 arg0) {
     s16 move = 3;

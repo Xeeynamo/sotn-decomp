@@ -504,7 +504,7 @@ typedef struct Cmd14 {
     u8 unke;
 } Cmd14;
 
-// Used in dra/7E4BC, dra/bss, rbo5/unk_4648C, bo4/unk_46E7C
+// Used in dra/7E4BC, dra/bss, rbo5/unk_4907C, bo4/unk_49A6C
 typedef struct {
     f32 posX;
     f32 posY;

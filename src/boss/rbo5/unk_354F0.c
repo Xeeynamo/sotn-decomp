@@ -18,6 +18,10 @@ static u16 D_us_801806FC[][2] = {
     {0x05AE, 0x05AF}, {0x05B0, 0x05B1}, {0x05B2, 0x05B3}, {0x05B4, 0x05B5},
 };
 
+#ifdef VERSION_PSP
+extern s32 E_ID(ID_1B);
+#endif
+
 void EntityUnkId1B(Entity* self) {
     Entity* next;
     s32 i;
@@ -118,7 +122,7 @@ void EntityUnkId1B(Entity* self) {
             }
             tilemapIndex += ((3 - blockIndex) << 5);
             g_Tilemap.fg[tilemapIndex] = D_us_801806FC[7 - blockIndex][0];
-            g_Tilemap.fg[tilemapIndex + 1] = D_us_801806FC[7 - blockIndex][1];
+            (&g_Tilemap.fg[tilemapIndex])[1] = D_us_801806FC[7 - blockIndex][1];
             self->velocityY = 0;
             self->step++;
         }
@@ -137,7 +141,7 @@ void EntityUnkId1B(Entity* self) {
         }
         tilemapIndex += ((3 - blockIndex) << 5);
         g_Tilemap.fg[tilemapIndex] = D_us_801806FC[3 - blockIndex][0];
-        g_Tilemap.fg[tilemapIndex + 1] = D_us_801806FC[3 - blockIndex][1];
+        (&g_Tilemap.fg[tilemapIndex])[1] = D_us_801806FC[3 - blockIndex][1];
         self->step++;
         break;
 

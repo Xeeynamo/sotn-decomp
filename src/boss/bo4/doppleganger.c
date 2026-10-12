@@ -442,7 +442,7 @@ void EntityDoppleganger10(void) {
     } else {
         DOPPLEGANGER.hitboxState = g_Dop.unk70;
         if (g_Dop.status & PLAYER_STATUS_STONE) {
-            DOPPLEGANGER.hitboxState &= 0xFFCF;
+            DOPPLEGANGER.hitboxState &= ~0x30;
         }
         if ((g_Dop.timers[ALU_T_INVINCIBLE] |
              g_Dop.timers[ALU_T_INVINCIBLE_CONSUMABLES]) != 0) {

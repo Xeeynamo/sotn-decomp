@@ -2,7 +2,7 @@
 #include "bo4.h"
 #include "../../dra/subwpn_dagger.h"
 
-// Used in dra/7E4BC, dra/bss, rbo5/unk_4648C, bo4/unk_49A6C
+// Used in dra/7E4BC, dra/bss, rbo5/unk_4907C, bo4/unk_49A6C
 typedef struct {
     f32 posX;
     f32 posY;
