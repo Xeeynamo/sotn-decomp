@@ -42,7 +42,7 @@ segments:
       - [0x0, .data, header]
       - [0x2C, data]
       - [0x3F0, .data, e_init]
-      - [0x4FC, data]
+      - [0x4FC, .data, background_block_init]
       - [0x514, .data, e_red_door_tiles]
       - [0x524, data]
       - [0x524, .data, e_lock_camera]

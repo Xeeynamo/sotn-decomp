@@ -84,6 +84,7 @@ segments:
       - [0x161A8, data]
       - [0x21F90, .data, header]
       - [0x21FC0, data]
+      - [0x22110, .data, background_block_init]
       - [0x22130, .data, e_lock_camera]
       - [0x221A8, data, 221A8]
       - [0x22280, .rodata, e_life_up]
