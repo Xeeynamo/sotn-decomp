@@ -263,7 +263,7 @@
 | cen        | jtbl_pspeu_09293FB0               |       12 |          0 | Yes    |       |     |
 | no3        | jtbl_pspeu_09298DF0               |       12 |          0 | Yes    |       |     |
 | np3_psp    | jtbl_pspeu_09291B58               |       12 |          0 | Yes    |       |     |
-| rno2       | jtbl_pspeu_092874B0               |       12 |          0 | Yes    |       |     |
+| rno2_psp   | jtbl_pspeu_092874B0               |       12 |          0 | Yes    |       |     |
 | rnz0_psp   | jtbl_pspeu_09281B60               |       12 |          0 | Yes    |       |     |
 | top        | jtbl_pspeu_092769C8               |       12 |          0 | Yes    |       |     |
 | main       | func_psp_08910498                 |       12 |          1 |        |       |     |
@@ -1714,8 +1714,8 @@
 | rare       | e_azaghal.rodata                  |       28 |          0 | Yes    |       |     |
 | rchi       | e_breakable_wall.rodata           |       28 |          0 | Yes    |       |     |
 | rno2       | e_azaghal.rodata                  |       28 |          0 | Yes    |       |     |
+| rno2       | e_ghost_dancer.rodata             |       28 |          0 | Yes    |       |     |
 | rno2       | e_karasuman.rodata                |       28 |          0 | Yes    |       |     |
-| rno2       | unk_A130.rodata                   |       28 |          0 | Yes    |       |     |
 | st0        | e_collect.rodata                  |       28 |          0 | Yes    |       |     |
 | st0        | title_card.rodata                 |       28 |          0 | Yes    |       |     |
 | top        | e_secret_stairs.rodata            |       28 |          0 | Yes    |       |     |
