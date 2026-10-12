@@ -84,7 +84,7 @@ void func_us_801A269C(Entity* self) {
         UnkCollisionFunc3(D_us_801806D0);
         switch (self->step_s) {
         case 0:
-            self->palette = PAL_FLAG(0x15F);
+            self->palette = PAL_FLAG(PAL_FILL_WHITE);
             self->blendMode = BLEND_SUB | BLEND_TRANSP;
             self->opacity = 0;
             self->drawFlags |= ENTITY_OPACITY;
