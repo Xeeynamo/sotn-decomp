@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo4.h"
 
+#ifndef VERSION_PSP
 u8 D_us_80181478[] = {
 #include "gen/D_us_80181478.h"
 };
@@ -10,6 +11,8 @@ u8 D_us_80182054[] = {
 u8 D_us_80182398[] = {
 #include "gen/D_us_80182398.h"
 };
+#endif
+
 u8 D_us_8018293C[] = {
 #include "gen/D_us_8018293C.h"
 };
