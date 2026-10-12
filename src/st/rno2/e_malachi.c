@@ -6,6 +6,7 @@ extern EInit D_us_80180904;
 extern EInit D_us_80180910;
 extern EInit g_EInitParticle;
 
+static s16 sensors_unused[] = {0, 40, 8, 0};
 static s16 sensors1[] = {0, 72, 8, 0};
 static s16 sensors2[] = {0, 40, 0, 4, 8, -4, -16, 0};
 // Does all the frames of the charge, then swipes the claw down
