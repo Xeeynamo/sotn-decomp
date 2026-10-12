@@ -1336,6 +1336,46 @@ set(SOURCE_FILES_STAGE_RCEN
     src/st/rcen/e_shaft_meridian_rings.c
 )
 
+set(SOURCE_FILES_STAGE_RCHI
+    src/pc/stages/stage_rchi.c
+    src/st/rchi/header.c
+    src/st/rchi/sprite_banks.c
+    src/st/rchi/palette_def.c
+    src/st/rchi/layers.c
+    src/st/rchi/graphics_banks.c
+    src/st/rchi/gen/e_laydef.c
+    src/st/rchi/e_init.c
+    src/st/rchi/e_red_door_tiles.c
+    src/st/rchi/d_prize_drops.c
+    src/st/rchi/gen/rooms.c
+    src/st/rchi/gen/e_layout.c
+    src/st/rchi/stage_data.c
+    src/st/rchi/tilemaps.c
+    src/st/rchi/gen/us/sprites.c
+    src/st/rchi/e_room_bg.c
+    src/st/rchi/e_lock_camera.c
+    src/st/rchi/e_breakable.c
+    src/st/rchi/e_demon_switch_wall.c
+    src/st/rchi/e_breakable_wall.c
+    src/st/rchi/e_bat.c
+    src/st/rchi/st_update.c
+    src/st/rchi/collision.c
+    src/st/rchi/create_entity.c
+    src/st/rchi/e_red_door.c
+    src/st/rchi/st_common.c
+    src/st/rchi/e_collect.c
+    src/st/rchi/e_misc.c
+    src/st/rchi/e_stage_name.c
+    src/st/rchi/e_particles.c
+    src/st/rchi/e_room_fg.c
+    src/st/rchi/popup.c
+    src/st/rchi/e_slogra.c
+    src/st/rchi/e_gaibon.c
+    src/st/rchi/e_thornweed.c
+    src/st/rchi/prim_helpers.c
+    src/st/rchi/bss.c
+)
+
 set(SOURCE_FILES_CORE
     ${SOURCE_FILES_DRA}
     ${SOURCE_FILES_RIC}
@@ -1440,6 +1480,7 @@ add_overlay(mad ${SOURCE_FILES_STAGE_MAD})
 add_overlay(bo1 ${SOURCE_FILES_BOSS_BO1})
 add_overlay(rcen ${SOURCE_FILES_STAGE_RCEN})
 add_overlay(rbo3 ${SOURCE_FILES_BOSS_RBO3})
+add_overlay(rchi ${SOURCE_FILES_STAGE_RCHI})
 
 foreach(id 000 002 007 008 010 012 034 035 037 040 041 043 045 046 050 051 052)
     add_overlay(w0_${id} src/weapon/w_${id}.c)

@@ -5,7 +5,7 @@
 extern LayoutEntity* D_8D2DF8C;
 extern LayoutEntity* D_8D2E060;
 
-extern Overlay g_StageOverlay;
+extern Overlay g_Overlay;
 extern PfnEntityUpdate EntityUpdates[];
 
 s32 E_ID(BACKGROUND_BLOCK);
@@ -60,5 +60,5 @@ void StageLoad(void) {
     g_pStObjLayoutHorizontal = &D_8D2DF8C;
     g_pStObjLayoutVertical = &D_8D2E060;
     func_892A018();
-    memcpy(&g_api.o, &g_StageOverlay, sizeof(Overlay));
+    memcpy(&g_api.o, &g_Overlay, sizeof(Overlay));
 }
