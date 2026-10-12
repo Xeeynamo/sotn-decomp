@@ -104,12 +104,14 @@ typedef struct {
     /* 0x84 */ struct Primitive* boxPrim;
     /* 0x88 */ struct Primitive* firstStarPrim; // Not used by CHI/NZ0
     /* 0x8C */ u8 unk8C;
-    // Only used by CHI/NZ0
-    /* 0x90 */ s32 : 32;
+    // Only used by CHI/NZ0 and TEK
+    /* 0x90 */ struct Primitive* firstRowPrim; // TEK only
     /* 0x94 */ s32 depth;
-    /* 0x98 */ s32 pad[3];
+    /* 0x98 */ struct Primitive* firstColumnPrim;      // TEK only
+    /* 0x9C */ SVECTOR rotation;                       // TEK only
     /* 0xA4 */ struct Primitive* firstRollingTextPrim; // drum turn effect
     /* 0xA8 */ s16 rotationSlices[5];
+    /* 0xB4 */ struct Primitive* firstPixelColumnPrim; // TEK only
 } ET_StagePopupJP;
 
 typedef struct {

@@ -18,7 +18,7 @@ static void CollectSubweapon(u16 subWeaponIdx) {
     if (subWeapon) {
         g_CurrentEntity->params = subWeapon;
         g_CurrentEntity->posY.i.hi = player->posY.i.hi + 12;
-#if defined VERSION_BETA || STAGE == STAGE_ST0
+#if defined VERSION_BETA || defined STAGE_IS_TEK || STAGE == STAGE_ST0
         g_CurrentEntity->step = 7;
         g_CurrentEntity->step_s = 0;
 #else

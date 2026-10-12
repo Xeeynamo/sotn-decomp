@@ -186,7 +186,14 @@ typedef enum HandItems {
     /* 0x0A9 */ NUM_HAND_ITEMS,
 } HandItems;
 
-typedef enum BodyItems {
+#ifdef STAGE_IS_TEK
+// Earlier builds have a smaller amount of equippable armors.
+// Unfortunately the list of those armors is unknown.
+enum BodyItems {
+    /* 0x50 */ NUM_BODY_ITEMS = 80,
+};
+#else
+enum BodyItems {
     /* 0x00 */ ITEM_NO_ARMOR,
     /* 0x01 */ ITEM_CLOTH_TUNIC,
     /* 0x02 */ ITEM_HIDE_CUIRASS,
@@ -278,7 +285,8 @@ typedef enum BodyItems {
     /* 0x58 */ ITEM_SECRET_BOOTS,
     /* 0x59 */ ITEM_ALUCART_MAIL,
     /* 0x5A */ NUM_BODY_ITEMS,
-} BodyItems;
+};
+#endif
 
 // Used by d_prize_drops and corresponds to a lookup inside e_collect.h
 typedef enum ItemDrops {
