@@ -1,14 +1,7 @@
-spriteBanks = 0x8018002C;
-cluts = 0x80180100;
-rooms_layers = 0x8018012C;
-gfxBanks = 0x8018020C;
-entityLayoutHorizontal = 0x80180248;
-entityLayoutVertical = 0x8018031C;
 g_EInitBreakable = 0x80180460;
 g_EInitParticle = 0x80180478;
 g_EInitInteractable = 0x80180490;
 g_EInitTheCreature = 0x801804CC;
-rooms = 0x80181378;
 EntityBreakable = 0x80197804;
 EntityTheCreature = 0x80197938;
 EntityTheCreatureHead = 0x8019818C;
