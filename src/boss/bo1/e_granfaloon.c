@@ -56,7 +56,7 @@ extern EInit g_EInitHomingLaser;
 extern EInit D_us_80180B34;
 extern EInit g_EInitGrafaloonZombie;
 extern EInit g_EInitShellDeadPiece;
-extern s32 is_boss_playing; // is Granfaloon spawned yet?
+extern s32 g_BossMgrState;
 extern EInit g_EInitGranfaloonCore;
 extern EInit g_EInitGranfaloonShell;
 
@@ -147,7 +147,7 @@ void EntityGranfaloon(Entity* self) {
         case 0:
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_GRANFALOON_DEFEAT, TIMEATTACK_SET_VISITED);
-            is_boss_playing = 1;
+            g_BossMgrState = BOSS_MGR_FIGHT_ON;
             boss_status |= BOSS_STATUS_SPAWNED;
             stopMusicFlag = 0;
             currentMusicId = MU_DEATH_BALLAD;
@@ -418,7 +418,7 @@ void EntityGranfaloon(Entity* self) {
                 ent->posX.i.hi = 0x100 - g_Tilemap.scrollX.i.hi;
                 ent->posY.i.hi = 0x150 - g_Tilemap.scrollY.i.hi;
                 ent->params = 1;
-                is_boss_playing = 0;
+                g_BossMgrState = BOSS_MGR_IDLE;
                 stopMusicFlag = 1;
                 currentMusicId = MU_RAINBOW_CEMETERY;
                 self->step_s++;
@@ -566,7 +566,7 @@ void EntityBodyPartShell(Entity* self) {
         }
     case WAIT_SPAWN:
         self->hitboxState = 0;
-        if (is_boss_playing) {
+        if (g_BossMgrState) {
             self->hitboxState = 3;
             self->step++;
         }

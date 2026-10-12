@@ -17,7 +17,7 @@ bool func_us_80194338(s16* offsets) {
 }
 
 extern s32 D_us_801806AC;
-s32 D_us_801806B0 = 0;
+s32 g_BossMgrState = 0;
 s32 D_us_801806B4 = 0;
 
 // clang-format off
@@ -104,7 +104,7 @@ static s16 unused_0 UNUSED = 24;
 static s32 unused_1 UNUSED = 8;
 
 // main boss controller
-void EntityBoss(Entity* self) {
+void EntityBossFightManager(Entity* self) {
     Entity* entity;
     s32 offsetX;
 
@@ -134,7 +134,7 @@ void EntityBoss(Entity* self) {
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_RALPH_GRANT_SYPHA_DEFEAT,
                 TIMEATTACK_SET_VISITED);
-            D_us_801806B0 |= 1;
+            g_BossMgrState |= 1;
             D_us_801806AC = 1;
             self->ext.et_801806B0.timer = 0x140;
             stopMusicFlag = 0;
@@ -145,7 +145,7 @@ void EntityBoss(Entity* self) {
         break;
     case 2:
         if (!--self->ext.et_801806B0.timer) {
-            D_us_801806B0 |= 2;
+            g_BossMgrState |= 2;
             self->step++;
         }
         break;
@@ -154,7 +154,7 @@ void EntityBoss(Entity* self) {
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_RALPH_GRANT_SYPHA_DEFEAT,
                 TIMEATTACK_SET_RECORD);
-            D_us_801806B0 |= 4;
+            g_BossMgrState |= 4;
             self->ext.et_801806B0.timer = 0x80;
             g_api.PlaySfx(SET_UNK_90);
             currentMusicId = MU_DOOR_OF_HOLY_SPIRITS;

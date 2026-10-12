@@ -50,10 +50,10 @@ INCLUDE_ASM("boss/rbo2/nonmatchings/unk_1B284", func_us_8019D260_from_rcen);
 INCLUDE_ASM("boss/rbo2/nonmatchings/unk_1B284", func_us_8019F260);
 
 extern EInit g_EInitInteractable;
-extern s32 D_us_80180B5C;
+extern s32 g_BossMgrState;
 extern u32 g_CutsceneFlags;
 
-void func_us_8019F4AC(Entity* self) {
+void EntityBossFightManager(Entity* self) {
     Entity* entity;
     u32 posX;
     s32 posY;
@@ -67,7 +67,7 @@ void func_us_8019F4AC(Entity* self) {
     case 1:
         posX = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;
         if ((posX - 0x41) < 0x17F) {
-            D_us_80180B5C |= 1;
+            g_BossMgrState |= 1;
             self->step++;
         }
         break;
@@ -87,7 +87,7 @@ void func_us_8019F4AC(Entity* self) {
             TIMEATTACK_EVENT_DEATH_DEFEAT, TIMEATTACK_SET_VISITED);
         stopMusicFlag = true;
         currentMusicId = MU_DEATH_BALLAD;
-        D_us_80180B5C |= 2;
+        g_BossMgrState |= 2;
         self->step++;
         break;
 
@@ -100,7 +100,7 @@ void func_us_8019F4AC(Entity* self) {
         // fallthrough
 
     case 4:
-        if (D_us_80180B5C & 0x10) {
+        if (g_BossMgrState & 0x10) {
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_DEATH_DEFEAT, TIMEATTACK_SET_RECORD);
             g_api.PlaySfx(SET_UNK_90);
@@ -110,7 +110,7 @@ void func_us_8019F4AC(Entity* self) {
         break;
 
     case 5:
-        if (D_us_80180B5C & 0x40) {
+        if (g_BossMgrState & 0x40) {
             self->step++;
         }
         break;
@@ -126,7 +126,7 @@ void func_us_8019F4AC(Entity* self) {
             entity->params = 0x15;
             stopMusicFlag = true;
             currentMusicId = MU_ABANDONED_PIT;
-            D_us_80180B5C |= 0x80;
+            g_BossMgrState |= 0x80;
             self->step++;
         }
         break;
@@ -141,5 +141,5 @@ void func_us_8019F4AC(Entity* self) {
     }
 
     FntPrint("set_step %x\n", self->step);
-    FntPrint("boss_flag %x\n", D_us_80180B5C);
+    FntPrint("boss_flag %x\n", g_BossMgrState);
 }

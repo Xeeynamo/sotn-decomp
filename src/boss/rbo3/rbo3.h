@@ -32,7 +32,7 @@ typedef enum {
     /* 0x19 */ E_UNK_25,
     /* 0x1A */ E_UNK_26,
     /* 0x1B */ E_UNK_27,
-    /* 0x1C */ E_UNK_28,
+    /* 0x1C */ E_BOSS_FIGHT_MANAGER,
     /* 0x1D */ E_UNK_29,
     /* 0x1E */ E_LIFE_UP_SPAWN,
     /* 0x1F */ E_CLOUDS,

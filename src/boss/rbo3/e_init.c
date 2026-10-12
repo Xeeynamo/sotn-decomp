@@ -28,7 +28,7 @@ void func_us_80192020(Entity* self);
 void func_us_801922EC(Entity* self);
 void func_us_801923DC(Entity* self);
 void func_us_80192998(Entity* self);
-void func_us_80192B38(Entity* self);
+void EntityBossFightManager(Entity* self);
 void func_us_80192D64(Entity* self);
 void EntityLifeUpSpawn(Entity* self);
 void EntityClouds(Entity* self);
@@ -48,7 +48,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityGreyPuff,        func_us_80191438,
     EntityMedusa,          func_us_80192020,
     func_us_801922EC,      func_us_801923DC,
-    func_us_80192998,      func_us_80192B38,
+    func_us_80192998,      EntityBossFightManager,
     func_us_80192D64,      EntityLifeUpSpawn,
     EntityClouds,          func_us_80193050,
 };

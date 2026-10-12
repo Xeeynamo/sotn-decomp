@@ -26,7 +26,7 @@ void EntityBossTorch(Entity* self);
 void EntityBossDoors(Entity* self);
 void EntityLifeUpSpawn(Entity* self);
 void EntityCoffin(Entity* self);
-void EntityBoss(Entity* self);
+void EntityBossFightManager(Entity* self);
 void EntityFakeRalph(Entity* self);
 void EntityFakeGrant(Entity* self);
 void EntityFakeSypha(Entity* self);
@@ -72,7 +72,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityBossDoors,
     EntityLifeUpSpawn,
     EntityCoffin,
-    EntityBoss,
+    EntityBossFightManager,
     EntityFakeRalph,
     EntityFakeGrant,
     EntityFakeSypha,

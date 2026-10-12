@@ -45,7 +45,7 @@ typedef enum EntityID {
     E_UNK_1D,               // func_us_8019E920
     E_UNK_1E,               // func_us_8019ECCC
     E_UNK_1F,               // func_us_8019F260
-    E_UNK_20,               // func_us_8019F4AC
+    E_BOSS_FIGHT_MANAGER,   // EntityBossFightManager
     E_CERBERUS_GATE_DEBUG,  // EntityCerberusGateDebug
     E_LIFE_UP_SPAWN,        // EntityLifeUpSpawn
     E_CUTSCENE_DIALOGUE,    // EntityCutsceneDialogue

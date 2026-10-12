@@ -1,12 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo1.h"
 
-#define RBO1_BOSS_FLAG_FIGHT_STARTED (1 << 0)
-#define RBO1_BOSS_FLAG_DEFEATED (1 << 1)
-#define RBO1_BOSS_FLAG_REWARD_READY (1 << 2)
-#define RBO1_BOSS_FLAG_DOORS_CLOSE (1 << 3)
-#define RBO1_BOSS_FLAG_DOORS_OPEN (1 << 4)
-
 typedef struct {
     s16 x;
     s16 y;
@@ -20,9 +14,9 @@ static Rbo1TilePlacement tile_placements[] = {
 };
 
 extern EInit g_EInitInteractable;
-extern s32 bossFlags;
+extern s32 g_BossMgrState;
 
-void func_us_80194C50(Entity* self) {
+void EntityBossFightManager(Entity* self) {
     Entity* entity;
     Rbo1TilePlacement* placement;
     s32 offsetX;
@@ -53,7 +47,7 @@ void func_us_80194C50(Entity* self) {
     case 1:
         offsetX = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;
         if (offsetX > 0x18 && offsetX < 0x3D8) {
-            bossFlags |= RBO1_BOSS_FLAG_DOORS_CLOSE;
+            g_BossMgrState |= BOSS_MGR_DOORS_CLOSE;
             g_api.PlaySfx(SET_UNK_90);
             self->step++;
         }
@@ -62,7 +56,7 @@ void func_us_80194C50(Entity* self) {
     case 2:
         offsetX = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;
         if (offsetX > 0x140 && offsetX < 0x320) {
-            bossFlags |= RBO1_BOSS_FLAG_FIGHT_STARTED;
+            g_BossMgrState |= BOSS_MGR_FIGHT_ON;
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_BEELZEBUB_DEFEAT, TIMEATTACK_SET_VISITED);
             self->step++;
@@ -79,7 +73,7 @@ void func_us_80194C50(Entity* self) {
         // fallthrough
 
     case 4:
-        if (bossFlags & RBO1_BOSS_FLAG_DEFEATED) {
+        if (g_BossMgrState & BOSS_MGR_DEFEAT) {
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_BEELZEBUB_DEFEAT, TIMEATTACK_SET_RECORD);
             g_api.PlaySfx(SET_UNK_90);
@@ -89,7 +83,7 @@ void func_us_80194C50(Entity* self) {
         break;
 
     case 5:
-        if (bossFlags & RBO1_BOSS_FLAG_REWARD_READY) {
+        if (g_BossMgrState & BOSS_MGR_TERMINATED) {
             self->step++;
         }
         break;
@@ -105,7 +99,7 @@ void func_us_80194C50(Entity* self) {
             entity->params = 5;
             stopMusicFlag = true;
             currentMusicId = MU_FINAL_TOCATTA;
-            bossFlags |= RBO1_BOSS_FLAG_DOORS_OPEN;
+            g_BossMgrState |= BOSS_MGR_DOORS_OPEN;
             self->step++;
         }
         break;

@@ -23,7 +23,7 @@ void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
 void func_us_801BAB18_from_bo0(Entity* self);
-void func_us_80192B38_from_rbo3(Entity* self);
+void EntityBossFightManager(Entity* self);
 void EntityLifeUpSpawn(Entity* self);
 void func_us_801940B4(Entity* self);
 void func_us_801957C0(Entity* self);
@@ -55,7 +55,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityExplosionVariants,
     EntityGreyPuff,
     func_us_801BAB18_from_bo0,
-    func_us_80192B38_from_rbo3,
+    EntityBossFightManager,
     EntityLifeUpSpawn,
     func_us_801940B4,
     func_us_801957C0,

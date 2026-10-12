@@ -7,7 +7,7 @@ extern s32 E_ID(LIFE_UP_SPAWN);
 #endif
 
 extern EInit g_EInitInteractable;
-s32 D_us_801807EC = 0;
+s32 g_BossMgrState = BOSS_MGR_IDLE;
 extern s32 D_us_80180810;
 
 void EntityBossFightManager(Entity* self) {
@@ -36,7 +36,7 @@ void EntityBossFightManager(Entity* self) {
         x = entity->posX.i.hi + g_Tilemap.scrollX.i.hi;
         if (x > 96 && x < 416) {
             D_us_80180810 = 1;
-            D_us_801807EC = 1;
+            g_BossMgrState = BOSS_MGR_FIGHT_ON;
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_THE_CREATURE_DEFEAT, TIMEATTACK_SET_VISITED);
             stopMusicFlag = true;
@@ -52,7 +52,7 @@ void EntityBossFightManager(Entity* self) {
         }
         break;
     case 3:
-        if (D_us_801807EC & 2) {
+        if (g_BossMgrState & BOSS_MGR_DEFEAT) {
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_THE_CREATURE_DEFEAT, TIMEATTACK_SET_RECORD);
             g_api.PlaySfx(SET_UNK_90);
@@ -61,7 +61,7 @@ void EntityBossFightManager(Entity* self) {
         }
         break;
     case 4:
-        if (D_us_801807EC & 4) {
+        if (g_BossMgrState & BOSS_MGR_TERMINATED) {
             self->step++;
         }
         break;

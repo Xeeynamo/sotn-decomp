@@ -11,7 +11,7 @@ extern s32 E_ID(MEDUSA);
 #endif
 
 extern EInit g_EInitMedusa;
-extern s32 D_us_80180728;
+extern s32 g_BossMgrState;
 
 static u8 D_us_801805F0[] = {15, 1, 12, 2, 7, 3, 4, 4, 32, 5, 255, 0};
 static u8 D_us_801805FC[] = {8, 5, 9, 6, 10, 7, 14, 8, 10, 7, 9, 6, 0, 0};
@@ -62,7 +62,7 @@ void EntityMedusa(Entity* self) {
         // fallthrough
 
     case 1:
-        if (D_us_80180728 & 1) {
+        if (g_BossMgrState & BOSS_MGR_FIGHT_ON) {
             SetStep(2);
         }
         break;
@@ -214,7 +214,7 @@ void EntityMedusa(Entity* self) {
         switch (self->step_s) {
         case 0:
             PlaySfxPositional(SFX_MEDUSA_DEATH);
-            D_us_80180728 |= 2;
+            g_BossMgrState |= BOSS_MGR_DEFEAT;
             self->hitboxState = 0;
             self->step_s++;
             // fallthrough
@@ -243,7 +243,7 @@ void EntityMedusa(Entity* self) {
 
             if (!--self->ext.GS_Props.timer) {
                 self->animCurFrame = 0;
-                D_us_80180728 |= 4;
+                g_BossMgrState |= BOSS_MGR_TERMINATED;
                 self->step_s++;
             }
             break;

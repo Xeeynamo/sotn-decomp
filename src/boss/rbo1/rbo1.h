@@ -42,7 +42,7 @@ typedef enum EntityID {
     E_UNK_1B,               // func_us_80193E24
     E_UNK_1C,               // func_us_80194108
     E_UNK_1D,               // func_us_801947E4
-    E_UNK_1E,               // func_us_80194C50
+    E_BOSS_FIGHT_MANAGER,   // EntityBossFightManager
     E_BOSS_ROOM_BLOCK,      // EntityBossRoomBlock
     E_LIFE_UP_SPAWN,        // EntityLifeUpSpawn
     NUM_ENTITIES,

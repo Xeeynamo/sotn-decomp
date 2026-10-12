@@ -11,7 +11,7 @@ extern EInit g_EInitTheCreature;
 extern EInit g_EInitTheCreatureHead;
 // fight state, owned by bossfight.c: 1 the fight started, 2 The Creature is
 // dying, 4 it is dead
-extern s32 D_us_801807EC;
+extern s32 g_BossMgrState;
 
 enum TheCreatureSteps {
     THE_CREATURE_INIT,
@@ -117,7 +117,7 @@ void EntityTheCreature(Entity* self) {
     case THE_CREATURE_IDLE:
         AnimateEntity(anim_idle, self);
         self->hitboxState = 0;
-        if (D_us_801807EC & 1) {
+        if (g_BossMgrState & BOSS_MGR_FIGHT_ON) {
             self->hitboxState = 3;
             SetStep(THE_CREATURE_WALK);
         }
@@ -264,7 +264,7 @@ void EntityTheCreature(Entity* self) {
     case THE_CREATURE_DEATH:
         switch (self->step_s) {
         case THE_CREATURE_DEATH_INIT:
-            D_us_801807EC |= 2;
+            g_BossMgrState |= BOSS_MGR_DEFEAT;
             self->hitboxState = 0;
             if (self->rotate) {
                 self->rotate = 0;
@@ -311,7 +311,7 @@ void EntityTheCreature(Entity* self) {
                 entity->posY.i.hi += 0x1C;
             }
             if (!--self->ext.theCreature.timer) {
-                D_us_801807EC |= 4;
+                g_BossMgrState |= BOSS_MGR_TERMINATED;
                 self->animCurFrame = 0;
                 self->step_s++;
             }
