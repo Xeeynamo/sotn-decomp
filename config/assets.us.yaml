@@ -1835,18 +1835,29 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
-          - [0x2C, sprite_banks, sprite_banks]
+          - [0x2C, sprite_banks, us/sprite_banks]
           - [0x8C, paldef, us/palette_def] # TODO: remove namespace once unified
           - [0xBC, layers, layers]
-          - [0xE4, gfx_banks, graphics_banks]
+          - [0xE4, gfx_banks, us/graphics_banks]
           - [0x1D0, layout, entity_layouts]
           - [0x378, skip]
           - [0x194C, rooms, rooms]
           - [0x1968, skip]
-          # - [0xB02C, palette, D_8018B02C]
-          # - [0xB2EC, palette, D_8018B2EC]
-          # - [0xB30C, palette, D_8018B30C]
-          - [0xFD2C, skip]
+          - [0x1CB0, cmpgfx, D_us_80181CB0, 128, 128, 4]
+          - [0x294C, cmpgfx, D_us_8018294C, 128, 128, 4]
+          - [0x38FC, cmpgfx, D_us_801838FC, 128, 128, 4]
+          - [0x4924, cmpgfx, D_us_80184924, 128, 128, 4]
+          - [0x547C, cmpgfx, D_us_8018547C, 128, 128, 4]
+          - [0x60BC, cmpgfx, D_us_801860BC, 128, 128, 4]
+          - [0x6A88, cmpgfx, D_us_80186A88, 128, 128, 4]
+          - [0x79F0, cmpgfx, D_us_801879F0, 128, 128, 4]
+          - [0x88B0, cmpgfx, D_us_801888B0, 128, 128, 4]
+          - [0x9774, cmpgfx, D_us_80189774, 128, 128, 4]
+          - [0xA0B0, cmpgfx, D_us_8018A0B0, 128, 128, 4]
+          - [0xB02C, palette, D_us_8018B02C, 16]
+          - [0xB2EC, palette, D_us_8018B2EC, 16]
+          - [0xB30C, palette, D_us_8018B30C, 16]
+          - [0xB92C, skip]
   - target: disks/us/BOSS/RBO1/RBO1.BIN
     asset_path: assets/boss/rbo1
     src_path: src/boss/rbo1

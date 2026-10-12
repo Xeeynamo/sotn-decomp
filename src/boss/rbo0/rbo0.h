@@ -7,6 +7,11 @@ enum Palettes {
     PAL_NONE,
     PAL_TORCH_A = 0x5A,
     PAL_TORCH_B = 0x5B,
+    PAL_UNK_169 = 0x169,
+    PAL_UNK_210 = 0x210,
+    PAL_UNK_2E4 = 0x2E4,
+    PAL_UNK_2E9 = 0x2E9,
+    PAL_UNK_2EF = 0x2EF,
 };
 
 typedef enum EntityID {

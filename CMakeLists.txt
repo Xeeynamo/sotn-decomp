@@ -1065,6 +1065,51 @@ SET(SOURCE_FILES_BOSS_BO4
     src/boss/bo4/bss.c
 )
 
+SET(SOURCE_FILES_BOSS_RBO0
+    src/pc/bosses/boss_rbo0.c
+    src/boss/rbo0/header.c
+    src/boss/rbo0/sprite_banks.c
+    src/boss/rbo0/palette_def.c
+    src/boss/rbo0/layers.c
+    src/boss/rbo0/graphics_banks.c
+    src/boss/rbo0/gen/e_laydef.c
+    src/boss/rbo0/e_init.c
+    src/boss/rbo0/background_block_init.c
+    src/boss/rbo0/e_red_door_tiles.c
+    src/boss/rbo0/e_lock_camera.c
+    src/boss/rbo0/e_breakable.c
+    src/boss/rbo0/d_prize_drops.c
+    src/boss/rbo0/e_boss_torch.c
+    src/boss/rbo0/e_boss_doors.c
+    src/boss/rbo0/e_boss.c
+    src/boss/rbo0/e_fake_ralph.c
+    src/boss/rbo0/e_fake_grant.c
+    src/boss/rbo0/e_fake_sypha.c
+    src/boss/rbo0/unk_19B94.c
+    src/boss/rbo0/st_update.c
+    src/boss/rbo0/st_collision.c
+    src/boss/rbo0/e_red_door.c
+    src/boss/rbo0/st_common.c
+    src/boss/rbo0/e_collect.c
+    src/boss/rbo0/e_misc.c
+    src/boss/rbo0/e_particles.c
+    src/boss/rbo0/e_room_fg.c
+    src/boss/rbo0/gen/rooms.c
+    src/boss/rbo0/e_life_up.c
+    src/boss/rbo0/e_coffin.c
+    src/boss/rbo0/gen/e_layout.c
+    src/boss/rbo0/stage_data.c
+    src/boss/rbo0/palettes.c
+    src/boss/rbo0/tiledef.c
+    src/boss/rbo0/gen/us/sprites.c
+    src/boss/rbo0/e_stage_name.c
+    src/boss/rbo0/prim_helpers.c
+    src/boss/rbo0/e_room_bg.c
+    src/boss/rbo0/create_entity.c
+    src/boss/rbo0/popup.c
+    src/boss/rbo0/bss.c
+)
+
 SET(SOURCE_FILES_BOSS_RBO3
     src/pc/bosses/boss_rbo3.c
     src/boss/rbo3/header.c
@@ -1479,6 +1524,7 @@ add_overlay(lib ${SOURCE_FILES_STAGE_LIB})
 add_overlay(mad ${SOURCE_FILES_STAGE_MAD})
 add_overlay(bo1 ${SOURCE_FILES_BOSS_BO1})
 add_overlay(rcen ${SOURCE_FILES_STAGE_RCEN})
+add_overlay(rbo0 ${SOURCE_FILES_BOSS_RBO0})
 add_overlay(rbo3 ${SOURCE_FILES_BOSS_RBO3})
 add_overlay(rchi ${SOURCE_FILES_STAGE_RCHI})
 

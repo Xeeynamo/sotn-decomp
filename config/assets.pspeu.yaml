@@ -1340,13 +1340,28 @@ files:
         vram: 0x09237700
         assets:
           - [0x80, skip]
-          - [0x1BB58, sprite_banks, sprite_banks]
+          - [0x1BB58, sprite_banks, psp/sprite_banks]
           - [0x1BBB8, layers, layers]
           - [0x1BBD0, paldef, psp/palette_def]  # TODO: remove namespace once unified
-          - [0x1BC08, gfx_banks, graphics_banks]
+          - [0x1BC08, gfx_banks, psp/graphics_banks]
           - [0x1BD00, skip]
           - [0x1BF50, rooms, rooms]
           - [0x1BF70, skip]
+          - [0x1C288, cmpgfx, D_us_80181CB0, 128, 128, 4]
+          - [0x1CF28, cmpgfx, D_us_8018294C, 128, 128, 4]
+          - [0x1DED8, cmpgfx, D_us_801838FC, 128, 128, 4]
+          - [0x1EF00, cmpgfx, D_us_80184924, 128, 128, 4]
+          - [0x1FA58, cmpgfx, D_us_8018547C, 128, 128, 4]
+          - [0x20698, cmpgfx, D_us_801860BC, 128, 128, 4]
+          - [0x21068, cmpgfx, D_us_80186A88, 128, 128, 4]
+          - [0x21FD0, cmpgfx, D_us_801879F0, 128, 128, 4]
+          - [0x22E90, cmpgfx, D_us_801888B0, 128, 128, 4]
+          - [0x23D58, cmpgfx, D_us_80189774, 128, 128, 4]
+          - [0x24698, cmpgfx, D_us_8018A0B0, 128, 128, 4]
+          - [0x25618, palette, D_us_8018B02C, 16]
+          - [0x258D8, palette, D_us_8018B2EC, 16]
+          - [0x258F8, palette, D_us_8018B30C, 16]
+          - [0x25F18, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo1.bin
     asset_path: assets/boss/rbo1
     src_path: src/boss/rbo1
