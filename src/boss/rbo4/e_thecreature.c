@@ -208,7 +208,7 @@ void EntityTheCreature(Entity* self) {
             } else {
                 self->velocityX = FIX(3);
             }
-            self->rotate += 0xC0;
+            self->rotate += ROT(16.875);
             collision = UnkCollisionFunc2(sensors_roll);
             if (!(g_Timer & 0xF)) {
                 PlaySfxPositional(SFX_STONE_MOVE_B);
@@ -232,7 +232,7 @@ void EntityTheCreature(Entity* self) {
             }
             break;
         case THE_CREATURE_ROLL_BOUNCE:
-            self->rotate += 0x100;
+            self->rotate += ROT(22.5);
             if (UnkCollisionFunc3(sensors_ground) & 1) {
                 PlaySfxPositional(SFX_EXPLODE_A);
                 self->velocityY = -self->velocityY;
@@ -246,7 +246,7 @@ void EntityTheCreature(Entity* self) {
             }
             break;
         case THE_CREATURE_ROLL_STOP:
-            self->rotate -= 0x100;
+            self->rotate -= ROT(22.5);
             self->velocityX -= self->velocityX >> 4;
             collision = UnkCollisionFunc2(sensors_roll);
             if (!--self->ext.theCreature.timer) {
@@ -379,7 +379,7 @@ void EntityTheCreatureHead(Entity* self) {
             self->step_s++;
         case THE_CREATURE_HEAD_FALL_DROP:
             self->animCurFrame = 26;
-            self->rotate += 0x80;
+            self->rotate += ROT(11.25);
             if (UnkCollisionFunc3(sensors_head) & 1) {
                 self->ext.theCreature.timer = 0x30;
                 self->step_s++;
