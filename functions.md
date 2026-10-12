@@ -1981,7 +1981,7 @@
 | rno0       | func_pspeu_0923F300               |       31 |          3 |        |       |     |
 | rno0       | func_pspeu_0925B088               |       31 |          3 |        |       |     |
 | rno0       | func_pspeu_09253088               |       31 |          3 |        |       |     |
-| rno2       | SetEntityVelocityFromAngle        |       31 |          3 |        |       |     |
+| rno2       | func_pspeu_09250228               |       31 |          3 |        |       |     |
 | rnz1       | func_pspeu_0924E7E8               |       31 |          3 |        |       |     |
 | rnz1       | func_pspeu_0924BE80               |       31 |          3 |        |       |     |
 | sel        | func_psp_092409C8                 |       31 |          3 |        |       |     |
@@ -2639,7 +2639,7 @@
 | rno1       | func_pspeu_09238620               |       39 |          2 |        |       |     |
 | rno2       | CreateEntityFromEntity            |       39 |          2 |        |       |     |
 | rno2       | func_pspeu_0923AC48               |       39 |          2 |        |       |     |
-| rno2       | GetAngleBetweenEntitiesShifted    |       39 |          2 |        |       |     |
+| rno2       | func_pspeu_092502E8               |       39 |          2 |        |       |     |
 | rno3       | func_pspeu_09238598               |       39 |          2 |        |       |     |
 | rno3       | func_pspeu_09238620               |       39 |          2 |        |       |     |
 | rno4       | CreateEntityFromCurrentEntity     |       39 |          2 |        |       |     |
@@ -5344,7 +5344,7 @@
 | nz0        | func_pspeu_0924B9E0               |       91 |          7 |        |       |     |
 | rcat       | func_pspeu_09242980               |       91 |          7 |        |       |     |
 | rdai       | CheckColliderOffsets              |       91 |          7 |        |       |     |
-| rno2       | CheckColliderOffsets              |       91 |          7 |        |       |     |
+| rno2       | func_pspeu_0924C138               |       91 |          7 |        |       |     |
 | rnz0       | func_pspeu_09249B18               |       91 |          7 |        |       |     |
 | bo6        | func_pspeu_09266CE8               |       91 |          8 |        |       |     |
 | main       | __b2d                             |       91 |          8 |        |       |     |
@@ -7247,7 +7247,7 @@
 | no2        | func_pspeu_09239898               |      177 |         20 |        |       |     |
 | np3        | EntityBloodDrips                  |      177 |         20 |        |       |     |
 | nz0        | func_pspeu_09244730               |      177 |         20 |        |       |     |
-| rno2       | EntityBloodDrips                  |      177 |         20 |        |       |     |
+| rno2       | func_pspeu_0923B2E8               |      177 |         20 |        |       |     |
 | bo2        | func_us_801B503C                  |      177 |         24 |        |       |     |
 | nz1        | func_pspeu_09249C90               |      177 |         24 |        |       |     |
 | rno0       | func_pspeu_0924F560               |      177 |         24 |        |       |     |
@@ -9255,7 +9255,7 @@
 | rdai       | func_us_801C17E8                  |      574 |         83 |        |       |     |
 | cat        | func_pspeu_09243F28               |      580 |         75 | Yes    |       |     |
 | lib        | func_psp_09240860                 |      580 |         75 | Yes    |       |     |
-| rno2       | EntityFlyingZombieTorso           |      580 |         75 | Yes    |       |     |
+| rno2       | func_pspeu_09246110               |      580 |         75 | Yes    |       |     |
 | dra        | func_psp_0911D490                 |      582 |         49 | Yes    |       |     |
 |            | func_pspeu_09249728               |      582 |         60 |        |       |     |
 | rbo5       | func_pspeu_09253620               |      582 |         60 |        |       |     |
@@ -9577,7 +9577,7 @@
 | rcat       | func_pspeu_09246780               |      791 |        122 |        |       |     |
 |            | func_092E92F8                     |      792 |         43 |        |       |     |
 | tt_006     | func_pspeu_092E92F8               |      792 |         43 |        |       |     |
-| rno2       | EntityFlyingZombie                |      795 |        114 |        |       |     |
+| rno2       | func_pspeu_09245568               |      795 |        114 |        |       |     |
 | no2        | func_pspeu_0923D188               |      795 |        116 | Yes    |       |     |
 | rnz1       | func_pspeu_0923D278               |      795 |        116 | Yes    |       |     |
 |            | func_pspeu_0925E010               |      797 |         57 |        |       |     |
