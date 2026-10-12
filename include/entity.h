@@ -4506,9 +4506,9 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ u32 : 32;
-    /* 0x80 */ s16 unk80;
+    /* 0x80 */ s16 timer;
     /* 0x82 */ u16 : 16;
-    /* 0x84 */ s16 unk84;
+    /* 0x84 */ s16 rotSpeed;
 } ET_GhostDancer;
 
 typedef struct {
