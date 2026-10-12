@@ -35,7 +35,7 @@ typedef enum EntityID {
     E_EXPLOSION_VARIANTS,   // EntityExplosionVariants
     E_GREY_PUFF,            // EntityGreyPuff
     E_THE_CREATURE,         // EntityTheCreature
-    E_UNK_17,               // func_us_8019818C
+    E_THE_CREATURE_HEAD,    // EntityTheCreatureHead
     E_UNK_18,               // func_us_8019846C
     E_UNK_19,               // func_us_80198A18
     E_UNK_1A,               // func_us_80192B38_from_rbo3

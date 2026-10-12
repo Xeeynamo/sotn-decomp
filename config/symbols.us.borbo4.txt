@@ -11,6 +11,7 @@ g_EInitTheCreature = 0x801804CC;
 rooms = 0x80181378;
 EntityBreakable = 0x80197804;
 EntityTheCreature = 0x80197938;
+EntityTheCreatureHead = 0x8019818C;
 func_us_80192B38_from_rbo3 = 0x8019879C;
 func_us_801C0B9C_from_no1 = 0x80198AD4;
 Random = 0x80198E0C;

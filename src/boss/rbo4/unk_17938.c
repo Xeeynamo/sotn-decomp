@@ -2,18 +2,20 @@
 #include "rbo4.h"
 
 #ifdef VERSION_PSP
-extern s32 E_ID(UNK_17);
+extern s32 E_ID(THE_CREATURE);
+extern s32 E_ID(THE_CREATURE_HEAD);
 extern s32 E_ID(UNK_18);
 #endif
 
 extern EInit g_EInitTheCreature;
+extern EInit g_EInitTheCreatureHead;
 extern s32 D_us_801807EC;
 
 static s16 sensors_walk[] = {0, 23, 32, 0};
 static s16 sensors_unused[][2] = {{0, 23}, {0, 4}, {8, -4}, {-16, 0}};
 static s16 sensors_roll[] = {0, 23, 4, 0};
 static s16 sensors_ground[][2] = {{0, 23}, {0, 4}, {4, -4}, {-8, 0}};
-s16 D_us_8018066C[][2] = {{0, 12}, {0, 4}, {4, -4}, {-8, 0}};
+static s16 sensors_head[][2] = {{0, 12}, {0, 4}, {4, -4}, {-8, 0}};
 static AnimateEntityFrame anim_idle[] = {
     POSE(6, 1, 0), POSE(6, 2, 0), POSE(6, 3, 0), POSE(6, 4, 0),
     POSE(6, 3, 0), POSE(6, 2, 0), POSE_LOOP(0)};
@@ -45,11 +47,11 @@ static u8 hitbox_frames[] = {
     0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
     1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 1, 4, 5, 6, 0,
 };
-s8 D_us_80180730[][4] = {
+static s8 head_hitbox_data[][4] = {
     {0, 0, 0, 0},      {-82, -96, 0, 0}, {-24, -73, 36, 22}, {-6, -77, 37, 17},
     {28, -34, 17, 48}, {31, 2, 13, 21},  {-14, -21, 0, 0},   {3, -1, 25, 25},
 };
-u8 D_us_80180750[] = {
+static u8 head_hitbox_frames[] = {
     0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,
     3, 4, 5, 1, 1, 1, 1, 1, 1, 1, 6, 1, 1, 1, 7, 0,
 };
@@ -67,7 +69,7 @@ void EntityTheCreature(Entity* self) {
     case 0:
         InitializeEntity(g_EInitTheCreature);
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_ID(UNK_17), entity);
+        CreateEntityFromCurrentEntity(E_ID(THE_CREATURE_HEAD), entity);
         SetStep(1);
     case 1:
         AnimateEntity(anim_idle, self);
@@ -275,8 +277,82 @@ void EntityTheCreature(Entity* self) {
     self->hitboxHeight = *hitbox++;
 }
 
-#ifdef VERSION_PSP
-char D_pspeu_09259780[] = "step %x\n";
-#endif
+void EntityTheCreatureHead(Entity* self) {
+    Entity* entity;
+    s8* hitbox;
+    s32 frame;
 
-INCLUDE_ASM("boss/rbo4/nonmatchings/unk_17938", func_us_8019818C);
+    FntPrint("step %x\n", self->step);
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitTheCreatureHead);
+    case 1:
+        entity = self - 1;
+        frame = entity->animCurFrame;
+        self->posX.i.hi = entity->posX.i.hi;
+        self->posY.i.hi = entity->posY.i.hi;
+        self->facingLeft = entity->facingLeft;
+        frame = entity->animCurFrame;
+        hitbox = head_hitbox_data[0];
+        hitbox += head_hitbox_frames[frame] * 4;
+        self->hitboxOffX = *hitbox++;
+        self->hitboxOffY = *hitbox++;
+        self->hitboxWidth = *hitbox++;
+        self->hitboxHeight = *hitbox++;
+        if (self->ext.theCreature.unk85) {
+            SetStep(2);
+        }
+        break;
+    case 2:
+        switch (self->step_s) {
+        case 0:
+            entity = self - 1;
+            self->posX.i.hi = entity->posX.i.hi;
+            self->posY.i.hi = entity->posY.i.hi;
+            self->facingLeft = entity->facingLeft;
+            self->zPriority = entity->zPriority + 1;
+            self->hitboxState = 0;
+            self->animCurFrame = 26;
+            if (self->facingLeft) {
+                self->posX.i.hi += 4;
+            } else {
+                self->posX.i.hi -= 4;
+            }
+            self->posY.i.hi -= 39;
+            self->drawFlags = ENTITY_ROTATE;
+            self->step_s++;
+        case 1:
+            self->animCurFrame = 26;
+            self->rotate += 0x80;
+            if (UnkCollisionFunc3(sensors_head) & 1) {
+                self->ext.theCreature.timer = 0x30;
+                self->step_s++;
+            }
+            break;
+        case 2:
+            if (!(self->ext.theCreature.timer & 0xF)) {
+                PlaySfxPositional(SFX_FIREBALL_SHOT_B);
+            }
+            if (self->ext.theCreature.timer & 1) {
+                entity = AllocEntity(&g_Entities[192], &g_Entities[256]);
+                if (entity != NULL) {
+                    CreateEntityFromEntity(E_ID(UNK_18), self, entity);
+                    entity->params = 1;
+                    entity->zPriority = self->zPriority + 1;
+                    entity->posX.i.hi += (Random() & 7) - 4;
+                    entity->posY.i.hi += (Random() & 7) - 4;
+                }
+            }
+            if (!--self->ext.theCreature.timer) {
+                self->animCurFrame = 0;
+                self->step_s++;
+            }
+            break;
+        }
+        break;
+    }
+    entity = self - 1;
+    if (entity->entityId != E_ID(THE_CREATURE)) {
+        DestroyEntity(self);
+    }
+}

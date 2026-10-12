@@ -23,7 +23,7 @@ void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
 void EntityTheCreature(Entity* self);
-void func_us_8019818C(Entity* self);
+void EntityTheCreatureHead(Entity* self);
 void func_us_8019846C(Entity* self);
 void func_us_80198A18(Entity* self);
 void func_us_80192B38_from_rbo3(Entity* self);
@@ -53,7 +53,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityExplosionVariants,
     EntityGreyPuff,
     EntityTheCreature,
-    func_us_8019818C,
+    EntityTheCreatureHead,
     func_us_8019846C,
     func_us_80198A18,
     func_us_80192B38_from_rbo3,
@@ -73,7 +73,7 @@ EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABL
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
 EInit g_EInitTheCreature = {ANIMSET_OVL(3), 0x00, 0x48, PAL_THE_CREATURE, ENEMY_THE_CREATURE};
-EInit D_us_801804D8 = {ANIMSET_OVL(3), 0x00, 0x48, PAL_THE_CREATURE, ENEMY_THE_CREATURE_UNK_173};
+EInit g_EInitTheCreatureHead = {ANIMSET_OVL(3), 0x00, 0x48, PAL_THE_CREATURE, ENEMY_THE_CREATURE_UNK_173};
 EInit D_us_801804E4 = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
 EInit g_EInitUnused801804F0 = {ANIMSET_OVL(2), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
 // clang-format on
