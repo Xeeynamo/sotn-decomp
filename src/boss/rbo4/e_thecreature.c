@@ -9,8 +9,6 @@ extern s32 E_ID(THE_CREATURE_FLAMES);
 
 extern EInit g_EInitTheCreature;
 extern EInit g_EInitTheCreatureHead;
-// fight state, owned by bossfight.c: 1 the fight started, 2 The Creature is
-// dying, 4 it is dead
 extern s32 g_BossMgrState;
 
 enum TheCreatureSteps {

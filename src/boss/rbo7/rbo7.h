@@ -53,4 +53,11 @@ extern u8 blend_modes[];
 extern u8 g_eBreakableHitboxes[];
 extern u16 g_eBreakableanimSets[];
 
+enum BossMgrState {
+    BOSS_MGR_IDLE = 0,       // initial state, fight not yet engaged
+    BOSS_MGR_FIGHT_ON = 1,   // boss battle started
+    BOSS_MGR_DEFEAT = 2,     // triggered as soon as the boss is defeated
+    BOSS_MGR_TERMINATED = 4, // boss is dead, entity got destroyed
+};
+
 #endif // RBO7_H

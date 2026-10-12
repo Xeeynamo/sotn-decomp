@@ -111,7 +111,7 @@ void EntityFakeSypha(Entity* self) {
 
     case 1:
         self->animCurFrame = 5;
-        if (g_BossMgrState & 1) {
+        if (g_BossMgrState & BOSS_MGR_FIGHT_ON) {
             SetStep(2);
         }
         break;
@@ -132,7 +132,7 @@ void EntityFakeSypha(Entity* self) {
             }
             break;
         case 2:
-            if (g_BossMgrState & 2) {
+            if (g_BossMgrState & BOSS_MGR_INTRO_DONE) {
                 self->hitboxState = 3;
                 SetStep(3);
             }
@@ -596,7 +596,7 @@ void EntityFakeSypha(Entity* self) {
 extern EInit D_us_80180530;
 
 void EntityFlameAttack(Entity* self) {
-    if (g_BossMgrState & 4) {
+    if (g_BossMgrState & BOSS_MGR_TERMINATED) {
         DestroyEntity(self);
         return;
     }
@@ -658,7 +658,7 @@ void EntityPetrifyCloud(Entity* self) {
     s16 angle;
     s32 offsetY;
 
-    if (g_BossMgrState & 4) {
+    if (g_BossMgrState & BOSS_MGR_TERMINATED) {
         DestroyEntity(self);
         return;
     }
@@ -730,7 +730,7 @@ void EntityHolyLightning(Entity* self) {
     s32 offsetX;
     s32 offsetY;
 
-    if (g_BossMgrState & 4) {
+    if (g_BossMgrState & BOSS_MGR_TERMINATED) {
         DestroyEntity(self);
         return;
     }
@@ -895,7 +895,7 @@ void EntitySummonAttack(Entity* self) {
     s16 green;
     s16 blue;
 
-    if (g_BossMgrState & 4) {
+    if (g_BossMgrState & BOSS_MGR_TERMINATED) {
         self->flags |= FLAG_DEAD;
     }
     if (self->flags & FLAG_DEAD) {

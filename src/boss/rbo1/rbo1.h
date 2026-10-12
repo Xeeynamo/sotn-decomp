@@ -48,4 +48,13 @@ typedef enum EntityID {
     NUM_ENTITIES,
 };
 
+enum BossMgrState {
+    BOSS_MGR_IDLE = 0,          // initial state, fight not yet engaged
+    BOSS_MGR_FIGHT_ON = 1,      // boss battle started
+    BOSS_MGR_DEFEAT = 2,        // triggered as soon as the boss is defeated
+    BOSS_MGR_TERMINATED = 4,    // boss is dead, entity got destroyed
+    BOSS_MGR_DOORS_CLOSE = 8,   // boss room doors are closing
+    BOSS_MGR_DOORS_OPEN = 0x10, // boss room doors are reopening
+};
+
 #endif // RBO1_H

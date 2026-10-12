@@ -67,7 +67,7 @@ void EntityBossFightManager(Entity* self) {
     case 1:
         posX = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;
         if ((posX - 0x41) < 0x17F) {
-            g_BossMgrState |= 1;
+            g_BossMgrState |= BOSS_MGR_ROOM_ENTERED;
             self->step++;
         }
         break;
@@ -87,7 +87,7 @@ void EntityBossFightManager(Entity* self) {
             TIMEATTACK_EVENT_DEATH_DEFEAT, TIMEATTACK_SET_VISITED);
         stopMusicFlag = true;
         currentMusicId = MU_DEATH_BALLAD;
-        g_BossMgrState |= 2;
+        g_BossMgrState |= BOSS_MGR_DEATH_FIGHT_ON;
         self->step++;
         break;
 
@@ -100,7 +100,7 @@ void EntityBossFightManager(Entity* self) {
         // fallthrough
 
     case 4:
-        if (g_BossMgrState & 0x10) {
+        if (g_BossMgrState & BOSS_MGR_DEATH_DEFEAT) {
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_DEATH_DEFEAT, TIMEATTACK_SET_RECORD);
             g_api.PlaySfx(SET_UNK_90);
@@ -110,7 +110,7 @@ void EntityBossFightManager(Entity* self) {
         break;
 
     case 5:
-        if (g_BossMgrState & 0x40) {
+        if (g_BossMgrState & BOSS_MGR_DEATH_REWARD_READY) {
             self->step++;
         }
         break;
@@ -126,7 +126,7 @@ void EntityBossFightManager(Entity* self) {
             entity->params = 0x15;
             stopMusicFlag = true;
             currentMusicId = MU_ABANDONED_PIT;
-            g_BossMgrState |= 0x80;
+            g_BossMgrState |= BOSS_MGR_DEATH_REWARD_SPAWNED;
             self->step++;
         }
         break;

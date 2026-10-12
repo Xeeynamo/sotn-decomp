@@ -288,7 +288,7 @@ void EntityCoffin(Entity* self) {
         }
     case 1:
         self->ext.bossCoffin.unk82 = 0x300;
-        if (g_BossMgrState & 1) {
+        if (g_BossMgrState & BOSS_MGR_FIGHT_ON) {
             g_api.PlaySfx(SFX_DOOR_OPEN);
             self->step++;
         }

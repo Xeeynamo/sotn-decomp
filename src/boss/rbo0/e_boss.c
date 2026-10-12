@@ -134,7 +134,7 @@ void EntityBossFightManager(Entity* self) {
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_RALPH_GRANT_SYPHA_DEFEAT,
                 TIMEATTACK_SET_VISITED);
-            g_BossMgrState |= 1;
+            g_BossMgrState |= BOSS_MGR_FIGHT_ON;
             D_us_801806AC = 1;
             self->ext.et_801806B0.timer = 0x140;
             stopMusicFlag = 0;
@@ -145,7 +145,7 @@ void EntityBossFightManager(Entity* self) {
         break;
     case 2:
         if (!--self->ext.et_801806B0.timer) {
-            g_BossMgrState |= 2;
+            g_BossMgrState |= BOSS_MGR_INTRO_DONE;
             self->step++;
         }
         break;
@@ -154,7 +154,7 @@ void EntityBossFightManager(Entity* self) {
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_RALPH_GRANT_SYPHA_DEFEAT,
                 TIMEATTACK_SET_RECORD);
-            g_BossMgrState |= 4;
+            g_BossMgrState |= BOSS_MGR_TERMINATED;
             self->ext.et_801806B0.timer = 0x80;
             g_api.PlaySfx(SET_UNK_90);
             currentMusicId = MU_DOOR_OF_HOLY_SPIRITS;

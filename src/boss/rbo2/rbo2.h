@@ -53,4 +53,12 @@ typedef enum EntityID {
     NUM_ENTITIES,
 };
 
+enum BossMgrState {
+    BOSS_MGR_ROOM_ENTERED = 0x01,
+    BOSS_MGR_DEATH_FIGHT_ON = 0x02,
+    BOSS_MGR_DEATH_DEFEAT = 0x10,
+    BOSS_MGR_DEATH_REWARD_READY = 0x40,
+    BOSS_MGR_DEATH_REWARD_SPAWNED = 0x80,
+};
+
 #endif // RBO2_H

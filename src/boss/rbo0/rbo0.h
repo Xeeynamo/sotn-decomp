@@ -63,6 +63,13 @@ typedef enum EntityID {
     NUM_ENTITIES,
 };
 
+enum BossMgrState {
+    BOSS_MGR_IDLE = 0,       // initial state, fight not yet engaged
+    BOSS_MGR_FIGHT_ON = 1,   // boss battle started
+    BOSS_MGR_INTRO_DONE = 2, // the fake party members become hittable
+    BOSS_MGR_TERMINATED = 4, // bosses are dead
+};
+
 #ifdef VERSION_PSP
 extern s32 E_ID(BACKGROUND_BLOCK);
 extern s32 E_ID(LOCK_CAMERA);
