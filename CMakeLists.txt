@@ -1186,7 +1186,7 @@ SET(SOURCE_FILES_BOSS_RBO4
     src/boss/rbo4/tilemaps.c
     src/boss/rbo4/gen/us/sprites.c
     src/boss/rbo4/bossfight.c
-    src/boss/rbo4/unk_18AD4.c
+    src/boss/rbo4/e_boss_doors.c
     src/boss/rbo4/e_stage_name.c
     src/boss/rbo4/prim_helpers.c
     src/boss/rbo4/e_room_bg.c

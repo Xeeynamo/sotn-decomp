@@ -27,37 +27,19 @@ void EntityTheCreatureHead(Entity* self);
 void EntityTheCreatureFlames(Entity* self);
 void func_us_80198A18(Entity* self);
 void EntityBossFightManager(Entity* self);
-void func_us_801C0B9C_from_no1(Entity* self);
+void EntityBossDoors(Entity* self);
 void EntityLifeUpSpawn(Entity* self);
 
 PfnEntityUpdate EntityUpdates[] = {
-    EntityBreakable,
-    EntityExplosion,
-    EntityPrizeDrop,
-    EntityDamageDisplay,
-    EntityRedDoor,
-    EntityIntenseExplosion,
-    EntitySoulStealOrb,
-    EntityRoomForeground,
-    EntityStageNamePopup,
-    EntityEquipItemDrop,
-    EntityRelicOrb,
-    EntityPersistentItemDrop,
-    EntityEnemyBlood,
-    EntityMessageBox,
-    EntityDummy,
-    EntityDummy,
-    EntityBackgroundBlock,
-    EntityLockCamera,
-    EntityUnkId13,
-    EntityExplosionVariants,
-    EntityGreyPuff,
-    EntityTheCreature,
-    EntityTheCreatureHead,
-    EntityTheCreatureFlames,
-    func_us_80198A18,
-    EntityBossFightManager,
-    func_us_801C0B9C_from_no1,
+    EntityBreakable,     EntityExplosion,         EntityPrizeDrop,
+    EntityDamageDisplay, EntityRedDoor,           EntityIntenseExplosion,
+    EntitySoulStealOrb,  EntityRoomForeground,    EntityStageNamePopup,
+    EntityEquipItemDrop, EntityRelicOrb,          EntityPersistentItemDrop,
+    EntityEnemyBlood,    EntityMessageBox,        EntityDummy,
+    EntityDummy,         EntityBackgroundBlock,   EntityLockCamera,
+    EntityUnkId13,       EntityExplosionVariants, EntityGreyPuff,
+    EntityTheCreature,   EntityTheCreatureHead,   EntityTheCreatureFlames,
+    func_us_80198A18,    EntityBossFightManager,  EntityBossDoors,
     EntityLifeUpSpawn,
 };
 
@@ -74,6 +56,6 @@ EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
 EInit g_EInitTheCreature = {ANIMSET_OVL(3), 0x00, 0x48, PAL_THE_CREATURE, ENEMY_THE_CREATURE};
 EInit g_EInitTheCreatureHead = {ANIMSET_OVL(3), 0x00, 0x48, PAL_THE_CREATURE, ENEMY_THE_CREATURE_UNK_173};
-EInit D_us_801804E4 = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitBossDoor = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
 EInit g_EInitUnused801804F0 = {ANIMSET_OVL(2), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
 // clang-format on
