@@ -8,9 +8,22 @@ void EntityGreyPuff(Entity* entity);
 
 enum Palettes {
     PAL_NONE = 0,
+    PAL_GHOST = 0x200,
+    PAL_MARIONETTE = 0x201,
+    PAL_SLINGER = 0x203,
+    PAL_FLEA_MAN = 0x204,
+    PAL_SKELETON = 0x207,
+    PAL_DIPLOCEPHALUS = 0x20E,
+    PAL_ELEVATOR = 0x223,
+    PAL_SKELERANG = 0x228,
     PAL_PLATE_LORD_UNK1 = 0x22B,
     PAL_PLATE_LORD_UNK2 = 0x22C,
     PAL_PLATE_LORD_UNK3 = 0x22D,
+    PAL_STONE_ROSE = 0x22E,
+    PAL_CTULHU = 0x238,
+    PAL_AXE_KNIGHT_AXE = 0x23D,
+    PAL_AXE_KNIGHT = 0x23F,
+    PAL_OUIJA_TABLE = 0x241,
     // puff params 0,1
     PAL_PUFF_OPAQUE_OFFSET = 0x2C0,
     // puff params 2 (not used directly, PAL_PUFF_OPAQUE_OFFSET + 3)

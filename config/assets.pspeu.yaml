@@ -900,6 +900,12 @@ files:
         vram: 0x09237700
         assets:
           - [0x80, skip]
+          - [0x1A320, sprite_banks, psp/sprite_banks]
+          - [0x1A380, layers, layers]
+          - [0x1A3C8, paldef, palette_def]
+          - [0x1A418, gfx_banks, psp/graphics_banks]
+          - [0x1A570, skip]
+          - [0x1A720, rooms, rooms]
           - [0x1A750, cutscene, cutscene_script_pre_fight_it]
           - [0x1AC28, cutscene, cutscene_script_pre_fight_sp]
           - [0x1B068, cutscene, cutscene_script_pre_fight_fr]
@@ -911,6 +917,33 @@ files:
           - [0x1C1D8, cutscene, cutscene_script_post_fight_ge]
           - [0x1C320, cutscene, cutscene_script_post_fight_en]
           - [0x1C420, skip]
+          - [0x1C470, cmpgfx, gfx_shaft_orb_1, 128, 128, 4, 0x2B678]
+          - [0x1CC40, cmpgfx, gfx_shaft_orb_2, 128, 128, 4, 0x2B678]
+          - [0x1D4A8, cmpgfx, gfx_shaft_orb_3, 128, 128, 4, 0x2B678]
+          - [0x1E2F8, cmpgfx, gfx_shaft_orb_4, 128, 128, 4, 0x2B678]
+          - [0x1F190, cmpgfx, gfx_shaft_orb_5, 128, 128, 4, 0x2B678]
+          - [0x1FB38, cmpgfx, gfx_shaft_1, 128, 128, 4, 0x2B678]
+          - [0x20648, cmpgfx, gfx_shaft_2, 128, 128, 4, 0x2B678]
+          - [0x20B68, cmpgfx, gfx_shaft_3, 128, 128, 4, 0x2B678]
+          - [0x213D0, cmpgfx, gfx_shaft_4, 128, 128, 4, 0x2B678]
+          - [0x21FC0, cmpgfx, gfx_shaft_crystal_ball_1, 128, 128, 4, 0x2B678]
+          - [0x231A0, cmpgfx, gfx_shaft_crystal_ball_2, 128, 128, 4, 0x2B678]
+          - [0x24750, cmpgfx, gfx_shaft_crystal_ball_3, 128, 128, 4, 0x2B678]
+          - [0x26068, cmpgfx, gfx_shaft_meridian_ring_1, 128, 128, 4]
+          - [0x263D8, cmpgfx, gfx_shaft_meridian_ring_2, 128, 128, 4]
+          - [0x26800, cmpgfx, gfx_shaft_meridian_ring_3, 128, 128, 4]
+          - [0x26BC0, cmpgfx, gfx_explosion_1, 128, 128, 4, 0x2B3B8]
+          - [0x27570, cmpgfx, gfx_explosion_2, 128, 128, 4, 0x2B3B8]
+          - [0x28468, cmpgfx, gfx_explosion_3, 128, 128, 4, 0x2B3B8]
+          - [0x28B58, rawgfx, gfx_portrait_alucard, 48, 72, 8, 0x2B878]
+          - [0x298D8, rawgfx, gfx_portrait_shaft, 48, 72, 8, 0x2BA78]
+          - [0x2A658, cmpgfx, gfx_elevator, 128, 128, 4, 0x2BC78]
+          - [0x2B3B8, palette, pal_flame, 16] # 0x2E0 / 0x2E4 / 0x2E7
+          - [0x2B678, palette, pal_shaft, 16] # 0x200
+          - [0x2B878, palette, pal_portrait_alucard, 16] # 0x210
+          - [0x2BA78, palette, pal_portrait_shaft, 16] # 0x218
+          - [0x2BC78, palette, pal_elevator, 16] # 0x240
+          - [0x2BCB8, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rchi.bin
     asset_path: assets/st/rchi
     src_path: src/st/rchi
@@ -973,10 +1006,40 @@ files:
     asset_path: assets/st/rno1
     src_path: src/st/rno1
     splat_config_path: config/splat.pspeu.strno1.yaml
+    segments:
+    - start: 0x80
+      vram: 0x09237700
+      assets:
+        - [0x80, skip]
+        - [0x1FB40, sprite_banks, psp/sprite_banks]
+        - [0x1FBA0, layers, layers]
+        - [0x1FD68, skip]
+        - [0x1FE18, gfx_banks, graphics_banks]
+        - [0x1FEF0, skip]
+        - [0x20190, rooms, rooms]
+        - [0x20250, skip]
+        - [0x20398, cmpgfx, D_80185B40, 128, 128, 4]
+        - [0x20C68, cmpgfx, D_8018640C, 128, 128, 4]
+        - [0x212E0, cmpgfx, D_80186A84, 128, 128, 4]
+        - [0x22020, cmpgfx, D_801877C4, 128, 128, 4]
+        - [0x22A50, cmpgfx, D_801881F4, 128, 128, 4]
+        - [0x23838, cmpgfx, D_80188FDC, 128, 128, 4]
+        - [0x24188, cmpgfx, D_80189928, 128, 128, 4]
+        - [0x25628, cmpgfx, D_8018ADC4, 128, 128, 4]
+        - [0x25FE0, cmpgfx, D_8018B778, 128, 128, 4]
+        - [0x26EE8, skip]
+
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno2.bin
     asset_path: assets/st/rno2
     src_path: src/st/rno2
     splat_config_path: config/splat.pspeu.strno2.yaml
+    segments:
+    - start: 0x80
+      vram: 0x09237700
+      assets:
+        - [0x28F40, sprite_banks, psp/sprite_banks]
+        - [0x28FA0, skip]
+
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno3.bin
     asset_path: assets/st/rno3
     src_path: src/st/rno3
@@ -1215,6 +1278,22 @@ files:
     asset_path: assets/boss/bo4
     src_path: src/boss/bo4
     splat_config_path: config/splat.pspeu.bobo4.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x2BB20, layers, layers]
+          - [0x2BB38, skip]
+          - [0x2BBA0, gfx_banks, graphics_banks]
+          - [0x2BC10, skip]
+          - [0x2BD98, rooms, rooms]
+          - [0x2BDB8, skip]
+          - [0x2BE18, cmpgfx, D_801ABEA0, 128, 128, 4]
+          - [0x2C0F8, cmpgfx, D_801AC180, 128, 128, 4]
+          - [0x2C200, palette, D_us_801AC288, 16]
+          - [0x2C5E0, skip]
+          - [0x30C70, blueprintsdef, blueprints, DopBlueprints, EntityID]
+          - [0x30F24, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo5.bin
     asset_path: assets/boss/bo5
     src_path: src/boss/bo5
@@ -1255,6 +1334,30 @@ files:
     asset_path: assets/boss/rbo3
     src_path: src/boss/rbo3
     splat_config_path: config/splat.pspeu.borbo3.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          - [0x12D18, sprite_banks, psp/sprite_banks]
+          - [0x12D78, layers, layers]
+          - [0x12DA0, paldef, palette_def]
+          - [0x12DC8, gfx_banks, psp/graphics_banks]
+          - [0x12E90, skip]
+          - [0x13010, rooms, rooms]
+          - [0x13030, skip]
+          - [0x130B0, cmpgfx, D_us_80181E14, 128, 128, 4]
+          - [0x13AA0, cmpgfx, D_us_80182804, 128, 128, 4]
+          - [0x14808, cmpgfx, D_us_8018356C, 128, 128, 4]
+          - [0x15508, cmpgfx, D_us_80184268, 128, 128, 4]
+          - [0x16140, cmpgfx, D_us_80184EA0, 128, 128, 4]
+          - [0x16660, cmpgfx, D_us_801853BC, 128, 128, 4]
+          - [0x17010, cmpgfx, D_us_80185D68, 128, 128, 4]
+          - [0x17F08, cmpgfx, D_us_80186C60, 128, 128, 4]
+          - [0x185F8, palette, D_us_80187350, 16]
+          - [0x187F8, palette, D_us_80187550, 16]
+          - [0x188B8, palette, D_us_80187610, 16]
+          - [0x188D8, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo4.bin
     asset_path: assets/boss/rbo4
     src_path: src/boss/rbo4
@@ -1263,6 +1366,12 @@ files:
     asset_path: assets/boss/rbo5
     src_path: src/boss/rbo5
     splat_config_path: config/splat.pspeu.borbo5.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x2BE28, blueprintsdef, blueprints, DopBlueprints, EntityID]
+          - [0x2C0DC, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo6.bin
     asset_path: assets/boss/rbo6
     src_path: src/boss/rbo6
@@ -1397,6 +1506,9 @@ files:
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_010.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_011.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_012.bin
+    asset_path: assets/weapon
+    src_path: src/weapon
+    splat_config_path: config/splat.pspeu.w1_012.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_013.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_014.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_015.bin

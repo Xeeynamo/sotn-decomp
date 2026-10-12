@@ -10,37 +10,16 @@ extern LayoutEntity* D_8D2DFC4;
 
 extern Overlay g_Overlay;
 
-static u8 cutscene_script_pre_fight_it[] = {
-#include <gen/cutscene_script_pre_fight_it.h>
-};
-static u8 cutscene_script_pre_fight_sp[] = {
-#include <gen/cutscene_script_pre_fight_sp.h>
-};
-static u8 cutscene_script_pre_fight_fr[] = {
-#include <gen/cutscene_script_pre_fight_fr.h>
-};
-static u8 cutscene_script_pre_fight_ge[] = {
-#include <gen/cutscene_script_pre_fight_ge.h>
-};
-static u8 cutscene_script_pre_fight_en[] = {
-#include <gen/cutscene_script_pre_fight_en.h>
-};
-
-static u8 cutscene_script_post_fight_it[] = {
-#include <gen/cutscene_script_post_fight_it.h>
-};
-static u8 cutscene_script_post_fight_sp[] = {
-#include <gen/cutscene_script_post_fight_sp.h>
-};
-static u8 cutscene_script_post_fight_fr[] = {
-#include <gen/cutscene_script_post_fight_fr.h>
-};
-static u8 cutscene_script_post_fight_ge[] = {
-#include <gen/cutscene_script_post_fight_ge.h>
-};
-static u8 cutscene_script_post_fight_en[] = {
-#include <gen/cutscene_script_post_fight_en.h>
-};
+extern u8 cutscene_script_pre_fight_it[];
+extern u8 cutscene_script_pre_fight_sp[];
+extern u8 cutscene_script_pre_fight_fr[];
+extern u8 cutscene_script_pre_fight_ge[];
+extern u8 cutscene_script_pre_fight_en[];
+extern u8 cutscene_script_post_fight_it[];
+extern u8 cutscene_script_post_fight_sp[];
+extern u8 cutscene_script_post_fight_fr[];
+extern u8 cutscene_script_post_fight_ge[];
+extern u8 cutscene_script_post_fight_en[];
 
 s32 E_ID(BACKGROUND_BLOCK);
 s32 E_ID(LOCK_CAMERA);
@@ -48,16 +27,16 @@ s32 E_ID(UNK_ID13);
 s32 E_ID(EXPLOSION_VARIANTS);
 s32 E_ID(GREY_PUFF);
 s32 E_ID(SHAFT);
-s32 E_ID(UNK_17);
-s32 E_ID(UNK_18);
-s32 E_ID(UNK_19);
-s32 E_ID(UNK_1A);
-s32 E_ID(UNK_1B);
-s32 E_ID(UNK_1C);
-s32 E_ID(UNK_1D);
-s32 E_ID(UNK_1E);
-s32 E_ID(UNK_1F);
-s32 E_ID(UNK_20);
+s32 E_ID(SHAFT_MERIDIAN_RINGS);
+s32 E_ID(SHAFT_CRYSTAL_BALL);
+s32 E_ID(CUTSCENE_SHAFT);
+s32 E_ID(SHAFT_ATTACK_ORB);
+s32 E_ID(SHAFT_FLAME_TRAIL);
+s32 E_ID(SHAFT_FLAME_PILLAR);
+s32 E_ID(SHAFT_LIGHTNING);
+s32 E_ID(SHAFT_LIGHTNING_HITBOX);
+s32 E_ID(SHAFT_ORBIT_ORB);
+s32 E_ID(SHAFT_DEATH_FLAMES);
 s32 E_ID(CUTSCENE_DIALOGUE);
 s32 E_ID(UNK_22);
 s32 E_ID(UNK_23);
@@ -82,16 +61,16 @@ static void InitEntityIds(void) {
     SET_E_ID(EXPLOSION_VARIANTS);
     SET_E_ID(GREY_PUFF);
     SET_E_ID(SHAFT);
-    SET_E_ID(UNK_17);
-    SET_E_ID(UNK_18);
-    SET_E_ID(UNK_19);
-    SET_E_ID(UNK_1A);
-    SET_E_ID(UNK_1B);
-    SET_E_ID(UNK_1C);
-    SET_E_ID(UNK_1D);
-    SET_E_ID(UNK_1E);
-    SET_E_ID(UNK_1F);
-    SET_E_ID(UNK_20);
+    SET_E_ID(SHAFT_MERIDIAN_RINGS);
+    SET_E_ID(SHAFT_CRYSTAL_BALL);
+    SET_E_ID(CUTSCENE_SHAFT);
+    SET_E_ID(SHAFT_ATTACK_ORB);
+    SET_E_ID(SHAFT_FLAME_TRAIL);
+    SET_E_ID(SHAFT_FLAME_PILLAR);
+    SET_E_ID(SHAFT_LIGHTNING);
+    SET_E_ID(SHAFT_LIGHTNING_HITBOX);
+    SET_E_ID(SHAFT_ORBIT_ORB);
+    SET_E_ID(SHAFT_DEATH_FLAMES);
     SET_E_ID(CUTSCENE_DIALOGUE);
     SET_E_ID(UNK_22);
     SET_E_ID(UNK_23);

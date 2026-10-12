@@ -6,10 +6,10 @@
 
 // original name: SET_STAGE_OVERLAYADDR
 void SetStageOverlayAddress(void) {
-    PfnEntityUpdates[0] = g_StageOverlayData.entityEntries; // 0x60dc000
-    *DAT_060645EC = *DAT_0601ac30;                          // 0x60dc004
-    *DAT_060645e4 = *DAT_0601ac38;                          // 0x60dc008
-    *DAT_060645f8 = *DAT_0601ac40;                          // 0x60dc00c
+    PfnEntityUpdates[0] = g_StageOverlayData.entityEntries;
+    *DAT_060645EC = *DAT_060DC004;
+    *DAT_060645e4 = *DAT_060DC008;
+    *DAT_060645f8 = *DAT_060DC00C;
 }
 
 // _SET_SCL_OVERLAYADDR

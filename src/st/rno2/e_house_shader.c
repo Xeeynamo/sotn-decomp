@@ -1,0 +1,197 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#include "rno2.h"
+
+// One of this entity exists in exactly the same location
+// as each of the 4 EntityBackgroundHouses. I can't be certain
+// about the purpose of this but it seems like some short of
+// shader doing weird graphics operations and accessing odd tpage
+// values. This should be considered a strong candidate for research
+// and testing!
+
+// The main thing that makes me think it's a shader:
+// In the lower left of the main giant room, there is an entity for a
+// 3D house spawner, but we don't see any houses there - weird. If you go
+// into that area and walk around a bit, you may notice irregular graphics.
+// The most obvious thing I noticed: Come into the room from the lower left
+// (the spike room with the Ghost Dancers). Go right past the first set of
+// double candles, then up through the first gap in the stone above. Stand on
+// the platform to the right of the gap. The texture you're on has a pattern of
+// squares. Walk left and right, between square 3 and square 7. The left edge
+// of the platform has a strange shadow near the moon, and extends in and out
+// as you move. It seems like this is supposed to be a shader effect.
+
+void EntityHouseShader(Entity* self) {
+    DRAWENV draw;
+    DR_ENV* dr_env;
+    Primitive* prim;
+    s32 i;
+    s32 primIndex;
+    u8 flag;
+
+    RECT rect = {0, 0x100, 0x50, 0xC0};
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitSpawner);
+        primIndex = g_api.func_800EDB58(PRIM_GT4, 8);
+        if (primIndex != -1) {
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
+            if (dr_env == NULL) {
+                DestroyEntity(self);
+                return;
+            }
+            prim->type = PRIM_ENV;
+            prim->priority = 0x13F;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+            dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
+            if (dr_env == NULL) {
+                DestroyEntity(self);
+                return;
+            }
+            prim->type = PRIM_ENV;
+            prim->priority = 0x141;
+            prim->drawMode = DRAW_UNK_800;
+            prim = prim->next;
+            self->ext.prim = prim;
+            while (prim != NULL) {
+                prim->drawMode = DRAW_HIDE;
+                prim = prim->next;
+            }
+        } else {
+            DestroyEntity(self);
+        }
+        break;
+
+    case 1:
+        prim = &g_PrimBuf[self->primIndex];
+        draw = g_CurrentBuffer->draw;
+        if (draw.ofs[0] == 0) {
+            flag = 0;
+        } else {
+            flag = 1;
+        }
+        draw.isbg = 1;
+        draw.r0 = 0;
+        draw.g0 = 0;
+        draw.b0 = 0;
+        draw.dtd = 1;
+        draw.clip = rect;
+        draw.ofs[0] = 0;
+        draw.ofs[1] = 0x100;
+        dr_env = *(DR_ENV**)&prim->r1;
+        SetDrawEnv(dr_env, &draw);
+        prim->drawMode = DRAW_DEFAULT;
+        prim = prim->next;
+        prim = self->ext.prim;
+
+        for (i = 2; i >= 0; i--) {
+            prim->type = PRIM_GT4;
+#ifdef VERSION_PSP
+            prim->tpage = 0x1110;
+#else
+            prim->tpage = 0x110;
+#endif
+            prim->u0 = prim->u2 = 0;
+            prim->u1 = prim->u3 = prim->u0 + 0x28;
+            prim->v0 = prim->v1 = 0;
+            prim->v2 = prim->v3 = prim->v0 + 0x28;
+            prim->x0 = prim->x2 = i * 0xA;
+            prim->x1 = prim->x3 = prim->x0 + (0x50 - (i * 0x14));
+            prim->y0 = prim->y1 = (i * 0xA) + 0x40;
+            prim->y2 = prim->y3 = prim->y0 + (0x50 - (i * 0x14));
+            prim->r0 = prim->g0 = prim->b0 = 0xFF;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
+            prim->priority = 0x140;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
+            if (i == 0) {
+                prim->drawMode = DRAW_DEFAULT;
+            }
+            prim->drawMode |= DRAW_COLORS;
+            prim = prim->next;
+        }
+
+        prim->type = PRIM_GT4;
+#ifdef VERSION_PSP
+        prim->tpage = 0x101A;
+#else
+        prim->tpage = 0x1A;
+#endif
+        prim->clut = PAL_FILL_WHITE;
+        prim->u0 = prim->u2 = 0x10;
+        prim->u1 = prim->u3 = 0x20;
+        prim->v0 = prim->v1 = 0xD0;
+        prim->v2 = prim->v3 = 0xE0;
+        prim->x0 = prim->x2 = 0;
+        prim->x1 = prim->x3 = 0x28;
+        prim->y0 = prim->y1 = 0;
+        prim->y2 = prim->y3 = 0x28;
+        prim->r0 = 0x48;
+        prim->g0 = 0x30;
+        prim->b0 = 0x48;
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
+        prim->priority = 0x140;
+        prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+
+        prim = prim->next;
+        prim->type = PRIM_GT4;
+#ifdef VERSION_PSP
+        prim->tpage = 0x104;
+#else
+        if (flag) {
+            prim->tpage = 0x104;
+        } else {
+            prim->tpage = 0x100;
+        }
+#endif
+        prim->u0 = prim->u2 = 0x49;
+        prim->u1 = prim->u3 = 0x71;
+        prim->v0 = prim->v1 = 0x97;
+        prim->v2 = prim->v3 = 0xBF;
+        prim->x0 = prim->x2 = 0;
+        prim->x1 = prim->x3 = 0x28;
+        prim->y0 = prim->y1 = 0;
+        prim->y2 = prim->y3 = 0x28;
+        prim->priority = 0x140;
+        prim->drawMode = DRAW_DEFAULT;
+
+        prim = prim->next;
+        prim->type = PRIM_GT4;
+#ifdef VERSION_PSP
+        prim->tpage = 0x1110;
+#else
+        prim->tpage = 0x110;
+#endif
+        prim->u0 = prim->u2 = 4;
+        prim->u1 = prim->u3 = 0x4C;
+        prim->v0 = prim->v1 = 0x44;
+        prim->v2 = prim->v3 = 0x8C;
+        prim->x0 = prim->x2 = 0x39;
+        prim->x1 = prim->x3 = 0x81;
+        prim->y0 = prim->y1 = 0x87;
+        prim->y2 = prim->y3 = 0xCF;
+#ifdef VERSION_PSP
+        prim->r0 = 0x20;
+        prim->g0 = 0x10;
+        prim->b0 = 0x20;
+#else
+        prim->r0 = 0x10;
+        prim->g0 = 8;
+        prim->b0 = 0x10;
+#endif
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
+        prim->priority = 0x142;
+        prim->drawMode = DRAW_DITHERING | DRAW_TPAGE2 | DRAW_TPAGE |
+                         DRAW_COLORS | DRAW_TRANSP;
+        break;
+    }
+}

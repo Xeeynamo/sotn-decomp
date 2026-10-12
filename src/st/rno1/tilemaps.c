@@ -18,5 +18,10 @@
 #include <gen/rno1_tilemap_14.h>
 #include <gen/rno1_tilemap_15.h>
 #include <gen/rno1_tiledef_rload.h>
+#ifdef VERSION_PSP
+#include <gen/rno1_tiledef_rsave.h>
+#include <gen/rno1_tiledef_rno1.h>
+#else
 #include <gen/rno1_tiledef_rno1.h>
 #include <gen/rno1_tiledef_rsave.h>
+#endif

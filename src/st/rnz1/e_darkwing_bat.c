@@ -150,7 +150,8 @@ static s32 WindAttackHelper(s32 arg0) {
             return 1;
         }
         var_s2 = g_CurrentEntity->ext.darkwing.damage;
-        g_Player.unk64 = (g_api.enemyDefs[275].attack / var_s2);
+        g_Player.unk64 =
+            (g_api.enemyDefs[ENEMY_DARKWING_BAT_UNK_113].attack / var_s2);
         g_Player.unk60 = 4;
         if (var_s2 > 2) {
             g_Player.unk60 = 0;
@@ -348,7 +349,8 @@ void EntityDarkwingBat(Entity* self) {
             /* fallthrough */
         case 1:
             if (!AnimateEntity(anim_torpedo_twist, self)) {
-                self->attack = g_api.enemyDefs[274].attack;
+                self->attack =
+                    g_api.enemyDefs[ENEMY_DARKWING_BAT_UNK_112].attack;
                 self->ext.darkwing.timer = 0;
                 SetSubStep(2);
             }
@@ -385,7 +387,7 @@ void EntityDarkwingBat(Entity* self) {
                 xVar = -xVar;
             }
             if (xVar > 0x40) {
-                self->attack = g_api.enemyDefs[273].attack;
+                self->attack = g_api.enemyDefs[ENEMY_DARKWING_BAT].attack;
                 SetSubStep(3);
             }
             break;
@@ -511,7 +513,8 @@ void EntityDarkwingBat(Entity* self) {
                        PLAYER_STATUS_STONE | PLAYER_STATUS_CROUCH |
                        PLAYER_STATUS_MIST_FORM))) {
                     g_Player.unk60 = 1;
-                    g_Player.unk64 = g_api.enemyDefs[276].attack;
+                    g_Player.unk64 =
+                        g_api.enemyDefs[ENEMY_DARKWING_BAT_UNK_114].attack;
                     g_Player.unk62 = 0;
                     SetSubStep(4);
                 }
@@ -534,7 +537,8 @@ void EntityDarkwingBat(Entity* self) {
         case 5:
             if (!AnimateEntity(anim_hugging, self)) {
                 self->ext.darkwing.attackCycles += 1;
-                g_Player.unk64 = g_api.enemyDefs[276].attack;
+                g_Player.unk64 =
+                    g_api.enemyDefs[ENEMY_DARKWING_BAT_UNK_114].attack;
                 g_Player.unk60 = 3;
             }
             self->ext.darkwing.timer++;
@@ -606,7 +610,8 @@ void EntityDarkwingBat(Entity* self) {
             if (!--self->ext.darkwing.timer) {
                 self->ext.darkwing.timer = 0x18;
                 self->ext.darkwing.attackCycles += 1;
-                g_Player.unk64 = g_api.enemyDefs[276].attack;
+                g_Player.unk64 =
+                    g_api.enemyDefs[ENEMY_DARKWING_BAT_UNK_114].attack;
                 g_Player.unk60 = 3;
             }
             if (self->ext.darkwing.timer & 1) {

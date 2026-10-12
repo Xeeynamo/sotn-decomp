@@ -97,19 +97,20 @@ PfnEntityUpdate EntityUpdates[] = {
     func_801BC5C0,
 };
 
-EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0x7C, 0x0100, 0};
-EInit g_EInitObtainable = {ANIMSET_OVL(3), 0x0000, 0x007C, 0x0100, 0x0001};
-EInit g_EInitParticle = {0x0003, 0x0000, 0x0000, 0x0000, 0x0002};
-EInit g_EInitCutscene = {0x0000, 0x0000, 0x0000, 0x0000, 0x0004};
-EInit g_EInitUnkId13 = {0x0000, 0x0000, 0x0000, 0x0000, 0x0002};
-EInit g_EInitLockCamera = {0x0000, 0x0000, 0x0000, 0x0000, 0x0001};
-EInit g_EInitCommon = {0x0000, 0x0000, 0x0000, 0x0000, 0x0003};
-EInit g_EInitDamageNum = {0x0000, 0x0000, 0x0000, 0x0000, 0x0003};
-EInit g_EInit3DObject = {0x0000, 0x0000, 0x0000, 0x0000, 0x0005};
-EInit g_EInitDracula = {0x8001, 0x0000, 0x0048, 0x0200, 0x00A9};
-EInit g_EInitDraculaFireball = {0x8001, 0x0000, 0x0048, 0x0200, 0x00AA};
-EInit g_EInitDraculaMeteorball = {0x8001, 0x0000, 0x0048, 0x0200, 0x00AB};
-EInit g_EInitDraculaFinalForm = {0x8002, 0x0000, 0x0050, 0x0202, 0x00AC};
-EInit g_EInitDraculaMegaFireball = {0x8002, 0x0000, 0x0050, 0x0202, 0x00AD};
-EInit g_EInitDraculaRainAttack = {0x8002, 0x0000, 0x0050, 0x0202, 0x00AE};
-EInit g_EInitSecretStairs = {0x8006, 0x0000, 0x004C, 0x0228, 0x0005};
+// clang-format off
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0x00, 0x7C, PAL_UNK_100, ENEMY_BREAKABLE};
+EInit g_EInitObtainable = {ANIMSET_OVL(3), 0x00, 0x7C, PAL_UNK_100, ENEMY_OBTAINABLE};
+EInit g_EInitParticle = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitCutscene = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_SPAWNER};
+EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInit3DObject = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitDracula = {ANIMSET_OVL(1), 0x00, 0x48, PAL_DRACULA, ENEMY_DRACULA};
+EInit g_EInitDraculaFireball = {ANIMSET_OVL(1), 0x00, 0x48, PAL_DRACULA, ENEMY_DRACULA_FIREBALL};
+EInit g_EInitDraculaMeteorball = {ANIMSET_OVL(1), 0x00, 0x48, PAL_DRACULA, ENEMY_DRACULA_METEORBALL};
+EInit g_EInitDraculaFinalForm = {ANIMSET_OVL(2), 0x00, 0x50, PAL_GREATER_DEMON, ENEMY_GREATER_DEMON};
+EInit g_EInitDraculaMegaFireball = {ANIMSET_OVL(2), 0x00, 0x50, PAL_GREATER_DEMON, ENEMY_GREATER_DEMON_MEGA_FIREBALL};
+EInit g_EInitDraculaRainAttack = {ANIMSET_OVL(2), 0x00, 0x50, PAL_GREATER_DEMON, ENEMY_GREATER_DEMON_RAIN_ATTACK};
+EInit g_EInitSecretStairs = {ANIMSET_OVL(6), 0x00, 0x4C, PAL_SECRET_STAIRS, ENEMY_INTERACTABLE};

@@ -1,55 +1,18 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-static s16 g_DopSensorsCeilingCrouch[] = {
-    -8,
-    -8,
-    -8,
-    -8,
-};
-static s16 g_DopSensorsFloorCrouch[] = {
-    8,
-    8,
-    8,
-    8,
-};
-static s16 g_DopSensorsWallCrouch[] = {
-    7, 0, 0, 0, 0, 0, -7, 0,
-};
-s16 g_DopSensorsCeilingDefault[] = {
-    -22,
-    -22,
-    -22,
-    -22,
-};
-s16 g_DopSensorsFloorDefault[] = {
-    29,
-    25,
-    25,
-    25,
-};
-s16 g_DopSensorsWallDefault[] = {
-    24, 17, 9, 1, -7, -14, -21, 0,
-};
-Point16 g_DopSensorsCeiling[] = {
-    {0, -22},
-    {0, -22},
-    {4, -22},
-    {-4, -22},
-};
-Point16 g_DopSensorsFloor[] = {
-    {0, 29},
-    {0, 25},
-    {4, 25},
-    {-4, 25},
-};
-Point16 g_DopSensorsWall[] = {
-    {5, 24},  {5, 17},  {5, 9},  {5, 1},  {5, -7},  {5, -14},  {5, -21},
-    {-5, 24}, {-5, 17}, {-5, 9}, {-5, 1}, {-5, -7}, {-5, -14}, {-5, -21},
-};
+extern s16 g_DopSensorsCeilingCrouch[];
+extern s16 g_DopSensorsFloorCrouch[];
+extern s16 g_DopSensorsWallCrouch[];
+extern s16 g_DopSensorsCeilingDefault[];
+extern s16 g_DopSensorsFloorDefault[];
+extern s16 g_DopSensorsWallDefault[];
+extern Point16 g_DopSensorsCeiling[];
+extern Point16 g_DopSensorsFloor[];
+extern Point16 g_DopSensorsWall[];
 
-static void CheckWallRight(void);
-static void CheckWallLeft(void);
-static void CheckFloor(void);
-static void CheckCeiling(void);
+void DopCheckWallRight(void);
+void DopCheckWallLeft(void);
+void DopCheckFloor(void);
+void DopCheckCeiling(void);
 
 static void CheckStageCollision(bool checkSensors) {
     s16 argX;
@@ -121,13 +84,13 @@ static void CheckStageCollision(bool checkSensors) {
         argY = DOPPLEGANGER.posY.i.hi + g_DopSensorsFloor[i].y;
         g_api.CheckCollision(argX, argY, &g_Dop.colFloor[i], 0);
     }
-    CheckFloor();
+    DopCheckFloor();
     for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
         argX = DOPPLEGANGER.posX.i.hi + g_DopSensorsCeiling[i].x;
         argY = DOPPLEGANGER.posY.i.hi + g_DopSensorsCeiling[i].y;
         g_api.CheckCollision(argX, argY, &g_Dop.colCeiling[i], 0);
     }
-    CheckCeiling();
+    DopCheckCeiling();
     if ((*vram_ptr & 1) && (DOPPLEGANGER.velocityY >= 0)) {
         DOPPLEGANGER.posY.i.lo = 0;
     }
@@ -139,8 +102,8 @@ static void CheckStageCollision(bool checkSensors) {
         argY = DOPPLEGANGER.posY.i.hi + g_DopSensorsWall[i].y;
         g_api.CheckCollision(argX, argY, &g_Dop.colWall[i], 0);
     }
-    CheckWallRight();
-    CheckWallLeft();
+    DopCheckWallRight();
+    DopCheckWallLeft();
     if ((*vram_ptr & 4) && (DOPPLEGANGER.velocityX > 0)) {
         DOPPLEGANGER.posX.i.lo = 0;
     }

@@ -85,7 +85,7 @@ typedef enum EntityID {
     NUM_ENTITIES,
 };
 
-enum Palette {
+enum Palettes {
     PAL_NONE,
     PAL_SPIKES_DUST = 0x161,
     PAL_BREAKABLE = 0x219,

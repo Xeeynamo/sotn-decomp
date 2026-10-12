@@ -160,84 +160,76 @@ PfnEntityUpdate EntityUpdates[] = {
 };
 
 // Common
-EInit g_EInitBreakable = {ANIMSET_DRA(3), 0x00, 0x00, 0x0000, 0x000};
-EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x00, 0x00, 0x0000, 0x001};
-EInit g_EInitParticle = {ANIMSET_DRA(3), 0x00, 0x00, 0x0000, 0x002};
-EInit g_EInitSpawner = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x004};
-EInit g_EInitInteractable = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x005};
-EInit g_EInitUnkId13 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x002};
-EInit g_EInitLockCamera = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x001};
-EInit g_EInitCommon = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x003};
-EInit g_EInitDamageNum = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x003};
-EInit g_EInitEnvironment = {ANIMSET_OVL(0x01), 0x00, 0x00, 0x0000, 0x005};
-EInit g_EInitCavernDoor = {ANIMSET_OVL(0x02), 0x00, 0x53, 0x0200, 0x005};
+// clang-format off
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_BREAKABLE};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitParticle = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitSpawner = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_SPAWNER};
+EInit g_EInitInteractable = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitEnvironment = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitCavernDoor = {ANIMSET_OVL(2), 0x00, 0x53, PAL_CAVERN_DOOR, ENEMY_INTERACTABLE};
 
 // Blade Master
-EInit g_EInitBladeMaster = {ANIMSET_OVL(0x03), 0x01, 0x48, 0x0201, 0x07A};
-EInit g_EInitBladeMasterAttackHitbox = {
-    ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x07B};
+EInit g_EInitBladeMaster = {ANIMSET_OVL(3), 0x01, 0x48, PAL_BLADE_MASTER, ENEMY_BLADE_MASTER};
+EInit g_EInitBladeMasterAttackHitbox = {ANIMSET_OVL(0), 0x00, 0x00, PAL_NONE, ENEMY_BLADE_MASTER_ATTACK_HITBOX};
 
 // Blade Soldier
-EInit g_EInitBladeSoldier = {ANIMSET_OVL(0x04), 0x01, 0x4B, 0x0203, 0x07C};
-EInit g_EInitBladeSoldierAttackHitbox = {
-    ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x07D};
+EInit g_EInitBladeSoldier = {ANIMSET_OVL(4), 0x01, 0x4B, PAL_BLADE_SOLDIER, ENEMY_BLADE_SOLDIER};
+EInit g_EInitBladeSoldierAttackHitbox = {ANIMSET_OVL(0), 0x00, 0x00, PAL_NONE, ENEMY_BLADE_SOLDIER_ATTACK_HITBOX};
 
 // Bone Musket
-EInit g_EInitBoneMusket = {ANIMSET_OVL(0x05), 0x00, 0x4C, 0x0205, 0x066};
-EInit D_us_80180AA0 = {ANIMSET_OVL(0x05), 0x00, 0x4C, 0x0205, 0x067};
+EInit g_EInitBoneMusket = {ANIMSET_OVL(5), 0x00, 0x4C, PAL_BONE_MUSKET, ENEMY_BONE_MUSKET};
+EInit D_us_80180AA0 = {ANIMSET_OVL(5), 0x00, 0x4C, PAL_BONE_MUSKET, ENEMY_UNK_67};
 
 // Owl Knight
-EInit g_EInitOwlKnight = {ANIMSET_OVL(0x06), 0x10, 0x49, 0x0209, 0x014};
-EInit g_EInitOwlKnightSword = {ANIMSET_OVL(0x06), 0x00, 0x49, 0x209, 0x015};
+EInit g_EInitOwlKnight = {ANIMSET_OVL(6), 0x10, 0x49, PAL_OWL_KNIGHT_OWL, ENEMY_OWL_KNIGHT};
+EInit g_EInitOwlKnightSword = {ANIMSET_OVL(6), 0x00, 0x49, PAL_OWL_KNIGHT_OWL, ENEMY_OWL_KNIGHT_SWORD};
 
 // Owl
-EInit g_EInitOwl = {ANIMSET_OVL(0x06), 0x01, 0x49, 0x0209, 0x016};
+EInit g_EInitOwl = {ANIMSET_OVL(6), 0x01, 0x49, PAL_OWL_KNIGHT_OWL, ENEMY_OWL};
 
 // Valhalla Knight
-EInit g_EInitValhallaKnight = {ANIMSET_OVL(0x07), 0x01, 0x4C, 0x0210, 0x085};
-EInit g_EInitValhallaKnightUnk1 = {
-    ANIMSET_OVL(0x07), 0x01, 0x4C, 0x0210, 0x003};
-EInit g_EInitValhallaKnightUnk2 = {
-    ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x086};
-EInit g_EInitValhallaKnightUnk3 = {
-    ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x087};
+EInit g_EInitValhallaKnight = {ANIMSET_OVL(7), 0x01, 0x4C, PAL_VALHALLA_KNIGHT, ENEMY_VALHALLA_KNIGHT};
+EInit g_EInitValhallaKnightUnk1 = {ANIMSET_OVL(7), 0x01, 0x4C, PAL_VALHALLA_KNIGHT, ENEMY_COMMON};
+EInit g_EInitValhallaKnightUnk2 = {ANIMSET_OVL(0), 0x00, 0x00, PAL_NONE, ENEMY_VALHALLA_KNIGHT_UNK2};
+EInit g_EInitValhallaKnightUnk3 = {ANIMSET_OVL(0), 0x00, 0x00, PAL_NONE, ENEMY_VALHALLA_KNIGHT_UNK3};
 
 // (Blue) Axe Knight
-EInit g_EInitAxeKnight = {ANIMSET_OVL(0x08), 0x01, 0x50, 0x0213, 0x006};
-EInit g_EInitAxeKnightAxe = {ANIMSET_OVL(0x08), 0x2F, 0x50, 0x0213, 0x007};
+EInit g_EInitAxeKnight = {ANIMSET_OVL(8), 0x01, 0x50, PAL_AXE_KNIGHT, ENEMY_AXE_KNIGHT};
+EInit g_EInitAxeKnightAxe = {ANIMSET_OVL(8), 0x2F, 0x50, PAL_AXE_KNIGHT, ENEMY_AXE_KNIGHT_AXE};
 
 // Armor Lord
-EInit g_EInitArmorLord = {ANIMSET_OVL(0x09), 0x01, 0x52, 0x0216, 0x022};
-EInit g_EInitArmorLordSwordShadow = {
-    ANIMSET_OVL(0x09), 0x00, 0x52, 0x0216, 0x023};
-EInit g_EInitArmorLordTemp = {ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x024};
+EInit g_EInitArmorLord = {ANIMSET_OVL(9), 0x01, 0x52, PAL_ARMOR_LORD, ENEMY_ARMOR_LORD};
+EInit g_EInitArmorLordSwordShadow = {ANIMSET_OVL(9), 0x00, 0x52, PAL_ARMOR_LORD, ENEMY_ARMOR_LORD_SWORD_SHADOW};
+EInit g_EInitArmorLordTemp = {ANIMSET_OVL(0), 0x00, 0x00, PAL_NONE, ENEMY_ARMOR_LORD_UNK_24};
 
 // Hunting Girl
-EInit g_EInitHuntingGirl = {ANIMSET_OVL(0x0A), 0x00, 0x54, 0x021D, 0x0E3};
+EInit g_EInitHuntingGirl = {ANIMSET_OVL(10), 0x00, 0x54, PAL_HUNTING_GIRL_INIT, ENEMY_HUNTING_GIRL};
 
 // Paranthropus
-EInit g_EInitParanthropus = {ANIMSET_OVL(0x0B), 0x01, 0x48, 0x021F, 0x0D3};
-EInit g_EInitParanthropusBoneHitbox = {
-    ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x0D4};
-EInit g_EInitParanthropusThrownBone = {
-    ANIMSET_OVL(0x0B), 0x36, 0x48, 0x021F, 0x0D5};
+EInit g_EInitParanthropus = {ANIMSET_OVL(11), 0x01, 0x48, PAL_PARANTHROPUS, ENEMY_PARANTHROPUS};
+EInit g_EInitParanthropusBoneHitbox = {ANIMSET_OVL(0), 0x00, 0x00, PAL_NONE, ENEMY_PARANTHROPUS_BONE_HITBOX};
+EInit g_EInitParanthropusThrownBone = {ANIMSET_OVL(11), 0x36, 0x48, PAL_PARANTHROPUS, ENEMY_PARANTHROPUS_THROWN_BONE};
 
 // Flea Armor
-EInit g_EInitFleaArmor = {ANIMSET_OVL(0x0C), 0x01, 0x48, 0x0222, 0x029};
-EInit g_EInitFleaArmorAttackHitbox = {
-    ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x02A};
+EInit g_EInitFleaArmor = {ANIMSET_OVL(12), 0x01, 0x48, PAL_FLEA_ARMOR_FLEA_MAN, ENEMY_FLEA_ARMOR};
+EInit g_EInitFleaArmorAttackHitbox = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_FLEA_ARMOR_ATTACK_HITBOX};
 
 // Flea Man
-EInit g_EInitFleaMan = {ANIMSET_OVL(0x0C), 0x00, 0x48, 0x0222, 0x028};
+EInit g_EInitFleaMan = {ANIMSET_OVL(12), 0x00, 0x48, PAL_FLEA_ARMOR_FLEA_MAN, ENEMY_FLEA_MAN};
 
 // Bone Scimitar
-EInit g_EInitBoneScimitar = {ANIMSET_OVL(0x0D), 0x01, 0x4D, 0x0225, 0x069};
-EInit g_EInitScimitarParts = {ANIMSET_OVL(0x0D), 0x00, 0x4D, 0x0225, 0x002};
+EInit g_EInitBoneScimitar = {ANIMSET_OVL(13), 0x01, 0x4D, PAL_BONE_SCIMITAR, ENEMY_BONE_SCIMITAR};
+EInit g_EInitScimitarParts = {ANIMSET_OVL(13), 0x00, 0x4D, PAL_BONE_SCIMITAR, ENEMY_PARTICLE};
 
 // Plate Lord
-EInit g_EInitPlateLord = {ANIMSET_OVL(0x0E), 0x01, 0x4C, 0x0226, 0x061};
-EInit D_us_80180B90 = {ANIMSET_OVL(0x0E), 0x16, 0x4C, 0x0226, 0x062};
+EInit g_EInitPlateLord = {ANIMSET_OVL(14), 0x01, 0x4C, PAL_PLATE_LORD_UNK1, ENEMY_PLATE_LORD};
+EInit D_us_80180B90 = {ANIMSET_OVL(14), 0x16, 0x4C, PAL_PLATE_LORD_UNK1, ENEMY_PLATE_LORD_UNK_62};
 
 // Grave Keeper
-EInit g_EInitGraveKeeper = {ANIMSET_OVL(0x18), 0x01, 0x4D, 0x0229, 0x06F};
-EInit g_EInitGraveKeeperHitbox = {ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x070};
+EInit g_EInitGraveKeeper = {ANIMSET_OVL(24), 0x01, 0x4D, PAL_GRAVE_KEEPER, ENEMY_GRAVE_KEEPER};
+EInit g_EInitGraveKeeperHitbox = {ANIMSET_OVL(0), 0x00, 0x00, PAL_NONE, ENEMY_GRAVE_KEEPER_HITBOX};

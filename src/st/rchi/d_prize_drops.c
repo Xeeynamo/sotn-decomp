@@ -1,0 +1,12 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#include "rchi.h"
+
+// Some of these items appear copied from CHI and don't directly appear in RCHI
+// (eg. Ring of Ares)
+u16 PrizeDrops[] = {
+    ITEMDROP_POWER_OF_SIRE, ITEMDROP_LIFE_APPLE,    ITEMDROP_ALUCARD_SWORD,
+    ITEMDROP_GREEN_TEA,     ITEMDROP_POWER_OF_SIRE, ITEMDROP_POT_ROAST,
+    ITEMDROP_SHIITAKE,      ITEMDROP_SHIITAKE,      ITEMDROP_KARMA_COIN,
+    ITEMDROP_STONE_SWORD,   ITEMDROP_TURKEY,        ITEMDROP_RING_OF_ARES,
+    ITEMDROP_COMBAT_KNIFE,  ITEMDROP_SHIITAKE,      ITEMDROP_SHIITAKE,
+};

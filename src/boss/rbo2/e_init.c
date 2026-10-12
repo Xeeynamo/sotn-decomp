@@ -55,23 +55,23 @@ PfnEntityUpdate EntityUpdates[] = {
 
 // clang-format off
 // animSet, animCurFrame, unk5A, palette, enemyID
-EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0, 0, 0x000};
-EInit g_EInitObtainable = {ANIMSET_DRA(3), 0, 0, 0, 0x001};
-EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0, 0, 0x002};
-EInit g_EInitSpawner = {ANIMSET_DRA(0), 0, 0, 0, 0x004};
-EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0, 0, 0x005};
-EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, 0, 0x002};
-EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, 0, 0x001};
-EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
-EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
-EInit g_EInitDeath1 = {ANIMSET_OVL(3), 0, 72, 512, 0x164};
-EInit D_us_801804A0 = {ANIMSET_OVL(3), 0, 72, 512, 0x165};
-EInit D_us_801804AC = {ANIMSET_OVL(3), 0, 72, 512, 0x166};
-EInit D_us_801804B8 = {ANIMSET_OVL(3), 0, 72, 512, 0x167};
-EInit D_us_801804C4 = {ANIMSET_OVL(3), 0, 72, 512, 0x002};
-EInit g_EInitDeath2 = {ANIMSET_OVL(4), 0, 80, 525, 0x169};
-EInit D_us_801804DC = {ANIMSET_OVL(4), 0, 80, 525, 0x002};
-EInit D_us_801804E8 = {ANIMSET_OVL(4), 0, 80, 525, 0x16A};
-EInit D_us_801804F4 = {ANIMSET_OVL(1), 0, 0, 0, 0x005};
-EInit g_EInitUnused80180500 = {ANIMSET_OVL(2), 0, 0, 0, 0x005};
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_BREAKABLE};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitParticle = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitSpawner = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_SPAWNER};
+EInit g_EInitInteractable = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitDeath1 = {ANIMSET_OVL(3), 0x00, 0x48, PAL_DEATH, ENEMY_DEATH};
+EInit D_us_801804A0 = {ANIMSET_OVL(3), 0x00, 0x48, PAL_DEATH, ENEMY_DEATH_UNK_165};
+EInit D_us_801804AC = {ANIMSET_OVL(3), 0x00, 0x48, PAL_DEATH, ENEMY_DEATH_UNK_166};
+EInit D_us_801804B8 = {ANIMSET_OVL(3), 0x00, 0x48, PAL_DEATH, ENEMY_DEATH_UNK_167};
+EInit D_us_801804C4 = {ANIMSET_OVL(3), 0x00, 0x48, PAL_DEATH, ENEMY_PARTICLE};
+EInit g_EInitDeath2 = {ANIMSET_OVL(4), 0x00, 0x50, PAL_DEATH_2, ENEMY_DEATH_2};
+EInit D_us_801804DC = {ANIMSET_OVL(4), 0x00, 0x50, PAL_DEATH_2, ENEMY_PARTICLE};
+EInit D_us_801804E8 = {ANIMSET_OVL(4), 0x00, 0x50, PAL_DEATH_2, ENEMY_DEATH_2_UNK_16A};
+EInit D_us_801804F4 = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitUnused80180500 = {ANIMSET_OVL(2), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
 // clang-format on

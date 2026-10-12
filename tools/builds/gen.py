@@ -714,6 +714,8 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
         sym_version = "sd"
     if ovl_name == "fname":
         sym_version = "beta_fname"
+    if ovl_name == "sttek":
+        sym_version = "sttek"
     symbols_lists = [
         f"-T config/undefined_syms.{sym_version}.txt",
     ]
@@ -767,6 +769,8 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
     strip_rule = "psx-strip"
     if platform != "psp" and not is_hd(ver) and is_servant(ovl_name):
         strip_rule = "psx-strip-servant"
+    if ovl_name == "fname":
+        strip_rule = "psx-strip-servant"
     output_name = os.path.basename(target_path)
     if ovl_name == "main":
         output_name = "main.exe"
@@ -776,7 +780,10 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
         inputs=[output_elf],
     )
     if platform == "psx":
-        if (is_stage(ovl_name) or is_boss(ovl_name)) and ovl_name != "stsel":
+        if (is_stage(ovl_name) or is_boss(ovl_name)) and ovl_name not in (
+            "stsel",
+            "sttek",
+        ):
             gfx_name = f"F_{os.path.basename(target_path)}"
             if is_hd(ver):
                 gfx_name = f"f_{os.path.basename(target_path)}"

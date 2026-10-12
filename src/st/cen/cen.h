@@ -9,6 +9,7 @@
 enum Palettes {
     PAL_NONE = 0,
     PAL_BREAKABLE_DEBRIS = 0x159,
+    PAL_ELEVATOR = 0x223,
 };
 
 typedef enum EntityID {
@@ -122,7 +123,7 @@ void EntityGreyPuff(Entity* entity);
 /*** Initializers ***/
 extern EInit g_EInitBreakable;
 extern EInit g_EInitObtainable;
-extern GAME_IMPORT EInit g_EInitSpawner;
+extern EInit g_EInitSpawner;
 extern EInit g_EInitInteractable;
 extern EInit g_EInitCommon;
 extern EInit g_EInitParticle;

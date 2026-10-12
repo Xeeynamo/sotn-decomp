@@ -111,8 +111,8 @@ void EntityCavernBackgroundLossoth(Entity* self) {
             TransMatrix(&matrix, &sp48);
             SetRotMatrix(&matrix);
             SetTransMatrix(&matrix);
-            RotTransPers(&D_us_801821E4, &((long*)SPAD(0))[i * 4], &p, &flag);
-            RotTransPers(&D_us_801821EC, &((long*)SPAD(1))[i * 4], &p, &flag);
+            RotTransPers(&D_us_801821E4, (long*)&SPAD(0)[i * 4], &p, &flag);
+            RotTransPers(&D_us_801821EC, (long*)&SPAD(1)[i * 4], &p, &flag);
 
             r = -0x2AA;
             RotMatrix(&D_us_80182204, &matrix);
@@ -123,27 +123,27 @@ void EntityCavernBackgroundLossoth(Entity* self) {
             TransMatrix(&matrix, &sp48);
             SetRotMatrix(&matrix);
             SetTransMatrix(&matrix);
-            RotTransPers(&D_us_801821F4, &((long*)SPAD(2))[i * 4], &p, &flag);
-            RotTransPers(&D_us_801821FC, &((long*)SPAD(3))[i * 4], &p, &flag);
+            RotTransPers(&D_us_801821F4, (long*)&SPAD(2)[i * 4], &p, &flag);
+            RotTransPers(&D_us_801821FC, (long*)&SPAD(3)[i * 4], &p, &flag);
         }
 
         for (prim = self->ext.prim, i = 0; i < 7; prim = prim->next, i++) {
-            LOW(prim->x0) = ((long*)SPAD(0))[i * 4];
-            LOW(prim->x1) = ((long*)SPAD(4))[i * 4];
-            LOW(prim->x2) = ((long*)SPAD(1))[i * 4];
-            LOW(prim->x3) = ((long*)SPAD(5))[i * 4];
+            LOW(prim->x0) = SPAD(0)[i * 4];
+            LOW(prim->x1) = SPAD(4)[i * 4];
+            LOW(prim->x2) = SPAD(1)[i * 4];
+            LOW(prim->x3) = SPAD(5)[i * 4];
             prim = prim->next;
 
-            LOW(prim->x0) = ((long*)SPAD(1))[i * 4];
-            LOW(prim->x1) = ((long*)SPAD(5))[i * 4];
-            LOW(prim->x2) = ((long*)SPAD(2))[i * 4];
-            LOW(prim->x3) = ((long*)SPAD(6))[i * 4];
+            LOW(prim->x0) = SPAD(1)[i * 4];
+            LOW(prim->x1) = SPAD(5)[i * 4];
+            LOW(prim->x2) = SPAD(2)[i * 4];
+            LOW(prim->x3) = SPAD(6)[i * 4];
             prim = prim->next;
 
-            LOW(prim->x0) = ((long*)SPAD(2))[i * 4];
-            LOW(prim->x1) = ((long*)SPAD(6))[i * 4];
-            LOW(prim->x2) = ((long*)SPAD(3))[i * 4];
-            LOW(prim->x3) = ((long*)SPAD(7))[i * 4];
+            LOW(prim->x0) = SPAD(2)[i * 4];
+            LOW(prim->x1) = SPAD(6)[i * 4];
+            LOW(prim->x2) = SPAD(3)[i * 4];
+            LOW(prim->x3) = SPAD(7)[i * 4];
         }
 
         // Alternate between palettes to emulate a subtle flicker
@@ -268,8 +268,8 @@ void EntityCavernBackgroundDiscusLord(Entity* self) {
             TransMatrix(&matrix, &sp48);
             SetRotMatrix(&matrix);
             SetTransMatrix(&matrix);
-            RotTransPers(&D_us_8018220C, &((long*)SPAD(0))[i * 4], &p, &flag);
-            RotTransPers(&D_us_80182214, &((long*)SPAD(1))[i * 4], &p, &flag);
+            RotTransPers(&D_us_8018220C, (long*)&SPAD(0)[i * 4], &p, &flag);
+            RotTransPers(&D_us_80182214, (long*)&SPAD(1)[i * 4], &p, &flag);
 
             r = -0x40;
             RotMatrix(&D_us_8018222C, &matrix);
@@ -280,27 +280,27 @@ void EntityCavernBackgroundDiscusLord(Entity* self) {
             TransMatrix(&matrix, &sp48);
             SetRotMatrix(&matrix);
             SetTransMatrix(&matrix);
-            RotTransPers(&D_us_8018221C, &((long*)SPAD(2))[i * 4], &p, &flag);
-            RotTransPers(&D_us_80182224, &((long*)SPAD(3))[i * 4], &p, &flag);
+            RotTransPers(&D_us_8018221C, (long*)&SPAD(2)[i * 4], &p, &flag);
+            RotTransPers(&D_us_80182224, (long*)&SPAD(3)[i * 4], &p, &flag);
         }
 
         for (prim = self->ext.prim, i = 0; i < 7; prim = prim->next, i++) {
-            LOW(prim->x0) = ((long*)SPAD(0))[i * 4];
-            LOW(prim->x1) = ((long*)SPAD(4))[i * 4];
-            LOW(prim->x2) = ((long*)SPAD(1))[i * 4];
-            LOW(prim->x3) = ((long*)SPAD(5))[i * 4];
+            LOW(prim->x0) = SPAD(0)[i * 4];
+            LOW(prim->x1) = SPAD(4)[i * 4];
+            LOW(prim->x2) = SPAD(1)[i * 4];
+            LOW(prim->x3) = SPAD(5)[i * 4];
             prim = prim->next;
 
-            LOW(prim->x0) = ((long*)SPAD(1))[i * 4];
-            LOW(prim->x1) = ((long*)SPAD(5))[i * 4];
-            LOW(prim->x2) = ((long*)SPAD(2))[i * 4];
-            LOW(prim->x3) = ((long*)SPAD(6))[i * 4];
+            LOW(prim->x0) = SPAD(1)[i * 4];
+            LOW(prim->x1) = SPAD(5)[i * 4];
+            LOW(prim->x2) = SPAD(2)[i * 4];
+            LOW(prim->x3) = SPAD(6)[i * 4];
             prim = prim->next;
 
-            LOW(prim->x0) = ((long*)SPAD(2))[i * 4];
-            LOW(prim->x1) = ((long*)SPAD(6))[i * 4];
-            LOW(prim->x2) = ((long*)SPAD(3))[i * 4];
-            LOW(prim->x3) = ((long*)SPAD(7))[i * 4];
+            LOW(prim->x0) = SPAD(2)[i * 4];
+            LOW(prim->x1) = SPAD(6)[i * 4];
+            LOW(prim->x2) = SPAD(3)[i * 4];
+            LOW(prim->x3) = SPAD(7)[i * 4];
         }
 
         // Alternate between palettes to emulate a subtle flicker

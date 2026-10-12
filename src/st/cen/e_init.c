@@ -46,11 +46,12 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityUnkId1B,         EntityMovingElevator,
 };
 
-EInit g_EInitBreakable = {ANIMSET_OVL(1), 0, 0x00, 0x000, 0};
+// clang-format off
+EInit g_EInitBreakable = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_BREAKABLE};
 #include "../e_init_common.h"
-EInit g_EInitEnemy3 = {ANIMSET_OVL(1), 0, 0x00, 0x000, 3};
-EInit g_EInitElevator = {ANIMSET_OVL(11), 1, 0x48, 0x223, 5};
+EInit g_EInitEnemy3 = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitElevator = {ANIMSET_OVL(11), 0x01, 0x48, PAL_ELEVATOR, ENEMY_INTERACTABLE};
 
 #ifdef VERSION_PSP
-EInit g_EInitUnk = {ANIMSET_DRA(0), 0, 0x00, 0, 0x190};
+EInit g_EInitUnk = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_MARIA};
 #endif

@@ -18,7 +18,15 @@ void EntityBreakable(Entity* entity) {
         AnimateEntity(g_eBreakableAnimations[breakableType], entity);
         if (entity->hitParams) { // If the candle is destroyed
             Entity* entityDropItem;
+#ifdef STAGE_IS_TEK
+            if (breakableType == 1) {
+                g_api.PlaySfx(SFX_BREAKABLE_HIT_ALT);
+            } else {
+                g_api.PlaySfx(SFX_BREAKABLE_HIT);
+            }
+#else
             g_api.PlaySfx(SFX_BREAKABLE_HIT);
+#endif
             entityDropItem = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entityDropItem != NULL) {
                 CreateEntityFromCurrentEntity(E_EXPLOSION, entityDropItem);

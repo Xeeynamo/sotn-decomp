@@ -86,14 +86,15 @@ PfnEntityUpdate EntityUpdates[] = {
     EntitySkullLordPieces,
 };
 
-EInit g_EInitBreakable = {ANIMSET_OVL(1), 0, 0, 0x0, 0};
+// clang-format off
+EInit g_EInitBreakable = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_BREAKABLE};
 
 #include "../e_init_common.h"
 
-static EInit __unused__ = {ANIMSET_OVL(1), 0, 0, 0x0, 3};
-EInit g_EInitRTOPCommon = {ANIMSET_OVL(2), 0, 0, 0x0, 5};
-EInit g_EInitTombstone = {ANIMSET_OVL(5), 21, 0x4D, 0x208, 0x71};
-EInit g_EInitYorick = {ANIMSET_OVL(6), 1, 0x56, 0x20A, 0x78};
-EInit g_EInitYorickSkull = {ANIMSET_OVL(6), 0x1E, 0x56, 0x20A, 0x79};
-EInit g_EInitSkullLord = {ANIMSET_OVL(7), 1, 0x48, 0x20B, 0x105};
-EInit g_EInitSkullLordEffects = {ANIMSET_OVL(7), 1, 0x48, 0x20B, 0x5};
+static EInit __unused__ = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitRTOPCommon = {ANIMSET_OVL(2), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitTombstone = {ANIMSET_OVL(5), 0x15, 0x4D, PAL_TOMBSTONE, ENEMY_TOMBSTONE};
+EInit g_EInitYorick = {ANIMSET_OVL(6), 0x01, 0x56, PAL_YORICK, ENEMY_YORICK};
+EInit g_EInitYorickSkull = {ANIMSET_OVL(6), 0x1E, 0x56, PAL_YORICK, ENEMY_YORICK_SKULL};
+EInit g_EInitSkullLord = {ANIMSET_OVL(7), 0x01, 0x48, PAL_SKULL_LORD, ENEMY_SKULL_LORD};
+EInit g_EInitSkullLordEffects = {ANIMSET_OVL(7), 0x01, 0x48, PAL_SKULL_LORD, ENEMY_INTERACTABLE};

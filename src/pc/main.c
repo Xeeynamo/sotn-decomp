@@ -179,6 +179,9 @@ int Main(int argc, char* argv[]) {
     if (params.replayPath && Replay_DidDrift()) {
         return -1;
     }
+    if (Replay_DemoAborted()) {
+        return -1;
+    }
     return 0;
 }
 

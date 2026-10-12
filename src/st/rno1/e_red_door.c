@@ -41,7 +41,7 @@ void EntityRedDoor(Entity* self) {
     s16 angle;
     u8* uv;
     s16 x, y;
-    u8 sp3F;
+    u8 params;
     s16 endX;
     s16 scrollX, scrollY;
     s32 tileIdx;
@@ -73,7 +73,7 @@ void EntityRedDoor(Entity* self) {
             return;
         }
         self->flags |= FLAG_HAS_PRIMS;
-        uv = (u8*)g_eRedDoorUV;
+        uv = g_eRedDoorUV[0];
         prim = &g_PrimBuf[self->primIndex];
         i = 0;
         y = self->posY.i.hi - 0x1F;
@@ -371,7 +371,7 @@ void EntityRedDoor(Entity* self) {
         }
     }
 
-    sp3F = self->params & 0xFF;
+    params = self->params & 0xFF;
     if (self->animCurFrame) {
         for (i = 0; i < 4; i++) {
             x = self->posX.i.hi;
@@ -379,7 +379,7 @@ void EntityRedDoor(Entity* self) {
             scrollX = x + g_Tilemap.scrollX.i.hi;
             scrollY = y + g_Tilemap.scrollY.i.hi;
             tileIdx = (scrollX >> 4) + (scrollY >> 4) * g_Tilemap.hSize * 0x10;
-            g_Tilemap.fg[tileIdx] = g_RedDoorTiles[sp3F][i];
+            g_Tilemap.fg[tileIdx] = g_RedDoorTiles[params][i];
         }
     } else {
         for (i = 0; i < 4; i++) {
@@ -388,7 +388,7 @@ void EntityRedDoor(Entity* self) {
             scrollX = x + g_Tilemap.scrollX.i.hi;
             scrollY = y + g_Tilemap.scrollY.i.hi;
             tileIdx = (scrollX >> 4) + (scrollY >> 4) * g_Tilemap.hSize * 0x10;
-            g_Tilemap.fg[tileIdx] = g_RedDoorTiles[sp3F][i + 4];
+            g_Tilemap.fg[tileIdx] = g_RedDoorTiles[params][i + 4];
         }
     }
 }

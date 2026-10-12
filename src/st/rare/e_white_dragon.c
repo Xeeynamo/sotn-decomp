@@ -9,7 +9,6 @@ static s16 z_priorities[] = {8, 7, 6, 5, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 6, 7};
 static s16 attack_timers[] = {
     0x0180, 0x0140, 0x0200, 0x0100, 0x00E0, 0x0150, 0x0120, 0x00C0};
 
-#define WHITE_DRAGON_ID 0x2B
 #define SEGMENT_COUNT 24
 
 static void func_us_801B4F00(void) {
@@ -56,7 +55,7 @@ static void func_us_801B4F00(void) {
         if (i) {
             if ((i ^ g_GameTimer) & 1) {
                 currentEntity->hitboxState =
-                    g_api.enemyDefs[WHITE_DRAGON_ID].hitboxState;
+                    g_api.enemyDefs[ENEMY_WHITE_DRAGON].hitboxState;
             } else {
                 currentEntity->hitboxState = 0;
             }
@@ -273,7 +272,7 @@ void EntityWhiteDragon(Entity* self) {
             self->flags |=
                 FLAG_POS_CAMERA_LOCKED | FLAG_SUPPRESS_STUN | FLAG_UNK_10;
             self->facingLeft = self->params & 1;
-            enemyDef = &g_api.enemyDefs[WHITE_DRAGON_ID];
+            enemyDef = &g_api.enemyDefs[ENEMY_WHITE_DRAGON];
 
             entity = self;
             for (i = SEGMENT_COUNT - 1; i >= 0; i--) {
@@ -285,7 +284,7 @@ void EntityWhiteDragon(Entity* self) {
                 // Interestingly this enemy does not use the standard method of
                 // EInit to initialise the enemy and instead uses a
                 // g_EInitSpawner and manually sets up the properties.
-                entity->enemyId = WHITE_DRAGON_ID;
+                entity->enemyId = ENEMY_WHITE_DRAGON;
                 entity->ext.whiteDragon.posX.val = self->posX.val;
                 entity->ext.whiteDragon.posY.val = self->posY.val;
                 entity->params = i;

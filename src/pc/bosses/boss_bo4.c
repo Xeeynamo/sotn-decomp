@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#include <psyz/module.h>
 #include <game.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,9 +11,9 @@ extern AbbreviatedOverlay2 g_BossOverlay;
 extern PfnEntityUpdate EntityUpdates[];
 extern LayoutEntity* entityLayoutHorizontal[];
 extern LayoutEntity* entityLayoutVertical[];
-extern GAME_IMPORT PfnEntityUpdate* PfnEntityUpdates;
-extern GAME_IMPORT LayoutEntity** g_pStObjLayoutHorizontal;
-extern GAME_IMPORT LayoutEntity** g_pStObjLayoutVertical;
+extern PfnEntityUpdate* PfnEntityUpdates;
+extern LayoutEntity** g_pStObjLayoutHorizontal;
+extern LayoutEntity** g_pStObjLayoutVertical;
 
 // stubs
 AluFrame* D_us_801B0A78[1] = {0};
@@ -22,9 +23,13 @@ SpriteParts* D_us_801B1664[1] = {0};
 SpriteParts* D_us_801B2068[1] = {0};
 SpriteParts* D_us_801B252C[1] = {0};
 
-OVL_API void InitStage(Overlay* o) {
+void Psyz_ModuleStart(void* param) {
+    Overlay* o = param;
+
     memcpy(o, &g_BossOverlay, sizeof(AbbreviatedOverlay2));
     PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = entityLayoutHorizontal;
     g_pStObjLayoutVertical = entityLayoutVertical;
 }
+
+void Psyz_ModuleStop(void) {}

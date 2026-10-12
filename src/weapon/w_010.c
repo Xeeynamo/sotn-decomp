@@ -2,9 +2,6 @@
 // Weapon ID #10. Used by weapons:
 // Iron shield, Unknown#205
 #include "weapon_private.h"
-extern u16* g_WeaponCluts[];
-extern s32 g_HandId;
-#include "shared.h"
 #include "gen/w_010_1.h"
 #include "gen/w_010_2.h"
 #define g_Animset w_010_1
@@ -12,17 +9,93 @@ extern s32 g_HandId;
 #include "items.h"
 #include "sfx.h"
 
-extern s8 D_4A000_8017AB20;
-extern AnimationFrame* D_4A000_8017AB68;
-extern s16 D_4A000_8017ABBC[];
-extern s16 D_4A000_8017ABDC[];
+static u16 pal_0[N_ARRAY_PAL][COLORS_PER_PAL] = {
+    {0x0000, 0x8421, 0x98A3, 0xAD2A, 0xCA52, 0xAC61, 0xC503, 0xD9A7, 0xE2AF,
+     0x9084, 0x9D08, 0xA96C, 0xB9F0, 0x801F, 0xD2D8, 0xE35C},
+    {0x0000, 0xA0E6, 0x9D2D, 0xB5D2, 0xD677, 0xAC68, 0xACED, 0xAD72, 0xB1F8,
+     0x9C41, 0xC125, 0xD5C9, 0xDE6E, 0xEEF5, 0xFFDB, 0xE33A},
+    {0x0000, 0x8CA8, 0x992C, 0xA1D2, 0xB679, 0xA4AF, 0xB0F7, 0xADDA, 0xBA7C,
+     0x9C41, 0xACE6, 0xBD8B, 0xC631, 0xD6B5, 0xEB5A, 0xFFDE},
+    {0x0000, 0x8421, 0xB8EA, 0xD58D, 0xFAF6, 0x8D2F, 0x91D6, 0x929B, 0xBB3F,
+     0x9084, 0x9D08, 0xA98C, 0xBA11, 0xC696, 0xD31A, 0xE35C}};
+static AnimationFrame anim_00[] = {POSE(2, 0x01, 1), POSE_LOOP(0)};
+static AnimationFrame anim_01[] = {POSE(2, 0x02, 2), POSE_LOOP(0)};
+static AnimationFrame anim_09[] = {
+    POSE(2, 0x03, 3), POSE(2, 0x04, 3), POSE(2, 0x05, 3), POSE(2, 0x06, 3),
+    POSE(2, 0x07, 3), POSE(2, 0x08, 3), POSE(2, 0x09, 4), POSE(2, 0x0A, 1),
+    POSE(2, 0x0B, 1), POSE(2, 0x0C, 1), POSE_LOOP(0)};
+static AnimationFrame anim_08[] = {
+    POSE(3, 0x0D, 1),  POSE(3, 0x0E, 7),  POSE(3, 0x0F, 8),  POSE(3, 0x10, 9),
+    POSE(3, 0x11, 10), POSE(3, 0x12, 11), POSE(3, 0x13, 12), POSE(3, 0x14, 13),
+    POSE(3, 0x15, 14), POSE(3, 0x16, 13), POSE(3, 0x17, 12), POSE(3, 0x18, 11),
+    POSE(3, 0x19, 10), POSE(3, 0x1A, 9),  POSE(3, 0x1B, 8),  POSE(3, 0x1C, 7),
+    POSE_LOOP(0)};
+static AnimationFrame anim_07[] = {
+    POSE(1, 0x24, 1), POSE(1, 0x25, 1), POSE(1, 0x26, 1), POSE(1, 0x27, 1),
+    POSE(1, 0x28, 1), POSE(1, 0x29, 1), POSE(1, 0x2A, 1), POSE(1, 0x2B, 1),
+    POSE(1, 0x2C, 1), POSE(1, 0x2D, 1), POSE(1, 0x2E, 1), POSE(1, 0x2F, 1),
+    POSE(1, 0x30, 1), POSE_LOOP(0)};
+static AnimationFrame anim_06[] = {
+    POSE(1, 0x2A, 1), POSE(1, 0x2B, 1), POSE(1, 0x2C, 1), POSE(1, 0x2D, 1),
+    POSE(1, 0x2E, 1), POSE(1, 0x2F, 1), POSE(1, 0x30, 1), POSE_LOOP(0)};
+static AnimationFrame anim_05[] = {
+    POSE(2, 0x21, 1), POSE(2, 0x22, 1), POSE(2, 0x23, 1), POSE(2, 0x24, 1),
+    POSE(2, 0x25, 1), POSE(2, 0x26, 1), POSE(2, 0x27, 1), POSE(2, 0x28, 1),
+    POSE(2, 0x29, 1), POSE(2, 0x2A, 1), POSE(2, 0x2B, 1), POSE(2, 0x2C, 1),
+    POSE(2, 0x2D, 1), POSE(2, 0x2E, 1), POSE(2, 0x2F, 1), POSE(2, 0x30, 1),
+    POSE_LOOP(0)};
+static AnimationFrame anim_10[] = {
+    POSE(2, 0x31, 1), POSE(2, 0x32, 1), POSE(2, 0x33, 1), POSE_END};
+static AnimationFrame anim_11[] = {
+    POSE(2, 0x34, 2), POSE(2, 0x35, 2), POSE(2, 0x36, 2), POSE_END};
+static AnimationFrame anim_12[] = {
+    POSE(2, 0x33, 1), POSE(2, 0x32, 1), POSE(2, 0x31, 1), POSE_END};
+static AnimationFrame anim_13[] = {
+    POSE(2, 0x36, 2), POSE(2, 0x35, 2), POSE(2, 0x34, 2), POSE_END};
+static AnimationFrame anim_04[] = {
+    POSE(4, 0x1D, 1), POSE(4, 0x1E, 1), POSE_LOOP(0)};
+static AnimationFrame anim_02[] = {
+    POSE(2, 0x1F, 6), POSE(2, 0x20, 6), POSE_LOOP(0)};
+static AnimationFrame anim_03[] = {
+    POSE(3, 0x37, 17), POSE(3, 0x38, 17), POSE(3, 0x38, 17), POSE(3, 0x38, 16),
+    POSE(3, 0x38, 15), POSE(3, 0x39, 1),  POSE(3, 0x3A, 1),  POSE(3, 0x3B, 1),
+    POSE(3, 0x3C, 1),  POSE(3, 0x3D, 1),  POSE(3, 0x01, 1),  POSE(3, 0x01, 1),
+    POSE(3, 0x01, 1),  POSE(3, 0x01, 1),  POSE(3, 0x01, 1),  POSE_LOOP(0)};
 
-extern s32 D_4A000_8017CC1C; // g_DebugWaitInfoTimer
+static s8 hitboxes[][4] = {
+    {0, 0, 0, 0},    {14, -7, 4, 12},  {14, 13, 4, 12}, {-11, -7, 4, 12},
+    {1, -5, 4, 12},  {-32, -31, 0, 0}, {22, -6, 4, 12}, {15, -6, 4, 12},
+    {16, -5, 4, 12}, {17, -4, 4, 12},  {18, -3, 4, 12}, {19, -2, 4, 12},
+    {20, -1, 4, 12}, {21, 0, 4, 12},   {22, 1, 4, 12},  {12, -5, 4, 12},
+    {10, -3, 4, 12}, {8, -1, 4, 12}};
+
+static AnimationFrame* anims[] = {
+    anim_00, anim_01, anim_02, anim_03, anim_04, anim_05, anim_06,
+    anim_07, anim_08, anim_09, anim_10, anim_11, anim_12, anim_13};
+
+static AnimationFrame anim_thunder[] = {
+    POSE(2, 0x3F, 6), POSE(2, 0x40, 6), POSE(2, 0x41, 6), POSE(2, 0x42, 6),
+    POSE(2, 0x43, 6), POSE(2, 0x44, 6), POSE_END};
+
+static s16 shieldAngles[] = {
+    0x0000, 0x0300, 0x0600, 0x0900, 0x0C00, 0x0F00, 0x1200, 0x1500,
+    0x1800, 0x1B00, 0x1E00, 0x2100, 0x2400, 0x2700, 0x2A00, 0x2D00};
+
+static s16 shieldAngles2[] = {
+    0x0000, 0x0300, 0x0600, 0x0900, 0x0C00, 0x0F00, 0x1200, 0x1500,
+    0x1800, 0x1B00, 0x1E00, 0x2100, 0x2400, 0x2700, 0x2A00, 0x2D00};
+
+static u16* g_WeaponCluts[] = {(u16*)pal_0, (u16*)pal_0};
+static s32 g_HandId = HAND_ID;
+
+#include "shared.h"
+
+static s32 g_DebugWaitInfoTimer;
 
 static void DebugShowWaitInfo(const char* msg) {
     g_CurrentBuffer = g_CurrentBuffer->next;
     FntPrint(msg);
-    if (D_4A000_8017CC1C++ & 4) {
+    if (g_DebugWaitInfoTimer++ & 4) {
         FntPrint("\no\n");
     }
     DrawSync(0);
@@ -174,14 +247,12 @@ static void EntityWeaponAttack(Entity* self) {
         break;
     }
     if (self->step != 4) {
-        g_api.PlayAnimation(&D_4A000_8017AB20, &D_4A000_8017AB68);
+        g_api.PlayAnimation(&hitboxes[0][0], anims);
     }
     self->drawFlags = PLAYER.drawFlags;
     self->scaleY = PLAYER.scaleY;
     self->rotPivotY = PLAYER.rotPivotY;
 }
-
-extern AnimationFrame D_4A000_8017ABA0[];
 
 s32 func_ptr_80170004(Entity* self) {
     if (self->ext.weapon.parent->entityId == 0) {
@@ -202,7 +273,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->zPriority = self->ext.weapon.parent->zPriority + 4;
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->flags = FLAG_UNK_100000 | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
-        self->anim = D_4A000_8017ABA0;
+        self->anim = anim_thunder;
         g_api.PlaySfx(SFX_THUNDER_A);
         self->step++;
     } else if (self->poseTimer < 0) {
@@ -472,15 +543,15 @@ void EntityWeaponShieldSpell(Entity* self) {
         nextPrim = prim->next;
         *prim = *prevPrim;
         prim->next = nextPrim;
-        angle = D_4A000_8017ABBC[i];
+        angle = shieldAngles[i];
         prim->r2 = prim->g2 = prim->b2 = prim->b3 = 0;
         prim->g3 = prim->r3 =
             ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
-        angle = D_4A000_8017ABBC[(i + 1) % 16];
+        angle = shieldAngles[(i + 1) % 16];
         prim->r0 = prim->g0 = prim->b0 = prim->b1 = 0;
         prim->g1 = prim->r1 =
             ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
-        D_4A000_8017ABBC[i] += self->ext.shield.unk8A;
+        shieldAngles[i] += self->ext.shield.unk8A;
         prim->clut = PAL_FILL_WHITE;
         prim->priority = 0x1BA;
         prim->drawMode = (DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP);
@@ -647,13 +718,13 @@ void func_ptr_80170024(Entity* self) {
         prim->y1 = top + (bottom - top) * (i + 1) / 16;
         prim->y2 = top2 + (bottom2 - top2) * i / 16;
         prim->y3 = top2 + (bottom2 - top2) * (i + 1) / 16;
-        angle = D_4A000_8017ABDC[i];
+        angle = shieldAngles2[i];
         prim->r0 = prim->g0 = prim->b0 = prim->r2 = prim->g2 = prim->b2 =
             ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
-        angle = D_4A000_8017ABDC[(i + 1) % 16];
+        angle = shieldAngles2[(i + 1) % 16];
         prim->r1 = prim->g1 = prim->b1 = prim->r3 = prim->g3 = prim->b3 =
             ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
-        D_4A000_8017ABDC[i] += self->ext.shield.unk8A;
+        shieldAngles2[i] += self->ext.shield.unk8A;
         prim = prim->next;
     }
 }

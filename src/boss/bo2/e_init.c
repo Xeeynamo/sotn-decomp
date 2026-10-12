@@ -89,22 +89,22 @@ PfnEntityUpdate EntityUpdates[] = {
 
 // clang-format off
 // animSet, animCurFrame, unk5A, palette, enemyID
-EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0, 0, 0x000};
-EInit g_EInitObtainable = {ANIMSET_DRA(3), 0, 0, 0, 0x001};
-EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0, 0, 0x002};
-EInit g_EInitSpawner = {ANIMSET_DRA(0), 0, 0, 0, 0x004};
-EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0, 0, 0x005};
-EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, 0, 0x002};
-EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, 0, 0x001};
-EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
-EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
-EInit D_us_80180524 = {ANIMSET_OVL(1), 0, 0, 0, 0x005};
-EInit g_EInitMinotaurus = {ANIMSET_OVL(2), 1, 72, 512, 0x0CB};
-EInit g_EInitMinotaurAttackHitbox = {ANIMSET_OVL(2), 1, 72, 512, 0x0CC};
-EInit g_EInitMinotaurFireball = {ANIMSET_DRA(2), 1, 0, 0, 0x002};
-EInit g_EInitMinotaurSpitLiquid = {ANIMSET_DRA(2), 1, 0, 0, 0x0CD};
-EInit g_EInitWerewolfARE = {ANIMSET_OVL(3), 1, 84, 528, 0x0CE};
-EInit g_EInitWerewolfAttackHitbox = {ANIMSET_OVL(3), 0, 84, 528, 0x0CF};
-EInit D_us_80180578 = {ANIMSET_OVL(3), 57, 84, 528, 0x0D0};
-EInit D_us_80180584 = {ANIMSET_OVL(3), 0, 84, 528, 0x0D1};
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_BREAKABLE};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitParticle = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitSpawner = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_SPAWNER};
+EInit g_EInitInteractable = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit D_us_80180524 = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitMinotaurus = {ANIMSET_OVL(2), 0x01, 0x48, PAL_MINOTAURUS, ENEMY_MINOTAURUS};
+EInit g_EInitMinotaurAttackHitbox = {ANIMSET_OVL(2), 0x01, 0x48, PAL_MINOTAURUS, ENEMY_MINOTAURUS_ATTACK_HITBOX};
+EInit g_EInitMinotaurFireball = {ANIMSET_DRA(2), 0x01, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitMinotaurSpitLiquid = {ANIMSET_DRA(2), 0x01, 0x00, PAL_NONE, ENEMY_MINOTAURUS_SPIT_LIQUID};
+EInit g_EInitWerewolfARE = {ANIMSET_OVL(3), 0x01, 0x54, PAL_WEREWOLF, ENEMY_WEREWOLF_ARE};
+EInit g_EInitWerewolfAttackHitbox = {ANIMSET_OVL(3), 0x00, 0x54, PAL_WEREWOLF, ENEMY_WEREWOLF_ARE_ATTACK_HITBOX};
+EInit D_us_80180578 = {ANIMSET_OVL(3), 0x39, 0x54, PAL_WEREWOLF, ENEMY_WEREWOLF_ARE_UNK_D0};
+EInit D_us_80180584 = {ANIMSET_OVL(3), 0x00, 0x54, PAL_WEREWOLF, ENEMY_WEREWOLF_ARE_UNK_D1};
 // clang-format on

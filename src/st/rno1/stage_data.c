@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
+// These .h files don't exist for PSP
+#ifndef VERSION_PSP
 u8 gfx_unused_1[] = {
 #include "gen/gfx_unused_1.h"
 };
@@ -16,6 +18,8 @@ u8 gfx_unused_4[] = {
 u8 gfx_unused_5[] = {
 #include "gen/gfx_unused_5.h"
 };
+#endif
+
 u8 D_80185B40[] = {
 #include "gen/D_80185B40.h"
 };

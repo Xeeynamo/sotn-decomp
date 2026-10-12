@@ -221,7 +221,7 @@ void func_060E25F4(Entity* self) {
     goto cleanup;
 
 state10:
-    save_id = DAT_060485C4;
+    save_id = DAT_060485C0.unk4;
     for (i = 1; i <= 5; i++) {
         status = func_0600D028(save_id, i);
         if (status != 0 && status != BUP_BROKEN) {
@@ -308,7 +308,7 @@ void func_060E323C(s32 scale, s32 unused) {
     s32 i;
     s32 last;
 
-    base = DAT_060485e0;
+    base = DAT_060485E0;
     srcX = g_Stage16Entity08ModelVertices14[0];
     dstX = base;
     factor = scale << 8;
@@ -334,8 +334,7 @@ void func_060E323C(s32 scale, s32 unused) {
     DAT_06061DF0.current->val[0][1] = DAT_06061DF0.current->val[0][1] * 5 / 4;
     DAT_06061DF0.current->val[0][2] = DAT_06061DF0.current->val[0][2] * 5 / 4;
 
-    TransformAndProjectPoints(
-        base, (s32*)((char*)base + 0x408), 0xE, &DAT_06061DF0);
+    TransformAndProjectPoints((MthXyz*)base, (XyInt*)((char*)base + 0x408), 14);
 }
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E330C, func_060E330C);
 void func_060E3478(Entity* entity) {

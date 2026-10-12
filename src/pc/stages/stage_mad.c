@@ -1,8 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#include <psyz/module.h>
 #include <game.h>
 #include <stdlib.h>
 #include <string.h>
+#if !defined(PSP)
 #include <time.h>
+#endif
 #include "overlay.h"
 #include "../../st/mad/mad.h"
 
@@ -11,9 +14,9 @@ extern PfnEntityUpdate EntityUpdates[];
 extern LayoutEntity* entityLayoutHorizontal[];
 extern LayoutEntity* entityLayoutVertical[];
 extern RoomDef rooms_layers[];
-extern GAME_IMPORT PfnEntityUpdate* PfnEntityUpdates;
-extern GAME_IMPORT LayoutEntity** g_pStObjLayoutHorizontal;
-extern GAME_IMPORT LayoutEntity** g_pStObjLayoutVertical;
+extern PfnEntityUpdate* PfnEntityUpdates;
+extern LayoutEntity** g_pStObjLayoutHorizontal;
+extern LayoutEntity** g_pStObjLayoutVertical;
 
 #define TILES_PER_ROOM (16 * 16)
 #define MERGED_ROOM_COUNT 8
@@ -55,12 +58,20 @@ static void MergeRoomTilemaps(void) {
 static void SeedDebugRooms(void) {
     unsigned int seed;
 
+#if defined(PSP)
+    // The PSP EBOOT has no time(); the vblank counter varies per run just as
+    // well, which is all the seed needs to do.
+    seed = (unsigned int)VSync(-1);
+#else
     seed = (unsigned int)time(NULL);
+#endif
     INFOF("seeding rand() with %u for randomized debug rooms", seed);
     srand(seed);
 }
 
-OVL_API void InitStage(Overlay* o) {
+void Psyz_ModuleStart(void* param) {
+    Overlay* o = param;
+
     memcpy(o, &g_Overlay, sizeof(Overlay));
     PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = entityLayoutHorizontal;
@@ -68,3 +79,5 @@ OVL_API void InitStage(Overlay* o) {
     MergeRoomTilemaps();
     SeedDebugRooms();
 }
+
+void Psyz_ModuleStop(void) {}

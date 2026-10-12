@@ -414,5 +414,3 @@ Uint8 GetComBlockAdr(void) {
         return 0;
     }
 }
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6019058, func_06019058);

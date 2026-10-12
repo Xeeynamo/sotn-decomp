@@ -8,8 +8,14 @@
 
 enum Palettes {
     PAL_NONE,
+    PAL_PARANTHROPUS = 0x200,
+    PAL_STONE_SKULL = 0x203,
+    PAL_JACK_O_BONES = 0x20C,
+    PAL_NOVA_SKELETON = 0x214,
+    PAL_ELEVATOR_MACHINE = 0x219,
     PAL_BREAKABLE = 0x22C,
     PAL_BREAKABLE_DEBRIS = 0x230,
+    PAL_BOSS_NEXT_DECOR = 0x234,
 };
 
 typedef enum EntityID {
@@ -35,9 +41,9 @@ typedef enum EntityID {
     E_UNK_ID13,                 // EntityUnkId13
     E_EXPLOSION_VARIANTS,       // EntityExplosionVariants
     E_GREY_PUFF,                // EntityGreyPuff
-    E_UNK_16,                   // func_us_801A68AC
-    E_UNK_17,                   // func_us_801A700C
-    E_UNK_18,                   // func_us_801B7CC4_from_no1
+    E_FOG,                      // EntityFog
+    E_RAIN,                     // EntityRain
+    E_RAIN_SFX_FADE,            // EntityFadeRainSound
     E_PARANTHROPUS,             // EntityParanthropus
     E_PARANTHROPUS_BONE_HITBOX, // EntityParanthropusBoneHitbox
     E_PARANTHROPUS_SKULL,       // EntityParanthropusSkull
@@ -50,17 +56,17 @@ typedef enum EntityID {
     E_NOVA_LASER,               // EntityNovaLaser
     E_NOVA_PULSE,               // EntityNovaLaserPulse
     E_NOVA_DEATH_PARTS,         // EntityNovaSkeletonDeathParts
-    E_UNK_25,                   // func_us_801B8F50_from_no1
-    E_UNK_26,                   // func_us_801BE880_from_no1
-    E_UNK_27,                   // func_us_801BEB54_from_no1
-    E_UNK_28,                   // func_us_801BEE00_from_no1
-    E_UNK_29,                   // func_us_801BF074_from_no1
-    E_UNK_2A,                   // func_us_801A86A8
+    E_ELEVATOR_MACHINE,         // EntityElevatorMachine
+    E_SECRET_WALL,              // EntitySecretElevatorWall
+    E_WALL_SEGMENT,             // EntityBreakableWallSegment
+    E_WALL_PARTICLES,           // EntityWallParticles
+    E_WALL_DEBRIS,              // EntityBreakableWallDebris
+    E_SECRET_ELEVATOR,          // EntitySecretElevator
     E_BREAKABLE_DEBRIS,         // EntityBreakableDebris
-    E_UNK_2C,                   // func_us_801A9BEC
-    E_UNK_2D,                   // func_us_801B9028_from_no1
-    E_UNK_2E,                   // func_us_80198A18_from_rbo4
-    E_UNK_2F,                   // func_us_801A9A8C
+    E_DOORWAY_BLOCKER,          // EntityDoorwayBlocker
+    E_E_BOSS_NEXT_ROOM_DECOR,   // EntityBossAnteRoomDecoration
+    E_E_BOSS_ROUND_HALF,        // EntityBossRoundDoorHalf
+    E_E_BOSS_ROUND,             // EntityBossRoundDoor
     NUM_ENTITIES,
 };
 

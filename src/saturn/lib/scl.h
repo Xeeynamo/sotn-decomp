@@ -78,19 +78,12 @@ typedef struct SclRotscl {
 } SclRotscl;
 
 typedef struct SclWinscl {
-
     Uint16 win0_start[2];
-
     Uint16 win0_end[2];
-
     Uint16 win1_start[2];
-
     Uint16 win1_end[2];
-
     Uint16 wincontrl[4];
-
     Uint32 linewin0_addr;
-
     Uint32 linewin1_addr;
 } SclWinscl;
 
@@ -207,7 +200,6 @@ typedef struct SclConfig {
     Uint8 mapover;
     Uint8 flip;
     Uint16 patnamecontrl;
-
     Uint32 plate_addr[32];
 } SclConfig;
 

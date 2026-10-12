@@ -44,37 +44,25 @@
 #include <assert.h>
 #ifndef _MSC_VER
 #define STATIC_ASSERT _Static_assert
-#define PACKED __attribute__((packed))
 #define UNUSED __attribute__((unused))
 #else
-#define STATIC_ASSERT(x, ...)
-#define PACKED
+#define STATIC_ASSERT static_assert
 #define UNUSED
 #endif
 #define ASSERT(x) assert(x)
 #define SYNC_FIELD(struct1, struct2, field)                                    \
     STATIC_ASSERT(OFF(struct1, field) == OFF(struct2, field), "unsynced")
 
-#if defined(_WIN32) && defined(OVERLAY_BUILD)
-#define GAME_IMPORT __declspec(dllimport)
-#else
-#define GAME_IMPORT
-#endif
-
 #elif defined(VERSION_PSP)
 #define ASSERT(x)
 #define STATIC_ASSERT(x, y)
-#define PACKED
 #define UNUSED
 #define SYNC_FIELD(struct1, struct2, field)
-#define GAME_IMPORT
 #else
 #define ASSERT(x)
 #define STATIC_ASSERT(x, ...)
-#define PACKED
 #define UNUSED
 #define SYNC_FIELD(struct1, struct2, field)
-#define GAME_IMPORT
 #endif
 
 #define LOBU(x) (*(u8*)&(x))

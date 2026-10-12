@@ -8,7 +8,3 @@
 #define DAMAGE_ENT_END g_Entities[192]
 
 #include "../e_spikes.h"
-
-#ifndef VERSION_PSP
-const RECT g_Rno2DrawEnvClip = {0, 0x100, 0x50, 0xC0};
-#endif

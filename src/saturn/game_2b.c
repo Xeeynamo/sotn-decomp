@@ -412,8 +412,8 @@ void func_06079A2C(s32 arg0, s32 arg1, Point16* pos) {
 }
 
 s32 func_06079AF0(void) {
-    if ((g_Player.status & PLAYER_STATUS_DEAD) || (DAT_0605d7f0 != 0) ||
-        !(g_pads[0].previous & PAD_START)) {
+    if ((g_Player.status & PLAYER_STATUS_DEAD) || DAT_0605D7F0 ||
+        !(g_pads[0].tapped & PAD_START)) {
         return 0;
     }
     if (DAT_0605C668 != 0 && DAT_0605ceb0 != 0) {
@@ -677,7 +677,7 @@ u8 CheckColliderOffsets(Entity* entity, s16* arg0, u8 facing) {
     return ret;
 }
 
-bool UnkCollisionFunc5(Entity* entity, s16* pointXY) {
+int UnkCollisionFunc5(Entity* entity, s16* pointXY) {
     Collider collider;
 
     FallEntity(entity);
@@ -1648,7 +1648,7 @@ void CheckCollision(s32 x, s32 y, Collider* res, u16 unk) {
         u16 D;
         u16 E;
         posX = posX * 4 / 5;
-        A = DAT_0605cdb8 * 4 / 5;
+        A = DAT_0605CDB8 * 4 / 5;
         B = A / 2;
         C = posX >> 20;
         D = posY >> 20;

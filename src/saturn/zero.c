@@ -35,7 +35,7 @@ void func_060040d8(void) {
     case 0:
         func_0600456c();
         DAT_0605d7f8 = 0;
-        func_06004f50(0x20);
+        func_06004F50(0x20);
         DAT_0605cea0.unk0++;
         break;
     case 6:
@@ -119,14 +119,14 @@ void func_060040d8(void) {
         SclProcess = 1;
         SCL_DisplayFrame();
         SCL_Vdp2Init();
-        func_06011ce4();
+        func_06011CE4();
         ReturnToGame();
-        func_06004f50(0x31);
+        func_06004F50(0x31);
         func_06007d54();
         break;
     case 0x31:
-        DAT_0605d7f0 = 1;
-        func_0600d8bc();
+        DAT_0605D7F0 = true;
+        func_0600D8BC();
         break;
     }
     if (func_0600fb4c() != 0) {
@@ -146,7 +146,7 @@ void func_060040d8(void) {
             }
         }
         StartColorOffsetFade(0, 4);
-        func_06004f50(0x30);
+        func_06004F50(0x30);
     }
     func_06010400();
     CloseSpriteList();
@@ -160,7 +160,7 @@ void func_060040d8(void) {
 
 void InitScuDma();
 void InitBackupRam();
-void func_06011ce4();
+void func_06011CE4();
 
 void InitSystem(void) {
     CSH_Init(0);
@@ -173,7 +173,7 @@ void InitSystem(void) {
     InitVdp2Display();
     func_06006470();
     InitBackupRam();
-    func_06011ce4();
+    func_06011CE4();
     SetVblank(1);
     func_060082C8();
     InitDebugPrint();
@@ -183,21 +183,23 @@ void func_0600456C(void) {
     func_06004878();
     func_060046E8();
     func_060047E8();
-    func_06007F6C();
+    SetVDP2Vram();
 
     Scl_w_reg.win0_start[0] = 0;
-    Scl_w_reg.win0_start[1] = 0xC;
-    Scl_w_reg.win0_end[0] = 0x280;
-    Scl_w_reg.win0_end[1] = 0xF0;
-    Scl_w_reg.wincontrl[0] = 0x383;
+    Scl_w_reg.win0_start[1] = 12;
+    Scl_w_reg.win0_end[0] = 640;
+    Scl_w_reg.win0_end[1] = 240;
+    Scl_w_reg.wincontrl[0] = 0x0383;
     Scl_w_reg.wincontrl[1] = 0x8383;
-    Scl_w_reg.wincontrl[2] = 0x83;
+    Scl_w_reg.wincontrl[2] = 0x0083;
 
     SclProcess = 1;
     func_06009D30();
     DAT_0605D770.unk0 = 0;
     SCL_DisplayFrame();
 }
+
+void GFS_Reset();
 
 // original name: RESET_SYSTEM
 void func_0600460C(void) {
@@ -208,26 +210,26 @@ void func_0600460C(void) {
     func_0600B234();
     func_0600DAB4();
     InitVdp2Display();
-    func_06007F6C();
+    SetVDP2Vram();
 
     Scl_w_reg.win0_start[0] = 0;
-    Scl_w_reg.win0_start[1] = 0xC;
-    Scl_w_reg.win0_end[0] = 0x280;
-    Scl_w_reg.win0_end[1] = 0xF0;
-    Scl_w_reg.wincontrl[0] = 0x383;
+    Scl_w_reg.win0_start[1] = 12;
+    Scl_w_reg.win0_end[0] = 640;
+    Scl_w_reg.win0_end[1] = 240;
+    Scl_w_reg.wincontrl[0] = 0x0383;
     Scl_w_reg.wincontrl[1] = 0x8383;
-    Scl_w_reg.wincontrl[2] = 0x83;
+    Scl_w_reg.wincontrl[2] = 0x0083;
     SclProcess = 1;
 
     func_06009D30();
-    func_0601B600();
+    GFS_Reset();
     func_06006470();
     func_060082C8();
     InitDebugPrint();
 }
 
 void func_060046E8(void) {
-    struct BgTransfer* transfers;
+    BgTransfer* transfer;
     u32 i;
 
     DAT_06057F40 = 0;
@@ -266,19 +268,19 @@ void func_060046E8(void) {
 
     func_0600FB34();
 
-    transfers = DAT_0605d6c0;
+    transfer = &DAT_0605D6C0[0];
     for (i = 0; i < 8; i++) {
-        transfers[i].tileFlags = 0;
-        transfers[i].src = 0;
-        transfers[i].dest = 0;
-        transfers[i].cnt = 0;
+        transfer[i].tileFlags = 0;
+        transfer[i].src = 0;
+        transfer[i].dest = 0;
+        transfer[i].cnt = 0;
     }
 
     g_CurrentRoom.stageID = 0;
     g_CurrentRoom.unk2 = 0;
     g_CurrentRoom.unk4 = 0;
     g_CurrentRoom.unk6 = 0;
-    DAT_0605d7f0 = 0;
+    DAT_0605D7F0 = false;
     g_Status.timerHours = 0;
     g_Status.timerMinutes = 0;
     g_Status.timerSeconds = 1;
@@ -309,19 +311,19 @@ void func_060047E8(void) {
     g_Tilemap.width = 0;
     g_Tilemap.y = 0;
     g_Tilemap.x = 0;
-    DAT_0605C6DC = 0;
+    DAT_0605C6D8.a = 0;
     currentMusicId = 0;
 }
 
 void func_06004878(void) {
-    while (PER_LInit(PER_KD_SYS, 0, 0, 0, 0) == 1) {
+    while (PER_LInit(PER_KD_SYS, 0, 0, NULL, 0) == PER_INT_ERR) {
     }
 
     do {
-        DAT_060505E0 = (DAT_06065D32 != 0) ? &DAT_06065D40 : NULL;
+        DAT_060505E0 = PER_GET_SYS();
     } while (DAT_060505E0 == NULL);
 
-    DAT_0605D764 = ((DAT_060505E0->unk4 >> 9) ^ 1) & 1;
+    DAT_0605D764 = DAT_060505E0->sm & PER_MSK_STEREO ? false : true;
     if (DAT_0605D764 != 0) {
         ((s32(*)(s32))PlaySfx)(0xF0000006);
     } else {
@@ -336,12 +338,13 @@ void func_06004878(void) {
 void func_06004924(void) {
     u32 status_sys;
 
-    while (PER_LInit(PER_KD_SYS, 0, 0, 0, 0) == 1) {
+    while (PER_LInit(PER_KD_SYS, 0, 0, NULL, 0) == PER_INT_ERR) {
     }
+
     do {
-        DAT_060505E4 = (DAT_06065D32 != 0) ? &DAT_06065D40 : NULL;
+        DAT_060505E4 = PER_GET_SYS();
     } while (DAT_060505E4 == NULL);
-    status_sys = DAT_060505E4->unk4;
+    status_sys = DAT_060505E4->sm;
     if (DAT_0605D764 != 0) {
         status_sys &= ~PER_MSK_STEREO;
     } else {
@@ -355,36 +358,75 @@ void func_06004924(void) {
     func_06004A10();
 }
 
+extern s8 DAT_06057F50[PER_WORK_SIZE(1, 2)];
+
 void func_06004A10(void) {
     s32 i;
     s8* ptr;
 
     i = 0;
-    ptr = &DAT_06057F50;
-    for (; i < 10; i++) {
+    ptr = DAT_06057F50;
+    for (; i < PER_WORK_SIZE(1, 2); i++) {
         *ptr++ = 0;
     }
 
-    g_pads[0].tapped = g_pads[0].previous = g_pads[0].pressed = 0;
+    g_pads[0].previous = g_pads[0].tapped = g_pads[0].pressed = 0;
     ResetPadsRepeat();
-    while (PER_LInit(PER_KD_PERTIM, 1, 2, (s32)&DAT_06057F50, 0) != 0) {
+    while (PER_LInit(PER_KD_PERTIM, 1, 2, DAT_06057F50, 0) != PER_INT_OK) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004A74, func_06004A74);
+void InitializePads(void);
 
-void func_06004C14(void) {
-    s16 previous;
-    s16 pressed;
+void func_06004A74(void) {
+    u32 status;
+    s32 i;
 
-    previous = g_pads[0].pressed;
-    g_pads[0].tapped = previous;
-    pressed = ~DAT_060505F8->buttons;
-    g_pads[0].pressed = pressed;
-    g_pads[0].previous = pressed & (previous ^ pressed);
+    g_pads[0].previous = g_pads[0].pressed;
+    status = PER_LGetPer(&DAT_060505F8, &DAT_060505FC);
+    if (DAT_060505FC->con != PER_MCON_NCON_UNKNOWN &&
+        DAT_060505F8->id == PER_ID_DGT && DAT_060505F8->size == PER_SIZE_DGT) {
+        if (!DAT_0605D7F0) {
+            UpdatePads();
+            UpdatePadsRepeat();
+        }
+    } else if (DAT_060505F8->id == PER_ID_ANL) {
+        InitializePads();
+    }
+    if (status == PER_INT_ERR) {
+        InitializePads();
+    }
+    if (DAT_060505FC->con != 1) {
+        func_06004A10();
+    }
+    if (status == PER_INT_ERR || DAT_060505FC->con != 1) {
+        DAT_06057F60[0] = 0x01;
+        DAT_06057F60[1] = 0x00;
+        DAT_06057F60[2] = 0x00;
+        DAT_06057F60[3] = 0x21;
+        DAT_06057F60[4] = 0x45;
+        DAT_06057F60[5] = 0x98;
+        DAT_06057F60[6] = 0x19;
+    } else {
+        DAT_06050600 = PER_GET_TIM();
+        DAT_06057F60[0] = DAT_06050600[0];
+        DAT_06057F60[1] = DAT_06050600[1];
+        DAT_06057F60[2] = DAT_06050600[2];
+        DAT_06057F60[3] = DAT_06050600[3];
+        DAT_06057F60[4] = DAT_06050600[4];
+        DAT_06057F60[5] = DAT_06050600[5];
+        DAT_06057F60[6] = DAT_06050600[6];
+    }
 }
 
-s32 g_PadsRepeatTimer[];
+void UpdatePads(void) {
+    g_pads[0].previous = g_pads[0].pressed;
+    g_pads[0].pressed = ~DAT_060505F8->buttons;
+    g_pads[0].tapped =
+        (g_pads[0].pressed ^ g_pads[0].previous) & g_pads[0].pressed;
+}
+
+extern u8 g_PadsRepeatTimer[0x10];
 
 // func_06004C44
 void ResetPadsRepeat(void) {
@@ -398,80 +440,132 @@ void ResetPadsRepeat(void) {
     }
 }
 
-// _REPEAT_PAD
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004C70, UpdatePadsRepeat);
+// original name: REPEAT_PAD
+void UpdatePadsRepeat(void) {
+    u16 button = 1;
+    u16 tapped = g_pads[0].tapped;
+    u16 pressed = g_pads[0].pressed;
+    u16 repeat = 0;
+    s32 i;
+
+    for (i = 0; i < 0x10; i++, button <<= 1) {
+        if (pressed & button) {
+            if (tapped & button) {
+                repeat |= button;
+                g_PadsRepeatTimer[i] = 0x10;
+            } else if (!g_PadsRepeatTimer[i]--) {
+                repeat |= button;
+                g_PadsRepeatTimer[i] = 5;
+            }
+        }
+    }
+    g_pads[0].repeat = repeat;
+}
 
 // func_06004CDC
 void InitializePads(void) {
-    g_pads[0].previous = g_pads[0].pressed = g_pads[0].tapped =
+    g_pads[0].tapped = g_pads[0].pressed = g_pads[0].previous =
         g_pads[0].repeat = PAD_NONE;
 }
 
-// original name: SET_VBLANK
-void func_06004D00(s32 useAlternateHandlers) {
-    s32 vector;
-    s32 scuMask;
-    void (*handler)(void);
-    u32 savedSr;
-    s16 srMask;
-    u32 interruptMask;
-    void (*setScuHandler)(u32, void (*)(void));
-    void (**changeScuMask)(u32, u32);
+static inline void set_sr(u32 sr) { asm volatile("ldc\t%0,sr" : : "r"(sr)); }
 
-    SH2_GET_SR(savedSr);
-    savedSr |= 0xF0;
-    SH2_SET_SR(savedSr);
+static inline u32 get_sr(void) {
+    u32 sr;
+
+    asm volatile("stc\tsr,%0" : "=r"(sr));
+    return sr;
+}
+
+static inline u32 get_imask(void) {
+    u32 imask = (get_sr() & 0x000000F0) >> 4;
+
+    return imask;
+}
+
+static inline void set_imask(u32 imask) {
+    u32 sr = get_sr();
+
+    sr &= ~0x000000F0;
+    sr |= (imask << 4);
+    set_sr(sr);
+}
+
+// original name: SET_VBLANK
+void SetVblank(s32 useAlternateHandlers) {
+
+    set_imask(15);
+
     if (useAlternateHandlers == 0) {
-        changeScuMask = &DAT_06000344;
-        scuMask = 7;
-        (*changeScuMask)(-1, scuMask);
-        handler = func_06004D84;
-        setScuHandler = INT_SetScuFunc;
-        setScuHandler(0x40, handler);
-        setScuHandler(0x41, func_06004DE8);
-        handler = NULL;
-        vector = 0x42;
+        INT_ChgMsk(
+            INT_MSK_NULL, INT_MSK_VBLK_IN | INT_MSK_VBLK_OUT | INT_MSK_HBLK_IN);
+        INT_SetScuFunc(INT_SCU_VBLK_IN, func_06004D84);
+        INT_SetScuFunc(INT_SCU_VBLK_OUT, func_06004DE8);
+        INT_SetScuFunc(INT_SCU_HBLK_IN, NULL);
+        INT_ChgMsk(INT_MSK_VBLK_IN | INT_MSK_VBLK_OUT, INT_MSK_NULL);
     } else {
-        changeScuMask = &DAT_06000344;
-        scuMask = 3;
-        (*changeScuMask)(-1, scuMask);
-        handler = func_06004E50;
-        setScuHandler = INT_SetScuFunc;
-        setScuHandler(0x40, handler);
-        handler = func_06004E94;
-        vector = 0x41;
+        INT_ChgMsk(INT_MSK_NULL, INT_MSK_VBLK_IN | INT_MSK_VBLK_OUT);
+        INT_SetScuFunc(INT_SCU_VBLK_IN, func_06004E50);
+        INT_SetScuFunc(INT_SCU_VBLK_OUT, func_06004E94);
+        INT_ChgMsk(INT_MSK_VBLK_IN | INT_MSK_VBLK_OUT, INT_MSK_NULL);
     }
-    setScuHandler(vector, handler);
-    (*changeScuMask)(-4, 0);
-    SH2_GET_SR(interruptMask);
-    srMask = ~0xF0;
-    SH2_SET_SR(srMask & interruptMask);
+
+    set_imask(0);
 }
 
 void func_06004D84(void) {
-    u32 sr;
-    u32 imask;
+    u32 msk;
 
-    SH2_GET_SR(sr);
-    imask = (sr & 0xF0) >> 4;
-    SH2_GET_SR(sr);
-    sr &= ~0xF0;
-    SH2_SET_SR(sr);
+    msk = get_imask();
+    set_imask(0);
 
     SCL_VblankStart();
     DAT_0605c10c += 1;
     func_06008EE8();
     SignalSlaveSh2();
 
-    SH2_GET_SR(sr);
-    sr &= ~0xF0;
-    sr = (imask << 4) | sr;
-    SH2_SET_SR(sr);
+    set_imask(msk);
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004DE8, func_06004DE8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004E50, func_06004E50);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004E94, func_06004E94);
+void func_06004DE8(void) {
+    u32 msk;
+
+    msk = get_imask();
+    set_imask(0);
+
+    SCL_VblankEnd();
+    func_06004A74();
+    if (IsCdOpened() == true) {
+        SYS_EXECDMP();
+    }
+
+    set_imask(msk);
+}
+
+void func_06004E50(void) {
+    u32 msk;
+
+    msk = get_imask();
+    set_imask(0);
+
+    SCL_VblankStart();
+
+    set_imask(msk);
+}
+
+void func_06004E94(void) {
+    u32 msk;
+
+    msk = get_imask();
+    set_imask(0);
+
+    SCL_VblankEnd();
+    if (IsCdOpened() == true) {
+        SYS_EXECDMP();
+    }
+
+    set_imask(msk);
+}
 
 // _RETURN_TO_GAME
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004EF0, func_06004EF0);
@@ -488,9 +582,9 @@ void func_06005208(s32 arg) {
     DAT_0605c110 = 0;
 
     if (mode == 5) {
-        Scl_s_reg.dispenbl &= 0xFFFE;
+        Scl_s_reg.dispenbl &= ~0x0001;
         SclProcess = 1;
-        DAT_0605d772 = 5;
+        DAT_0605D770.unk2 = 5;
     } else {
         DAT_0605C100 = 0;
         DAT_0605CD80 = 0;
@@ -540,7 +634,7 @@ void func_06005470(void) {
     }
 }
 
-extern s32* DAT_0605c120[];
+extern s16* DAT_0605C120[];
 
 void func_06005508(void) {
     ReadFileToAddr("TITLE.PRG", (s32)&DAT_060a5000);
@@ -556,7 +650,7 @@ void func_06005508(void) {
     if (DAT_0605D7DC & 1) {
         DAT_0605D7DC++;
     }
-    *DAT_0605c120 = (s32*)DAT_0605D7DC;
+    DAT_0605C120[0] = (s16*)DAT_0605D7DC;
 }
 
 // original name: READ_LOAD_MODE
@@ -586,7 +680,7 @@ s32 func_060055C8(void) {
     case 0:
         ResetSpriteVram();
         AllocGameSprite(g_PlayableCharacter);
-        Scl_s_reg.dispenbl &= 0xFFC0;
+        Scl_s_reg.dispenbl &= ~0x003F;
         SclProcess = 1;
         ((s32(*)(s32, s32))StartColorOffsetFade)(1, 2);
         DAT_0605D770.unk0++;
@@ -1015,7 +1109,7 @@ s32 func_06006470(void) {
     } while (index < 3);
 
     if (success == 0) {
-        DAT_0600026C();
+        SYS_EXECDMP();
     }
 
     DAT_0605AE8C = &DAT_0605064C;
@@ -1024,7 +1118,7 @@ s32 func_06006470(void) {
 }
 
 void func_0600652C(void) {
-    func_0601B600();
+    GFS_Reset();
     DAT_06038a44 = 0;
 }
 
@@ -1067,26 +1161,24 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006720, func_06006720);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006A7C, func_06006A7C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006C00, func_06006C00);
 
-s8* func_06006E14(s8* path) {
+char* func_06006E14(char* path) {
     s32 lastSlash;
     s32 i;
 
     lastSlash = -1;
-    i = 0;
-    do {
+    for (i = 0; i < 0x3F; i++) {
         if (path[i] == '\\') {
             lastSlash = i;
         } else if (path[i] == 0) {
             break;
         }
-        i++;
-    } while (i <= 0x3E);
+    }
 
     lastSlash++;
     return path + lastSlash;
 }
 
-void func_06006E4C(s8* path, s8* dst) {
+void func_06006E4C(char* path, char* dst) {
     s32 lastSlash;
     s32 i;
 
@@ -1106,16 +1198,18 @@ void func_06006E4C(s8* path, s8* dst) {
     dst[lastSlash] = 0;
 }
 
-s32 func_06006E9C(s32* arg0, s32 arg1) {
-    s32 stride;
-    s32 base;
+void GFS_GetFileSize(s32, s32*, s32*, s32*);
 
-    func_0601B910(arg1, &stride, arg0, &base);
-    return (stride * (*arg0 - 1)) + base;
+s32 func_06006E9C(s32* nsct, s32 gfs) {
+    s32 sctsz;
+    s32 lstsz;
+
+    GFS_GetFileSize(gfs, &sctsz, nsct, &lstsz);
+    return (sctsz * (*nsct - 1)) + lstsz;
 }
 
 // original name: IsCdOpened
-bool func_06006ED4() { return (func_0602DCFC() & 0x20) ? true : false; }
+bool IsCdOpened() { return (CDC_GetHirqReq() & CDC_HIRQ_DCHG) ? true : false; }
 
 s32 func_06006EF8(void) {
     s32 stat[4];
@@ -1128,7 +1222,7 @@ s32 func_06006EF8(void) {
     data = (char*)&stat[1];
     status = stat;
     retries = 0x10;
-    while (func_0602D754(&stat[1]) == -8 && retries > 0) {
+    while (CDC_GetPeriStat(&stat[1]) == CDC_ERR_PERI && retries > 0) {
     }
     status[0] = data[0] & 0x0F;
     if (stat[0] == 1 || stat[0] == 2) {
@@ -1300,33 +1394,43 @@ u16 func_06007BE0(s16* colors, s32 arg1) {
     return tblNo;
 }
 
-// _SprSetGourTbl
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007CA0, AllocGourTbl);
+extern s32 DAT_0605BEC4;
+extern u16 DAT_0605BEC8;
+extern s16 DAT_0605BECA;
+extern s32 d_06038dbc;
+extern s32 d_060576AC;
+
+// original name: SprSetGourTbl
+u16 SprSetGourTbl(SprGourTbl* gourTbl) {
+    u16 prev;
+
+    prev = DAT_0605BEC8;
+    if (DAT_0605BEC8 < 0x304) {
+        SPR_2SetGourTbl(DAT_0605BEC8, gourTbl);
+        DAT_0605BEC8++;
+    }
+    return prev;
+}
 
 // func_06007CE0
 u16 LocalLookupTblNoToVram(u16 arg0) { return arg0 * 0x10 + 0x400; }
 
-extern s16 d_0605BECA;
-extern s16 d_0605BEC8;
-extern s32 d_06038dbc;
-extern s32 DAT_0605BEC4;
-extern s32 d_060576AC;
-
 // func_06007CF8
 void ResetSpriteVram() {
     SPR_2ClrAllChar();
-    d_0605BECA = 0;
+    DAT_0605BECA = 0;
     d_0605AEA8 = 0;
     d_0605AEB0 = 0;
-    d_0605BEC8 = 0x304;
+    DAT_0605BEC8 = 0x304;
     d_060576AC = 0;
-    DAT_0605BEC4 = 0x00011180;
+    DAT_0605BEC4 = 0x11180;
     d_06038dbc = 0;
 }
 
-extern u16 d_0605AEA0[4];
+extern XyInt DAT_0605AEA0[2];
 extern SprSpCmd DAT_06050684[];
 extern SprSpCmd* d_0605AEAC;
+extern XyInt DAT_0600E23C;
 
 void func_06007D54(void) {
     SprSpCmd cmd;
@@ -1334,22 +1438,22 @@ void func_06007D54(void) {
     SPR_2OpenCommand(1);
 
     cmd.control = 0x1009;
-    LOW(cmd.cx) = DAT_0605BEC0;
+    LOW(cmd.cx) = LOW(DAT_0605BEC0);
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(0, &cmd);
         d_0605AEAC++;
     }
 
     cmd.control = 0x1008;
-    LOW(cmd.ax) = ((s32*)d_0605AEA0)[0];
-    LOW(cmd.cx) = ((s32*)d_0605AEA0)[1];
+    LOW(cmd.ax) = LOW(DAT_0605AEA0[0]);
+    LOW(cmd.cx) = LOW(DAT_0605AEA0[1]);
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(0, &cmd);
         d_0605AEAC++;
     }
 
     cmd.control = 0x100A;
-    LOW(cmd.ax) = DAT_0600E23C;
+    LOW(cmd.ax) = LOW(DAT_0600E23C);
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(0, &cmd);
         d_0605AEAC++;
@@ -1373,7 +1477,7 @@ void CloseSpriteList(void) {
         cmd.ax = cmd.dx = 0;
         cmd.bx = cmd.cx = d_0605BEBE;
         cmd.ay = cmd.by = 0;
-        cmd.cy = cmd.dy = d_0605AEA0[1] - 1;
+        cmd.cy = cmd.dy = DAT_0605AEA0[0].y - 1;
         SPR_2Cmd(0x1FF, &cmd);
         d_0605AEAC++;
     }
@@ -1384,23 +1488,23 @@ void CloseSpriteList(void) {
 // func_06007EB8
 void SetSpriteEraseData(s16 arg0) {
     SPR_2FrameEraseData(arg0);
-    SPR_SetEraseData(
-        arg0, d_0605AEA0[0], d_0605AEA0[1], d_0605AEA0[2], d_0605AEA0[3]);
+    SPR_SetEraseData(arg0, DAT_0605AEA0[0].x, DAT_0605AEA0[0].y,
+                     DAT_0605AEA0[1].x, DAT_0605AEA0[1].y);
 }
 
 // func_06007F04
 void InitVdp2Display(void) {
     SCL_Vdp2Init();
-    SCL_SetDisplayMode(0, 1, 0);
+    SCL_SetDisplayMode(SCL_NON_INTER, SCL_240LINE, SCL_NORMAL_A);
     SPR_2FrameChgIntr(-1);
     SclPriBuffDirty.SclColOffset = 1;
-    SclColOffset.ColorOffsetEnable = 0x6f;
-    SCL_SetColOffset(0, 0x6f, 0xFF01, 0xFF01, 0xFF01);
+    SclColOffset.ColorOffsetEnable = 0x6F;
+    SCL_SetColOffset(SCL_OFFSET_A, 0x6F, -0xFF, -0xFF, -0xFF);
     SetVdp2BackgroundColor();
 }
 
 // original name: SET_VDP2_VRAM
-void func_06007F6C(void) {
+void SetVDP2Vram(void) {
     SclVramConfig cfg;
     SCL_InitVramConfigTb(&cfg);
     cfg.vramModeA = 0;
@@ -1427,7 +1531,20 @@ void func_06007F6C(void) {
     SCL_SetColMixMode(6, 1);
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008048, ResetLayerColorCalc);
+// func_06008048
+void ResetLayerColorCalc(void) {
+    SCL_DisableLineCol(SCL_NBG1);
+    SCL_DisableLineCol(SCL_NBG2);
+    SCL_DisableLineCol(SCL_NBG3);
+    SCL_DisableLineCol(SCL_SPR);
+    SCL_SET_EXCCEN(0);
+    SCL_SET_N1CCEN(0);
+    SCL_SET_N2CCEN(0);
+    SCL_SET_N3CCEN(0);
+    SCL_SET_CCMD(1);
+    SCL_SET_S0CCRT(23);
+    SCL_SET_S1CCRT(15);
+}
 
 void func_060080EC(s32 arg0) {
     if (arg0 == 1) {
@@ -1447,7 +1564,22 @@ void SetVdp2BackgroundColorRgb(u8 r, u8 g, u8 b) {
     SCL_SetBack(SCL_VDP2_VRAM + 0x80000 - 0x1E0, 1, &color);
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600819C, BlankScreen);
+// func_0600819C
+void BlankScreen(void) {
+    SCL_SetDisplayMode(SCL_NON_INTER, SCL_240LINE, SCL_NORMAL_A);
+    SclPriBuffDirty.SclColOffset = 1;
+    SclColOffset.ColorOffsetEnable = 0x6F;
+    SCL_SetColOffset(SCL_OFFSET_A, 0x6F, -0xFF, -0xFF, -0xFF);
+    SetVdp2BackgroundColor();
+    Scl_w_reg.win0_start[0] = 0;
+    Scl_w_reg.win0_start[1] = 12;
+    Scl_w_reg.win0_end[0] = 640;
+    Scl_w_reg.win0_end[1] = 240;
+    Scl_w_reg.wincontrl[0] = 0x0383;
+    Scl_w_reg.wincontrl[1] = 0x8383;
+    Scl_w_reg.wincontrl[2] = 0x0083;
+    SclProcess = 1;
+}
 
 // func_0600824C
 void InitScuDma(void) { DMA_ScuInit(); }
@@ -1463,6 +1595,7 @@ void func_06008264(void) {
 // func_06008298
 void TransferAllBgLayers(void) {
     s32 i;
+    // BUG: DAT_0605CD90 has size 4
     for (i = 0; i < 8; i++) {
         TransferBgLayer(i);
     }
@@ -1550,7 +1683,7 @@ void func_06008488(void) {
 s32 func_06008524(u32 dest, u32 src, u32 cnt) {
     u32 first;
     u32 i;
-    struct BgTransfer* transfer;
+    BgTransfer* transfer;
 
     first = 0;
     if (DAT_0605cd70.unk0 == 0) {
@@ -1559,7 +1692,7 @@ s32 func_06008524(u32 dest, u32 src, u32 cnt) {
     if (DAT_0605cd70.unk0 == 1) {
         first = 3;
     }
-    transfer = &DAT_0605d6c0[first];
+    transfer = &DAT_0605D6C0[first];
 
     for (i = first; i < 8; i++, transfer++) {
         if (transfer->cnt == 0) {
@@ -1577,52 +1710,50 @@ s32 func_06008524(u32 dest, u32 src, u32 cnt) {
 // func_06008588
 void TransferBgLayer(s32 arg0) {
     s32 cnt;
-    struct BgTransfer* puVar5;
-    struct Unk0605CD90* puVar6;
+    BgTransfer* transfer;
+    Unk0605CD90* ptr;
 
-    puVar5 = &DAT_0605d6c0[arg0];
-    puVar6 = &DAT_0605CD90[arg0];
-    if (puVar5->tileFlags == 0) {
+    transfer = &DAT_0605D6C0[arg0];
+    ptr = &DAT_0605CD90[arg0];
+    if (transfer->tileFlags == 0) {
         return;
     }
-    if (puVar5->tileFlags & 1) {
-        cnt =
-            DecompressLZSS(puVar6->unkc, (s32)SYS_buf_060485E0, puVar6->unk18);
-        DmaScroll((u16*)SYS_buf_060485E0, puVar6->dst0, cnt);
+    if (transfer->tileFlags & 1) {
+        cnt = DecompressLZSS(ptr->unkC, (s32)DAT_060485E0, ptr->unk18);
+        DmaScroll((u16*)DAT_060485E0, ptr->dst0, cnt);
     }
-    if (puVar5->tileFlags & 2) {
-        cnt =
-            DecompressLZSS(puVar6->unk10, (s32)SYS_buf_060485E0, puVar6->unk1c);
-        DmaScroll((u16*)SYS_buf_060485E0, puVar6->dst4, cnt);
+    if (transfer->tileFlags & 2) {
+        cnt = DecompressLZSS(ptr->unk10, (s32)DAT_060485E0, ptr->unk1C);
+        DmaScroll((u16*)DAT_060485E0, ptr->dst4, cnt);
     }
-    if (puVar5->tileFlags & 4) {
+    if (transfer->tileFlags & 4) {
         if (DAT_0605cd70.unk2 == 4) {
-            BuildSubDispTilemap(puVar6);
+            BuildSubDispTilemap(ptr);
         } else {
-            func_0600871C(puVar6, &DAT_0605c680, arg0);
+            func_0600871C(ptr, &DAT_0605c680, arg0);
         }
     }
-    if (puVar5->tileFlags & 8) {
-        DmaScroll(puVar5->src, puVar5->dest, puVar5->cnt);
+    if (transfer->tileFlags & 8) {
+        DmaScroll(transfer->src, transfer->dest, transfer->cnt);
     }
-    if (puVar5->tileFlags & 0x10) {
-        DmaScroll(puVar5->src, puVar5->dest, puVar5->cnt);
+    if (transfer->tileFlags & 0x10) {
+        DmaScroll(transfer->src, transfer->dest, transfer->cnt);
     }
-    if (puVar5->tileFlags & 0x20) {
-        DmaScroll(puVar5->src, puVar5->dest, puVar5->cnt);
+    if (transfer->tileFlags & 0x20) {
+        DmaScroll(transfer->src, transfer->dest, transfer->cnt);
     }
-    if (puVar5->tileFlags & 0x40) {
-        cnt = DecompressLZSS(puVar6->unkc, DMA_SRC_ADDR, puVar6->unk18);
-        DmaScroll(DMA_SRC_ADDR, puVar6->dst0, cnt);
+    if (transfer->tileFlags & 0x40) {
+        cnt = DecompressLZSS(ptr->unkC, DMA_SRC_ADDR, ptr->unk18);
+        DmaScroll(DMA_SRC_ADDR, ptr->dst0, cnt);
     }
-    if (puVar5->tileFlags & 0x80) {
-        cnt = DecompressLZSS(puVar6->unk10, DMA_SRC_ADDR, puVar6->unk1c);
-        DmaScroll(DMA_SRC_ADDR, puVar6->dst4, cnt);
+    if (transfer->tileFlags & 0x80) {
+        cnt = DecompressLZSS(ptr->unk10, DMA_SRC_ADDR, ptr->unk1C);
+        DmaScroll(DMA_SRC_ADDR, ptr->dst4, cnt);
     }
-    puVar5->tileFlags = 0;
-    puVar5->cnt = 0;
-    puVar5->dest = 0;
-    puVar5->src = 0;
+    transfer->tileFlags = 0;
+    transfer->cnt = 0;
+    transfer->dest = 0;
+    transfer->src = 0;
 }
 
 // original name: DMA_SCROLL
@@ -1634,30 +1765,119 @@ void DmaScroll(u16* src, u16* dest, u32 cnt) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600871C, func_0600871C);
+void func_0600871C(Unk0605CD90* arg0, UNK_0605c680* arg1, s32 arg2) {
+    s32 scrollX, scrollY;
+    s16 x, y;
+    u16 cols, rows;
+    u16 tileBase;
+    s16* dst;
+    s16* src;
+    u16 i, j;
+
+    if (arg0->unk20 == 0) {
+        return;
+    }
+
+    if ((g_CurrentRoom.stageID == 0x41) && (g_CurrentRoom.unk4 == 0x12) &&
+        (arg2 == 0)) {
+        arg0->width = 0x500;
+    }
+
+    scrollX = FIXED(0);
+    scrollY = FIXED(8);
+
+    if (arg0->divisorX != 0) {
+        scrollX = arg1->unk4 / arg0->divisorX;
+    }
+
+    if (arg0->divisorY != 0) {
+        scrollY = arg1->unkC / arg0->divisorY;
+    }
+
+    x = (scrollX >> 19) - 8;
+    y = (scrollY >> 19) - 8;
+
+    cols = 0x38;
+    rows = 0x2E;
+
+    if (x < 0) {
+        cols += x;
+        x = 0;
+    }
+
+    if (y < 0) {
+        rows += y;
+        y = 0;
+    }
+
+    if ((arg0->flags & 1) == 0) {
+        if ((x + cols) > arg0->width) {
+            cols = arg0->width - x;
+        }
+    }
+    if ((arg0->flags & 2) == 0) {
+        if ((y + rows) > arg0->height) {
+            rows = arg0->height - y;
+        }
+    }
+
+    src = DAT_0605C120[arg2] + 2;
+    dst = arg0->unk8;
+    tileBase = arg0->unk24 * 0x1000;
+
+    src += (x % arg0->width) + (y % arg0->height) * arg0->width;
+    dst += ((y & 0x3F) << 6) + (x & 0x3F);
+
+    for (i = 0; i < rows; i++) {
+        for (j = 0; j < cols; j++) {
+            *dst = *src + tileBase;
+
+            if (((x + j) & 0x3F) == 0x3F) {
+                dst -= 0x3F;
+            } else {
+                dst++;
+            }
+
+            if ((arg0->flags & 1) &&
+                ((x + j) % arg0->width) == (arg0->width - 1)) {
+                src -= arg0->width - 1;
+            } else {
+                src++;
+            }
+        }
+        dst = arg0->unk8 + (x & 0x3F);
+        dst += ((y + i + 1) & 0x3F) << 6;
+
+        src = DAT_0605C120[arg2] + 2;
+        src += (x % arg0->width) + ((y + i + 1) % arg0->height) * arg0->width;
+    }
+    if ((g_CurrentRoom.stageID == 0x41) && (g_CurrentRoom.unk4 == 0x12) &&
+        (arg2 == 0)) {
+        arg0->width = 0x2D0;
+    }
+}
 
 // func_060089F0
-void BuildSubDispTilemap(struct Unk0605CD90* arg0) {
-    u16 sVar2;
-    s16* psVar5;
-    s16* psVar7;
-    u16 i; // r2
-    u16 j; // r1
+void BuildSubDispTilemap(Unk0605CD90* arg0) {
+    u16 tileBase;
+    s16* dst;
+    s16* src;
+    u16 i, j;
 
-    psVar7 = DAT_0605c120[3] + 1;
-    sVar2 = arg0->unk24 * 0x1000;
+    src = DAT_0605C120[3] + 2;
+    tileBase = arg0->unk24 * 0x1000;
     j = 0;
-    psVar5 = arg0->unk8 + j * 0x20;
+    dst = arg0->unk8 + j * 0x20;
     for (j = 0; j < 32; j++) {
         for (i = 0; i < 32; i++) {
-            *psVar5++ = *psVar7++ + sVar2;
+            *dst++ = *src++ + tileBase;
         }
-        psVar5 = 0x400 + arg0->unk8 + j * 0x20;
+        dst = 0x400 + arg0->unk8 + j * 0x20;
 
         for (i = 0; i < 10; i++) {
-            *psVar5++ = *psVar7++ + sVar2;
+            *dst++ = *src++ + tileBase;
         }
-        psVar5 = arg0->unk8 + (j + 1) * 0x20;
+        dst = arg0->unk8 + (j + 1) * 0x20;
     }
 }
 
@@ -1670,46 +1890,257 @@ void UpdateScrollForRoom(void) {
     }
 }
 
-void func_06008AB4(s32 arg0, s32 arg1, s32 arg2) {
+void func_06008AB4(void) {
     if (DAT_0605cd70.unk2 != 4 &&
         (DAT_0605cd70.unk0 != 0x91 || DAT_0605cd70.unk2 != 1) &&
-        DAT_0605d772 != 4) {
+        DAT_0605D770.unk2 != 4) {
         if (DAT_0605cd70.unk2 != 5 || DAT_0605cd70.unk0 <= 2) {
-            func_0600BD68(arg0, arg1, arg2, &DAT_0605cd70);
+            func_0600BD68();
         }
         func_0600DE38();
         func_0600E164();
     }
 }
 
-// _SCROLL_DSP
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008B20, func_06008B20);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008C2C, func_06008C2C);
-INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6008D04, func_06008D04);
-INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6008EE8, func_06008EE8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008FF0, func_800EA5AC);
+// original name: SCROLL_DSP
+void func_06008B20(void) {
+    Unk0605CD90* ptr;
+    s32 x, y;
+    u32 i;
 
-void func_06009010(u8* rgb) {
-    s16 enabled;
-
-    enabled = DAT_0605C6DC;
-    if (enabled != 0) {
-        SCL_SetColOffset(SCL_OFFSET_A, 0x6F, rgb[0], rgb[1], rgb[2]);
-    } else {
-        SCL_SetColOffset(SCL_OFFSET_A, 0x6F, 0, 0, enabled);
+    ptr = &DAT_0605CD90[0];
+    for (i = 0; i < 3; i++, ptr++) {
+        if (ptr->unk18 != 0) {
+            SCL_Open(SCL_NBG1 << i);
+            x = FIXED(0);
+            y = FIXED(10);
+            if (ptr->divisorX != 0) {
+                x = DAT_0605c680.unk3C / ptr->divisorX;
+            }
+            if (ptr->divisorY != 0) {
+                y = DAT_0605c680.unk40 / ptr->divisorY;
+            }
+            SCL_MoveTo(x, y, 0);
+            SCL_Close();
+        }
+    }
+    if (DAT_0605cd70.unk2 == 5) {
+        SCL_Open(SCL_NBG0);
+        SCL_MoveTo(FIXED(0), FIXED(8), FIXED(0));
+        SCL_Close();
+    }
+    if (DAT_0605cd70.unk2 == 4) {
+        SCL_Open(SCL_NBG0);
+        SCL_MoveTo(FIXED(15), FIXED(13), FIXED(0));
+        SCL_Close();
     }
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009058, func_06009058);
+void func_06008C2C(void) {
+    Unk0605CD90* ptr;
+    s32 x, y;
+    u32 i;
+
+    ptr = &DAT_0605CD90[0];
+    for (i = 0; i < 3; i++, ptr++) {
+        if (i == 0) {
+            SCL_Open(SCL_NBG1);
+            x = (DAT_0605c680.unk3C / 4) * 7;
+            y = DAT_0605c680.unk40;
+            SCL_MoveTo(x, y, FIXED(0));
+            SCL_Close();
+        } else {
+            SCL_Open(SCL_NBG1 << i);
+            x = FIXED(0);
+            y = FIXED(10);
+            if (ptr->divisorX != 0) {
+                x = DAT_0605c680.unk3C / ptr->divisorX;
+            }
+            if (ptr->divisorY != 0) {
+                y = DAT_0605c680.unk40 / ptr->divisorY;
+            }
+            SCL_MoveTo(x, y, FIXED(0));
+            SCL_Close();
+        }
+    }
+}
+
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008D04, StartColorOffsetFade);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008EE8, func_06008EE8);
+
+void func_800EA5AC(u16 a, u8 r, u8 g, u8 b) {
+    DAT_0605C6D8.a = a;
+    DAT_0605C6D8.r = r;
+    DAT_0605C6D8.g = g;
+    DAT_0605C6D8.b = b;
+}
+
+void func_06009010(u8* rgb) {
+    if (DAT_0605C6D8.a != 0) {
+        SCL_SetColOffset(SCL_OFFSET_A, 0x6F, rgb[0], rgb[1], rgb[2]);
+    } else {
+        SCL_SetColOffset(SCL_OFFSET_A, 0x6F, 0, 0, 0);
+    }
+}
+
+extern SclConfig DAT_0605BED0[];
+
+void func_06009058(u16 arg0) {
+    SclConfig* scfg;
+    Unk0605CD90* ptr;
+    s32 i;
+
+    DAT_0605c680.unk0 = 0;
+    ptr = &DAT_0605CD90[0];
+    scfg = &DAT_0605BED0[0];
+    switch (arg0) {
+    case 6:
+        ptr->dst0 = SCL_VDP2_VRAM_A0;
+        ptr->unk8 = SCL_VDP2_VRAM_B0;
+        ptr->dst4 = SCL_COLRAM_ADDR;
+        ptr->unk24 = 0;
+        SCL_InitConfigTb(scfg);
+        scfg->charsize = SCL_CHAR_SIZE_1X1;
+        scfg->pnamesize = SCL_PN1WORD;
+        scfg->platesize = SCL_PL_SIZE_1X1;
+        scfg->coltype = SCL_COL_TYPE_256;
+        scfg->datatype = SCL_CELL;
+        scfg->mapover = SCL_OVER_0;
+        scfg->flip = SCL_PN_12BIT;
+        scfg->plate_addr[0] = scfg->plate_addr[1] = scfg->plate_addr[2] =
+            scfg->plate_addr[3] = ptr->unk8;
+        scfg->patnamecontrl = 0;
+        SCL_SetConfig(SCL_NBG0, scfg);
+        SCL_SetCycleTable(DAT_06038D30);
+        break;
+
+    case 4:
+    case 8:
+        for (i = 0; i < 2; i++, ptr++, scfg++) {
+            ptr->dst0 = SCL_VDP2_VRAM_A0 + i * 0x8000;
+            ptr->unk8 = SCL_VDP2_VRAM_B0 + i * 0x8000;
+            ptr->dst4 = SCL_COLRAM_ADDR + i * 0x200;
+            ptr->unk24 = i;
+            SCL_InitConfigTb(scfg);
+            scfg->charsize = SCL_CHAR_SIZE_1X1;
+            scfg->pnamesize = SCL_PN1WORD;
+            scfg->platesize = SCL_PL_SIZE_1X1;
+            scfg->coltype = SCL_COL_TYPE_16;
+            scfg->datatype = SCL_CELL;
+            scfg->mapover = SCL_OVER_0;
+            scfg->flip = SCL_PN_10BIT;
+            scfg->plate_addr[0] = scfg->plate_addr[1] = scfg->plate_addr[2] =
+                scfg->plate_addr[3] = ptr->unk8;
+            scfg->patnamecontrl = 0;
+            if (i != 0) {
+                scfg->patnamecontrl = 0x21;
+            }
+            SCL_SetConfig(SCL_NBG1 << i, scfg);
+        }
+        SCL_SetCycleTable(DAT_06038D50);
+        break;
+
+    case 2:
+        for (i = 0; i < 2; i++, ptr++, scfg++) {
+            ptr->dst0 = SCL_VDP2_VRAM_A0 + (1 - i) * 0x18000;
+            ptr->unk8 = SCL_VDP2_VRAM_B0 + i * 0x8000;
+            ptr->dst4 = SCL_COLRAM_ADDR + i * 0x200;
+            ptr->unk24 = i;
+            SCL_InitConfigTb(scfg);
+            scfg->charsize = SCL_CHAR_SIZE_1X1;
+            scfg->pnamesize = SCL_PN1WORD;
+            scfg->platesize = SCL_PL_SIZE_1X1;
+            scfg->coltype = SCL_COL_TYPE_256;
+            scfg->datatype = SCL_CELL;
+            scfg->mapover = SCL_OVER_0;
+            scfg->flip = SCL_PN_10BIT;
+            scfg->plate_addr[0] = scfg->plate_addr[1] = scfg->plate_addr[2] =
+                scfg->plate_addr[3] = ptr->unk8;
+            scfg->patnamecontrl = 0x43;
+            if (i != 0) {
+                scfg->flip = SCL_PN_12BIT;
+                scfg->patnamecontrl = 0;
+            }
+            SCL_SetConfig(SCL_NBG1 << i, scfg);
+        }
+        SCL_SetCycleTable(DAT_06038D40);
+        break;
+
+    case 3:
+    case 7:
+        for (i = 0; i < 2; i++, ptr++, scfg++) {
+            ptr->dst0 = SCL_VDP2_VRAM_A0 + i * 0x20000;
+            ptr->unk8 = SCL_VDP2_VRAM_B0 + i * 0x8000;
+            ptr->dst4 = SCL_COLRAM_ADDR + i * 0x200;
+            ptr->unk24 = i;
+            SCL_InitConfigTb(scfg);
+            scfg->charsize = SCL_CHAR_SIZE_1X1;
+            scfg->pnamesize = SCL_PN1WORD;
+            scfg->platesize = SCL_PL_SIZE_1X1;
+            scfg->coltype = SCL_COL_TYPE_256;
+            scfg->datatype = SCL_CELL;
+            scfg->mapover = SCL_OVER_0;
+            scfg->flip = SCL_PN_12BIT;
+            scfg->plate_addr[0] = scfg->plate_addr[1] = scfg->plate_addr[2] =
+                scfg->plate_addr[3] = ptr->unk8;
+            scfg->patnamecontrl = i * 4;
+            SCL_SetConfig(SCL_NBG1 << i, scfg);
+        }
+        ptr->dst0 = SCL_VDP2_VRAM_A0 + 0x10000;
+        ptr->unk8 = SCL_VDP2_VRAM_B0 + 0x10000;
+        ptr->dst4 = SCL_COLRAM_ADDR + 0x400;
+        ptr->unk24 = 0x20;
+        SCL_InitConfigTb(scfg);
+        scfg->charsize = SCL_CHAR_SIZE_1X1;
+        scfg->pnamesize = SCL_PN1WORD;
+        scfg->platesize = SCL_PL_SIZE_2X2;
+        scfg->coltype = SCL_COL_TYPE_16;
+        scfg->datatype = SCL_CELL;
+        scfg->mapover = SCL_OVER_0;
+        scfg->flip = SCL_PN_10BIT;
+        scfg->plate_addr[0] = ptr->unk8;
+        scfg->plate_addr[1] = ptr->unk8 + 0x1000;
+        scfg->plate_addr[2] = ptr->unk8 + 0x2000;
+        scfg->plate_addr[3] = ptr->unk8 + 0x3000;
+        scfg->patnamecontrl = 0x42;
+        SCL_SetConfig(SCL_NBG3, scfg);
+        SCL_SetCycleTable(DAT_06038D60);
+        break;
+
+    case 5:
+    case 16:
+    case 17:
+        for (i = 0; i < 3; i++, ptr++, scfg++) {
+            ptr->dst0 = SCL_VDP2_VRAM_A0 + i * 0x8000;
+            ptr->unk8 = SCL_VDP2_VRAM_B0 + i * 0x8000;
+            ptr->dst4 = SCL_COLRAM_ADDR + i * 0x200;
+            ptr->unk24 = i * 0x10;
+            SCL_InitConfigTb(scfg);
+            scfg->charsize = SCL_CHAR_SIZE_1X1;
+            scfg->pnamesize = SCL_PN1WORD;
+            scfg->platesize = SCL_PL_SIZE_1X1;
+            scfg->coltype = SCL_COL_TYPE_16;
+            scfg->datatype = SCL_CELL;
+            scfg->mapover = SCL_OVER_0;
+            scfg->flip = SCL_PN_10BIT;
+            scfg->plate_addr[0] = scfg->plate_addr[1] = scfg->plate_addr[2] =
+                scfg->plate_addr[3] = ptr->unk8;
+            scfg->patnamecontrl = DAT_06038C84[i];
+            SCL_SetConfig(SCL_NBG1 << i, scfg);
+        }
+        SCL_SetCycleTable(DAT_06038D70);
+        break;
+    }
+}
 
 // original name: GAME_SCROLL_SET
 void func_06009510(u16 scrollId) {
     s32 i;
     s32 bound;
-    struct Unk0605CD90* ptr;
+    Unk0605CD90* ptr;
 
     i = 0;
-    ptr = DAT_0605CD90;
+    ptr = &DAT_0605CD90[0];
 
     for (; i < 4; i++, ptr++) {
         ptr->unk18 = 0;
@@ -1737,11 +2168,64 @@ void func_06009510(u16 scrollId) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009570, func_06009570);
+void func_06009570(s32 arg0) {
+    SclConfig scfg;
+    s32* temp_r1;
+    Unk0605CD90* ptr;
+    s16* src;
+
+    SCL_InitConfigTb(&scfg);
+    scfg.charsize = SCL_CHAR_SIZE_2X2;
+    scfg.pnamesize = SCL_PN1WORD;
+    scfg.platesize = SCL_PL_SIZE_2X1;
+    scfg.coltype = SCL_COL_TYPE_16;
+    scfg.datatype = SCL_CELL;
+    scfg.mapover = SCL_OVER_0;
+    scfg.flip = SCL_PN_10BIT;
+    scfg.patnamecontrl = 0x64;
+    scfg.plate_addr[3] = SCL_VDP2_VRAM_B0 + 0x18000;
+    scfg.plate_addr[2] = SCL_VDP2_VRAM_B0 + 0x18000;
+    scfg.plate_addr[1] = SCL_VDP2_VRAM_B0 + 0x18000;
+    scfg.plate_addr[0] = SCL_VDP2_VRAM_B0 + 0x18000;
+    SCL_SetConfig(SCL_NBG0, &scfg);
+    ptr = &DAT_0605CD90[3];
+    temp_r1 = &DAT_06038CA0[arg0 * 6];
+    ptr->unk8 = SCL_VDP2_VRAM_B0 + 0x18000;
+    ptr->dst0 = SCL_VDP2_VRAM_A1;
+    ptr->dst4 = SCL_COLRAM_ADDR + 0x600;
+    ptr->unk24 = 0x30;
+    ptr->unkC = *temp_r1++ + 0x00252000;
+    ptr->unk18 = *temp_r1++;
+    ptr->unk10 = *temp_r1++ + 0x00252000;
+    ptr->unk1C = *temp_r1++;
+    ptr->unk14 = *temp_r1++ + 0x00252000;
+    ptr->unk20 = *temp_r1++;
+    ptr->divisorX = ptr->divisorY = 1;
+    ptr->flags = 0;
+    SCL_Open(SCL_NBG0);
+    SCL_MoveTo(FIXED(8), FIXED(8), FIXED(0));
+    SCL_Close();
+    DAT_0605C120[3] = 0x2C7000;
+    src = DAT_0605C120[3];
+    DecompressLZSS(ptr->unk14, src, ptr->unk20);
+    ptr->width = src[0];
+    ptr->height = src[1];
+    DAT_0605D6C0[3].tileFlags = 7;
+    SCL_SetDisplayMode(SCL_DOUBLE_INTER, SCL_240LINE, SCL_HIRESO_A);
+    Scl_w_reg.win0_start[0] = 0;
+    Scl_w_reg.win0_start[1] = 12;
+    Scl_w_reg.win0_end[0] = 640;
+    Scl_w_reg.win0_end[1] = 480;
+    Scl_w_reg.wincontrl[0] = 0x8383;
+    Scl_w_reg.wincontrl[1] = 0x8383;
+    Scl_w_reg.wincontrl[2] = 0x0083;
+    SclProcess = 1;
+    SCL_SetCycleTable(DAT_06038DA0);
+}
 
 void func_0600971C(void) {
     if (g_PlayableCharacter == 0) {
-        SCL_SetDisplayMode(0, 1, 0);
+        SCL_SetDisplayMode(SCL_NON_INTER, SCL_240LINE, SCL_NORMAL_A);
         SCL_SetCycleTable(DAT_06038D70);
     }
 
@@ -1754,21 +2238,21 @@ void func_0600971C(void) {
     Scl_w_reg.wincontrl[2] = 0x0083;
 
     SclProcess = 1;
-    Scl_s_reg.dispenbl &= 0xFFFE;
+    Scl_s_reg.dispenbl &= ~0x0001;
     SclProcess = 1;
 }
 
-void func_060097B4(Entity* arg0, s32 arg1) {
+void func_060097B4(Unk0605CD90* arg0, s32 arg1) {
     s32 x, y;
 
-    SCL_Open(8 << arg1);
-    x = 0;
-    y = 0xA0000;
-    if (arg0->step != 0) {
-        x = DAT_0605c680.unk34 / arg0->step;
+    SCL_Open(SCL_NBG1 << arg1);
+    x = FIXED(0);
+    y = FIXED(10);
+    if (arg0->divisorX != 0) {
+        x = DAT_0605c680.unk34 / arg0->divisorX;
     }
-    if (arg0->step_s != 0) {
-        y = DAT_0605c680.unk38 / arg0->step_s;
+    if (arg0->divisorY != 0) {
+        y = DAT_0605c680.unk38 / arg0->divisorY;
     }
     SCL_MoveTo(x, y, 0);
     SCL_Close();
@@ -1812,13 +2296,13 @@ void func_06009F10(void) {
     SclConfig scfg;
 
     SCL_InitConfigTb(&scfg);
-    scfg.charsize = 0;
-    scfg.pnamesize = 1;
-    scfg.platesize = 0;
-    scfg.coltype = 0;
-    scfg.datatype = 0;
-    scfg.mapover = 0;
-    scfg.flip = 0;
+    scfg.charsize = SCL_CHAR_SIZE_1X1;
+    scfg.pnamesize = SCL_PN1WORD;
+    scfg.platesize = SCL_PL_SIZE_1X1;
+    scfg.coltype = SCL_COL_TYPE_16;
+    scfg.datatype = SCL_CELL;
+    scfg.mapover = SCL_OVER_0;
+    scfg.flip = SCL_PN_10BIT;
     scfg.plate_addr[3] = SCL_VDP2_VRAM_B0 + 0x8000;
     scfg.plate_addr[2] = SCL_VDP2_VRAM_B0 + 0x8000;
     scfg.plate_addr[1] = SCL_VDP2_VRAM_B0 + 0x8000;
@@ -1829,7 +2313,21 @@ void func_06009F10(void) {
 
 // _X_SCROLL_TRANS
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009F84, func_06009F84);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A030, func_0600A030);
+
+void func_0600A030(void) {
+    Unk0605CD90* ptr;
+    s32 i;
+
+    ptr = &DAT_0605CD90[0];
+    for (i = 0; i < 3; i++) {
+        if (ptr->unk18 != 0) {
+            Scl_s_reg.dispenbl |= 2 << i;
+            SclProcess = 1;
+        }
+        ptr++;
+    }
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A088, func_0600A088);
 
 void func_0600A240(s32 arg0) {
@@ -1847,9 +2345,8 @@ void SetCharTrans(u16 arg0, s32 arg1, s32 arg2) {
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A29C, LookupTblNoToVramAddr);
 
-// func_0600A304
-void SetSprGourTable(u16 arg0, SprGourTbl* gourTbl) {
-    SPR_2SetGourTbl(arg0, gourTbl);
+void func_0600A304(s32 gourTblNo, SprGourTbl* gourTbl) {
+    SPR_2SetGourTbl(gourTblNo, gourTbl);
 }
 
 // original name: SetPlTransNonSeparateAura
@@ -2057,22 +2554,22 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B954, func_0600B954);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600BA24, func_0600BA24);
 
 void func_0600BCE0(s32* mtx, s16 angle) {
-    s32 sincos[2];
+    Fixed32 s, c;
     s32 cosv;
     s32 sinv;
     s32 axis;
 
-    rsincos(angle, &sincos[0], &sincos[1]);
-    cosv = sincos[1];
-    sinv = sincos[0];
+    rsincos(angle, &s, &c);
+    cosv = c;
+    sinv = s;
     axis = mtx[0];
-    sincos[1] = cosv * 0x10;
-    sincos[0] = sinv * 0x10;
-    mtx[0] = MTH_Mul(sincos[1], axis);
-    mtx[1] = MTH_Mul(sincos[0], axis);
+    c = cosv * 0x10;
+    s = sinv * 0x10;
+    mtx[0] = MTH_Mul(c, axis);
+    mtx[1] = MTH_Mul(s, axis);
     axis = mtx[3];
-    mtx[2] = -MTH_Mul(sincos[0], axis);
-    mtx[3] = MTH_Mul(sincos[1], axis);
+    mtx[2] = -MTH_Mul(s, axis);
+    mtx[3] = MTH_Mul(c, axis);
 }
 
 extern SprGourTbl* SpGourTbl;
@@ -2128,42 +2625,42 @@ void func_0600BEA8(void) {
 }
 
 void func_0600BF08(void) {
-    u16 sp[2];
+    s16 size[2];
 
-    sp[0] = 0x60;
-    sp[1] = 0x80;
-    AllocSpriteCharVram(8, 0, sp, 0);
+    size[0] = 0x60;
+    size[1] = 0x80;
+    AllocSpriteCharVram(8, 0, size, 0);
 }
 
 void func_0600BF38(void) {
-    s16 local[2];
+    s16 size[2];
     s32 i;
 
-    local[0] = 0x80;
-    local[1] = 0x50;
+    size[0] = 0x80;
+    size[1] = 0x50;
     for (i = 0; i < 8; i++) {
-        AllocSpriteCharVram(8, 0, local, 0);
+        AllocSpriteCharVram(8, 0, size, 0);
     }
     func_0600AB60();
 }
 
 void func_0600BF8C(void) {
-    s16 local[2];
+    s16 size[2];
     s32 i;
 
-    local[0] = 0x100;
-    local[1] = 0x80;
+    size[0] = 0x100;
+    size[1] = 0x80;
     for (i = 0; i < 2; i++) {
-        AllocSpriteCharVram(8, 0, local, 0);
+        AllocSpriteCharVram(8, 0, size, 0);
     }
 }
 
 void func_0600BFD8(void) {
-    s16 local[2];
+    s16 size[2];
 
-    local[0] = 0x100;
-    local[1] = 0xA0;
-    AllocSpriteCharVram(8, 0, local, 0);
+    size[0] = 0x100;
+    size[1] = 0xA0;
+    AllocSpriteCharVram(8, 0, size, 0);
 }
 
 void func_0600C00C(void) {
@@ -2181,9 +2678,9 @@ void func_0600C00C(void) {
         banks[4]->allocationIndex = 3;
     }
     if (g_PlayableCharacter == 1 || g_PlayableCharacter == 2) {
-        d_0605BECA = 0xA;
+        DAT_0605BECA = 10;
     } else {
-        d_0605BECA = 0xD;
+        DAT_0605BECA = 13;
     }
     bank = DAT_06064650[5];
     i = 5;
@@ -2202,20 +2699,20 @@ void func_0600C00C(void) {
         i++;
         bank = DAT_06064650[i];
     }
-    DAT_06038FD4 = d_0605BECA;
+    DAT_06038FD4 = DAT_0605BECA;
 }
 
 void func_0600C0C4(int arg0) {
     if (arg0 == 0) {
-        d_0605BECA = 10;
+        DAT_0605BECA = 10;
         DAT_060645D4[0]->allocationIndex = 10;
     } else {
-        d_0605BECA = 11;
+        DAT_0605BECA = 11;
         DAT_06064670[0]->allocationIndex = 11;
     }
 }
 
-void func_0600C0FC(void) { DAT_060645D0[0]->allocationIndex = 0xC; }
+void func_0600C0FC(void) { DAT_060645D0[0]->allocationIndex = 12; }
 
 extern SaturnSpriteResource** DAT_060645EC;
 
@@ -2225,8 +2722,8 @@ void func_0600C114(void) {
     s32 palette;
     s32 i;
 
-    d_0605BECA = DAT_06038FD4;
-    bank = *DAT_060645EC;
+    DAT_0605BECA = DAT_06038FD4;
+    bank = DAT_060645EC[0];
     i = 0;
     while (bank != NULL) {
         if (bank->palettes != NULL) {
@@ -2248,8 +2745,7 @@ void func_0600C18C(void) { d_0605AEA8 = 0x10; }
 
 void func_0600C1A0(void) {
     SaturnSpriteResource* entry;
-    s32 i;
-    s32 j;
+    s32 i, j;
 
     if (g_PlayableCharacter == 1 || g_PlayableCharacter == 2) {
         d_0605AEA8 = 0x30;
@@ -2258,7 +2754,7 @@ void func_0600C1A0(void) {
     }
     d_0605AEB0 = 0;
 
-    for (i = 0; i <= 4; i++) {
+    for (i = 0; i < 5; i++) {
         entry = DAT_06064650[i];
         if (entry->palettes != NULL) {
             entry->flags = func_0600AEE4(entry->palettes);
@@ -2453,7 +2949,7 @@ void InitBackupRam(void) {
 
     func_0600CC14();
 
-    BUP_Init(0x0605DDD0, 0x06002000, (BupConfig*)&DAT_0605DD90);
+    BUP_Init(DAT_0605DDD0, DAT_06002000, &DAT_0605DD90);
 
     func_0600CBCC();
 
@@ -2479,7 +2975,7 @@ s32 func_0600CD70(void) {
     InitBackupRam();
     func_0600CC14();
 
-    if ((u16)DAT_0605DD90 == 1) {
+    if (DAT_0605DD90.unit_id == 1) {
         status = BUP_Stat(0, 0, &sttb);
         result = 0;
         if (status == BUP_UNFORMAT) {
@@ -2515,59 +3011,152 @@ s32 func_0600CE1C(void) {
     return result;
 }
 
-const char DAT_0600CEC8[] = "%s%02d";
+extern BupDir DAT_0605DDA0;
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600CED0, func_0600CED0);
-
-s32 func_0600D028(u32 device, s8 arg1) {
-    char work[12];
+s32 func_0600CED0(u32 device, s8 arg1) {
+    char filename[12];
     s32 status;
 
-    sprintf(work, DAT_0600CEC8, DAT_06038FE0, arg1);
+    sprintf(filename, "%s%02d", DAT_06038FE0, arg1);
+    status = BUP_Dir(device, filename, 1, &DAT_0605DDA0);
+    if (status == BUP_NON) {
+        return DAT_0605DDA0.date;
+    }
+    return 0;
+}
+
+extern char DAT_0605DD70[];
+extern char DAT_06038FE4[][4];
+
+char* func_0600CF40(u32 device, s8 arg1) {
+    char filename[12];
+    BupDate date;
+    u32 pdate;
+
+    sprintf(filename, "%s%02d", DAT_06038FE0, arg1);
+    pdate = func_0600CED0(device, arg1);
+    if (pdate != 0) {
+        BUP_GetDate(pdate, &date);
+        sprintf(DAT_0605DD70, "%4d-%2d-%2d %s %2d:%02d", date.year + 1980,
+                date.month, date.day, DAT_06038FE4[date.week], date.time,
+                date.min);
+    } else {
+        DAT_0605DD70[0] = '\0';
+    }
+    return DAT_0605DD70;
+}
+
+s32 func_0600D028(u32 device, s8 arg1) {
+    char filename[12];
+    s32 status;
+
+    sprintf(filename, "%s%02d", DAT_06038FE0, arg1);
     func_0600CC14();
-    status = BUP_Read(device, work, &SYS_state_060485C0);
+    status = BUP_Read(device, filename, &DAT_060485C0);
     func_0600CBCC();
     return status;
 }
 
-void func_0600D0DC(void) {
+s32 func_0600D0DC(void) {
     BupDate date;
 
-    date.year =
-        (((u8)DAT_06057F60.unk6 >> 4) * 1000) +
-        ((DAT_06057F60.unk6 & 0x0F) * 100) +
-        (((u8)DAT_06057F60.unk5 >> 4) * 10) + (DAT_06057F60.unk5 & 0x0F) + 0x44;
-    date.month = DAT_06057F60.unk4 & 0x0F;
-    date.day = BCD_TO_DEC(DAT_06057F60.unk3);
-    date.time = BCD_TO_DEC(DAT_06057F60.unk2);
-    date.min = BCD_TO_DEC(DAT_06057F60.unk1);
+    date.year = (u8)((u16)(DAT_06057F60[6] >> 4) * 1000 +
+                     (u16)(DAT_06057F60[6] & 0x0F) * 100 +
+                     (u16)(DAT_06057F60[5] >> 4) * 10 +
+                     (u16)(DAT_06057F60[5] & 0x0F) - 1980);
+    date.month = DAT_06057F60[4] & 0x0F;
+    date.day = (DAT_06057F60[3] >> 4) * 10 + (DAT_06057F60[3] & 0x0F);
+    date.time = (DAT_06057F60[2] >> 4) * 10 + (DAT_06057F60[2] & 0x0F);
+    date.min = (DAT_06057F60[1] >> 4) * 10 + (DAT_06057F60[1] & 0x0F);
 
-    BUP_SetDate(&date);
+    return BUP_SetDate(&date);
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D1A0, func_0600D1A0);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D264, func_0600D264);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D370, func_0600D370);
+s8 func_0600D1A0(u32 device, s8 arg1) {
+    char filename[12];
+    s32 status;
+
+    sprintf(filename, "%s%02d", DAT_06038FE0, arg1);
+    func_0600CC14();
+    status = BUP_Read(device, filename, &DAT_060485C0);
+    func_0600CBCC();
+    if (status == 0) {
+        status = LoadGameState();
+    }
+    return status;
+}
+
+extern char DAT_06039000[];
+
+void SaveGameState(void);
+
+s8 func_0600D264(u32 device, s8 arg1) {
+    s32 date;
+    s32 status;
+
+    if (arg1 != 0) {
+        SaveGameState();
+        DAT_060485C0.unk4 = device;
+        DAT_060485C0.unk5 = arg1;
+        sprintf(DAT_0605DDA0.filename, "%s%02d", DAT_06038FE0, arg1);
+        sprintf(DAT_0605DDA0.comment, DAT_06039000);
+        DAT_0605DDA0.language = 0;
+        date = func_0600D0DC();
+        DAT_0605DDA0.date = date;
+        DAT_060485C0.unk8 = date;
+        DAT_0605DDA0.datasize = 0x1124;
+        func_0600CC14();
+        status = BUP_Write(device, &DAT_0605DDA0, &DAT_060485C0, 0);
+        func_0600CBCC();
+        return status;
+    }
+    return 3;
+}
+
+void func_0600D6C0(void);
+
+s8 func_0600D370(u32 device, s8 arg1) {
+    s32 date;
+    s32 status;
+
+    if (arg1 != 0) {
+        func_0600D6C0();
+        DAT_060485C0.unk4 = device;
+        DAT_060485C0.unk5 = arg1;
+        sprintf(DAT_0605DDA0.filename, "%s%02d", DAT_06038FE0, arg1);
+        sprintf(DAT_0605DDA0.comment, DAT_06039000);
+        DAT_0605DDA0.language = 0;
+        date = func_0600D0DC();
+        DAT_0605DDA0.date = date;
+        DAT_060485C0.unk8 = date;
+        DAT_0605DDA0.datasize = 0x1124;
+        func_0600CC14();
+        status = BUP_Write(device, &DAT_0605DDA0, &DAT_060485C0, 0);
+        func_0600CBCC();
+        return status;
+    }
+    return 3;
+}
 
 s8 func_0600D47C(u32 device, s8 arg1) {
-    char work[12];
+    char filename[12];
 
-    sprintf(work, DAT_0600CEC8, DAT_06038FE0, arg1);
-    return BUP_Verify(device, work, &SYS_state_060485C0);
+    sprintf(filename, "%s%02d", DAT_06038FE0, arg1);
+    return BUP_Verify(device, filename, &DAT_060485C0);
 }
 
 s8 func_0600D4C4(u32 device, s8 arg1) {
-    char work[12];
+    char filename[12];
 
-    sprintf(work, DAT_0600CEC8, DAT_06038FE0, arg1);
-    return BUP_Delete(device, work);
+    sprintf(filename, "%s%02d", DAT_06038FE0, arg1);
+    return BUP_Delete(device, filename);
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D508, SaveGameState);
 
 // original name: ABup_ChechsumSet
 void func_0600D6C0(void) {
-    ((s32*)&SYS_state_060485C4)[-1] = Crc32(0x1120, &SYS_state_060485C4);
+    DAT_060485C0.unk0 = Crc32(0x1120, &DAT_060485C0.unk4);
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D6EC, LoadGameState);
@@ -2757,8 +3346,8 @@ void func_0600E164(void) {
     count = DAT_0605CD5C;
     if (count != 0) {
         if (count > 0) {
-            cmd.ax = cmd.dx = *(s16*)&DAT_0605BEC0 - (--count);
-            cmd.bx = cmd.cx = *(s16*)&DAT_0605BEC0;
+            cmd.ax = cmd.dx = DAT_0605BEC0.x - (--count);
+            cmd.bx = cmd.cx = DAT_0605BEC0.x;
         } else {
             cmd.ax = cmd.dx = 0;
             cmd.bx = cmd.cx = -count - 1;
@@ -2766,19 +3355,21 @@ void func_0600E164(void) {
         cmd.control = 0x1004;
         cmd.drawMode = 0x00C0;
         cmd.color = 0x67F0;
-        cmd.ay = cmd.by = DAT_0605AEA2;
-        cmd.cy = cmd.dy = DAT_0605BEC2;
+        cmd.ay = cmd.by = DAT_0605AEA0[0].y;
+        cmd.cy = cmd.dy = DAT_0605BEC0.y;
         SPR_2Cmd(0x1FF, &cmd);
         d_0605AEAC++;
     }
 }
 
-const Uint16 DAT_0600E228[12] = {0};
+const Uint16 DAT_0600E228[10] = {0};
 
-void func_0600E240(Point16* arg0) {
+const XyInt DAT_0600E23C = {0, 0};
+
+void func_0600E240(XyInt* arg0) {
     MTH_InitialMatrix(&DAT_06061DF0, 2, &DAT_060579A8);
-    DAT_06061DE8[0] = ((Point16*)&DAT_0600E23C)->x;
-    DAT_06061DE8[1] = ((Point16*)&DAT_0600E23C)->y;
+    DAT_06061DE8.x = DAT_0600E23C.x;
+    DAT_06061DE8.y = DAT_0600E23C.y;
     DAT_06057A08.x = -(arg0->x / 2);
     DAT_06057A08.y = -(arg0->y / 2);
     DAT_06057A0C.x = arg0->x + arg0->x / 2;
@@ -2846,20 +3437,68 @@ void TransformNormals(MthXyz* src, MthXyz* dst, s32 count) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E450, TransformAndProjectPoints);
+// 0x0600E450
+void TransformAndProjectPoints(MthXyz* src, XyInt* dst, s32 count) {
+    MthXyz point;
 
-// original name: CheckClipScreenArea
-s32 CheckClipScreenArea(Point16* arg0) {
-    if (arg0->x < DAT_06057A08.x || DAT_06057A0C.x < arg0->x ||
-        arg0->y < DAT_06057A08.y || DAT_06057A0C.y < arg0->y) {
-        return 0;
+    while (count > 0) {
+        MTH_CoordTrans(DAT_06061DF0.current, src, &point);
+        point.z >>= 8;
+        MTH_Pers2D(&point, &DAT_06061DE0, dst);
+        dst->x += DAT_06061DE8.x;
+        dst->y += DAT_06061DE8.y;
+        src++;
+        dst++;
+        count--;
     }
-    return 1;
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E51C, RotateVec2Degrees);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E5A4, RotateVec2);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E61C, func_0600E61C);
+// original name: CheckClipScreenArea
+bool CheckClipScreenArea(XyInt* arg0) {
+    if (arg0->x < DAT_06057A08.x || DAT_06057A0C.x < arg0->x ||
+        arg0->y < DAT_06057A08.y || DAT_06057A0C.y < arg0->y) {
+        return false;
+    }
+    return true;
+}
+
+// 0x0600E51C
+void RotateVec2Degrees(MthXy* arg0, s16 arg1) {
+    Fixed32 angle;
+    Fixed32 s, c;
+    MthXy pos;
+
+    angle = MTH_IntToFixed(arg1);
+    c = MTH_Cos(angle);
+    s = MTH_Sin(angle);
+
+    pos = *arg0;
+    arg0->x = MTH_Mul(c, pos.x) - MTH_Mul(s, pos.y);
+    arg0->y = MTH_Mul(s, pos.x) + MTH_Mul(c, pos.y);
+}
+
+// 0x0600E5A4
+void RotateVec2(MthXy* arg0, s16 arg1) {
+    Fixed32 s, c;
+    MthXy pos;
+
+    rsincos(arg1, &s, &c);
+    c *= 0x10;
+    s *= 0x10;
+
+    pos = *arg0;
+    arg0->x = MTH_Mul(c, pos.x) - MTH_Mul(s, pos.y);
+    arg0->y = MTH_Mul(s, pos.x) + MTH_Mul(c, pos.y);
+}
+
+bool func_0600E61C(XyInt* p0, XyInt* p1, XyInt* p2) {
+    s32 dx1 = p1->x - p0->x;
+    s32 dx2 = p2->x - p0->x;
+    s32 dy1 = p1->y - p0->y;
+    s32 dy2 = p2->y - p0->y;
+
+    return (dx1 * dy2) > (dy1 * dx2);
+}
 
 const s16 ratan_tbl[] = {
     0x000, 0x000, 0x001, 0x001, 0x002, 0x003, 0x003, 0x004, 0x005, 0x005, 0x006,
@@ -3130,6 +3769,7 @@ const s16 rsin_tbl[] = {
     0x0FFF, 0x0FFF, 0x0FFF, 0x0FFF, 0x0FFF, 0x0FFF, 0x0FFF,
 };
 
+//_SSsin
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F7BC, rsin);
 
 //_SScos
@@ -3233,8 +3873,8 @@ void func_0600FB34(void) {
 }
 
 s32 func_0600FB4C(void) {
-    if ((DAT_0605d772 == 0) && ((g_pads[0].pressed & 0x700) == 0x700)) {
-        if ((g_pads[0].previous & PAD_START) && (DAT_0605C658 != 0)) {
+    if ((DAT_0605D770.unk2 == 0) && ((g_pads[0].pressed & 0x700) == 0x700)) {
+        if ((g_pads[0].tapped & PAD_START) && (DAT_0605C658 != 0)) {
             return 1;
         }
     }
@@ -3293,30 +3933,30 @@ void func_0600FFB8(Entity* self) {
 
 // func_06010008
 void InitDebugPrint(void) {
-    SclConfig temp;
+    SclConfig scfg;
 
     DAT_06062224[1] = 0;
     DAT_06062224[0] = 0;
     ClearDebugPrintTilemap();
-    SCL_InitConfigTb(&temp);
-    temp.dispenbl = 1;
-    temp.charsize = 0;
-    temp.pnamesize = 1;
-    temp.platesize = 0;
-    temp.coltype = 0;
-    temp.datatype = 0;
-    temp.mapover = 0;
-    temp.flip = 0;
-    temp.patnamecontrl = 0x66;
-    temp.plate_addr[0] = VDP2_DEBUG_TILEMAP_OFFSET;
-    temp.plate_addr[1] = VDP2_DEBUG_TILEMAP_OFFSET;
-    temp.plate_addr[2] = VDP2_DEBUG_TILEMAP_OFFSET;
-    temp.plate_addr[3] = VDP2_DEBUG_TILEMAP_OFFSET;
-    SCL_SetConfig(SCL_NBG0, &temp);
-    DAT_0605d6c0[3].tileFlags = 0x10;
-    DAT_0605d6c0[3].src = &DAT_06039214;
-    DAT_0605d6c0[3].dest = VDP2_25F00600;
-    DAT_0605d6c0[3].cnt = 0x80;
+    SCL_InitConfigTb(&scfg);
+    scfg.dispenbl = ON;
+    scfg.charsize = SCL_CHAR_SIZE_1X1;
+    scfg.pnamesize = SCL_PN1WORD;
+    scfg.platesize = SCL_PL_SIZE_1X1;
+    scfg.coltype = SCL_COL_TYPE_16;
+    scfg.datatype = SCL_CELL;
+    scfg.mapover = SCL_OVER_0;
+    scfg.flip = SCL_PN_10BIT;
+    scfg.patnamecontrl = 0x66;
+    scfg.plate_addr[0] = SCL_VDP2_VRAM_B0 + 0x18000;
+    scfg.plate_addr[1] = SCL_VDP2_VRAM_B0 + 0x18000;
+    scfg.plate_addr[2] = SCL_VDP2_VRAM_B0 + 0x18000;
+    scfg.plate_addr[3] = SCL_VDP2_VRAM_B0 + 0x18000;
+    SCL_SetConfig(SCL_NBG0, &scfg);
+    DAT_0605D6C0[3].tileFlags = 0x10;
+    DAT_0605D6C0[3].src = &DAT_06039214;
+    DAT_0605D6C0[3].dest = SCL_COLRAM_ADDR + 0x600;
+    DAT_0605D6C0[3].cnt = 0x80;
 }
 
 // 0x060100B8
@@ -3326,7 +3966,7 @@ void ClearDebugPrintTilemap(void) {
     u16 i;
     u16* ptr;
 
-    ptr = VDP2_DEBUG_TILEMAP_OFFSET;
+    ptr = SCL_VDP2_VRAM_B0 + 0x18000;
     for (i = 0; i < 0x1000; i++) {
         *ptr++ = 0;
     }
@@ -3350,140 +3990,3 @@ void SignalSlaveSh2(void) {
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011278, func_06011278);
-
-void func_06011A6C(s32 arg0) {
-    s32 i;
-
-    for (i = 0;; i++) {
-        if (DAT_06064250[i] != 0) {
-            if (i != 0x1E) {
-                continue;
-            }
-        }
-        break;
-    }
-    DAT_06064250[i] = arg0;
-    DAT_06064250[i + 1] = 0;
-}
-
-s32 PlaySfxVolPan(s32 sfxId, s32 sfxVol, s16 sfxPan) {
-    s32 ret = 0;
-
-    if (sfxId < 0x600 || sfxId > 0x916) {
-        return -3;
-    }
-    if (sfxPan < -8 || sfxPan > 8) {
-        sfxPan = 0x40;
-        ret = -1;
-    } else {
-        if (sfxPan == 0) {
-            sfxPan = sfxPan * 8 + 0x40;
-        } else if (sfxPan > 0) {
-            sfxPan = sfxPan * 8 + 0x3F;
-        } else {
-            sfxPan = sfxPan * 8 + 0x40;
-        }
-    }
-    DAT_06064230 = sfxVol;
-    DAT_060643c4 = sfxPan;
-    DAT_060644c4 = 1;
-    PlaySfx(sfxId);
-    DAT_060644c4 = 0;
-    return ret;
-}
-
-s32 func_06011B28(s32 arg0) {
-    if (arg0 < 0) {
-        arg0 = 0;
-    } else if (arg0 < 0x10) {
-        arg0 *= 2;
-    } else if (arg0 < 0x20) {
-        arg0 = ((arg0 - 0x10) * 0x26) / 0x10 + 0x20;
-    } else if (arg0 < 0x30) {
-        arg0 = ((arg0 - 0x20) * 0x1A) / 0x10 + 0x46;
-    } else if (arg0 < 0x40) {
-        arg0 = ((arg0 - 0x30) * 0x0D) / 0x10 + 0x60;
-    } else if (arg0 < 0x50) {
-        arg0 = (arg0 - 0x40) / 2 + 0x6D;
-    } else if (arg0 < 0x60) {
-        arg0 = ((arg0 - 0x50) * 5) / 0x10 + 0x75;
-    } else if (arg0 < 0x70) {
-        arg0 = (arg0 - 0x60) / 4 + 0x7A;
-    } else if (arg0 < 0x82) {
-        arg0 = ((arg0 - 0x70) * 4) / 18 + 0x7E;
-    }
-    if (arg0 == 0) {
-        arg0 = 1;
-    }
-    return arg0;
-}
-
-s32 func_06011C28(s32 volume, s16 pan) {
-    s32 result;
-
-    result = 0;
-    if (DAT_060643E0.unk1C == 0) {
-        return -2;
-    }
-    if (pan < -8 || pan > 8) {
-        pan = 0x40;
-        result = -1;
-    } else if (pan == 0) {
-        pan = 0x40;
-    } else {
-        if (pan > 0) {
-            pan = pan * 8 + 0x3F;
-        } else {
-            pan = pan * 8 + 0x40;
-        }
-    }
-    volume = func_06011B28((DAT_060644B0 * volume) / 127);
-    if (volume == 0) {
-        volume = 1;
-    }
-    func_06018B8C(7, volume, 0);
-    func_06018C00(7, 0, pan);
-    DAT_0606436E = pan;
-    return result;
-}
-
-const u16 DAT_06011CE0 = 0x5344;
-const u16 DAT_06011CE2 = 0x0000;
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011CE4, func_06011CE4);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011EE0, func_06011EE0);
-
-// func_06011F40
-void StopPcm(s32 arg0) { SND_StopPcm2(arg0); }
-
-void func_06011F58(void) {
-    s32 bgm;
-
-    func_06011F40(7);
-    DAT_060641F4 = 0;
-    DAT_06063EB4 = 0;
-    DAT_06062258 = 0;
-    bgm = DAT_06062290[DAT_06062268];
-    if (bgm != 0) {
-        func_0601BDD0(bgm);
-        DAT_06063C1C = 0;
-    }
-    D_8013B61C = 0;
-    DAT_06063BD4 = 0;
-}
-
-// original name: KeyOffBGM2
-void func_06011FC8(void) {
-    s32 bgm;
-
-    func_06011F40(7);
-    DAT_060641F4 = 0;
-    DAT_06063EB4 = 0;
-    bgm = DAT_06062290[DAT_06062268];
-    if (bgm != 0) {
-        func_0601BDD0(bgm);
-        DAT_06063C1C = 0;
-    }
-    D_8013B61C = 0;
-    DAT_06063BD4 = 0;
-}

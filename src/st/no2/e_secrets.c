@@ -72,7 +72,7 @@ static void func_us_801B59C4(Primitive* prim) {
         if (collider.effects & EFFECT_SOLID) {
             posY += collider.unk18;
             for (i = 0; i < 3; i++) {
-                prim2 = g_CurrentEntity->ext.breakableNo2.unk7C;
+                prim2 = g_CurrentEntity->ext.breakableNo2.firstPrim;
                 prim2 = FindFirstUnkPrim2(prim2, 2);
                 if (prim2 != NULL) {
                     UnkPolyFunc2(prim2);
@@ -183,7 +183,7 @@ void func_us_801B5FB8(Entity* self) {
     s32 i;
     s32 tileIdx;
 
-    FntPrint("timer %x\n", self->ext.breakableNo2.unk80);
+    FntPrint("timer %x\n", self->ext.breakableNo2.timer);
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitEnvironment);
@@ -211,11 +211,11 @@ void func_us_801B5FB8(Entity* self) {
     case STEP_SFX:
         if (self->hitFlags) {
             PlaySfxPositional(SFX_WALL_DEBRIS_B);
-            self->ext.breakableNo2.unk80 = 0x10;
-            self->ext.breakableNo2.unk88++;
+            self->ext.breakableNo2.timer = 0x10;
+            self->ext.breakableNo2.hits++;
             self->step++;
         }
-        if (self->ext.breakableNo2.unk88 == 3) {
+        if (self->ext.breakableNo2.hits == 3) {
             self->hitboxState = 0;
             self->step = 3;
         }
@@ -224,13 +224,13 @@ void func_us_801B5FB8(Entity* self) {
 
     case STEP_ANIMATE:
 #ifndef BOSS_IS_BO0
-        if (self->ext.breakableNo2.unk88 == 1) {
+        if (self->ext.breakableNo2.hits == 1) {
             self->animCurFrame = 12;
         }
-        if (self->ext.breakableNo2.unk88 == 2) {
+        if (self->ext.breakableNo2.hits == 2) {
             self->animCurFrame = 13;
         }
-        if (!--self->ext.breakableNo2.unk80) {
+        if (!--self->ext.breakableNo2.timer) {
             self->step--;
         }
 #else
@@ -254,7 +254,7 @@ void func_us_801B5FB8(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            self->ext.breakableNo2.unk7C = prim;
+            self->ext.breakableNo2.firstPrim = prim;
             while (prim != NULL) {
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
@@ -272,7 +272,7 @@ void func_us_801B5FB8(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        prim = self->ext.breakableNo2.unk7C;
+        prim = self->ext.breakableNo2.firstPrim;
         for (i = 0; i < 2; i++) {
             prim->tpage = 0xF;
             prim->clut = 0x21;
@@ -292,12 +292,12 @@ void func_us_801B5FB8(Entity* self) {
             prim->drawMode = DRAW_UNK02;
             prim = prim->next;
         }
-        self->ext.breakableNo2.unk80 = 0x20;
+        self->ext.breakableNo2.timer = 0x20;
         self->step++;
         break;
 
     case STEP_TIMER:
-        if (!--self->ext.breakableNo2.unk80) {
+        if (!--self->ext.breakableNo2.timer) {
             self->step++;
         }
         break;
@@ -312,7 +312,7 @@ void func_us_801B5FB8(Entity* self) {
             tileIdx = D_us_80180DEC[i];
             g_Tilemap.fg[tileIdx] = D_us_80180E00[i];
         }
-        prim = self->ext.breakableNo2.unk7C;
+        prim = self->ext.breakableNo2.firstPrim;
         for (i = 0; i < 8; i++) {
             UnkPolyFunc2(prim);
             prim->next->x1 = self->posX.i.hi - 8 + ((i % 2) * 0x10);
@@ -339,19 +339,19 @@ void func_us_801B5FB8(Entity* self) {
             }
         }
         g_api.PlaySfx(SFX_WALL_DEBRIS_B);
-        self->ext.breakableNo2.unk80 = 0x180;
+        self->ext.breakableNo2.timer = 0x180;
         self->step++;
         break;
 
     case STEP_FINALIZE:
-        prim = self->ext.breakableNo2.unk7C;
+        prim = self->ext.breakableNo2.firstPrim;
         while (prim != NULL) {
             if (prim->p3 & 8) {
                 func_us_801B59C4(prim);
             }
             prim = prim->next;
         }
-        if (!--self->ext.breakableNo2.unk80) {
+        if (!--self->ext.breakableNo2.timer) {
             g_CastleFlags[NO2_SECRET_WALL_OPEN] |= 2;
             DestroyEntity(self);
         }
@@ -384,7 +384,7 @@ void func_us_801B65A4(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            self->ext.breakableNo2.unk7C = prim;
+            self->ext.breakableNo2.firstPrim = prim;
             while (prim != NULL) {
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
@@ -393,7 +393,7 @@ void func_us_801B65A4(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        prim = self->ext.breakableNo2.unk7C;
+        prim = self->ext.breakableNo2.firstPrim;
         for (i = 0; i < 4; i++) {
             UnkPolyFunc2(prim);
             prim->next->x1 = self->posX.i.hi;
@@ -407,7 +407,7 @@ void func_us_801B65A4(Entity* self) {
 
     case 2:
         i = 1;
-        prim = self->ext.breakableNo2.unk7C;
+        prim = self->ext.breakableNo2.firstPrim;
         while (prim != NULL) {
             if (prim->p3 & 8) {
                 i = 0;
@@ -513,11 +513,11 @@ void func_us_801B68EC(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            self->ext.breakableNo2.unk7C = prim;
+            self->ext.breakableNo2.firstPrim = prim;
             while (prim != NULL) {
                 prim->drawMode = DRAW_HIDE;
                 prim->priority = 0x68;
-                self->ext.breakableNo2.unk84 = prim;
+                self->ext.breakableNo2.lastPrim = prim;
                 prim = prim->next;
             }
         } else {
@@ -528,21 +528,21 @@ void func_us_801B68EC(Entity* self) {
     case 1:
         if (self->hitFlags) {
             for (i = 0; i < 0x10; i++) {
-                prim = self->ext.breakableNo2.unk7C;
+                prim = self->ext.breakableNo2.firstPrim;
                 prim = FindFirstUnkPrim(prim);
                 if (prim != NULL) {
                     prim->p3 = 1;
                 }
             }
         }
-        prim = self->ext.breakableNo2.unk7C;
+        prim = self->ext.breakableNo2.firstPrim;
         while (prim != NULL) {
             if (prim->p3) {
                 func_us_801B6794(prim);
             }
             prim = prim->next;
         }
-        prim = self->ext.breakableNo2.unk84;
+        prim = self->ext.breakableNo2.lastPrim;
         prim->x0 = prim->y0 = 0;
         prim->u0 = 0;
         prim->drawMode = DRAW_UNK02;
@@ -569,7 +569,7 @@ void func_us_801B68EC(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            self->ext.breakableNo2.unk7C = prim;
+            self->ext.breakableNo2.firstPrim = prim;
             while (prim != NULL) {
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
@@ -578,7 +578,7 @@ void func_us_801B68EC(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        prim = self->ext.breakableNo2.unk7C;
+        prim = self->ext.breakableNo2.firstPrim;
         for (i = 0; i < 4; i++) {
             UnkPolyFunc2(prim);
             prim->next->x1 = self->posX.i.hi - 8 + ((i % 2) * 0x10);
@@ -610,7 +610,7 @@ void func_us_801B68EC(Entity* self) {
 
     case 3:
         i = 1;
-        prim = self->ext.breakableNo2.unk7C;
+        prim = self->ext.breakableNo2.firstPrim;
         while (prim != NULL) {
             if (prim->p3 & 8) {
                 i = 0;

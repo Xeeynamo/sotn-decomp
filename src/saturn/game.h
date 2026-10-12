@@ -130,7 +130,7 @@ extern s32 g_NewPlayerStatsTotal[];
 extern s32 g_MenuPageScrollActive;
 void SetVdp2DisplayMode(s32);
 extern s16 DAT_06086220[];
-extern s16 DAT_060862a4;
+extern s16 DAT_060862A4;
 extern s16 g_ButtonMask[];
 void CheckWeaponCombo(void);
 void func_06073280(void);
@@ -229,13 +229,7 @@ extern SpritePart g_SpritePartPool[SPRITE_PART_MAX];       /* 0x0608D7F8 */
 extern SpriteObject g_SpriteObjectPool[SPRITE_OBJECT_MAX]; /* 0x0608AFF8 */
 s32 func_0606F378(s32 arg0);
 
-typedef struct {
-    s32 unk0;
-    s32 unk4;
-} UnkStruct_06074690;
-
-extern volatile s32 DAT_0605D7F4;
-extern volatile UnkStruct_06074690 DAT_06074690;
+extern s32 DAT_0605D7F4;
 extern s32 DAT_0605D7FC;
 extern s32 DAT_06086298;
 void func_06009DB0(void);

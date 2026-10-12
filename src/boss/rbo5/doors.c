@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo5.h"
 
-u16 D_us_801805B0 = 0;
+s32 D_us_801805B0 = 0;
 STATIC_PAD_DATA(4);
 s32 D_us_801805B8 = 0;
 s32 g_stone_flag = 0;
@@ -11,17 +11,23 @@ extern s32 D_us_801D43C4;
 extern EInit g_EInitInteractable;
 
 #ifdef VERSION_PSP
-extern s32 D_pspeu_0926BCC8;
-extern s32 D_pspeu_0926BCB8;
-extern s32 D_pspeu_0926BCB0;
-extern s32 D_pspeu_0926BCA0;
-extern s32 D_pspeu_0926BC98;
-#define E_ID(ID_17) D_pspeu_0926BCC8
-#define E_ID(ID_19) D_pspeu_0926BCB8
-#define E_ID(ID_1A) D_pspeu_0926BCB0
-#define E_ID(ID_1C) D_pspeu_0926BCA0
-#define E_ID(ID_1D) D_pspeu_0926BC98
+extern s32 E_ID(ID_16);
+extern s32 E_ID(ID_17);
+extern s32 E_ID(ID_19);
+extern s32 E_ID(ID_1A);
+extern s32 E_ID(ID_1C);
+extern s32 E_ID(ID_1D);
 #endif
+
+static s16 D_us_801805C0[] = {
+    0x80, 0x80, 0x100, 0x300, 0x500, 0x700,
+};
+static s16 D_us_801805CC[] = {
+    0xC, 0xC, 0x12, 0x16, 0x20, 0x26,
+};
+static s16 D_us_801805D8[] = {
+    0x100, 0x100, 0xF8, 0xF2, 0xEE, 0xEC,
+};
 
 // hit during enter sequence
 void EntityUnkId18(Entity* self) {
@@ -64,16 +70,12 @@ void EntityUnkId18(Entity* self) {
 #ifdef VERSION_PSP
                 g_Player.padSim = PAD_NONE;
 #else
-                g_Player.padSim = PAD_L1;
+                g_Player.padSim = PAD_MIST;
 #endif
             } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
-#ifdef VERSION_PSP
-                g_Player.padSim = PAD_L1;
-#else
-                g_Player.padSim = PAD_R2;
-#endif
+                g_Player.padSim = PAD_WOLF;
             } else if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
-                g_Player.padSim = PAD_R1;
+                g_Player.padSim = PAD_BAT;
             } else {
                 g_Player.demo_timer = 0x240;
                 g_Player.padSim = 0;
@@ -129,9 +131,6 @@ void EntityUnkId18(Entity* self) {
         dop->zPriority = 0x56;
         if (D_us_801805B8 & 4) {
             g_api.PlaySfx(SET_UNK_92);
-#ifdef VERSION_PSP
-            currentMusicId = MU_TOWER_OF_MIST;
-#endif
             self->step++;
         }
         break;
@@ -170,32 +169,16 @@ void EntityUnkId18(Entity* self) {
         break;
 
     case 10:
-#ifdef VERSION_PSP
-        self->step++;
-        break;
-    case 11:
-#endif
         break;
     }
 
-#ifndef VERSION_PSP
     FntPrint("stone_flag:%02x\n", g_stone_flag);
-#endif
     g_stone_flag = 0;
     D_us_801D43C0 = self->posX.i.hi;
     D_us_801D43C4 = self->posY.i.hi;
 }
 
 extern EInit EInitUnk17;
-static s16 D_us_801805C0[] = {
-    0x80, 0x80, 0x100, 0x300, 0x500, 0x700,
-};
-static s16 D_us_801805CC[] = {
-    0xC, 0xC, 0x12, 0x16, 0x20, 0x26,
-};
-static s16 D_us_801805D8[] = {
-    0x100, 0x100, 0xF8, 0xF2, 0xEE, 0xEC,
-};
 static u8 D_us_801805E4[] = {1, 0x62, 0x1, 0x63, 0};
 static u8 D_us_801805EC[] = {1, 0x64, 0x1, 0x65, 0};
 static u8 D_us_801805F4[] = {2, 0x62, 0x2, 0x63, 0};
@@ -270,7 +253,7 @@ void EntityUnkId17(Entity* self) {
             if ((g_Timer & 0xF) == 0) {
                 g_api.PlaySfx(SFX_STONE_MOVE_B);
             }
-            if (!--self->ext.et_801BDA0C.unk9C) {
+            if (--self->ext.et_801BDA0C.unk9C == 0) {
                 self->step++;
             }
         }
@@ -360,8 +343,8 @@ void EntityUnkId1C(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(EInitUnk17);
-        self->rotate = ROT(-90);
         self->drawFlags |= ENTITY_ROTATE;
+        self->rotate = ROT(-90);
         if (self->params & 1) {
             self->animCurFrame = 0x64;
             self->velocityX = FIX(-0.5);
@@ -513,7 +496,7 @@ void EntityUnkId19(Entity* self) {
 
         prim = self->ext.et_801BE2C8.unk80;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
-        CreateEntityFromEntity(E_ID_16, self, &DOPPLEGANGER);
+        CreateEntityFromEntity(E_ID(ID_16), self, &DOPPLEGANGER);
         // BUG! Sets Doppleganger 10 defeat flag instead of Doppleganger 40
         g_api.TimeAttackController(
             TIMEATTACK_EVENT_DOPPLEGANGER_10_DEFEAT, TIMEATTACK_SET_VISITED);
@@ -802,7 +785,7 @@ static u8 D_us_8018068C[8] = {
     false, false, true, true, true, false, false, false,
 };
 
-static s16 D_us_80180694[] = {
+static u16 D_us_80180694[] = {
     0x0373, 0x0000, 0x0000, 0x0000, 0x075E, 0x0001, 0x0001, 0x0001,
     0x0000, 0x0000, 0x0000, 0x072D, 0x0001, 0x0001, 0x0001, 0x075D,
     0x0000, 0x0000, 0x0000, 0x03F2, 0x0001, 0x0001, 0x0001, 0x075C,
@@ -811,7 +794,7 @@ static s16 D_us_80180694[] = {
     0x0933, 0x0000, 0x0000, 0x0951, 0x0761, 0x0001, 0x0001, 0x0763,
 };
 
-void func_us_801B5004(Tilemap* map, s32 arg1) {
+static void func_us_801B5004(Tilemap* map, s32 arg1) {
     Tilemap* tmap;
     s16 tilePos;
     u16* tileData;
@@ -821,16 +804,11 @@ void func_us_801B5004(Tilemap* map, s32 arg1) {
     tilePos = D_us_80180680[arg1 >> 1];
     tileData = &D_us_80180694[arg1 << 2];
 
-    i = 0;
     for (i = 0; i < 4; i++) {
         tmap->fg[tilePos] = *tileData++;
         tilePos += tmap->hSize << 4;
     }
 }
-
-#ifdef VERSION_PSP
-extern s32 D_us_801805B0;
-#endif
 
 extern EInit g_EInitCommon;
 
@@ -955,7 +933,7 @@ void EntityUnkId1E(Entity* self) {
         break;
     case 9:
         self->step++;
-        LOW(D_us_801805B0) = 0;
+        D_us_801805B0 = 0;
         break;
     case 10:
         if (!temp_s1) {

@@ -3,6 +3,10 @@
 
 #include "xpt.h"
 
+#define BUP_LIB_SIZE4 (16 * 1024 / sizeof(Uint32))
+
+#define BUP_WORK_SIZE4 (8312 / sizeof(Uint32))
+
 #define BUP_LIB_ADDRESS (*(Uint32*)(0x6000350 + 8))
 
 #define BUP_VECTOR_ADDRESS (*(Uint32*)(0x6000350 + 4))

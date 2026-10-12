@@ -2,6 +2,12 @@
 
 #define SEALED_DOOR_CLUT 0x198
 
+#ifdef INVERTED_STAGE
+#define SEALED_DOOR_ALT_CLUT 0x200
+#else
+#define SEALED_DOOR_ALT_CLUT 0x21B
+#endif
+
 static u8 g_eBlueDoorUV[][8] = {
     {0xB1, 0xB7, 0xB1, 0xB7, 0x21, 0x21, 0x5F, 0x5F},
     {0x88, 0xA8, 0x88, 0xA8, 0x21, 0x21, 0x5F, 0x5F},
@@ -93,7 +99,7 @@ void EntitySealedDoor(Entity* self) {
             prim->clut = SEALED_DOOR_CLUT;
             if (self->params & 0x1000) {
                 prim->tpage = 0x12;
-                prim->clut = 0x21B;
+                prim->clut = SEALED_DOOR_ALT_CLUT;
             }
             prim->priority = PLAYER.zPriority - 0x20;
             prim->y0 = prim->y1 = y;

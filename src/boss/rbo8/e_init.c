@@ -54,20 +54,20 @@ PfnEntityUpdate EntityUpdates[] = {
 
 // clang-format off
 // animSet, animCurFrame, unk5A, palette, enemyID
-EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0, 0, 0x000};
-EInit g_EInitObtainable = {ANIMSET_DRA(3), 0, 0, 0, 0x001};
-EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0, 0, 0x002};
-EInit g_EInitSpawner = {ANIMSET_DRA(0), 0, 0, 0, 0x004};
-EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0, 0, 0x005};
-EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, 0, 0x002};
-EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, 0, 0x001};
-EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
-EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
-EInit D_us_80180A68 = {ANIMSET_OVL(4), 0, 0, 0, 0x005};
-EInit g_EInitGalamothLvl50 = {ANIMSET_OVL(1), 0, 72, 512, 0x0C6};
-EInit g_EInitGalamothLvl0 = {ANIMSET_OVL(1), 0, 72, 512, 0x0C7};
-EInit D_us_80180A8C = {ANIMSET_OVL(1), 0, 72, 512, 0x0C8};
-EInit D_us_80180A98 = {ANIMSET_OVL(1), 0, 72, 512, 0x0C9};
-EInit D_us_80180AA4 = {ANIMSET_OVL(2), 0, 76, 539, 0x002};
-EInit D_us_80180AB0 = {ANIMSET_OVL(3), 0, 79, 539, 0x002};
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_BREAKABLE};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitParticle = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitSpawner = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_SPAWNER};
+EInit g_EInitInteractable = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit D_us_80180A68 = {ANIMSET_OVL(4), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitGalamothLvl50 = {ANIMSET_OVL(1), 0x00, 0x48, PAL_GALAMOTH, ENEMY_GALAMOTH};
+EInit g_EInitGalamothLvl0 = {ANIMSET_OVL(1), 0x00, 0x48, PAL_GALAMOTH, ENEMY_GALAMOTH_LV0};
+EInit D_us_80180A8C = {ANIMSET_OVL(1), 0x00, 0x48, PAL_GALAMOTH, ENEMY_GALAMOTH_UNK_C8};
+EInit D_us_80180A98 = {ANIMSET_OVL(1), 0x00, 0x48, PAL_GALAMOTH, ENEMY_GALAMOTH_UNK_C9};
+EInit D_us_80180AA4 = {ANIMSET_OVL(2), 0x00, 0x4C, PAL_UNK_21B, ENEMY_PARTICLE};
+EInit D_us_80180AB0 = {ANIMSET_OVL(3), 0x00, 0x4F, PAL_UNK_21B, ENEMY_PARTICLE};
 // clang-format on

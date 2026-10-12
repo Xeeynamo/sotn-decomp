@@ -12,7 +12,7 @@ static u16 D_us_80180670[][2] = {
 };
 
 #ifdef VERSION_PSP
-extern s32 D_pspeu_0926BCA8;
+extern s32 E_ID(ID_1B);
 #endif
 
 // 4-segment block doors
@@ -100,12 +100,12 @@ void EntityUnkId1B(Entity* self) {
     case 2:
 #ifdef VERSION_PSP
         if (!self->params) {
-#endif
             g_Player.padSim = PAD_NONE;
             g_Player.demo_timer = 4;
-
-#ifdef VERSION_PSP
         }
+#else
+        g_Player.padSim = PAD_NONE;
+        g_Player.demo_timer = 4;
 #endif
         // undeclared AnimateEntity
         if (!AnimateEntity(D_us_80180668, self)) {
@@ -117,12 +117,12 @@ void EntityUnkId1B(Entity* self) {
     case 3:
 #ifdef VERSION_PSP
         if (!self->params) {
-#endif
             g_Player.padSim = 0;
             g_Player.demo_timer = 0x18;
-
-#ifdef VERSION_PSP
         }
+#else
+        g_Player.padSim = 0;
+        g_Player.demo_timer = 0x18;
 #endif
         MoveEntity();
         self->velocityY += FIX(0.125);
@@ -143,7 +143,7 @@ void EntityUnkId1B(Entity* self) {
             }
             tilemapIndex += ((3 - blockIndex) << 5);
             g_Tilemap.fg[tilemapIndex] = D_us_80180670[7 - blockIndex][0];
-            g_Tilemap.fg[tilemapIndex + 1] = D_us_80180670[7 - blockIndex][1];
+            (&g_Tilemap.fg[tilemapIndex])[1] = D_us_80180670[7 - blockIndex][1];
             self->velocityY = 0;
             self->step++;
         }
@@ -162,7 +162,7 @@ void EntityUnkId1B(Entity* self) {
         }
         tilemapIndex += ((3 - blockIndex) << 5);
         g_Tilemap.fg[tilemapIndex] = D_us_80180670[3 - blockIndex][0];
-        g_Tilemap.fg[tilemapIndex + 1] = D_us_80180670[3 - blockIndex][1];
+        (&g_Tilemap.fg[tilemapIndex])[1] = D_us_80180670[3 - blockIndex][1];
         self->step++;
         break;
 

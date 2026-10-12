@@ -504,7 +504,7 @@ typedef struct Cmd14 {
     u8 unke;
 } Cmd14;
 
-// Used in dra/7E4BC, dra/bss, rbo5/unk_4648C, bo4/unk_46E7C
+// Used in dra/7E4BC, dra/bss, rbo5/unk_4907C, bo4/unk_49A6C
 typedef struct {
     f32 posX;
     f32 posY;
@@ -949,5 +949,15 @@ bool func_80133950(void);
 void func_80133FCC(void);
 void SetReleaseRate2(void);
 void func_801361F8(void);
+
+#ifdef FIX_UB
+// Without these prototypes, the callers assume an int return type and read
+// garbage from the unused upper bits of the return register.
+s16 AllocPrimitives(u8 primType, s32 count);
+s16 AllocPrimitivesReverse(u8 type, s32 count);
+s16 GetStatusAilmentTimer(StatusAilments statusAilment, s16 timer);
+s16 func_80110394(void);
+int MemcardDetectSave(s32 nPort, u8* expectedSaveName, s32 block);
+#endif
 
 #endif

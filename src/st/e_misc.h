@@ -139,8 +139,12 @@ static u16 explode_lifetime[] = {16, 24, 42, 47};
 void EntityExplosionVariants(Entity* self) {
     if (!self->step) {
         self->velocityY = explode_yVel[self->ext.destructAnim.index];
+#ifdef STAGE_IS_TEK
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
+#else
         self->flags =
             FLAG_UNK_2000 | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
+#endif
         self->palette = PAL_FLAG(PAL_UNK_195);
         self->animSet = ANIMSET_DRA(2);
         self->animCurFrame = explode_startFrame[self->params];
@@ -163,8 +167,12 @@ void EntityExplosionVariants(Entity* self) {
 // params: Index of scaleX and velocityY to use
 void EntityGreyPuff(Entity* self) {
     if (!self->step) {
+#ifdef STAGE_IS_TEK
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
+#else
         self->flags =
             FLAG_UNK_2000 | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
+#endif
         self->palette = PAL_FLAG(PAL_UNK_195);
         self->animSet = ANIMSET_DRA(5);
         self->animCurFrame = 1;
@@ -253,7 +261,7 @@ void EntityOlroxDrool(Entity* self) {
     }
 }
 
-bool UnkCollisionFunc5(s16* pointXY) {
+int UnkCollisionFunc5(s16* pointXY) {
     Collider collider;
 
     FallEntity();
@@ -464,6 +472,9 @@ u8 UnkCollisionFunc4(u8 arg0) {
 void EntityIntenseExplosion(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_EInitParticle);
+#ifdef STAGE_IS_TEK
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
+#endif
         self->palette = PAL_FLAG(PAL_UNK_170);
         self->animSet = ANIMSET_DRA(5);
         self->animCurFrame = 1;
@@ -517,7 +528,7 @@ void InitializeUnkEntity(Entity* self) {
     }
 }
 
-#if defined(VERSION_BETA)
+#if defined(VERSION_BETA) || defined(STAGE_IS_TEK)
 void func_801966B0(u16* sensors) {
     switch (g_CurrentEntity->step_s) {
     case 0:
@@ -571,9 +582,15 @@ void MakeEntityFromId(u16 entityId, Entity* src, Entity* dst) {
     dst->unk5A = src->unk5A;
     dst->zPriority = src->zPriority;
     dst->animSet = src->animSet;
+#ifdef STAGE_IS_TEK
+    dst->flags =
+        FLAG_NOT_AN_ENEMY | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED |
+        FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA | FLAG_DESTROY_IF_OUT_OF_CAMERA;
+#else
     dst->flags = FLAG_UNK_2000 | FLAG_NOT_AN_ENEMY | FLAG_KEEP_ALIVE_OFFCAMERA |
                  FLAG_POS_CAMERA_LOCKED | FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
                  FLAG_DESTROY_IF_OUT_OF_CAMERA;
+#endif
 
     if (src->palette & PAL_UNK_FLAG) {
         dst->palette = src->hitEffect;
@@ -600,7 +617,11 @@ void MakeExplosions(void) {
             CreateEntityFromEntity(E_EXPLOSION, g_CurrentEntity, entity);
 #endif
             // EntityExplosion does not seem to use these values.
+#ifdef STAGE_IS_TEK
+            entity->params = 6 - i;
+#else
             entity->ext.destructAnim.unk85 = 6 - i;
+#endif
             entity->ext.destructAnim.unk80 = temp_s3;
             entity->ext.destructAnim.unk84 = temp_s4;
         }
@@ -612,6 +633,13 @@ extern AnimateEntityFrame g_bigRedFireballAnim[];
 // Not used in any current overlays. Seems to resemble Gaibon's big fireball,
 // but is not actually called in NZ0. Will need to check future overlays for
 // any actual uses.
+// TEK stores the fireball speed in params instead of the ext data
+#ifdef STAGE_IS_TEK
+#define FIREBALL_SPEED self->params
+#else
+#define FIREBALL_SPEED self->ext.bigredfireball.speed
+#endif
+
 void EntityBigRedFireball(Entity* self) {
     s32 speedTemp;
 
@@ -626,22 +654,21 @@ void EntityBigRedFireball(Entity* self) {
 
         switch (self->ext.bigredfireball.switch_control) {
         case 1:
-            if (self->ext.bigredfireball.speed > 3) {
-                self->ext.bigredfireball.speed -= 3;
+            if (FIREBALL_SPEED > 3) {
+                FIREBALL_SPEED -= 3;
                 self->ext.bigredfireball.angle =
                     self->ext.bigredfireball.angle - 0x800;
             }
             break;
 
         case 2:
-            self->ext.bigredfireball.angle +=
-                self->ext.bigredfireball.speed * 192;
+            self->ext.bigredfireball.angle += FIREBALL_SPEED * 192;
             break;
         }
 
         self->ext.bigredfireball.angle &= 0xFFF;
         self->rotate = self->ext.bigredfireball.angle;
-        speedTemp = self->ext.bigredfireball.speed * 320 / 24; // = 13.333
+        speedTemp = FIREBALL_SPEED * 320 / 24; // = 13.333
         self->velocityX = speedTemp * rsin(self->ext.bigredfireball.angle);
         self->velocityY = -(speedTemp * rcos(self->ext.bigredfireball.angle));
     }
@@ -794,7 +821,7 @@ static s16 g_QuadIndices2[] = {
 #if !defined(STAGE_IS_NZ0) && !defined(STAGE_IS_NO1) &&                        \
     !defined(STAGE_IS_CHI) && !defined(STAGE_IS_LIB) &&                        \
     !defined(STAGE_IS_CAT) && !defined(STAGE_IS_RNO0) &&                       \
-    !defined(BOSS_IS_BO1) && STAGE != STAGE_ST0 &&                             \
+    !defined(BOSS_IS_BO1) && STAGE != STAGE_ST0 && !defined(STAGE_IS_TEK) &&   \
     (!defined(VERSION_PSP) ||                                                  \
      (!defined(BOSS_IS_BO0) && !defined(STAGE_IS_RLIB)))
     0, 0,
@@ -957,6 +984,7 @@ void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
     }
 }
 
+#ifndef STAGE_IS_TEK
 void PlaySfxPositional(s16 sfxId) {
     s32 posX, posY;
     s16 sfxPan;
@@ -985,3 +1013,4 @@ void PlaySfxPositional(s16 sfxId) {
         g_api.PlaySfxVolPan(sfxId, sfxVol, sfxPan);
     }
 }
+#endif

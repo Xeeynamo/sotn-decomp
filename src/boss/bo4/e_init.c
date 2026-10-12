@@ -44,14 +44,15 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityUnkId1C,       EntityLifeUpSpawn,
 };
 
-EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0x00, 0x000, 0};
+// clang-format off
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_BREAKABLE};
 
 #include "../../st/e_init_common.h"
 
-EInit g_EInitDoppleganger10 = {ANIMSET_DRA(0), 0, 0, 0, 0xFD};
-EInit EInitReboundStone = {ANIMSET_DRA(0), 0, 0, 0, 0x101};
-EInit EInitSubwpnKnife = {ANIMSET_DRA(0), 0, 0, 0, 0x12B};
-EInit D_us_80180434 = {ANIMSET_DRA(0), 0, 0, 0, 0x102};
-EInit D_us_80180440 = {ANIMSET_OVL(3), 0, 0x44, 0x211, 0x103};
-EInit D_us_8018044C = {ANIMSET_OVL(4), 0, 0x45, 0x210, 0x104};
-EInit EInitUnk17 = {ANIMSET_OVL(15), 0x4B, 0, 0, 5};
+EInit g_EInitDoppleganger10 = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_DOPPLEGANGER10};
+EInit EInitReboundStone = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_DOPPLEGANGER10_REBOUND_STONE};
+EInit EInitSubwpnKnife = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_DOPPLEGANGER_SUBWPN_KNIFE};
+EInit D_us_80180434 = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_DOPPLEGANGER10_UNK_102};
+EInit D_us_80180440 = {ANIMSET_OVL(3), 0x00, 0x44, PAL_UNK_211, ENEMY_DOPPLEGANGER10_UNARMED_ATTACK_1};
+EInit D_us_8018044C = {ANIMSET_OVL(4), 0x00, 0x45, PAL_UNK_210, ENEMY_DOPPLEGANGER10_UNARMED_ATTACK_2};
+EInit EInitUnk17 = {ANIMSET_OVL(15), 0x4B, 0x00, PAL_NONE, ENEMY_INTERACTABLE};

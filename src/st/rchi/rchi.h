@@ -5,9 +5,15 @@
 #include <stage.h>
 
 #define STAGE_IS_RCHI
+#define INVERTED_STAGE
 
 enum Palettes {
     PAL_NONE,
+    PAL_BREAKABLE_DEBRIS = 0x159,
+    PAL_SLOGRA = 0x200,
+    PAL_GAIBON = 0x203,
+    PAL_THORNWEED_CORPSEWEED = 0x20B,
+    PAL_BAT = 0x240,
 };
 
 typedef enum EntityID {
@@ -51,15 +57,5 @@ typedef enum EntityID {
     E_BAT,                     // EntityBat
     NUM_ENTITIES,
 };
-
-extern EInit g_EInitBreakable;
-extern EInit g_EInitGaibon;
-extern EInit D_us_80180648;
-extern AnimateEntityFrame* g_RchiBreakableAnimations[];
-extern u8 g_RchiBreakableHitboxHeights[];
-extern u8 g_RchiBreakableExplosionTypes[];
-extern u16 g_RchiBreakableAnimSets[];
-extern u8 g_RchiBreakableBlendModes[];
-extern s16 g_RchiBreakableDebrisOffsets[];
 
 #endif // RCHI_H

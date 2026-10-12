@@ -22,9 +22,9 @@ void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
-void func_us_801A68AC(Entity* self);
-void func_us_801A700C(Entity* self);
-void func_us_801B7CC4_from_no1(Entity* self);
+void EntityFog(Entity* self);
+void EntityRain(Entity* self);
+void EntityFadeRainSound(Entity* self);
 void EntityParanthropus(Entity* self);
 void EntityParanthropusBoneHitbox(Entity* self);
 void EntityParanthropusSkull(Entity* self);
@@ -37,17 +37,17 @@ void EntityNovaSkeleton(Entity* self);
 void EntityNovaLaser(Entity* self);
 void EntityNovaLaserPulse(Entity* self);
 void EntityNovaSkeletonDeathParts(Entity* self);
-void func_us_801B8F50_from_no1(Entity* self);
-void func_us_801BE880_from_no1(Entity* self);
-void func_us_801BEB54_from_no1(Entity* self);
-void func_us_801BEE00_from_no1(Entity* self);
-void func_us_801BF074_from_no1(Entity* self);
-void func_us_801A86A8(Entity* self);
+void EntityElevatorMachine(Entity* self);
+void EntitySecretElevatorWall(Entity* self);
+void EntityBreakableWallSegment(Entity* self);
+void EntityWallParticles(Entity* self);
+void EntityBreakableWallDebris(Entity* self);
+void EntitySecretElevator(Entity* self);
 void EntityBreakableDebris(Entity* self);
-void func_us_801A9BEC(Entity* self);
-void func_us_801B9028_from_no1(Entity* self);
-void func_us_80198A18_from_rbo4(Entity* self);
-void func_us_801A9A8C(Entity* self);
+void EntityDoorwayBlocker(Entity* self);
+void EntityBossAnteRoomDecoration(Entity* self);
+void EntityBossRoundDoorHalf(Entity* self);
+void EntityBossRoundDoor(Entity* self);
 
 PfnEntityUpdate EntityUpdates[] = {
     EntityBreakable,
@@ -71,9 +71,9 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
-    func_us_801A68AC,
-    func_us_801A700C,
-    func_us_801B7CC4_from_no1,
+    EntityFog,
+    EntityRain,
+    EntityFadeRainSound,
     EntityParanthropus,
     EntityParanthropusBoneHitbox,
     EntityParanthropusSkull,
@@ -86,45 +86,45 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityNovaLaser,
     EntityNovaLaserPulse,
     EntityNovaSkeletonDeathParts,
-    func_us_801B8F50_from_no1,
-    func_us_801BE880_from_no1,
-    func_us_801BEB54_from_no1,
-    func_us_801BEE00_from_no1,
-    func_us_801BF074_from_no1,
-    func_us_801A86A8,
+    EntityElevatorMachine,
+    EntitySecretElevatorWall,
+    EntityBreakableWallSegment,
+    EntityWallParticles,
+    EntityBreakableWallDebris,
+    EntitySecretElevator,
     EntityBreakableDebris,
-    func_us_801A9BEC,
-    func_us_801B9028_from_no1,
-    func_us_80198A18_from_rbo4,
-    func_us_801A9A8C,
+    EntityDoorwayBlocker,
+    EntityBossAnteRoomDecoration,
+    EntityBossRoundDoorHalf,
+    EntityBossRoundDoor,
 };
 
 // clang-format off
 // animSet, animCurFrame, unk5A, palette, enemyID
-EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0, 0, 0x000};
-EInit g_EInitObtainable = {ANIMSET_DRA(3), 0, 0, 0, 0x001};
-EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0, 0, 0x002};
-EInit g_EInitSpawner = {ANIMSET_DRA(0), 0, 0, 0, 0x004};
-EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0, 0, 0x005};
-EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, 0, 0x002};
-EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, 0, 0x001};
-EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
-EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
-EInit g_EInitParanthropus = {ANIMSET_OVL(3), 1, 76, 512, 0x0D3};
-EInit g_EInitParanthropusBoneHitbox = {ANIMSET_OVL(0), 0, 0, 0, 0x0D4};
-EInit g_EInitParanthropusThrownBone = {ANIMSET_OVL(3), 54, 76, 512, 0x0D5};
-EInit g_EInitStoneSkull = {ANIMSET_OVL(4), 0, 78, 515, 0x180};
-EInit g_EInitJackOBones = {ANIMSET_OVL(5), 1, 74, 524, 0x074};
-EInit g_EInitJackOBones2 = {ANIMSET_OVL(5), 0, 74, 524, 0x002};
-EInit g_EInitJackOBones3 = {ANIMSET_OVL(5), 21, 74, 524, 0x075};
-EInit g_EInitNovaSkeleton = {ANIMSET_OVL(6), 1, 72, 532, 0x07E};
-EInit g_EInitNovaSkeleton2 = {ANIMSET_OVL(6), 0, 72, 532, 0x07F};
-EInit D_us_8018073C = {ANIMSET_OVL(8), 1, 79, 537, 0x005};
-EInit D_us_80180748 = {ANIMSET_OVL(2), 75, 0, 0, 0x005};
-EInit D_us_80180754 = {ANIMSET_DRA(0), 0, 0, 0, 0x000};
-EInit D_us_80180760 = {ANIMSET_OVL(2), 102, 0, 0, 0x005};
-EInit D_us_8018076C = {ANIMSET_OVL(11), 0, 72, 564, 0x003};
-EInit D_us_80180778 = {ANIMSET_OVL(1), 0, 0, 0, 0x005};
-EInit g_EInitUnused80180784 = {ANIMSET_OVL(2), 0, 0, 0, 0x005};
-EInit D_us_80180790 = {ANIMSET_OVL(2), 92, 0, 0, 0x005};
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_BREAKABLE};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitParticle = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitSpawner = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_SPAWNER};
+EInit g_EInitInteractable = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitParanthropus = {ANIMSET_OVL(3), 0x01, 0x4C, PAL_PARANTHROPUS, ENEMY_PARANTHROPUS};
+EInit g_EInitParanthropusBoneHitbox = {ANIMSET_OVL(0), 0x00, 0x00, PAL_NONE, ENEMY_PARANTHROPUS_BONE_HITBOX};
+EInit g_EInitParanthropusThrownBone = {ANIMSET_OVL(3), 0x36, 0x4C, PAL_PARANTHROPUS, ENEMY_PARANTHROPUS_THROWN_BONE};
+EInit g_EInitStoneSkull = {ANIMSET_OVL(4), 0x00, 0x4E, PAL_STONE_SKULL, ENEMY_STONE_SKULL};
+EInit g_EInitJackOBones = {ANIMSET_OVL(5), 0x01, 0x4A, PAL_JACK_O_BONES, ENEMY_JACK_O_BONES};
+EInit g_EInitJackOBones2 = {ANIMSET_OVL(5), 0x00, 0x4A, PAL_JACK_O_BONES, ENEMY_PARTICLE};
+EInit g_EInitJackOBones3 = {ANIMSET_OVL(5), 0x15, 0x4A, PAL_JACK_O_BONES, ENEMY_JACK_O_BONES_3};
+EInit g_EInitNovaSkeleton = {ANIMSET_OVL(6), 0x01, 0x48, PAL_NOVA_SKELETON, ENEMY_NOVA_SKELETON};
+EInit g_EInitNovaSkeleton2 = {ANIMSET_OVL(6), 0x00, 0x48, PAL_NOVA_SKELETON, ENEMY_NOVA_SKELETON_LASER};
+EInit g_EInitElevatorMachine = {ANIMSET_OVL(8), 0x01, 0x4F, PAL_ELEVATOR_MACHINE, ENEMY_INTERACTABLE};
+EInit g_EInitSecretWall = {ANIMSET_OVL(2), 0x4B, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitWallSegment = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_BREAKABLE};
+EInit g_EInitSecretElevator = {ANIMSET_OVL(2), 0x66, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitBossNextDecor = {ANIMSET_OVL(11), 0x00, 0x48, PAL_BOSS_NEXT_DECOR, ENEMY_COMMON};
+EInit g_EInitHalfRound = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitUnused80180784 = {ANIMSET_OVL(2), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EinitDoorwayBlocker = {ANIMSET_OVL(2), 0x5C, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
 // clang-format on

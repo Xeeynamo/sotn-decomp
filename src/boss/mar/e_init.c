@@ -53,15 +53,17 @@ PfnEntityUpdate EntityUpdates[] = {
     func_us_8018C90C,      func_us_8018CA94,
 };
 
-EInit g_EInitBreakable = {0x0003, 0x0000, 0x0000, 0x0000, 0x0000};
-EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x0000, 0x0000, 0x0000, 0x0001};
-EInit g_EInitParticle = {0x0003, 0x0000, 0x0000, 0x0000, 0x0002};
-EInit g_EInitSpawner = {0x0000, 0x0000, 0x0000, 0x0000, 0x0004};
-EInit g_EInitInteractable = {0x0000, 0x0000, 0x0000, 0x0000, 0x0005};
-EInit g_EInitUnkId13 = {0x0000, 0x0000, 0x0000, 0x0000, 0x0002};
-EInit g_EInitLockCamera = {0x0000, 0x0000, 0x0000, 0x0000, 0x0001};
-EInit g_EInitCommon = {0x0000, 0x0000, 0x0000, 0x0000, 0x0003};
-EInit g_EInitDamageNum = {0x0000, 0x0000, 0x0000, 0x0000, 0x0003};
+// clang-format off
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_BREAKABLE};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitParticle = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitSpawner = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_SPAWNER};
+EInit g_EInitInteractable = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+// clang-format on
 
 static u16 unused[][6] = {
     {0x0000, 0x0000, 0x0000, 0x0000, 0x0133, 0x0000},

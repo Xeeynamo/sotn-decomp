@@ -2,7 +2,7 @@
 
 // Detects if the merman is splashing into water.
 // If so, creates a splash effect, and sets merman underwater to true.
-bool CheckMermanEnteringWater(s16 yOffset) {
+int CheckMermanEnteringWater(s16 yOffset) {
     Collider collider;
     Entity* newEntity;
     s32 res = false;

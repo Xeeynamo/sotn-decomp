@@ -21,15 +21,18 @@ extern long Exec(struct EXEC*, long, char**);
 // GPU_cw
 extern void _bu_init(void);
 
+#ifndef __psyz // PsyZ declares its own low-level file I/O functions
 /*
  * Opens a device for low-level input/output and returns
  * the descriptor. Returns -1 on failure.
  */
 extern int open(const char* devname, // Pointer to a filename
-                 int flag       // Open mode
+                int flag             // Open mode
 );
 
+#ifndef __psyz
 extern long lseek(long, long, long);
+#endif
 
 /*
  * Reads n bytes from the descriptor
@@ -41,7 +44,9 @@ extern long read(long fd,   // File descriptor
                  void* buf, // Pointer to read buffer address
                  long n     // Number of bytes to read
 );
+#ifndef __psyz
 extern long write(long, void*, long);
+#endif
 
 /*
  * Close releases the file descriptor.
@@ -49,6 +54,7 @@ extern long write(long, void*, long);
  */
 extern int close(int fd // File descriptor
 );
+#endif
 
 /*
  * Initializes the file system

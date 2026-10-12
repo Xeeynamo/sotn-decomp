@@ -89,8 +89,9 @@ void func_us_801C82B8(Entity* self) {
 
     case 3:
         animStatus = AnimateEntity(D_us_8018186C, self);
-        newEnt->attack = g_api.enemyDefs[94].attack;
-        newEnt->attackElement = g_api.enemyDefs[94].attackElement;
+        newEnt->attack = g_api.enemyDefs[ENEMY_SPEAR_GUARD_UNK_5E].attack;
+        newEnt->attackElement =
+            g_api.enemyDefs[ENEMY_SPEAR_GUARD_UNK_5E].attackElement;
         if (!animStatus) {
             SetStep(2);
             self->ext.spearGuard.unk7C = 1;

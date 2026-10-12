@@ -369,7 +369,7 @@ void func_8010ED54(u8 anim) {
     g_Player.unk48 = 0;
 }
 
-bool func_8010EDB8(void) {
+int func_8010EDB8(void) {
     Entity* ent6C;
     bool var_s7; // Triggers on some kind of special move spell
     Equipment sp10;

@@ -940,6 +940,21 @@ snd_srcs = [
     'src/saturn/maria/coffsyms.c',
 ]
 
+o2_srcs = [
+        'src/saturn/lib/gfs/gfs.c',
+        'src/saturn/lib/gfs/gfs_cdf.c',
+        'src/saturn/lib/gfs/gfs_mmf.c',
+        'src/saturn/lib/gfs/gfs_sff.c',
+        'src/saturn/lib/gfs/gfs_dir.c',
+        'src/saturn/lib/gfs/gfs_trn.c',
+        'src/saturn/lib/gfs/gfs_buf.c',
+        'src/saturn/lib/gfs/gfs_cdb.c',
+        'src/saturn/lib/gfs/gfs_cdc.c',
+        'src/saturn/lib/gfs/gfs_mmb.c',
+        'src/saturn/lib/gfs/gfs_mmc.c',
+        'src/saturn/lib/gfs/gfs_sfb.c',
+]
+
 lib_srcs = [
     'src/saturn/lib/bup.c',
     'src/saturn/lib/cdc.c',
@@ -948,7 +963,6 @@ lib_srcs = [
     'src/saturn/lib/dma/dma_scu1.c',
     'src/saturn/lib/dma/dma_scu0.c',
     'src/saturn/lib/dma/dma_cpu0.c',
-    'src/saturn/lib/gfs.c',
     'src/saturn/lib/mth.c',
     'src/saturn/lib/int.c',
     'src/saturn/lib/per.c',
@@ -973,6 +987,8 @@ asm_srcs = [
 # O0 srcs
 add_srcs(lib_srcs, build_base_path, "O0")
 
+add_srcs(o2_srcs, build_base_path, "O2")
+
 add_srcs(snd_srcs, build_base_path, "O3")
 
 def elf_srcs(srcs, output_dir):
@@ -988,6 +1004,7 @@ def elf_srcs(srcs, output_dir):
             inputs=[input_name])
 
 elf_srcs(snd_srcs, build_base_path)
+elf_srcs(o2_srcs, build_base_path)
 elf_srcs(lib_srcs, build_base_path)
 
 def add_asm_srcs(srcs, output_dir):
@@ -1583,7 +1600,18 @@ multi_objs = {
         'build/saturn/lib/dma/dma_scu1.o',
         'build/saturn/lib/dma/dma_scu0.o',
         'build/saturn/lib/dma/dma_cpu0.o',
-        'build/saturn/lib/gfs.o',
+        'build/saturn/lib/gfs/gfs.o',
+        'build/saturn/lib/gfs/gfs_cdf.o',
+        'build/saturn/lib/gfs/gfs_mmf.o',
+        'build/saturn/lib/gfs/gfs_sff.o',
+        'build/saturn/lib/gfs/gfs_dir.o',
+        'build/saturn/lib/gfs/gfs_trn.o',
+        'build/saturn/lib/gfs/gfs_buf.o',
+        'build/saturn/lib/gfs/gfs_cdb.o',
+        'build/saturn/lib/gfs/gfs_cdc.o',
+        'build/saturn/lib/gfs/gfs_mmb.o',
+        'build/saturn/lib/gfs/gfs_mmc.o',
+        'build/saturn/lib/gfs/gfs_sfb.o',
         'build/saturn/lib/mth/mth_fixd.o',
         'build/saturn/lib/mth/mth_mtrx.o',
         'build/saturn/lib/mth/mth_ps2d.o',

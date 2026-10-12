@@ -18,7 +18,7 @@ void SaveDeviceProbe(Entity* self) {
         }
         return;
     } else {
-        value = DAT_060485C4;
+        value = DAT_060485C0.unk4;
         index = 1;
         do {
             status = func_0600D028(value, index);

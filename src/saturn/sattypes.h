@@ -1072,9 +1072,6 @@ typedef struct {
     /* 0x46A */ u16 unk7E;
 } PlayerState;
 
-#define SH2_GET_SR(dst) __asm__ volatile("stc\tsr, %0" : "=r"(dst))
-#define SH2_SET_SR(src) __asm__ volatile("ldc\t%0, sr" : : "r"(src))
-
 typedef struct {
     s32 primIndex;
     s32 D_800973FC;
@@ -1169,8 +1166,8 @@ typedef struct {
 
 typedef struct {
     /* 0x0 */ u16 pressed;
-    /* 0x2 */ u16 previous;
-    /* 0x4 */ u16 tapped;
+    /* 0x2 */ u16 tapped;
+    /* 0x4 */ u16 previous;
     /* 0x6 */ u16 repeat;
 } Pad; // size = 0x8
 
@@ -1247,7 +1244,7 @@ typedef struct {
 
 typedef struct {
     u16 unk0;
-    s16 : 16;
+    u16 unk2;
     s32 : 32;
     u32 unk8;
 } Unk0605D770;
@@ -1313,12 +1310,16 @@ typedef struct {
 } RoomBossTeleport;
 
 typedef struct {
-    s32 : 32;
+    s32 unk0;
     s8 unk4;
     s8 unk5;
-    s8 pad[0x1006];
+    s8 : 8;
+    s8 : 8;
+    s32 unk8;
+    s8 pad1008[0x1000];
     s32 unk100C;
-} UNK_060485C0;
+    s8 pad1010[0x114];
+} UNK_060485C0; // size: 0x1124
 
 typedef enum {
     PLAYER_CHARACTER,
@@ -1472,7 +1473,6 @@ s32 func_800F4D38(s32, s32);
 
 extern Entity g_Entities[TOTAL_ENTITY_COUNT]; // 0x060997F8
 extern UNK_060485C0 DAT_060485C0;
-extern s8 DAT_060485C4;
 // One entry of the VRAM transfer queue at d_0605DB60.
 typedef struct {
     /* 0x00 */ s32 unk0;

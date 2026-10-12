@@ -139,7 +139,7 @@ s32 GetMemcardFreeBlockCount(s32 nPort) {
     return g_MemcardInfo[nPort].nFreeBlock;
 }
 
-bool MemcardDetectSave(s32 nPort, u8* expectedSaveName, s32 block) {
+int MemcardDetectSave(s32 nPort, u8* expectedSaveName, s32 block) {
     s32 nBlocks;
     s32 didNotMatch;
     s32 i, j;

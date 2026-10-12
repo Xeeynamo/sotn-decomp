@@ -63,7 +63,7 @@ void EntityGreyPuffSpawner(
 INCLUDE_ASM("boss/bo3/nonmatchings/e_misc", EntityExplosionVariants);
 INCLUDE_ASM("boss/bo3/nonmatchings/e_misc", EntityGreyPuff);
 INCLUDE_ASM("boss/bo3/nonmatchings/e_misc", EntityOlroxDrool);
-bool UnkCollisionFunc5(s16* pointXY) {
+int UnkCollisionFunc5(s16* pointXY) {
     Collider collider;
 
     FallEntity();

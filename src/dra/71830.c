@@ -28,7 +28,7 @@ void func_8011197C(void) {
 #ifndef VERSION_HD
 extern s32 D_80137FDC;
 #endif
-bool func_801119C4(void) {
+int func_801119C4(void) {
     if (!D_801396EA) {
         if (g_Player.padTapped & PAD_L2) {
             if (g_Player.demo_timer == 0) {
@@ -214,7 +214,7 @@ bool func_80111DE8(bool mistReset) {
     return 0;
 }
 
-bool func_8011203C(void) {
+int func_8011203C(void) {
     Entity* ent;
     bool collision = func_80111D24();
 

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#include <psyz/module.h>
 #include <game.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,9 +12,9 @@ extern Overlay g_Overlay;
 extern PfnEntityUpdate EntityUpdates[];
 extern LayoutEntity* entityLayoutHorizontal[];
 extern LayoutEntity* entityLayoutVertical[];
-extern GAME_IMPORT PfnEntityUpdate* PfnEntityUpdates;
-extern GAME_IMPORT LayoutEntity** g_pStObjLayoutHorizontal;
-extern GAME_IMPORT LayoutEntity** g_pStObjLayoutVertical;
+extern PfnEntityUpdate* PfnEntityUpdates;
+extern LayoutEntity** g_pStObjLayoutHorizontal;
+extern LayoutEntity** g_pStObjLayoutVertical;
 
 extern u8 cutscene_cen_alucard[];
 extern u8 cutscene_cen_maria[];
@@ -26,10 +27,14 @@ static void InitCutscenePc(void) {
     CutscenePcAlloc(symbols, LEN(symbols));
 }
 
-OVL_API void InitStage(Overlay* o) {
+void Psyz_ModuleStart(void* param) {
+    Overlay* o = param;
+
     memcpy(o, &g_Overlay, sizeof(Overlay));
     PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = entityLayoutHorizontal;
     g_pStObjLayoutVertical = entityLayoutVertical;
     InitCutscenePc();
 }
+
+void Psyz_ModuleStop(void) {}
