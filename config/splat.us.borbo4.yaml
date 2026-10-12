@@ -46,7 +46,7 @@ segments:
       - [0x514, .data, e_red_door_tiles]
       - [0x524, data]
       - [0x524, .data, e_lock_camera]
-      - [0x5A4, data]
+      - [0x5A4, .data, e_breakable]
       - [0x63C, .data, d_prize_drops]
       - [0x654, data]
       - [0x83C, .data, st_update]
