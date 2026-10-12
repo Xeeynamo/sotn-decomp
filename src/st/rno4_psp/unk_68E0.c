@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rno4/rno4.h"
 
-extern u16 D_us_80180B6C;
+extern EInit D_us_80180B6C;
 
 void func_us_801D68E0(Entity* self) {
     Primitive* prim;
@@ -18,7 +18,7 @@ void func_us_801D68E0(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_us_80180B6C);
+        InitializeEntity(D_us_80180B6C);
         primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
 
         if (primIndex == -1) {
@@ -49,8 +49,8 @@ void func_us_801D68E0(Entity* self) {
             angle = -angle;
         }
 
-        self->velocityX = rsin((s32)angle) * (-0x80);
-        self->velocityY = rcos((s32)angle) << 7;
+        self->velocityX = rsin(angle) * (-0x80);
+        self->velocityY = rcos(angle) << 7;
         self->ext.et_801D68E0.unk80 = 0x20;
 
     case 1:
@@ -94,7 +94,7 @@ void func_us_801D68E0(Entity* self) {
 #else
     if (1) {
 #endif
-        if (ent->entityId != 0x40) {
+        if (ent->entityId != E_UNK_40) {
             DestroyEntity(self);
         }
     }

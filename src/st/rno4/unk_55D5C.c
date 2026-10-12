@@ -45,7 +45,7 @@ void func_us_801D5E90(Entity* self) {
     s8* frameParts;
 
     s32 primIndex;
-    s32 genericInt;
+    long genericInt;
     s32 posX;
     s32 posY;
     s32 radius;
@@ -409,7 +409,7 @@ void func_us_801D5E90(Entity* self) {
         // to cast a pointer to s32 first and then to Primitve* later
         // But seeing as genericInt is an all-purpose variable anyways,
         // it might just be true
-        genericInt = (s32)prim->next;
+        genericInt = (long)prim->next;
         if (!genericInt) {
             prim->x0 = 0;
             prim->y0 = 0;
@@ -420,7 +420,7 @@ void func_us_801D5E90(Entity* self) {
     }
 }
 
-extern u16 D_us_80180B6C;
+extern EInit D_us_80180B6C;
 
 void func_us_801D68E0(Entity* self) {
     Primitive* prim;
@@ -437,7 +437,7 @@ void func_us_801D68E0(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_us_80180B6C);
+        InitializeEntity(D_us_80180B6C);
         primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
 
         if (primIndex == -1) {
@@ -468,8 +468,8 @@ void func_us_801D68E0(Entity* self) {
             angle = -angle;
         }
 
-        self->velocityX = rsin((s32)angle) * (-0x80);
-        self->velocityY = rcos((s32)angle) << 7;
+        self->velocityX = rsin(angle) * (-0x80);
+        self->velocityY = rcos(angle) << 7;
         self->ext.et_801D68E0.unk80 = 0x20;
 
     case 1:
@@ -513,7 +513,7 @@ void func_us_801D68E0(Entity* self) {
 #else
     if (1) {
 #endif
-        if (ent->entityId != 0x40) {
+        if (ent->entityId != E_UNK_40) {
             DestroyEntity(self);
         }
     }

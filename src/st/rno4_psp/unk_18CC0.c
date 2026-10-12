@@ -4,11 +4,12 @@
 extern AnimateEntityFrame D_us_8018230C[];
 
 extern s16 D_us_801822CC;
-extern s32 D_us_801822E4;
-extern s32 D_us_801822F8;
-extern s32 D_us_80182328;
+extern AnimateEntityFrame D_us_801822E4[];
+extern AnimateEntityFrame D_us_801822F8[];
+extern AnimateEntityFrame D_us_80182328[];
 extern s16 D_us_801822DC;
-extern u16 g_EInitDarkOctopus;
+
+extern EInit g_EInitDarkOctopus;
 
 void func_us_801D511C(Entity* self) {
     Entity* nextEntity;
@@ -26,12 +27,12 @@ void func_us_801D511C(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&g_EInitDarkOctopus);
+        InitializeEntity(g_EInitDarkOctopus);
         if (self->params) {
             if (self->params == 1) {
-                self->palette = PAL_FLAG(0x225);
+                self->palette = PAL_FLAG(PAL_UNK_225);
             } else {
-                self->palette = PAL_FLAG(0x224);
+                self->palette = PAL_FLAG(PAL_UNK_224);
             }
             self->blendMode = BLEND_ADD | BLEND_TRANSP;
             self->drawFlags |= ENTITY_OPACITY;
@@ -66,7 +67,7 @@ void func_us_801D511C(Entity* self) {
     case 2:
         UnkCollisionFunc2(&D_us_801822DC);
 
-        AnimateEntity(&D_us_801822E4, self);
+        AnimateEntity(D_us_801822E4, self);
         posX = self->posX.i.hi;
         posY = self->posY.i.hi - 8;
         if (self->velocityX > 0) {
@@ -97,7 +98,7 @@ void func_us_801D511C(Entity* self) {
         break;
 
     case 3:
-        AnimateEntity(&D_us_801822F8, self);
+        AnimateEntity(D_us_801822F8, self);
 
         switch (self->ext.et_801D511C.unk89) {
         case 0:
@@ -112,7 +113,7 @@ void func_us_801D511C(Entity* self) {
             break;
 
         case 3:
-            AnimateEntity(&D_us_801822F8, self);
+            AnimateEntity(D_us_801822F8, self);
             self->ext.et_801D511C.unk84 = ((Random() & 0x7F) * 16) - 0x400;
         }
 
@@ -124,7 +125,7 @@ void func_us_801D511C(Entity* self) {
             }
 
         case 1:
-            AnimateEntity(&D_us_801822F8, self);
+            AnimateEntity(D_us_801822F8, self);
             if (((self->ext.et_801D511C.unk82) % 6) == 0) {
                 nextEntity = AllocEntity(&g_Entities[0xA0], &g_Entities[0xBC]);
                 if (nextEntity) {
@@ -145,7 +146,7 @@ void func_us_801D511C(Entity* self) {
             break;
 
         case 2: {
-            if (!(self->ext.et_801D511C.unk82 -= 0x1)) {
+            if (!--self->ext.et_801D511C.unk82) {
                 SetStep(2);
                 self->ext.et_801D511C.unk82 = 0x80;
                 return;
@@ -171,11 +172,11 @@ void func_us_801D511C(Entity* self) {
             return;
 
         case 1:
-            AnimateEntity(&D_us_801822F8, self);
+            AnimateEntity(D_us_801822F8, self);
             self->opacity -= 4;
             if (!self->opacity) {
                 self->blendMode = BLEND_NO;
-                self->palette = PAL_FLAG(0x224);
+                self->palette = PAL_FLAG(PAL_UNK_224);
                 self->opacity = 0x80;
                 if (self->ext.et_801D511C.unk8C) {
                     nextEntity = self->ext.et_801D511C.unk8C;
@@ -187,8 +188,8 @@ void func_us_801D511C(Entity* self) {
             break;
 
         case 2:
-            AnimateEntity(&D_us_801822F8, self);
-            if ((self + 1)->entityId != 0x3E) {
+            AnimateEntity(D_us_801822F8, self);
+            if ((self + 1)->entityId != E_UNK_3E) {
                 self->poseTimer = 0;
                 self->pose = 0;
                 self->ext.et_801D511C.unk82 = 0x80;
@@ -209,7 +210,7 @@ void func_us_801D511C(Entity* self) {
                     nextEntity->params = 0x11;
                 }
             }
-            AnimateEntity(&D_us_80182328, self);
+            AnimateEntity(D_us_80182328, self);
             self->ext.et_801D511C.unk82 -= 1;
             if (!(self->ext.et_801D511C.unk82 & 0xf)) {
                 g_api.PlaySfx(SFX_NOISE_SWEEP_DOWN_A);
@@ -265,7 +266,6 @@ void func_us_801D511C(Entity* self) {
 }
 
 extern s16 D_us_80182330[];
-extern u16 g_EInitDarkOctopus;
 
 void func_us_801D58FC(Entity* self) {
     Entity* prevEnt;
@@ -285,7 +285,7 @@ void func_us_801D58FC(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&g_EInitDarkOctopus);
+        InitializeEntity(g_EInitDarkOctopus);
         self->hitboxWidth = 6;
         self->hitboxHeight = 0xB;
         self->hitboxOffX = 1;
@@ -334,7 +334,7 @@ void func_us_801D58FC(Entity* self) {
                 self->opacity = 0x80;
                 self->poseTimer = 0;
                 self->pose = 0;
-                self->palette = PAL_FLAG(0x224);
+                self->palette = PAL_FLAG(PAL_UNK_224);
                 self->drawFlags |= ENTITY_SCALEY;
                 self->scaleY = 0x100;
 
@@ -363,7 +363,7 @@ void func_us_801D58FC(Entity* self) {
     }
 }
 
-extern u16 D_us_80180B54;
+extern EInit D_us_80180B54;
 extern s16 D_us_801822DC;
 
 void func_us_801D5BA4(Entity* self) {
@@ -371,7 +371,7 @@ void func_us_801D5BA4(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_us_80180B54);
+        InitializeEntity(D_us_80180B54);
         self->drawFlags |= ENTITY_SCALEX | ENTITY_SCALEY | ENTITY_ROTATE;
         self->drawFlags |= ENTITY_OPACITY;
         self->blendMode = BLEND_SUB | BLEND_TRANSP;

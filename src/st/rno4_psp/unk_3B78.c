@@ -65,7 +65,7 @@ void func_us_801D5E90(Entity* self) {
     s8* frameParts;
 
     s32 primIndex;
-    s32 genericInt;
+    long genericInt;
     s32 posX;
     s32 posY;
     s32 radius;
@@ -429,7 +429,7 @@ void func_us_801D5E90(Entity* self) {
         // to cast a pointer to s32 first and then to Primitve* later
         // But seeing as genericInt is an all-purpose variable anyways,
         // it might just be true
-        genericInt = (s32)prim->next;
+        genericInt = (long)prim->next;
         if (!genericInt) {
             prim->x0 = 0;
             prim->y0 = 0;
