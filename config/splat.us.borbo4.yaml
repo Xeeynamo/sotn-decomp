@@ -55,7 +55,7 @@ segments:
       - [0x63C, .data, e_thecreature]
       - [0x770, .data, e_thecreature_flames]
       - [0x7EC, .data, bossfight]
-      - [0x7F0, data]
+      - [0x7F0, .data, unk_18A18]
       - [0x810, .data, e_boss_doors]
       - [0x83C, .data, st_update]
       - [0x888, data]
