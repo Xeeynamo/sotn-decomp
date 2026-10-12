@@ -202,9 +202,9 @@ segments:
     subalign: 4
     subsegments:
       - [0x4A040, .data, w_010]
-      - [0x4A8EC, data, w_010]
       - [0x4AC08, .rodata, w_010]
       - [0x4ACC0, c, w_010]
+      - [0x4CC1C, .bss, w_010]
   - name: f_011
     type: grey4
     start: 0x4D000
