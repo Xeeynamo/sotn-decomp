@@ -68,7 +68,7 @@ segments:
       - [0x17528, .rodata, e_stage_name]
       - [0x1755C, .rodata, prim_helpers]
       - [0x17564, .rodata, e_life_up]
-      - [0x17580, c, unk_17580]
+      - [0x17580, c, e_room_bg]
       - [0x17648, c, e_lock_camera]
       - [0x17804, c, e_breakable]
       - [0x17938, c, unk_17938]

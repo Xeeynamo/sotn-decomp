@@ -63,6 +63,7 @@ segments:
       - [0xE858, c, st_init_psp]
       - [0xE968, c, e_breakable]
       - [0xEAE8, c, ../rbo4_psp/unk_EAE8]
+      - [0xFAC8, c, e_room_bg]
       - [0xFBA8, c, e_lock_camera]
       - [0xFE08, c, ../rbo4_psp/unk_FE08]
       - [0x10800, .data, e_life_up]
