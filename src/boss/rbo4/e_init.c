@@ -26,7 +26,7 @@ void EntityTheCreature(Entity* self);
 void EntityTheCreatureHead(Entity* self);
 void EntityTheCreatureFlames(Entity* self);
 void func_us_80198A18(Entity* self);
-void func_us_80192B38_from_rbo3(Entity* self);
+void EntityBossFightManager(Entity* self);
 void func_us_801C0B9C_from_no1(Entity* self);
 void EntityLifeUpSpawn(Entity* self);
 
@@ -56,7 +56,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityTheCreatureHead,
     EntityTheCreatureFlames,
     func_us_80198A18,
-    func_us_80192B38_from_rbo3,
+    EntityBossFightManager,
     func_us_801C0B9C_from_no1,
     EntityLifeUpSpawn,
 };
