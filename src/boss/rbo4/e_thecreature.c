@@ -4,7 +4,7 @@
 #ifdef VERSION_PSP
 extern s32 E_ID(THE_CREATURE);
 extern s32 E_ID(THE_CREATURE_HEAD);
-extern s32 E_ID(UNK_18);
+extern s32 E_ID(THE_CREATURE_FLAMES);
 #endif
 
 extern EInit g_EInitTheCreature;
@@ -296,7 +296,7 @@ void EntityTheCreature(Entity* self) {
         case THE_CREATURE_DEATH_FLAMES:
             entity = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_ID(UNK_18), self, entity);
+                CreateEntityFromEntity(E_ID(THE_CREATURE_FLAMES), self, entity);
                 entity->params = 0;
                 entity->zPriority = self->zPriority + 2;
                 entity->posX.i.hi += (Random() & 0x1F) - 0x10;
@@ -304,7 +304,7 @@ void EntityTheCreature(Entity* self) {
             }
             entity = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_ID(UNK_18), self, entity);
+                CreateEntityFromEntity(E_ID(THE_CREATURE_FLAMES), self, entity);
                 entity->params = 2;
                 entity->zPriority = self->zPriority + 2;
                 entity->posX.i.hi += (Random() & 0x1F) - 0x10;
@@ -392,7 +392,8 @@ void EntityTheCreatureHead(Entity* self) {
             if (self->ext.theCreature.timer & 1) {
                 entity = AllocEntity(&g_Entities[192], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID(UNK_18), self, entity);
+                    CreateEntityFromEntity(
+                        E_ID(THE_CREATURE_FLAMES), self, entity);
                     entity->params = 1;
                     entity->zPriority = self->zPriority + 1;
                     entity->posX.i.hi += (Random() & 7) - 4;

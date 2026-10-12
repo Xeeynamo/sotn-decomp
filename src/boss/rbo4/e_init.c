@@ -24,7 +24,7 @@ void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
 void EntityTheCreature(Entity* self);
 void EntityTheCreatureHead(Entity* self);
-void func_us_8019846C(Entity* self);
+void EntityTheCreatureFlames(Entity* self);
 void func_us_80198A18(Entity* self);
 void func_us_80192B38_from_rbo3(Entity* self);
 void func_us_801C0B9C_from_no1(Entity* self);
@@ -54,7 +54,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityGreyPuff,
     EntityTheCreature,
     EntityTheCreatureHead,
-    func_us_8019846C,
+    EntityTheCreatureFlames,
     func_us_80198A18,
     func_us_80192B38_from_rbo3,
     func_us_801C0B9C_from_no1,

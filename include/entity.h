@@ -3086,6 +3086,15 @@ typedef struct {
 } ET_TheCreature;
 
 typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ u8* anim;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 accelY;
+    /* 0x90 */ s32 accel;
+} ET_TheCreatureFlames;
+
+typedef struct {
     /* 0x7C */ Primitive* prim;
     /* 0x80 */ s16 unk80;
 } ET_801B8D30;
@@ -4807,6 +4816,7 @@ typedef union { // offset=0x7C
     ET_801B8D30 et_801B8D30;
     ET_Clouds clouds;
     ET_TheCreature theCreature;
+    ET_TheCreatureFlames theCreatureFlames;
     ET_801C0B9C et_801C0B9C;
     ET_unkDoor unkDoor;
     ET_FrozenShade frozenShade;
