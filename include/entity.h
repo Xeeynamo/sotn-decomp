@@ -3081,8 +3081,8 @@ typedef struct {
     /* 0x7C */ s32 : 32;
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 : 16;
-    /* 0x84 */ u8 unk84;
-    /* 0x85 */ u8 unk85;
+    /* 0x84 */ u8 backOff;
+    /* 0x85 */ u8 detach;
 } ET_TheCreature;
 
 typedef struct {

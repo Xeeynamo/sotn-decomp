@@ -9,7 +9,50 @@ extern s32 E_ID(UNK_18);
 
 extern EInit g_EInitTheCreature;
 extern EInit g_EInitTheCreatureHead;
+// fight state, owned by unk_1879C: 1 the fight started, 2 The Creature is
+// dying, 4 it is dead
 extern s32 D_us_801807EC;
+
+enum TheCreatureSteps {
+    THE_CREATURE_INIT,
+    THE_CREATURE_IDLE,
+    THE_CREATURE_WALK,
+    THE_CREATURE_STOMP,
+    THE_CREATURE_ROLL,
+    THE_CREATURE_TURN,
+    THE_CREATURE_DEATH,
+    THE_CREATURE_DEBUG = 255,
+};
+
+enum TheCreatureRollSubsteps {
+    THE_CREATURE_ROLL_CURL,
+    THE_CREATURE_ROLL_INIT,
+    THE_CREATURE_ROLL_MOVE,
+    THE_CREATURE_ROLL_BOUNCE,
+    THE_CREATURE_ROLL_STOP,
+    THE_CREATURE_ROLL_UNCURL,
+};
+
+enum TheCreatureDeathSubsteps {
+    THE_CREATURE_DEATH_INIT,
+    THE_CREATURE_DEATH_LAND,
+    THE_CREATURE_DEATH_DROP_HEAD,
+    THE_CREATURE_DEATH_BURN,
+    THE_CREATURE_DEATH_FLAMES,
+    THE_CREATURE_DEATH_END,
+};
+
+enum TheCreatureHeadSteps {
+    THE_CREATURE_HEAD_INIT,
+    THE_CREATURE_HEAD_ATTACHED,
+    THE_CREATURE_HEAD_FALL,
+};
+
+enum TheCreatureHeadFallSubsteps {
+    THE_CREATURE_HEAD_FALL_INIT,
+    THE_CREATURE_HEAD_FALL_DROP,
+    THE_CREATURE_HEAD_FALL_BURN,
+};
 
 static s16 sensors_walk[] = {0, 23, 32, 0};
 static s16 sensors_unused[][2] = {{0, 23}, {0, 4}, {8, -4}, {-16, 0}};
@@ -62,69 +105,76 @@ void EntityTheCreature(Entity* self) {
     s32 collision;
     s32 posX;
 
-    if ((self->flags & FLAG_DEAD) && self->step != 6) {
-        SetStep(6);
+    if ((self->flags & FLAG_DEAD) && self->step != THE_CREATURE_DEATH) {
+        SetStep(THE_CREATURE_DEATH);
     }
     switch (self->step) {
-    case 0:
+    case THE_CREATURE_INIT:
         InitializeEntity(g_EInitTheCreature);
         entity = self + 1;
         CreateEntityFromCurrentEntity(E_ID(THE_CREATURE_HEAD), entity);
-        SetStep(1);
-    case 1:
+        SetStep(THE_CREATURE_IDLE);
+    case THE_CREATURE_IDLE:
         AnimateEntity(anim_idle, self);
         self->hitboxState = 0;
         if (D_us_801807EC & 1) {
             self->hitboxState = 3;
-            SetStep(2);
+            SetStep(THE_CREATURE_WALK);
         }
         break;
-    case 2:
+    case THE_CREATURE_WALK:
         if (!self->step_s) {
             self->ext.theCreature.timer = 0x40;
             self->step_s++;
         }
         AnimateEntity(anim_walk, self);
         collision = UnkCollisionFunc2(sensors_walk);
+        // blocked by a wall or a slope
         if (collision & 0x60) {
             self->posX.val -= self->velocityX;
             self->velocityX = 0;
         }
+        // keep 104 to 128 pixels away from the player: back off when closer,
+        // walk forward again when farther
         if (GetDistanceToPlayerX() < 104) {
-            self->ext.theCreature.unk84 = 1;
+            self->ext.theCreature.backOff = 1;
         }
         if (GetDistanceToPlayerX() > 128) {
-            self->ext.theCreature.unk84 = 0;
+            self->ext.theCreature.backOff = 0;
         }
-        if (self->facingLeft ^ self->ext.theCreature.unk84) {
+        if (self->facingLeft ^ self->ext.theCreature.backOff) {
             self->velocityX = FIX(-0.5);
         } else {
             self->velocityX = FIX(0.5);
         }
+        // every 64 frames attack: stomp with the hammer when the player is
+        // close, otherwise roll towards them. It also rolls when close but
+        // stuck against a wall or at the edge of a ledge.
         if (!--self->ext.theCreature.timer) {
             if (GetDistanceToPlayerX() < 80) {
-                SetStep(3);
+                SetStep(THE_CREATURE_STOMP);
                 if (collision & 0xE0) {
-                    SetStep(4);
+                    SetStep(THE_CREATURE_ROLL);
                 }
             } else {
-                SetStep(4);
+                SetStep(THE_CREATURE_ROLL);
             }
         }
         collision = GetSideToPlayer() & 1;
+        // the player went behind
         if (self->facingLeft != collision) {
-            SetStep(5);
+            SetStep(THE_CREATURE_TURN);
         }
         break;
-    case 5:
+    case THE_CREATURE_TURN:
         if (!AnimateEntity(anim_turn, self)) {
-            SetStep(2);
+            SetStep(THE_CREATURE_WALK);
         }
         if (!self->poseTimer && self->pose == 2) {
             self->facingLeft ^= 1;
         }
         break;
-    case 3:
+    case THE_CREATURE_STOMP:
         if (!self->step_s) {
             if (!AnimateEntity(anim_hammer, self)) {
                 g_api.ShakeCamera(1);
@@ -136,23 +186,23 @@ void EntityTheCreature(Entity* self) {
                 PlaySfxPositional(SFX_THE_CREATURE_ATTACK);
             }
         } else if (!--self->ext.theCreature.timer) {
-            SetStep(2);
+            SetStep(THE_CREATURE_WALK);
         }
         break;
-    case 4:
+    case THE_CREATURE_ROLL:
         switch (self->step_s) {
-        case 0:
+        case THE_CREATURE_ROLL_CURL:
             if (!AnimateEntity(anim_curl, self)) {
                 self->step_s++;
             }
             break;
-        case 1:
+        case THE_CREATURE_ROLL_INIT:
             self->animCurFrame = 0x1E;
             self->drawFlags = ENTITY_ROTATE;
             self->rotate = 0;
             self->ext.theCreature.timer = 0x200;
             self->step_s++;
-        case 2:
+        case THE_CREATURE_ROLL_MOVE:
             if (self->facingLeft) {
                 self->velocityX = FIX(-3);
             } else {
@@ -163,35 +213,39 @@ void EntityTheCreature(Entity* self) {
             if (!(g_Timer & 0xF)) {
                 PlaySfxPositional(SFX_STONE_MOVE_B);
             }
+            // hit a wall or rolled off a ledge: jump up and bounce
             if (collision & 0x80) {
                 self->velocityX = 0;
                 self->velocityY = FIX(-4);
                 PlaySfxPositional(SFX_SHAFT_ORB_BOUNCE);
                 self->step_s++;
             }
+            // after 512 frames, stop once it is in the middle of the arena
             if (self->ext.theCreature.timer) {
                 self->ext.theCreature.timer--;
             } else {
                 posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
                 if (posX > 0xC0 && posX < 0x140) {
                     self->ext.theCreature.timer = 0x30;
-                    SetSubStep(4);
+                    SetSubStep(THE_CREATURE_ROLL_STOP);
                 }
             }
             break;
-        case 3:
+        case THE_CREATURE_ROLL_BOUNCE:
             self->rotate += 0x100;
             if (UnkCollisionFunc3(sensors_ground) & 1) {
                 PlaySfxPositional(SFX_EXPLODE_A);
                 self->velocityY = -self->velocityY;
                 self->velocityY -= self->velocityY >> 1;
+                // every landing halves the speed; when slow enough turn around
+                // and roll back
                 if (abs(self->velocityY) < FIX(0.5)) {
                     self->facingLeft ^= 1;
                     self->step_s--;
                 }
             }
             break;
-        case 4:
+        case THE_CREATURE_ROLL_STOP:
             self->rotate -= 0x100;
             self->velocityX -= self->velocityX >> 4;
             collision = UnkCollisionFunc2(sensors_roll);
@@ -200,16 +254,16 @@ void EntityTheCreature(Entity* self) {
                 self->step_s++;
             }
             break;
-        case 5:
+        case THE_CREATURE_ROLL_UNCURL:
             if (!AnimateEntity(anim_uncurl, self)) {
-                SetStep(2);
+                SetStep(THE_CREATURE_WALK);
             }
             break;
         }
         break;
-    case 6:
+    case THE_CREATURE_DEATH:
         switch (self->step_s) {
-        case 0:
+        case THE_CREATURE_DEATH_INIT:
             D_us_801807EC |= 2;
             self->hitboxState = 0;
             if (self->rotate) {
@@ -219,27 +273,27 @@ void EntityTheCreature(Entity* self) {
             PlaySfxPositional(SFX_THE_CREATURE_DEATH);
             self->step_s++;
             break;
-        case 1:
+        case THE_CREATURE_DEATH_LAND:
             if (UnkCollisionFunc3(sensors_ground) & 1) {
                 self->step_s++;
             }
             break;
-        case 2:
+        case THE_CREATURE_DEATH_DROP_HEAD:
             if (!AnimateEntity(anim_death, self)) {
                 PlaySfxPositional(SFX_THE_CREATURE_HEAD_FALL);
                 entity = self + 1;
-                entity->ext.theCreature.unk85 = 1;
+                entity->ext.theCreature.detach = 1;
                 self->step_s++;
             }
             break;
-        case 3:
+        case THE_CREATURE_DEATH_BURN:
             if (!AnimateEntity(anim_burn, self)) {
                 self->ext.theCreature.timer = 0x50;
                 PlaySfxPositional(SFX_BOSS_LARGE_FLAMES);
                 self->step_s++;
             }
             break;
-        case 4:
+        case THE_CREATURE_DEATH_FLAMES:
             entity = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (entity != NULL) {
                 CreateEntityFromEntity(E_ID(UNK_18), self, entity);
@@ -262,11 +316,11 @@ void EntityTheCreature(Entity* self) {
                 self->step_s++;
             }
             break;
-        case 5:
+        case THE_CREATURE_DEATH_END:
             break;
         }
         break;
-    case 0xFF:
+    case THE_CREATURE_DEBUG:
 #include "../../st/pad2_anim_debug.h"
     }
     hitbox = hitbox_data[0];
@@ -277,6 +331,8 @@ void EntityTheCreature(Entity* self) {
     self->hitboxHeight = *hitbox++;
 }
 
+// The head is an invisible hitbox that follows the body and covers the hammer.
+// When the body dies it detaches, falls and burns.
 void EntityTheCreatureHead(Entity* self) {
     Entity* entity;
     s8* hitbox;
@@ -284,9 +340,9 @@ void EntityTheCreatureHead(Entity* self) {
 
     FntPrint("step %x\n", self->step);
     switch (self->step) {
-    case 0:
+    case THE_CREATURE_HEAD_INIT:
         InitializeEntity(g_EInitTheCreatureHead);
-    case 1:
+    case THE_CREATURE_HEAD_ATTACHED:
         entity = self - 1;
         frame = entity->animCurFrame;
         self->posX.i.hi = entity->posX.i.hi;
@@ -299,13 +355,13 @@ void EntityTheCreatureHead(Entity* self) {
         self->hitboxOffY = *hitbox++;
         self->hitboxWidth = *hitbox++;
         self->hitboxHeight = *hitbox++;
-        if (self->ext.theCreature.unk85) {
-            SetStep(2);
+        if (self->ext.theCreature.detach) {
+            SetStep(THE_CREATURE_HEAD_FALL);
         }
         break;
-    case 2:
+    case THE_CREATURE_HEAD_FALL:
         switch (self->step_s) {
-        case 0:
+        case THE_CREATURE_HEAD_FALL_INIT:
             entity = self - 1;
             self->posX.i.hi = entity->posX.i.hi;
             self->posY.i.hi = entity->posY.i.hi;
@@ -321,7 +377,7 @@ void EntityTheCreatureHead(Entity* self) {
             self->posY.i.hi -= 39;
             self->drawFlags = ENTITY_ROTATE;
             self->step_s++;
-        case 1:
+        case THE_CREATURE_HEAD_FALL_DROP:
             self->animCurFrame = 26;
             self->rotate += 0x80;
             if (UnkCollisionFunc3(sensors_head) & 1) {
@@ -329,7 +385,7 @@ void EntityTheCreatureHead(Entity* self) {
                 self->step_s++;
             }
             break;
-        case 2:
+        case THE_CREATURE_HEAD_FALL_BURN:
             if (!(self->ext.theCreature.timer & 0xF)) {
                 PlaySfxPositional(SFX_FIREBALL_SHOT_B);
             }
