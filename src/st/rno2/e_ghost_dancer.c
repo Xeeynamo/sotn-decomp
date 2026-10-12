@@ -51,7 +51,7 @@ void EntityGhostDancer(Entity* self) {
                 other->ext.ghostDancer.timer = *deathPartsParams++;
                 other->velocityY = (Random() & 0x1F) * -0x1000;
                 other->velocityX = (Random() & 0x3F) * 0xC00;
-                if (((GetSideToPlayer() & 1) ^ 1)) {
+                if ((GetSideToPlayer() & 1) ^ 1) {
                     other->velocityX = -other->velocityX;
                 }
             }
