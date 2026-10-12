@@ -1,5 +1,1 @@
-spriteBanks = 0x092519D8;
-rooms_layers = 0x09251B58;
-cluts = 0x09251C20;
-gfxBanks = 0x09251CB0;
-rooms = 0x09251F00;
+

@@ -948,6 +948,31 @@ files:
     asset_path: assets/st/rchi
     src_path: src/st/rchi
     splat_config_path: config/splat.pspeu.strchi.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          - [0x1A358, sprite_banks, psp/sprite_banks]
+          - [0x1A3B8, layers, layers]
+          - [0x1A558, paldef, palette_def]
+          - [0x1A5A8, gfx_banks, psp/graphics_banks]
+          - [0x1A678, skip]
+          - [0x1A880, rooms, rooms]
+          - [0x1A920, skip]
+          - [0x1A988, cmpgfx, gfx_slogra_1, 128, 128, 4, 0x1F778]
+          - [0x1B480, cmpgfx, gfx_slogra_2, 128, 128, 4, 0x1F778]
+          - [0x1BE68, cmpgfx, gfx_slogra_3, 128, 128, 4, 0x1F778]
+          - [0x1C730, cmpgfx, gfx_gaibon_1, 128, 128, 4, 0x1F7D8]
+          - [0x1D4A0, cmpgfx, gfx_gaibon_2, 128, 128, 4, 0x1F7D8]
+          - [0x1DC60, cmpgfx, gfx_thornweed_corpseweed, 128, 128, 4, 0x1F8D8]
+          - [0x1E9F0, cmpgfx, gfx_bat, 128, 128, 4, 0x1F958]
+          - [0x1F4B8, palette, pal_flame, 16] # 0x2E0
+          - [0x1F778, palette, pal_slogra, 16] # 0x200
+          - [0x1F7D8, palette, pal_gaibon, 16] # 0x203
+          - [0x1F8D8, palette, pal_thornweed_corpseweed, 16] # 0x20B
+          - [0x1F958, palette, pal_bat, 16] # 0x240
+          - [0x1F9B8, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rdai.bin
     asset_path: assets/st/rdai
     src_path: src/st/rdai
