@@ -2,7 +2,7 @@
 #include "rbo0.h"
 #include <scratchpad.h>
 
-extern s32 D_us_801806B0;
+extern s32 g_BossMgrState;
 
 static u8 D_us_801819BC[] = {
     0x03, 0x02, 0x18, 0x46, 0x18, 0x02, 0x2C, 0x46, 0x33, 0x02,
@@ -288,7 +288,7 @@ void EntityCoffin(Entity* self) {
         }
     case 1:
         self->ext.bossCoffin.unk82 = 0x300;
-        if (D_us_801806B0 & 1) {
+        if (g_BossMgrState & BOSS_MGR_FIGHT_ON) {
             g_api.PlaySfx(SFX_DOOR_OPEN);
             self->step++;
         }

@@ -32,7 +32,7 @@ void func_us_8019E558(Entity* self);
 void func_us_8019E920(Entity* self);
 void func_us_8019ECCC(Entity* self);
 void func_us_8019F260(Entity* self);
-void func_us_8019F4AC(Entity* self);
+void EntityBossFightManager(Entity* self);
 void EntityCerberusGateDebug(Entity* self);
 void EntityLifeUpSpawn(Entity* self);
 void EntityCutsceneDialogue(Entity* self);
@@ -49,7 +49,7 @@ PfnEntityUpdate EntityUpdates[] = {
     func_us_8019B52C,    func_us_8019C718,        func_us_8019C924,
     func_us_8019D4CC,    func_us_8019D950,        func_us_8019DA04,
     func_us_8019E558,    func_us_8019E920,        func_us_8019ECCC,
-    func_us_8019F260,    func_us_8019F4AC,        EntityCerberusGateDebug,
+    func_us_8019F260,    EntityBossFightManager,  EntityCerberusGateDebug,
     EntityLifeUpSpawn,   EntityCutsceneDialogue,  func_us_801A17C8,
 };
 

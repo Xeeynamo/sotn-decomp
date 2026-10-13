@@ -1906,6 +1906,46 @@ files:
     asset_path: assets/boss/rbo4
     src_path: src/boss/rbo4
     splat_config_path: config/splat.us.borbo4.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x2C, sprite_banks, us/sprite_banks]
+          - [0x8C, palette, D_us_8018008C, 16]
+          - [0xAC, paldef, palette_def]
+          - [0x10C, layers, layers]
+          - [0x134, gfx_banks, us/graphics_banks]
+          - [0x248, layout, entity_layouts]
+          - [0x3F0, skip]
+          - [0x1378, rooms, rooms]
+          - [0x1394, skip]
+          - [0x1478, cmpgfx, D_us_80181478, 128, 128, 4]
+          - [0x2054, cmpgfx, D_us_80182054, 128, 128, 4]
+          - [0x2398, cmpgfx, D_us_80182398, 128, 128, 4]
+          - [0x293C, cmpgfx, D_us_8018293C, 128, 128, 4]
+          - [0x32B0, cmpgfx, D_us_801832B0, 128, 128, 4]
+          - [0x3BD4, cmpgfx, D_us_80183BD4, 128, 128, 4]
+          - [0x4438, cmpgfx, D_us_80184438, 128, 128, 4]
+          - [0x4D5C, cmpgfx, D_us_80184D5C, 128, 128, 4]
+          - [0x5554, cmpgfx, D_us_80185554, 128, 128, 4]
+          - [0x5BF8, cmpgfx, D_us_80185BF8, 128, 128, 4]
+          - [0x62D4, cmpgfx, D_us_801862D4, 128, 128, 4]
+          - [0x6848, cmpgfx, D_us_80186848, 128, 128, 4]
+          - [0x6E60, cmpgfx, D_us_80186E60, 128, 128, 4]
+          - [0x780C, cmpgfx, D_us_8018780C, 128, 128, 4]
+          - [0x8704, cmpgfx, D_us_80188704, 128, 128, 4]
+          - [0x8DF4, cmpgfx, D_us_80188DF4, 128, 128, 4]
+          - [0x9D70, palette, D_us_80189D70, 16]
+          - [0x9D90, palette, D_us_80189D90, 16]
+          - [0x9DB0, palette, D_us_80189DB0, 16]
+          - [0x9DD0, palette, D_us_80189DD0, 16]
+          - [0x9E30, palette, D_us_80189E30, 16] # 0x2E0
+          - [0xA0F0, palette, D_us_8018A0F0, 16] # 0x200
+          - [0xA2F0, skip]
+          - [0xA6F0, tiledef, rload] # 0x100 tiles per section
+          - [0xAB00, skip]
+          - [0xEB10, tiledef, rsave] # 0x1000 tiles per section
+          - [0x12B20, skip]
   - target: disks/us/BOSS/RBO5/RBO5.BIN
     asset_path: assets/boss/rbo5
     src_path: src/boss/rbo5

@@ -223,7 +223,7 @@ void EntityFakeRalph(Entity* self) {
         // fallthrough
     case 1:
         self->animCurFrame = 1;
-        if (D_us_801806B0 & 1) {
+        if (g_BossMgrState & BOSS_MGR_FIGHT_ON) {
             SetStep(2);
         }
         break;
@@ -243,7 +243,7 @@ void EntityFakeRalph(Entity* self) {
             }
             break;
         case 2:
-            if (D_us_801806B0 & 2) {
+            if (g_BossMgrState & BOSS_MGR_INTRO_DONE) {
                 self->hitboxState = 3;
                 SetStep(3);
             }
@@ -787,7 +787,7 @@ void EntityBoneCross(Entity* self) {
     s32 offsetX;
     s32 offsetY;
 
-    if (D_us_801806B0 & 4) {
+    if (g_BossMgrState & BOSS_MGR_TERMINATED) {
         self->flags |= FLAG_DEAD;
     }
     if (self->flags & FLAG_DEAD) {
@@ -869,7 +869,7 @@ void EntityGiantBoneCross(Entity* self) {
     Entity* entity;
     s32 offsetX;
 
-    if (D_us_801806B0 & 4) {
+    if (g_BossMgrState & BOSS_MGR_TERMINATED) {
         self->flags |= FLAG_DEAD;
     }
 
@@ -939,7 +939,7 @@ extern EInit D_us_801804E8;
 
 // created by bone cross and giant bone cross attack
 void EntityBoneCrossAfterImage(Entity* self) {
-    if (D_us_801806B0 & 4) {
+    if (g_BossMgrState & BOSS_MGR_TERMINATED) {
         DestroyEntity(self);
         return;
     }
@@ -994,7 +994,7 @@ extern EInit D_us_80180500;
 void EntityDagger(Entity* self) {
     s32 offsetX;
 
-    if (D_us_801806B0 & 4) {
+    if (g_BossMgrState & BOSS_MGR_TERMINATED) {
         self->flags |= FLAG_DEAD;
     }
 
@@ -1058,7 +1058,7 @@ void EntityHolyWaterFlask(Entity* self) {
     s32 offsetX;
     s32 offsetY;
 
-    if (D_us_801806B0 & 4) {
+    if (g_BossMgrState & BOSS_MGR_TERMINATED) {
         DestroyEntity(self);
         return;
     }
@@ -1134,7 +1134,7 @@ void EntityHolyWaterFlask(Entity* self) {
 extern EInit D_us_8018050C;
 
 void EntityHolyWaterFlame(Entity* self) {
-    if (D_us_801806B0 & 4) {
+    if (g_BossMgrState & BOSS_MGR_TERMINATED) {
         DestroyEntity(self);
         return;
     }

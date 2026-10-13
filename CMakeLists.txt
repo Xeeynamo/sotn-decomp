@@ -1154,6 +1154,48 @@ SET(SOURCE_FILES_BOSS_RBO3
     src/boss/rbo3/bss.c
 )
 
+SET(SOURCE_FILES_BOSS_RBO4
+    src/pc/bosses/boss_rbo4.c
+    src/boss/rbo4/header.c
+    src/boss/rbo4/sprite_banks.c
+    src/boss/rbo4/palette_def.c
+    src/boss/rbo4/layers.c
+    src/boss/rbo4/graphics_banks.c
+    src/boss/rbo4/gen/e_laydef.c
+    src/boss/rbo4/e_init.c
+    src/boss/rbo4/background_block_init.c
+    src/boss/rbo4/e_red_door_tiles.c
+    src/boss/rbo4/e_lock_camera.c
+    src/boss/rbo4/e_breakable.c
+    src/boss/rbo4/d_prize_drops.c
+    src/boss/rbo4/e_thecreature.c
+    src/boss/rbo4/e_thecreature_flames.c
+    src/boss/rbo4/st_update.c
+    src/boss/rbo4/collision.c
+    src/boss/rbo4/e_red_door.c
+    src/boss/rbo4/st_common.c
+    src/boss/rbo4/e_collect.c
+    src/boss/rbo4/e_misc.c
+    src/boss/rbo4/e_particles.c
+    src/boss/rbo4/e_room_fg.c
+    src/boss/rbo4/gen/rooms.c
+    src/boss/rbo4/e_life_up.c
+    src/boss/rbo4/gen/e_layout.c
+    src/boss/rbo4/stage_data.c
+    src/boss/rbo4/pal_unk.c
+    src/boss/rbo4/tilemaps.c
+    src/boss/rbo4/gen/us/sprites.c
+    src/boss/rbo4/bossfight.c
+    src/boss/rbo4/e_boss_doors.c
+    src/boss/rbo4/e_stage_name.c
+    src/boss/rbo4/prim_helpers.c
+    src/boss/rbo4/e_room_bg.c
+    src/boss/rbo4/unk_18A18.c
+    src/boss/rbo4/create_entity.c
+    src/boss/rbo4/popup.c
+    src/boss/rbo4/bss.c
+)
+
 set(SOURCE_FILES_STAGE_RWRP
     src/pc/stages/stage_rwrp.c
     src/st/rwrp/header.c
@@ -1361,6 +1403,7 @@ set(SOURCE_FILES_STAGE_RCEN
     src/st/rcen/e_room_bg.c
     src/st/rcen/e_lock_camera.c
     src/st/rcen/e_breakable.c
+    src/st/rcen/d_prize_drops.c
     src/st/rcen/e_shaft.c
     src/st/rcen/e_shaft_death_flames.c
     src/st/rcen/cutscene.c
@@ -1526,6 +1569,7 @@ add_overlay(bo1 ${SOURCE_FILES_BOSS_BO1})
 add_overlay(rcen ${SOURCE_FILES_STAGE_RCEN})
 add_overlay(rbo0 ${SOURCE_FILES_BOSS_RBO0})
 add_overlay(rbo3 ${SOURCE_FILES_BOSS_RBO3})
+add_overlay(rbo4 ${SOURCE_FILES_BOSS_RBO4})
 add_overlay(rchi ${SOURCE_FILES_STAGE_RCHI})
 
 foreach(id 000 002 007 008 010 012 034 035 037 040 041 043 045 046 050 051 052)

@@ -123,7 +123,7 @@ void EntityFakeGrant(Entity* self) {
 
     case 1:
         self->animCurFrame = 3;
-        if (D_us_801806B0 & 1) {
+        if (g_BossMgrState & BOSS_MGR_FIGHT_ON) {
             SetStep(2);
         }
         break;
@@ -144,7 +144,7 @@ void EntityFakeGrant(Entity* self) {
             }
             break;
         case 2:
-            if (D_us_801806B0 & 2) {
+            if (g_BossMgrState & BOSS_MGR_INTRO_DONE) {
                 self->hitboxState = 3;
                 SetStep(3);
             }
@@ -450,7 +450,7 @@ extern EInit D_us_80180518;
 
 // vertical dagger
 void EntityVerticalDagger(Entity* self) {
-    if (D_us_801806B0 & 4) {
+    if (g_BossMgrState & BOSS_MGR_TERMINATED) {
         self->flags |= FLAG_DEAD;
     }
 
@@ -497,7 +497,7 @@ void EntityHorizontalDagger(Entity* self) {
     s32 offsetX;
     s32 offsetY;
 
-    if (D_us_801806B0 & 4) {
+    if (g_BossMgrState & BOSS_MGR_TERMINATED) {
         self->flags |= FLAG_DEAD;
     }
 

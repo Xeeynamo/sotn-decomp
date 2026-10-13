@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 
 	"github.com/goccy/go-yaml"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
@@ -181,6 +182,13 @@ func extractAssetFile(config *assetConfig, file assetFileEntry) error {
 	symbols := make(map[psx.Addr]string)
 	addSplatSymbols(symbols, splatConfig)
 	addAssetSymbols(symbols, &file)
+	if len(file.Segments) > 0 {
+		seg := file.Segments[0]
+		fileEnd := seg.Vram.Sum(len(data) - seg.Start)
+		if err := addSymbolFileSymbols(symbols, splatConfig, fileEnd); err != nil {
+			return err
+		}
+	}
 	for _, segment := range file.Segments {
 		if len(segment.Assets) == 0 {
 			continue
@@ -318,6 +326,36 @@ func addAssetSymbols(m map[psx.Addr]string, a *assetFileEntry) {
 			m[segment.Vram.Sum(int(offset)-segment.Start)] = sym
 		}
 	}
+}
+
+// addSymbolFileSymbols names addresses past the end of the file due to PSP
+// storing zero-filled arrays to .bss instead of .data
+func addSymbolFileSymbols(m map[psx.Addr]string, c *splat.Config, fileEnd psx.Addr) error {
+	for _, path := range c.Options.SymbolAddrsPath {
+		content, err := os.ReadFile(path)
+		if err != nil {
+			return fmt.Errorf("unable to read symbols at %q: %v", path, err)
+		}
+		for _, line := range strings.Split(string(content), "\n") {
+			if i := strings.Index(line, "//"); i >= 0 {
+				line = line[:i]
+			}
+			name, value, found := strings.Cut(line, "=")
+			if !found {
+				continue
+			}
+			name = strings.TrimSpace(name)
+			value = strings.TrimSuffix(strings.TrimSpace(value), ";")
+			addr, err := strconv.ParseUint(strings.TrimSpace(value), 0, 32)
+			if err != nil || name == "" || psx.Addr(addr) < fileEnd {
+				continue
+			}
+			if _, exists := m[psx.Addr(addr)]; !exists {
+				m[psx.Addr(addr)] = name
+			}
+		}
+	}
+	return nil
 }
 
 func addSplatSymbols(m map[psx.Addr]string, c *splat.Config) {

@@ -20,6 +20,7 @@ import (
 const palCopy = 1               // PAL_COPY
 const palBulkCopy = 5           // PAL_BULK_COPY
 const palTerminate = 0xFFFFFFFF // PAL_TERMINATE
+const palFlagsMask = 0xC000     // upper bits of the op kind, kept as is
 
 type handler struct{}
 
@@ -70,7 +71,11 @@ func (h *handler) Build(e assets.BuildArgs) error {
 	}
 	for i, def := range doc.Defs {
 		content.WriteString(fmt.Sprintf("static u_long* pal_def_%d[] = {\n", i))
-		content.WriteString(fmt.Sprintf("    MAKE_PAL_OP(%s, %d),\n", palOpName(def.Kind), def.Freq))
+		if def.Flags != 0 {
+			content.WriteString(fmt.Sprintf("    MAKE_PAL_OP(%s | 0x%04X, %d),\n", palOpName(def.Kind), def.Flags, def.Freq))
+		} else {
+			content.WriteString(fmt.Sprintf("    MAKE_PAL_OP(%s, %d),\n", palOpName(def.Kind), def.Freq))
+		}
 		if def.Kind == palBulkCopy || def.Kind == palCopy {
 			for _, entry := range def.Entries {
 				if entry.Offset == 0 {
@@ -197,6 +202,7 @@ type paletteEntry struct {
 // other ops carry a (destination, count) pair followed by data pointers
 type paletteDef struct {
 	Kind        int            `json:"kind"`
+	Flags       int            `json:"flags,omitempty"`
 	Freq        int            `json:"freq,omitempty"`
 	Destination int            `json:"destination,omitempty"`
 	Count       int            `json:"count,omitempty"`
@@ -227,7 +233,8 @@ func readPaletteDefs(r io.ReadSeeker, baseAddr psx.Addr, start, end int) ([]pale
 		if err := binary.Read(r, binary.LittleEndian, &op); err != nil {
 			return nil, 0, fmt.Errorf("error reading palette op: %w", err)
 		}
-		kind := int(op & 0xFFFF)
+		flags := int(op & palFlagsMask)
+		kind := int(op & 0xFFFF &^ palFlagsMask)
 		freq := int(op >> 16)
 		// PSP aligns every def to 8 bytes, pad with a zero after terminator
 		if op == 0 {
@@ -239,7 +246,7 @@ func readPaletteDefs(r io.ReadSeeker, baseAddr psx.Addr, start, end int) ([]pale
 		if kind < palCopy || kind > palBulkCopy || freq > 0xFF {
 			break
 		}
-		def := paletteDef{Kind: kind, Freq: freq, addr: addr}
+		def := paletteDef{Kind: kind, Flags: flags, Freq: freq, addr: addr}
 		if err := readPaletteEntries(r, baseAddr, addr, &def); err != nil {
 			return nil, 0, err
 		}
