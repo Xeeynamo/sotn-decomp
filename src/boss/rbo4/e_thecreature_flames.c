@@ -88,7 +88,7 @@ void EntityTheCreatureFlames(Entity* self) {
             self->drawFlags |= ENTITY_ROTATE;
             self->opacity = 0x80;
             self->facingLeft = Random() & 1;
-            self->rotate = (rand() & 0x7FF) - 0x400;
+            self->rotate = (rand() & 0x7FF) - ROT(90);
             angle = self->rotate;
             if (self->facingLeft) {
                 angle = -angle;
