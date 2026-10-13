@@ -73,7 +73,7 @@ segments:
       - [0x11F98, .data, e_particles]
       - [0x12018, data, '12018']
       - [0x12018, .data, e_collect]
-      - [0x12560, data, '12560']
+      - [0x12560, .data, e_misc]
       - [0x125B0, .data, collision]
       - [0x12988, .data, e_room_fg]
       - [0x12A28, data, 12A28]
