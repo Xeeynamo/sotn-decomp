@@ -1,18 +1,27 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno2.h"
 
+#ifndef VERSION_PSP
+u8 gfx_unused[] = {
+#include "gen/gfx_unused.h"
+};
+// Used in a graphics bank which is itself not used, I think?
 u8 D_80184000[] = {
 #include "gen/D_80184000.h"
 };
 u8 D_80184344[] = {
 #include "gen/D_80184344.h"
 };
+#endif
+
 u8 D_801848E8[] = {
 #include "gen/D_801848E8.h"
 };
+#ifndef VERSION_PSP
 u8 unused_gfx[] = {
 #include "gen/unused_gfx.h"
 };
+#endif
 u8 D_80186470[] = {
 #include "gen/D_80186470.h"
 };
@@ -70,7 +79,6 @@ u8 D_80192B14[] = {
 u8 D_80192F7C[] = {
 #include "gen/D_80192F7C.h"
 };
-
 u16 D_801931EC[] = {
 #include "gen/D_801931EC.h"
 };

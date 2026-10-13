@@ -33,5 +33,11 @@
 #include <gen/rno2_tilemap_29.h>
 #include <gen/rno2_tilemap_30.h>
 #include <gen/rno2_tiledef_rload.h>
+
+#ifdef VERSION_PSP
+#include <gen/rno2_tiledef_rsave.h>
+#include <gen/rno2_tiledef_rno2.h>
+#else
 #include <gen/rno2_tiledef_rno2.h>
 #include <gen/rno2_tiledef_rsave.h>
+#endif

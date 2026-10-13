@@ -58,7 +58,7 @@ segments:
       - [0x14F0, .data, e_particles]
       - [0x1570, .data, e_room_fg]
       - [0x15FC, .data, e_minotaur]
-      - [0x18B0, .data, e_azaghal]
+      - [0x18A8, .data, e_azaghal]
       - [0x1B64, .data, e_white_dragon]
       - [0x1BE4, .data, e_stone_skull]
       - [0x1C58, data] # rooms
