@@ -65,6 +65,8 @@ segments:
       - [0x12C4, data]
       - [0x12E0, .data, e_life_up]
       - [0x1334, data]
+      - [0x94FC, .data, pal_unk]
+      - [0x987C, data]
       - [0x13420, .rodata, e_boss_doors]
       - [0x1342C, .rodata, bossfight]
       - [0x13448, .rodata, e_akmodan_ii]

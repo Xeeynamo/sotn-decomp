@@ -1979,6 +1979,13 @@ files:
     asset_path: assets/boss/rbo7
     src_path: src/boss/rbo7
     splat_config_path: config/splat.us.borbo7.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x94FC, palette, D_us_801894FC, 16] # 0x2C0
+          - [0x97BC, palette, D_us_801897BC, 16] # 0xC0
+          - [0x987C, skip]
   - target: disks/us/BOSS/RBO8/RBO8.BIN
     asset_path: assets/boss/rbo8
     src_path: src/boss/rbo8
