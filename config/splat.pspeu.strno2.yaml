@@ -97,7 +97,7 @@ segments:
       - [0x28FA0, data]
       - [0x294A8, .data, e_red_door_tiles]
       - [0x294C8, .data, e_init]
-      - [0x29788, data]
+      - [0x29788, .data, gen/rooms]
       - [0x29858, .data, e_breakable]
       - [0x299A0, data]
       - [0x4F980, .data, header]

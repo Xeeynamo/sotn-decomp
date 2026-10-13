@@ -1064,6 +1064,8 @@ files:
       assets:
         - [0x28F40, sprite_banks, psp/sprite_banks]
         - [0x28FA0, skip]
+        - [0x29788, rooms, rooms]
+        - [0x29858, skip]
 
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno3.bin
     asset_path: assets/st/rno3
