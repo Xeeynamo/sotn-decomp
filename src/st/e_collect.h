@@ -1484,10 +1484,7 @@ void EntityRelicOrb(Entity* self) {
 
 #if STAGE != STAGE_ST0
 // defined in d_prize_drops.c
-#ifndef STAGE_PRIZE_DROPS
 extern u16 PrizeDrops[];
-#define STAGE_PRIZE_DROPS PrizeDrops
-#endif
 
 // EntityPersistentItemDrop: Handles persistent room item drops (hearts, relics,
 // items, equipment). Checks g_CastleFlags via HEART_DROP_CASTLE_FLAG to prevent
@@ -1515,7 +1512,7 @@ void EntityPersistentItemDrop(Entity* self) {
         }
 
         index -= HEART_DROP_CASTLE_FLAG;
-        index = STAGE_PRIZE_DROPS[index];
+        index = PrizeDrops[index];
         if (index < 128) {
             self->unkB8 = (Entity*)EntityPrizeDrop;
         } else {

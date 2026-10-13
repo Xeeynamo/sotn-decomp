@@ -6,7 +6,7 @@
 extern s32 E_ID(SHAFT_CRYSTAL_BALL);
 #endif
 extern EInit g_EInitInteractable;
-extern s32 g_RcenShaftFlags;
+extern s32 g_BossMgrState;
 
 typedef struct {
     /* 0x0 */ u8 u0;
@@ -142,7 +142,7 @@ void EntityShaftMeridianRings(Entity* self) {
         rotation = self->ext.shaftMeridianRings.rotations;
         splitEnd = ring_rotation_speeds;
         // Spin at half speed once Shaft has been defeated
-        if (g_RcenShaftFlags & 4) {
+        if (g_BossMgrState & BOSS_MGR_DEFEAT) {
             for (i = 0; i < LEN(ring_rotation_speeds); i++, rotation++,
                 splitEnd++) {
                 rotation->vx += splitEnd->vx / 2;

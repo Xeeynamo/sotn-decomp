@@ -62,4 +62,12 @@ enum EntityID {
     NUM_ENTITIES,
 };
 
+enum BossMgrState {
+    BOSS_MGR_IDLE = 0,       // initial state, fight not yet engaged
+    BOSS_MGR_CUTSCENE = 1,   // cutscene with shaft begins
+    BOSS_MGR_FIGHT_ON = 2,   // boss begins
+    BOSS_MGR_DEFEAT = 4,     // shaft is defeated
+    BOSS_MGR_TERMINATED = 8, // shaft despawns and entities get destroyed
+};
+
 #endif // RCEN_H
