@@ -33,4 +33,4 @@ void InitEntityIds(void) {
     SET_E_ID(CTULHU_DEATH);
 }
 
-INCLUDE_ASM("boss/rbo7_psp/nonmatchings/rbo7_psp/st_init", RBO7_Load);
+INCLUDE_ASM("boss/rbo7/rbo7_psp/st_init", RBO7_Load);

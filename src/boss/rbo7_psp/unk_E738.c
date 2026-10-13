@@ -86,9 +86,9 @@ void EntityBossFightManager(Entity* self) {
 
 #include "../../st/e_breakable.h"
 
-INCLUDE_ASM("boss/rbo7_psp/nonmatchings/rbo7_psp/unk_E738", func_us_801940B4);
+INCLUDE_ASM("boss/rbo7/rbo7_psp/unk_E738", func_us_801940B4);
 
-INCLUDE_ASM("boss/rbo7_psp/nonmatchings/rbo7_psp/unk_E738", func_us_801957C0);
+INCLUDE_ASM("boss/rbo7/rbo7_psp/unk_E738", func_us_801957C0);
 
 extern EInit D_us_80180444;
 extern s8 D_us_8018074C[];
@@ -130,9 +130,9 @@ void EntityHarpyKick(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/rbo7_psp/nonmatchings/rbo7_psp/unk_E738", func_us_80195A8C);
+INCLUDE_ASM("boss/rbo7/rbo7_psp/unk_E738", func_us_80195A8C);
 
-INCLUDE_ASM("boss/rbo7_psp/nonmatchings/rbo7_psp/unk_E738", func_us_80195D04);
+INCLUDE_ASM("boss/rbo7/rbo7_psp/unk_E738", func_us_80195D04);
 
 extern u8 D_us_8018076C[];
 
