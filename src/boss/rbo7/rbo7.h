@@ -63,12 +63,6 @@ extern s32 E_ID(UNK_1D);
 extern s32 E_ID(CTULHU_DEATH);
 #endif
 
-extern EInit g_EInitBreakable;
-extern AnimationFrame* g_eBreakableAnimations[];
-extern u8 g_eBreakableExplosionTypes[];
-extern u8 blend_modes[];
-extern u8 g_eBreakableHitboxes[];
-extern u16 g_eBreakableanimSets[];
 
 enum BossMgrState {
     BOSS_MGR_IDLE = 0,       // initial state, fight not yet engaged
