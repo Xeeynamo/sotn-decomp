@@ -83,7 +83,7 @@ segments:
       - [0x13B90, .data, e_init]
       - [0x13CC8, data]
       - [0x13CE8, .data, e_breakable]
-      - [0x13D38, data]
+      - [0x13D38, .data, stage_data]
       - [0x19070, .data, pal_unk]
       - [0x193F0, data]
       - [0x1DC00, .data, header]
