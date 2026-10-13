@@ -77,9 +77,10 @@ char D_pspeu_092554A8[] = "charal %x\n";
 char D_pspeu_092554B8[] = "tsukami %x\n";
 #endif
 
-#ifdef VERSION_PSP
+#if defined(VERSION_PSP) && !defined(NON_MATCHINGS)
 INCLUDE_ASM("boss/rbo7/nonmatchings/e_akmodan_ii", EntityAkmodanII);
 #else
+// matches on US; PSP is close but has register allocation differences
 void EntityAkmodanII(Entity* self) {
     Primitive* prim;
     Entity* entity;
@@ -178,20 +179,20 @@ void EntityAkmodanII(Entity* self) {
         if (!--self->ext.akmodanII.timer) {
             SetStep(4);
         }
-        i = (GetSideToPlayer() & 1) ^ 1;
+        side = (GetSideToPlayer() & 1) ^ 1;
         entity = &PLAYER;
         x = entity->velocityX;
         if (self->facingLeft) {
             x = -x;
         }
         if (GetDistanceToPlayerX() < 64 && GetDistanceToPlayerX() >= 57 &&
-            self->facingLeft == i && x > 0) {
+            self->facingLeft == side && x > 0) {
             SetStep(4);
         }
         if (self->hitFlags & 3) {
             SetStep(6);
         }
-        if (GetDistanceToPlayerX() < 38 && self->facingLeft == i) {
+        if (GetDistanceToPlayerX() < 38 && self->facingLeft == side) {
             x = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
             if (x > 80 && x < 0x1B0) {
                 SetStep(5);
@@ -246,8 +247,8 @@ void EntityAkmodanII(Entity* self) {
                 self->ext.akmodanII.savedTileHeight = g_Tilemap.height;
                 g_Tilemap.x = g_Tilemap.scrollX.i.hi;
                 g_Tilemap.width = g_Tilemap.scrollX.i.hi + 0x100;
-                self->ext.akmodanII.grabbing = 1;
                 self->ext.akmodanII.unk86 = 0;
+                self->ext.akmodanII.grabbing = 1;
                 self->step_s = 2;
             }
             break;
@@ -285,11 +286,11 @@ void EntityAkmodanII(Entity* self) {
             }
             break;
         case 4:
-            i = AnimateEntity(D_us_80180624, self);
-            if (i & 0x80) {
+            side = AnimateEntity(D_us_80180624, self);
+            if (side & 0x80) {
                 self->poseTimer -= self->ext.akmodanII.unk86;
             }
-            if (!i) {
+            if (!side) {
                 self->ext.akmodanII.unk86++;
                 g_Player.unk64 =
                     g_api.enemyDefs[ENEMY_AKMODAN_II_UNK_10E].attack / 2;
@@ -343,13 +344,12 @@ void EntityAkmodanII(Entity* self) {
         break;
     case 6:
         if (!self->step_s) {
-            i = 0;
             entity = &PLAYER;
             x = entity->posX.i.hi - self->posX.i.hi;
             y = entity->posY.i.hi - self->posY.i.hi;
             angle = ratan2(y, x);
             angle += 0x400;
-            do {
+            for (i = 0; i < 8; i++) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(E_ID(UNK_1C), self, entity);
@@ -361,8 +361,7 @@ void EntityAkmodanII(Entity* self) {
                     }
                     entity->zPriority = self->zPriority + 1;
                 }
-                i++;
-            } while (i < 8);
+            }
             PlaySfxPositional(SFX_AKMODAN_II_PAIN);
             self->step_s++;
         }
@@ -531,9 +530,10 @@ void EntityAkmodanII(Entity* self) {
             self->step_s++;
             /* fall through */
         case 4:
+            prim = self->ext.akmodanII.deathPrim;
             x = (Random() & 0x1F) - 0x10;
             y = -(Random() & 0x3F) + 0x20;
-            i = Random() & 1;
+            side = Random() & 1;
             FntPrint("timer %x\n", self->ext.akmodanII.timer);
             if (!--self->ext.akmodanII.timer) {
                 self->ext.akmodanII.timer = 0x50;
@@ -545,7 +545,7 @@ void EntityAkmodanII(Entity* self) {
                 CreateEntityFromCurrentEntity(E_ID(CTULHU_DEATH), entity);
                 entity->posX.i.hi += x;
                 entity->posY.i.hi += y - 8;
-                entity->facingLeft = i;
+                entity->facingLeft = side;
                 entity->params = 0;
             }
             if (!(g_Timer & 7)) {
@@ -559,8 +559,8 @@ void EntityAkmodanII(Entity* self) {
                     } else {
                         entity->posY.i.hi = y + 0x64;
                     }
+                    entity->facingLeft = side;
                     entity->params = 1;
-                    entity->facingLeft = i;
                     entity->zPriority = 0x14;
                     if (self->params) {
                         entity->zPriority += 4;
@@ -591,7 +591,8 @@ void EntityAkmodanII(Entity* self) {
             prim->tpage = 0x12;
             prim->clut = 0x1C7;
             prim->u0 = prim->u2 = 0x28;
-            prim->u1 = prim->u3 = 0;
+            prim->u3 = 0;
+            prim->u1 = 0;
             prim->v0 = prim->v1 = 0x80;
             prim->v2 = prim->v3 = 0xC0;
             x = self->posX.i.hi;
@@ -655,8 +656,8 @@ void EntityAkmodanII(Entity* self) {
                     }
                 }
                 prim = self->ext.akmodanII.deathPrim;
-                prim->v0 = prim->v1 = prim->v1 + 1;
-                prim->y0 = prim->y1 = prim->y1 + 1;
+                prim->v0 = ++prim->v1;
+                prim->y0 = ++prim->y1;
                 self->ext.akmodanII.deathY++;
                 if (self->ext.akmodanII.deathY >= 0x40) {
                     self->step_s++;
@@ -665,10 +666,10 @@ void EntityAkmodanII(Entity* self) {
             /* fall through */
         case 8:
             prim = self->ext.akmodanII.prim;
-            i = 0;
+            side = 0;
             while (prim->next != NULL) {
                 if (prim->p3 == 2) {
-                    i |= 1;
+                    side |= 1;
                     if (!LOH(prim->u2)) {
                         LOH(prim->u2) = 0x20;
                         prim->p3 = 8;
@@ -677,17 +678,17 @@ void EntityAkmodanII(Entity* self) {
                     }
                 }
                 if (prim->p3 == 8) {
-                    i |= 1;
+                    side |= 1;
                     x = prim->x0 << 16;
-                    x += (u16)prim->x3;
+                    x += LOHU(prim->x3);
                     y = prim->y0 << 16;
-                    y += (u16)prim->y3;
+                    y = y + LOHU(prim->y3);
                     x += LOW(prim->x1);
                     y += LOW(prim->x2);
                     prim->x0 = x >> 16;
                     prim->y0 = y >> 16;
-                    prim->x3 = x;
-                    prim->y3 = y;
+                    LOHU(prim->x3) = x & 0xFFFF;
+                    LOHU(prim->y3) = y & 0xFFFF;
                     LOW(prim->x2) -= 0x4000;
                     LOH(prim->u2)--;
                     if (!LOH(prim->u2)) {
@@ -700,7 +701,7 @@ void EntityAkmodanII(Entity* self) {
             prim->x0 = prim->y0 = -0x10;
             prim->priority = self->zPriority;
             prim->drawMode = DRAW_UNK02;
-            if (!i) {
+            if (!side) {
                 g_BossMgrState |= BOSS_MGR_TERMINATED;
                 g_api.FreePrimitives(self->primIndex);
                 self->flags &= ~FLAG_HAS_PRIMS;
