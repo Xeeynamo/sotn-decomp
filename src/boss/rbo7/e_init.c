@@ -22,7 +22,7 @@ void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
-void func_us_801BAB18_from_bo0(Entity* self);
+void EntityBossDoors(Entity* self);
 void EntityBossFightManager(Entity* self);
 void EntityLifeUpSpawn(Entity* self);
 void func_us_801940B4(Entity* self);
@@ -54,7 +54,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
-    func_us_801BAB18_from_bo0,
+    EntityBossDoors,
     EntityBossFightManager,
     EntityLifeUpSpawn,
     func_us_801940B4,
@@ -77,7 +77,7 @@ EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABL
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
 EInit g_EInitUnused80180420 = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
-EInit D_us_8018042C = {ANIMSET_OVL(2), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitBossDoors = {ANIMSET_OVL(2), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
 EInit g_EInitAkmodanII = {ANIMSET_OVL(8), 0x01, 0x48, PAL_AKMODAN_II, ENEMY_AKMODAN_II};
 EInit D_us_80180444 = {ANIMSET_OVL(8), 0x00, 0x48, PAL_AKMODAN_II, ENEMY_AKMODAN_II_UNK_10C};
 EInit D_us_80180450 = {ANIMSET_OVL(10), 0x01, 0x4E, PAL_CC_YELLOW_EFFECT, ENEMY_AKMODAN_II_UNK_10D};

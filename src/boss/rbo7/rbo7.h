@@ -34,7 +34,7 @@ typedef enum EntityID {
     E_UNK_ID13,             // EntityUnkId13
     E_EXPLOSION_VARIANTS,   // EntityExplosionVariants
     E_GREY_PUFF,            // EntityGreyPuff
-    E_UNK_16,               // func_us_801BAB18_from_bo0
+    E_BOSS_DOORS,           // EntityBossDoors
     E_BOSS_FIGHT_MANAGER,   // EntityBossFightManager
     E_LIFE_UP_SPAWN,        // EntityLifeUpSpawn
     E_UNK_19,               // func_us_801940B4
@@ -52,7 +52,7 @@ extern s32 E_ID(LOCK_CAMERA);
 extern s32 E_ID(UNK_ID13);
 extern s32 E_ID(EXPLOSION_VARIANTS);
 extern s32 E_ID(GREY_PUFF);
-extern s32 E_ID(UNK_16);
+extern s32 E_ID(BOSS_DOORS);
 extern s32 E_ID(BOSS_FIGHT_MANAGER);
 extern s32 E_ID(LIFE_UP_SPAWN);
 extern s32 E_ID(UNK_19);

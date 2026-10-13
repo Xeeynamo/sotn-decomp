@@ -7,7 +7,6 @@ entityLayoutVertical = 0x80180268;
 g_EInitAkmodanII = 0x80180438;
 g_BossMgrState = 0x801805C8;
 rooms = 0x801812C4;
-func_us_801BAB18_from_bo0 = 0x801939D4;
 Random = 0x80195ED4;
 CreateEntityFromCurrentEntity = 0x8019854C;
 CreateEntityFromEntity = 0x801985C0;
