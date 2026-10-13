@@ -14,36 +14,35 @@ s16 D_us_801805DC[] = {0, 32, 8, 0};
 AnimateEntityFrame D_us_801805E4[] = {
     POSE(16, 16, 0), POSE(16, 1, 0), POSE(16, 16, 0), POSE(16, 1, 0), POSE_END};
 AnimateEntityFrame D_us_801805F0[] = {
-    POSE(64, 3, 0), POSE(2, 5, 0), POSE(43, 6, 0),
+    POSE(64, 3, 0), POSE(2, 5, 0),  POSE(43, 6, 0),
     POSE(3, 7, 0),  POSE(21, 8, 0), POSE_END};
 AnimateEntityFrame D_us_801805FC[] = {
-    POSE(7, 9, 0),  POSE(7, 10, 0), POSE(7, 11, 0), POSE(7, 12, 0),
-    POSE(7, 13, 0), POSE(7, 12, 0), POSE(7, 11, 0), POSE(7, 10, 0),
-    POSE_LOOP(0)};
+    POSE(7, 9, 0),  POSE(7, 10, 0), POSE(7, 11, 0),
+    POSE(7, 12, 0), POSE(7, 13, 0), POSE(7, 12, 0),
+    POSE(7, 11, 0), POSE(7, 10, 0), POSE_LOOP(0)};
 AnimateEntityFrame D_us_80180610[] = {
     POSE(3, 14, 0), POSE(10, 15, 0), POSE(3, 14, 0), POSE_END};
 AnimateEntityFrame D_us_80180618[] = {
-    POSE(6, 17, 0), POSE(36, 18, 0), POSE(4, 19, 0), POSE(32, 20, 0),
-    POSE_END};
+    POSE(6, 17, 0), POSE(36, 18, 0), POSE(4, 19, 0), POSE(32, 20, 0), POSE_END};
 AnimateEntityFrame D_us_80180624[] = {
-    POSE(5, 21, 0), POSE(5, 22, 0), POSE(5, 23, 0), POSE(5, 24, 0),
-    POSE(5, 25, 0), POSE(5, 26, 0), POSE(5, 27, 0), POSE(5, 28, 0),
-    POSE_LOOP(0)};
+    POSE(5, 21, 0), POSE(5, 22, 0), POSE(5, 23, 0),
+    POSE(5, 24, 0), POSE(5, 25, 0), POSE(5, 26, 0),
+    POSE(5, 27, 0), POSE(5, 28, 0), POSE_LOOP(0)};
 AnimateEntityFrame D_us_80180638[] = {
     POSE(4, 29, 0), POSE(21, 30, 0), POSE_END};
 AnimateEntityFrame D_us_80180640[] = {
-    POSE(4, 32, 0), POSE(17, 33, 0), POSE(4, 34, 0), POSE(4, 35, 0),
-    POSE(4, 36, 0), POSE(4, 37, 0),  POSE(4, 38, 0), POSE(4, 39, 0),
-    POSE(12, 40, 0), POSE(4, 39, 0), POSE(4, 38, 0), POSE(4, 37, 0),
-    POSE(4, 36, 0), POSE(4, 35, 0),  POSE(4, 34, 0), POSE(4, 33, 0),
-    POSE(4, 32, 0), POSE_END};
+    POSE(4, 32, 0),  POSE(17, 33, 0), POSE(4, 34, 0), POSE(4, 35, 0),
+    POSE(4, 36, 0),  POSE(4, 37, 0),  POSE(4, 38, 0), POSE(4, 39, 0),
+    POSE(12, 40, 0), POSE(4, 39, 0),  POSE(4, 38, 0), POSE(4, 37, 0),
+    POSE(4, 36, 0),  POSE(4, 35, 0),  POSE(4, 34, 0), POSE(4, 33, 0),
+    POSE(4, 32, 0),  POSE_END};
 static AnimateEntityFrame anim_burst_in[] = {
-    POSE(2, 1, 0), POSE(2, 8, 0), POSE(2, 9, 0), POSE(2, 10, 0),
-    POSE(2, 11, 0), POSE_END};
+    POSE(2, 1, 0),  POSE(2, 8, 0),  POSE(2, 9, 0),
+    POSE(2, 10, 0), POSE(2, 11, 0), POSE_END};
 static AnimateEntityFrame anim_burst_loop[] = {
-    POSE(2, 8, 0),  POSE(2, 9, 0),  POSE(2, 10, 0), POSE(2, 11, 0),
-    POSE(2, 10, 0), POSE(2, 9, 0),  POSE(2, 10, 0), POSE(2, 11, 0),
-    POSE_LOOP(0)};
+    POSE(2, 8, 0),  POSE(2, 9, 0),  POSE(2, 10, 0),
+    POSE(2, 11, 0), POSE(2, 10, 0), POSE(2, 9, 0),
+    POSE(2, 10, 0), POSE(2, 11, 0), POSE_LOOP(0)};
 static AnimateEntityFrame anim_burst_out[] = {
     POSE(2, 12, 0), POSE(2, 13, 0), POSE(2, 14, 0), POSE_END};
 static AnimateEntityFrame anim_flame[] = {
@@ -59,15 +58,15 @@ static AnimateEntityFrame anim_flame[] = {
 s16 D_us_801806CC[][2] = {
     {-26, -14}, {-24, 0}, {-32, 0}, {-30, -8}, {-16, -8}, {-18, -8}, {-16, -8},
     {-8, -8},   {8, -8},  {16, -8}, {18, -8},  {16, -8},  {-18, -8}, {-18, -8}};
-s8 D_us_80180704[][4] = {{0, 0, 0, 0},   {4, -4, 4, 36},  {4, 0, 4, 32},
-                         {4, 8, 4, 24},  {-4, 0, 4, 32},  {-4, 4, 4, 28},
-                         {12, 0, 4, 32}};
-u8 D_us_80180720[] = {0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3,
-                      3, 1, 4, 4, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                      0, 4, 2, 6, 6, 2, 2, 2, 2, 2, 2, 0, 0, 0};
-static s8 D_us_8018074C[][4] = {{0, 0, 0, 0},     {-20, -4, 4, 4},
-                                {-16, -4, 8, 4},  {-16, -4, 16, 4},
-                                {-24, -4, 16, 4}, {-32, -4, 24, 4}};
+s8 D_us_80180704[][4] = {
+    {0, 0, 0, 0},   {4, -4, 4, 36}, {4, 0, 4, 32}, {4, 8, 4, 24},
+    {-4, 0, 4, 32}, {-4, 4, 4, 28}, {12, 0, 4, 32}};
+u8 D_us_80180720[] = {
+    0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 1, 4, 4, 5, 5, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 2, 6, 6, 2, 2, 2, 2, 2, 2, 0, 0, 0};
+static s8 D_us_8018074C[][4] = {
+    {0, 0, 0, 0},     {-20, -4, 4, 4},  {-16, -4, 8, 4},
+    {-16, -4, 16, 4}, {-24, -4, 16, 4}, {-32, -4, 24, 4}};
 static u8 D_us_80180764[] = {0, 1, 2, 3, 4, 5, 0, 0};
 #ifdef VERSION_PSP
 char D_pspeu_09255468[] = "step %x\n";
@@ -235,9 +234,9 @@ void EntityAkmodanII(Entity* self) {
             if (abs(x) < 8 && abs(y) < 12 &&
                 !(g_Player.status &
                   (PLAYER_STATUS_AXEARMOR | PLAYER_STATUS_DEAD |
-                   PLAYER_STATUS_INVINCIBLE |
-                   PLAYER_STATUS_STONE | PLAYER_STATUS_UNK40 |
-                   PLAYER_STATUS_WOLF_FORM | PLAYER_STATUS_MIST_FORM))) {
+                   PLAYER_STATUS_INVINCIBLE | PLAYER_STATUS_STONE |
+                   PLAYER_STATUS_UNK40 | PLAYER_STATUS_WOLF_FORM |
+                   PLAYER_STATUS_MIST_FORM))) {
                 g_Player.unk60 = 1;
                 g_Player.unk64 = 8;
                 g_Player.unk62 = 0;
@@ -497,7 +496,7 @@ void EntityAkmodanII(Entity* self) {
             self->step_s++;
             break;
         case 3:
-            self->palette = 0x81C7;
+            self->palette = PAL_FLAG(0x1C7);
             self->flags |= FLAG_POS_CAMERA_LOCKED;
             self->zPriority = self->ext.akmodanII.baseZPriority;
             prim = self->ext.akmodanII.deathPrim;
@@ -804,7 +803,6 @@ void func_us_801957C0(Entity* self) {
         break;
     }
 }
-
 
 void EntityHarpyKick(Entity* self) {
     s32 animFrame;
