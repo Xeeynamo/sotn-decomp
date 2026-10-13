@@ -109,7 +109,7 @@ segments:
       - [0x4FC18, .data, e_room_bg]
       - [0x4FC38, .data, e_prisoner]
       - [0x4FCB0, .data, e_lock_camera]
-      - [0x4FD28, data, 4FD28]
+      - [0x4FD28, .data, e_spikes]
       - [0x4FD80, .rodata, e_ctulhu]
       - [0x4FDA0, .rodata, e_azaghal]
       - [0x4FDD8, .rodata, e_karasuman]
