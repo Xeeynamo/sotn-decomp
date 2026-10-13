@@ -1063,12 +1063,23 @@ files:
       vram: 0x09237700
       assets:
         - [0x28F40, sprite_banks, psp/sprite_banks]
-        - [0x28FA0, skip]
         - [0x28FA0, layers, layers]
-        - [0x29268, skip]
+        - [0x29268, paldef, palette_def]
+        - [0x29300, skip]
         - [0x29788, rooms, rooms]
         - [0x29858, skip]
-
+        - [0x37650, palette, D_801931EC, 16]
+        - [0x37910, palette, D_801934AC, 16]
+        - [0x37950, palette, D_801934EC, 16]
+        - [0x37970, palette, D_8019350C, 16]
+        - [0x37A10, palette, D_801935AC, 16]
+        - [0x37C10, palette, D_801937AC, 16]
+        - [0x37CD0, palette, D_8019386C, 16]
+        - [0x37D10, palette, D_801938AC, 16]
+        - [0x37DD0, palette, D_8019396C, 16]
+        - [0x37ED0, palette, D_80193A6C, 16]
+        - [0x37F10, palette, D_80193AAC, 16]
+        - [0x37F50, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno3.bin
     asset_path: assets/st/rno3
     src_path: src/st/rno3

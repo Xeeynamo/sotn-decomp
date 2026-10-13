@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno2.h"
 
+#ifndef VERSION_PSP
 u8 gfx_unused[] = {
 #include "gen/gfx_unused.h"
 };
@@ -73,7 +74,7 @@ u8 D_80192B14[] = {
 u8 D_80192F7C[] = {
 #include "gen/D_80192F7C.h"
 };
-
+#endif
 u16 D_801931EC[] = {
 #include "gen/D_801931EC.h"
 };
