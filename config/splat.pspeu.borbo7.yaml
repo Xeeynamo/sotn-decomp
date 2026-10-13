@@ -78,7 +78,7 @@ segments:
       - [0x12988, .data, e_room_fg]
       - [0x12A28, data, 12A28]
       - [0x13AB0, .data, palette_def]
-      - [0x13AD8, data]
+      - [0x13AD8, .data, graphics_banks]
       - [0x13B80, .data, e_red_door_tiles]
       - [0x13B90, .data, e_init]
       - [0x13CC8, data]
