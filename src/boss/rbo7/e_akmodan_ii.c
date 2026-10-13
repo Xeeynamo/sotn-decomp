@@ -41,7 +41,7 @@ AnimateEntityFrame D_us_80180670[] = {
     POSE_LOOP(0)};
 AnimateEntityFrame D_us_80180684[] = {
     POSE(2, 12, 0), POSE(2, 13, 0), POSE(2, 14, 0), POSE_END};
-AnimateEntityFrame D_us_8018068C[] = {
+static AnimateEntityFrame anim_flame[] = {
     POSE(3, 1, 0),  POSE(3, 2, 0),  POSE(4, 3, 0),  POSE(4, 4, 0),
     POSE(4, 5, 0),  POSE(4, 6, 0),  POSE(4, 5, 0),  POSE(4, 4, 0),
     POSE(4, 5, 0),  POSE(4, 6, 0),  POSE(4, 7, 0),  POSE(4, 8, 0),
@@ -117,7 +117,36 @@ void EntityHarpyKick(Entity* self) {
 
 INCLUDE_ASM("boss/rbo7/nonmatchings/e_akmodan_ii", func_us_80195A8C);
 
-INCLUDE_ASM("boss/rbo7/nonmatchings/e_akmodan_ii", func_us_80195D04);
+extern EInit D_us_80180450;
+extern s32 g_BossMgrState;
+
+void func_us_80195D04(Entity* self) {
+    if (g_BossMgrState & BOSS_MGR_DEFEAT) {
+        DestroyEntity(self);
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180450);
+        self->animSet = 5;
+        self->palette += 0x8000;
+        self->unk5A = 0;
+        self->blendMode = BLEND_TRANSP;
+        self->velocityY = FIX(-0.375);
+        self->hitboxWidth = self->hitboxHeight = 3;
+        /* fall through */
+    case 1:
+        MoveEntity();
+        if (self->pose > 25) {
+            self->hitboxState = 0;
+        }
+        if (!AnimateEntity(anim_flame, self)) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 static AnimateEntityFrame D_us_8018076C[] = {
     POSE(3, 1, 0),  POSE(3, 2, 0),  POSE(3, 3, 0),  POSE(3, 4, 0),
