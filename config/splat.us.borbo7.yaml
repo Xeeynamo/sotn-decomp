@@ -48,7 +48,7 @@ segments:
       - [0x484, .data, e_lock_camera]
       - [0x504, .data, e_breakable]
       - [0x564, .data, d_prize_drops]
-      - [0x568, data]
+      - [0x564, data]
       - [0x788, .data, st_update]
       - [0x7D4, data]
       - [0x7D4, .data, collision]
