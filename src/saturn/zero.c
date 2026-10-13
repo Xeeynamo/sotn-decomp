@@ -834,9 +834,6 @@ void func_060059F4(void) {
     DAT_060645C4();
 }
 
-extern s32 DAT_060389E0[][2];
-extern s32 DAT_060389F4[];
-
 s32 func_06005A90(void) {
     func_06019FE4(0);
     switch (DAT_0605D770.unk8) {

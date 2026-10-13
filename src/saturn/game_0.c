@@ -246,8 +246,8 @@ void CreateEntitiesBelow(s16 posY) {
     }
 }
 
-extern u16** DAT_060645e4;
-extern u16** DAT_060645f8;
+extern u16** DAT_060645E4;
+extern u16** DAT_060645F8;
 
 void InitRoomEntities(s32 arg0) {
     Tilemap* tilemap;
@@ -291,8 +291,8 @@ void InitRoomEntities(s32 arg0) {
         arg0++;
     }
     iVar9 = g_CurrentRoom.unk8 * 0x35 + arg0;
-    g_LayoutObjHorizontal = DAT_060645e4[iVar9];
-    g_LayoutObjVertical = DAT_060645f8[iVar9];
+    g_LayoutObjHorizontal = DAT_060645E4[iVar9];
+    g_LayoutObjVertical = DAT_060645F8[iVar9];
     ptrH = g_LayoutObjHorizontal;
     ptrV = g_LayoutObjVertical;
     if (*ptrH != 0xFFFE) {

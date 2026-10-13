@@ -8,7 +8,17 @@
 
 void DestroyEntity(Entity* entity);
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606B6F8, LoadSubDisplayFiles);
+// func_0606B6F8
+void LoadSubDisplayFiles(void) {
+    ReadFileToAddr("SUB.PRG", 0x060D6000);
+    if (g_FileLoadEnabled != 0) {
+        func_0601AF5C();
+    }
+    ReadFileToAddr("KANJI.FON", 0x00252000);
+    ReadFileToAddr("SUB_DISP.MAP", 0x002B2000);
+}
+
+const char DAT_0606B754[] = "OYAJI.CHR";
 
 // _READ_SUB_OUT_MODE
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606B760, func_0606B760);
@@ -17,7 +27,6 @@ extern s32 DAT_0605BEC4;
 extern s32 DAT_060937F8;
 extern char DAT_0606BB34[];
 extern char DAT_0606BB40[];
-extern char DAT_0606B754[];
 extern char* g_StageAlternateMapNames[];
 extern Unk0605D770 DAT_0605D770;
 
@@ -183,8 +192,6 @@ void func_0606BEE4(void) {
 }
 
 void func_0606C064(void) { ReadFileToAddr("GAMEOVER.MAP", 0x00252000); }
-
-extern s32 DAT_060389F4[];
 
 s32 func_0606C088(u16 arg0) {
     switch (DAT_0605D770.unk8) {

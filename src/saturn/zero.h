@@ -27,7 +27,7 @@ void func_06004E50(void);
 void func_06004E94(void);
 void INT_SetScuFunc(u32 vector, void (*handler)(void));
 
-// DAT_0605C120, DAT_060645EC, DAT_060645e4, DAT_060645f8 and SpGourTbl
+// DAT_0605C120, DAT_060645EC, DAT_060645E4, DAT_060645F8 and SpGourTbl
 // are deliberately absent: zero and its dependents access them at
 // different types, and a shared declaration changes codegen.
 // Each user declares its own.
@@ -355,6 +355,8 @@ extern void ResetPadsRepeat(void);
 extern void func_06008C2C(void);
 extern void (*DAT_06064624)(s32);
 extern void (*DAT_0606461C)(s32);
+extern s32 DAT_060389E0[][2];
+extern s32 DAT_060389F4[];
 extern u8 DAT_06038C84[];
 extern s32 DAT_06038CA0[];
 extern u16 DAT_06038D30[];
