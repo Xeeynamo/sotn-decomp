@@ -2,6 +2,8 @@
 #include "rbo7.h"
 
 extern EInit g_EInitInteractable;
+extern EInit D_us_80180444;
+extern EInit D_us_80180450;
 
 // unused
 static s16 sensors_unused[][2] = {{0, 32}, {0, 4}, {16, -4}, {-32, 0}};
@@ -75,9 +77,64 @@ char D_pspeu_092554B8[] = "tsukami %x\n";
 
 INCLUDE_ASM("boss/rbo7/nonmatchings/e_akmodan_ii", func_us_801940B4);
 
-INCLUDE_ASM("boss/rbo7/nonmatchings/e_akmodan_ii", func_us_801957C0);
+void func_us_801957C0(Entity* self) {
+    Entity* entity;
 
-extern EInit D_us_80180444;
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180444);
+        self->hitboxState = 0;
+        if (self->params == 2) {
+            self->step = 2;
+        }
+        if (self->params == 3) {
+            self->step = 3;
+        }
+        break;
+    case 2:
+        switch (self->step_s) {
+        case 0:
+            self->animCurFrame = 0;
+            entity = self - self->params;
+            if (entity->ext.akmodanII.unk84) {
+                self->animCurFrame = 4;
+                self->ext.akmodanII.timer = 64;
+                self->step_s++;
+            }
+            break;
+        case 1:
+            if (self->facingLeft) {
+                self->velocityX = FIX(0.75);
+            } else {
+                self->velocityX = FIX(-0.75);
+            }
+            self->step_s++;
+        case 2:
+            MoveEntity();
+            if (!--self->ext.akmodanII.timer) {
+                self->zPriority -= 2;
+                self->step_s++;
+            }
+            break;
+        }
+        break;
+    case 3:
+        switch (self->step_s) {
+        case 0:
+            self->animCurFrame = 0;
+            entity = self - self->params;
+            if (entity->ext.akmodanII.unk84) {
+                self->animCurFrame = 2;
+                self->step_s++;
+            }
+            break;
+        case 1:
+            break;
+        }
+        break;
+    }
+}
+
 
 void EntityHarpyKick(Entity* self) {
     s32 animFrame;
@@ -117,7 +174,6 @@ void EntityHarpyKick(Entity* self) {
 
 INCLUDE_ASM("boss/rbo7/nonmatchings/e_akmodan_ii", func_us_80195A8C);
 
-extern EInit D_us_80180450;
 extern s32 g_BossMgrState;
 
 void func_us_80195D04(Entity* self) {
