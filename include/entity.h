@@ -3099,6 +3099,8 @@ typedef struct {
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 : 16;
     /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 : 8;
+    /* 0x86 */ u8 unk86;
 } ET_AkmodanII;
 
 typedef struct {

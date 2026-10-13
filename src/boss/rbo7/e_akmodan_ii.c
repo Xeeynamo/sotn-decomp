@@ -4,6 +4,7 @@
 extern EInit g_EInitInteractable;
 extern EInit D_us_80180444;
 extern EInit D_us_80180450;
+extern s32 g_BossMgrState;
 
 // unused
 static s16 sensors_unused[][2] = {{0, 32}, {0, 4}, {16, -4}, {-32, 0}};
@@ -34,14 +35,14 @@ AnimateEntityFrame D_us_80180640[] = {
     POSE(12, 40, 0), POSE(4, 39, 0), POSE(4, 38, 0), POSE(4, 37, 0),
     POSE(4, 36, 0), POSE(4, 35, 0),  POSE(4, 34, 0), POSE(4, 33, 0),
     POSE(4, 32, 0), POSE_END};
-AnimateEntityFrame D_us_80180664[] = {
+static AnimateEntityFrame anim_burst_in[] = {
     POSE(2, 1, 0), POSE(2, 8, 0), POSE(2, 9, 0), POSE(2, 10, 0),
     POSE(2, 11, 0), POSE_END};
-AnimateEntityFrame D_us_80180670[] = {
+static AnimateEntityFrame anim_burst_loop[] = {
     POSE(2, 8, 0),  POSE(2, 9, 0),  POSE(2, 10, 0), POSE(2, 11, 0),
     POSE(2, 10, 0), POSE(2, 9, 0),  POSE(2, 10, 0), POSE(2, 11, 0),
     POSE_LOOP(0)};
-AnimateEntityFrame D_us_80180684[] = {
+static AnimateEntityFrame anim_burst_out[] = {
     POSE(2, 12, 0), POSE(2, 13, 0), POSE(2, 14, 0), POSE_END};
 static AnimateEntityFrame anim_flame[] = {
     POSE(3, 1, 0),  POSE(3, 2, 0),  POSE(4, 3, 0),  POSE(4, 4, 0),
@@ -172,9 +173,65 @@ void EntityHarpyKick(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/rbo7/nonmatchings/e_akmodan_ii", func_us_80195A8C);
+void func_us_80195A8C(Entity* self) {
+    s16 angle;
 
-extern s32 g_BossMgrState;
+    if (g_BossMgrState & BOSS_MGR_DEFEAT) {
+        DestroyEntity(self);
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180450);
+        self->blendMode = BLEND_TRANSP;
+        self->drawFlags = ENTITY_ROTATE | ENTITY_SCALEY | ENTITY_SCALEX;
+        self->hitboxWidth = self->hitboxHeight = 6;
+        self->rotate += 0x180 - Random() * 3;
+        angle = self->rotate;
+        self->posX.i.hi += (rsin(angle) * 8) >> 12;
+        self->posY.i.hi += (rcos(angle) * -28) >> 12;
+        self->velocityX = rsin(angle) * 24;
+        self->velocityY = rcos(angle) * -24;
+        self->scaleX = 0x60;
+        self->scaleY = 0x60;
+        self->ext.akmodanII.unk86 = 0;
+        /* fall through */
+    case 1:
+        if (!AnimateEntity(anim_burst_in, self)) {
+            SetStep(2);
+        }
+        MoveEntity();
+        self->scaleX += 0xC;
+        self->scaleY += 0xC;
+        break;
+    case 2:
+        if (!self->step_s) {
+            self->velocityX >>= 2;
+            self->velocityY >>= 2;
+            self->step_s++;
+        }
+        MoveEntity();
+        if (!AnimateEntity(anim_burst_loop, self)) {
+            self->ext.akmodanII.unk86++;
+        }
+        if (self->ext.akmodanII.unk86 > 16) {
+            self->drawFlags |= ENTITY_OPACITY;
+            self->opacity = 0x80;
+            self->hitboxState = 0;
+            SetStep(3);
+        }
+        break;
+    case 3:
+        self->opacity -= 2;
+        self->scaleX += 0x18;
+        self->scaleY += 0x18;
+        if (!AnimateEntity(anim_burst_out, self)) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 void func_us_80195D04(Entity* self) {
     if (g_BossMgrState & BOSS_MGR_DEFEAT) {
