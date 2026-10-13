@@ -1836,7 +1836,7 @@
 | rchi       | func_pspeu_09247F90               |       29 |          5 |        |       |     |
 | rno2       | func_pspeu_092512D8               |       29 |          5 |        |       |     |
 | rno3       | func_pspeu_09251B38               |       29 |          5 |        |       |     |
-| rno4       | FindFirstUnkPrim                  |       29 |          5 |        |       |     |
+| rno4       | func_pspeu_09251940               |       29 |          5 |        |       |     |
 | rnz0       | func_pspeu_09254700               |       29 |          5 |        |       |     |
 | rnz1       | func_pspeu_0924D188               |       29 |          5 |        |       |     |
 | bo2        | unk_14DB0.rodata                  |       30 |          0 | Yes    |       |     |
@@ -5170,7 +5170,7 @@
 | rno3       | func_pspeu_09253D28               |       84 |          6 |        |       |     |
 | dra        | func_psp_090EEE78                 |       84 |          7 |        |       |     |
 | main       | __multadd                         |       84 |          7 |        |       |     |
-| rno4       | func_us_801D5DC8                  |       84 |          7 |        |       |     |
+| rno4       | func_pspeu_0923D170               |       84 |          7 |        |       |     |
 | bo6        | func_pspeu_0924A448               |       84 |          8 |        |       |     |
 | main       | rcos                              |       84 |         10 |        |       |     |
 | main       | rsin                              |       84 |         10 |        |       |     |
@@ -7285,6 +7285,7 @@
 |            | func_pspeu_0925A878               |      183 |         17 |        |       |     |
 | rbo5       | PlayAnimation                     |      183 |         17 |        |       |     |
 | dra        | func_psp_09116E40                 |      183 |         17 |        |       |     |
+| rno4       | func_pspeu_0923DF60               |      183 |         19 |        |       |     |
 | chi        | func_psp_0923D008                 |      183 |         20 |        |       |     |
 | main       | __ieee754_atan2f                  |      183 |         48 |        |       |     |
 | bo6        | func_pspeu_09267A60               |      184 |         17 |        |       |     |
@@ -9525,7 +9526,7 @@
 | are        | func_pspeu_0923C7F0               |      747 |         69 |        |       |     |
 | no1        | func_pspeu_09238930               |      747 |         69 |        |       |     |
 | top        | func_pspeu_09238930               |      747 |         69 |        |       |     |
-| rno4       | func_us_801D511C                  |      747 |        109 |        |       |     |
+| rno4       | func_pspeu_09250340               |      747 |        109 |        |       |     |
 | bo6        | func_pspeu_092509D0_from_rbo5     |      748 |        125 |        |       |     |
 | dra        | func_psp_0911A0B8                 |      749 |         52 |        |       |     |
 | rcat       | func_pspeu_0924F9B0               |      749 |         71 |        |       |     |
@@ -9646,6 +9647,7 @@
 |            | func_092EBFB0                     |      874 |         53 | Yes    |       |     |
 | lib        | func_psp_09255068                 |      883 |         80 |        |       |     |
 | lib        | func_psp_09263810                 |      884 |         74 | Yes    |       |     |
+| rno4       | func_pspeu_0923D2A0               |      887 |        152 | Yes    |       |     |
 | st0        | func_pspeu_09251B50               |      890 |        109 |        |       |     |
 | dra        | func_psp_0913A448                 |      893 |        109 | Yes    |       |     |
 | no1        | func_pspeu_09251A78               |      893 |        137 | Yes    |       |     |
@@ -9811,7 +9813,6 @@
 | st0        | PrologueScroll                    |     1058 |        112 | Yes    |       |     |
 | lib        | func_psp_09267400                 |     1060 |        102 | Yes    |       |     |
 | bo0        | func_pspeu_092667C8               |     1063 |         94 | Yes    |       |     |
-| rno4       | func_us_801D5E90                  |     1065 |        171 | Yes    |       |     |
 | bo0        | func_pspeu_0925B1B0               |     1069 |         81 |        |       |     |
 |            | func_pspeu_092489E0               |     1071 |         91 |        |       |     |
 | rbo2       | func_us_8019DA04                  |     1072 |        154 | Yes    |       |     |
