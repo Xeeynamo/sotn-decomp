@@ -1,5 +1,4 @@
 spriteBanks = 0x8018002C;
-cluts = 0x801800AC;
 rooms_layers = 0x801800D0;
 gfxBanks = 0x80180168;
 entityLayoutHorizontal = 0x80180194;

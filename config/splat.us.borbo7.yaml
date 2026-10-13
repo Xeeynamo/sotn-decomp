@@ -41,6 +41,8 @@ segments:
     subsegments:
       - [0x0, .data, header]
       - [0x2C, data]
+      - [0x8C, .data, palette_def]
+      - [0xB0, data]
       - [0x33C, .data, e_init]
       - [0x45C, .data, background_block_init]
       - [0x474, .data, e_red_door_tiles]

@@ -1983,6 +1983,8 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
+          - [0x8C, paldef, palette_def]
+          - [0xB0, skip]
           - [0x94FC, palette, D_us_801894FC, 16] # 0x2C0
           - [0x97BC, palette, D_us_801897BC, 16] # 0xC0
           - [0x987C, skip]
