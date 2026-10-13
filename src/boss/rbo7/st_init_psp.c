@@ -1,5 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../rbo7/rbo7.h"
+#include "rbo7.h"
+#include "../../st/pfn_entity_update.h"
+
+extern LayoutEntity* D_8D2DDD4;
+extern LayoutEntity* D_8D2DEA8;
+extern Overlay g_BossOverlay;
 
 s32 E_ID(BACKGROUND_BLOCK);
 s32 E_ID(LOCK_CAMERA);
@@ -33,4 +38,11 @@ void InitEntityIds(void) {
     SET_E_ID(CTULHU_DEATH);
 }
 
-INCLUDE_ASM("boss/rbo7/rbo7_psp/st_init", RBO7_Load);
+void RBO7_Load(void) {
+    InitEntityIds();
+    PfnEntityUpdates = EntityUpdates;
+    g_pStObjLayoutHorizontal = &D_8D2DDD4;
+    g_pStObjLayoutVertical = &D_8D2DEA8;
+    func_892A018();
+    memcpy(&g_api.o, &g_BossOverlay, sizeof(Overlay));
+}

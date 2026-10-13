@@ -46,6 +46,23 @@ typedef enum EntityID {
     NUM_ENTITIES,
 };
 
+#ifdef VERSION_PSP
+extern s32 E_ID(BACKGROUND_BLOCK);
+extern s32 E_ID(LOCK_CAMERA);
+extern s32 E_ID(UNK_ID13);
+extern s32 E_ID(EXPLOSION_VARIANTS);
+extern s32 E_ID(GREY_PUFF);
+extern s32 E_ID(UNK_16);
+extern s32 E_ID(BOSS_FIGHT_MANAGER);
+extern s32 E_ID(LIFE_UP_SPAWN);
+extern s32 E_ID(UNK_19);
+extern s32 E_ID(UNK_1A);
+extern s32 E_ID(HARPY_KICK);
+extern s32 E_ID(UNK_1C);
+extern s32 E_ID(UNK_1D);
+extern s32 E_ID(CTULHU_DEATH);
+#endif
+
 extern EInit g_EInitBreakable;
 extern AnimationFrame* g_eBreakableAnimations[];
 extern u8 g_eBreakableExplosionTypes[];
