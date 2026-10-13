@@ -861,8 +861,156 @@ void UnMuteCd(void) {
 // _conve
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60133CC, func_060133CC);
 
-// _convertDVI_STE
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6013538, func_06013538);
+extern s32 g_AdpcmDeltaTable[];
+extern s32 g_AdpcmIndexAdjust[];
+
+// original name: convertDVI_STE
+void func_06013538(u8* arg0, u16* arg1, u16* arg2, u32 arg3, s16* arg4,
+                   s16* arg5, s32* arg6, s32* arg7) {
+#define CLAMP(x, min, max)                                                     \
+    if (x < min) {                                                             \
+        x = min;                                                               \
+    } else if (x > max) {                                                      \
+        x = max;                                                               \
+    }
+
+    s32 count;
+    u32 i;
+    s32 var_r2;
+    s32 var_r3;
+    u8 temp_r1;
+    s32 hi, lo;
+    u8* ptr;
+
+    var_r2 = *arg6;
+    var_r3 = *arg4;
+    ptr = arg0;
+    count = i = arg3 >> 2;
+    for (i = count; i > 0; i--) {
+        temp_r1 = *ptr++;
+        hi = temp_r1 >> 4;
+        lo = temp_r1 & 0xF;
+        var_r3 += g_AdpcmDeltaTable[(var_r2 * 0x10) + hi];
+        CLAMP(var_r3, -0x8000, 0x7FFF);
+        var_r2 += g_AdpcmIndexAdjust[hi];
+        CLAMP(var_r2, 0, 0x58);
+        *arg1++ = var_r3;
+        var_r3 += g_AdpcmDeltaTable[(var_r2 * 0x10) + lo];
+        CLAMP(var_r3, -0x8000, 0x7FFF);
+        var_r2 += g_AdpcmIndexAdjust[lo];
+        CLAMP(var_r2, 0, 0x58);
+        *arg1++ = var_r3;
+
+        temp_r1 = *ptr++;
+        hi = temp_r1 >> 4;
+        lo = temp_r1 & 0xF;
+        var_r3 += g_AdpcmDeltaTable[(var_r2 * 0x10) + hi];
+        CLAMP(var_r3, -0x8000, 0x7FFF);
+        var_r2 += g_AdpcmIndexAdjust[hi];
+        CLAMP(var_r2, 0, 0x58);
+        *arg1++ = var_r3;
+        var_r3 += g_AdpcmDeltaTable[(var_r2 * 0x10) + lo];
+        CLAMP(var_r3, -0x8000, 0x7FFF);
+        var_r2 += g_AdpcmIndexAdjust[lo];
+        CLAMP(var_r2, 0, 0x58);
+        *arg1++ = var_r3;
+
+        temp_r1 = *ptr++;
+        hi = temp_r1 >> 4;
+        lo = temp_r1 & 0xF;
+        var_r3 += g_AdpcmDeltaTable[(var_r2 * 0x10) + hi];
+        CLAMP(var_r3, -0x8000, 0x7FFF);
+        var_r2 += g_AdpcmIndexAdjust[hi];
+        CLAMP(var_r2, 0, 0x58);
+        *arg1++ = var_r3;
+        var_r3 += g_AdpcmDeltaTable[(var_r2 * 0x10) + lo];
+        CLAMP(var_r3, -0x8000, 0x7FFF);
+        var_r2 += g_AdpcmIndexAdjust[lo];
+        CLAMP(var_r2, 0, 0x58);
+        *arg1++ = var_r3;
+
+        temp_r1 = *ptr;
+        hi = temp_r1 >> 4;
+        lo = temp_r1 & 0xF;
+        ptr += 5;
+        var_r3 += g_AdpcmDeltaTable[(var_r2 * 0x10) + hi];
+        CLAMP(var_r3, -0x8000, 0x7FFF);
+        var_r2 += g_AdpcmIndexAdjust[hi];
+        CLAMP(var_r2, 0, 0x58);
+        *arg1++ = var_r3;
+        var_r3 += g_AdpcmDeltaTable[(var_r2 * 0x10) + lo];
+        CLAMP(var_r3, -0x8000, 0x7FFF);
+        var_r2 += g_AdpcmIndexAdjust[lo];
+        CLAMP(var_r2, 0, 0x58);
+        *arg1++ = var_r3;
+    }
+    *arg6 = var_r2;
+    *arg4 = var_r3;
+
+    var_r2 = *arg7;
+    var_r3 = *arg5;
+    ptr = arg0 + 4;
+    for (i = count; i > 0; i--) {
+        temp_r1 = *ptr++;
+        hi = temp_r1 >> 4;
+        lo = temp_r1 & 0xF;
+        var_r3 += g_AdpcmDeltaTable[(var_r2 * 0x10) + hi];
+        CLAMP(var_r3, -0x8000, 0x7FFF);
+        var_r2 += g_AdpcmIndexAdjust[hi];
+        CLAMP(var_r2, 0, 0x58);
+        *arg2++ = var_r3;
+        var_r3 += g_AdpcmDeltaTable[(var_r2 * 0x10) + lo];
+        CLAMP(var_r3, -0x8000, 0x7FFF);
+        var_r2 += g_AdpcmIndexAdjust[lo];
+        CLAMP(var_r2, 0, 0x58);
+        *arg2++ = var_r3;
+
+        temp_r1 = *ptr++;
+        hi = temp_r1 >> 4;
+        lo = temp_r1 & 0xF;
+        var_r3 += g_AdpcmDeltaTable[(var_r2 * 0x10) + hi];
+        CLAMP(var_r3, -0x8000, 0x7FFF);
+        var_r2 += g_AdpcmIndexAdjust[hi];
+        CLAMP(var_r2, 0, 0x58);
+        *arg2++ = var_r3;
+        var_r3 += g_AdpcmDeltaTable[(var_r2 * 0x10) + lo];
+        CLAMP(var_r3, -0x8000, 0x7FFF);
+        var_r2 += g_AdpcmIndexAdjust[lo];
+        CLAMP(var_r2, 0, 0x58);
+        *arg2++ = var_r3;
+
+        temp_r1 = *ptr++;
+        hi = temp_r1 >> 4;
+        lo = temp_r1 & 0xF;
+        var_r3 += g_AdpcmDeltaTable[(var_r2 * 0x10) + hi];
+        CLAMP(var_r3, -0x8000, 0x7FFF);
+        var_r2 += g_AdpcmIndexAdjust[hi];
+        CLAMP(var_r2, 0, 0x58);
+        *arg2++ = var_r3;
+        var_r3 += g_AdpcmDeltaTable[(var_r2 * 0x10) + lo];
+        CLAMP(var_r3, -0x8000, 0x7FFF);
+        var_r2 += g_AdpcmIndexAdjust[lo];
+        CLAMP(var_r2, 0, 0x58);
+        *arg2++ = var_r3;
+
+        temp_r1 = *ptr;
+        hi = temp_r1 >> 4;
+        lo = temp_r1 & 0xF;
+        ptr += 5;
+        var_r3 += g_AdpcmDeltaTable[(var_r2 * 0x10) + hi];
+        CLAMP(var_r3, -0x8000, 0x7FFF);
+        var_r2 += g_AdpcmIndexAdjust[hi];
+        CLAMP(var_r2, 0, 0x58);
+        *arg2++ = var_r3;
+        var_r3 += g_AdpcmDeltaTable[(var_r2 * 0x10) + lo];
+        CLAMP(var_r3, -0x8000, 0x7FFF);
+        var_r2 += g_AdpcmIndexAdjust[lo];
+        CLAMP(var_r2, 0, 0x58);
+        *arg2++ = var_r3;
+    }
+    *arg7 = var_r2;
+    *arg5 = var_r3;
+}
 
 void func_060139C4(void);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60139C4, func_060139C4);
