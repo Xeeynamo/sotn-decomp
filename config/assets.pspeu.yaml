@@ -1494,6 +1494,8 @@ files:
         vram: 0x09237700
         assets:
           - [0x80, skip]
+          - [0x13AB0, paldef, palette_def]
+          - [0x13AD8, skip]
           - [0x19070, palette, D_us_801894FC, 16]
           - [0x19330, palette, D_us_801897BC, 16]
           - [0x193F0, skip]

@@ -22,7 +22,6 @@ func_us_80195A8C = 0x092485E8;
 func_us_80195D04 = 0x09248918;
 spriteBanks = 0x0924B0B8;
 rooms_layers = 0x0924B128;
-cluts = 0x0924B150;
 gfxBanks = 0x0924B1D0;
 EntityUpdates = 0x0924B210;
 g_EInitAkmodanII = 0x0924B318;
