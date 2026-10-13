@@ -91,8 +91,6 @@ extern s16 DAT_06062224[];
 extern s32 DAT_06039214;
 void ClearDebugPrintTilemap();
 
-#define SH2_REG_M_FRT_IC 0x21000000
-
 extern void* g_BatResourceDescriptorList;
 
 extern s32* DAT_060a5000;
@@ -252,7 +250,7 @@ s32 func_06006574(struct Unk0600654C*);
 extern s32 DAT_0605d7f8;
 extern s32 DAT_06057f34;
 void SPR_WaitDrawEnd();
-void func_06012fb4();
+void func_06012FB4();
 void func_0600D8BC();
 void func_06009838();
 void UpdateScrollForRoom();
@@ -337,6 +335,8 @@ void func_060082C8(void);
 void func_06009D30(void);
 void func_0600B234(void);
 void func_0600DAB4(void);
+void func_06009F84(Unk0605CD90*);
+void func_06009AE8(s32, Unk0605CD90*, UNK_0605c680*);
 extern void SPR_2OpenCommand(Uint16);
 extern MthMatrix DAT_060579A8;
 extern Point16 DAT_0605BEC0;
@@ -365,6 +365,7 @@ extern u16 DAT_06038D70[];
 extern u16 DAT_06038DA0[];
 extern void func_06009D60(u32);
 extern u8 DAT_060577A0[];
+extern u8 DAT_060578A0[];
 void rsincos(s32 angle, s32* sinOut, s32* cosOut);
 void func_0600BF38();
 void func_0600BF8C();

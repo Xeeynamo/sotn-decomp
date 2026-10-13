@@ -80,7 +80,6 @@ _DestroyEntity = 0x0600FFB8;
 _func_06010400 = 0x06010400;
 _PlaySfx = 0x06011278;
 _PlaySfxVolPan = 0x06011AA0;
-_func_06012fb4 = 0x06012FB4;
 _func_0601333c = 0x0601333C;
 _MuteCdAudio = 0x06013394;
 _func_060139C4 = 0x060139C4;
@@ -298,7 +297,6 @@ _g_SpriteListHead = 0x06057790;
 _g_SpriteListTail = 0x06057794;
 _g_SpriteObjectFreeList = 0x06057798;
 _g_SpritePartFreeList = 0x0605779C;
-_d_060578A0 = 0x060578A0;
 _DAT_06039128 = 0x06039128;
 _DAT_06057A10 = 0x06057A10;
 _adr_com_block = 0x06057C68;
@@ -536,7 +534,6 @@ _g_BatResourceDescriptorList = 0x060CF040;
 _g_StageOverlayData = 0x060DC000;
 
 /* Aliases used by modules that inherit this symbol file. */
-_IsXaBgmPlaying = 0x06012DFC;
 _CdSoundCommandQueueEmpty = 0x06012E18;
 _func_80133950 = 0x06012E4C;
 _g_EntityNoopEntry = 0x06044348;

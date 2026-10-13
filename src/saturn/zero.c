@@ -138,7 +138,7 @@ void func_060040d8(void) {
                 func_06010400();
                 SCL_DisplayFrame();
             }
-            func_06012fb4();
+            func_06012FB4();
             func_0600652C();
             func_0601333c();
             if (DAT_0605cea0.unk2 == 2) {
@@ -2258,7 +2258,32 @@ void func_060097B4(Unk0605CD90* arg0, s32 arg1) {
     SCL_Close();
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009838, func_06009838);
+void func_06009838(void) {
+    Unk0605CD90* ptr;
+    u16 i;
+
+    ptr = &DAT_0605CD90[0];
+    for (i = 0; i < 3; i++, ptr++) {
+        if (ptr->unk18 != 0) {
+            if ((g_CurrentRoom.stageID == 0x41) &&
+                (g_CurrentRoom.unk4 == 0x12)) {
+                if (i == 0) {
+                    func_06009F84(ptr);
+                } else {
+                    func_060098F0(i, ptr, &DAT_0605c680);
+                }
+            } else {
+                if (DAT_0605c680.unk34 != DAT_0605c680.unk3C) {
+                    func_060098F0(i, ptr, &DAT_0605c680);
+                }
+                if (DAT_0605c680.unk38 != DAT_0605c680.unk40) {
+                    func_06009AE8(i, ptr, &DAT_0605c680);
+                }
+            }
+        }
+    }
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60098F0, func_060098F0);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009AE8, func_06009AE8);
 
@@ -2361,8 +2386,6 @@ void func_0600A330(void) {
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A350, func_0600A350);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A490, func_0600A490);
 
-extern u8 d_060578A0[];
-
 // MapBytesThroughLutPair
 void func_0600A5FC(u8* src, u8* dst0, u8* dst1, s32 count) {
     u8 value;
@@ -2370,7 +2393,7 @@ void func_0600A5FC(u8* src, u8* dst0, u8* dst1, s32 count) {
     while (count > 0) {
         value = *src++;
         *dst0++ = DAT_060577A0[value];
-        *dst1++ = d_060578A0[value];
+        *dst1++ = DAT_060578A0[value];
         count--;
     }
 }
@@ -2378,7 +2401,7 @@ void func_0600A5FC(u8* src, u8* dst0, u8* dst1, s32 count) {
 // func_0600A62C
 void MapBytesThroughLut(u8* src, u8* dst, s32 count) {
     while (count > 0) {
-        *dst++ = d_060578A0[*src++];
+        *dst++ = DAT_060578A0[*src++];
         count--;
     }
 }
@@ -3979,14 +4002,3 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60100DC, func_060100DC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6010274, func_06010274);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6010328, func_06010328);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6010400, func_06010400);
-
-// _pause_seq
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60110C0, func_060110C0);
-
-// func_06011264
-void SignalSlaveSh2(void) {
-    // set input capture flag on sub-sh2
-    *((u16*)SH2_REG_M_FRT_IC) = 0xFFFF;
-}
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011278, func_06011278);

@@ -27,6 +27,67 @@ static inline void set_imask(register Uint32 imask) {
     set_sr(sr);
 }
 
+// original name: pause_seq
+void func_060110C0(s32 arg0) {
+    switch (arg0) {
+    case 0xFE00000E:
+        if (DAT_06041655[DAT_060643E0[0]][2] == 9) {
+            SND_PauseSeq(0);
+        }
+        if (DAT_06041655[DAT_060643E0[1]][2] == 9) {
+            SND_PauseSeq(1);
+        }
+        if (DAT_06041655[DAT_060643E0[2]][2] == 9) {
+            SND_PauseSeq(2);
+        }
+        break;
+
+    case 0xFE000010:
+        if (DAT_06041655[DAT_060643E0[3]][2] == 9) {
+            SND_PauseSeq(3);
+        }
+        if (DAT_06041655[DAT_060643E0[4]][2] == 9) {
+            SND_PauseSeq(4);
+        }
+        if (DAT_06041655[DAT_060643E0[5]][2] == 9) {
+            SND_PauseSeq(5);
+        }
+        break;
+
+    case 0xFE00000F:
+        if (DAT_06041655[DAT_060643E0[0]][2] == 9) {
+            SND_ContSeq(0);
+        }
+        if (DAT_06041655[DAT_060643E0[1]][2] == 9) {
+            SND_ContSeq(1);
+        }
+        if (DAT_06041655[DAT_060643E0[2]][2] == 9) {
+            SND_ContSeq(2);
+        }
+        break;
+
+    case 0xFE000011:
+        if (DAT_06041655[DAT_060643E0[3]][2] == 9) {
+            SND_ContSeq(3);
+        }
+        if (DAT_06041655[DAT_060643E0[4]][2] == 9) {
+            SND_ContSeq(4);
+        }
+        if (DAT_06041655[DAT_060643E0[5]][2] == 9) {
+            SND_ContSeq(5);
+        }
+        break;
+    }
+}
+
+// func_06011264
+void SignalSlaveSh2(void) {
+    // set input capture flag on sub-sh2
+    *((u16*)SH2_REG_M_FRT_IC) = 0xFFFF;
+}
+
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011278, PlaySfx);
+
 void func_06011A6C(s32 arg0) {
     s32 i;
 
@@ -713,7 +774,7 @@ void func_06012FB4(void) {
     }
     DAT_060644C3 = 0;
     for (i = 0; i < 0x80; i++) {
-        *((s16*)&DAT_06063ED0[i][0]) = 0;
+        *((u16*)&DAT_06063ED0[i][0]) = 0;
         DAT_06063ED0[i][2] = 0;
         DAT_06063ED0[i][3] = 0;
         DAT_06063ED0[i][4] = 0;

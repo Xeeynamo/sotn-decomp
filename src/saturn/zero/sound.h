@@ -6,6 +6,8 @@
 
 #include "lib/gfs/gfs.h"
 
+#define SH2_REG_M_FRT_IC 0x21000000
+
 typedef struct {
     s32 unk0;
     s32 unk4;
@@ -35,6 +37,7 @@ void PcmClose(GfsHn gfs, s32 type);
 
 extern s32 DAT_06041280;
 extern s32 DAT_06041284;
+extern u8 DAT_06041655[][5];
 extern s32 DAT_06044108;
 extern s32 DAT_0604410C;
 extern s32 DAT_06057C24;
