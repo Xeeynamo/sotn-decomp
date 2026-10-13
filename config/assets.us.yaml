@@ -1399,6 +1399,7 @@ files:
           - [0x754, skip]
           - [0x2390, rooms, rooms]
           - [0x245C, skip]
+          - [0x3424, cmpgfx, gfx_unused, 128, 128, 4]
           - [0x4000, cmpgfx, D_80184000, 128, 128, 4]
           - [0x4344, cmpgfx, D_80184344, 128, 128, 4]
           - [0x48E8, cmpgfx, D_801848E8, 128, 128, 4]
