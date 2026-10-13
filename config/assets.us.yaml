@@ -1985,6 +1985,8 @@ files:
         assets:
           - [0x8C, paldef, palette_def]
           - [0xB0, skip]
+          - [0xD8, gfx_banks, us/graphics_banks]
+          - [0x194, skip]
           - [0x13C4, cmpgfx, D_us_801813C4, 128, 128, 4]
           - [0x1FA0, cmpgfx, D_us_80181FA0, 128, 128, 4]
           - [0x22E4, cmpgfx, D_us_801822E4, 128, 128, 4]

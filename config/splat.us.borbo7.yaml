@@ -43,6 +43,8 @@ segments:
       - [0x2C, data]
       - [0x8C, .data, palette_def]
       - [0xB0, data]
+      - [0xD8, .data, graphics_banks]
+      - [0x194, data]
       - [0x33C, .data, e_init]
       - [0x45C, .data, background_block_init]
       - [0x474, .data, e_red_door_tiles]

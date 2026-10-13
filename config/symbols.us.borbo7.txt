@@ -1,6 +1,5 @@
 spriteBanks = 0x8018002C;
 rooms_layers = 0x801800D0;
-gfxBanks = 0x80180168;
 entityLayoutHorizontal = 0x80180194;
 entityLayoutVertical = 0x80180268;
 g_EInitAkmodanII = 0x80180438;
