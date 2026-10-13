@@ -87,7 +87,6 @@ segments:
       - [0x21800, .data, e_particles]
       - [0x21880, .data, e_collect]
       - [0x21DC8, .data, e_misc]
-      - [0x21E18, data, 21E18]
       - [0x21E18, .data, collision]
       - [0x221F0, .data, e_medusa_head]
       - [0x22270, .data, e_room_fg]
