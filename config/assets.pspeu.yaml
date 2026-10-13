@@ -1499,6 +1499,8 @@ files:
           - [0x13AB0, paldef, palette_def]
           - [0x13AD8, gfx_banks, psp/graphics_banks]
           - [0x13B80, skip]
+          - [0x13CC8, rooms, rooms]
+          - [0x13CE8, skip]
           - [0x13D38, cmpgfx, D_us_801841D8, 128, 128, 4]
           - [0x14DC8, cmpgfx, D_us_80185264, 128, 128, 4]
           - [0x15758, cmpgfx, D_us_80185BF4, 128, 128, 4]
