@@ -23,3 +23,4 @@ InitializeEntity = 0x80199FFC;
 GetPlayerCollisionWith = 0x8019A3A0;
 PlaySfxPositional = 0x8019F3A4;
 FindFirstUnkPrim = 0x801A1488;
+D_us_801806CC = 0x801806CC; // size:0x38
