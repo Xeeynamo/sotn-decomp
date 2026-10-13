@@ -84,6 +84,7 @@ segments:
       - [0x13D38, data]
       - [0x1DC00, .data, header]
       - [0x1DC30, data]
+      - [0x1DE68, .data, background_block_init]
       - [0x1DE88, .data, e_lock_camera]
       - [0x1DF00, data, 1DF00]
       - [0x1DF80, .rodata, e_life_up]
