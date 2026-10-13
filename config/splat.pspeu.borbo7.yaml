@@ -98,7 +98,7 @@ segments:
       - [0x1E0E8, .bss, e_collect]
       - [0x1E108, bss, 1E108]
       - [0x1E118, .bss, st_init_psp]
-      - [0x1E188, bss, 1E188]
+      - [0x1E188, .bss, bossfight]
       - [0x1E190, .bss, e_breakable]
       - [0x1E198, .bss, d_prize_drops]
       - [0x1E1A0, .bss, e_lock_camera]

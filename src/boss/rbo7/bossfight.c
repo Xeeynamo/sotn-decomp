@@ -3,7 +3,8 @@
 
 extern EInit g_EInitInteractable;
 extern s32 D_us_80180564;
-extern s32 g_BossMgrState;
+
+s32 g_BossMgrState = BOSS_MGR_IDLE;
 
 void EntityBossFightManager(Entity* self) {
     Entity* entity;
