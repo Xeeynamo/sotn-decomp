@@ -9,8 +9,10 @@
 
 enum Palettes {
     PAL_NONE,
+    PAL_FLEA_RIDER = 0x206,
     PAL_BREAKABLE = 0x238,
     PAL_BREAKABLE_DEBRIS = 0x23C,
+    PAL_AXE_KNIGHT = 0x240,
 };
 
 enum EntityID {

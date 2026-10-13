@@ -8,6 +8,8 @@
 
 enum Palettes {
     PAL_NONE,
+    PAL_DEATH = 0x200,
+    PAL_DEATH_2 = 0x20D,
 };
 
 typedef enum EntityID {
@@ -43,12 +45,20 @@ typedef enum EntityID {
     E_UNK_1D,               // func_us_8019E920
     E_UNK_1E,               // func_us_8019ECCC
     E_UNK_1F,               // func_us_8019F260
-    E_UNK_20,               // func_us_8019F4AC
+    E_BOSS_FIGHT_MANAGER,   // EntityBossFightManager
     E_CERBERUS_GATE_DEBUG,  // EntityCerberusGateDebug
     E_LIFE_UP_SPAWN,        // EntityLifeUpSpawn
     E_CUTSCENE_DIALOGUE,    // EntityCutsceneDialogue
     E_UNK_24,               // func_us_801A17C8
     NUM_ENTITIES,
+};
+
+enum BossMgrState {
+    BOSS_MGR_ROOM_ENTERED = 0x01,
+    BOSS_MGR_DEATH_FIGHT_ON = 0x02,
+    BOSS_MGR_DEATH_DEFEAT = 0x10,
+    BOSS_MGR_DEATH_REWARD_READY = 0x40,
+    BOSS_MGR_DEATH_REWARD_SPAWNED = 0x80,
 };
 
 #endif // RBO2_H

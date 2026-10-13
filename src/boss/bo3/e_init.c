@@ -141,22 +141,22 @@ PfnEntityUpdate EntityUpdates[] = {
 
 // clang-format off
 // animSet, animCurFrame, unk5A, palette, enemyID
-EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0, 0, 0x000};
-EInit g_EInitObtainable = {ANIMSET_DRA(3), 0, 0, 0, 0x001};
-EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0, 0, 0x002};
-EInit g_EInitSpawner = {ANIMSET_DRA(0), 0, 0, 0, 0x004};
-EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0, 0, 0x005};
-EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, 0, 0x002};
-EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, 0, 0x001};
-EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
-EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
-EInit g_EInitScylla = {ANIMSET_OVL(2), 0, 72, 512, 0x11F};
-EInit D_us_801805AC = {ANIMSET_OVL(2), 0, 72, 512, 0x120};
-EInit D_us_801805B8 = {ANIMSET_OVL(2), 0, 72, 512, 0x005};
-EInit D_us_801805C4 = {ANIMSET_OVL(2), 0, 72, 512, 0x121};
-EInit D_us_801805D0 = {ANIMSET_OVL(2), 0, 72, 512, 0x122};
-EInit D_us_801805DC = {ANIMSET_OVL(2), 0, 72, 512, 0x124};
-EInit D_us_801805E8 = {ANIMSET_OVL(2), 0, 72, 512, 0x125};
-EInit D_us_801805F4 = {ANIMSET_OVL(2), 0, 72, 512, 0x002};
-EInit g_EInitScyllawyrm = {ANIMSET_OVL(2), 0, 72, 512, 0x126};
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_BREAKABLE};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitParticle = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitSpawner = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_SPAWNER};
+EInit g_EInitInteractable = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitScylla = {ANIMSET_OVL(2), 0x00, 0x48, PAL_SCYLLA, ENEMY_SCYLLA};
+EInit D_us_801805AC = {ANIMSET_OVL(2), 0x00, 0x48, PAL_SCYLLA, ENEMY_SCYLLA_UNK_120};
+EInit D_us_801805B8 = {ANIMSET_OVL(2), 0x00, 0x48, PAL_SCYLLA, ENEMY_INTERACTABLE};
+EInit D_us_801805C4 = {ANIMSET_OVL(2), 0x00, 0x48, PAL_SCYLLA, ENEMY_SCYLLA_UNK_121};
+EInit D_us_801805D0 = {ANIMSET_OVL(2), 0x00, 0x48, PAL_SCYLLA, ENEMY_SCYLLA_UNK_122};
+EInit D_us_801805DC = {ANIMSET_OVL(2), 0x00, 0x48, PAL_SCYLLA, ENEMY_SCYLLA_UNK_124};
+EInit D_us_801805E8 = {ANIMSET_OVL(2), 0x00, 0x48, PAL_SCYLLA, ENEMY_SCYLLA_UNK_125};
+EInit D_us_801805F4 = {ANIMSET_OVL(2), 0x00, 0x48, PAL_SCYLLA, ENEMY_PARTICLE};
+EInit g_EInitScyllawyrm = {ANIMSET_OVL(2), 0x00, 0x48, PAL_SCYLLA, ENEMY_SCYLLA_WYRM};
 // clang-format on

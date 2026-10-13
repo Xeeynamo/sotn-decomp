@@ -11,6 +11,7 @@ enum Palettes {
     PAL_CASTLE_WALL_1 = 0x74,
     PAL_BACKGROUND_SKY_LAND = 0xC5,
     PAL_CASTLE_WALL_2 = 0xC8,
+    PAL_HIPPOGRYPH = 0x200,
 };
 
 typedef enum EntityID {

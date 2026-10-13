@@ -163,7 +163,8 @@ void FallEntity(void) {
     }
 }
 
-#if defined(VERSION_BETA) || (STAGE == STAGE_ST0 && !defined(VERSION_PSP))
+#if defined(VERSION_BETA) || defined(STAGE_IS_TEK) ||                          \
+    (STAGE == STAGE_ST0 && !defined(VERSION_PSP))
 u8 func_8019214C(void) {
     u8 unkState;
     Entity* entity;
@@ -232,7 +233,7 @@ s32 UnkCollisionFunc3(s16* sensors) {
     return 0;
 }
 
-#if defined(VERSION_BETA) || STAGE == STAGE_ST0
+#if defined(VERSION_BETA) || defined(STAGE_IS_TEK) || STAGE == STAGE_ST0
 s32 func_80192408(u16* sensors, u16 arg1) {
     Collider col[5];
     s16 i;
@@ -443,7 +444,7 @@ u16 LimitAngleChange(u16 delta, u16 base, u16 target) {
     // Equivalent to 0-360 versus -180 to 180.
     // This converts the absolute diff into signed.
     if (diff & 0x800) {
-#if STAGE == STAGE_ST0
+#if STAGE == STAGE_ST0 || defined(STAGE_IS_TEK)
         ret = diff & 0x7FF;
 #else
         ret = (0x800 - diff) & 0x7FF;
@@ -482,7 +483,7 @@ void SetSubStep(u8 step_s) {
 void EntityExplosionSpawn(u16 params, u16 arg1) {
 #if STAGE != STAGE_ST0
     if (arg1) {
-#if defined VERSION_BETA
+#if defined(VERSION_BETA) || defined(STAGE_IS_TEK)
         g_api.PlaySfx(arg1);
 #else
         PlaySfxPositional(arg1);
@@ -607,6 +608,110 @@ void CheckFieldCollision(s16* hitSensors, s16 sensorCount) {
 // and from which direction.
 // w and h holds the collider size of the entity
 // while flags stores which sides are solid
+#ifdef STAGE_IS_TEK
+u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
+    Entity* player = &PLAYER;
+    s16 x, y;
+    u16 checks;
+    s32 plStatus = g_Player.status;
+
+    x = self->posX.i.hi;
+    y = self->posY.i.hi;
+    if (x & 0x100) {
+        return 0;
+    }
+    if (y < -0x180 || y > 0x180) {
+        return 0;
+    }
+
+    y = player->posY.i.hi - y;
+    x = player->posX.i.hi - x;
+    if (self->facingLeft) {
+        x += self->hitboxOffX;
+    } else {
+        x -= self->hitboxOffX;
+    }
+    y -= self->hitboxOffY;
+
+    if (plStatus & 7) {
+        if (plStatus & 1 || plStatus & 2) {
+            w += 5;
+            h += 6;
+        } else if (plStatus & 4) {
+            w += 6;
+            h += 6;
+        }
+    } else {
+        w += 5;
+        h += 24;
+    }
+
+    if (x > 0) {
+        checks = 1;
+    } else {
+        checks = 0;
+    }
+    if (y > 0) {
+        checks |= 2;
+    }
+
+    x += w;
+    y += h;
+    w += w;
+    h += h;
+
+    if ((u16)x <= w && (u16)y <= h) {
+        if (x && x != w) {
+            // check collision from top
+            if (flags & 4 && checks ^ 2 && player->velocityY >= 0 && y < 8) {
+                player->posY.i.hi -= y;
+                g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_GROUND;
+                if (plStatus &
+                    (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM)) {
+                    return 0;
+                }
+                return 4;
+            }
+
+            // check collision from bottom
+            if (flags & 2 && checks & 2 &&
+                (player->velocityY <= 0 || flags & 0x10)) {
+                y = (s16)h - y;
+                if (y < 0x10) {
+                    player->posY.i.hi += y;
+                    g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_CEILING;
+                    if (plStatus &
+                        (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM)) {
+                        return 0;
+                    }
+                    return 2;
+                }
+            }
+        }
+
+        // check collision from the sides
+        if (y && y != h && flags & 1) {
+            if (checks & 1) {
+                x = (s16)w - x;
+                if (flags & 8 && x > 2) {
+                    x = 2;
+                }
+                player->posX.i.hi += x;
+                g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_L_WALL;
+                return 1;
+            } else {
+                if (flags & 8 && x > 2) {
+                    x = 2;
+                }
+                player->posX.i.hi -= x;
+                g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_R_WALL;
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+#else
 u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
     Entity* player = &PLAYER;
     s16 x, y;
@@ -738,6 +843,7 @@ u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
     }
     return 0;
 }
+#endif
 
 void ReplaceBreakableWithItemDrop(Entity* self) {
     u16 params;

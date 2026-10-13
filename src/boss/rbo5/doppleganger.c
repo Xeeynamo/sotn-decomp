@@ -1,9 +1,19 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo5.h"
 
+#ifdef VERSION_PSP
+PlayerState g_Dop;
+s32 D_us_801D36E8[32];
+s32 D_us_801D3768[32];
+s32 D_us_801D3FEC;
+#else
 extern s32 D_us_801D36E8[];
 extern s32 D_us_801D3768[];
+#endif
 
+#ifdef VERSION_PSP
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5/doppleganger", func_us_801C096C);
+#else
 static void func_us_801C096C(void) {
     Entity* entity;
     Primitive* prim;
@@ -72,12 +82,13 @@ static void func_us_801C096C(void) {
     g_api.TimeAttackController(
         TIMEATTACK_EVENT_DOPPLEGANGER_40_DEFEAT, TIMEATTACK_SET_VISITED);
 }
+#endif
 
-static s16 D_us_80181274[] = {
+s16 D_us_80181274[] = {
     -0x30, -0x30, -0x2F, -0x28, -0x29, -0x1E, -0x1F, -0x1E, -0x29,
     -0x29, -0x31, -0x33, -0x33, -0x2A, -0x29, -0x1D, -0x1D, 0,
 };
-static s32 D_us_80181298[] = {
+s32 D_us_80181298[] = {
     FIX(1.0 / 2048.0), FIX(1.0 / 1024.0), FIX(1.0 / 2.0),    FIX(1.0 / 8.0),
     FIX(1.0 / 4.0),    FIX(1.0 / 16.0),   FIX(1.0 / 32.0),   FIX(1.0 / 128.0),
     FIX(1.0 / 256.0),  FIX(1.0 / 2048.0),
@@ -94,6 +105,10 @@ extern AnimationFrame* D_us_80183D40[];
 extern SpriteParts* D_us_801B1674[];
 extern s32 D_us_801D3FEC;
 
+#ifdef VERSION_PSP
+char D_pspeu_09262FC0[] = "noroi:%02x\n";
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5/doppleganger", EntityDoppleganger40);
+#else
 void EntityDoppleganger40(void) {
     s32 i;
     s32 status;
@@ -448,7 +463,7 @@ void EntityDoppleganger40(void) {
     } else {
         DOPPLEGANGER.hitboxState = g_Dop.unk70;
         if (g_Dop.status & PLAYER_STATUS_STONE) {
-            DOPPLEGANGER.hitboxState &= 0xFFCF;
+            DOPPLEGANGER.hitboxState &= ~0x30;
         }
         if ((g_Dop.timers[13] | g_Dop.timers[14]) != 0) {
             DOPPLEGANGER.hitboxState = 0;
@@ -505,9 +520,10 @@ void EntityDoppleganger40(void) {
 
     FntPrint("noroi:%02x\n", g_Dop.timers[1]);
 }
+#endif
 
-static s32 D_us_801D32F4;
-static s32 D_us_801D32F8;
+s32 D_us_801D32F4;
+s32 D_us_801D32F8;
 
 void func_us_801C1DB0(s32 arg0) {
     D_us_801D32F4 = arg0;
@@ -515,10 +531,13 @@ void func_us_801C1DB0(s32 arg0) {
 }
 
 extern s32 D_us_801805B0;
-static s32 D_us_801D32FC;
-static s32 D_us_801D3300;
-static s32 D_us_801D3304;
+s32 D_us_801D32FC;
+s32 D_us_801D3300;
+s32 D_us_801D3304;
 
+#ifdef VERSION_PSP
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5/doppleganger", func_us_801C1DC8);
+#else
 void func_us_801C1DC8(void) {
     s32 dopOffsetX;
     s32 flags;
@@ -992,9 +1011,13 @@ void func_us_801C1DC8(void) {
         break;
     }
 }
+#endif
 
 extern EInit EInitUnk16;
 
+#ifdef VERSION_PSP
+INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5/doppleganger", EntityUnkId16);
+#else
 void EntityUnkId16(Entity* self) {
     Entity* entity;
     s32 i;
@@ -1029,5 +1052,4 @@ void EntityUnkId16(Entity* self) {
     }
     g_Dop.unk6C = g_Dop.unk6A;
 }
-
-#include "../dop_collision.h"
+#endif

@@ -2,7 +2,7 @@
 
 extern Point16 g_DopSensorsFloor[];
 
-static void CheckFloor(void) {
+void DopCheckFloor(void) {
     Collider collider;
     s32 temp_v1;
     u32 effects;
@@ -169,7 +169,7 @@ static void CheckFloor(void) {
 extern Point16 g_DopSensorsCeiling[];
 
 // same as DRA's CheckCeiling
-static void CheckCeiling(void) {
+void DopCheckCeiling(void) {
     Collider collider;
     s32 temp_fp;
     s32 temp_v1;
@@ -329,14 +329,14 @@ static void CheckCeiling(void) {
 
 extern Point16 g_DopSensorsWall[];
 
-static void CheckWallRight(void) {
+void DopCheckWallRight(void) {
     Collider collider;
 
     s16* dopY;
     s16* dopX;
     s32 effects;
     s32 i;
-    u32* pVramFlag;
+    s32* pVramFlag;
 
     s16 offsetX, offsetY;
 
@@ -402,14 +402,14 @@ static void CheckWallRight(void) {
     }
 }
 
-static void CheckWallLeft(void) {
+void DopCheckWallLeft(void) {
     Collider collider;
 
     s16* dopY;
     s16* dopX;
     s32 effects;
     s32 i;
-    u32* pVramFlag;
+    s32* pVramFlag;
 
     s16 offsetX, offsetY;
     dopY = &DOPPLEGANGER.posY.i.hi;

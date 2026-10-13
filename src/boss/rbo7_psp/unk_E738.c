@@ -8,9 +8,9 @@ extern s32 E_ID(UNK_19);
 
 extern EInit g_EInitInteractable;
 extern s32 D_us_80180564;
-extern s32 D_us_801805C8;
+extern s32 g_BossMgrState;
 
-void func_us_80192B38_from_rbo3(Entity* self) {
+void EntityBossFightManager(Entity* self) {
     Entity* entity;
     s32 x;
     s32 y;
@@ -24,7 +24,7 @@ void func_us_80192B38_from_rbo3(Entity* self) {
         x = entity->posX.i.hi + g_Tilemap.scrollX.i.hi;
         if (x > 0x80 && x < 0x180) {
             D_us_80180564 = 1;
-            D_us_801805C8 = 1;
+            g_BossMgrState = BOSS_MGR_FIGHT_ON;
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_AKMODAN_II_DEFEAT, TIMEATTACK_SET_VISITED);
             stopMusicFlag = true;
@@ -42,7 +42,7 @@ void func_us_80192B38_from_rbo3(Entity* self) {
         break;
 
     case 3:
-        if (D_us_801805C8 & 2) {
+        if (g_BossMgrState & BOSS_MGR_DEFEAT) {
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_AKMODAN_II_DEFEAT, TIMEATTACK_SET_RECORD);
             g_api.PlaySfx(SET_UNK_90);
@@ -52,7 +52,7 @@ void func_us_80192B38_from_rbo3(Entity* self) {
         break;
 
     case 4:
-        if (D_us_801805C8 & 4) {
+        if (g_BossMgrState & BOSS_MGR_TERMINATED) {
             self->step++;
         }
         break;

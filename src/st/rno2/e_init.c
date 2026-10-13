@@ -53,8 +53,8 @@ void EntityKarasumanOrbAttack(Entity* self);
 void EntityKarasumanRavenAttack(Entity* self);
 void EntityKarasumanFeather(Entity* self);
 void EntityKarasumanRavenAbsorb(Entity* self);
-void EntityFlyingZombie2(Entity* self);
-void EntityFlyingZombie1(Entity* self);
+void EntityFlyingZombie(Entity* self);
+void EntityFlyingZombieTorso(Entity* self);
 void EntityBloodDrips(Entity* self);
 void EntityBloodSplatter(Entity* self);
 void EntityAzaghal(Entity* self);
@@ -118,8 +118,8 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityKarasumanRavenAttack,
     EntityKarasumanFeather,
     EntityKarasumanRavenAbsorb,
-    EntityFlyingZombie2,
-    EntityFlyingZombie1,
+    EntityFlyingZombie,
+    EntityFlyingZombieTorso,
     EntityBloodDrips,
     EntityBloodSplatter,
     EntityAzaghal,
@@ -133,35 +133,35 @@ PfnEntityUpdate EntityUpdates[] = {
 
 // clang-format off
 // animSet, animCurFrame, unk5A, palette, enemyID
-EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0, 0, 0x000};
-EInit g_EInitObtainable = {ANIMSET_DRA(3), 0, 0, 0, 0x001};
-EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0, 0, 0x002};
-EInit g_EInitSpawner = {ANIMSET_DRA(0), 0, 0, 0, 0x004};
-EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0, 0, 0x005};
-EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, 0, 0x002};
-EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, 0, 0x001};
-EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
-EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
-EInit g_EInitEnvironment = {ANIMSET_OVL(2), 11, 0, 0, 0x003};
-EInit g_EInitPrisoner = {ANIMSET_OVL(3), 1, 73, 513, 0x003};
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_BREAKABLE};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitParticle = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitSpawner = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_SPAWNER};
+EInit g_EInitInteractable = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitEnvironment = {ANIMSET_OVL(2), 0x0B, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitPrisoner = {ANIMSET_OVL(3), 0x01, 0x49, PAL_PRISONER, ENEMY_COMMON};
 
-EInit g_EInitCtulhu = {ANIMSET_OVL(4), 0, 72, 515, 0x0E9};
-EInit g_EInitCtulhuFireball = {ANIMSET_OVL(4), 0, 72, 515, 0x0EA};
-EInit g_EInitCtulhuIceShockwave = {ANIMSET_OVL(4), 44, 72, 515, 0x0EB};
+EInit g_EInitCtulhu = {ANIMSET_OVL(4), 0x00, 0x48, PAL_CTULHU, ENEMY_CTULHU};
+EInit g_EInitCtulhuFireball = {ANIMSET_OVL(4), 0x00, 0x48, PAL_CTULHU, ENEMY_CTULHU_FIREBALL};
+EInit g_EInitCtulhuIceShockwave = {ANIMSET_OVL(4), 0x2C, 0x48, PAL_CTULHU, ENEMY_CTULHU_ICE_SHOCKWAVE};
 
-EInit g_EInitMalachi = {ANIMSET_OVL(5), 0, 80, 520, 0x0EC};
-EInit D_us_80180904 = {ANIMSET_OVL(5), 0, 80, 520, 0x0ED};
-EInit D_us_80180910 = {ANIMSET_OVL(5), 0, 80, 520, 0x0EE};
-EInit g_EInitKarasuman = {ANIMSET_OVL(6), 0, 72, 536, 0x118};
-EInit D_us_80180928 = {ANIMSET_OVL(6), 59, 72, 536, 0x119};
-EInit D_us_80180934 = {ANIMSET_OVL(6), 0, 72, 536, 0x11A};
-EInit D_us_80180940 = {ANIMSET_OVL(6), 0, 72, 536, 0x11B};
-EInit D_us_8018094C = {ANIMSET_OVL(6), 63, 72, 536, 0x002};
-EInit g_EInitFlyingZombieHalf2 = {ANIMSET_OVL(7), 1, 75, 542, 0x00F};
-EInit g_EInitFlyingZombieHalf1 = {ANIMSET_OVL(7), 0, 75, 542, 0x00E};
-EInit g_EInitBloodyZombie = {ANIMSET_OVL(9), 1, 74, 726, 0x00D};
-EInit g_EInitAzaghal = {ANIMSET_OVL(0), 0, 0, 0, 0x0E0};
-EInit g_EInitGhostDancer = {ANIMSET_OVL(10), 0, 76, 558, 0x0D8};
-EInit g_EInitMedusaHeadBlue = {ANIMSET_OVL(13), 0, 95, 592, 0x12F};
-EInit g_EInitMedusaHeadYellow = {ANIMSET_OVL(13), 0, 95, 593, 0x130};
+EInit g_EInitMalachi = {ANIMSET_OVL(5), 0x00, 0x50, PAL_MALACHI, ENEMY_MALACHI};
+EInit D_us_80180904 = {ANIMSET_OVL(5), 0x00, 0x50, PAL_MALACHI, ENEMY_MALACHI_SHOOTER};
+EInit D_us_80180910 = {ANIMSET_OVL(5), 0x00, 0x50, PAL_MALACHI, ENEMY_MALACHI_BALL};
+EInit g_EInitKarasuman = {ANIMSET_OVL(6), 0x00, 0x48, PAL_KARASUMAN, ENEMY_KARASUMAN};
+EInit g_EInitKarasumanFeatherAttack = {ANIMSET_OVL(6), 0x3B, 0x48, PAL_KARASUMAN, ENEMY_KARASUMAN_FEATHER_ATTACK};
+EInit g_EInitKarasumanOrbAttack = {ANIMSET_OVL(6), 0x00, 0x48, PAL_KARASUMAN, ENEMY_KARASUMAN_ORB_ATTACK};
+EInit g_EInitKarasumanRavenAttack = {ANIMSET_OVL(6), 0x00, 0x48, PAL_KARASUMAN, ENEMY_KARASUMAN_RAVEN_ATTACK};
+EInit g_EInitKarasumanFeather = {ANIMSET_OVL(6), 0x3F, 0x48, PAL_KARASUMAN, ENEMY_PARTICLE};
+EInit g_EInitFlyingZombie = {ANIMSET_OVL(7), 0x01, 0x4B, PAL_FLYING_ZOMBIE, ENEMY_FLYING_ZOMBIE_2};
+EInit g_EInitFlyingZombieTorso = {ANIMSET_OVL(7), 0x00, 0x4B, PAL_FLYING_ZOMBIE, ENEMY_FLYING_ZOMBIE_1};
+EInit g_EInitBloodyZombie = {ANIMSET_OVL(9), 0x01, 0x4A, PAL_BLOODY_ZOMBIE, ENEMY_BLOODY_ZOMBIE};
+EInit g_EInitAzaghal = {ANIMSET_OVL(0), 0x00, 0x00, PAL_NONE, ENEMY_AZAGHAL};
+EInit g_EInitGhostDancer = {ANIMSET_OVL(10), 0x00, 0x4C, PAL_GHOST_DANCER, ENEMY_GHOST_DANCER};
+EInit g_EInitMedusaHeadBlue = {ANIMSET_OVL(13), 0x00, 0x5F, PAL_MEDUSA_HEAD_BLUE, ENEMY_MEDUSA_HEAD_BLUE};
+EInit g_EInitMedusaHeadYellow = {ANIMSET_OVL(13), 0x00, 0x5F, PAL_MEDUSA_HEAD_YELLOW, ENEMY_MEDUSA_HEAD_YELLOW};
 // clang-format on

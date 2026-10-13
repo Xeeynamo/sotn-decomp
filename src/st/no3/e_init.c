@@ -199,18 +199,19 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityWargExplosionPuffTransparent,
     EntityExplosionPuffOpaque};
 
-EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0x00, 0x000, 0};
+// clang-format off
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_BREAKABLE};
 #include "../e_init_common.h"
-EInit g_EInitStInteractable = {0x8001, 0, 0x0, 0x0, 5};
-EInit g_EInitFireWarg1 = {0x8006, 1, 0x48, 0x2cb, 148};
-EInit g_EInitFireWarg2 = {0x8006, 1, 0x48, 0x2cb, 151};
-EInit g_EInitFireWarg3 = {0x0, 0, 0x48, 0x2cb, 150};
-EInit g_EInitWaterObject = {0x8003, 1, 0x48, 0x28c, 29};
-EInit g_EInitWaterSplash = {0x8003, 0, 0x48, 0x28c, 30};
-EInit g_EInitMerman = {0x8004, 1, 0x4a, 0x2b2, 27};
-EInit g_EInitMermanFireball = {0x8004, 0, 0x4a, 0x2b2, 28};
-EInit g_EInitBoneScimitar = {0x8002, 1, 0x48, 0x2c5, 105};
-EInit g_EInitScimitarParts = {0x8002, 1, 0x48, 0x2c5, 2};
-EInit g_EInitBat = {0x8005, 0, 0x4c, 0x2c8, 64};
-EInit g_EInitWarg = {0x8006, 7, 0x48, 0x2d0, 175};
-EInit g_EInitZombie = {0x8007, 0, 0x4d, 0x2d3, 110};
+EInit g_EInitStInteractable = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitFireWarg1 = {ANIMSET_OVL(6), 0x01, 0x48, PAL_FIRE_WARG, ENEMY_FIRE_WARG};
+EInit g_EInitFireWarg2 = {ANIMSET_OVL(6), 0x01, 0x48, PAL_FIRE_WARG, ENEMY_WARG_RIDER};
+EInit g_EInitFireWarg3 = {ANIMSET_DRA(0), 0x00, 0x48, PAL_FIRE_WARG, ENEMY_FIRE_WARG_UNK_96};
+EInit g_EInitWaterObject = {ANIMSET_OVL(3), 0x01, 0x48, PAL_MERMAN_2, ENEMY_MERMAN_2};
+EInit g_EInitWaterSplash = {ANIMSET_OVL(3), 0x00, 0x48, PAL_MERMAN_2, ENEMY_MERMAN_2_WATER_SPLASH};
+EInit g_EInitMerman = {ANIMSET_OVL(4), 0x01, 0x4A, PAL_MERMAN, ENEMY_MERMAN};
+EInit g_EInitMermanFireball = {ANIMSET_OVL(4), 0x00, 0x4A, PAL_MERMAN, ENEMY_MERMAN_FIREBALL};
+EInit g_EInitBoneScimitar = {ANIMSET_OVL(2), 0x01, 0x48, PAL_BONE_SCIMITAR, ENEMY_BONE_SCIMITAR};
+EInit g_EInitScimitarParts = {ANIMSET_OVL(2), 0x01, 0x48, PAL_BONE_SCIMITAR, ENEMY_PARTICLE};
+EInit g_EInitBat = {ANIMSET_OVL(5), 0x00, 0x4C, PAL_BAT, ENEMY_BAT};
+EInit g_EInitWarg = {ANIMSET_OVL(6), 0x07, 0x48, PAL_WARG, ENEMY_WARG};
+EInit g_EInitZombie = {ANIMSET_OVL(7), 0x00, 0x4D, PAL_ZOMBIE, ENEMY_ZOMBIE};

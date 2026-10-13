@@ -10,6 +10,7 @@ g_EInitInteractable = 0x80180458;
 g_EInitDeath1 = 0x80180494;
 g_EInitDeath2 = 0x801804D0;
 BackgroundBlockInit = 0x80180510;
+g_BossMgrState = 0x80180B5C;
 actor_names = 0x80180C08;
 rooms = 0x8018174C;
 EntityBreakable = 0x8019B284;

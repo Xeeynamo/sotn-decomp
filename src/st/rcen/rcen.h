@@ -8,8 +8,10 @@
 
 enum Palettes {
     PAL_NONE,
+    PAL_SHAFT = 0x200,
     PAL_PORTRAIT_ALUCARD = 0x210,
     PAL_PORTRAIT_SHAFT = 0x218,
+    PAL_ELEVATOR = 0x240,
     PAL_SHAFT_DEATH_FLAMES = 0x2E0,
     PAL_SHAFT_ORB_FLAME_PILLAR = 0x2E4,
     PAL_SHAFT_ORB_FLAME_TRAIL = 0x2E7
@@ -58,6 +60,14 @@ enum EntityID {
     E_UNK_27,                     // func_us_801B4148_from_bo0
     E_UNK_28,                     // func_us_801C123C_from_no4
     NUM_ENTITIES,
+};
+
+enum BossMgrState {
+    BOSS_MGR_IDLE = 0,       // initial state, fight not yet engaged
+    BOSS_MGR_CUTSCENE = 1,   // cutscene with shaft begins
+    BOSS_MGR_FIGHT_ON = 2,   // boss begins
+    BOSS_MGR_DEFEAT = 4,     // shaft is defeated
+    BOSS_MGR_TERMINATED = 8, // shaft despawns and entities get destroyed
 };
 
 #endif // RCEN_H

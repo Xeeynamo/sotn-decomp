@@ -15,7 +15,9 @@ extern PfnEntityUpdate* PfnEntityUpdates;
 extern LayoutEntity** g_pStObjLayoutHorizontal;
 extern LayoutEntity** g_pStObjLayoutVertical;
 
-EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 3};
+// clang-format off
+EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+// clang-format on
 EInit g_EInitDamageNum;
 static SpriteParts* s_SpriteBanks[] = {NULL};
 static u_long s_EmptyClut[] = {(u_long)-1};

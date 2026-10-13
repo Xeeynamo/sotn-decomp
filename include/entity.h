@@ -104,12 +104,14 @@ typedef struct {
     /* 0x84 */ struct Primitive* boxPrim;
     /* 0x88 */ struct Primitive* firstStarPrim; // Not used by CHI/NZ0
     /* 0x8C */ u8 unk8C;
-    // Only used by CHI/NZ0
-    /* 0x90 */ s32 : 32;
+    // Only used by CHI/NZ0 and TEK
+    /* 0x90 */ struct Primitive* firstRowPrim; // TEK only
     /* 0x94 */ s32 depth;
-    /* 0x98 */ s32 pad[3];
+    /* 0x98 */ struct Primitive* firstColumnPrim;      // TEK only
+    /* 0x9C */ SVECTOR rotation;                       // TEK only
     /* 0xA4 */ struct Primitive* firstRollingTextPrim; // drum turn effect
     /* 0xA8 */ s16 rotationSlices[5];
+    /* 0xB4 */ struct Primitive* firstPixelColumnPrim; // TEK only
 } ET_StagePopupJP;
 
 typedef struct {
@@ -3003,7 +3005,7 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ u16 unk7C;
-    /* 0x7E */ u16 unk7E;
+    /* 0x7E */ u16 hoverIndex;
     /* 0x80 */ u8 unk80;
     /* 0x81 */ u8 unk81;
 } ET_FlyingZombie;
@@ -3074,6 +3076,23 @@ typedef struct {
     /* 0x9C */ f32 unk9C;
     /* 0xA0 */ f32 unkA0;
 } ET_Clouds;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ u8 backOff;
+    /* 0x85 */ u8 detach;
+} ET_TheCreature;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ u8* anim;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 accelY;
+    /* 0x90 */ s32 accel;
+} ET_TheCreatureFlames;
 
 typedef struct {
     /* 0x7C */ Primitive* prim;
@@ -3818,7 +3837,10 @@ typedef struct {
     /* 0x86 */ u8 : 8;
     /* 0x87 */ u8 : 8;
     /* 0x88 */ u32 : 32;
-    /* 0x8C */ u32 : 32;
+    /* 0x8C */ u8 : 8;
+    /* 0x8D */ u8 : 8;
+    /* 0x8E */ u8 : 8;
+    /* 0x8F */ u8 signal;
     /* 0x90 */ u32 : 32;
     /* 0x94 */ u32 : 32;
     /* 0x98 */ u32 : 32;
@@ -3830,12 +3852,18 @@ typedef struct {
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 moveTimer;
     /* 0x84 */ s32 deathPuffPosX;
-    /* 0x88 */ u32 : 32;
+    /* 0x88 */ s16 nextStep;
+    /* 0x8A */ s16 : 16;
     /* 0x8C */ u8 moveAway;
-    /* 0x8D */ u8 : 8;
-    /* 0x8E */ u8 : 8;
-    /* 0x8F */ u8 : 8;
+    /* 0x8D */ u8 isReady;
+    /* 0x8E */ u8 hasNextStep;
+    /* 0x8F */ u8 signal;
     /* 0x90 */ u8 axeThrown;
+    /* 0x91 */ u8 : 8;
+    /* 0x92 */ s16 : 16;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 attack;
 } ET_Minotaur;
 
 typedef struct {
@@ -4521,6 +4549,13 @@ typedef struct {
 } ET_ShaftMeridianRings;
 
 typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ u16 : 16;
+    /* 0x84 */ s16 rotSpeed;
+} ET_GhostDancer;
+
+typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 shootCooldown;
@@ -4537,6 +4572,14 @@ typedef struct {
     /* 0xA0 */ u32 : 32;
     /* 0xA4 */ struct Primitive* deathPrim;
 } ET_Malachi;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s16 halfWidth;
+} ET_801A460C;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -4799,6 +4842,8 @@ typedef union { // offset=0x7C
     ET_801BB200 et_801BB200;
     ET_801B8D30 et_801B8D30;
     ET_Clouds clouds;
+    ET_TheCreature theCreature;
+    ET_TheCreatureFlames theCreatureFlames;
     ET_801C0B9C et_801C0B9C;
     ET_unkDoor unkDoor;
     ET_FrozenShade frozenShade;
@@ -4925,6 +4970,8 @@ typedef union { // offset=0x7C
     ET_ShaftLightning shaftLightning;
     ET_ShaftMeridianRings shaftMeridianRings;
     ET_Malachi malachi;
+    ET_801A460C et_801A460C;
+    ET_GhostDancer ghostDancer;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);

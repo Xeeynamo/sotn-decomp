@@ -159,29 +159,30 @@ PfnEntityUpdate EntityUpdates[] = {
     func_801B8E0C,
 };
 
-EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0x00, 0x000, 0};
+// clang-format off
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_BREAKABLE};
 #include "../e_init_common.h"
-EInit g_EInitEnemy3 = {ANIMSET_OVL(1), 0, 0x00, 0x000, 3};
-EInit g_EInitBloodSkeleton = {0x8002, 0x0000, 0x004C, 0x0200, 0x0046};
-EInit g_EInitBoneScimitar = {0x8003, 0x0001, 0x004D, 0x0204, 0x0069};
-EInit g_EInitScimitarParts = {0x8003, 0x0000, 0x004D, 0x0204, 0x0002};
-EInit g_EInitAxeKnight = {0x8004, 0x0001, 0x0048, 0x0207, 0x00F6};
-EInit g_EInitAxeKnightAxe = {0x8004, 0x002F, 0x0048, 0x0205, 0x018F};
-EInit g_EInitBloodyZombie = {0x8005, 0x0001, 0x004A, 0x0209, 0x000D};
-EInit g_EInitSkeleton = {0x8006, 0x0001, 0x004E, 0x020C, 0x004B};
-EInit g_EInitSkeletonPieces = {0x8006, 0x0000, 0x004E, 0x020C, 0x0002};
-EInit g_EInitSkeletonBone = {0x8006, 0x0015, 0x004E, 0x020C, 0x004C};
-EInit g_EInitSpittleBone = {0x8007, 0x0034, 0x0050, 0x020D, 0x0051};
-EInit g_EInitSpittleBoneSpit = {0x8007, 0x0040, 0x0050, 0x020D, 0x0052};
-EInit g_EInitTableWithGlobe = {0x8008, 0x0000, 0x004B, 0x0219, 0x0005};
-EInit g_EInitLifeMaxTank = {0x8009, 0x0000, 0x004F, 0x0211, 0x0005};
-EInit g_EInitPrizeContainer = {0x800A, 0x0000, 0x0053, 0x0215, 0x0005};
-EInit g_EInitSubwpnCloche = {0x800C, 0x0000, 0x004C, 0x021D, 0x0005};
-EInit g_EInitSubwpnClochePieces = {0x800C, 0x0000, 0x004C, 0x021D, 0x0002};
-EInit g_EInitBossDoor = {0x8001, 0x0008, 0x0000, 0x0000, 0x0005};
-EInit g_EInitSlogra = {0x800D, 0x0000, 0x0048, 0x0227, 0x00F3};
-EInit g_EInitSlograSpear = {0x800D, 0x0000, 0x0048, 0x0227, 0x00F4};
-EInit g_EInitSlograProjectile = {0x800D, 0x0000, 0x0048, 0x0227, 0x00F5};
-EInit g_EInitGaibon = {0x800E, 0x0000, 0x004C, 0x022A, 0x00FE};
-EInit g_EInitGaibonProjectile = {0x0000, 0x0000, 0x0000, 0x0000, 0x00FF};
-EInit g_EInitGaibonLargeProjectile = {0x0000, 0x0000, 0x0000, 0x0000, 0x0100};
+EInit g_EInitEnemy3 = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitBloodSkeleton = {ANIMSET_OVL(2), 0x00, 0x4C, PAL_BLOOD_SKELETON, ENEMY_BLOOD_SKELETON};
+EInit g_EInitBoneScimitar = {ANIMSET_OVL(3), 0x01, 0x4D, PAL_BONE_SCIMITAR, ENEMY_BONE_SCIMITAR};
+EInit g_EInitScimitarParts = {ANIMSET_OVL(3), 0x00, 0x4D, PAL_BONE_SCIMITAR, ENEMY_PARTICLE};
+EInit g_EInitAxeKnight = {ANIMSET_OVL(4), 0x01, 0x48, PAL_AXE_KNIGHT, ENEMY_BLUE_AXE_KNIGHT};
+EInit g_EInitAxeKnightAxe = {ANIMSET_OVL(4), 0x2F, 0x48, PAL_AXE_KNIGHT_AXE, ENEMY_BLUE_AXE_KNIGHT_AXE};
+EInit g_EInitBloodyZombie = {ANIMSET_OVL(5), 0x01, 0x4A, PAL_BLOODY_ZOMBIE, ENEMY_BLOODY_ZOMBIE};
+EInit g_EInitSkeleton = {ANIMSET_OVL(6), 0x01, 0x4E, PAL_SKELETON, ENEMY_SKELETON};
+EInit g_EInitSkeletonPieces = {ANIMSET_OVL(6), 0x00, 0x4E, PAL_SKELETON, ENEMY_PARTICLE};
+EInit g_EInitSkeletonBone = {ANIMSET_OVL(6), 0x15, 0x4E, PAL_SKELETON, ENEMY_SKELETON_BONE};
+EInit g_EInitSpittleBone = {ANIMSET_OVL(7), 0x34, 0x50, PAL_SPITTLE_BONE, ENEMY_SPITTLE_BONE};
+EInit g_EInitSpittleBoneSpit = {ANIMSET_OVL(7), 0x40, 0x50, PAL_SPITTLE_BONE, ENEMY_SPITTLE_BONE_SPIT};
+EInit g_EInitTableWithGlobe = {ANIMSET_OVL(8), 0x00, 0x4B, PAL_BREAKABLE, ENEMY_INTERACTABLE};
+EInit g_EInitLifeMaxTank = {ANIMSET_OVL(9), 0x00, 0x4F, PAL_LIFE_MAX_TANK, ENEMY_INTERACTABLE};
+EInit g_EInitPrizeContainer = {ANIMSET_OVL(10), 0x00, 0x53, PAL_PRIZE_CONTAINER, ENEMY_INTERACTABLE};
+EInit g_EInitSubwpnCloche = {ANIMSET_OVL(12), 0x00, 0x4C, PAL_SUBWPN_CLOCHE, ENEMY_INTERACTABLE};
+EInit g_EInitSubwpnClochePieces = {ANIMSET_OVL(12), 0x00, 0x4C, PAL_SUBWPN_CLOCHE, ENEMY_PARTICLE};
+EInit g_EInitBossDoor = {ANIMSET_OVL(1), 0x08, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitSlogra = {ANIMSET_OVL(13), 0x00, 0x48, PAL_SLOGRA, ENEMY_SLOGRA};
+EInit g_EInitSlograSpear = {ANIMSET_OVL(13), 0x00, 0x48, PAL_SLOGRA, ENEMY_SLOGRA_SPEAR};
+EInit g_EInitSlograProjectile = {ANIMSET_OVL(13), 0x00, 0x48, PAL_SLOGRA, ENEMY_SLOGRA_PROJECTILE};
+EInit g_EInitGaibon = {ANIMSET_OVL(14), 0x00, 0x4C, PAL_GAIBON, ENEMY_GAIBON};
+EInit g_EInitGaibonProjectile = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_GAIBON_PROJECTILE};
+EInit g_EInitGaibonLargeProjectile = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_GAIBON_LARGE_PROJECTILE};

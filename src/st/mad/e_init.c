@@ -35,5 +35,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityGreyPuff,
 };
 
-EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0x00, 0x000, 0};
+// clang-format off
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_BREAKABLE};
+// clang-format on
 #include "../e_init_common.h"

@@ -3,10 +3,9 @@
 
 extern EInit g_EInitAzaghal;
 
-typedef struct {
-    SVECTOR* targetPosition;
-    s16* lerpVals;
-} AzaghalPosition;
+// Present in PSX but stripped on PSP
+// This looks like it might be unused sensor data
+static s16 unused[] = {0, 64, 4, 0};
 
 static s16 sensors_ground[] = {0, 72, 0, 4, 4, -4, -8, 0};
 
@@ -62,6 +61,12 @@ static s16 lerp_g[][2] = {
 
 static SVECTOR D_us_801819EC = {.vx = 0, .vy = 0, .vz = 224};
 static SVECTOR D_us_801819F4 = {.vx = 0, .vy = 0, .vz = 48};
+
+typedef struct {
+    SVECTOR* targetPosition;
+    s16* lerpVals;
+} AzaghalPosition;
+
 static AzaghalPosition anim_seek_player[] = {
     {.targetPosition = &D_us_801819EC, .lerpVals = *lerp_a},
     {.targetPosition = &D_us_801819F4, .lerpVals = *lerp_a},

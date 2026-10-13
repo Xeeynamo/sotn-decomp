@@ -1026,6 +1026,7 @@ SET(SOURCE_FILES_BOSS_BO4
     src/boss/bo4/create_entity.c
     src/boss/bo4/doors.c
     src/boss/bo4/dop_anim.c
+    src/boss/bo4/dop_collision.c
     src/boss/bo4/doppleganger.c
     src/boss/bo4/doppleganger_anim.c
     src/boss/bo4/d_prize_drops.c
@@ -1056,9 +1057,143 @@ SET(SOURCE_FILES_BOSS_BO4
     src/boss/bo4/st_update.c
     src/boss/bo4/stage_data.c
     src/boss/bo4/unk_365FC.c
-    src/boss/bo4/unk_45354.c
-    src/boss/bo4/unk_46E7C.c
+    src/boss/bo4/unk_45648.c
+    src/boss/bo4/unk_46040.c
+    src/boss/bo4/unk_465F0.c
+    src/boss/bo4/unk_49A6C.c
+    src/boss/bo4/unk_50D4C.c
     src/boss/bo4/bss.c
+)
+
+SET(SOURCE_FILES_BOSS_RBO0
+    src/pc/bosses/boss_rbo0.c
+    src/boss/rbo0/header.c
+    src/boss/rbo0/sprite_banks.c
+    src/boss/rbo0/palette_def.c
+    src/boss/rbo0/layers.c
+    src/boss/rbo0/graphics_banks.c
+    src/boss/rbo0/gen/e_laydef.c
+    src/boss/rbo0/e_init.c
+    src/boss/rbo0/background_block_init.c
+    src/boss/rbo0/e_red_door_tiles.c
+    src/boss/rbo0/e_lock_camera.c
+    src/boss/rbo0/e_breakable.c
+    src/boss/rbo0/d_prize_drops.c
+    src/boss/rbo0/e_boss_torch.c
+    src/boss/rbo0/e_boss_doors.c
+    src/boss/rbo0/e_boss.c
+    src/boss/rbo0/e_fake_ralph.c
+    src/boss/rbo0/e_fake_grant.c
+    src/boss/rbo0/e_fake_sypha.c
+    src/boss/rbo0/unk_19B94.c
+    src/boss/rbo0/st_update.c
+    src/boss/rbo0/st_collision.c
+    src/boss/rbo0/e_red_door.c
+    src/boss/rbo0/st_common.c
+    src/boss/rbo0/e_collect.c
+    src/boss/rbo0/e_misc.c
+    src/boss/rbo0/e_particles.c
+    src/boss/rbo0/e_room_fg.c
+    src/boss/rbo0/gen/rooms.c
+    src/boss/rbo0/e_life_up.c
+    src/boss/rbo0/e_coffin.c
+    src/boss/rbo0/gen/e_layout.c
+    src/boss/rbo0/stage_data.c
+    src/boss/rbo0/palettes.c
+    src/boss/rbo0/tiledef.c
+    src/boss/rbo0/gen/us/sprites.c
+    src/boss/rbo0/e_stage_name.c
+    src/boss/rbo0/prim_helpers.c
+    src/boss/rbo0/e_room_bg.c
+    src/boss/rbo0/create_entity.c
+    src/boss/rbo0/popup.c
+    src/boss/rbo0/bss.c
+)
+
+SET(SOURCE_FILES_BOSS_RBO3
+    src/pc/bosses/boss_rbo3.c
+    src/boss/rbo3/header.c
+    src/boss/rbo3/sprite_banks.c
+    src/boss/rbo3/palette_def.c
+    src/boss/rbo3/layers.c
+    src/boss/rbo3/graphics_banks.c
+    src/boss/rbo3/gen/e_laydef.c
+    src/boss/rbo3/e_init.c
+    src/boss/rbo3/background_block_init.c
+    src/boss/rbo3/e_red_door_tiles.c
+    src/boss/rbo3/e_lock_camera.c
+    src/boss/rbo3/e_breakable.c
+    src/boss/rbo3/d_prize_drops.c
+    src/boss/rbo3/e_medusa.c
+    src/boss/rbo3/unk_12998.c
+    src/boss/rbo3/unk_12B38.c
+    src/boss/rbo3/12D64.c
+    src/boss/rbo3/st_update.c
+    src/boss/rbo3/collision.c
+    src/boss/rbo3/e_red_door.c
+    src/boss/rbo3/st_common.c
+    src/boss/rbo3/e_collect.c
+    src/boss/rbo3/e_misc.c
+    src/boss/rbo3/e_particles.c
+    src/boss/rbo3/e_room_fg.c
+    src/boss/rbo3/gen/rooms.c
+    src/boss/rbo3/e_life_up.c
+    src/boss/rbo3/e_clouds.c
+    src/boss/rbo3/gen/e_layout.c
+    src/boss/rbo3/stage_data.c
+    src/boss/rbo3/pal_unk.c
+    src/boss/rbo3/tilemaps.c
+    src/boss/rbo3/gen/us/sprites.c
+    src/boss/rbo3/unk_11438.c
+    src/boss/rbo3/e_stage_name.c
+    src/boss/rbo3/prim_helpers.c
+    src/boss/rbo3/e_room_bg.c
+    src/boss/rbo3/unk_13050.c
+    src/boss/rbo3/create_entity.c
+    src/boss/rbo3/popup.c
+    src/boss/rbo3/bss.c
+)
+
+SET(SOURCE_FILES_BOSS_RBO4
+    src/pc/bosses/boss_rbo4.c
+    src/boss/rbo4/header.c
+    src/boss/rbo4/sprite_banks.c
+    src/boss/rbo4/palette_def.c
+    src/boss/rbo4/layers.c
+    src/boss/rbo4/graphics_banks.c
+    src/boss/rbo4/gen/e_laydef.c
+    src/boss/rbo4/e_init.c
+    src/boss/rbo4/background_block_init.c
+    src/boss/rbo4/e_red_door_tiles.c
+    src/boss/rbo4/e_lock_camera.c
+    src/boss/rbo4/e_breakable.c
+    src/boss/rbo4/d_prize_drops.c
+    src/boss/rbo4/e_thecreature.c
+    src/boss/rbo4/e_thecreature_flames.c
+    src/boss/rbo4/st_update.c
+    src/boss/rbo4/collision.c
+    src/boss/rbo4/e_red_door.c
+    src/boss/rbo4/st_common.c
+    src/boss/rbo4/e_collect.c
+    src/boss/rbo4/e_misc.c
+    src/boss/rbo4/e_particles.c
+    src/boss/rbo4/e_room_fg.c
+    src/boss/rbo4/gen/rooms.c
+    src/boss/rbo4/e_life_up.c
+    src/boss/rbo4/gen/e_layout.c
+    src/boss/rbo4/stage_data.c
+    src/boss/rbo4/pal_unk.c
+    src/boss/rbo4/tilemaps.c
+    src/boss/rbo4/gen/us/sprites.c
+    src/boss/rbo4/bossfight.c
+    src/boss/rbo4/e_boss_doors.c
+    src/boss/rbo4/e_stage_name.c
+    src/boss/rbo4/prim_helpers.c
+    src/boss/rbo4/e_room_bg.c
+    src/boss/rbo4/unk_18A18.c
+    src/boss/rbo4/create_entity.c
+    src/boss/rbo4/popup.c
+    src/boss/rbo4/bss.c
 )
 
 set(SOURCE_FILES_STAGE_RWRP
@@ -1268,6 +1403,7 @@ set(SOURCE_FILES_STAGE_RCEN
     src/st/rcen/e_room_bg.c
     src/st/rcen/e_lock_camera.c
     src/st/rcen/e_breakable.c
+    src/st/rcen/d_prize_drops.c
     src/st/rcen/e_shaft.c
     src/st/rcen/e_shaft_death_flames.c
     src/st/rcen/cutscene.c
@@ -1286,6 +1422,46 @@ set(SOURCE_FILES_STAGE_RCEN
     src/st/rcen/popup.c
     src/st/rcen/prim_helpers.c
     src/st/rcen/e_shaft_meridian_rings.c
+)
+
+set(SOURCE_FILES_STAGE_RCHI
+    src/pc/stages/stage_rchi.c
+    src/st/rchi/header.c
+    src/st/rchi/sprite_banks.c
+    src/st/rchi/palette_def.c
+    src/st/rchi/layers.c
+    src/st/rchi/graphics_banks.c
+    src/st/rchi/gen/e_laydef.c
+    src/st/rchi/e_init.c
+    src/st/rchi/e_red_door_tiles.c
+    src/st/rchi/d_prize_drops.c
+    src/st/rchi/gen/rooms.c
+    src/st/rchi/gen/e_layout.c
+    src/st/rchi/stage_data.c
+    src/st/rchi/tilemaps.c
+    src/st/rchi/gen/us/sprites.c
+    src/st/rchi/e_room_bg.c
+    src/st/rchi/e_lock_camera.c
+    src/st/rchi/e_breakable.c
+    src/st/rchi/e_demon_switch_wall.c
+    src/st/rchi/e_breakable_wall.c
+    src/st/rchi/e_bat.c
+    src/st/rchi/st_update.c
+    src/st/rchi/collision.c
+    src/st/rchi/create_entity.c
+    src/st/rchi/e_red_door.c
+    src/st/rchi/st_common.c
+    src/st/rchi/e_collect.c
+    src/st/rchi/e_misc.c
+    src/st/rchi/e_stage_name.c
+    src/st/rchi/e_particles.c
+    src/st/rchi/e_room_fg.c
+    src/st/rchi/popup.c
+    src/st/rchi/e_slogra.c
+    src/st/rchi/e_gaibon.c
+    src/st/rchi/e_thornweed.c
+    src/st/rchi/prim_helpers.c
+    src/st/rchi/bss.c
 )
 
 set(SOURCE_FILES_CORE
@@ -1344,6 +1520,7 @@ function(add_overlay name)
         src/dra
         src/pc
         src/st/${name}
+        src/boss/${name}
         tools/psyz/psyz/include
     )
 
@@ -1390,8 +1567,12 @@ add_overlay(lib ${SOURCE_FILES_STAGE_LIB})
 add_overlay(mad ${SOURCE_FILES_STAGE_MAD})
 add_overlay(bo1 ${SOURCE_FILES_BOSS_BO1})
 add_overlay(rcen ${SOURCE_FILES_STAGE_RCEN})
+add_overlay(rbo0 ${SOURCE_FILES_BOSS_RBO0})
+add_overlay(rbo3 ${SOURCE_FILES_BOSS_RBO3})
+add_overlay(rbo4 ${SOURCE_FILES_BOSS_RBO4})
+add_overlay(rchi ${SOURCE_FILES_STAGE_RCHI})
 
-foreach(id 000 002 007 008 012 034 035 037 040 041 043 045 046 050 051 052)
+foreach(id 000 002 007 008 010 012 034 035 037 040 041 043 045 046 050 051 052)
     add_overlay(w0_${id} src/weapon/w_${id}.c)
     target_compile_definitions(${w0_${id}_COMPILE_TARGET} PRIVATE WEAPON0)
     add_overlay(w1_${id} src/weapon/w_${id}.c)

@@ -7,6 +7,11 @@
 
 #define STAGE_IS_RBO3
 
+enum Palettes {
+    PAL_NONE = 0,
+    PAL_MEDUSA = 0x220,
+};
+
 typedef enum {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_BREAKABLE,
@@ -16,21 +21,34 @@ typedef enum {
     /* 0x0A */ E_EQUIP_ITEM_DROP = 0xA,
     /* 0x0B */ E_RELIC_ORB,
     /* 0x0D */ E_ENEMY_BLOOD = 13,
-    /* 0x11 */ E_MEDUSA,
-    /* 0x14 */ E_EXPLOSION_VARIANTS = 0x14,
+    /* 0x11 */ E_BACKGROUND_BLOCK = 0x11,
+    /* 0x12 */ E_LOCK_CAMERA,
+    /* 0x13 */ E_UNK_ID13,
+    /* 0x14 */ E_EXPLOSION_VARIANTS,
     /* 0x15 */ E_GREY_PUFF,
-    /* 0x18 */ UNK_ENTITY_24 = 24,
-    /* 0x19 */ UNK_ENTITY_25,
-    /* 0x1A */ UNK_ENTITY_26,
-    /* 0x1B */ UNK_ENTITY_27,
-    /* 0x1C */ UNK_ENTITY_28,
-    /* 0x1D */ UNK_ENTITY_29,
-    /* 0x1E */ UNK_ENTITY_30,
+    /* 0x16 */ E_UNK_22,
+    /* 0x17 */ E_MEDUSA,
+    /* 0x18 */ E_UNK_24,
+    /* 0x19 */ E_UNK_25,
+    /* 0x1A */ E_UNK_26,
+    /* 0x1B */ E_UNK_27,
+    /* 0x1C */ E_BOSS_FIGHT_MANAGER,
+    /* 0x1D */ E_UNK_29,
+    /* 0x1E */ E_LIFE_UP_SPAWN,
+    /* 0x1F */ E_CLOUDS,
+    /* 0x20 */ E_UNK_32,
 } EntityID;
 
 extern EInit g_EInitInteractable;
 extern EInit g_EInitCommon;
 extern EInit g_EInitParticle;
 extern EInit g_EInitLockCamera;
+
+enum BossMgrState {
+    BOSS_MGR_IDLE = 0,       // initial state, fight not yet engaged
+    BOSS_MGR_FIGHT_ON = 1,   // boss battle started
+    BOSS_MGR_DEFEAT = 2,     // triggered as soon as the boss is defeated
+    BOSS_MGR_TERMINATED = 4, // boss is dead, entity got destroyed
+};
 
 #endif // RBO3_H

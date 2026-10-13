@@ -3,6 +3,7 @@
 #define GAME_H
 #include "common.h"
 #include "castle_flags.h"
+#include "items.h"
 #include "player_steps.h"
 #include <psxsdk/kernel.h>
 
@@ -1143,12 +1144,12 @@ typedef enum {
 } FamiliarActiveIds;
 
 typedef struct {
-    /* 80097964 */ u8 relics[30];
+    /* 80097964 */ u8 relics[NUM_RELICS];
     /* 80097982 */ u8 spells[NUM_SPELLS];
-    /* 8009798A */ u8 equipHandCount[169];
-    /* 80097A33 */ u8 equipBodyCount[90];
-    /* 80097A8D */ u8 equipHandOrder[169];
-    /* 80097B36 */ u8 equipBodyOrder[90];
+    /* 8009798A */ u8 equipHandCount[NUM_HAND_ITEMS];
+    /* 80097A33 */ u8 equipBodyCount[NUM_BODY_ITEMS];
+    /* 80097A8D */ u8 equipHandOrder[NUM_HAND_ITEMS];
+    /* 80097B36 */ u8 equipBodyOrder[NUM_BODY_ITEMS];
     /* 80097B90 */ char saveName[12];
     /* 80097B9C */ u32 spellsLearnt;
     /* 80097BA0 */ s32 hp;
@@ -1159,7 +1160,9 @@ typedef struct {
     /* 80097BB4 */ s32 mpMax;
     /* 80097BB8 */ s32 statsBase[4];
     /* 80097BC8 */ s32 statsEquip[4];
+#ifndef STAGE_IS_TEK
     /* 80097BD8 */ s32 statsTotal[4];
+#endif
     /* 80097BE8 */ s32 level;
     /* 80097BEC */ u32 exp;
     /* 80097BF0 */ s32 gold;
@@ -1569,8 +1572,10 @@ typedef struct {
     /* 0x0C */ u8 statsBonus[4];
     /* 0x10 */ u16 weakToElements;
     /* 0x12 */ u16 resistElements;
+#ifndef STAGE_IS_TEK
     /* 0x14 */ u16 immuneElements;
     /* 0x16 */ u16 absorbElements;
+#endif
     /* 0x18 */ u16 icon;
     /* 0x1A */ u16 iconPalette;
     /* 0x1C */ u16 equipType;
@@ -1593,10 +1598,12 @@ typedef struct {
 typedef struct {
     /* 0x00 */ const char* name;
     /* 0x04 */ char* desc;
+#ifndef STAGE_IS_TEK
     /* 0x08 */ u16 icon;
     /* 0x0A */ u16 iconPalette;
 #ifndef VERSION_BETA
     /* 0x0C */ s32 unk0C;
+#endif
 #endif
 } RelicDesc; /* size=0x10 */
 
@@ -2029,8 +2036,13 @@ typedef struct {
 
 // Used in game.h
 typedef struct {
+#ifdef STAGE_IS_TEK
+    s32 unk0;
+    s32 primIndex;
+#else
     /* 0x800973F8 */ s32 primIndex;
     /* 0x800973FC */ s32 D_800973FC;
+#endif
     /* 0x80097400 */ bool pauseEnemies; // True for Stopwatch and cutscenes
     /* 0x80097404 */ s32 : 32;
     /* 0x80097408 */ s32 g_zEntityCenter;
@@ -2254,5 +2266,6 @@ extern s32 D_80098894;
 #include <game_psp.h>
 
 #include "palettes.h"
+#include "enemies.h"
 
 #endif

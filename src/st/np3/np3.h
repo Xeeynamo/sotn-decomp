@@ -8,7 +8,19 @@ enum Palettes {
     // puff params 0,1,3
     PAL_PUFF_OPAQUE_OFFSET = 0xD0,
     // puff params 2 (not used directly, PAL_PUFF_OPAQUE_OFFSET + 3)
-    PAL_PUFF_OPAQUE_2 = 0xD3
+    PAL_PUFF_OPAQUE_2 = 0xD3,
+    PAL_MERMAN_2 = 0x28C,
+    PAL_MERMAN = 0x2B2,
+    PAL_BONE_SCIMITAR = 0x2C5,
+    PAL_BAT = 0x2C8,
+    PAL_OWL_KNIGHT_OWL = 0x2CB,
+    PAL_ZOMBIE = 0x2D3,
+    PAL_BLOODY_ZOMBIE = 0x2D6,
+    PAL_SLOGRA = 0x2D9,
+    PAL_GAIBON = 0x2E2,
+    PAL_BLADE = 0x2EA,
+    PAL_GURKHA = 0x2ED,
+    PAL_HAMMER = 0x2F0,
 };
 
 typedef enum EntityID {

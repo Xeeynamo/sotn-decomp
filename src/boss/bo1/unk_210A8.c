@@ -45,7 +45,7 @@ static u16 D_pspeu_09268330[2][4] = {
     {0x00DF, 0x00FF, 0x011F, 0x013F}, {0x02C0, 0x02E0, 0x0300, 0x0320}};
 static u16 D_pspeu_09268340[2][4] = {
     {0x051E, 0x001D, 0x001D, 0x001D}, {0x0025, 0x0000, 0x0000, 0x0000}};
-s32 is_boss_playing = 0;
+s32 g_BossMgrState = BOSS_MGR_IDLE;
 static s32 D_us_801B2378;
 extern EInit g_EInitParticle;
 extern EInit g_EInitBossDoor;
@@ -162,10 +162,10 @@ void EntityBossDoor(Entity* self) {
             DestroyEntity(self);
             break;
         }
-        is_boss_playing = 0;
+        g_BossMgrState = BOSS_MGR_IDLE;
         self->zPriority = 0x5F;
     case 1:
-        if (is_boss_playing) {
+        if (g_BossMgrState) {
             self->step++;
         }
         break;
@@ -179,9 +179,9 @@ void EntityBossDoor(Entity* self) {
             self->posY.i.hi += collider.unk18;
             self->velocityY = -self->velocityY;
             self->velocityY /= 4;
-            if (!(is_boss_playing & 0x10)) {
+            if (!(g_BossMgrState & 0x10)) {
                 PlaySfxPositional(SFX_EXPLODE_B);
-                is_boss_playing |= 0x10;
+                g_BossMgrState |= 0x10;
             }
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
@@ -232,7 +232,7 @@ void EntityBossDoor(Entity* self) {
         self->step++;
         break;
     case 4:
-        if (!is_boss_playing) {
+        if (!g_BossMgrState) {
             self->step++;
         }
         break;

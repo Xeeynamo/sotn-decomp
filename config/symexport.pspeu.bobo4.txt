@@ -1,7 +1,7 @@
 EXTERN(_binary_assets_boss_bo4_mwo_header_bin_start);
 EXTERN(BO4_Load);
-doppleganger_sprites = 0x09263438;
-bat_form_sprites = 0x09263440;
+D_8D31FA0 = 0x08D31FA0;
+D_8D589B8 = 0x08D589B8;
 g_Clut = 0x091F5DF8;
 EXTERN(D_psp_E_ID_16);
 EXTERN(D_psp_E_ID_17);

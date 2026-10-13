@@ -1,0 +1,16 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#include "rbo4.h"
+
+static u8 anim_frames[] = {0x40, 0x01, 0xFF, 0x00};
+
+ObjInit2 BackgroundBlockInit[] = {
+    {.animSet = ANIMSET_DRA(6),
+     .zPriority = 0x01FA,
+     .facingLeft = 0,
+     .unk5A = 0,
+     .palette = 0,
+     .drawFlags = ENTITY_DEFAULT,
+     .blendMode = BLEND_TRANSP,
+     .flags = 0,
+     .animFrames = anim_frames},
+};

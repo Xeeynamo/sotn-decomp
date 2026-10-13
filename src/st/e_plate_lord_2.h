@@ -329,7 +329,7 @@ void func_us_801D542C(Entity* self) {
         }
         tempEntity->posX.i.hi = posX;
         tempEntity->posY.i.hi = posY;
-        tempEntity->attack = g_api.enemyDefs[98].attack;
+        tempEntity->attack = g_api.enemyDefs[ENEMY_PLATE_LORD_UNK_62].attack;
         func_us_801D51EC();
         return;
     case 13:
@@ -445,10 +445,10 @@ void func_us_801D542C(Entity* self) {
             self->ext.plateLordUnknown.unk9D = 0;
         }
         attack = (tempEntity->ext.plateLordUnknown.unk84 *
-                  g_api.enemyDefs[98].attack) >>
+                  g_api.enemyDefs[ENEMY_PLATE_LORD_UNK_62].attack) >>
                  8;
-        if (attack > g_api.enemyDefs[98].attack) {
-            attack = g_api.enemyDefs[98].attack;
+        if (attack > g_api.enemyDefs[ENEMY_PLATE_LORD_UNK_62].attack) {
+            attack = g_api.enemyDefs[ENEMY_PLATE_LORD_UNK_62].attack;
         }
         tempEntity = self + 4;
         tempEntity->attack = attack;
@@ -512,7 +512,7 @@ void func_us_801D542C(Entity* self) {
             self->ext.plateLordUnknown.unk82 = 0x800;
         }
         tempEntity = self + 4;
-        tempEntity->attack = g_api.enemyDefs[98].attack;
+        tempEntity->attack = g_api.enemyDefs[ENEMY_PLATE_LORD_UNK_62].attack;
         break;
     }
     if ((self->step == 9) || (self->step == 0xB)) {

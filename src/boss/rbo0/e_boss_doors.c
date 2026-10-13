@@ -2,7 +2,7 @@
 #include "rbo0.h"
 
 extern EInit g_EInitEnvironment;
-extern s32 D_us_801806AC;
+s32 D_us_801806AC = 0;
 
 // Very similar to RARE's e_boss_door but with
 // additional checks for the boss state.

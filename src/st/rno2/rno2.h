@@ -10,12 +10,21 @@
 enum Palettes {
     PAL_NONE,
     PAL_SPIKES_DUST = 0x161,
+    PAL_PRISONER = 0x201,
+    PAL_CTULHU = 0x203,
+    PAL_MALACHI = 0x208,
+    PAL_KARASUMAN = 0x218,
+    PAL_FLYING_ZOMBIE = 0x21E,
     PAL_AZAGHAL_BODY_A = 0x220,
     PAL_AZAGHAL_BODY_B = 0x221,
     PAL_AZAGHAL_COMBO_A = 0x222,
     PAL_AZAGHAL_COMBO_B = 0x223,
     PAL_BREAKABLE = 0x226,
     PAL_BREAKABLE_DEBRIS = 0x22A,
+    PAL_GHOST_DANCER = 0x22E,
+    PAL_MEDUSA_HEAD_BLUE = 0x250,
+    PAL_MEDUSA_HEAD_YELLOW = 0x251,
+    PAL_BLOODY_ZOMBIE = 0x2D6,
     PAL_CTULHU_DEATH = 0x2EE,
 };
 
@@ -73,8 +82,8 @@ typedef enum EntityID {
     E_KARASUMAN_RAVEN_ATTACK,   // EntityKarasumanRavenAttack
     E_KARASUMAN_FEATHER,        // EntityKarasumanFeather
     E_KARASUMAN_RAVEN_ABSORB,   // EntityKarasumanRavenAbsorb
-    E_FLYING_ZOMBIE2,           // EntityFlyingZombie2
-    E_FLYING_ZOMBIE1,           // EntityFlyingZombie1
+    E_FLYING_ZOMBIE,            // EntityFlyingZombie
+    E_FLYING_ZOMBIE_TORSO,      // EntityFlyingZombieTorso
     E_BLOOD_DRIPS,              // EntityBloodDrips
     E_BLOOD_SPLATTER,           // EntityBloodSplatter
     E_AZAGHAL,                  // EntityAzaghal

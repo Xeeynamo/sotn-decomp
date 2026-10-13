@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rbo2/rbo2.h"
 
-INCLUDE_ASM("boss/rbo2_psp/nonmatchings/rbo2_psp/unk_E860", func_us_8019F4AC);
+INCLUDE_ASM("boss/rbo2_psp/nonmatchings/rbo2_psp/unk_E860", EntityBossFightManager);
 
 INCLUDE_ASM("boss/rbo2_psp/nonmatchings/rbo2_psp/unk_E860", EntityBreakable);
 

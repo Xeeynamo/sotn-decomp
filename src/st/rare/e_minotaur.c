@@ -173,10 +173,6 @@ static s32 fireball_config[][2] = {
     {FIX(6), ROT(123.75)},
 };
 
-// Present in PSX but stripped on PSP
-// This looks like it might be unused sensor data
-static s16 unused[] = {0, 64, 4, 0};
-
 void EntityMinotaur(Entity* self) {
     enum MinotaurStep {
         INIT = 0,

@@ -174,79 +174,74 @@ PfnEntityUpdate EntityUpdates[] = {
 };
 
 // Common
-EInit g_EInitBreakable = {ANIMSET_DRA(3), 0x00, 0x00, 0x0000, 0x000};
-EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x00, 0x00, 0x0000, 0x001};
-EInit g_EInitParticle = {ANIMSET_DRA(3), 0x00, 0x00, 0x0000, 0x002};
-EInit g_EInitSpawner = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x004};
-EInit g_EInitInteractable = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x005};
-EInit g_EInitUnkId13 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x002};
-EInit g_EInitLockCamera = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x001};
-EInit g_EInitCommon = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x003};
-EInit g_EInitDamageNum = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x003};
+// clang-format off
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_BREAKABLE};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitParticle = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitSpawner = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_SPAWNER};
+EInit g_EInitInteractable = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
 
 // Bone Ark
-EInit g_EInitBoneArk = {ANIMSET_OVL(0x05), 0x0D, 0x48, 0x0200, 0x02D};
-EInit g_EInitBoneArkSkeleton = {ANIMSET_OVL(0x05), 0x01, 0x48, 0x0200, 0x02E};
-EInit g_EInitBoneArkNeck = {ANIMSET_OVL(0x05), 0x11, 0x48, 0x0200, 0x005};
-EInit g_EInitBoneArkAttackEffects = {
-    ANIMSET_OVL(0x05), 0x0E, 0x48, 0x0200, 0x02D};
-EInit g_EInitBoneArkProjectile = {ANIMSET_OVL(0x05), 0x15, 0x48, 0x0200, 0x02F};
+EInit g_EInitBoneArk = {ANIMSET_OVL(5), 0x0D, 0x48, PAL_BONE_ARK, ENEMY_BONE_ARK};
+EInit g_EInitBoneArkSkeleton = {ANIMSET_OVL(5), 0x01, 0x48, PAL_BONE_ARK, ENEMY_BONE_ARK_SKELETON};
+EInit g_EInitBoneArkNeck = {ANIMSET_OVL(5), 0x11, 0x48, PAL_BONE_ARK, ENEMY_INTERACTABLE};
+EInit g_EInitBoneArkAttackEffects = {ANIMSET_OVL(5), 0x0E, 0x48, PAL_BONE_ARK, ENEMY_BONE_ARK};
+EInit g_EInitBoneArkProjectile = {ANIMSET_OVL(5), 0x15, 0x48, PAL_BONE_ARK, ENEMY_BONE_ARK_PROJECTILE};
 
-EInit g_EInitSpikeRoomLightSwitch = {
-    ANIMSET_OVL(0x02), 0x01, 0x00, 0x0000, 0x005};
-EInit g_EInitElevator = {ANIMSET_OVL(0x02), 0x03, 0x00, 0x0000, 0x005};
-EInit g_EInitEnvironment = {ANIMSET_OVL(0x01), 0x00, 0x00, 0x0000, 0x005};
-EInit D_us_801811E8 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x005};
-EInit g_EInitCoffin = {ANIMSET_OVL(0x01), 0x13, 0x00, 0x0000, 0x000};
+EInit g_EInitSpikeRoomLightSwitch = {ANIMSET_OVL(2), 0x01, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitElevator = {ANIMSET_OVL(2), 0x03, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitEnvironment = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit D_us_801811E8 = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitCoffin = {ANIMSET_OVL(1), 0x13, 0x00, PAL_NONE, ENEMY_BREAKABLE};
 
 // Discus Lord
-EInit g_EInitDiscusLord = {ANIMSET_OVL(0x04), 0x01, 0x49, 0x0224, 0x04D};
-EInit g_EInitDiscus = {ANIMSET_OVL(0x04), 0x10, 0x49, 0x0224, 0x04E};
+EInit g_EInitDiscusLord = {ANIMSET_OVL(4), 0x01, 0x49, PAL_DISCUS_LORD_HELLFIRE_BEAST, ENEMY_DISCUS_LORD};
+EInit g_EInitDiscus = {ANIMSET_OVL(4), 0x10, 0x49, PAL_DISCUS_LORD_HELLFIRE_BEAST, ENEMY_DISCUS_LORD_DISCUS};
 
 // Hellfire Beast
-EInit g_EInitHellfireBeast = {ANIMSET_OVL(0x04), 0x19, 0x49, 0x0224, 0x047};
-EInit g_EInitHellfireBeastPunchHitbox = {
-    ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x04A};
-EInit g_EInitHellfireBeastFlamePillar = {
-    ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x048};
-EInit g_EInitHellfireBeastThorsHammer = {
-    ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x049};
+EInit g_EInitHellfireBeast = {ANIMSET_OVL(4), 0x19, 0x49, PAL_DISCUS_LORD_HELLFIRE_BEAST, ENEMY_HELLFIRE_BEAST};
+EInit g_EInitHellfireBeastPunchHitbox = {ANIMSET_OVL(0), 0x00, 0x00, PAL_NONE, ENEMY_HELLFIRE_BEAST_PUNCH_HITBOX};
+EInit g_EInitHellfireBeastFlamePillar = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_HELLFIRE_BEAST_FLAME_PILLAR};
+EInit g_EInitHellfireBeastThorsHammer = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_HELLFIRE_BEAST_THORS_HAMMER};
 
 // Lossoth
-EInit g_EInitLossoth = {ANIMSET_OVL(0x03), 0x00, 0x50, 0x0216, 0x083};
-EInit g_EInitLossothEffects = {ANIMSET_OVL(0x03), 0x00, 0x50, 0x0216, 0x005};
-EInit g_EInitLossothAttack = {ANIMSET_OVL(0x03), 0x00, 0x50, 0x0216, 0x084};
+EInit g_EInitLossoth = {ANIMSET_OVL(3), 0x00, 0x50, PAL_LOSSOTH, ENEMY_LOSSOTH};
+EInit g_EInitLossothEffects = {ANIMSET_OVL(3), 0x00, 0x50, PAL_LOSSOTH, ENEMY_INTERACTABLE};
+EInit g_EInitLossothAttack = {ANIMSET_OVL(3), 0x00, 0x50, PAL_LOSSOTH, ENEMY_LOSSOTH_ATTACK};
 
 // Grave Keeper
-EInit g_EInitGraveKeeper = {ANIMSET_OVL(0x09), 0x01, 0x4D, 0x0236, 0x06F};
-EInit g_EInitGraveKeeperHitbox = {ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x070};
+EInit g_EInitGraveKeeper = {ANIMSET_OVL(9), 0x01, 0x4D, PAL_GRAVE_KEEPER_TOMBSTONE, ENEMY_GRAVE_KEEPER};
+EInit g_EInitGraveKeeperHitbox = {ANIMSET_OVL(0), 0x00, 0x00, PAL_NONE, ENEMY_GRAVE_KEEPER_HITBOX};
 
 // Tombstone
-EInit g_EInitTombstone = {ANIMSET_OVL(0x09), 0x15, 0x4D, 0x0236, 0x071};
+EInit g_EInitTombstone = {ANIMSET_OVL(9), 0x15, 0x4D, PAL_GRAVE_KEEPER_TOMBSTONE, ENEMY_TOMBSTONE};
 
 // Gremlin
-EInit g_EInitGremlin = {ANIMSET_OVL(0x0A), 0x00, 0x4F, 0x0238, 0x0E1};
-EInit D_us_801812F0 = {ANIMSET_OVL(0x0A), 0x00, 0x4F, 0x0238, 0x005}; // unused
-EInit g_EInitGremlinFire = {ANIMSET_OVL(0x0A), 0x00, 0x4F, 0x0238, 0x0E2};
+EInit g_EInitGremlin = {ANIMSET_OVL(10), 0x00, 0x4F, PAL_GREMLIN, ENEMY_GREMLIN};
+EInit D_us_801812F0 = {ANIMSET_OVL(10), 0x00, 0x4F, PAL_GREMLIN, ENEMY_INTERACTABLE}; // unused
+EInit g_EInitGremlinFire = {ANIMSET_OVL(10), 0x00, 0x4F, PAL_GREMLIN, ENEMY_GREMLIN_FIRE};
 
 // Large Slime
-EInit g_EInitLargeSlime = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x041};
+EInit g_EInitLargeSlime = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_LARGE_SLIME};
 
 // Slime
-EInit g_EInitSlime = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x042};
+EInit g_EInitSlime = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_SLIME};
 
 // Wereskeleton
-EInit g_EInitWereskeleton = {ANIMSET_OVL(0x06), 0x01, 0x49, 0x0250, 0x03D};
-EInit D_us_80180A88 = {ANIMSET_OVL(0x06), 0x00, 0x49, 0x0250, 0x03E};
+EInit g_EInitWereskeleton = {ANIMSET_OVL(6), 0x01, 0x49, PAL_WERESKELETON, ENEMY_WERESKELETON};
+EInit D_us_80180A88 = {ANIMSET_OVL(6), 0x00, 0x49, PAL_WERESKELETON, ENEMY_WERESKELETON_BONE};
 
 // Thornweed
-EInit g_EInitThornweed = {ANIMSET_OVL(0x0B), 0x00, 0x50, 0x0252, 0x09D};
+EInit g_EInitThornweed = {ANIMSET_OVL(11), 0x00, 0x50, PAL_THORNWEED_CORPSEWEED, ENEMY_THORNWEED};
 
 // Corpseweed
-EInit D_us_801812F4 = {ANIMSET_OVL(0x0B), 0x00, 0x50, 0x0252, 0x09E}; // unused
-EInit g_EInitCorpseweed = {ANIMSET_OVL(0x0B), 0x00, 0x50, 0x0252, 0x09F};
-EInit g_EInitCorpseweedProjectile = {
-    ANIMSET_OVL(0x0B), 0x00, 0x50, 0x0252, 0x0A0};
+EInit D_us_801812F4 = {ANIMSET_OVL(11), 0x00, 0x50, PAL_THORNWEED_CORPSEWEED, ENEMY_CORPSEWEED_UNUSED}; // unused
+EInit g_EInitCorpseweed = {ANIMSET_OVL(11), 0x00, 0x50, PAL_THORNWEED_CORPSEWEED, ENEMY_CORPSEWEED};
+EInit g_EInitCorpseweedProjectile = {ANIMSET_OVL(11), 0x00, 0x50, PAL_THORNWEED_CORPSEWEED, ENEMY_CORPSEWEED_PROJECTILE};
 
 // Blood Skeleton
-EInit g_EInitBloodSkeleton = {ANIMSET_OVL(0x0D), 0x00, 0x4C, 0x0262, 0x046};
+EInit g_EInitBloodSkeleton = {ANIMSET_OVL(13), 0x00, 0x4C, PAL_BLOOD_SKELETON, ENEMY_BLOOD_SKELETON};

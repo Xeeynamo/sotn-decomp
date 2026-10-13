@@ -10,7 +10,7 @@ extern RoomDef rooms_layers[];
 extern GfxBank* gfxBanks[];
 void UpdateStageEntities(void);
 
-AbbreviatedOverlay g_StageOverlay = {
+AbbreviatedOverlay g_Overlay = {
     .Update = Update,
     .HitDetection = HitDetection,
     .UpdateRoomPosition = UpdateRoomPosition,

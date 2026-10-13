@@ -11,6 +11,7 @@ g_eBreakableHitboxes = 0x80180534;
 g_eBreakableExplosionTypes = 0x8018053C;
 g_eBreakableanimSets = 0x80180544;
 blend_modes = 0x80180554;
+g_BossMgrState = 0x801805C8;
 rooms = 0x801812C4;
 func_us_801BAB18_from_bo0 = 0x801939D4;
 Random = 0x80195ED4;

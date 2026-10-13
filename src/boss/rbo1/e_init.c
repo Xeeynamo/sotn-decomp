@@ -30,7 +30,7 @@ void func_us_80193C2C(Entity* self);
 void func_us_80193E24(Entity* self);
 void func_us_80194108(Entity* self);
 void func_us_801947E4(Entity* self);
-void func_us_80194C50(Entity* self);
+void EntityBossFightManager(Entity* self);
 void EntityBossRoomBlock(Entity* self);
 void EntityLifeUpSpawn(Entity* self);
 
@@ -44,26 +44,26 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityUnkId13,       EntityExplosionVariants, EntityGreyPuff,
     func_us_801923A8,    func_us_80192C5C,        func_us_80192F84,
     func_us_801936FC,    func_us_80193C2C,        func_us_80193E24,
-    func_us_80194108,    func_us_801947E4,        func_us_80194C50,
+    func_us_80194108,    func_us_801947E4,        EntityBossFightManager,
     EntityBossRoomBlock, EntityLifeUpSpawn,
 };
 
 // clang-format off
 // animSet, animCurFrame, unk5A, palette, enemyID
-EInit g_EInitBreakable = {ANIMSET_OVL(1), 0, 0, 0, 0x000};
-EInit g_EInitObtainable = {ANIMSET_DRA(3), 0, 0, 0, 0x001};
-EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0, 0, 0x002};
-EInit g_EInitSpawner = {ANIMSET_DRA(0), 0, 0, 0, 0x004};
-EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0, 0, 0x005};
-EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, 0, 0x002};
-EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, 0, 0x001};
-EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
-EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
-EInit g_EInitBeezelbub = {ANIMSET_OVL(3), 0, 72, 512, 0x144};
-EInit g_EInitBeezelbub801804A0 = {ANIMSET_OVL(3), 0, 72, 512, 0x144};
-EInit D_us_801804AC = {ANIMSET_OVL(3), 0, 72, 512, 0x145};
-EInit D_us_801804B8 = {ANIMSET_OVL(3), 0, 72, 512, 0x146};
-EInit D_us_801804C4 = {ANIMSET_OVL(3), 0, 72, 512, 0x005};
-EInit D_us_801804D0 = {ANIMSET_OVL(3), 0, 72, 512, 0x002};
-EInit D_us_801804DC = {ANIMSET_OVL(1), 8, 0, 0, 0x005};
+EInit g_EInitBreakable = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_BREAKABLE};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitParticle = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitSpawner = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_SPAWNER};
+EInit g_EInitInteractable = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitBeezelbub = {ANIMSET_OVL(3), 0x00, 0x48, PAL_BEEZELBUB, ENEMY_BEEZELBUB};
+EInit g_EInitBeezelbub801804A0 = {ANIMSET_OVL(3), 0x00, 0x48, PAL_BEEZELBUB, ENEMY_BEEZELBUB};
+EInit D_us_801804AC = {ANIMSET_OVL(3), 0x00, 0x48, PAL_BEEZELBUB, ENEMY_BEEZELBUB_UNK_145};
+EInit D_us_801804B8 = {ANIMSET_OVL(3), 0x00, 0x48, PAL_BEEZELBUB, ENEMY_BEEZELBUB_UNK_146};
+EInit D_us_801804C4 = {ANIMSET_OVL(3), 0x00, 0x48, PAL_BEEZELBUB, ENEMY_INTERACTABLE};
+EInit D_us_801804D0 = {ANIMSET_OVL(3), 0x00, 0x48, PAL_BEEZELBUB, ENEMY_PARTICLE};
+EInit D_us_801804DC = {ANIMSET_OVL(1), 0x08, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
 // clang-format on

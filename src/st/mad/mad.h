@@ -17,6 +17,10 @@
 // For now it's just an overriding define.
 #define NUM_HAND_ITEMS 0xAD
 
+enum Palettes {
+    PAL_NONE = 0,
+};
+
 typedef enum {
     E_NONE,
     E_BREAKABLE,

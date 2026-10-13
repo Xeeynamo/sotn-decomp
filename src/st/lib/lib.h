@@ -5,8 +5,19 @@
 
 enum Palettes {
     PAL_NONE = 0,
+    PAL_DHURON = 0x200,
+    PAL_BLOODY_ZOMBIE = 0x207,
+    PAL_FLYING_ZOMBIE = 0x20A,
+    PAL_ECTOPLASM = 0x23E,
+    PAL_LESSER_DEMON = 0x249,
+    PAL_THORNWEED_CORPSEWEED = 0x252,
+    PAL_CANDLE_TABLE = 0x256,
     PAL_SPELLBOOK = 0x25A,
+    PAL_SPELLBOOK_ATTACK = 0x266,
+    PAL_SKELETON = 0x26B,
     PAL_BREAKABLE = 0x26C,
+    PAL_FLEA_ARMOR_FLEA_MAN = 0x274,
+    PAL_MUDMAN = 0x277,
 };
 
 typedef enum EntityID {
@@ -38,7 +49,7 @@ typedef enum EntityID {
     /* 0x19 */ E_ID_19,
     /* 0x1A */ E_ID_1A,
     /* 0x1B */ E_ID_1B,
-    /* 0x1C */ E_ID_1C,
+    /* 0x1C */ E_FLYING_ZOMBIE_TORSO,
     /* 0x1D */ E_BLOOD_DRIPS,
     /* 0x1E */ E_BLOOD_SPLATTER,
     /* 0x1F */ E_ID_1F,
@@ -108,8 +119,8 @@ extern EInit g_EInitLockCamera;
 extern EInit g_EInitCommon;
 extern EInit g_EInitDamageNum;
 extern EInit g_EInitBloodyZombie;
-extern EInit g_EInitFlyingZombie2;
-extern EInit g_EInitFlyingZombie1;
+extern EInit g_EInitFlyingZombie;
+extern EInit g_EInitFlyingZombieTorso;
 // extern EInit D_us_80180890;
 extern EInit g_EInitDhuron;
 extern EInit D_us_801808A8;

@@ -115,35 +115,35 @@ PfnEntityUpdate EntityUpdates[] = {
 
 // clang-format off
 // animSet, animCurFrame, unk5A, palette, enemyID
-EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0, 0x000, 0x000};
-EInit g_EInitObtainable = {ANIMSET_DRA(3), 0, 0, 0x000, 0x001};
-EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0, 0x000, 0x002};
-EInit g_EInitSpawner = {ANIMSET_DRA(0), 0, 0, 0x000, 0x004};
-EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0, 0x000, 0x005};
-EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, 0x000, 0x002};
-EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, 0x000, 0x001};
-EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0x000, 0x003};
-EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0x000, 0x003};
-EInit g_EInitEnvironment = {ANIMSET_OVL(2), 0, 0, 0x000, 0x005};
-EInit g_EInitBreakableWallSegment = {ANIMSET_DRA(0), 0, 0, 0x000, 0x005};
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_BREAKABLE};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitParticle = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitSpawner = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_SPAWNER};
+EInit g_EInitInteractable = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitEnvironment = {ANIMSET_OVL(2), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitBreakableWallSegment = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
 
-EInit g_EInitFrozenHalf = {ANIMSET_OVL(3), 1, 72, 0x200, 0x0D9};
-EInit g_EInitFrozenHalfOrbitIcicle = {ANIMSET_OVL(3), 24, 72, 0x200, 0x0DA};
-EInit g_EInitFrozenHalfThrownChunk = {ANIMSET_OVL(3), 30, 72, 0x200, 0x0DB};
-EInit g_EInitFrozenHalfBlizzard = {ANIMSET_OVL(3), 23, 72, 0x200, 0x005};
-EInit g_EInitFrozenHalfFallingIce = {ANIMSET_OVL(3), 28, 72, 0x200, 0x0DC};
+EInit g_EInitFrozenHalf = {ANIMSET_OVL(3), 0x01, 0x48, PAL_FROZEN_HALF, ENEMY_FROZEN_HALF};
+EInit g_EInitFrozenHalfOrbitIcicle = {ANIMSET_OVL(3), 0x18, 0x48, PAL_FROZEN_HALF, ENEMY_FROZEN_HALF_ORBIT_ICICLE};
+EInit g_EInitFrozenHalfThrownChunk = {ANIMSET_OVL(3), 0x1E, 0x48, PAL_FROZEN_HALF, ENEMY_FROZEN_HALF_THROWN_CHUNK};
+EInit g_EInitFrozenHalfBlizzard = {ANIMSET_OVL(3), 0x17, 0x48, PAL_FROZEN_HALF, ENEMY_INTERACTABLE};
+EInit g_EInitFrozenHalfFallingIce = {ANIMSET_OVL(3), 0x1C, 0x48, PAL_FROZEN_HALF, ENEMY_FROZEN_HALF_FALLING_ICE};
 
-EInit g_EInitSalome = {ANIMSET_OVL(4), 0, 76, 0x206, 0x0E5};
-EInit g_EInitSalomeEffects = {ANIMSET_OVL(4), 0, 76, 0x206, 0x005};
-EInit g_EInitSalomeMagicOrb = {ANIMSET_OVL(4), 0, 76, 0x206, 0x0E6};
-EInit g_EInitSalomeSkull = {ANIMSET_OVL(4), 0, 76, 0x206, 0x0E7};
-EInit g_EInitSalomeCat = {ANIMSET_OVL(4), 0, 76, 0x206, 0x0E8};
+EInit g_EInitSalome = {ANIMSET_OVL(4), 0x00, 0x4C, PAL_SALOME, ENEMY_SALOME};
+EInit g_EInitSalomeEffects = {ANIMSET_OVL(4), 0x00, 0x4C, PAL_SALOME, ENEMY_INTERACTABLE};
+EInit g_EInitSalomeMagicOrb = {ANIMSET_OVL(4), 0x00, 0x4C, PAL_SALOME, ENEMY_SALOME_MAGIC_ORB};
+EInit g_EInitSalomeSkull = {ANIMSET_OVL(4), 0x00, 0x4C, PAL_SALOME, ENEMY_SALOME_SKULL};
+EInit g_EInitSalomeCat = {ANIMSET_OVL(4), 0x00, 0x4C, PAL_SALOME, ENEMY_SALOME_CAT};
 
-EInit g_EInitBat = {ANIMSET_OVL(9), 0, 95, 0x240, 0x040};
+EInit g_EInitBat = {ANIMSET_OVL(9), 0x00, 0x5F, PAL_BAT, ENEMY_BAT};
 
-EInit g_EInitBloodSkeleton = {ANIMSET_OVL(10), 0, 93, 0x250, 0x046};
+EInit g_EInitBloodSkeleton = {ANIMSET_OVL(10), 0x00, 0x5D, PAL_BLOOD_SKELETON, ENEMY_BLOOD_SKELETON};
 
-EInit g_EInitSkeleton = {ANIMSET_OVL(11), 1, 94, 0x260, 0x04B};
-EInit g_EInitSkeletonPieces = {ANIMSET_OVL(11), 0, 94, 0x260, 0x002};
-EInit g_EInitSkeletonBone = {ANIMSET_OVL(11), 21, 94, 0x260, 0x04C};
+EInit g_EInitSkeleton = {ANIMSET_OVL(11), 0x01, 0x5E, PAL_SKELETON, ENEMY_SKELETON};
+EInit g_EInitSkeletonPieces = {ANIMSET_OVL(11), 0x00, 0x5E, PAL_SKELETON, ENEMY_PARTICLE};
+EInit g_EInitSkeletonBone = {ANIMSET_OVL(11), 0x15, 0x5E, PAL_SKELETON, ENEMY_SKELETON_BONE};
 // clang-format on

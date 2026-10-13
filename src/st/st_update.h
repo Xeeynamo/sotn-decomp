@@ -19,7 +19,7 @@ u16 UNK_Invincibility0[] = {
     PAL_FLAG(PAL_CC_STONE_EFFECT),     PAL_FLAG(PAL_CC_DARK_EFFECT),
     PAL_FLAG(PAL_CC_CURSE_EFFECT),     PAL_FLAG(PAL_CC_CURSE_EFFECT),
     PAL_FLAG(PAL_CC_CRITICAL_EFFECT),  PAL_FLAG(PAL_CC_CRITICAL_EFFECT),
-#if !(defined VERSION_BETA)
+#if !(defined VERSION_BETA) && !defined(STAGE_IS_TEK)
     PAL_FLAG(PAL_CC_CURSE_EFFECT),     PAL_FLAG(PAL_CC_CURSE_EFFECT),
 #endif
 };
@@ -30,6 +30,13 @@ s32 Random(void) {
     g_randomNext = (g_randomNext * 0x01010101) + 1;
     return (g_randomNext >> 0x18) & 0xFF;
 }
+
+// TEK does not cache the entity flags in a local
+#ifdef STAGE_IS_TEK
+#define UPDATE_FLAGS e->flags
+#else
+#define UPDATE_FLAGS flags
+#endif
 
 void Update(void) {
     s16 x, y;
@@ -55,11 +62,14 @@ void Update(void) {
             continue;
 
         if (e->step) {
+#ifndef STAGE_IS_TEK
+            // TEK uses `e->flags`, recent build cache result in `flags`
             flags = e->flags;
-            if (flags & FLAG_DESTROY_IF_OUT_OF_CAMERA) {
+#endif
+            if (UPDATE_FLAGS & FLAG_DESTROY_IF_OUT_OF_CAMERA) {
                 x = e->posX.i.hi;
                 y = e->posY.i.hi;
-                if (flags & FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA) {
+                if (UPDATE_FLAGS & FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA) {
                     if (x < -64 || x > 320 || y < -64 || y > 288) {
                         DestroyEntity(e);
                         continue;
@@ -72,7 +82,7 @@ void Update(void) {
                 }
             }
 
-            if (flags & FLAG_UNK_02000000) {
+            if (UPDATE_FLAGS & FLAG_UNK_02000000) {
                 x = e->posY.i.hi + g_Tilemap.scrollY.i.hi;
                 y = ((s16)g_Tilemap.vSize << 8) + 128;
 
@@ -82,9 +92,9 @@ void Update(void) {
                 }
             }
 
-            if (flags & 0xF) {
+            if (UPDATE_FLAGS & 0xF) {
                 iFramePalette = e->nFramesInvincibility << 1;
-                iFramePalette += (flags & 1);
+                iFramePalette += (UPDATE_FLAGS & 1);
                 e->palette = UNK_Invincibility0[iFramePalette];
                 if (!(--e->flags & 0xF)) {
                     e->palette = e->hitEffect;
@@ -92,24 +102,37 @@ void Update(void) {
                 }
             }
 
+#ifdef STAGE_IS_TEK
+            if (e->flags & FLAG_UNK_20000000) {
+                if (!(e->flags & FLAG_UNK_10000000)) {
+                    if (e->posX.i.hi < -64 || e->posX.i.hi > 320 ||
+                        e->posY.i.hi < -64 || e->posY.i.hi > 288) {
+                        continue;
+                    }
+                }
+            }
+#else
             if ((flags & FLAG_UNK_20000000) && !(flags & FLAG_UNK_10000000)) {
                 if (e->posX.i.hi < -64 || e->posX.i.hi > 320 ||
                     e->posY.i.hi < -64 || e->posY.i.hi > 288) {
                     continue;
                 }
             }
+#endif
             if (e->stunFrames) {
                 e->stunFrames--;
-                if (!(flags & FLAG_UNK_100000)) {
+                if (!(UPDATE_FLAGS & FLAG_UNK_100000)) {
                     continue;
                 }
             }
+#ifndef STAGE_IS_TEK
             if (g_unkGraphicsStruct.D_800973FC) {
-                if (!(flags & (FLAG_UNK_2000 | FLAG_DEAD)) &&
-                    !(flags & FLAG_UNK_200 && !(g_GameTimer & 3))) {
+                if (!(UPDATE_FLAGS & (FLAG_UNK_2000 | FLAG_DEAD)) &&
+                    !(UPDATE_FLAGS & FLAG_UNK_200 && !(g_GameTimer & 3))) {
                     continue;
                 }
             }
+#endif
         }
         g_CurrentEntity = e;
         e->pfnUpdate(e);
@@ -117,6 +140,8 @@ void Update(void) {
         e->hitFlags = 0;
     }
 }
+
+#undef UPDATE_FLAGS
 
 void UpdateStageEntities(void) {
     Entity* entity;
@@ -128,7 +153,7 @@ void UpdateStageEntities(void) {
             continue;
 
         if (entity->step) {
-#ifdef VERSION_BETA
+#if defined(VERSION_BETA) || defined(STAGE_IS_TEK)
             if (D_80096ED0_mad && !(entity->flags & FLAG_UNK_10000))
 #else
             if (!(entity->flags & FLAG_UNK_10000))

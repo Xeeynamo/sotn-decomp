@@ -1,23 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo0.h"
 
-// n.b.! this is identical to e_boss_torch for
-// rare, but the symbol used here is the same
-// address for PrizeDrops. It seems like
-// e_collect may have been linked against a
-// different definition, but is unused for
-// this boss.
-
 extern EInit g_EInitEnvironment;
-#ifdef VERSION_PSP
 static AnimateEntityFrame frames[] = {
-#else
-// this may be a bug, not sure how this can also be used for PrizeDrops
-AnimateEntityFrame PrizeDrops[] = {
-#endif
-    {.duration = 5, .pose = 0x04}, {.duration = 5, .pose = 0x05},
-    {.duration = 5, .pose = 0x06}, {.duration = 5, .pose = 0x07},
-    {.duration = 5, .pose = 0x08}, POSE_LOOP(0),
+    POSE(5, 0x04, 0), POSE(5, 0x05, 0), POSE(5, 0x06, 0),
+    POSE(5, 0x07, 0), POSE(5, 0x08, 0), POSE_LOOP(0),
 };
 // Torches are scaled slightly smaller based on params
 // to appear further in the background.
@@ -34,11 +21,7 @@ void EntityBossTorch(Entity* self) {
         self->scaleX = self->scaleY = scale[self->params];
         // fallthrough
     case 1:
-#ifdef VERSION_PSP
         AnimateEntity(frames, self);
-#else
-        AnimateEntity(PrizeDrops, self);
-#endif
         if (g_Timer & 4) {
             self->palette = (self->params * 2) + PAL_FLAG(PAL_TORCH_A);
         } else {

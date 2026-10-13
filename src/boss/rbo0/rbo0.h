@@ -7,6 +7,11 @@ enum Palettes {
     PAL_NONE,
     PAL_TORCH_A = 0x5A,
     PAL_TORCH_B = 0x5B,
+    PAL_UNK_169 = 0x169,
+    PAL_UNK_210 = 0x210,
+    PAL_UNK_2E4 = 0x2E4,
+    PAL_UNK_2E9 = 0x2E9,
+    PAL_UNK_2EF = 0x2EF,
 };
 
 typedef enum EntityID {
@@ -36,7 +41,7 @@ typedef enum EntityID {
     E_BOSS_DOORS,             // EntityBossDoors
     E_LIFE_UP_SPAWN,          // EntityLifeUpSpawn
     E_COFFIN,                 // EntityCoffin
-    E_UNK_1A,                 // EntityBoss
+    E_BOSS_FIGHT_MANAGER,     // EntityBossFightManager
     E_FAKE_RALPH,             // EntityFakeRalph
     E_FAKE_GRANT,             // EntityFakeGrant
     E_FAKE_SYPHA,             // EntityFakeSypha
@@ -58,6 +63,13 @@ typedef enum EntityID {
     NUM_ENTITIES,
 };
 
+enum BossMgrState {
+    BOSS_MGR_IDLE = 0,       // initial state, fight not yet engaged
+    BOSS_MGR_FIGHT_ON = 1,   // boss battle started
+    BOSS_MGR_INTRO_DONE = 2, // the fake party members become hittable
+    BOSS_MGR_TERMINATED = 4, // bosses are dead
+};
+
 #ifdef VERSION_PSP
 extern s32 E_ID(BACKGROUND_BLOCK);
 extern s32 E_ID(LOCK_CAMERA);
@@ -68,7 +80,7 @@ extern s32 E_ID(BOSS_TORCH);
 extern s32 E_ID(BOSS_DOORS);
 extern s32 E_ID(LIFE_UP_SPAWN);
 extern s32 E_ID(COFFIN);
-extern s32 E_ID(UNK_1A);
+extern s32 E_ID(BOSS_FIGHT_MANAGER);
 extern s32 E_ID(FAKE_RALPH);
 extern s32 E_ID(FAKE_GRANT);
 extern s32 E_ID(FAKE_SYPHA);
@@ -91,5 +103,5 @@ extern s32 E_ID(RESURRECT);
 #endif
 
 extern EInit g_EInitInteractable;
-extern s32 D_us_801806B0;
+extern s32 g_BossMgrState;
 extern s32 D_us_801806B4; // boss state flag (how many defeated?)

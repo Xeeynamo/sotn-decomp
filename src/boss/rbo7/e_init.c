@@ -23,7 +23,7 @@ void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
 void func_us_801BAB18_from_bo0(Entity* self);
-void func_us_80192B38_from_rbo3(Entity* self);
+void EntityBossFightManager(Entity* self);
 void EntityLifeUpSpawn(Entity* self);
 void func_us_801940B4(Entity* self);
 void func_us_801957C0(Entity* self);
@@ -55,7 +55,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityExplosionVariants,
     EntityGreyPuff,
     func_us_801BAB18_from_bo0,
-    func_us_80192B38_from_rbo3,
+    EntityBossFightManager,
     EntityLifeUpSpawn,
     func_us_801940B4,
     func_us_801957C0,
@@ -67,18 +67,18 @@ PfnEntityUpdate EntityUpdates[] = {
 
 // clang-format off
 // animSet, animCurFrame, unk5A, palette, enemyID
-EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0, 0, 0x000};
-EInit g_EInitObtainable = {ANIMSET_DRA(3), 0, 0, 0, 0x001};
-EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0, 0, 0x002};
-EInit g_EInitSpawner = {ANIMSET_DRA(0), 0, 0, 0, 0x004};
-EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0, 0, 0x005};
-EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, 0, 0x002};
-EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, 0, 0x001};
-EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
-EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
-EInit g_EInitUnused80180420 = {ANIMSET_OVL(1), 0, 0, 0, 0x005};
-EInit D_us_8018042C = {ANIMSET_OVL(2), 0, 0, 0, 0x005};
-EInit g_EInitAkmodanII = {ANIMSET_OVL(8), 1, 72, 570, 0x10B};
-EInit D_us_80180444 = {ANIMSET_OVL(8), 0, 72, 570, 0x10C};
-EInit D_us_80180450 = {ANIMSET_OVL(10), 1, 78, 359, 0x10D};
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_BREAKABLE};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitParticle = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitSpawner = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_SPAWNER};
+EInit g_EInitInteractable = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABLE};
+EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitUnused80180420 = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit D_us_8018042C = {ANIMSET_OVL(2), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitAkmodanII = {ANIMSET_OVL(8), 0x01, 0x48, PAL_AKMODAN_II, ENEMY_AKMODAN_II};
+EInit D_us_80180444 = {ANIMSET_OVL(8), 0x00, 0x48, PAL_AKMODAN_II, ENEMY_AKMODAN_II_UNK_10C};
+EInit D_us_80180450 = {ANIMSET_OVL(10), 0x01, 0x4E, PAL_CC_YELLOW_EFFECT, ENEMY_AKMODAN_II_UNK_10D};
 // clang-format on

@@ -9,7 +9,29 @@ typedef struct {
     AnimateEntityFrame* frames;
 } Unk80180D98;
 
-extern Unk80180D98 D_us_80180D98[];
+static AnimateEntityFrame D_us_80180D5C[] = {
+    POSE(3, 0x01, 0), POSE(3, 0x02, 0), POSE(3, 0x03, 0), POSE(3, 0x04, 0),
+    POSE(3, 0x05, 0), POSE(3, 0x06, 0), POSE(3, 0x07, 0), POSE(3, 0x08, 0),
+    POSE(3, 0x09, 0), POSE(3, 0x0A, 0), POSE(3, 0x0B, 0), POSE(3, 0x0C, 0),
+    POSE(3, 0x0D, 0), POSE_END};
+static AnimateEntityFrame D_us_80180D78[] = {
+    POSE(2, 0x01, 0), POSE(2, 0x02, 0), POSE(2, 0x03, 0), POSE(2, 0x04, 0),
+    POSE(2, 0x05, 0), POSE(2, 0x06, 0), POSE(2, 0x07, 0), POSE(2, 0x08, 0),
+    POSE(2, 0x09, 0), POSE(2, 0x0A, 0), POSE(2, 0x0B, 0), POSE(2, 0x0C, 0),
+    POSE(2, 0x0D, 0), POSE(2, 0x0E, 0), POSE_END};
+
+Unk80180D98 D_us_80180D98[] = {
+    {ANIMSET_DRA(14), 0x79, 0x00, 0x30, D_us_80180D5C},
+    {ANIMSET_OVL(5), 0x57, 0x00, 0x00, D_us_80180D78},
+    {ANIMSET_OVL(5), 0x57, 0x03, 0x30, D_us_80180D78},
+    {ANIMSET_DRA(14), 0x79, 0x04, 0x30, D_us_80180D5C},
+    {ANIMSET_DRA(14), 0x79, 0x09, 0x30, D_us_80180D5C},
+    {ANIMSET_OVL(5), 0x57, 0x0F, 0x30, D_us_80180D78},
+    {ANIMSET_DRA(14), 0x79, 0x0E, 0x70, D_us_80180D5C},
+    {ANIMSET_DRA(14), 0x79, 0x0A, 0x30, D_us_80180D5C},
+    {ANIMSET_DRA(14), 0x79, 0x06, 0x30, D_us_80180D5C},
+    {ANIMSET_DRA(14), 0x79, 0x0E, 0x30, D_us_80180D5C},
+};
 
 extern EInit g_EInitParticle;
 

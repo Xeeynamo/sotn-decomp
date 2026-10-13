@@ -8,10 +8,13 @@
 
 #define INVERTED_STAGE
 
-enum RTOP_Palette {
+enum Palettes {
     PAL_NONE = 0,
     PAL_BREAKABLE = 0x200,
     PAL_BREAKABLE_DEBRIS = 0x204,
+    PAL_TOMBSTONE = 0x208,
+    PAL_YORICK = 0x20A,
+    PAL_SKULL_LORD = 0x20B,
     PAL_UNK_220 = 0x220,
 };
 

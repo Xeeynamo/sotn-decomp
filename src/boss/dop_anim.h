@@ -108,13 +108,14 @@ void DrawPlayerAfterImage(void) {
                   .ext.afterImage.resetFlag;
     prim =
         &g_PrimBuf[g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].primIndex];
+    i = 0;
     plDraw = &g_PlayerDraw[9];
     temp_t1 = g_shadowOpacityReductionTable
         [g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.index];
     temp_t0 = g_D_800ACF3C[g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1]
                                .ext.afterImage.index];
 
-    for (i = 0; prim != NULL; i++, prim = prim->next) {
+    for (; prim != NULL; i++, prim = prim->next) {
         if (prim->b0 > temp_t0) {
             prim->b0 -= temp_t1;
         }
@@ -294,12 +295,6 @@ u32 UpdateAnim(s8* hitboxes, AnimationFrame** anims) {
     s32 ret = 0;
 #else
     s32 ret;
-#endif
-
-#if defined(VERSION_PSP)
-    if (!g_CurrentEntity->anim) {
-        return -1;
-    }
 #endif
 
     if (g_CurrentEntity->poseTimer == -1) {

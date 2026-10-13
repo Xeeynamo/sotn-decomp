@@ -24,7 +24,7 @@ extern s32 E_ID(SHAFT_DEATH_FLAMES);
 #endif
 
 // Flags to control when cutscenes begin/end and fight begins/ends
-s32 g_RcenShaftFlags = 0;
+s32 g_BossMgrState = BOSS_MGR_IDLE;
 static s32 attack_step = 0;
 
 // A subtle pulse overlayed on the orb
@@ -279,11 +279,11 @@ void EntityShaft(Entity* self) {
             }
 
             // Cutscene begins
-            g_RcenShaftFlags |= 1;
+            g_BossMgrState |= BOSS_MGR_CUTSCENE;
             self->step_s++;
             break;
         case 1:
-            if (g_RcenShaftFlags & 2) {
+            if (g_BossMgrState & BOSS_MGR_FIGHT_ON) {
                 // Fight begins
                 stopMusicFlag = 1;
                 currentMusicId = MU_DEATH_BALLAD;
@@ -422,7 +422,7 @@ void EntityShaft(Entity* self) {
             if (g_CastleFlags[SHAFT_FIGHT_CS_UNK1] ||
                 g_PlayableCharacter != PLAYER_ALUCARD ||
                 g_DemoMode != Demo_None || (g_CutsceneFlags & 0x100)) {
-                g_RcenShaftFlags |= 4;
+                g_BossMgrState |= BOSS_MGR_DEFEAT;
                 self->hitboxState = 0;
                 self->drawFlags = ENTITY_OPACITY;
                 self->opacity = 0x80;
@@ -477,7 +477,7 @@ void EntityShaft(Entity* self) {
                 self->ext.rcenShaft.timer = 0x20;
                 self->animCurFrame = 0;
                 g_api.PlaySfx(SFX_FIREBALL_SHOT_A);
-                g_RcenShaftFlags |= 8;
+                g_BossMgrState |= BOSS_MGR_TERMINATED;
                 self->step_s++;
             }
             break;
@@ -527,7 +527,7 @@ void EntityShaftCrystalBall(Entity* self) {
 
     // When the fight is over, crack the crystal ball and start the death
     // sequence
-    if (g_RcenShaftFlags & 4) {
+    if (g_BossMgrState & BOSS_MGR_DEFEAT) {
         if (self->step != 2) {
             SetStep(2);
         }
@@ -556,7 +556,7 @@ void EntityShaftCrystalBall(Entity* self) {
         shaftEntity = self - 1;
         self->posX.i.hi = shaftEntity->posX.i.hi;
         self->posY.i.hi = shaftEntity->posY.i.hi;
-        if (g_RcenShaftFlags & 8) {
+        if (g_BossMgrState & BOSS_MGR_TERMINATED) {
             DestroyEntity(self);
         }
         break;
@@ -581,7 +581,7 @@ void EntityCutsceneShaft(Entity* self) {
         self->animCurFrame = 0x23;
         // fallthrough
     case 1:
-        if (g_RcenShaftFlags & 1) {
+        if (g_BossMgrState & BOSS_MGR_CUTSCENE) {
             // Once the cutscene is done float up into your ball
             self->step++;
         }
@@ -613,7 +613,7 @@ void EntityCutsceneShaft(Entity* self) {
         var_s1 = self->opacity;
         var_s1 -= 8;
         if (var_s1 < 0) {
-            g_RcenShaftFlags |= 2;
+            g_BossMgrState |= BOSS_MGR_FIGHT_ON;
             DestroyEntity(self);
             break;
         }
@@ -635,7 +635,7 @@ void EntityShaftAttackOrb(Entity* self) {
     s16 angle;
     s32 i;
 
-    if (g_RcenShaftFlags & 4) {
+    if (g_BossMgrState & BOSS_MGR_DEFEAT) {
         if (self->step != DEATH) {
             SetStep(DEATH);
         }
@@ -941,7 +941,7 @@ void EntityShaftAttackOrb(Entity* self) {
             }
 
             if (!result) {
-                enemyDef = &g_api.enemyDefs[0x163];
+                enemyDef = &g_api.enemyDefs[ENEMY_SHAFT_UNK_163];
                 self->attack = enemyDef->attack;
                 self->hitboxWidth = enemyDef->hitboxWidth;
                 self->hitboxHeight = enemyDef->hitboxHeight;
@@ -983,7 +983,7 @@ void EntityShaftAttackOrb(Entity* self) {
             }
 
             if (!--self->ext.rcenShaft.timer) {
-                enemyDef = &g_api.enemyDefs[0x160];
+                enemyDef = &g_api.enemyDefs[ENEMY_SHAFT_ORB];
                 self->attack = enemyDef->attack;
                 self->hitboxWidth = enemyDef->hitboxWidth;
                 self->hitboxHeight = enemyDef->hitboxHeight;
@@ -1044,7 +1044,7 @@ void EntityShaftAttackOrb(Entity* self) {
             break;
         }
 
-        if (g_RcenShaftFlags & 8) {
+        if (g_BossMgrState & BOSS_MGR_TERMINATED) {
             DestroyEntity(self);
         }
         break;
@@ -1055,7 +1055,7 @@ void EntityShaftFlameTrail(Entity* self) {
     Entity* shaftEntity;
     s16 angle;
 
-    if (g_RcenShaftFlags & 4) {
+    if (g_BossMgrState & BOSS_MGR_DEFEAT) {
         DestroyEntity(self);
         return;
     }
@@ -1086,7 +1086,7 @@ void EntityShaftFlamePillar(Entity* self) {
     Entity* entity;
     s16 angle;
 
-    if (g_RcenShaftFlags & 4) {
+    if (g_BossMgrState & BOSS_MGR_DEFEAT) {
         DestroyEntity(self);
         return;
     }
@@ -1141,7 +1141,7 @@ void EntityShaftLightning(Entity* self) {
     s32 primIndex;
     s32 sp34;
 
-    if (g_RcenShaftFlags & 4) {
+    if (g_BossMgrState & BOSS_MGR_DEFEAT) {
         DestroyEntity(self);
         return;
     }
@@ -1335,7 +1335,7 @@ void EntityShaftLightning(Entity* self) {
 // As such, the game spawns in an Entity with a hitbox for a single frame
 // of the lightning attack, so it can damage the player.
 void EntityShaftLightningHitbox(Entity* self) {
-    if (g_RcenShaftFlags & 4) {
+    if (g_BossMgrState & BOSS_MGR_DEFEAT) {
         DestroyEntity(self);
     } else if (!self->step) {
         InitializeEntity(g_EInitShaftLightningHitbox);
@@ -1350,7 +1350,7 @@ void EntityShaftOrbitOrb(Entity* self) {
     s32 posY;
     s16 angle;
 
-    if (g_RcenShaftFlags & 4 && self->step != 4) {
+    if (g_BossMgrState & BOSS_MGR_DEFEAT && self->step != 4) {
         SetStep(4);
     }
 
@@ -1471,7 +1471,7 @@ void EntityShaftOrbitOrb(Entity* self) {
             break;
         }
 
-        if (g_RcenShaftFlags & 8) {
+        if (g_BossMgrState & BOSS_MGR_TERMINATED) {
             DestroyEntity(self);
         }
 
