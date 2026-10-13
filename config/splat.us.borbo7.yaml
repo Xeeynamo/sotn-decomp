@@ -40,7 +40,7 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, header]
-      - [0x2C, data]
+      - [0x2C, .data, sprite_banks]
       - [0x8C, .data, palette_def]
       - [0xB0, .data, layers]
       - [0xD8, .data, graphics_banks]
@@ -72,7 +72,7 @@ segments:
       - [0x13C4, .data, stage_data]
       - [0x94FC, .data, pal_unk]
       - [0x987C, .data, tilemaps]
-      - [0x124AC, data]
+      - [0x124AC, .data, gen/us/sprites]
       - [0x13420, .rodata, e_boss_doors]
       - [0x1342C, .rodata, bossfight]
       - [0x13448, .rodata, e_akmodan_ii]
