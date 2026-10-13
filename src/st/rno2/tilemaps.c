@@ -40,8 +40,4 @@
 #else
 #include <gen/rno2_tiledef_rno2.h>
 #include <gen/rno2_tiledef_rsave.h>
-<<<<<<< HEAD
 #endif
-=======
-#endif
->>>>>>> 162e79f08 (psp layers)
