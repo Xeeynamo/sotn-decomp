@@ -3095,12 +3095,27 @@ typedef struct {
 } ET_TheCreatureFlames;
 
 typedef struct {
-    /* 0x7C */ s32 : 32;
+    /* 0x7C */ Primitive* prim;
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 : 16;
     /* 0x84 */ u8 unk84;
     /* 0x85 */ u8 : 8;
     /* 0x86 */ u8 unk86;
+    /* 0x87 */ u8 grabbing;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s16 savedTileX;
+    /* 0x9E */ s16 savedTileWidth;
+    /* 0xA0 */ s16 savedTileY;
+    /* 0xA2 */ s16 savedTileHeight;
+    /* 0xA4 */ u16 baseZPriority;
+    /* 0xA6 */ s16 : 16;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ Primitive* deathPrim;
+    /* 0xB0 */ s16 deathY;
 } ET_AkmodanII;
 
 typedef struct {

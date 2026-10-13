@@ -25,7 +25,7 @@ void EntityGreyPuff(Entity* self);
 void EntityBossDoors(Entity* self);
 void EntityBossFightManager(Entity* self);
 void EntityLifeUpSpawn(Entity* self);
-void func_us_801940B4(Entity* self);
+void EntityAkmodanII(Entity* self);
 void func_us_801957C0(Entity* self);
 void EntityHarpyKick(Entity* self);
 void func_us_80195A8C(Entity* self);
@@ -57,7 +57,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityBossDoors,
     EntityBossFightManager,
     EntityLifeUpSpawn,
-    func_us_801940B4,
+    EntityAkmodanII,
     func_us_801957C0,
     EntityHarpyKick,
     func_us_80195A8C,
