@@ -1403,6 +1403,7 @@ set(SOURCE_FILES_STAGE_RCEN
     src/st/rcen/e_room_bg.c
     src/st/rcen/e_lock_camera.c
     src/st/rcen/e_breakable.c
+    src/st/rcen/d_prize_drops.c
     src/st/rcen/e_shaft.c
     src/st/rcen/e_shaft_death_flames.c
     src/st/rcen/cutscene.c
