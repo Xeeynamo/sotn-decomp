@@ -943,12 +943,12 @@ void EntityCtulhuDeath(Entity* self) {
         self->unk5A = 121;
         self->drawFlags = ENTITY_OPACITY;
         if (self->params) {
-            self->palette = 0x2EE;
+            self->palette = PAL_UNK_2EE;
             self->opacity = 8;
             self->blendMode = BLEND_TRANSP | BLEND_SUB;
             self->flags &= ~FLAG_POS_CAMERA_LOCKED;
         } else {
-            self->palette = 0x2E4;
+            self->palette = PAL_UNK_2E4;
             self->zPriority += 2;
             self->opacity = 0x14;
             self->blendMode = BLEND_TRANSP | BLEND_ADD;

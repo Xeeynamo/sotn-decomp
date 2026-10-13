@@ -2003,12 +2003,12 @@ files:
           - [0x7338, cmpgfx, D_us_80187338, 128, 128, 4]
           - [0x7D04, cmpgfx, D_us_80187D04, 128, 128, 4]
           - [0x8580, cmpgfx, D_us_80188580, 128, 128, 4]
-          - [0x94FC, palette, D_us_801894FC, 16] # 0x2C0
-          - [0x97BC, palette, D_us_801897BC, 16] # 0xC0
+          - [0x94FC, palette, D_us_801894FC, 16]
+          - [0x97BC, palette, D_us_801897BC, 16]
           - [0x987C, skip]
-          - [0xA07C, tiledef, rload] # 0x100 tiles per section
+          - [0xA07C, tiledef, rload]
           - [0xA48C, skip]
-          - [0xE49C, tiledef, rsave] # 0x1000 tiles per section
+          - [0xE49C, tiledef, rsave]
           - [0x124AC, skip]
   - target: disks/us/BOSS/RBO8/RBO8.BIN
     asset_path: assets/boss/rbo8
