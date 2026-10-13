@@ -8,6 +8,8 @@
 
 enum Palettes {
     PAL_NONE,
+    PAL_UNK_224 = 0x224,
+    PAL_UNK_225 = 0x225,
     PAL_JACK_O_BONES = 0x210,
     PAL_NOVA_SKELETON = 0x214,
     PAL_DARK_OCTOPUS = 0x220,
