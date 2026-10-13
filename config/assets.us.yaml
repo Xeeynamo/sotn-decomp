@@ -1985,6 +1985,18 @@ files:
         assets:
           - [0x8C, paldef, palette_def]
           - [0xB0, skip]
+          - [0x13C4, cmpgfx, D_us_801813C4, 128, 128, 4]
+          - [0x1FA0, cmpgfx, D_us_80181FA0, 128, 128, 4]
+          - [0x22E4, cmpgfx, D_us_801822E4, 128, 128, 4]
+          - [0x2888, cmpgfx, D_us_80182888, 128, 128, 4]
+          - [0x34E0, cmpgfx, D_us_801834E0, 128, 128, 4]
+          - [0x41D8, cmpgfx, D_us_801841D8, 128, 128, 4]
+          - [0x5264, cmpgfx, D_us_80185264, 128, 128, 4]
+          - [0x5BF4, cmpgfx, D_us_80185BF4, 128, 128, 4]
+          - [0x6624, cmpgfx, D_us_80186624, 128, 128, 4]
+          - [0x7338, cmpgfx, D_us_80187338, 128, 128, 4]
+          - [0x7D04, cmpgfx, D_us_80187D04, 128, 128, 4]
+          - [0x8580, cmpgfx, D_us_80188580, 128, 128, 4]
           - [0x94FC, palette, D_us_801894FC, 16] # 0x2C0
           - [0x97BC, palette, D_us_801897BC, 16] # 0xC0
           - [0x987C, skip]
