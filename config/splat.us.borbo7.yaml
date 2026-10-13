@@ -102,7 +102,6 @@ segments:
       - [0x20F50, c, prim_helpers]
       - [0x21780, c, e_life_up]
       - [0x22034, .bss, create_entity]
-      - [0x22044, bss]
+      - [0x22044, .bss, bss]
       - [0x22CAC, .bss, st_update]
-      - [0x22CEC, bss]
   - [0x22CEC]
