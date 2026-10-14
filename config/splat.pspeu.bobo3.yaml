@@ -90,7 +90,7 @@ segments:
       - [0x2E7D0, .data, e_lock_camera]
       - [0x2E848, .data, e_scylla]
       - [0x2EB00, .data, e_explosion_puff_opaque]
-      - [0x2EB90, data, 2EB90]
+      - [0x2EB90, .data, e_scylla_wyrm]
       - [0x2EBB0, .data, cavern_bg_effects]
       - [0x2EE00, .rodata, e_life_up]
       - [0x2EE20, .rodata, e_red_door]
