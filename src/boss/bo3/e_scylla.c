@@ -239,7 +239,212 @@ s32 func_us_801A2A90(Primitive* prim, s32 amount) {
 
 INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla", func_us_801A2AEC);
 
-INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla", func_us_801A365C);
+extern EInit D_us_801805AC;
+
+void func_us_801A365C(Entity* self) {
+    Entity* newEntity;
+    s32 i;
+    s32 animEnd;
+
+    if ((self->flags & FLAG_DEAD) && self->step != 6) {
+        SetStep(6);
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_801805AC);
+        self->hitboxOffX = 0x14;
+        self->hitboxOffY = -0xE;
+        self->hitboxWidth = 0x18;
+        self->hitboxHeight = 0x14;
+        SetStep(1);
+        /* fall through */
+    case 1:
+        AnimateEntity(D_us_80180DD4, self);
+        if (D_us_80180D48 & 1) {
+            SetStep(2);
+        }
+        break;
+
+    case 2:
+        switch (self->step_s) {
+        case 0:
+            self->ext.scyllaBody.timer = 0x60;
+            self->step_s++;
+            /* fall through */
+        case 1:
+            AnimateEntity(D_us_80180DD4, self);
+            if (!(Random() & 0x7F)) {
+                SetSubStep(2);
+            }
+            if (!--self->ext.scyllaBody.timer) {
+                if (self->ext.scyllaBody.flip) {
+                    SetStep(4);
+                } else {
+                    SetStep(3);
+                }
+                self->ext.scyllaBody.flip ^= 1;
+            }
+            break;
+
+        case 2:
+            if (!AnimateEntity(D_us_80180DE8, self)) {
+                SetSubStep(1);
+            }
+            if (!self->pose && self->pose == 6) {
+                PlaySfxPositional(SFX_WARG_ATTACK);
+            }
+            break;
+        }
+        break;
+
+    case 5:
+        switch (self->step_s) {
+        case 0:
+            self->ext.scyllaBody.timer = 0x20;
+            PlaySfxPositional(SFX_WARG_GROWL);
+            self->step_s++;
+            /* fall through */
+        case 1:
+            AnimateEntity(D_us_80180DE0, self);
+            if (!--self->ext.scyllaBody.timer) {
+                SetSubStep(2);
+            }
+            break;
+
+        case 2:
+            if (!AnimateEntity(D_us_80180DE8, self)) {
+                SetStep(2);
+            }
+            break;
+        }
+        break;
+
+    case 3:
+        switch (self->step_s) {
+        case 0:
+            self->ext.scyllaBody.timer = 0x28;
+            PlaySfxPositional(SFX_WARG_GROWL);
+            self->step_s++;
+            /* fall through */
+        case 1:
+            AnimateEntity(D_us_80180DE0, self);
+            if (!--self->ext.scyllaBody.timer) {
+                SetSubStep(2);
+            }
+            break;
+
+        case 2:
+            if (!AnimateEntity(D_us_80180E04, self)) {
+                SetSubStep(3);
+            }
+            break;
+
+        case 3:
+            newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(E_ID(UNK_37), self, newEntity);
+                newEntity->posX.i.hi += 0x30;
+                newEntity->posY.i.hi -= 8;
+                newEntity->zPriority = self->zPriority + 1;
+            }
+            self->step_s++;
+            /* fall through */
+        case 4:
+            if (!AnimateEntity(D_us_80180E18, self)) {
+                SetStep(2);
+            }
+            break;
+        }
+        break;
+
+    case 4:
+        switch (self->step_s) {
+        case 0:
+            animEnd = AnimateEntity(D_us_80180E5C, self);
+            if (!self->poseTimer && self->pose == 1) {
+                g_api.PlaySfx(SFX_WARG_DEATH_HOWL);
+            }
+            if (!animEnd) {
+                SetSubStep(1);
+            }
+            break;
+
+        case 1:
+            animEnd = AnimateEntity(D_us_80180E6C, self);
+            if (!self->poseTimer && self->pose == 1) {
+                g_api.PlaySfx(SFX_WARG_DEATH_HOWL);
+            }
+            if (!animEnd) {
+                SetSubStep(2);
+            }
+            break;
+
+        case 2:
+            animEnd = AnimateEntity(D_us_80180E80, self);
+            if (!self->poseTimer && self->pose == 1) {
+                g_api.PlaySfx(SFX_WARG_DEATH_HOWL);
+            }
+            if (!animEnd) {
+                SetSubStep(3);
+            }
+            break;
+
+        case 3:
+            animEnd = 1;
+            if (!AnimateEntity(D_us_80180E94, self)) {
+                SetStep(2);
+                return;
+            }
+            break;
+        }
+        if (!animEnd) {
+            g_api.PlaySfx(SFX_SCYLLA_WYRM_WALL_DEBRIS);
+            g_api.ShakeCamera(1);
+            for (i = 0; i < 8; i++) {
+                newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                if (newEntity != NULL) {
+                    CreateEntityFromEntity(E_ID(UNK_38), self, newEntity);
+                    newEntity->posY.i.hi = 0;
+                    newEntity->posX.i.hi = self->posX.i.hi + (Random() & 0x7F);
+                    newEntity->zPriority = self->zPriority + 2;
+                }
+            }
+        }
+        break;
+
+    case 6:
+        switch (self->step_s) {
+        case 0:
+            self->hitboxState = 0;
+            PlaySfxPositional(SFX_WARG_GROWL);
+            self->step_s++;
+            /* fall through */
+        case 1:
+            AnimateEntity(D_us_80180DE0, self);
+            if (D_us_80180D48 & 0x20) {
+                self->step_s++;
+            }
+            break;
+
+        case 2:
+            self->drawFlags |= ENTITY_SCALEX | ENTITY_SCALEY;
+            self->scaleX = self->scaleY = 0x100;
+            self->step_s++;
+            /* fall through */
+        case 3:
+            AnimateEntity(D_us_80180DE0, self);
+            if (self->scaleX > 0x80) {
+                self->scaleX = --self->scaleY;
+            }
+            break;
+        }
+        if (D_us_80180D48 & 8) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 extern EInit D_us_801805B8;
 
