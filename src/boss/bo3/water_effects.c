@@ -19,6 +19,9 @@ INCLUDE_ASM("boss/bo3/nonmatchings/water_effects", func_us_801B5004_from_rbo5);
 
 INCLUDE_ASM("boss/bo3/nonmatchings/water_effects", func_us_801A1BE8);
 
-INCLUDE_ASM("boss/bo3/nonmatchings/water_effects", EntitySplashWater);
+extern s16 g_splashAspects[];
+extern s32 g_SplashYMovement[];
+
+#include "../../st/entity_splash_water.h"
 
 #include "../../st/entity_water_drop.h"
