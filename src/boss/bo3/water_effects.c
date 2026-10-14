@@ -38,7 +38,7 @@ s16 D_us_801B2870;
 s16 D_us_801B2872;
 u16 D_us_801B2874;
 
-void func_us_801A071C(void) {
+static void func_us_801A071C(void) {
     s16* data;
     s16* tileRects;
     s16* surfaceLines;
@@ -82,7 +82,80 @@ void func_us_801A071C(void) {
     *tileRects = value;
 }
 
-INCLUDE_ASM("boss/bo3/nonmatchings/water_effects", func_us_801A07CC);
+void func_us_801A07CC(Entity* self) {
+    Entity* player;
+
+    player = &PLAYER;
+    D_us_801B2870 = 0;
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitInteractable);
+        if (D_us_80180C64) {
+            if (g_CastleFlags[SCYLLA_DEFEATED]) {
+                self->step = 5;
+            } else {
+                self->step = 3;
+            }
+        } else if (g_CastleFlags[SCYLLA_DEFEATED]) {
+            self->step = 6;
+        }
+        break;
+
+    case 1:
+        if (player->posX.i.hi >= 0x38) {
+            D_us_80180C66 |= 1;
+            self->ext.timer.t = 0x10;
+            self->step++;
+        }
+        break;
+
+    case 2:
+        if (!--self->ext.timer.t) {
+            self->step++;
+        }
+        break;
+
+    case 3:
+        if (self->ext.timer.t) {
+            --self->ext.timer.t;
+        } else {
+            self->ext.timer.t = 3;
+            if (D_us_80180C64 < 0xD0) {
+                D_us_80180C64++;
+                D_us_801B2870 = -1;
+            } else {
+                self->step++;
+            }
+        }
+        func_us_801A071C();
+        break;
+
+    case 4:
+        if (g_CastleFlags[SCYLLA_DEFEATED]) {
+            D_us_80180C66 ^= 1;
+            self->step++;
+        }
+        break;
+
+    case 5:
+        if (self->ext.timer.t) {
+            --self->ext.timer.t;
+        } else {
+            self->ext.timer.t = 1;
+            if (D_us_80180C64 > 0) {
+                D_us_80180C64--;
+                D_us_801B2870 = 1;
+            } else {
+                self->step++;
+            }
+        }
+        func_us_801A071C();
+        break;
+
+    case 6:
+        break;
+    }
+}
 
 u16 func_us_801A09DC(s16 index, s16 x, s16 y, s16* out) {
     s16* data;
