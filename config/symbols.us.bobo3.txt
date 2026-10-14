@@ -1,16 +1,12 @@
 g_EInitInteractable = 0x80180564;
-g_EInitCommon = 0x80180588;
 g_EInitScylla = 0x801805A0;
-func_us_801B5004 = 0x801A1B7C;
 Random = 0x801A6704;
 CreateEntityFromEntity = 0x801A8DF0;
 DestroyEntity = 0x801A9B1C;
 AnimateEntity = 0x801A9C4C;
 GetDistanceToPlayerX = 0x801A9E1C;
-MoveEntity = 0x801A9ED0;
 AllocEntity = 0x801AA38C;
 SetStep = 0x801AA75C;
 SetSubStep = 0x801AA77C;
 InitializeEntity = 0x801AA82C;
-GetPlayerCollisionWith = 0x801AABD0;
 PlaySfxPositional = 0x801AFBE0;

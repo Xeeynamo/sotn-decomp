@@ -555,7 +555,7 @@ void func_us_801A16E4(Entity* self) {
 
 #include "../../st/water_slow_zone.h"
 
-void func_us_801B5004(Tilemap* map, s32 arg1) {
+static void func_us_801B5004(Tilemap* map, s32 arg1) {
     Tilemap* tmap;
     s16 tilePos;
     u16* tileData;
@@ -571,7 +571,102 @@ void func_us_801B5004(Tilemap* map, s32 arg1) {
     }
 }
 
-INCLUDE_ASM("boss/bo3/nonmatchings/water_effects", func_us_801A1BE8);
+void func_us_801A1BE8(Entity* self) {
+    u16 params;
+    u16 flag;
+    s16 y;
+
+    params = self->params;
+    flag = D_us_80180C66 & (1 << params);
+    params <<= 1;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitCommon);
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = 0x25;
+        self->facingLeft = D_us_80180CD0[params >> 1];
+        self->zPriority = 0x9E;
+        if (flag) {
+            func_us_801B5004((Tilemap*)self, params + 1);
+            self->step = 4;
+            break;
+        }
+        func_us_801B5004((Tilemap*)self, params);
+        self->posY.i.hi -= 0x40;
+        break;
+
+    case 1:
+        if (flag) {
+            self->step++;
+            self->velocityY = FIX(4);
+        }
+        break;
+
+    case 2:
+        if (self->facingLeft) {
+            self->posX.i.hi += 8;
+        } else {
+            self->posX.i.hi -= 8;
+        }
+        GetPlayerCollisionWith(self, 0x10, 0x20, 0xB);
+        if (self->facingLeft) {
+            self->posX.i.hi -= 8;
+        } else {
+            self->posX.i.hi += 8;
+        }
+        MoveEntity();
+        y = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+        if (y < 0x80) {
+            break;
+        }
+        g_api.PlaySfxVolPan(SFX_EXPLODE_B, 0x7F, -6);
+        func_us_801B5004((Tilemap*)self, params + 1);
+        self->velocityY = FIX(-1);
+        self->step++;
+        break;
+
+    case 3:
+        self->velocityY += FIX(0.125);
+        MoveEntity();
+        y = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+        if (y >= 0x80) {
+            self->posY.i.hi = 0x80 - g_Tilemap.scrollY.i.hi;
+            self->step++;
+        }
+        break;
+
+    case 4:
+        if (!flag) {
+            self->step++;
+            self->velocityY = FIX(-1);
+            func_us_801B5004((Tilemap*)self, params);
+        }
+        break;
+
+    case 5:
+        if (self->facingLeft) {
+            self->posX.i.hi += 8;
+        } else {
+            self->posX.i.hi -= 8;
+        }
+        GetPlayerCollisionWith(self, 0x10, 0x20, 0xB);
+        if (self->facingLeft) {
+            self->posX.i.hi -= 8;
+        } else {
+            self->posX.i.hi += 8;
+        }
+        MoveEntity();
+        y = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+        if (y < 0x41) {
+            self->step++;
+        }
+        break;
+
+    case 6:
+        break;
+    }
+}
 
 #include "../../st/entity_splash_water.h"
 
