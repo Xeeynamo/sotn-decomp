@@ -580,8 +580,8 @@ void MarMain(void) {
             }
             if (!(g_Player.timers[PL_T_INVINCIBLE_SCENE] |
                   g_Player.timers[PL_T_INVINCIBLE]) &&
-                g_Player.unk60 < 2) {
-                if (g_Player.unk60 == 1) {
+                g_Player.grabState < GRAB_HELD) {
+                if (g_Player.grabState == GRAB_START) {
                     playerStep = PLAYER.step;
                     playerStepS = PLAYER.step_s;
                     MarSetStep(PL_S_BOSS_GRAB);

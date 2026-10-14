@@ -1979,6 +1979,37 @@ files:
     asset_path: assets/boss/rbo7
     src_path: src/boss/rbo7
     splat_config_path: config/splat.us.borbo7.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x2C, sprite_banks, us/sprite_banks]
+          - [0x8C, paldef, palette_def]
+          - [0xB0, layers, layers]
+          - [0xD8, gfx_banks, us/graphics_banks]
+          - [0x194, layout, entity_layouts]
+          - [0x33C, skip]
+          - [0x12C4, rooms, rooms]
+          - [0x12E0, skip]
+          - [0x13C4, cmpgfx, D_us_801813C4, 128, 128, 4]
+          - [0x1FA0, cmpgfx, D_us_80181FA0, 128, 128, 4]
+          - [0x22E4, cmpgfx, D_us_801822E4, 128, 128, 4]
+          - [0x2888, cmpgfx, D_us_80182888, 128, 128, 4]
+          - [0x34E0, cmpgfx, D_us_801834E0, 128, 128, 4]
+          - [0x41D8, cmpgfx, D_us_801841D8, 128, 128, 4]
+          - [0x5264, cmpgfx, D_us_80185264, 128, 128, 4]
+          - [0x5BF4, cmpgfx, D_us_80185BF4, 128, 128, 4]
+          - [0x6624, cmpgfx, D_us_80186624, 128, 128, 4]
+          - [0x7338, cmpgfx, D_us_80187338, 128, 128, 4]
+          - [0x7D04, cmpgfx, D_us_80187D04, 128, 128, 4]
+          - [0x8580, cmpgfx, D_us_80188580, 128, 128, 4]
+          - [0x94FC, palette, D_us_801894FC, 16]
+          - [0x97BC, palette, D_us_801897BC, 16]
+          - [0x987C, skip]
+          - [0xA07C, tiledef, rload]
+          - [0xA48C, skip]
+          - [0xE49C, tiledef, rsave]
+          - [0x124AC, skip]
   - target: disks/us/BOSS/RBO8/RBO8.BIN
     asset_path: assets/boss/rbo8
     src_path: src/boss/rbo8

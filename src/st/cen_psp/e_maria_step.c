@@ -750,7 +750,7 @@ void MarStepBossGrab(void) {
     switch (g_CurrentEntity->step_s) {
     case 0:
         MarResetPose();
-        if (g_Maria.unk62 == 0) {
+        if (g_Maria.grabReactionEffect == GRAB_REACTION_NORMAL) {
             MARIA.anim = mar_anim_stun;
             g_Maria.timers[PL_T_2] = 8;
             g_Maria.damagePalette = PAL_FLAG(PAL_CC_RED_EFFECT_A);
@@ -758,11 +758,11 @@ void MarStepBossGrab(void) {
         }
         MARIA.velocityX = MARIA.velocityY = 0;
         MARIA.step_s = 1;
-        g_Maria.unk60 = 2;
+        g_Maria.grabState = GRAB_HELD;
         break;
     case 1:
-        // Effectively a switch on g_Maria.unk60
-        if (g_Maria.unk60 == 3) {
+        // Effectively a switch on g_Maria.grabState
+        if (g_Maria.grabState == GRAB_DAMAGE) {
             damage.effects = EFFECT_NONE;
             damage.damageKind = DAMAGEKIND_1;
             damage.damageTaken = g_Maria.damageTaken;
@@ -773,24 +773,24 @@ void MarStepBossGrab(void) {
                 break;
             }
 
-            if (g_Maria.unk62 == 0) {
+            if (g_Maria.grabReactionEffect == GRAB_REACTION_NORMAL) {
                 g_Maria.timers[PL_T_2] = 4;
                 g_Maria.damagePalette = PAL_FLAG(PAL_CC_RED_EFFECT_A);
                 g_api.PlaySfx(SFX_VO_MAR_PAIN_C + MAR_SFX_OFFSET);
             }
 
-            if (g_Maria.unk62 == 2) {
+            if (g_Maria.grabReactionEffect == GRAB_REACTION_STONE) {
                 // nb. bug? Empty block here
             }
 
-            g_Maria.unk60 = 2;
-        } else if (g_Maria.unk60 == 4) {
+            g_Maria.grabState = GRAB_HELD;
+        } else if (g_Maria.grabState == GRAB_RELEASE) {
             MARIA.step = PL_S_HIT;
             MARIA.step_s = 2;
-            g_Maria.unk60 = 0;
-            g_Maria.damageTaken = g_Maria.unk64;
+            g_Maria.grabState = GRAB_NONE;
+            g_Maria.damageTaken = g_Maria.grabDamage;
             g_api.PlaySfx(SFX_VO_MAR_PAIN_D + MAR_SFX_OFFSET);
-        } else if (g_Maria.unk60 == 0) {
+        } else if (g_Maria.grabState == GRAB_NONE) {
             MARIA.step = PL_S_HIT;
             MARIA.step_s = 1;
         }

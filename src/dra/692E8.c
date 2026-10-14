@@ -887,10 +887,10 @@ void EntityAlucard() {
         goto specialmove;
     }
 #endif
-    if (g_Player.unk60 >= 2) {
+    if (g_Player.grabState >= GRAB_HELD) {
         goto block_159;
     }
-    if (g_Player.unk60 == 1) {
+    if (g_Player.grabState == GRAB_START) {
         playerStep = PLAYER.step;
         playerStepS = PLAYER.step_s;
         SetPlayerStep(Player_BossGrab);

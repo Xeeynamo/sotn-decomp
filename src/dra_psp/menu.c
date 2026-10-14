@@ -3285,7 +3285,7 @@ s32 func_800FB23C(s32* nav, u8* order, u8* count, u32* selected) {
     var_s6 =
         (g_Player.status & (PLAYER_STATUS_TRANSFORM | PLAYER_STATUS_UNK10) |
          PLAYER.step == Player_UnmorphWolf | PLAYER.step == Player_BossGrab |
-         g_Player.unk60) &&
+         g_Player.grabState) &&
         itemId == ITEM_AXE_LORD_ARMOR && D_801375CC == EQUIP_ARMOR &&
         count[itemId] != 0;
     var_s6 |= D_801375CC == EQUIP_HAND && count[itemId] != 0 &&
