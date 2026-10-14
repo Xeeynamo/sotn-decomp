@@ -93,7 +93,38 @@ void func_us_801A516C(void) {
     }
 }
 
-INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla_wyrm", func_us_801A51E4);
+void func_us_801A51E4(void) {
+    Entity* entity;
+    s32 i;
+    s16 baseAngle;
+    s32 posX;
+    s32 posY;
+    s32 distance;
+    s32 dx;
+    s32 dy;
+    s16 angle;
+
+    posX = g_CurrentEntity->posX.val;
+    posY = g_CurrentEntity->posY.val;
+    baseAngle = g_CurrentEntity->ext.scyllaWyrm.angle;
+    entity = g_CurrentEntity + 1;
+    for (i = 0; i < 11; i++, entity++) {
+        dx = entity->posX.val - posX;
+        dy = entity->posY.val - posY;
+        angle = ratan2(dy, dx);
+        angle += (rcos(baseAngle) << 8) >> 12;
+        dx >>= 16;
+        dy >>= 16;
+        distance = SquareRoot0(dx * dx + dy * dy);
+        if (distance > 0x20) {
+            distance = 0x20;
+        }
+        posX = entity->posX.val = posX + ((distance * rcos(angle)) << 4);
+        posY = entity->posY.val = posY + ((distance * rsin(angle)) << 4);
+        entity->rotate = angle;
+        baseAngle += 0x180;
+    }
+}
 
 void func_us_801A5338(Entity* self) {
     Entity* entity;
