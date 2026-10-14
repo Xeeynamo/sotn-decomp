@@ -19,7 +19,7 @@ static s16 water_slow_zones[] = {
 };
 s16 D_us_80180CC4[] = {0x01E0, 0x0060, 0x0061, 0x006E, 0x01FF, 0x01E0};
 u8 D_us_80180CD0[] = {0, 0, 0, 1, 1, 0, 0, 0};
-s16 D_us_80180CD8[] = {
+u16 D_us_80180CD8[] = {
     0x0373, 0x0000, 0x0000, 0x0000, 0x075E, 0x0001, 0x0001, 0x0001,
     0x0375, 0x0000, 0x0000, 0x0000, 0x0765, 0x0001, 0x0001, 0x0001,
     0x03F2, 0x0000, 0x0000, 0x0000, 0x075C, 0x0001, 0x0001, 0x0001,
@@ -47,7 +47,21 @@ extern EInit g_EInitInteractable;
 
 #include "../../st/water_slow_zone.h"
 
-INCLUDE_ASM("boss/bo3/nonmatchings/water_effects", func_us_801B5004);
+void func_us_801B5004(Tilemap* map, s32 arg1) {
+    Tilemap* tmap;
+    s16 tilePos;
+    u16* tileData;
+    s32 i;
+
+    tmap = &g_Tilemap;
+    tilePos = D_us_80180CC4[arg1 >> 1];
+    tileData = &D_us_80180CD8[arg1 << 2];
+
+    for (i = 0; i < 4; i++) {
+        tmap->fg[tilePos] = *tileData++;
+        tilePos += tmap->hSize << 4;
+    }
+}
 
 INCLUDE_ASM("boss/bo3/nonmatchings/water_effects", func_us_801A1BE8);
 
