@@ -43,7 +43,6 @@ func_us_801A5338 = 0x0924D4A0;
 func_us_801A57A4 = 0x0924DAA8;
 func_us_801A5948 = 0x0924DCB0;
 spriteBanks = 0x09252390;
-rooms_layers = 0x09252470;
 g_RedDoorTiles = 0x092525C0;
 g_EInitParticle = 0x09252710;
 g_EInitSpawner = 0x09252720;
