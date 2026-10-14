@@ -1342,7 +1342,8 @@ files:
         assets:
           - [0x80, skip]
           - [0x1AE10, paldef, palette_def]
-          - [0x1AE48, skip]
+          - [0x1AE48, gfx_banks, psp/graphics_banks]
+          - [0x1AF40, skip]
           - [0x1B2E0, cmpgfx, D_us_801829E4, 128, 128, 4]
           - [0x1C538, cmpgfx, D_us_80183C3C, 128, 128, 4]
           - [0x1D8C0, cmpgfx, D_us_80184FC4, 128, 128, 4]
