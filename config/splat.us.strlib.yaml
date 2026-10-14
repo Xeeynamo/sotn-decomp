@@ -48,7 +48,6 @@ segments:
       - [0x530, .data, e_init]
       - [0x6C4, .data, e_room_bg]
       - [0x794, .data, e_red_door_tiles]
-      - [0x7A4, data]
       - [0x7A4, .data, e_lock_camera]
       - [0x824, data]
       - [0xB5C, .data, e_explosion_puff_opaque]
