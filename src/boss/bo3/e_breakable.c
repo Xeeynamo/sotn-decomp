@@ -42,8 +42,11 @@ static u8 blend_modes[] = {
     DRAW_TPAGE2 | DRAW_TPAGE,
     DRAW_TPAGE2 | DRAW_TPAGE,
     DRAW_TPAGE2 | DRAW_TPAGE};
-static u16 hitbox_y_offsets[] = {0x0000, 0x0000, 0xFFE8, 0xFFF0, 0x0000,
-                                 0x0000, 0x0000, 0x0000, 0x0000, 0x0000};
+static u16 hitbox_y_offsets[] = {
+    0x0000, 0x0000, 0xFFE8, 0xFFF0, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000};
+// unused
+static s16 debris_offsets_y[] = {0, 1, 2, 2, 3, 0, 1, 2, 3, 0};
 
 #define E_BREAKABLE_RELIC E_ID(UNK_43)
 

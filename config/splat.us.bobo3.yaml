@@ -47,7 +47,6 @@ segments:
       - [0x664, data]
       - [0x664, .data, e_lock_camera]
       - [0x6E4, .data, e_breakable]
-      - [0x7D4, data]
       - [0x7EC, .data, cavern_bg_effects]
       - [0xC64, .data, water_effects]
       - [0xD48, .data, e_scylla]
