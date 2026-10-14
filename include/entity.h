@@ -3309,6 +3309,11 @@ typedef struct {
 } ET_ScyllaParticle;
 
 typedef struct {
+    /* 0x7C */ u8 pad[0x10];
+    /* 0x8C */ s16 angle;
+} ET_ScyllaFireball;
+
+typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 : 16;
@@ -4898,6 +4903,7 @@ typedef union { // offset=0x7C
     ET_801C12B0 et_801C12B0;
     ET_ScyllaWyrm scyllaWyrm;
     ET_ScyllaParticle scyllaParticle;
+    ET_ScyllaFireball scyllaFireball;
     ET_BonePillar bonePillar;
     ET_801C4520 et_801C4520;
     ET_801C4980 et_801C4980;

@@ -302,7 +302,72 @@ const u32 D_us_8019CA94[3] = {0, 0, 0};
 
 INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla", func_us_801A4680);
 
-INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla", func_us_801A4988);
+extern EInit D_us_801805DC;
+
+void func_us_801A4988(Entity* self) {
+    Entity* entity;
+    s16 angle;
+    s32 i;
+    s32 dx;
+    s32 dy;
+
+    if (D_us_80180D48 & 2) {
+        self->flags |= FLAG_DEAD;
+    }
+    if (self->flags & FLAG_DEAD) {
+        for (i = 0; i < 0x10; i++) {
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (entity != NULL) {
+                CreateEntityFromEntity(E_ID(UNK_39), self, entity);
+                entity->zPriority = self->zPriority;
+            }
+        }
+        PlaySfxPositional(SFX_SCYLLA_BUBBLE_BURST);
+        DestroyEntity(self);
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_801805DC);
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
+        self->hitPoints = 0;
+        /* fall through */
+    case 1:
+        if (!AnimateEntity(D_us_80180EF4, self)) {
+            SetStep(2);
+        }
+        break;
+
+    case 2:
+        entity = &PLAYER;
+        dx = entity->posX.i.hi - self->posX.i.hi;
+        dy = entity->posY.i.hi - self->posY.i.hi;
+        angle = ratan2(dy, dx);
+        if (angle > 0x200) {
+            angle = 0x200;
+        }
+        if (angle < -0x180) {
+            angle = -0x180;
+        }
+        self->velocityX = rcos(angle) * 5 << 4;
+        self->velocityY = rsin(angle) * 5 << 4;
+        self->ext.scyllaFireball.angle = angle;
+        PlaySfxPositional(SFX_EXPLODE_B);
+        self->step++;
+        /* fall through */
+    case 3:
+        AnimateEntity(D_us_80180EE4, self);
+        MoveEntity();
+        entity = &PLAYER;
+        angle = GetAngleBetweenEntities(self, entity);
+        angle = LimitAngleChange(8, self->ext.scyllaFireball.angle, angle);
+        self->velocityX = rcos(angle) * 5 << 4;
+        self->velocityY = rsin(angle) * 5 << 4;
+        self->ext.scyllaFireball.angle = angle;
+        break;
+    }
+}
 
 extern EInit D_us_801805E8;
 
