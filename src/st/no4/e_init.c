@@ -49,7 +49,7 @@ void EntityFerryman(Entity* self);
 void EntityBoatElevatorChains(Entity* self);
 void EntityBoatElevatorController(Entity* self);
 void EntityFerrymanUnused(Entity* self);
-void func_us_801C123C(Entity* self);
+void EntityBreakableStatueBroken(Entity* self);
 void EntityWaterBox(Entity* self);
 void EntityWaterSpray(Entity* self);
 void EntityFloatingIcePlatform(Entity* self);
@@ -147,7 +147,7 @@ PfnEntityUpdate EntityUpdates[] = {
     /* 0x32 */ EntityDummy,
     /* 0x33 */ EntityDummy,
     /* 0x34 */ EntityDummy,
-    /* 0x35 */ func_us_801C123C,
+    /* 0x35 */ EntityBreakableStatueBroken,
     /* 0x36 */ EntityWaterBox,
     /* 0x37 */ EntityWaterSpray,
     /* 0x38 */ EntityFloatingIcePlatform,

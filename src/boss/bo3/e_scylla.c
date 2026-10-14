@@ -6,83 +6,52 @@ typedef struct {
     s16 values[4];
 } ScyllaPartInit;
 
-s32 D_us_80180D48 = 0;
+s32 g_BossMgrState = BOSS_MGR_IDLE;
 
 static AnimateEntityFrame D_us_80180D4C[] = {
-    POSE(18, 1, 0), POSE(18, 2, 0), POSE(18, 3, 0),
-    POSE(18, 2, 0), POSE_LOOP(0),
-};
-
+    POSE(18, 1, 0), POSE(18, 2, 0), POSE(18, 3, 0), POSE(18, 2, 0),
+    POSE_LOOP(0)};
 static AnimateEntityFrame D_us_80180D58[] = {
     POSE(4, 1, 0), POSE(7, 5, 0), POSE(7, 6, 0),  POSE(7, 7, 0),
-    POSE(7, 8, 0), POSE(7, 9, 0), POSE(7, 10, 0), POSE_END,
-};
-
+    POSE(7, 8, 0), POSE(7, 9, 0), POSE(7, 10, 0), POSE_END};
 static AnimateEntityFrame D_us_80180D68[] = {
-    POSE(8, 7, 0), POSE(8, 8, 0), POSE(8, 9, 0), POSE(8, 10, 0), POSE_LOOP(0),
-};
-
+    POSE(8, 7, 0), POSE(8, 8, 0), POSE(8, 9, 0), POSE(8, 10, 0), POSE_LOOP(0)};
 static AnimateEntityFrame D_us_80180D74[] = {
     POSE(4, 9, 0),  POSE(4, 10, 0), POSE(2, 7, 0),  POSE(2, 6, 0),
     POSE(1, 11, 0), POSE(1, 12, 0), POSE(1, 13, 0), POSE(48, 14, 0),
-    POSE(6, 15, 0), POSE(6, 16, 0), POSE(2, 1, 0),  POSE_END,
-};
-
+    POSE(6, 15, 0), POSE(6, 16, 0), POSE(2, 1, 0),  POSE_END};
 static AnimateEntityFrame D_us_80180D8C[] = {
     POSE(2, 1, 0),  POSE(10, 20, 0), POSE(10, 21, 0), POSE(8, 22, 0),
-    POSE(8, 23, 0), POSE(8, 24, 0),  POSE(1, 25, 0),  POSE_END,
-};
-
+    POSE(8, 23, 0), POSE(8, 24, 0),  POSE(1, 25, 0),  POSE_END};
 static AnimateEntityFrame D_us_80180D9C[] = {
-    POSE(8, 22, 0), POSE(8, 23, 0), POSE(8, 24, 0),
-    POSE(8, 25, 0), POSE_LOOP(0),
-};
-
+    POSE(8, 22, 0), POSE(8, 23, 0), POSE(8, 24, 0), POSE(8, 25, 0),
+    POSE_LOOP(0)};
 static AnimateEntityFrame D_us_80180DA8[] = {
     POSE(2, 22, 0),  POSE(8, 23, 0), POSE(10, 26, 0),
-    POSE(10, 27, 0), POSE(8, 1, 0),  POSE_END,
-};
-
+    POSE(10, 27, 0), POSE(8, 1, 0),  POSE_END};
 static AnimateEntityFrame D_us_80180DB4[] = {
     POSE(1, 1, 0),   POSE(3, 17, 0),  POSE(3, 18, 0),
     POSE(16, 19, 0), POSE(16, 19, 0), POSE(6, 18, 0),
-    POSE(6, 17, 0),  POSE(1, 1, 0),   POSE_END,
-};
-
+    POSE(6, 17, 0),  POSE(1, 1, 0),   POSE_END};
 static AnimateEntityFrame D_us_80180DC8[] = {
-    POSE(1, 1, 0), POSE(4, 17, 0), POSE(4, 18, 0), POSE(64, 19, 0), POSE_END,
-};
-
+    POSE(1, 1, 0), POSE(4, 17, 0), POSE(4, 18, 0), POSE(64, 19, 0), POSE_END};
 AnimateEntityFrame D_us_80180DD4[] = {
-    POSE(20, 28, 0), POSE(20, 29, 0), POSE(20, 30, 0),
-    POSE(20, 29, 0), POSE_LOOP(0),
-};
-
+    POSE(20, 28, 0), POSE(20, 29, 0), POSE(20, 30, 0), POSE(20, 29, 0),
+    POSE_LOOP(0)};
 AnimateEntityFrame D_us_80180DE0[] = {
-    POSE(1, 28, 0),
-    POSE(1, 31, 0),
-    POSE_LOOP(0),
-};
-
+    POSE(1, 28, 0), POSE(1, 31, 0), POSE_LOOP(0)};
 AnimateEntityFrame D_us_80180DE8[] = {
     POSE(1, 28, 0),  POSE(10, 32, 0), POSE(16, 33, 0), POSE(10, 34, 0),
     POSE(16, 35, 0), POSE(10, 36, 0), POSE(16, 37, 0), POSE(8, 38, 0),
     POSE(8, 39, 0),  POSE(8, 40, 0),  POSE(8, 41, 0),  POSE(8, 28, 0),
-    POSE_END,
-};
-
+    POSE_END};
 AnimateEntityFrame D_us_80180E04[] = {
     POSE(2, 28, 0), POSE(6, 46, 0), POSE(6, 47, 0),
     POSE(6, 48, 0), POSE(6, 49, 0), POSE(22, 50, 0),
-    POSE(8, 32, 0), POSE(1, 33, 0), POSE_END,
-};
-
+    POSE(8, 32, 0), POSE(1, 33, 0), POSE_END};
 AnimateEntityFrame D_us_80180E18[] = {
     POSE(4, 33, 0), POSE(6, 42, 0), POSE(6, 43, 0), POSE(6, 44, 0),
-    POSE(6, 45, 0), POSE(2, 28, 0), POSE_END,
-};
-
-// unused
+    POSE(6, 45, 0), POSE(2, 28, 0), POSE_END};
 static AnimateEntityFrame anim_unused_0[] = {
     POSE(32, 28, 0), POSE(4, 36, 0),  POSE(6, 37, 0),  POSE(4, 51, 0),
     POSE(6, 52, 0),  POSE(4, 53, 0),  POSE(26, 54, 0), POSE(6, 53, 0),
@@ -90,93 +59,56 @@ static AnimateEntityFrame anim_unused_0[] = {
     POSE(6, 55, 0),  POSE(4, 56, 0),  POSE(26, 57, 0), POSE(6, 56, 0),
     POSE(6, 55, 0),  POSE(4, 32, 0),  POSE(6, 33, 0),  POSE(6, 58, 0),
     POSE(4, 59, 0),  POSE(26, 60, 0), POSE(6, 59, 0),  POSE(6, 58, 0),
-    POSE(2, 28, 0),  POSE_END,
-};
-
+    POSE(2, 28, 0),  POSE_END};
 AnimateEntityFrame D_us_80180E5C[] = {
     POSE(16, 28, 0), POSE(4, 36, 0), POSE(6, 37, 0),  POSE(4, 51, 0),
-    POSE(6, 52, 0),  POSE(4, 53, 0), POSE(10, 54, 0), POSE_END,
-};
-
+    POSE(6, 52, 0),  POSE(4, 53, 0), POSE(10, 54, 0), POSE_END};
 AnimateEntityFrame D_us_80180E6C[] = {
     POSE(16, 54, 0), POSE(6, 53, 0), POSE(6, 52, 0), POSE(4, 51, 0),
     POSE(4, 34, 0),  POSE(6, 35, 0), POSE(6, 55, 0), POSE(4, 56, 0),
-    POSE(10, 57, 0), POSE_END,
-};
-
+    POSE(10, 57, 0), POSE_END};
 AnimateEntityFrame D_us_80180E80[] = {
     POSE(16, 57, 0), POSE(6, 56, 0),  POSE(6, 55, 0),
     POSE(4, 32, 0),  POSE(6, 33, 0),  POSE(6, 58, 0),
-    POSE(4, 59, 0),  POSE(10, 60, 0), POSE_END,
-};
-
+    POSE(4, 59, 0),  POSE(10, 60, 0), POSE_END};
 AnimateEntityFrame D_us_80180E94[] = {
-    POSE(16, 60, 0), POSE(6, 59, 0), POSE(6, 58, 0), POSE(2, 28, 0), POSE_END,
-};
-
+    POSE(16, 60, 0), POSE(6, 59, 0), POSE(6, 58, 0), POSE(2, 28, 0), POSE_END};
 static AnimateEntityFrame D_us_80180EA0[] = {
-    POSE(20, 61, 0), POSE(20, 62, 0), POSE(20, 63, 0),
-    POSE(20, 62, 0), POSE_LOOP(0),
-};
-
+    POSE(20, 61, 0), POSE(20, 62, 0), POSE(20, 63, 0), POSE(20, 62, 0),
+    POSE_LOOP(0)};
 static AnimateEntityFrame D_us_80180EAC[] = {
     POSE(4, 62, 0),  POSE(20, 63, 0), POSE(20, 62, 0),
-    POSE(20, 61, 0), POSE(16, 62, 0), POSE_LOOP(0),
-};
-
+    POSE(20, 61, 0), POSE(16, 62, 0), POSE_LOOP(0)};
 static AnimateEntityFrame D_us_80180EB8[] = {
-    POSE(20, 64, 0), POSE(20, 65, 0), POSE(20, 66, 0),
-    POSE(20, 65, 0), POSE_LOOP(0),
-};
-
+    POSE(20, 64, 0), POSE(20, 65, 0), POSE(20, 66, 0), POSE(20, 65, 0),
+    POSE_LOOP(0)};
 static AnimateEntityFrame D_us_80180EC4[] = {
-    POSE(20, 67, 0),
-    POSE(20, 68, 0),
-    POSE(20, 69, 0),
-    POSE_LOOP(0),
-};
-
+    POSE(20, 67, 0), POSE(20, 68, 0), POSE(20, 69, 0), POSE_LOOP(0)};
 static AnimateEntityFrame D_us_80180ECC[] = {
-    POSE(20, 70, 0), POSE(20, 71, 0), POSE(20, 72, 0),
-    POSE(20, 71, 0), POSE_LOOP(0),
-};
-
+    POSE(20, 70, 0), POSE(20, 71, 0), POSE(20, 72, 0), POSE(20, 71, 0),
+    POSE_LOOP(0)};
 AnimateEntityFrame D_us_80180ED8[] = {
-    POSE(8, 80, 0), POSE(8, 81, 0), POSE(8, 82, 0),
-    POSE(8, 83, 0), POSE_LOOP(0),
-};
-
+    POSE(8, 80, 0), POSE(8, 81, 0), POSE(8, 82, 0), POSE(8, 83, 0),
+    POSE_LOOP(0)};
 AnimateEntityFrame D_us_80180EE4[] = {
     POSE(1, 85, 0), POSE(1, 88, 0), POSE(1, 86, 0), POSE(1, 89, 0),
-    POSE(1, 87, 0), POSE(1, 90, 0), POSE_LOOP(0),
-};
-
+    POSE(1, 87, 0), POSE(1, 90, 0), POSE_LOOP(0)};
 AnimateEntityFrame D_us_80180EF4[] = {
     POSE(4, 91, 0), POSE(4, 92, 0), POSE(4, 93, 0), POSE(4, 94, 0),
     POSE(1, 85, 0), POSE(1, 88, 0), POSE(1, 86, 0), POSE(1, 89, 0),
-    POSE(1, 87, 0), POSE(1, 90, 0), POSE_END,
-};
-
+    POSE(1, 87, 0), POSE(1, 90, 0), POSE_END};
 AnimateEntityFrame D_us_80180F0C[] = {
     POSE(7, 95, 0), POSE(7, 96, 0), POSE(7, 97, 0),
-    POSE(7, 98, 0), POSE(7, 99, 0), POSE_END,
-};
-
+    POSE(7, 98, 0), POSE(7, 99, 0), POSE_END};
 AnimateEntityFrame D_us_80180F18[] = {
-    POSE(8, 100, 0), POSE(8, 101, 0), POSE(8, 100, 0),
-    POSE(8, 102, 0), POSE_LOOP(0),
-};
-
+    POSE(8, 100, 0), POSE(8, 101, 0), POSE(8, 100, 0), POSE(8, 102, 0),
+    POSE_LOOP(0)};
 AnimateEntityFrame D_us_80180F24[] = {
-    POSE(4, 100, 0), POSE(4, 101, 0), POSE(4, 100, 0),
-    POSE(4, 102, 0), POSE_LOOP(0),
-};
-
+    POSE(4, 100, 0), POSE(4, 101, 0), POSE(4, 100, 0), POSE(4, 102, 0),
+    POSE_LOOP(0)};
 AnimateEntityFrame D_us_80180F30[] = {
     POSE(2, 100, 0), POSE(8, 103, 0), POSE(8, 104, 0),  POSE(8, 105, 0),
-    POSE(8, 106, 0), POSE(8, 107, 0), POSE(16, 108, 0), POSE_END,
-};
-
+    POSE(8, 106, 0), POSE(8, 107, 0), POSE(16, 108, 0), POSE_END};
 AnimateEntityFrame D_us_80180F40[] = {
     POSE(8, 109, 0), POSE(8, 108, 0), POSE(8, 110, 0),
     POSE(8, 108, 0), POSE_LOOP(0),
@@ -191,26 +123,16 @@ ScyllaPartInit D_us_80180F4C[] = {
 };
 
 s16 D_us_80180F88[] = {16, 8, 8, 8};
-
 s16 D_us_80180F90[] = {0, 8, 0, 4, 4, -4, -8, 0};
-
 s16 D_us_80180FA0[] = {-16, -16, 0, 0};
-
 s16 D_us_80180FA8[] = {16, -16, 0, 0};
-
 s16 D_us_80180FB0[] = {-16, 16, 0, 0};
-
 s16 D_us_80180FB8[] = {16, 16, 0, 0};
 
 // unused
 static AnimateEntityFrame anim_unused_1[] = {
-    POSE(16, 73, 0), POSE(16, 74, 0), POSE(16, 73, 0),
-    POSE(16, 75, 0), POSE_LOOP(0),
-};
-
-#ifdef VERSION_PSP
-char charal_fmt[] = "charal %x\n";
-#endif
+    POSE(16, 73, 0), POSE(16, 74, 0), POSE(16, 73, 0), POSE(16, 75, 0),
+    POSE_LOOP(0)};
 
 static s32 func_us_801A2A90(Primitive* prim, s32 amount) {
     s32 isEnd;
@@ -238,13 +160,12 @@ static s32 func_us_801A2A90(Primitive* prim, s32 amount) {
 
 extern EInit g_EInitScylla;
 extern u16 D_us_80180C66;
-
-void func_us_801A2AEC(Entity* self) {
+void EntityScylla(Entity* self) {
     Entity* entity;
     s32 i;
     s32 rand;
 
-    if (D_us_80180D48 & 4) {
+    if (g_BossMgrState & BOSS_MGR_TERMINATED) {
         DestroyEntity(self);
         return;
     }
@@ -264,7 +185,7 @@ void func_us_801A2AEC(Entity* self) {
         self->nextPart = self + 1;
         self->parent = NULL;
         entity = self + 1;
-        CreateEntityFromEntity(E_ID(UNK_33), self, entity);
+        CreateEntityFromEntity(E_ID(SCYLLA_WOLF_HEAD), self, entity);
         entity->zPriority = self->zPriority + 1;
         entity->nextPart = self;
         entity->parent = self;
@@ -282,24 +203,24 @@ void func_us_801A2AEC(Entity* self) {
             D_us_80180C66 |= 0x10;
             D_us_80180C66 |= 0x20;
             entity = self + 2;
-            CreateEntityFromEntity(E_ID(UNK_3A), self, entity);
+            CreateEntityFromEntity(E_ID(WYRM), self, entity);
             entity->zPriority = self->zPriority;
             entity->posX.i.hi = 0x48 - g_Tilemap.scrollX.i.hi;
             entity->posY.i.hi = 0x90 - g_Tilemap.scrollY.i.hi;
             entity->params = 1;
             entity = self + 15;
-            CreateEntityFromEntity(E_ID(UNK_3A), self, entity);
+            CreateEntityFromEntity(E_ID(WYRM), self, entity);
             entity->zPriority = self->zPriority - 2;
             entity->posX.i.hi = 0x48 - g_Tilemap.scrollX.i.hi;
             entity->posY.i.hi = 0x90 - g_Tilemap.scrollY.i.hi;
             entity->params = 2;
             entity = self + 28;
-            CreateEntityFromEntity(E_ID(UNK_3A), self, entity);
+            CreateEntityFromEntity(E_ID(WYRM), self, entity);
             entity->zPriority = self->zPriority - 4;
             entity->posX.i.hi = 0x48 - g_Tilemap.scrollX.i.hi;
             entity->posY.i.hi = 0x90 - g_Tilemap.scrollY.i.hi;
             entity->params = 3;
-            D_us_80180D48 |= 1;
+            g_BossMgrState |= BOSS_MGR_FIGHT_ON;
             SetStep(2);
         }
         break;
@@ -345,7 +266,7 @@ void func_us_801A2AEC(Entity* self) {
         case 1:
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_ID(UNK_34), self, entity);
+                CreateEntityFromEntity(E_ID(SCYLLA_WATER_BLADE), self, entity);
                 entity->posX.i.hi += 0x14;
                 entity->posY.i.hi -= 0x34;
                 entity->zPriority = self->zPriority - 1;
@@ -402,7 +323,8 @@ void func_us_801A2AEC(Entity* self) {
             if (!(self->ext.scyllaBody.timer & 7)) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID(UNK_36), self, entity);
+                    CreateEntityFromEntity(
+                        E_ID(SCYLLA_BUBBLE_SKULL), self, entity);
                     entity->posY.i.hi = 0xBC - g_Tilemap.scrollY.i.hi;
                     entity->posX.i.hi += (Random() & 0x7F) + 0x30;
                 }
@@ -425,7 +347,7 @@ void func_us_801A2AEC(Entity* self) {
         case 0:
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_SCYLLA_DEFEAT, TIMEATTACK_SET_RECORD);
-            D_us_80180D48 |= 2;
+            g_BossMgrState |= BOSS_MGR_DEFEAT;
             g_CastleFlags[SCYLLA_DEFEATED] = 1;
             PlaySfxPositional(SFX_SCYLLA_DEATH);
             self->hitboxState = 0;
@@ -440,7 +362,7 @@ void func_us_801A2AEC(Entity* self) {
         case 2:
             self->ext.scyllaBody.timer = 0x80;
             g_api.PlaySfx(SFX_BOSS_LARGE_FLAMES);
-            D_us_80180D48 |= 0x40;
+            g_BossMgrState |= BOSS_MGR_FLAMES_1_START;
             self->step_s++;
             /* fall through */
         case 3:
@@ -463,14 +385,14 @@ void func_us_801A2AEC(Entity* self) {
                 }
             }
             if (!--self->ext.scyllaBody.timer) {
-                D_us_80180D48 |= 0x10;
+                g_BossMgrState |= BOSS_MGR_FLAMES_1_END;
                 self->step_s++;
             }
             break;
 
         case 4:
             self->ext.scyllaBody.timer = 0x50;
-            D_us_80180D48 |= 0x20;
+            g_BossMgrState |= BOSS_MGR_FLAMES_2_START;
             PlaySfxPositional(SFX_BOSS_LARGE_FLAMES);
             self->step_s++;
             /* fall through */
@@ -490,7 +412,7 @@ void func_us_801A2AEC(Entity* self) {
                 }
             }
             if (!--self->ext.scyllaBody.timer) {
-                D_us_80180D48 |= 8;
+                g_BossMgrState |= BOSS_MGR_FLAMES_2_END;
                 self->step_s++;
             }
             break;
@@ -523,7 +445,7 @@ void func_us_801A2AEC(Entity* self) {
         case 8:
             D_us_80180C66 &= ~0x10;
             D_us_80180C66 &= ~0x20;
-            D_us_80180D48 |= 4;
+            g_BossMgrState |= BOSS_MGR_TERMINATED;
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
                 CreateEntityFromEntity(E_ID(LIFE_UP_SPAWN), self, entity);
@@ -537,11 +459,7 @@ void func_us_801A2AEC(Entity* self) {
         break;
 
     case 0xFF:
-#ifdef VERSION_PSP
-        FntPrint(charal_fmt, self->animCurFrame);
-#else
         FntPrint("charal %x\n", self->animCurFrame);
-#endif
         if (g_pads[1].pressed & PAD_SQUARE) {
             if (self->params) {
                 break;
@@ -567,10 +485,8 @@ void func_us_801A2AEC(Entity* self) {
 }
 
 extern EInit D_us_801805AC;
-
 extern EInit D_us_801805AC;
-
-void func_us_801A365C(Entity* self) {
+void EntityScyllaWolfHead(Entity* self) {
     Entity* newEntity;
     s32 i;
     s32 animEnd;
@@ -590,7 +506,7 @@ void func_us_801A365C(Entity* self) {
         /* fall through */
     case 1:
         AnimateEntity(D_us_80180DD4, self);
-        if (D_us_80180D48 & 1) {
+        if (g_BossMgrState & BOSS_MGR_FIGHT_ON) {
             SetStep(2);
         }
         break;
@@ -672,7 +588,7 @@ void func_us_801A365C(Entity* self) {
         case 3:
             newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_ID(UNK_37), self, newEntity);
+                CreateEntityFromEntity(E_ID(SCYLLA_WATER_ORB), self, newEntity);
                 newEntity->posX.i.hi += 0x30;
                 newEntity->posY.i.hi -= 8;
                 newEntity->zPriority = self->zPriority + 1;
@@ -733,7 +649,8 @@ void func_us_801A365C(Entity* self) {
             for (i = 0; i < 8; i++) {
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_ID(UNK_38), self, newEntity);
+                    CreateEntityFromEntity(
+                        E_ID(SCYLLA_FALLING_ROCK), self, newEntity);
                     newEntity->posY.i.hi = 0;
                     newEntity->posX.i.hi = self->posX.i.hi + (Random() & 0x7F);
                     newEntity->zPriority = self->zPriority + 2;
@@ -751,7 +668,7 @@ void func_us_801A365C(Entity* self) {
             /* fall through */
         case 1:
             AnimateEntity(D_us_80180DE0, self);
-            if (D_us_80180D48 & 0x20) {
+            if (g_BossMgrState & BOSS_MGR_FLAMES_2_START) {
                 self->step_s++;
             }
             break;
@@ -768,7 +685,7 @@ void func_us_801A365C(Entity* self) {
             }
             break;
         }
-        if (D_us_80180D48 & 8) {
+        if (g_BossMgrState & BOSS_MGR_FLAMES_2_END) {
             DestroyEntity(self);
         }
         break;
@@ -776,11 +693,10 @@ void func_us_801A365C(Entity* self) {
 }
 
 extern EInit D_us_801805B8;
-
-void func_us_801A3CD8(Entity* self) {
+void EntityScyllaTentacles(Entity* self) {
     ScyllaPartInit* part;
 
-    if (D_us_80180D48 & 0x10) {
+    if (g_BossMgrState & BOSS_MGR_FLAMES_1_END) {
         DestroyEntity(self);
         return;
     }
@@ -796,7 +712,7 @@ void func_us_801A3CD8(Entity* self) {
     case 1:
         part = &D_us_80180F4C[self->params];
         AnimateEntity(part->anim, self);
-        if (D_us_80180D48 & 2) {
+        if (g_BossMgrState & BOSS_MGR_DEFEAT) {
             self->step++;
         }
         break;
@@ -804,7 +720,7 @@ void func_us_801A3CD8(Entity* self) {
     case 2:
         switch (self->step_s) {
         case 0:
-            if (D_us_80180D48 & 0x40) {
+            if (g_BossMgrState & BOSS_MGR_FLAMES_1_START) {
                 self->step_s++;
             }
             break;
@@ -827,8 +743,7 @@ void func_us_801A3CD8(Entity* self) {
 }
 
 extern EInit D_us_801805C4;
-
-void func_us_801A3EE0(Entity* self) {
+void EntityScyllaWaterBlade(Entity* self) {
     Entity* entity;
     Primitive* prim;
     s32 primIndex;
@@ -840,7 +755,7 @@ void func_us_801A3EE0(Entity* self) {
     MATRIX m;
     SVECTOR rot = {0};
 
-    if (D_us_80180D48 & 2) {
+    if (g_BossMgrState & BOSS_MGR_DEFEAT) {
         DestroyEntity(self);
         return;
     }
@@ -930,7 +845,6 @@ void func_us_801A3EE0(Entity* self) {
 }
 
 extern EInit g_EInitInteractable;
-
 void func_us_801A42A8(Entity* self) {
     Primitive* prim;
     s32 dy;
@@ -938,7 +852,7 @@ void func_us_801A42A8(Entity* self) {
     s32 primIndex;
     s32 dx;
 
-    if (D_us_80180D48 & 2) {
+    if (g_BossMgrState & BOSS_MGR_DEFEAT) {
         DestroyEntity(self);
         return;
     }
@@ -1047,22 +961,21 @@ void func_us_801A42A8(Entity* self) {
 }
 
 extern EInit D_us_801805D0;
-
-void func_us_801A4680(Entity* self) {
+void EntityScyllaBubbleSkull(Entity* self) {
     Entity* entity;
     s16 angle;
     s32 i;
     s32 dx;
     s32 dy;
 
-    if (D_us_80180D48 & 2) {
+    if (g_BossMgrState & BOSS_MGR_DEFEAT) {
         self->flags |= FLAG_DEAD;
     }
     if (self->flags & FLAG_DEAD) {
         for (i = 0; i < 5; i++) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_ID(UNK_39), self, entity);
+                CreateEntityFromEntity(E_ID(SCYLLA_DROPLET), self, entity);
                 entity->zPriority = self->zPriority;
                 entity->params = 1;
             }
@@ -1140,22 +1053,21 @@ void func_us_801A4680(Entity* self) {
 }
 
 extern EInit D_us_801805DC;
-
-void func_us_801A4988(Entity* self) {
+void EntityScyllaWaterOrb(Entity* self) {
     Entity* entity;
     s16 angle;
     s32 i;
     s32 dx;
     s32 dy;
 
-    if (D_us_80180D48 & 2) {
+    if (g_BossMgrState & BOSS_MGR_DEFEAT) {
         self->flags |= FLAG_DEAD;
     }
     if (self->flags & FLAG_DEAD) {
         for (i = 0; i < 0x10; i++) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_ID(UNK_39), self, entity);
+                CreateEntityFromEntity(E_ID(SCYLLA_DROPLET), self, entity);
                 entity->zPriority = self->zPriority;
             }
         }
@@ -1207,14 +1119,13 @@ void func_us_801A4988(Entity* self) {
 }
 
 extern EInit D_us_801805E8;
-
-void func_us_801A4C0C(Entity* self) {
+void EntityScyllaFallingRock(Entity* self) {
     Entity* newEntity;
     s32 posY;
     s16 posX;
     u32 pad[10];
 
-    if (D_us_80180D48 & 2) {
+    if (g_BossMgrState & BOSS_MGR_DEFEAT) {
         self->flags |= FLAG_DEAD;
     }
     if (self->flags & FLAG_DEAD) {
@@ -1272,8 +1183,7 @@ void func_us_801A4C0C(Entity* self) {
 }
 
 extern EInit D_us_801805F4;
-
-void func_us_801A4E24(Entity* self) {
+void EntityScyllaDroplet(Entity* self) {
     s32 speed;
     s16 angle;
 

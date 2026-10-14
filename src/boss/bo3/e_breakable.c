@@ -48,7 +48,7 @@ static u16 hitbox_y_offsets[] = {
 // unused
 static s16 debris_offsets_y[] = {0, 1, 2, 2, 3, 0, 1, 2, 3, 0};
 
-#define E_BREAKABLE_RELIC E_ID(UNK_43)
+#define E_BREAKABLE_RELIC E_ID(BREAKABLE_STATUE_BROKEN)
 
 extern EInit g_EInitInteractable;
 

@@ -13,6 +13,7 @@ enum Palettes {
     PAL_BONE_ARCHER = 0x21A,
     PAL_KILLER_FISH = 0x21B,
     PAL_SKELETON_APE = 0x21D,
+    PAL_BREAKABLE_STATUE = 0x228,
 };
 
 typedef enum EntityID {
@@ -69,7 +70,7 @@ typedef enum EntityID {
     /* 0x32 */ E_ID_32,
     /* 0x33 */ E_ID_33,
     /* 0x34 */ E_ID_34,
-    /* 0x35 */ E_ID_35 = 0x35,
+    /* 0x35 */ E_BREAKABLE_STATUE_BROKEN = 0x35,
     /* 0x36 */ E_WATERBOX,
     /* 0x37 */ E_WATER_SPRAY,
     /* 0x38 */ E_ICE_PLATFORM,

@@ -57,7 +57,7 @@ static s32 E_ID(ID_31);
 static s32 E_ID(ID_32);
 static s32 E_ID(ID_33);
 static s32 E_ID(ID_34);
-s32 E_ID(ID_35);
+s32 E_ID(BREAKABLE_STATUE_BROKEN);
 static s32 E_ID(E_WATERBOX);
 static s32 E_ID(WATER_SPRAY);
 static s32 E_ID(ICE_PLATFORM);
@@ -146,7 +146,7 @@ void InitEntityIds(void) {
     E_ID(ID_32) = 0x32;
     E_ID(ID_33) = 0x33;
     E_ID(ID_34) = 0x34;
-    E_ID(ID_35) = 0x35;
+    E_ID(BREAKABLE_STATUE_BROKEN) = 0x35;
     E_ID(E_WATERBOX) = 0x36;
     E_ID(WATER_SPRAY) = 0x37;
     E_ID(ICE_PLATFORM) = 0x38;

@@ -46,9 +46,9 @@ static u16 hitbox_y_offsets[] = {0x0000, 0x0000, 0xFFE8, 0xFFF0, 0x0000,
                                  0x0000, 0x0000, 0x0000, 0x0000, 0x0000};
 
 #ifdef VERSION_PSP
-extern s32 E_ID(ID_35);
+extern s32 E_ID(BREAKABLE_STATUE_BROKEN);
 #endif
 
-#define E_BREAKABLE_RELIC E_ID(ID_35)
+#define E_BREAKABLE_RELIC E_ID(BREAKABLE_STATUE_BROKEN)
 
 #include "../e_breakable_no4.h"

@@ -49,25 +49,25 @@ void func_us_801A07CC(Entity* self);
 void func_us_801A0A80(Entity* self);
 void func_us_801A1120(Entity* self);
 void func_us_801A16E4(Entity* self);
-void func_us_801A2AEC(Entity* self);
-void func_us_801A3CD8(Entity* self);
-void func_us_801A365C(Entity* self);
-void func_us_801A3EE0(Entity* self);
+void EntityScylla(Entity* self);
+void EntityScyllaTentacles(Entity* self);
+void EntityScyllaWolfHead(Entity* self);
+void EntityScyllaWaterBlade(Entity* self);
 void func_us_801A42A8(Entity* self);
-void func_us_801A4680(Entity* self);
-void func_us_801A4988(Entity* self);
-void func_us_801A4C0C(Entity* self);
-void func_us_801A4E24(Entity* self);
-void func_us_801A5338(Entity* self);
-void func_us_801A57A4(Entity* self);
-void func_us_801A5948(Entity* self);
+void EntityScyllaBubbleSkull(Entity* self);
+void EntityScyllaWaterOrb(Entity* self);
+void EntityScyllaFallingRock(Entity* self);
+void EntityScyllaDroplet(Entity* self);
+void EntityWyrm(Entity* self);
+void EntityWyrmBodyPart(Entity* self);
+void EntityWyrmHead(Entity* self);
 void EntityExplosionPuffOpaque(Entity* self);
 void func_us_801A1BE8(Entity* self);
 void EntityBreakableWallDebris(Entity* self);
 void EntityLifeUpSpawn(Entity* self);
 void func_us_801A6370(Entity* self);
 void func_us_801A6568(Entity* self);
-void func_us_801C123C(Entity* self);
+void EntityBreakableStatueBroken(Entity* self);
 
 PfnEntityUpdate EntityUpdates[] = {
     EntityBreakable,
@@ -118,25 +118,25 @@ PfnEntityUpdate EntityUpdates[] = {
     func_us_801A0A80,
     func_us_801A1120,
     func_us_801A16E4,
-    func_us_801A2AEC,
-    func_us_801A3CD8,
-    func_us_801A365C,
-    func_us_801A3EE0,
+    EntityScylla,
+    EntityScyllaTentacles,
+    EntityScyllaWolfHead,
+    EntityScyllaWaterBlade,
     func_us_801A42A8,
-    func_us_801A4680,
-    func_us_801A4988,
-    func_us_801A4C0C,
-    func_us_801A4E24,
-    func_us_801A5338,
-    func_us_801A57A4,
-    func_us_801A5948,
+    EntityScyllaBubbleSkull,
+    EntityScyllaWaterOrb,
+    EntityScyllaFallingRock,
+    EntityScyllaDroplet,
+    EntityWyrm,
+    EntityWyrmBodyPart,
+    EntityWyrmHead,
     EntityExplosionPuffOpaque,
     func_us_801A1BE8,
     EntityBreakableWallDebris,
     EntityLifeUpSpawn,
     func_us_801A6370,
     func_us_801A6568,
-    func_us_801C123C,
+    EntityBreakableStatueBroken,
 };
 
 // clang-format off
@@ -158,5 +158,5 @@ EInit D_us_801805D0 = {ANIMSET_OVL(2), 0x00, 0x48, PAL_SCYLLA, ENEMY_SCYLLA_UNK_
 EInit D_us_801805DC = {ANIMSET_OVL(2), 0x00, 0x48, PAL_SCYLLA, ENEMY_SCYLLA_UNK_124};
 EInit D_us_801805E8 = {ANIMSET_OVL(2), 0x00, 0x48, PAL_SCYLLA, ENEMY_SCYLLA_UNK_125};
 EInit D_us_801805F4 = {ANIMSET_OVL(2), 0x00, 0x48, PAL_SCYLLA, ENEMY_PARTICLE};
-EInit g_EInitScyllawyrm = {ANIMSET_OVL(2), 0x00, 0x48, PAL_SCYLLA, ENEMY_SCYLLA_WYRM};
+EInit g_EInitWyrm = {ANIMSET_OVL(2), 0x00, 0x48, PAL_SCYLLA, ENEMY_SCYLLA_WYRM};
 // clang-format on

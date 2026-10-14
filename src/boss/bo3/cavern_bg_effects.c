@@ -9,6 +9,8 @@ extern EInit g_EInitCommon;
 
 static u8 water_spray_anim[] = {1, 7, 1, 8, 1, 9, 0, 0};
 
+// slightly different from NO4, unused left-over.
+// The BO3 overlay was likely copied from NO4 then modified.
 void EntityWaterSpray(Entity* self) {
     s16* var_s2;
     s16* var_s1;

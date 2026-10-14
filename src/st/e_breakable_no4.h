@@ -72,14 +72,14 @@ void EntityBreakable(Entity* self) {
     }
 }
 
-void func_us_801C123C(Entity* self) {
+void EntityBreakableStatueBroken(Entity* self) {
     u32 pad[10];
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_OVL(0xB);
         self->unk5A = 0x5B;
-        self->palette = 0x228;
+        self->palette = PAL_BREAKABLE_STATUE;
         self->animCurFrame = 0x15;
         self->zPriority = 0x6A;
         self->step = 0x100;

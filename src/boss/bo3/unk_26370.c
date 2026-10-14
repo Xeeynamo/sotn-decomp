@@ -2,7 +2,6 @@
 #include "bo3.h"
 
 extern EInit g_EInitInteractable;
-extern s32 D_us_80180D48;
 extern u16 D_us_80180C66;
 
 void func_us_801A6370(Entity* self) {
@@ -20,7 +19,7 @@ void func_us_801A6370(Entity* self) {
         g_api.PlaySfx(SET_UNK_90);
         /* fall through */
     case 1:
-        if (D_us_80180D48 & 1) {
+        if (g_BossMgrState & BOSS_MGR_FIGHT_ON) {
             stopMusicFlag = false;
             currentMusicId = MU_FESTIVAL_OF_SERVANTS;
             self->step++;
@@ -35,7 +34,7 @@ void func_us_801A6370(Entity* self) {
         }
         /* fall through */
     case 3:
-        if (D_us_80180D48 & 2) {
+        if (g_BossMgrState & BOSS_MGR_DEFEAT) {
             g_api.PlaySfx(0x91);
             currentMusicId = MU_CRYSTAL_TEARDROPS;
             stopMusicFlag = false;
@@ -44,7 +43,7 @@ void func_us_801A6370(Entity* self) {
         break;
 
     case 4:
-        if (D_us_80180D48 & 4) {
+        if (g_BossMgrState & BOSS_MGR_TERMINATED) {
             stopMusicFlag = true;
             currentMusicId = MU_CRYSTAL_TEARDROPS;
             self->step++;

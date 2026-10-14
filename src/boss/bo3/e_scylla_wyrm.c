@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo3.h"
 
-extern EInit g_EInitScyllawyrm;
-extern s32 D_us_80180D48;
+extern EInit g_EInitWyrm;
 extern u16 D_us_80180C66;
 
 AnimateEntityFrame D_us_80180FCC[] = {
@@ -13,7 +12,7 @@ AnimateEntityFrame D_us_80180FD8[] = {
 AnimateEntityFrame D_us_80180FE0[] = {
     POSE(4, 0x4F, 0), POSE(8, 0x4E, 0), POSE(8, 0x49, 0), POSE_END};
 
-static void func_us_801A4FB8(void) {
+static void DrawWyrmBody(void) {
     Primitive* prim;
     Entity* entity;
     s32 posX;
@@ -63,7 +62,7 @@ static void func_us_801A4FB8(void) {
     prim->drawMode = DRAW_HIDE;
 }
 
-static void func_us_801A516C(void) {
+static void CalcWyrmBodyPosition(void) {
     Entity* entity;
     s32 posX;
     s32 posY;
@@ -91,7 +90,7 @@ static void func_us_801A516C(void) {
     }
 }
 
-void func_us_801A51E4(void) {
+void CalcWyrmBodyRotation(void) {
     Entity* entity;
     s32 i;
     s16 baseAngle;
@@ -124,13 +123,13 @@ void func_us_801A51E4(void) {
     }
 }
 
-void func_us_801A5338(Entity* self) {
+void EntityWyrm(Entity* self) {
     Entity* entity;
     Primitive* prim;
     s32 i;
     s32 primIndex;
 
-    if (self->params && (D_us_80180D48 & 2)) {
+    if (self->params && (g_BossMgrState & BOSS_MGR_DEFEAT)) {
         self->flags |= FLAG_DEAD;
     }
     if (self->flags & FLAG_DEAD && self->step == 2) {
@@ -139,7 +138,7 @@ void func_us_801A5338(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitScyllawyrm);
+        InitializeEntity(g_EInitWyrm);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 13);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -168,13 +167,13 @@ void func_us_801A5338(Entity* self) {
         self->parent = NULL;
         entity = self + 1;
         for (i = 0; i < 11; i++, entity++) {
-            CreateEntityFromEntity(E_ID(UNK_3B), self, entity);
+            CreateEntityFromEntity(E_ID(WYRM_BODY_PART), self, entity);
             entity->parent = self;
             entity->nextPart = entity + 1;
             entity->params = i & 3;
         }
         entity = self + 12;
-        CreateEntityFromEntity(E_ID(UNK_3C), self, entity);
+        CreateEntityFromEntity(E_ID(WYRM_HEAD), self, entity);
         entity->parent = self;
         entity->nextPart = self;
         entity->params = self->params;
@@ -201,16 +200,16 @@ void func_us_801A5338(Entity* self) {
         break;
 
     case 2:
-        func_us_801A516C();
-        func_us_801A51E4();
-        func_us_801A4FB8();
+        CalcWyrmBodyPosition();
+        CalcWyrmBodyRotation();
+        DrawWyrmBody();
         self->ext.scyllaWyrm.angle += 0x40;
         break;
 
     case 3:
-        func_us_801A516C();
-        func_us_801A51E4();
-        func_us_801A4FB8();
+        CalcWyrmBodyPosition();
+        CalcWyrmBodyRotation();
+        DrawWyrmBody();
         self->ext.scyllaWyrm.angle += 0x80;
         switch (self->step_s) {
         case 0:
@@ -254,12 +253,12 @@ void func_us_801A5338(Entity* self) {
     }
 }
 
-void func_us_801A57A4(Entity* self) {
+void EntityWyrmBodyPart(Entity* self) {
     Entity* newEntity;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitScyllawyrm);
+        InitializeEntity(g_EInitWyrm);
         self->animSet = 2;
         self->animCurFrame = 0;
         self->unk5A = 0;
@@ -309,13 +308,13 @@ void func_us_801A57A4(Entity* self) {
     }
 }
 
-void func_us_801A5948(Entity* self) {
+void EntityWyrmHead(Entity* self) {
     Entity* entity;
     s16 angle;
     s32 dx;
     s32 dy;
 
-    if (self->params && (D_us_80180D48 & 2)) {
+    if (self->params && (g_BossMgrState & BOSS_MGR_DEFEAT)) {
         self->flags |= FLAG_DEAD;
     }
     if (self->flags & FLAG_DEAD) {
@@ -326,7 +325,7 @@ void func_us_801A5948(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitScyllawyrm);
+        InitializeEntity(g_EInitWyrm);
         self->animCurFrame = 0x49;
         self->drawFlags = ENTITY_ROTATE;
         if (!self->params) {
