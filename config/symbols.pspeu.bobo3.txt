@@ -63,7 +63,6 @@ g_EInitScyllawyrm = 0x09252800;
 rooms = 0x09252810;
 g_SplashYMovement = 0x09265D58;
 g_splashAspects = 0x09265E00;
-BackgroundBlockInit = 0x09265E28;
 water_surface_lines = 0x09266258;
 water_tile_rects = 0x09266358;
 D_psp_E_LIFE_UP_SPAWN = 0x092666A0;

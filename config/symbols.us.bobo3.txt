@@ -10,7 +10,6 @@ g_EInitInteractable = 0x80180564;
 g_EInitCommon = 0x80180588;
 g_EInitScylla = 0x801805A0;
 g_EInitScyllawyrm = 0x80180600;
-BackgroundBlockInit = 0x8018061C;
 water_surface_lines = 0x80180830; // size:0xFC
 water_tile_rects = 0x8018092C; // size:0xF0
 g_SplashYMovement = 0x80180C80; // size:0x20

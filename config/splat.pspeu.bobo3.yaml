@@ -86,6 +86,7 @@ segments:
       - [0x2E630, .data, header]
       - [0x2E660, .data, d_prize_drops]
       - [0x2E6B0, data, 2E6B0]
+      - [0x2E790, .data, background_block_init]
       - [0x2E7D0, .data, e_lock_camera]
       - [0x2E848, data, 2E848]
       - [0x2EBB0, .data, cavern_bg_effects]
