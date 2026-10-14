@@ -242,7 +242,56 @@ INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla", func_us_801A2AEC);
 
 INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla", func_us_801A365C);
 
-INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla", func_us_801A3CD8);
+extern EInit D_us_801805B8;
+
+void func_us_801A3CD8(Entity* self) {
+    ScyllaPartInit* part;
+
+    if (D_us_80180D48 & 0x10) {
+        DestroyEntity(self);
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_801805B8);
+        part = &D_us_80180F4C[self->params];
+        self->zPriority = part->values[0];
+        self->posX.i.hi = part->values[1] - g_Tilemap.scrollX.i.hi;
+        self->posY.i.hi = part->values[2] - g_Tilemap.scrollY.i.hi;
+        /* fall through */
+    case 1:
+        part = &D_us_80180F4C[self->params];
+        AnimateEntity(part->anim, self);
+        if (D_us_80180D48 & 2) {
+            self->step++;
+        }
+        break;
+
+    case 2:
+        switch (self->step_s) {
+        case 0:
+            if (D_us_80180D48 & 0x40) {
+                self->step_s++;
+            }
+            break;
+
+        case 1:
+            self->drawFlags |= ENTITY_SCALEX | ENTITY_SCALEY;
+            self->scaleX = self->scaleY = 0x100;
+            self->step_s++;
+            /* fall through */
+        case 2:
+            if (self->scaleX > 0x80) {
+                self->scaleX = --self->scaleY;
+            }
+            break;
+        }
+        part = &D_us_80180F4C[self->params];
+        AnimateEntity(part->anim, self);
+        break;
+    }
+}
 
 INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla", func_us_801A3EE0);
 
