@@ -1817,6 +1817,8 @@ files:
         assets:
           - [0x8C, paldef, palette_def]
           - [0xBC, skip]
+          - [0x16C, gfx_banks, us/graphics_banks]
+          - [0x280, skip]
           - [0x201C, cmpgfx, D_us_8018201C, 128, 128, 4]
           - [0x23D0, cmpgfx, D_us_801823D0, 128, 128, 4]
           - [0x29E4, cmpgfx, D_us_801829E4, 128, 128, 4]
