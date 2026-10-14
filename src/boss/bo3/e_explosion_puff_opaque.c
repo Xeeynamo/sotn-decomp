@@ -2,3 +2,5 @@
 #include "bo3.h"
 
 INCLUDE_ASM("boss/bo3/nonmatchings/e_explosion_puff_opaque", CreateExplosionPuff);
+
+INCLUDE_ASM("boss/bo3/nonmatchings/e_explosion_puff_opaque", func_us_801A5F0C);
