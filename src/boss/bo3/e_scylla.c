@@ -292,7 +292,108 @@ void func_us_801A3CD8(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla", func_us_801A3EE0);
+extern EInit D_us_801805C4;
+
+void func_us_801A3EE0(Entity* self) {
+    Entity* entity;
+    Primitive* prim;
+    s32 primIndex;
+    s16 angle;
+    s32 dx;
+    s32 dy;
+    long p, flag;
+    VECTOR trans;
+    MATRIX m;
+    SVECTOR rot = {0};
+
+    if (D_us_80180D48 & 2) {
+        DestroyEntity(self);
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_801805C4);
+        self->ext.scyllaTail.timer = 0x20;
+        self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
+        self->scaleX = self->scaleY = 0;
+        /* fall through */
+    case 1:
+        if (self->ext.scyllaTail.timer) {
+            self->ext.scyllaTail.timer--;
+            break;
+        }
+        AnimateEntity(D_us_80180ED8, self);
+        if (self->scaleX < 0x100) {
+            self->scaleX = self->scaleY += 8;
+        }
+        entity = self->ext.scyllaTail.target;
+        if (entity->ext.scyllaWyrm.unk85) {
+            SetStep(2);
+        }
+        break;
+
+    case 2:
+        self->animCurFrame = 0;
+        self->zPriority = 0x8C;
+        entity = &PLAYER;
+        dx = entity->posX.i.hi - self->posX.i.hi;
+        dy = entity->posY.i.hi - self->posY.i.hi;
+        angle = ratan2(dy, dx);
+        self->velocityX = rcos(angle) * 9 << 3;
+        self->velocityY = rsin(angle) * 9 << 3;
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.scyllaTail.prim = prim;
+        UnkPolyFunc2(prim);
+        prim->tpage = 0x12;
+        prim->clut = 0x203;
+        prim->u0 = prim->u2 = 0x60;
+        prim->u1 = prim->u3 = 0x7F;
+        prim->v0 = prim->v1 = 0xE0;
+        prim->v2 = prim->v3 = 0xFF;
+        prim->priority = self->zPriority;
+        prim->drawMode = DRAW_UNK02;
+        self->step++;
+        /* fall through */
+    case 3:
+        MoveEntity();
+        self->rotate += ROT(56.25);
+        prim = self->ext.scyllaTail.prim;
+        SetGeomScreen(0x400);
+        SetGeomOffset(self->posX.i.hi, self->posY.i.hi);
+        RotMatrix(&rot, &m);
+        RotMatrixZ(self->rotate, &m);
+        RotMatrixX(ROT(61.875), &m);
+        SetRotMatrix(&m);
+        trans.vx = 0;
+        trans.vy = 0;
+        trans.vz = 0x400;
+        TransMatrix(&m, &trans);
+        SetTransMatrix(&m);
+        RotAverage4(
+            (SVECTOR*)D_us_80180FA0, (SVECTOR*)D_us_80180FA8,
+            (SVECTOR*)D_us_80180FB0, (SVECTOR*)D_us_80180FB8, (long*)&prim->x0,
+            (long*)&prim->x1, (long*)&prim->x2, (long*)&prim->x3, &p, &flag);
+        if (!((g_Timer + 2) & 7)) {
+            PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
+        }
+        if (self->velocityX > 0) {
+            if (self->posX.i.hi > 0x100) {
+                DestroyEntity(self);
+            }
+        } else if (self->posX.i.hi < 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 extern EInit g_EInitInteractable;
 
@@ -410,10 +511,6 @@ void func_us_801A42A8(Entity* self) {
         break;
     }
 }
-
-#ifndef VERSION_PSP
-const u32 D_us_8019CA94[3] = {0, 0, 0};
-#endif
 
 extern EInit D_us_801805D0;
 

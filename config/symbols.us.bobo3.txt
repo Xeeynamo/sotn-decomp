@@ -18,4 +18,3 @@ SetSubStep = 0x801AA77C;
 InitializeEntity = 0x801AA82C;
 GetPlayerCollisionWith = 0x801AABD0;
 PlaySfxPositional = 0x801AFBE0;
-UnkPolyFunc2 = 0x801B1ED8;
