@@ -148,7 +148,11 @@ void EntitySplashWater(Entity* self) {
 
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
+#ifdef STAGE_IS_BO3
+            CreateEntityFromCurrentEntity(E_ID(WATER_DROP), newEntity);
+#else
             CreateEntityFromCurrentEntity(E_WATER_DROP, newEntity);
+#endif
             newEntity->velocityY = self->velocityY;
         }
         break;
