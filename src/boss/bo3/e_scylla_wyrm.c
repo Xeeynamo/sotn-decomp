@@ -280,4 +280,150 @@ void func_us_801A57A4(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla_wyrm", func_us_801A5948);
+void func_us_801A5948(Entity* self) {
+    Entity* entity;
+    s16 angle;
+    s32 dx;
+    s32 dy;
+
+    if (self->params && (D_us_80180D48 & 2)) {
+        self->flags |= FLAG_DEAD;
+    }
+    if (self->flags & FLAG_DEAD) {
+        if (self->step < 6) {
+            SetStep(6);
+        }
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitScyllawyrm);
+        self->animCurFrame = 0x49;
+        self->drawFlags = ENTITY_ROTATE;
+        if (!self->params) {
+            self->facingLeft = 1;
+        }
+        /* fall through */
+    case 1:
+        entity = self - 12;
+        if (entity->ext.scyllaWyrm.unk86) {
+            break;
+        }
+        self->step = 2;
+        /* fall through */
+    case 2:
+        if (!AnimateEntity(D_us_80180FCC, self)) {
+            entity = &PLAYER;
+            dx = entity->posX.val - self->posX.val;
+            dy = entity->posY.val - self->posY.val;
+            angle = ratan2(dy, dx);
+            self->velocityX = rcos(angle) << 5;
+            self->velocityY = rsin(angle) << 5;
+            self->ext.scyllaWyrm.timer = 0x40;
+            self->animCurFrame = 0x49;
+            SetStep(3);
+        }
+        break;
+
+    case 3:
+        if (!self->step_s) {
+            if (!self->params) {
+                g_api.PlaySfx(SFX_SCYLLA_WYRM_WALL_DEBRIS);
+            }
+            self->step_s++;
+        }
+        MoveEntity();
+        if (GetDistanceToPlayerX() < 0x38) {
+            AnimateEntity(D_us_80180FD8, self);
+            if (!self->poseTimer && self->pose == 2) {
+                PlaySfxPositional(SFX_SCYLLA_WYRM_ATTACK);
+            }
+        }
+        if (!--self->ext.scyllaWyrm.timer) {
+            SetStep(4);
+        }
+        if (!self->params && !(g_Timer & 7)) {
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (entity != NULL) {
+                CreateEntityFromCurrentEntity(
+                    E_ID(BREAKABLE_WALL_DEBRIS), entity);
+                entity->posX.i.hi = 0xE0;
+                entity->posY.i.hi = 0x24;
+                angle = ((Random() & 0x3F) << 4) + 0x400;
+                entity->velocityX = rcos(angle) << 4;
+                entity->velocityY = rsin(angle) << 4;
+            }
+        }
+        break;
+
+    case 4:
+        if (!AnimateEntity(D_us_80180FE0, self)) {
+            SetStep(5);
+        }
+        break;
+
+    case 5:
+        entity = self - 12;
+        dx = entity->posX.val - self->posX.val;
+        dy = entity->posY.val - self->posY.val;
+        angle = ratan2(dy, dx);
+        angle += (rsin(self->ext.scyllaWyrm.angle) << 9) >> 12;
+        self->velocityX = rcos(angle) << 5;
+        self->velocityY = rsin(angle) << 5;
+        MoveEntity();
+        self->ext.scyllaWyrm.angle += 0x80;
+        self->animCurFrame = 0x49;
+        if (self->velocityY > FIX(0.5)) {
+            self->animCurFrame = 0x4A;
+        }
+        if (self->velocityY < FIX(0.5)) {
+            self->animCurFrame = 0x4B;
+        }
+        dx >>= 16;
+        dy >>= 16;
+        if (abs(dx) < 0x40) {
+            SetStep(2);
+        }
+        break;
+
+    case 6:
+        switch (self->step_s) {
+        case 0:
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (entity != NULL) {
+                CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                entity->params = 3;
+                entity->zPriority = self->zPriority + 1;
+            }
+            self->animCurFrame = 0;
+            self->hitboxState = 0;
+            entity = self - 12;
+            dx = entity->posX.val - self->posX.val;
+            dy = entity->posY.val - self->posY.val;
+            angle = ratan2(dy, dx);
+            self->velocityX = rcos(angle) * 12;
+            self->velocityY = rsin(angle) * 12;
+            self->step_s++;
+            /* fall through */
+        case 1:
+            MoveEntity();
+            entity = self - 12;
+            dx = entity->posX.val - self->posX.val;
+            if (abs(dx) < 0x40) {
+                self->velocityX = 0;
+                self->velocityY = 0;
+            }
+            break;
+        }
+        break;
+    }
+
+    entity = self - 1;
+    dx = self->posX.val - entity->posX.val;
+    dy = self->posY.val - entity->posY.val;
+    angle = ratan2(dy, dx);
+    self->rotate = angle;
+    if (!self->params) {
+        self->rotate = 0x800 - angle;
+    }
+}

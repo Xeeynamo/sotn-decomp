@@ -2,7 +2,6 @@ g_EInitSpawner = 0x80180558;
 g_EInitInteractable = 0x80180564;
 g_EInitCommon = 0x80180588;
 g_EInitScylla = 0x801805A0;
-g_EInitScyllawyrm = 0x80180600;
 g_SplashYMovement = 0x80180C80; // size:0x20
 func_us_801B5004 = 0x801A1B7C;
 Random = 0x801A6704;
