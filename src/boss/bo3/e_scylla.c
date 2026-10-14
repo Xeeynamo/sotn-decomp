@@ -258,4 +258,41 @@ INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla", func_us_801A4988);
 
 INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla", func_us_801A4C0C);
 
-INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla", func_us_801A4E24);
+extern EInit D_us_801805F4;
+
+void func_us_801A4E24(Entity* self) {
+    s32 speed;
+    s16 angle;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_801805F4);
+        self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
+        if (!self->params) {
+            self->scaleX = self->scaleY = (Random() & 0x7F) + 0x40;
+        } else {
+            self->scaleX = self->scaleY = (Random() & 0x3F) + 0x20;
+        }
+        self->blendMode = BLEND_TRANSP;
+        self->facingLeft = Random() & 1;
+        speed = (Random() & 0x1F) + 0x10;
+        angle = Random() * 6 + 0x900;
+        self->velocityX = (speed * rcos(angle)) >> 1;
+        self->velocityY = speed * rsin(angle);
+        if (self->params) {
+            self->velocityX >>= 1;
+            self->velocityY >>= 1;
+        }
+        self->posX.val += self->velocityX << 2;
+        self->posY.val += self->velocityY << 2;
+        self->ext.scyllaParticle.unk80 = (Random() & 0x1F) + 0x10;
+        /* fall through */
+    case 1:
+        AnimateEntity(D_us_80180F24, self);
+        MoveEntity();
+        if (self->velocityY < FIX(3)) {
+            self->velocityY += FIX(5.0 / 64);
+        }
+        break;
+    }
+}
