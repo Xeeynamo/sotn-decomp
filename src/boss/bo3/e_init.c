@@ -61,7 +61,7 @@ void func_us_801A4E24(Entity* self);
 void func_us_801A5338(Entity* self);
 void func_us_801A57A4(Entity* self);
 void func_us_801A5948(Entity* self);
-void func_us_801A5F0C(Entity* self);
+void EntityExplosionPuffOpaque(Entity* self);
 void func_us_801A1BE8(Entity* self);
 void EntityBreakableWallDebris(Entity* self);
 void EntityLifeUpSpawn(Entity* self);
@@ -130,7 +130,7 @@ PfnEntityUpdate EntityUpdates[] = {
     func_us_801A5338,
     func_us_801A57A4,
     func_us_801A5948,
-    func_us_801A5F0C,
+    EntityExplosionPuffOpaque,
     func_us_801A1BE8,
     EntityBreakableWallDebris,
     EntityLifeUpSpawn,

@@ -21,7 +21,7 @@ INCLUDE_ASM("boss/bo3_psp/nonmatchings/bo3_psp/unk_12290", func_us_801A4C0C);
 
 INCLUDE_ASM("boss/bo3_psp/nonmatchings/bo3_psp/unk_12290", func_us_801A4E24);
 
-INCLUDE_ASM("boss/bo3_psp/nonmatchings/bo3_psp/unk_12290", func_us_801A5F0C);
+INCLUDE_ASM("boss/bo3_psp/nonmatchings/bo3_psp/unk_12290", EntityExplosionPuffOpaque);
 
 INCLUDE_ASM("boss/bo3_psp/nonmatchings/bo3_psp/unk_12290", func_pspeu_0924CFF8);
 
