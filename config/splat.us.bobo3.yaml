@@ -40,7 +40,7 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, header]
-      - [0x2C, data]
+      - [0x2C, .data, sprite_banks]
       - [0x8C, .data, palette_def]
       - [0xBC, .data, layers]
       - [0x16C, .data, graphics_banks]
@@ -74,7 +74,7 @@ segments:
       - [0x201C, .data, stage_data]
       - [0xE810, .data, pal_unk]
       - [0xED10, .data, tilemaps]
-      - [0x1A140, data]
+      - [0x1A140, .data, gen/us/sprites]
       - [0x1C9C4, .rodata, e_breakable]
       - [0x1C9E4, .rodata, water_effects]
       - [0x1CA28, .rodata, e_scylla]
