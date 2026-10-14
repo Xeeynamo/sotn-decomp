@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../rlib/rlib.h"
+#include "rlib.h"
 
 extern EInit g_EInitBreakable;
 extern AnimationFrame* g_RlibBreakableAnimations[];
@@ -121,6 +121,34 @@ void func_us_801AE7AC_from_lib(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rlib_psp/nonmatchings/rlib_psp/unk_12220", func_us_801AE84C_from_lib);
+#define BREAKABLE_ANIMSET ANIMSET_OVL(7)
+#define PAL_BREAKABLE 0x213
+extern EInit g_EInitParticle;
 
-INCLUDE_ASM("st/rlib_psp/nonmatchings/rlib_psp/unk_12220", func_us_801AE8E8_from_lib);
+enum BreakableDebrisSteps {
+    INIT,
+    UPDATE,
+    DEBRIS_NOP = 256,
+};
+
+void EntityBreakableDebris(Entity* self) {
+    u32 pad[10];
+
+    switch (self->step) {
+    case INIT:
+        if (self->params & 256) {
+            InitializeEntity(g_EInitInteractable);
+            self->animSet = BREAKABLE_ANIMSET;
+            self->unk5A = 91;
+            self->palette = PAL_BREAKABLE;
+            self->animCurFrame = 21;
+            self->zPriority = 106;
+            self->step = DEBRIS_NOP; // No case defined, resulting in nop
+        } else {
+            InitializeEntity(g_EInitParticle);
+        }
+        break;
+    case UPDATE:
+        break;
+    }
+}
