@@ -79,6 +79,8 @@ segments:
       - [0x17DB0, .data, collision]
       - [0x18188, .data, e_room_fg]
       - [0x18228, data, '18228']
+      - [0x1AE10, .data, palette_def]
+      - [0x1AE48, data]
       - [0x1AF60, .data, e_init]
       - [0x1B190, data]
       - [0x1B1C0, .data, e_breakable]
