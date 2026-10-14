@@ -1336,6 +1336,15 @@ files:
     asset_path: assets/boss/bo3
     src_path: src/boss/bo3
     splat_config_path: config/splat.pspeu.bobo3.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          - [0x27120, palette, D_us_8018E810, 16] # 0x2C0
+          - [0x273E0, palette, D_us_8018EAD0, 16]
+          - [0x27520, palette, D_us_8018EC10, 16]
+          - [0x27620, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo4.bin
     asset_path: assets/boss/bo4
     src_path: src/boss/bo4
