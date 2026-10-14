@@ -13,7 +13,10 @@ INCLUDE_ASM("boss/bo3/nonmatchings/water_effects", func_us_801A1120);
 
 INCLUDE_ASM("boss/bo3/nonmatchings/water_effects", func_us_801A16E4);
 
-INCLUDE_ASM("boss/bo3/nonmatchings/water_effects", func_us_801C5518_from_no4);
+extern EInit g_EInitInteractable;
+extern s16 water_slow_zones[];
+
+#include "../../st/water_slow_zone.h"
 
 INCLUDE_ASM("boss/bo3/nonmatchings/water_effects", func_us_801B5004_from_rbo5);
 

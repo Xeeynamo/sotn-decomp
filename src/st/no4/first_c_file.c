@@ -2393,40 +2393,12 @@ void func_us_801C542C(Entity* self) {
     self->rotate += D_us_801815FC[params];
 }
 
-static s16 D_us_8018162C[] = {
+static s16 water_slow_zones[] = {
     0x260, 0x020, 0x0D0, 0x080, 0x470, 0x020,
     0x0D0, 0x080, 0x0C0, 0x02C, 0x0E0, 0x500,
 };
 
-void func_us_801C5518(Entity* self) {
-    Entity* player;
-    u16 diff;
-    s16* dataPtr;
-
-    player = &PLAYER;
-
-    if (!self->step) {
-        InitializeEntity(g_EInitInteractable);
-        self->animSet = 0;
-    }
-
-    dataPtr = &D_us_8018162C[self->params * 4];
-
-    diff = player->posX.i.hi + g_Tilemap.scrollX.i.hi - *dataPtr++;
-    if (diff > *dataPtr++) {
-        return;
-    }
-    diff = player->posY.i.hi + g_Tilemap.scrollY.i.hi - *dataPtr++;
-    if (diff > *dataPtr++) {
-        return;
-    }
-    if (player->velocityY < 0) {
-        player->velocityY *= 7;
-        player->velocityY /= 8;
-    } else if (player->velocityY > 0) {
-        player->nFramesInvincibility = 1;
-    }
-}
+#include "../water_slow_zone.h"
 
 #ifdef VERSION_PSP
 static char* D_us_80181644;
