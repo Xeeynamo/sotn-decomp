@@ -3294,6 +3294,10 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
+} ET_ScyllaWyrm;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 : 16;
     /* 0x84 */ u8 attackIntervalIdx;
@@ -4880,6 +4884,7 @@ typedef union { // offset=0x7C
     ET_SurfacingWater et_surfacingWater;
     ET_WaterAlcove et_waterAlcove;
     ET_801C12B0 et_801C12B0;
+    ET_ScyllaWyrm scyllaWyrm;
     ET_BonePillar bonePillar;
     ET_801C4520 et_801C4520;
     ET_801C4980 et_801C4980;
