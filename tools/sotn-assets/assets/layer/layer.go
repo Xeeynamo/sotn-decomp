@@ -135,7 +135,7 @@ func readLayers(r io.ReadSeeker, off, baseAddr psx.Addr) ([]roomLayers, datarang
 	return roomsLayers, datarange.New(slices.Min(layerOffsets), off.Sum(count*8)), nil
 }
 
-func buildLayers(inputDir, fileName, outputDir, ovlName string) (string, error) {
+func buildLayers(inputDir, fileName, outputDir, ovlName, tiledefDir string) (string, error) {
 	getHash := func(l layerUnpacked) string {
 		return fmt.Sprintf("%s-%s-%d-%d-%d-%d", l.Data, l.Tiledef, l.Left, l.Top, l.Right, l.Bottom)
 	}
@@ -189,7 +189,7 @@ func buildLayers(inputDir, fileName, outputDir, ovlName string) (string, error) 
 		fullPath := filepath.Join(filepath.Dir(fileName), name)
 		symbol := makeSymbolFromFileName(name)
 		eg.Go(func() error {
-			return tiledef.Build(fullPath, symbol, outputDir)
+			return tiledef.BuildInDir(fullPath, symbol, outputDir, tiledefDir)
 		})
 	}
 	if err := eg.Wait(); err != nil {
