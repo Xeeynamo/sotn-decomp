@@ -112,7 +112,7 @@ segments:
       - [0x31FBC, c, e_life_up]
       - [0x32870, .bss, water_effects]
       - [0x32878, .bss, create_entity]
-      - [0x32888, bss]
+      - [0x32888, .bss, bss]
       - [0x334F0, .bss, st_update]
       - [0x33530, bss]
   - [0x33530]
