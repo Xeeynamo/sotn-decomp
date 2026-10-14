@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo3.h"
 
+extern EInit g_EInitScyllawyrm;
+
 AnimateEntityFrame D_us_80180FCC[] = {
     POSE(4, 0x49, 0), POSE(8, 0x4C, 0), POSE(8, 0x49, 0),
     POSE(8, 0x4D, 0), POSE(4, 0x49, 0), POSE_END};
@@ -93,6 +95,59 @@ INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla_wyrm", func_us_801A51E4);
 
 INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla_wyrm", func_us_801A5338);
 
-INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla_wyrm", func_us_801A57A4);
+void func_us_801A57A4(Entity* self) {
+    Entity* newEntity;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitScyllawyrm);
+        self->animSet = 2;
+        self->animCurFrame = 0;
+        self->unk5A = 0;
+        self->palette = 0;
+        /* fall through */
+    case 1:
+        if ((g_Timer & 3) == self->params) {
+            self->hitboxState = 3;
+        } else {
+            self->hitboxState = 0;
+        }
+        if (self->ext.scyllaWyrm.unk85) {
+            SetStep(2);
+        }
+        break;
+
+    case 2:
+        switch (self->step_s) {
+        case 0:
+            self->hitboxState = 0;
+            self->ext.scyllaWyrm.timer = 0x10;
+            self->step_s++;
+            /* fall through */
+        case 1:
+            if (!(g_Timer & 0xF)) {
+                PlaySfxPositional(SFX_FIREBALL_SHOT_C);
+            }
+            if (!(self->ext.scyllaWyrm.timer & 3)) {
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (newEntity != NULL) {
+                    CreateEntityFromEntity(
+                        E_ID(EXPLODE_PUFF_OPAQUE), self, newEntity);
+                    newEntity->rotate = self->rotate - 0x400;
+                    newEntity->params = 0;
+                    newEntity->zPriority = 0x89;
+                }
+            }
+            if (!--self->ext.scyllaWyrm.timer) {
+                self->step_s++;
+            }
+            break;
+
+        case 2:
+            break;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla_wyrm", func_us_801A5948);
