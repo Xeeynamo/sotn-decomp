@@ -63,7 +63,7 @@ segments:
       - [0xE990, c, st_init_psp]
       - [0xEB90, c, e_breakable]
       - [0xEF98, c, water_effects]
-      - [0x11F50, c, ../bo3_psp/unk_11F50]
+      - [0x11F50, c, e_room_bg]
       - [0x12030, c, e_lock_camera]
       - [0x12290, c, ../bo3_psp/unk_12290]
       - [0x16D00, c, ../bo3_psp/e_breakable_wall]

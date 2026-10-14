@@ -25,7 +25,6 @@ func_us_801A1120 = 0x09247448;
 func_us_801A16E4 = 0x09247C90;
 func_us_801B5004 = 0x092481F0;
 func_us_801A1BE8 = 0x092482B8;
-EntityBackgroundBlock = 0x092495D0;
 func_us_801A2AEC = 0x092499D0;
 func_us_801A365C = 0x0924A970;
 func_us_801A3CD8 = 0x0924B238;
