@@ -213,7 +213,30 @@ char D_pspeu_09266160[] = "charal %x\n";
 char D_pspeu_09266170[] = "no WORK !!\n";
 #endif
 
-INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla", func_us_801A2A90);
+// static once func_us_801A42A8 is C
+s32 func_us_801A2A90(Primitive* prim, s32 amount) {
+    s32 isEnd;
+    s32 i, j;
+    u8* pColor;
+    s32 col;
+
+    pColor = &prim->r0;
+    isEnd = 0;
+    for (i = 0; i < 2; i++) {
+        for (j = 0; j < 3; j++, pColor++) {
+            col = *pColor;
+            col = col - amount;
+            if (col <= 0) {
+                col = 0;
+            } else {
+                isEnd = 1;
+            }
+            *pColor = col;
+        }
+        pColor += 9;
+    }
+    return isEnd;
+}
 
 INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla", func_us_801A2AEC);
 
