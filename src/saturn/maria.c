@@ -1683,7 +1683,7 @@ void func_060BE258(void) {
     colors0[2] = colors0[3] = 0xD294;
     colors1 = SpGourTbl->colors1;
     colors1[0] = colors1[1] = colors1[2] = colors1[3] = 0x9084;
-    DAT_0605c6e4 = 1;
+    DAT_0605C6E4 = 1;
 }
 void func_060BE308(s32* src) {
     s32* dst;

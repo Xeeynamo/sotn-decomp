@@ -71,7 +71,6 @@ _DecompressLZSS = 0x0600F96C;
 _UpdateCameraShake = 0x0600FA4C;
 _func_0600fb4c = 0x0600FB4C;
 _MarkRoomVisited = 0x0600FCF8;
-_RevealMapCellAtPlayer = 0x0600FC04;
 _MarkPlayerRoomVisited = 0x0600FE98;
 _func_800F2120 = 0x0600FEFC;
 _SetCanRevealMap = 0x0600FF08;
@@ -385,7 +384,6 @@ _g_pads = 0x0605C670; /* size = 0x10 */
 _DAT_0605c680 = 0x0605C680; /* size = 0x44 */
 _g_PlayableCharacter = 0x0605C6D0;
 _g_CurrentEntity = 0x0605C6E0;
-_DAT_0605c6e4 = 0x0605C6E4;
 _g_Status = 0x0605C6F0; /* size = 0x34C */
 _g_CastleFlags = 0x0605CA50;
 _g_GameTimer = 0x0605CD50;
@@ -417,13 +415,16 @@ _DAT_06064354 = 0x06064354;
 _snd_adr_sys_int_work = 0x060644F4;
 _func_06064580 = 0x06064580;
 _DAT_0606459c = 0x0606459C;
+_func_060645C4 = 0x060645C4;
 _DAT_060645D0 = 0x060645D0;
 _func_060645E0 = 0x060645E0;
 _DAT_060645EC = 0x060645EC;
 _func_06064614 = 0x06064614;
-_func_0606463c = 0x0606463C;
+_func_0606463C = 0x0606463C;
+_func_06064640 = 0x06064640;
 _func_06064644 = 0x06064644;
 _PfnEntityUpdates = 0x06064648;
+_func_0606465C = 0x0606465C;
 _func_06064674 = 0x06064674;
 _func_06064688 = 0x06064688;
 _func_0606468c = 0x0606468C;
@@ -526,7 +527,6 @@ _g_PrimBuf = 0x060867F8;
 _g_SpriteObjectPool = 0x0608AFF8;
 _g_SpritePartPool = 0x0608D7F8;
 _g_Entities = 0x060997F8; /* size = 0xB800 */
-_DAT_060a5000 = 0x060A5000;
 _g_BatServantDesc = 0x060CF000;
 _g_BatResourceDescriptorList = 0x060CF040;
 _g_StageOverlayData = 0x060DC000;
