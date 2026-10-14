@@ -72,7 +72,7 @@ segments:
       - [0x1CC10, .rodata, e_stage_name]
       - [0x1CC44, .rodata, prim_helpers]
       - [0x1CC4C, .rodata, e_life_up]
-      - [0x1CC68, c, unk_1CC68]
+      - [0x1CC68, c, e_room_bg]
       - [0x1CD30, c, e_lock_camera]
       - [0x1CEEC, c, unk_1CEEC]
       - [0x25E4C, c, e_explosion_puff_opaque]
