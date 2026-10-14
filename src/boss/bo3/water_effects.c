@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo3.h"
 
+extern EInit g_EInitInteractable;
+extern EInit g_EInitCommon;
 extern s16 water_surface_lines[];
 extern s16 water_tile_rects[];
 
@@ -31,7 +33,7 @@ u16 D_us_80180CD8[] = {
     0x0933, 0x0000, 0x0000, 0x0951, 0x0761, 0x0001, 0x0001, 0x0763};
 static s16 g_splashAspects[] = {0, 1, 2, 4, -1, -2, -4, 0};
 
-s32 D_us_801B2870;
+s16 D_us_801B2870[2];
 s32 D_us_801B2874;
 
 void func_us_801A071C(void) {
@@ -109,9 +111,96 @@ INCLUDE_ASM("boss/bo3/nonmatchings/water_effects", func_us_801A0A80);
 
 INCLUDE_ASM("boss/bo3/nonmatchings/water_effects", func_us_801A1120);
 
-INCLUDE_ASM("boss/bo3/nonmatchings/water_effects", func_us_801A16E4);
+void func_us_801A16E4(Entity* self) {
+    Tilemap* tilemap = &g_Tilemap;
+    Primitive* prim;
+    u16 params;
+    s16 aspect;
+    s32 primIndex;
+    s16 x, y;
+    s32 i;
 
-extern EInit g_EInitInteractable;
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitCommon);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        aspect = (self->posX.i.hi - 120) >> 4;
+        if (aspect < -8) {
+            aspect = -8;
+        }
+        if (aspect > 8) {
+            aspect = 8;
+        }
+        params = self->params;
+        if (!(params & 0x8000)) {
+            g_api.PlaySfxVolPan(SFX_WATER_SPLASH_MOVE, 0x7F, aspect);
+        }
+        params = (params >> 8) & 0x7F;
+        x = self->posX.i.hi;
+        y = self->posY.i.hi;
+        self->ext.waterEffects.unk82 = y + tilemap->scrollY.i.hi;
+        prim = &g_PrimBuf[primIndex];
+        for (i = 0; i < 2; i++) {
+            prim->u0 = prim->u2 = 0;
+            prim->u1 = prim->u3 = 0x1E;
+            prim->v0 = prim->v1 = 0x60;
+            prim->v2 = prim->v3 = 0x7C;
+            prim->y2 = prim->y3 = y;
+            prim->x2 = prim->x0 = x - 9;
+            prim->x3 = prim->x1 = x + 9;
+            PGREY(prim, 0) = PGREY(prim, 1) = 255;
+            PGREY(prim, 2) = PGREY(prim, 3) = 128;
+            prim->clut = PAL_CC_MAGIC_HUD_EFFECT;
+            prim->tpage = 0x1A;
+            prim->priority = self->zPriority + 2;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+            if (i != 0) {
+                prim->clut = PAL_CC_STONE_EFFECT;
+                prim->priority = self->zPriority + 4;
+                prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                                 DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+            }
+            prim = prim->next;
+        }
+        self->ext.waterEffects.topY.i.hi =
+            g_SurfacingYTbl[self->params & 0xFF] + 12 + (rand() & 1);
+        break;
+
+    case 1:
+        self->ext.waterEffects.topY.val -= FIX(0.25);
+        break;
+    }
+
+    self->posY.i.hi += D_us_801B2870[0];
+    x = self->posX.i.hi;
+    y = self->ext.waterEffects.unk82 - self->posY.i.hi - tilemap->scrollY.i.hi;
+    prim = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < 2; i++) {
+        prim->y2 -= y;
+        prim->y3 -= y;
+        prim->y0 = prim->y2 - self->ext.waterEffects.topY.i.hi;
+        prim->y1 = prim->y3 - self->ext.waterEffects.topY.i.hi;
+        prim->x2 = prim->x0 = x - 9;
+        prim->x3 = prim->x1 = x + 9;
+        prim->b1 -= 8;
+        PGREY(prim, 0) = PGREY(prim, 1);
+        prim->b3 -= 4;
+        PGREY(prim, 2) = PGREY(prim, 3);
+        if (prim->r0 < 9) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = prim->next;
+    }
+    self->ext.waterEffects.unk82 = self->posY.i.hi + tilemap->scrollY.i.hi;
+}
 
 #include "../../st/water_slow_zone.h"
 
