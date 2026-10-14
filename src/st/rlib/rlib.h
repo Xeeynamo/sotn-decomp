@@ -11,6 +11,7 @@ enum Palettes {
     PAL_LION = 0x200,
     PAL_TIN_MAN = 0x206,
     PAL_UNK_20F = 0x20F,
+    PAL_BREAKABLE = 0x213,
     PAL_SCHMOO = 0x21B,
     PAL_SCARECROW = 0x21E,
     // puff params 0,1
