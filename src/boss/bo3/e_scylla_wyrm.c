@@ -13,8 +13,7 @@ AnimateEntityFrame D_us_80180FD8[] = {
 AnimateEntityFrame D_us_80180FE0[] = {
     POSE(4, 0x4F, 0), POSE(8, 0x4E, 0), POSE(8, 0x49, 0), POSE_END};
 
-// static once func_us_801A5338 is C
-void func_us_801A4FB8(void) {
+static void func_us_801A4FB8(void) {
     Primitive* prim;
     Entity* entity;
     s32 posX;
@@ -64,8 +63,7 @@ void func_us_801A4FB8(void) {
     prim->drawMode = DRAW_HIDE;
 }
 
-// static once func_us_801A5338 is C
-void func_us_801A516C(void) {
+static void func_us_801A516C(void) {
     Entity* entity;
     s32 posX;
     s32 posY;
