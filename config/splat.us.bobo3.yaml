@@ -67,6 +67,8 @@ segments:
       - [0x1C14, data]
       - [0x1C40, .data, e_life_up]
       - [0x1C94, data]
+      - [0xE810, .data, pal_unk]
+      - [0xED10, data]
       - [0x1C9C4, .rodata, e_breakable]
       - [0x1C9E4, .rodata, water_effects]
       - [0x1CA28, .rodata, e_scylla]

@@ -1811,6 +1811,14 @@ files:
     asset_path: assets/boss/bo3
     src_path: src/boss/bo3
     splat_config_path: config/splat.us.bobo3.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0xE810, palette, D_us_8018E810, 16] # 0x2C0
+          - [0xEAD0, palette, D_us_8018EAD0, 16]
+          - [0xEC10, palette, D_us_8018EC10, 16]
+          - [0xED10, skip]
   - target: disks/us/BOSS/BO4/BO4.BIN
     asset_path: assets/boss/bo4
     src_path: src/boss/bo4
