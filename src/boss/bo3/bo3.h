@@ -11,6 +11,41 @@ enum Palettes {
     PAL_SCYLLA = 0x200,
 };
 
+#ifdef VERSION_PSP
+extern s32 E_ID(BACKGROUND_BLOCK);
+extern s32 E_ID(LOCK_CAMERA);
+extern s32 E_ID(UNK_ID13);
+extern s32 E_ID(EXPLOSION_VARIANTS);
+extern s32 E_ID(GREY_PUFF);
+extern s32 E_ID(SPLASH_WATER);
+extern s32 E_ID(WATER_DROP);
+extern s32 E_ID(UNK_1C);
+extern s32 E_ID(UNK_1D);
+extern s32 E_ID(UNK_2D);
+extern s32 E_ID(UNK_2E);
+extern s32 E_ID(UNK_2F);
+extern s32 E_ID(UNK_30);
+extern s32 E_ID(UNK_31);
+extern s32 E_ID(UNK_32);
+extern s32 E_ID(UNK_33);
+extern s32 E_ID(UNK_34);
+extern s32 E_ID(UNK_35);
+extern s32 E_ID(UNK_36);
+extern s32 E_ID(UNK_37);
+extern s32 E_ID(UNK_38);
+extern s32 E_ID(UNK_39);
+extern s32 E_ID(UNK_3A);
+extern s32 E_ID(UNK_3B);
+extern s32 E_ID(UNK_3C);
+extern s32 E_ID(EXPLODE_PUFF_OPAQUE);
+extern s32 E_ID(UNK_3E);
+extern s32 E_ID(BREAKABLE_WALL_DEBRIS);
+extern s32 E_ID(LIFE_UP_SPAWN);
+extern s32 E_ID(UNK_41);
+extern s32 E_ID(UNK_42);
+extern s32 E_ID(UNK_43);
+#endif
+
 typedef enum EntityID {
     E_NONE,
     E_BREAKABLE,             // EntityBreakable
