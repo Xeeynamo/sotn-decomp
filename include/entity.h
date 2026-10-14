@@ -3317,6 +3317,14 @@ typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 : 16;
+    /* 0x84 */ u8 pad[0x1C];
+    /* 0xA0 */ struct Primitive* curPrim;
+} ET_ScyllaBeam;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 : 16;
     /* 0x84 */ u8 attackIntervalIdx;
     /* 0x85 */ u8 bottomDead;
     /* 0x86 */ u8 isBouncing;
@@ -4904,6 +4912,7 @@ typedef union { // offset=0x7C
     ET_ScyllaWyrm scyllaWyrm;
     ET_ScyllaParticle scyllaParticle;
     ET_ScyllaFireball scyllaFireball;
+    ET_ScyllaBeam scyllaBeam;
     ET_BonePillar bonePillar;
     ET_801C4520 et_801C4520;
     ET_801C4980 et_801C4980;

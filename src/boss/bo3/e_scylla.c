@@ -294,7 +294,122 @@ void func_us_801A3CD8(Entity* self) {
 
 INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla", func_us_801A3EE0);
 
-INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla", func_us_801A42A8);
+extern EInit g_EInitInteractable;
+
+void func_us_801A42A8(Entity* self) {
+    Primitive* prim;
+    s32 dy;
+    s32 isDone;
+    s32 primIndex;
+    s32 dx;
+
+    if (D_us_80180D48 & 2) {
+        DestroyEntity(self);
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitInteractable);
+        primIndex = g_api.func_800EDB58(PRIM_LINE_G2_ALT, 0x12);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.scyllaBeam.prim = prim;
+        while (prim != NULL) {
+            prim->r0 = 0x20;
+            prim->g0 = 0x28;
+            prim->b0 = 0xC0;
+            prim->r1 = 0x10;
+            prim->g1 = 0x10;
+            prim->b1 = 0x60;
+            prim->priority = 0x98;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+        self->ext.scyllaBeam.timer = (Random() & 7) * self->params;
+        /* fall through */
+    case 1:
+        if (self->ext.scyllaBeam.timer) {
+            self->ext.scyllaBeam.timer--;
+            break;
+        }
+        dx = 0x5C - g_Tilemap.scrollX.i.hi;
+        dy = 0x54 - g_Tilemap.scrollY.i.hi;
+        dx = (dx - self->posX.i.hi) << 16;
+        dy = (dy - self->posY.i.hi) << 16;
+        dx /= 32;
+        self->velocityX = dx;
+        self->velocityY = FIX(-8.25);
+        prim = self->ext.scyllaBeam.prim;
+        self->ext.scyllaBeam.curPrim = prim;
+        prim->x0 = prim->x1 = self->posX.i.hi;
+        prim->y0 = prim->y1 = self->posY.i.hi;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+        self->ext.scyllaBeam.timer = 0x20;
+        self->step++;
+        /* fall through */
+    case 2:
+        switch (self->step_s) {
+        case 0:
+            MoveEntity();
+            self->velocityY += FIX(0.25);
+            if (self->velocityY > 0) {
+                self->step_s++;
+            }
+            break;
+
+        case 1:
+            dy = 0x54 - g_Tilemap.scrollY.i.hi;
+            dy = (dy - self->posY.i.hi) << 16;
+            self->velocityY = dy / self->ext.scyllaBeam.timer;
+            self->step_s++;
+            /* fall through */
+        case 2:
+            MoveEntity();
+            break;
+        }
+        prim = self->ext.scyllaBeam.curPrim;
+        prim->x0 = self->posX.i.hi;
+        prim->y0 = self->posY.i.hi;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+        self->ext.scyllaBeam.timer--;
+        if (!self->ext.scyllaBeam.timer) {
+            self->step++;
+        } else if (!(self->ext.scyllaBeam.timer & 3)) {
+            prim = prim->next;
+            self->ext.scyllaBeam.curPrim = prim;
+            prim->x0 = prim->x1 = self->posX.i.hi;
+            prim->y0 = prim->y1 = self->posY.i.hi;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+        }
+        /* fall through */
+    case 3:
+        isDone = true;
+        prim = self->ext.scyllaBeam.prim;
+        while (prim->next != NULL) {
+            if (prim->drawMode != DRAW_HIDE) {
+                if (!func_us_801A2A90(prim, 1)) {
+                    prim->drawMode = DRAW_HIDE;
+                } else {
+                    isDone = false;
+                }
+            }
+            prim = prim->next;
+        }
+        prim->x0 = prim->x1 = prim->y0 = prim->y1 = 0;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+        if (isDone) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 #ifndef VERSION_PSP
 const u32 D_us_8019CA94[3] = {0, 0, 0};
