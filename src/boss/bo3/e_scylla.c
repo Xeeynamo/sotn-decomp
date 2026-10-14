@@ -13,7 +13,9 @@ INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla", func_us_801A3EE0);
 
 INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla", func_us_801A42A8);
 
-INCLUDE_RODATA("boss/bo3/nonmatchings/e_scylla", D_us_8019CA94);
+#ifndef VERSION_PSP
+const u32 D_us_8019CA94[3] = {0, 0, 0};
+#endif
 
 INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla", func_us_801A4680);
 
