@@ -124,6 +124,3 @@ void func_us_801AE7AC_from_lib(Entity* self) {
 INCLUDE_ASM("st/rlib_psp/nonmatchings/rlib_psp/unk_12220", func_us_801AE84C_from_lib);
 
 INCLUDE_ASM("st/rlib_psp/nonmatchings/rlib_psp/unk_12220", func_us_801AE8E8_from_lib);
-
-#define BG_BLOCK_ROTATE_180
-#include "../e_room_bg.h"
