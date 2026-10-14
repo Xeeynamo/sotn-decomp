@@ -1,11 +1,1 @@
-g_EInitScylla = 0x801805A0;
-Random = 0x801A6704;
-CreateEntityFromEntity = 0x801A8DF0;
-DestroyEntity = 0x801A9B1C;
-AnimateEntity = 0x801A9C4C;
-GetDistanceToPlayerX = 0x801A9E1C;
-AllocEntity = 0x801AA38C;
-SetStep = 0x801AA75C;
-SetSubStep = 0x801AA77C;
-InitializeEntity = 0x801AA82C;
-PlaySfxPositional = 0x801AFBE0;
+

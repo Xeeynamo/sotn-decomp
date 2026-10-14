@@ -3333,7 +3333,8 @@ typedef struct {
 typedef struct {
     /* 0x7C */ s32 : 32;
     /* 0x80 */ s16 timer;
-    /* 0x82 */ u8 pad[4];
+    /* 0x82 */ u8 pad[3];
+    /* 0x85 */ u8 tailAttack;
     /* 0x86 */ u8 flip;
 } ET_ScyllaBody;
 

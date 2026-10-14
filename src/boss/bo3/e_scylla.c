@@ -8,48 +8,48 @@ typedef struct {
 
 s32 D_us_80180D48 = 0;
 
-AnimateEntityFrame D_us_80180D4C[] = {
+static AnimateEntityFrame D_us_80180D4C[] = {
     POSE(18, 1, 0), POSE(18, 2, 0), POSE(18, 3, 0),
     POSE(18, 2, 0), POSE_LOOP(0),
 };
 
-AnimateEntityFrame D_us_80180D58[] = {
+static AnimateEntityFrame D_us_80180D58[] = {
     POSE(4, 1, 0), POSE(7, 5, 0), POSE(7, 6, 0),  POSE(7, 7, 0),
     POSE(7, 8, 0), POSE(7, 9, 0), POSE(7, 10, 0), POSE_END,
 };
 
-AnimateEntityFrame D_us_80180D68[] = {
+static AnimateEntityFrame D_us_80180D68[] = {
     POSE(8, 7, 0), POSE(8, 8, 0), POSE(8, 9, 0), POSE(8, 10, 0), POSE_LOOP(0),
 };
 
-AnimateEntityFrame D_us_80180D74[] = {
+static AnimateEntityFrame D_us_80180D74[] = {
     POSE(4, 9, 0),  POSE(4, 10, 0), POSE(2, 7, 0),  POSE(2, 6, 0),
     POSE(1, 11, 0), POSE(1, 12, 0), POSE(1, 13, 0), POSE(48, 14, 0),
     POSE(6, 15, 0), POSE(6, 16, 0), POSE(2, 1, 0),  POSE_END,
 };
 
-AnimateEntityFrame D_us_80180D8C[] = {
+static AnimateEntityFrame D_us_80180D8C[] = {
     POSE(2, 1, 0),  POSE(10, 20, 0), POSE(10, 21, 0), POSE(8, 22, 0),
     POSE(8, 23, 0), POSE(8, 24, 0),  POSE(1, 25, 0),  POSE_END,
 };
 
-AnimateEntityFrame D_us_80180D9C[] = {
+static AnimateEntityFrame D_us_80180D9C[] = {
     POSE(8, 22, 0), POSE(8, 23, 0), POSE(8, 24, 0),
     POSE(8, 25, 0), POSE_LOOP(0),
 };
 
-AnimateEntityFrame D_us_80180DA8[] = {
+static AnimateEntityFrame D_us_80180DA8[] = {
     POSE(2, 22, 0),  POSE(8, 23, 0), POSE(10, 26, 0),
     POSE(10, 27, 0), POSE(8, 1, 0),  POSE_END,
 };
 
-AnimateEntityFrame D_us_80180DB4[] = {
+static AnimateEntityFrame D_us_80180DB4[] = {
     POSE(1, 1, 0),   POSE(3, 17, 0),  POSE(3, 18, 0),
     POSE(16, 19, 0), POSE(16, 19, 0), POSE(6, 18, 0),
     POSE(6, 17, 0),  POSE(1, 1, 0),   POSE_END,
 };
 
-AnimateEntityFrame D_us_80180DC8[] = {
+static AnimateEntityFrame D_us_80180DC8[] = {
     POSE(1, 1, 0), POSE(4, 17, 0), POSE(4, 18, 0), POSE(64, 19, 0), POSE_END,
 };
 
@@ -209,11 +209,10 @@ static AnimateEntityFrame anim_unused_1[] = {
 };
 
 #ifdef VERSION_PSP
-char D_pspeu_09266160[] = "charal %x\n";
+char charal_fmt[] = "charal %x\n";
 #endif
 
-// static once func_us_801A42A8 is C
-s32 func_us_801A2A90(Primitive* prim, s32 amount) {
+static s32 func_us_801A2A90(Primitive* prim, s32 amount) {
     s32 isEnd;
     s32 i, j;
     u8* pColor;
@@ -237,7 +236,337 @@ s32 func_us_801A2A90(Primitive* prim, s32 amount) {
     return isEnd;
 }
 
-INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla", func_us_801A2AEC);
+extern EInit g_EInitScylla;
+extern u16 D_us_80180C66;
+
+void func_us_801A2AEC(Entity* self) {
+    Entity* entity;
+    s32 i;
+    s32 rand;
+
+    if (D_us_80180D48 & 4) {
+        DestroyEntity(self);
+        return;
+    }
+
+    if ((self->flags & FLAG_DEAD) && self->step != 6) {
+        SetStep(6);
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitScylla);
+        self->zPriority = 0x88;
+        self->hitboxOffX = 6;
+        self->hitboxOffY = -0x30;
+        self->hitboxWidth = 4;
+        self->hitboxHeight = 0x1C;
+        self->nextPart = self + 1;
+        self->parent = NULL;
+        entity = self + 1;
+        CreateEntityFromEntity(E_ID(UNK_33), self, entity);
+        entity->zPriority = self->zPriority + 1;
+        entity->nextPart = self;
+        entity->parent = self;
+        SetStep(1);
+        /* fall through */
+    case 1:
+        AnimateEntity(D_us_80180D4C, self);
+#ifdef VERSION_PSP
+        if (GetDistanceToPlayerX() < 160) {
+#else
+        if (GetDistanceToPlayerX() < 176 || self->hitFlags) {
+#endif
+            g_api.TimeAttackController(
+                TIMEATTACK_EVENT_SCYLLA_DEFEAT, TIMEATTACK_SET_VISITED);
+            D_us_80180C66 |= 0x10;
+            D_us_80180C66 |= 0x20;
+            entity = self + 2;
+            CreateEntityFromEntity(E_ID(UNK_3A), self, entity);
+            entity->zPriority = self->zPriority;
+            entity->posX.i.hi = 0x48 - g_Tilemap.scrollX.i.hi;
+            entity->posY.i.hi = 0x90 - g_Tilemap.scrollY.i.hi;
+            entity->params = 1;
+            entity = self + 15;
+            CreateEntityFromEntity(E_ID(UNK_3A), self, entity);
+            entity->zPriority = self->zPriority - 2;
+            entity->posX.i.hi = 0x48 - g_Tilemap.scrollX.i.hi;
+            entity->posY.i.hi = 0x90 - g_Tilemap.scrollY.i.hi;
+            entity->params = 2;
+            entity = self + 28;
+            CreateEntityFromEntity(E_ID(UNK_3A), self, entity);
+            entity->zPriority = self->zPriority - 4;
+            entity->posX.i.hi = 0x48 - g_Tilemap.scrollX.i.hi;
+            entity->posY.i.hi = 0x90 - g_Tilemap.scrollY.i.hi;
+            entity->params = 3;
+            D_us_80180D48 |= 1;
+            SetStep(2);
+        }
+        break;
+
+    case 2:
+        if (!self->step_s) {
+            self->ext.scyllaBody.timer = 0x50;
+            self->step_s++;
+        }
+        AnimateEntity(D_us_80180D4C, self);
+        if (self->hitFlags & 3) {
+            SetStep(5);
+        }
+        if (!--self->ext.scyllaBody.timer) {
+            if (self->ext.scyllaBody.flip) {
+                SetStep(4);
+            } else {
+                SetStep(3);
+            }
+            self->ext.scyllaBody.flip ^= 1;
+        }
+        break;
+
+    case 5:
+        if (!self->step_s) {
+            PlaySfxPositional(SFX_SCYLLA_PAIN);
+            self->step_s++;
+        }
+        if (!AnimateEntity(D_us_80180DB4, self)) {
+            SetStep(2);
+            self->step_s = 1;
+        }
+        break;
+
+    case 3:
+        switch (self->step_s) {
+        case 0:
+            if (!AnimateEntity(D_us_80180D58, self)) {
+                SetSubStep(1);
+            }
+            break;
+
+        case 1:
+            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            if (entity != NULL) {
+                CreateEntityFromEntity(E_ID(UNK_34), self, entity);
+                entity->posX.i.hi += 0x14;
+                entity->posY.i.hi -= 0x34;
+                entity->zPriority = self->zPriority - 1;
+                entity->ext.scyllaTail.target = self;
+            }
+            for (i = 0; i < 6; i++) {
+                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (entity != NULL) {
+                    CreateEntityFromEntity(E_ID(UNK_35), self, entity);
+                    entity->posY.i.hi = 0xD8 - g_Tilemap.scrollY.i.hi;
+                    entity->posX.i.hi =
+                        self->posX.i.hi + 0x30 + (Random() & 0x7F);
+                    entity->params = i;
+                }
+            }
+            self->ext.scyllaBody.tailAttack = 0;
+            self->ext.scyllaBody.timer = 0x50;
+            PlaySfxPositional(SFX_SCYLLA_ATTACK_YELL);
+            self->step_s++;
+            /* fall through */
+        case 2:
+            AnimateEntity(D_us_80180D68, self);
+            if (!--self->ext.scyllaBody.timer) {
+                SetSubStep(3);
+            }
+            break;
+
+        case 3:
+            if (!AnimateEntity(D_us_80180D74, self)) {
+                SetStep(2);
+            }
+            if (!self->poseTimer && self->pose == 4) {
+                PlaySfxPositional(SFX_SCYLLA_ATTACK_DIE);
+                self->ext.scyllaBody.tailAttack = 1;
+            }
+            break;
+        }
+        break;
+
+    case 4:
+        switch (self->step_s) {
+        case 0:
+            if (!AnimateEntity(D_us_80180D8C, self)) {
+                SetSubStep(1);
+            }
+            break;
+
+        case 1:
+            self->ext.scyllaBody.timer = 0x40;
+            self->step_s++;
+            /* fall through */
+        case 2:
+            AnimateEntity(D_us_80180D9C, self);
+            if (!(self->ext.scyllaBody.timer & 7)) {
+                entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                if (entity != NULL) {
+                    CreateEntityFromEntity(E_ID(UNK_36), self, entity);
+                    entity->posY.i.hi = 0xBC - g_Tilemap.scrollY.i.hi;
+                    entity->posX.i.hi += (Random() & 0x7F) + 0x30;
+                }
+            }
+            if (!--self->ext.scyllaBody.timer) {
+                SetSubStep(3);
+            }
+            break;
+
+        case 3:
+            if (!AnimateEntity(D_us_80180DA8, self)) {
+                SetStep(2);
+            }
+            break;
+        }
+        break;
+
+    case 6:
+        switch (self->step_s) {
+        case 0:
+            g_api.TimeAttackController(
+                TIMEATTACK_EVENT_SCYLLA_DEFEAT, TIMEATTACK_SET_RECORD);
+            D_us_80180D48 |= 2;
+            g_CastleFlags[SCYLLA_DEFEATED] = 1;
+            PlaySfxPositional(SFX_SCYLLA_DEATH);
+            self->hitboxState = 0;
+            self->step_s++;
+            /* fall through */
+        case 1:
+            if (!AnimateEntity(D_us_80180DC8, self)) {
+                SetSubStep(2);
+            }
+            break;
+
+        case 2:
+            self->ext.scyllaBody.timer = 0x80;
+            g_api.PlaySfx(SFX_BOSS_LARGE_FLAMES);
+            D_us_80180D48 |= 0x40;
+            self->step_s++;
+            /* fall through */
+        case 3:
+            if (!(g_Timer & 0x1F)) {
+                g_api.PlaySfx(SFX_FIREBALL_SHOT_A);
+            }
+            for (i = 0; i < 4; i++) {
+                entity = AllocEntity(&g_Entities[64], &g_Entities[256]);
+                if (entity != NULL) {
+                    CreateEntityFromEntity(
+                        E_ID(EXPLODE_PUFF_OPAQUE), self, entity);
+                    entity->zPriority = 0x98;
+                    entity->params = 1;
+                    rand = Random();
+                    entity->posX.i.hi += rand - 0x40;
+                    entity->posY.i.hi = 0xD8;
+                    if (rand < 0x40) {
+                        entity->posY.i.hi = 0xB0;
+                    }
+                }
+            }
+            if (!--self->ext.scyllaBody.timer) {
+                D_us_80180D48 |= 0x10;
+                self->step_s++;
+            }
+            break;
+
+        case 4:
+            self->ext.scyllaBody.timer = 0x50;
+            D_us_80180D48 |= 0x20;
+            PlaySfxPositional(SFX_BOSS_LARGE_FLAMES);
+            self->step_s++;
+            /* fall through */
+        case 5:
+            if (!(g_Timer & 0x1F)) {
+                g_api.PlaySfx(SFX_FIREBALL_SHOT_B);
+            }
+            for (i = 0; i < 2; i++) {
+                entity = AllocEntity(&g_Entities[64], &g_Entities[256]);
+                if (entity != NULL) {
+                    CreateEntityFromEntity(
+                        E_ID(EXPLODE_PUFF_OPAQUE), self, entity);
+                    entity->zPriority = 0x98;
+                    entity->params = 2;
+                    entity->posX.i.hi += (Random() & 0x3F) - 0x20;
+                    entity->posY.i.hi = 0xC0;
+                }
+            }
+            if (!--self->ext.scyllaBody.timer) {
+                D_us_80180D48 |= 8;
+                self->step_s++;
+            }
+            break;
+
+        case 6:
+            self->ext.scyllaBody.timer = 0x60;
+            PlaySfxPositional(SFX_BOSS_LARGE_FLAMES);
+            self->step_s++;
+            /* fall through */
+        case 7:
+            if (!(g_Timer & 0x1F)) {
+                g_api.PlaySfx(SFX_FIREBALL_SHOT_C);
+            }
+            for (i = 0; i < 1; i++) {
+                entity = AllocEntity(&g_Entities[64], &g_Entities[256]);
+                if (entity != NULL) {
+                    CreateEntityFromEntity(
+                        E_ID(EXPLODE_PUFF_OPAQUE), self, entity);
+                    entity->zPriority = 0x98;
+                    entity->params = 3;
+                    entity->posX.i.hi += (Random() & 0x1F) - 0x10;
+                    entity->posY.i.hi = 0xB0;
+                }
+            }
+            if (!--self->ext.scyllaBody.timer) {
+                self->step_s++;
+            }
+            break;
+
+        case 8:
+            D_us_80180C66 &= ~0x10;
+            D_us_80180C66 &= ~0x20;
+            D_us_80180D48 |= 4;
+            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            if (entity != NULL) {
+                CreateEntityFromEntity(E_ID(LIFE_UP_SPAWN), self, entity);
+                entity->posX.i.hi = 0xC0 - g_Tilemap.scrollX.i.hi;
+                entity->posY.i.hi = 0x80 - g_Tilemap.scrollY.i.hi;
+                entity->params = 3;
+                DestroyEntity(self);
+            }
+            break;
+        }
+        break;
+
+    case 0xFF:
+#ifdef VERSION_PSP
+        FntPrint(charal_fmt, self->animCurFrame);
+#else
+        FntPrint("charal %x\n", self->animCurFrame);
+#endif
+        if (g_pads[1].pressed & PAD_SQUARE) {
+            if (self->params) {
+                break;
+            }
+            self->animCurFrame++;
+            self->params |= 1;
+        } else {
+            self->params = 0;
+        }
+        if (g_pads[1].pressed & PAD_CIRCLE) {
+            if (self->step_s) {
+                break;
+            }
+            self->animCurFrame--;
+            self->step_s |= 1;
+        } else {
+            self->step_s = 0;
+        }
+        self->posX.i.hi = 0x80;
+        self->posY.i.hi = 0x80;
+        break;
+    }
+}
+
+extern EInit D_us_801805AC;
 
 extern EInit D_us_801805AC;
 
@@ -533,7 +862,7 @@ void func_us_801A3EE0(Entity* self) {
             self->scaleX = self->scaleY += 8;
         }
         entity = self->ext.scyllaTail.target;
-        if (entity->ext.scyllaWyrm.unk85) {
+        if (entity->ext.scyllaBody.tailAttack) {
             SetStep(2);
         }
         break;
