@@ -3295,9 +3295,10 @@ typedef struct {
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 timer;
-    /* 0x82 */ s16 : 16;
-    /* 0x84 */ s8 : 8;
+    /* 0x82 */ s16 angle;
+    /* 0x84 */ u8 count;
     /* 0x85 */ u8 unk85;
+    /* 0x86 */ u8 unk86;
 } ET_ScyllaWyrm;
 
 typedef struct {
