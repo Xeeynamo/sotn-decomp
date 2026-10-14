@@ -110,7 +110,7 @@ void EntityAkmodanII(Entity* self) {
         self->hitboxState = 0;
         self->ext.akmodanII.baseZPriority = self->zPriority;
         entity = self + 1;
-        CreateEntityFromEntity(E_ID(HARPY_KICK), self, entity);
+        CreateEntityFromEntity(E_ID(AKMODAN_ATTACK_HITBOX), self, entity);
         /* fall through */
     case 1:
         entity = self + 2;
@@ -807,7 +807,7 @@ void func_us_801957C0(Entity* self) {
     }
 }
 
-void EntityHarpyKick(Entity* self) {
+void EntityAkmodanaAttackHitbox(Entity* self) {
     s32 animFrame;
     s8* hitbox;
     Entity* harpy;

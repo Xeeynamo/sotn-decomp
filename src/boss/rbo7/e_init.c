@@ -27,7 +27,7 @@ void EntityBossFightManager(Entity* self);
 void EntityLifeUpSpawn(Entity* self);
 void EntityAkmodanII(Entity* self);
 void func_us_801957C0(Entity* self);
-void EntityHarpyKick(Entity* self);
+void EntityAkmodanaAttackHitbox(Entity* self);
 void func_us_80195A8C(Entity* self);
 void func_us_80195D04(Entity* self);
 void EntityAkmodanDeathEffect(Entity* self);
@@ -59,7 +59,7 @@ PfnEntityUpdate EntityUpdates[] = {
     /* 0x18 */ EntityLifeUpSpawn,
     /* 0x19 */ EntityAkmodanII,
     /* 0x1A */ func_us_801957C0,
-    /* 0x1B */ EntityHarpyKick,
+    /* 0x1B */ EntityAkmodanaAttackHitbox,
     /* 0x1C */ func_us_80195A8C,
     /* 0x1D */ func_us_80195D04,
     /* 0x1E */ EntityAkmodanDeathEffect,
