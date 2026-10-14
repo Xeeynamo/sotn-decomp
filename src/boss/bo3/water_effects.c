@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo3.h"
 
-u16 D_us_80180C64 = 0;
+extern s16 water_surface_lines[];
+extern s16 water_tile_rects[];
+
+s16 D_us_80180C64 = 0;
 u16 D_us_80180C66 = 0;
 s16 D_us_80180C68[] = {0x0000, 0x04D0, 0x00D8, 0x00E8, 0x0068, 0x00B0,
                        0x00F0, 0x00F0, 0x0340, 0x0074, 0x00F0, 0x00F0};
@@ -31,7 +34,49 @@ static s16 g_splashAspects[] = {0, 1, 2, 4, -1, -2, -4, 0};
 s32 D_us_801B2870;
 s32 D_us_801B2874;
 
-INCLUDE_ASM("boss/bo3/nonmatchings/water_effects", func_us_801A071C);
+void func_us_801A071C(void) {
+    s16* data;
+    s16* tileRects;
+    s16* surfaceLines;
+    s16 value;
+
+    data = D_us_80180C68;
+    tileRects = water_tile_rects;
+    surfaceLines = water_surface_lines;
+    data += 2;
+    tileRects += 0x6E;
+    surfaceLines += 0x70;
+
+    value = 0xD8 - D_us_80180C64;
+    if (value < 0x18) {
+        value = 0;
+    }
+    *data = value;
+    *tileRects = value;
+    *surfaceLines = value;
+    data += 4;
+    tileRects += 4;
+    surfaceLines += 5;
+
+    if (D_us_80180C64 < 0xC0) {
+        value = 0xF0;
+    } else {
+        value = 0x1A8 - D_us_80180C64;
+    }
+    *data = value;
+    data += 4;
+    *data = value;
+    if (value > 0xE8) {
+        value = 0xE8;
+    }
+    *surfaceLines = value;
+    surfaceLines += 5;
+    *surfaceLines = value;
+    value++;
+    *tileRects = value;
+    tileRects += 4;
+    *tileRects = value;
+}
 
 INCLUDE_ASM("boss/bo3/nonmatchings/water_effects", func_us_801A07CC);
 
