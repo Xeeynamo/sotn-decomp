@@ -5,6 +5,7 @@ extern EInit g_EInitInteractable;
 extern EInit g_EInitCommon;
 extern s16 water_surface_lines[];
 extern s16 water_tile_rects[];
+extern EInit g_EInitSpawner;
 
 s16 D_us_80180C64 = 0;
 u16 D_us_80180C66 = 0;
@@ -12,7 +13,7 @@ s16 D_us_80180C68[] = {0x0000, 0x04D0, 0x00D8, 0x00E8, 0x0068, 0x00B0,
                        0x00F0, 0x00F0, 0x0340, 0x0074, 0x00F0, 0x00F0};
 
 #ifdef VERSION_PSP
-char D_pspeu_09265D48[] = "mizu %x\n";
+char mizu_fmt[] = "mizu %x\n";
 #endif
 
 s32 g_SplashYMovement[] = {FIX(-6.5), FIX(9.0 / 32), FIX(-5.5), FIX(17.0 / 64),
@@ -35,7 +36,7 @@ static s16 g_splashAspects[] = {0, 1, 2, 4, -1, -2, -4, 0};
 
 s16 D_us_801B2870;
 s16 D_us_801B2872;
-s32 D_us_801B2874;
+u16 D_us_801B2874;
 
 void func_us_801A071C(void) {
     s16* data;
@@ -108,7 +109,212 @@ u16 func_us_801A09DC(s16 index, s16 x, s16 y, s16* out) {
     return y + 0x8000 - value;
 }
 
-INCLUDE_ASM("boss/bo3/nonmatchings/water_effects", func_us_801A0A80);
+void func_us_801A0A80(Entity* self) {
+    s16 sp34[2];
+    s16 posX, posY;
+    u16 sp3C, sp3A;
+    Entity* tempEntity;
+    s16 var_s1;
+    s16 var_s3;
+    s16 i;
+    u16 sp28;
+    u32 var_s7;
+    s32 status;
+    Tilemap* tilemap = &g_Tilemap;
+    Entity* player = &PLAYER;
+
+    posX = player->posX.i.hi + tilemap->scrollX.i.hi;
+    status = g_Player.status;
+    if (status & (PLAYER_STATUS_CROUCH | PLAYER_STATUS_TRANSFORM)) {
+        if (status & PLAYER_STATUS_CROUCH) {
+            sp3C = 0x14;
+            sp3A = 0x19;
+            if (status & PLAYER_STATUS_WOLF_FORM) {
+                sp3C = 0xA;
+            }
+        } else if (
+            status & (PLAYER_STATUS_MIST_FORM | PLAYER_STATUS_BAT_FORM)) {
+            sp3C = 0xC;
+            sp3A = 5;
+        } else if (status & PLAYER_STATUS_WOLF_FORM) {
+            sp3C = 0x14;
+            sp3A = 0x19;
+        }
+    } else {
+        sp3C = 0x28;
+        sp3A = 0x19;
+    }
+    posY = sp3A + (player->posY.i.hi + tilemap->scrollY.i.hi);
+    var_s3 = var_s1 = self->params;
+    var_s3 &= 0xFF;
+    var_s1 = var_s1 >> 8;
+    for (i = 0; i < var_s1; i++, var_s3++) {
+        sp28 = func_us_801A09DC(var_s3, posX, posY, sp34);
+        if (sp28) {
+            break;
+        }
+    }
+    var_s3 = sp28 & 0x7FFF;
+    if (self->step) {
+        if (F(player->velocityY).i.hi &&
+            (status & (PLAYER_STATUS_MIST_FORM | PLAYER_STATUS_BAT_FORM)) ==
+                0) {
+            if (F(player->velocityY).i.hi < 0) {
+                if (!sp28) {
+                    var_s1 = D_us_801B2874;
+                    if (var_s1 && (var_s1 & 0x7FFF) < 17) {
+                        if (self->ext.aluwater.unk8C < 14) {
+                            var_s7 = (14 - self->ext.aluwater.unk8C) << 11;
+                        } else if (self->ext.aluwater.unk8E < 14) {
+                            var_s7 = (self->ext.aluwater.unk8E + 14) << 11;
+                        } else {
+                            var_s7 = 0;
+                        }
+                        tempEntity =
+                            AllocEntity(&g_Entities[224], &g_Entities[256]);
+                        if (tempEntity != NULL) {
+                            CreateEntityFromEntity(
+                                E_ID(UNK_2F), player, tempEntity);
+                            tempEntity->posX.i.hi = self->ext.aluwater.unk80 -
+                                                    tilemap->scrollX.i.hi;
+                            tempEntity->posY.i.hi = self->ext.aluwater.unk82 -
+                                                    (D_us_801B2874 & 0x7FFF) -
+                                                    tilemap->scrollY.i.hi;
+                            tempEntity->zPriority = player->zPriority;
+                            if (player->velocityY > FIX(-4)) {
+                                tempEntity->params = var_s7 + 1;
+                            } else {
+                                tempEntity->params = var_s7;
+                            }
+                        }
+                    }
+                }
+            } else if (sp28 && (var_s3 < 9) && !D_us_801B2874) {
+                if (sp34[0] < 14) {
+                    var_s7 = (14 - sp34[0]) << 11;
+                } else if (sp34[1] < 14) {
+                    var_s7 = (sp34[1] + 14) << 11;
+                } else {
+                    var_s7 = 0;
+                }
+                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (tempEntity != NULL) {
+                    CreateEntityFromEntity(E_ID(UNK_2F), player, tempEntity);
+                    if (player->velocityY > FIX(4)) {
+                        tempEntity->params = var_s7 + 1;
+                    } else {
+                        tempEntity->params = var_s7 + 2;
+                    }
+                    tempEntity->params = var_s7;
+                    tempEntity->posY.i.hi += sp3A - var_s3;
+                    tempEntity->zPriority = player->zPriority;
+                }
+            }
+        } else if ((status & PLAYER_STATUS_MIST_FORM) == 0) {
+            if (sp28 && !self->ext.aluwater.unk7E) {
+                if (posX != self->ext.aluwater.unk80) {
+                    if (var_s3 <= sp3C && sp34[0] >= 6 && sp34[1] >= 6) {
+                        tempEntity =
+                            AllocEntity(&g_Entities[224], &g_Entities[256]);
+                        if (tempEntity != NULL) {
+                            CreateEntityFromEntity(
+                                E_ID(UNK_30), player, tempEntity);
+                            tempEntity->posY.i.hi += sp3A - var_s3;
+                            if (player->velocityX != 0) {
+                                tempEntity->params = (sp3C - var_s3) >> 3;
+                                if (tempEntity->params == 5) {
+                                    tempEntity->params = 4;
+                                }
+                            } else {
+                                tempEntity->params = 0;
+                            }
+                            tempEntity->ext.aluwater.unk8A = 0;
+                            tempEntity->zPriority = player->zPriority;
+                            self->ext.aluwater.unk7E = 8;
+                        }
+                    }
+                }
+            }
+        }
+        if (self->ext.aluwater.unk7E) {
+            self->ext.aluwater.unk7E--;
+        }
+        g_unkGraphicsStruct.D_80097448 = var_s3;
+        if (status & (PLAYER_STATUS_CROUCH | PLAYER_STATUS_TRANSFORM)) {
+            if (status & PLAYER_STATUS_CROUCH) {
+                if (status & PLAYER_STATUS_WOLF_FORM) {
+                    if (var_s3 > 4) {
+                        g_unkGraphicsStruct.D_8009744C = var_s3 - 4;
+                    } else {
+                        g_unkGraphicsStruct.D_8009744C = 0;
+                    }
+                    if (var_s3 > 12) {
+                        g_unkGraphicsStruct.D_80097450 = var_s3 - 12;
+                    } else {
+                        g_unkGraphicsStruct.D_80097450 = 0;
+                    }
+                } else {
+                    if (var_s3 > 8) {
+                        g_unkGraphicsStruct.D_8009744C = var_s3 - 8;
+                    } else {
+                        g_unkGraphicsStruct.D_8009744C = 0;
+                    }
+                    if (var_s3 > 0x18) {
+                        g_unkGraphicsStruct.D_80097450 = var_s3 - 0x18;
+                    } else {
+                        g_unkGraphicsStruct.D_80097450 = 0;
+                    }
+                }
+            } else if (
+                status & (PLAYER_STATUS_MIST_FORM | PLAYER_STATUS_BAT_FORM)) {
+                if (var_s3 > 6) {
+                    g_unkGraphicsStruct.D_8009744C = var_s3 - 6;
+                } else {
+                    g_unkGraphicsStruct.D_8009744C = 0;
+                }
+                if (var_s3 > 0x10) {
+                    g_unkGraphicsStruct.D_80097450 = var_s3 - 0x10;
+                } else {
+                    g_unkGraphicsStruct.D_80097450 = 0;
+                }
+            } else if (status & PLAYER_STATUS_WOLF_FORM) {
+                if (var_s3 > 8) {
+                    g_unkGraphicsStruct.D_8009744C = var_s3 - 8;
+                } else {
+                    g_unkGraphicsStruct.D_8009744C = 0;
+                }
+                if (var_s3 > 0x18) {
+                    g_unkGraphicsStruct.D_80097450 = var_s3 - 0x18;
+                } else {
+                    g_unkGraphicsStruct.D_80097450 = 0;
+                }
+            }
+        } else {
+            if (var_s3 > 0x10) {
+                g_unkGraphicsStruct.D_8009744C = var_s3 - 0x10;
+            } else {
+                g_unkGraphicsStruct.D_8009744C = 0;
+            }
+            if (var_s3 > 0x30) {
+                g_unkGraphicsStruct.D_80097450 = var_s3 - 0x30;
+            } else {
+                g_unkGraphicsStruct.D_80097450 = 0;
+            }
+        }
+#ifdef VERSION_PSP
+        FntPrint(mizu_fmt, var_s3);
+#else
+        FntPrint("mizu %x\n", var_s3);
+#endif
+    } else {
+        InitializeEntity(g_EInitSpawner);
+    }
+    D_us_801B2874 = sp28;
+    self->ext.aluwater.unk80 = posX;
+    self->ext.aluwater.unk82 = posY;
+    self->ext.aluwater.unk8C = sp34[0];
+    self->ext.aluwater.unk8E = sp34[1];
+}
 
 void func_us_801A1120(Entity* self) {
     s32 primIndex;
