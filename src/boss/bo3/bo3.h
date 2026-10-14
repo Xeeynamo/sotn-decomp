@@ -9,6 +9,7 @@
 enum Palettes {
     PAL_NONE,
     PAL_SCYLLA = 0x200,
+    PAL_PUFF_OPAQUE_OFFSET = 0x2E0,
 };
 
 #ifdef VERSION_PSP
