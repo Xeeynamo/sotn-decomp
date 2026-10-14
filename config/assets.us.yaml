@@ -1302,6 +1302,21 @@ files:
     asset_path: assets/st/rlib
     src_path: src/st/rlib
     splat_config_path: config/splat.us.strlib.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x2C, sprite_banks, us/sprite_banks]
+          - [0x8C, paldef, palette_def]
+          - [0xEC, skip]
+          - [0xA978, palette, D_8018A978, 16]
+          - [0xAC38, palette, D_8018AC38, 16]
+          - [0xACF8, palette, D_8018ACF8, 16]
+          - [0xADB8, palette, D_8018ADB8, 16]
+          - [0xAE58, palette, D_8018AE58, 16]
+          - [0xAF58, palette, D_8018AF58, 16]
+          - [0xAFD8, palette, D_8018AFD8, 16]
+          - [0xB118, skip]
   - target: disks/us/ST/RNO0/RNO0.BIN
     asset_path: assets/st/rno0
     src_path: src/st/rno0
