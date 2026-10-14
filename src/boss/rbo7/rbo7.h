@@ -44,7 +44,7 @@ typedef enum EntityID {
     E_HARPY_KICK,           // EntityHarpyKick
     E_UNK_1C,               // func_us_80195A8C
     E_UNK_1D,               // func_us_80195D04
-    E_CTULHU_DEATH,         // EntityCtulhuDeath
+    E_AKMODAN_DEATH_EFFECT, // EntityAkmodanDeathEffect
     NUM_ENTITIES,
 };
 
@@ -62,7 +62,7 @@ extern s32 E_ID(UNK_1A);
 extern s32 E_ID(HARPY_KICK);
 extern s32 E_ID(UNK_1C);
 extern s32 E_ID(UNK_1D);
-extern s32 E_ID(CTULHU_DEATH);
+extern s32 E_ID(AKMODAN_DEATH_EFFECT);
 #endif
 
 enum BossMgrState {

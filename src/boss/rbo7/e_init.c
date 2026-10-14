@@ -30,7 +30,7 @@ void func_us_801957C0(Entity* self);
 void EntityHarpyKick(Entity* self);
 void func_us_80195A8C(Entity* self);
 void func_us_80195D04(Entity* self);
-void EntityCtulhuDeath(Entity* self);
+void EntityAkmodanDeathEffect(Entity* self);
 
 PfnEntityUpdate EntityUpdates[] = {
     /* 0x01 */ EntityBreakable,
@@ -62,7 +62,7 @@ PfnEntityUpdate EntityUpdates[] = {
     /* 0x1B */ EntityHarpyKick,
     /* 0x1C */ func_us_80195A8C,
     /* 0x1D */ func_us_80195D04,
-    /* 0x1E */ EntityCtulhuDeath,
+    /* 0x1E */ EntityAkmodanDeathEffect,
 };
 
 // clang-format off

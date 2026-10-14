@@ -542,7 +542,8 @@ void EntityAkmodanII(Entity* self) {
             entity = AllocEntity(&g_Entities[STAGE_ENTITY_START],
                                  &g_Entities[TOTAL_ENTITY_COUNT]);
             if (entity != NULL) {
-                CreateEntityFromCurrentEntity(E_ID(CTULHU_DEATH), entity);
+                CreateEntityFromCurrentEntity(
+                    E_ID(AKMODAN_DEATH_EFFECT), entity);
                 entity->posX.i.hi += x;
                 entity->posY.i.hi += y - 8;
                 entity->facingLeft = side;
@@ -552,7 +553,8 @@ void EntityAkmodanII(Entity* self) {
                 entity = AllocEntity(&g_Entities[STAGE_ENTITY_START],
                                      &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
-                    CreateEntityFromCurrentEntity(E_ID(CTULHU_DEATH), entity);
+                    CreateEntityFromCurrentEntity(
+                        E_ID(AKMODAN_DEATH_EFFECT), entity);
                     entity->posX.i.hi = x + 0x20;
                     if (self->params) {
                         entity->posY.i.hi = y + 0xE4;
@@ -935,7 +937,7 @@ static AnimateEntityFrame D_us_8018076C[] = {
     POSE(3, 9, 0),  POSE(3, 10, 0), POSE(3, 11, 0), POSE(3, 12, 0),
     POSE(3, 13, 0), POSE_END};
 
-void EntityCtulhuDeath(Entity* self) {
+void EntityAkmodanDeathEffect(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitInteractable);

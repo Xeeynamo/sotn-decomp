@@ -19,7 +19,7 @@ s32 E_ID(UNK_1A);
 s32 E_ID(HARPY_KICK);
 s32 E_ID(UNK_1C);
 s32 E_ID(UNK_1D);
-s32 E_ID(CTULHU_DEATH);
+s32 E_ID(AKMODAN_DEATH_EFFECT);
 
 void InitEntityIds(void) {
     SET_E_ID(BACKGROUND_BLOCK);
@@ -35,7 +35,7 @@ void InitEntityIds(void) {
     SET_E_ID(HARPY_KICK);
     SET_E_ID(UNK_1C);
     SET_E_ID(UNK_1D);
-    SET_E_ID(CTULHU_DEATH);
+    SET_E_ID(AKMODAN_DEATH_EFFECT);
 }
 
 void RBO7_Load(void) {
