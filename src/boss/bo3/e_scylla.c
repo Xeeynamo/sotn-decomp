@@ -300,7 +300,98 @@ INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla", func_us_801A42A8);
 const u32 D_us_8019CA94[3] = {0, 0, 0};
 #endif
 
-INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla", func_us_801A4680);
+extern EInit D_us_801805D0;
+
+void func_us_801A4680(Entity* self) {
+    Entity* entity;
+    s16 angle;
+    s32 i;
+    s32 dx;
+    s32 dy;
+
+    if (D_us_80180D48 & 2) {
+        self->flags |= FLAG_DEAD;
+    }
+    if (self->flags & FLAG_DEAD) {
+        for (i = 0; i < 5; i++) {
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (entity != NULL) {
+                CreateEntityFromEntity(E_ID(UNK_39), self, entity);
+                entity->zPriority = self->zPriority;
+                entity->params = 1;
+            }
+        }
+        DestroyEntity(self);
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_801805D0);
+        self->zPriority = 0x8C;
+        self->hitboxState = 0;
+        /* fall through */
+    case 1:
+        if (!AnimateEntity(D_us_80180F0C, self)) {
+            self->velocityY = FIX(-4);
+            self->ext.scyllaParticle.unk80 = 0x50;
+            self->hitboxState = 2;
+            SetStep(2);
+        }
+        if (!self->poseTimer && self->pose == 3) {
+            PlaySfxPositional(SFX_BONE_SWORD_SWISH_C);
+        }
+        break;
+
+    case 2:
+        AnimateEntity(D_us_80180F18, self);
+        MoveEntity();
+        self->velocityY -= self->velocityY >> 4;
+        if (!--self->ext.scyllaParticle.unk80) {
+            self->ext.scyllaParticle.unk80 = 0x80;
+            self->rotate = Random() << 4;
+            self->step++;
+        }
+        break;
+
+    case 3:
+        AnimateEntity(D_us_80180F18, self);
+        MoveEntity();
+        angle = self->rotate += ROT(2.8125);
+        self->velocityY = rsin(angle) << 3;
+        if (!--self->ext.scyllaParticle.unk80) {
+            SetStep(4);
+        }
+        break;
+
+    case 4:
+        if (!AnimateEntity(D_us_80180F30, self)) {
+            SetStep(5);
+        }
+        break;
+
+    case 5:
+        entity = &PLAYER;
+        dx = entity->posX.i.hi - self->posX.i.hi;
+        dy = entity->posY.i.hi - self->posY.i.hi;
+        angle = ratan2(dy, dx);
+        self->velocityX = rcos(angle) * 7 << 4;
+        self->velocityY = rsin(angle) * 7 << 4;
+        if (self->velocityX > 0) {
+            self->facingLeft = 0;
+        } else {
+            self->facingLeft = 1;
+        }
+        self->hitboxState = 3;
+        PlaySfxPositional(SFX_ARROW_SHOT_A);
+        self->step++;
+        /* fall through */
+    case 6:
+        AnimateEntity(D_us_80180F40, self);
+        MoveEntity();
+        break;
+    }
+}
 
 extern EInit D_us_801805DC;
 
