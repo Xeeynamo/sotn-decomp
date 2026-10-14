@@ -2196,7 +2196,8 @@ void PlayerStepBossGrab(void) {
         return;
     case 1:
         if (g_Player.grabState == GRAB_DAMAGE) {
-            temp_s0 = HandleDamage(&damage, DAMAGEKIND_2, g_Player.grabDamage, 1);
+            temp_s0 =
+                HandleDamage(&damage, DAMAGEKIND_2, g_Player.grabDamage, 1);
             CreateHPNumMove(damage.damageTaken, 0);
             if (temp_s0 == 4) {
                 SetPlayerStep(Player_Kill);

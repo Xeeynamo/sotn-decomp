@@ -739,7 +739,8 @@ void EntitySuccubus(Entity* self) {
 
         case SUCCUBUS_CHARGE_DEAL_DAMAGE:
             if (!AnimateEntity(D_8018071C, self)) {
-                g_Player.grabDamage = g_api.enemyDefs[ENEMY_SUCCUBUS_UNK_15B].attack;
+                g_Player.grabDamage =
+                    g_api.enemyDefs[ENEMY_SUCCUBUS_UNK_15B].attack;
                 g_Player.grabState = GRAB_DAMAGE;
                 self->ext.succubus.timer = 48;
                 self->step_s++;
