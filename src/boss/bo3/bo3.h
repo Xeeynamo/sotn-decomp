@@ -40,8 +40,8 @@ typedef enum EntityID {
     E_DUMMY_19,              // EntityDummy
     E_DUMMY_1A,              // EntityDummy
     E_WATER_DROP,            // EntityWaterDrop
-    E_UNK_1C,                // func_us_801C12B0_from_no4
-    E_UNK_1D,                // func_us_801C15F8_from_no4
+    E_UNK_1C,                // func_us_801C12B0
+    E_UNK_1D,                // func_us_801C15F8
     E_DUMMY_1E,              // EntityDummy
     E_DUMMY_1F,              // EntityDummy
     E_DUMMY_20,              // EntityDummy

@@ -67,7 +67,11 @@ void func_us_801C12B0(Entity* self) {
         while (prim != NULL) {
             prim->tpage = 0xF;
             prim->clut = 0x5E;
+#ifdef STAGE_IS_BO3
+            prim->priority = 0x9C;
+#else
             prim->priority = 0x9E;
+#endif
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
@@ -194,7 +198,11 @@ void func_us_801C15F8(Entity* self) {
             prim->r0 = 0;
             prim->g0 = 0x10;
             prim->b0 = 0x20;
+#ifdef STAGE_IS_BO3
+            prim->priority = 0x9B;
+#else
             prim->priority = 0x9D;
+#endif
             prim = prim->next;
         }
         break;
@@ -799,12 +807,26 @@ void func_us_801C2474(Entity* self) {
     s32 scrollY;
     s32 clut;
     s32 primIndex;
-
+#ifndef STAGE_IS_BO3
     Entity* player;
 
     player = &PLAYER;
+#endif
     scrollX = g_Tilemap.scrollX.i.hi;
     scrollY = g_Tilemap.scrollY.i.hi;
+#ifdef STAGE_IS_BO3
+    volume = (scrollY + PLAYER.posY.i.hi) / 32 + 0x58;
+    if (volume >= 0x80) {
+        volume = 0x80;
+    }
+    pan = scrollX + PLAYER.posX.i.hi - 0xC8;
+    pan = -(pan / 32);
+    if (pan < -8) {
+        pan = -8;
+    } else if (pan > 8) {
+        pan = 8;
+    }
+#else
     volume = (scrollY / 24) + 0x4D;
     if (volume > 0x7F) {
         volume = 0x7F;
@@ -833,6 +855,7 @@ void func_us_801C2474(Entity* self) {
     FntPrint("vol ; %x\n", volume);
     FntPrint("pan : %d\n", pan);
 #endif
+#endif
 
     if (!self->step) {
         InitializeEntity(g_EInitInteractable);
@@ -842,6 +865,9 @@ void func_us_801C2474(Entity* self) {
             DestroyEntity(self);
             return;
         }
+#ifdef STAGE_IS_BO3
+        g_api.PlaySfxVolPan(SFX_WATERFALL_LOOP, volume, pan);
+#endif
         self->ext.et_801C12B0.clut = 0;
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
@@ -1216,6 +1242,86 @@ void func_us_801C2E60(Entity* self) {
     }
 }
 
+#ifdef STAGE_IS_BO3
+void func_us_801C3160(Entity* self) {
+    s32 scrollY;
+    s32 primIndex;
+    s32 scrollX;
+    s32 i;
+    s32 yOffset;
+    s32 randVal;
+    Primitive* prim;
+
+    if (!self->step) {
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = 0;
+        primIndex = g_api.AllocPrimitives(PRIM_TILE, 0x80);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = (s32)primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.et_801C12B0.prim = prim;
+        while (prim != NULL) {
+            prim->priority = 0x6C;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+    }
+
+    prim = self->ext.et_801C12B0.prim;
+    scrollX = g_Tilemap.scrollX.i.hi;
+    scrollY = g_Tilemap.scrollY.i.hi;
+    self->ext.et_801C12B0.unk80++;
+    if (scrollY < 0xF0) {
+        yOffset = 0xB0;
+        yOffset -= scrollY;
+        for (i = 0; i < 4; i++) {
+            while (prim != NULL) {
+                if (prim->drawMode == DRAW_HIDE) {
+                    prim->r0 = prim->b0 = prim->g0 = 0x80;
+                    randVal = rand() & 0x1F;
+                    prim->y0 = yOffset + randVal;
+                    prim->x0 = ((0x100 - (rand() % 40)) - scrollX) - randVal;
+                    prim->x1 = 0;
+                    LOH(prim->r1) = 0;
+                    LOW(prim->u1) = 0xFFFE0000;
+                    LOW(prim->x3) = 0x4000;
+                    prim->clut = 0x10;
+                    prim->u0 = prim->v0 = 2;
+                    LOW(prim->r2) = 0;
+                    LOW(prim->r3) = 0;
+                    prim->drawMode = DRAW_UNK02;
+                    break;
+                }
+
+                prim = prim->next;
+            }
+        }
+    }
+
+    // This is probably an alternate Primitive
+    prim = self->ext.et_801C12B0.prim;
+    while (prim != NULL) {
+        if (prim->drawMode != DRAW_HIDE) {
+            LOH(prim->b1) = prim->x0;
+            prim->y1 = prim->y0;
+            LOW(prim->x1) = LOW(prim->x1) + LOW(prim->r2);
+            LOW(prim->r1) = LOW(prim->r1) + LOW(prim->u1);
+            prim->x0 = LOH(prim->b1);
+            prim->y0 = prim->y1;
+            LOW(prim->r2) = LOW(prim->r2) + LOW(prim->x3);
+            prim->r0 = prim->b0 = prim->g0 -= 8;
+            if (!--prim->clut) {
+                prim->drawMode = DRAW_HIDE;
+            }
+        }
+        prim = prim->next;
+    }
+}
+#else
 void func_us_801C3160(Entity* self) {
     s32 scrollY;
     s32 primIndex;
@@ -1318,11 +1424,18 @@ void func_us_801C3160(Entity* self) {
         prim = prim->next;
     }
 }
+#endif
 
+#ifdef STAGE_IS_BO3
+static s16 D_us_80181548[][4] = {
+    {0x0058, 0x0068, 0x0030, 0xFFFE},
+};
+#else
 static s16 D_us_80181548[][5] = {
     {0x0058, 0x0068, 0x00B0, 0x0030, 0xFFFE},
     {0x06A0, 0x0060, 0x00C8, 0x0020, 0x0001},
 };
+#endif
 
 void func_us_801C34EC(Entity* self) {
     s32 scrollX;
@@ -1358,7 +1471,9 @@ void func_us_801C34EC(Entity* self) {
     ptr = D_us_80181548[self->params];
     xOffset = *ptr++;
     randX = *ptr++;
+#ifndef STAGE_IS_BO3
     yOffset = *ptr++;
+#endif
     randY = *ptr++;
     tpage = *ptr;
     prim = self->ext.et_801C12B0.prim;
@@ -1366,6 +1481,9 @@ void func_us_801C34EC(Entity* self) {
     scrollY = g_Tilemap.scrollY.i.hi;
     self->ext.et_801C12B0.unk80++;
     if (scrollY < 0xF0) {
+#ifdef STAGE_IS_BO3
+        yOffset = 0xB0;
+#endif
         yOffset -= scrollY;
 
         while (prim != NULL) {
@@ -1655,10 +1773,14 @@ void func_us_801C3CC4(Entity* self) {
     }
 }
 
+#ifdef STAGE_IS_BO3
+static s16 D_us_80181570[] = {0x0100, 0x0240, 0x02E0, 0x0300, 0x0320, 0x7FFF};
+#else
 static s16 D_us_80181570[] = {
     0x0100, 0x0000, 0x0240, 0x0018, 0x02E0, 0x000C,
     0x0300, 0x0000, 0x0320, 0x0010, 0x7FFF, 0x0000,
 };
+#endif
 
 void func_us_801C3FB0(Entity* self) {
     s32 primIndex;
@@ -1724,7 +1846,11 @@ void func_us_801C3FB0(Entity* self) {
             break;
         }
 
+#ifdef STAGE_IS_BO3
+        var_s4 = scrollY;
+#else
         var_s4 = scrollY + *ptr++;
+#endif
         var_s2 = 0x60 - var_s4;
         var_s1 = 0;
 
@@ -1898,7 +2024,11 @@ void EntityWaterBox(Entity* self) {
 
     if (collision & 1 && g_Player.vram_flag & TOUCHING_GROUND) {
         if (self->posX.i.hi > player->posX.i.hi) {
+#ifdef STAGE_IS_BO3
+            if (g_pads[0].pressed & PAD_RIGHT) {
+#else
             if (g_pads[0].pressed & PAD_RIGHT && PLAYER.step == Player_Walk) {
+#endif
                 if (self->ext.timer.t) {
                     self->ext.timer.t--;
                     return;
@@ -1910,7 +2040,11 @@ void EntityWaterBox(Entity* self) {
                 self->ext.timer.t = 3;
             }
         } else {
+#ifdef STAGE_IS_BO3
+            if (g_pads[0].pressed & PAD_LEFT) {
+#else
             if (g_pads[0].pressed & PAD_LEFT && PLAYER.step == Player_Walk) {
+#endif
                 if (self->ext.timer.t) {
                     self->ext.timer.t--;
                     return;

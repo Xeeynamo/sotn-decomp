@@ -28,8 +28,8 @@ void EntityDummy(Entity* self);
 void EntityDummy(Entity* self);
 void EntityDummy(Entity* self);
 void EntityWaterDrop(Entity* self);
-void func_us_801C12B0_from_no4(Entity* self);
-void func_us_801C15F8_from_no4(Entity* self);
+void func_us_801C12B0(Entity* self);
+void func_us_801C15F8(Entity* self);
 void EntityDummy(Entity* self);
 void EntityDummy(Entity* self);
 void EntityDummy(Entity* self);
@@ -97,8 +97,8 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityDummy,
     EntityDummy,
     EntityWaterDrop,
-    func_us_801C12B0_from_no4,
-    func_us_801C15F8_from_no4,
+    func_us_801C12B0,
+    func_us_801C15F8,
     EntityDummy,
     EntityDummy,
     EntityDummy,
