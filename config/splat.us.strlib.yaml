@@ -40,11 +40,14 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, header]
-      - [0x2C, data]
+      - [0x2C, .data, sprite_banks]
+      - [0x8C, .data, palette_def]
+      - [0xEC, .data, layers]
+      - [0x264, .data, graphics_banks] # GfxBanks
+      - [0x388, .data, gen/e_laydef] # layout entries header
       - [0x530, .data, e_init]
       - [0x6C4, .data, e_room_bg]
       - [0x794, .data, e_red_door_tiles]
-      - [0x7A4, data]
       - [0x7A4, .data, e_lock_camera]
       - [0x824, data]
       - [0xB5C, .data, e_explosion_puff_opaque]
@@ -60,7 +63,12 @@ segments:
       - [0x1644, .data, e_particles]
       - [0x16C4, .data, e_room_fg]
       - [0x1750, data]
-      - [0x206D4, .rodata, unk_20AE8]
+      - [0x1A24, .data, gen/e_layout] # layout entries data
+      - [0x2564, data]
+      - [0x3140, .data, stage_data]
+      - [0xB118, .data, tilemaps]
+      - [0x1B348, .data, gen/us/sprites]
+      - [0x206D4, .rodata, e_breakable]
       - [0x206F4, .rodata, e_explosion_puff_opaque]
       - [0x20708, .rodata, unk_228C0]
       - [0x20714, .rodata, e_red_door]
@@ -70,7 +78,8 @@ segments:
       - [0x20858, .rodata, prim_helpers]
       - [0x20860, c, e_room_bg]
       - [0x2092C, c, e_lock_camera]
-      - [0x20AE8, c, unk_20AE8]
+      - [0x20AE8, c, e_breakable]
+      - [0x20F08, c, unk_20F08]
       - [0x22424, c, e_explosion_puff_opaque]
       - [0x228C0, c, unk_228C0]
       - [0x22B60, c, st_update]

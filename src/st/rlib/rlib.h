@@ -62,7 +62,7 @@ typedef enum EntityID {
     E_UNK_25,               // func_us_801AF9E8
     E_EXPLODE_PUFF_OPAQUE,  // EntityExplosionPuffOpaque
     E_UNK_27,               // func_us_801AFC88
-    E_UNK_28,               // func_us_801AE84C_from_lib
+    E_UNK_28,               // EntityBreakableDebris
     E_UNK_29,               // func_us_801BAF60_from_lib
     NUM_ENTITIES,
 };

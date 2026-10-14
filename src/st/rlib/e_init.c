@@ -40,7 +40,7 @@ void func_us_801AF448(Entity* self);
 void func_us_801AF9E8(Entity* self);
 void EntityExplosionPuffOpaque(Entity* self);
 void func_us_801AFC88(Entity* self);
-void func_us_801AE84C_from_lib(Entity* self);
+void EntityBreakableDebris(Entity* self);
 void func_us_801BAF60_from_lib(Entity* self);
 
 PfnEntityUpdate EntityUpdates[] = {
@@ -83,7 +83,7 @@ PfnEntityUpdate EntityUpdates[] = {
     func_us_801AF9E8,
     EntityExplosionPuffOpaque,
     func_us_801AFC88,
-    func_us_801AE84C_from_lib,
+    EntityBreakableDebris,
     func_us_801BAF60_from_lib,
 };
 
