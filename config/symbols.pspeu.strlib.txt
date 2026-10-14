@@ -63,7 +63,6 @@ g_RlibBreakablePalettes = 0x09251D80;
 g_RlibBreakableAnimSets = 0x09251D98;
 g_RlibBreakableBlendModes = 0x09251DB0;
 g_RlibBreakableUnk5A = 0x09251DC0;
-BackgroundBlockInit = 0x09269920;
 D_us_8018092C = 0x09269C08;
 D_us_8018093C = 0x09269C10;
 D_us_801809DC = 0x09269C18;
