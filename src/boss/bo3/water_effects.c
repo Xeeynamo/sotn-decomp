@@ -35,7 +35,30 @@ INCLUDE_ASM("boss/bo3/nonmatchings/water_effects", func_us_801A071C);
 
 INCLUDE_ASM("boss/bo3/nonmatchings/water_effects", func_us_801A07CC);
 
-INCLUDE_ASM("boss/bo3/nonmatchings/water_effects", func_us_801A09DC);
+u16 func_us_801A09DC(s16 index, s16 x, s16 y, s16* out) {
+    s16* data;
+    s16 value;
+
+    data = &D_us_80180C68[index * 4];
+    x -= *data++;
+    if (x < 0) {
+        return 0;
+    }
+    *out++ = x;
+    value = *data++ - x;
+    if (value <= 0) {
+        return 0;
+    }
+    *out = value;
+    value = *data++;
+    if (value > y) {
+        return 0;
+    }
+    if (y >= *data++) {
+        return 0;
+    }
+    return y + 0x8000 - value;
+}
 
 INCLUDE_ASM("boss/bo3/nonmatchings/water_effects", func_us_801A0A80);
 
