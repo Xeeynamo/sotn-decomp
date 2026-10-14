@@ -30,7 +30,6 @@ EntityWaterBox = 0x801A032C;
 func_us_801C5518_from_no4 = 0x801A1A6C;
 func_us_801B5004_from_rbo5 = 0x801A1B7C;
 EntitySplashWater = 0x801A1EE4;
-EntityWaterDrop = 0x801A27EC;
 CreateExplosionPuff = 0x801A5E4C;
 Random = 0x801A6704;
 CreateEntityFromCurrentEntity = 0x801A8D7C;

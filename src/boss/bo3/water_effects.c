@@ -21,4 +21,4 @@ INCLUDE_ASM("boss/bo3/nonmatchings/water_effects", func_us_801A1BE8);
 
 INCLUDE_ASM("boss/bo3/nonmatchings/water_effects", EntitySplashWater);
 
-INCLUDE_ASM("boss/bo3/nonmatchings/water_effects", EntityWaterDrop);
+#include "../../st/entity_water_drop.h"
