@@ -1308,7 +1308,8 @@ files:
         assets:
           - [0x2C, sprite_banks, us/sprite_banks]
           - [0x8C, paldef, palette_def]
-          - [0xEC, skip]
+          - [0xEC, layers, layers]
+          - [0x264, skip]
           - [0xA978, palette, D_8018A978, 16]
           - [0xAC38, palette, D_8018AC38, 16]
           - [0xACF8, palette, D_8018ACF8, 16]
