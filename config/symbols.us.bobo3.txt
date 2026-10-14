@@ -15,7 +15,6 @@ DestroyEntity = 0x801A9B1C;
 AnimateEntity = 0x801A9C4C;
 GetDistanceToPlayerX = 0x801A9E1C;
 MoveEntity = 0x801A9ED0;
-UnkCollisionFunc3 = 0x801A9F2C;
 AllocEntity = 0x801AA38C;
 GetAngleBetweenEntities = 0x801AA67C;
 LimitAngleChange = 0x801AA6FC;

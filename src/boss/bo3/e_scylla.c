@@ -210,7 +210,6 @@ static AnimateEntityFrame anim_unused_1[] = {
 
 #ifdef VERSION_PSP
 char D_pspeu_09266160[] = "charal %x\n";
-char D_pspeu_09266170[] = "no WORK !!\n";
 #endif
 
 // static once func_us_801A42A8 is C
@@ -305,7 +304,70 @@ INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla", func_us_801A4680);
 
 INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla", func_us_801A4988);
 
-INCLUDE_ASM("boss/bo3/nonmatchings/e_scylla", func_us_801A4C0C);
+extern EInit D_us_801805E8;
+
+void func_us_801A4C0C(Entity* self) {
+    Entity* newEntity;
+    s32 posY;
+    s16 posX;
+    u32 pad[10];
+
+    if (D_us_80180D48 & 2) {
+        self->flags |= FLAG_DEAD;
+    }
+    if (self->flags & FLAG_DEAD) {
+        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (newEntity != NULL) {
+            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+            newEntity->params = 0x11;
+        }
+        DestroyEntity(self);
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_801805E8);
+        self->drawFlags = ENTITY_ROTATE;
+        self->params = Random() & 3;
+        self->animCurFrame = self->params + 0x6F;
+        self->rotate = rand() & 0xFFF;
+        PlaySfxPositional(SFX_WALL_DEBRIS_B);
+        /* fall through */
+    case 1:
+        self->rotate += ROT(11.25);
+        if (self->posY.i.hi < 0x80) {
+            MoveEntity();
+            self->velocityY += FIX(0.125);
+            break;
+        }
+        posX = self->posX.i.hi;
+        posY = self->posY.i.hi + D_us_80180F88[self->params];
+        posY += g_Tilemap.scrollY.i.hi;
+        if (posY > 0xD8 && !self->ext.scyllaParticle.splashed) {
+            self->ext.scyllaParticle.splashed = true;
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(E_ID(SPLASH_WATER), self, newEntity);
+                newEntity->params = 0;
+                newEntity->posY.i.hi = 0xD8 - g_Tilemap.scrollY.i.hi;
+            }
+        }
+        if (UnkCollisionFunc3(D_us_80180F90) & 1) {
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                newEntity->params = 0x11;
+            } else {
+                FntPrint("no WORK !!\n");
+            }
+            DestroyEntity(self);
+            break;
+        }
+        self->velocityY -= FIX(0.125);
+        break;
+    }
+}
 
 extern EInit D_us_801805F4;
 
