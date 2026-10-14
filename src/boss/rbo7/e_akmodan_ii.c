@@ -238,9 +238,9 @@ void EntityAkmodanII(Entity* self) {
                    PLAYER_STATUS_INVINCIBLE | PLAYER_STATUS_STONE |
                    PLAYER_STATUS_UNK40 | PLAYER_STATUS_WOLF_FORM |
                    PLAYER_STATUS_MIST_FORM))) {
-                g_Player.unk60 = 1;
-                g_Player.unk64 = 8;
-                g_Player.unk62 = 0;
+                g_Player.grabState = GRAB_START;
+                g_Player.grabDamage = 8;
+                g_Player.grabReactionEffect = GRAB_REACTION_NORMAL;
                 self->ext.akmodanII.savedTileX = g_Tilemap.x;
                 self->ext.akmodanII.savedTileWidth = g_Tilemap.width;
                 self->ext.akmodanII.savedTileY = g_Tilemap.y;
@@ -292,9 +292,9 @@ void EntityAkmodanII(Entity* self) {
             }
             if (!side) {
                 self->ext.akmodanII.unk86++;
-                g_Player.unk64 =
-                    g_api.enemyDefs[ENEMY_AKMODAN_II_UNK_10E].attack / 2;
-                g_Player.unk60 = 3;
+                g_Player.grabDamage =
+                    g_api.enemyDefs[ENEMY_AKMODAN_II_GRAB].attack / 2;
+                g_Player.grabState = GRAB_DAMAGE;
             }
             if (self->animCurFrame >= 0x15 && self->animCurFrame < 0x1A) {
                 self->zPriority = g_unkGraphicsStruct.g_zEntityCenter + 4;
@@ -306,8 +306,8 @@ void EntityAkmodanII(Entity* self) {
             }
             break;
         case 5:
-            g_Player.unk64 = g_api.enemyDefs[ENEMY_AKMODAN_II_UNK_10E].attack;
-            g_Player.unk60 = 4;
+            g_Player.grabDamage = g_api.enemyDefs[ENEMY_AKMODAN_II_GRAB].attack;
+            g_Player.grabState = GRAB_RELEASE;
             self->ext.akmodanII.grabbing = 0;
             entity = &PLAYER;
             if (self->facingLeft) {
@@ -377,7 +377,7 @@ void EntityAkmodanII(Entity* self) {
             if (self->ext.akmodanII.grabbing) {
                 g_Tilemap.x = self->ext.akmodanII.savedTileX;
                 g_Tilemap.width = self->ext.akmodanII.savedTileWidth;
-                g_Player.unk60 = 0;
+                g_Player.grabState = GRAB_NONE;
             }
             PlaySfxPositional(SFX_AKMODAN_II_DEATH);
             self->step_s++;
@@ -745,7 +745,7 @@ void EntityAkmodanII(Entity* self) {
     self->hitboxOffY = *hitbox++;
     self->hitboxWidth = *hitbox++;
     self->hitboxHeight = *hitbox++;
-    FntPrint("tsukami %x\n", g_Player.unk60);
+    FntPrint("tsukami %x\n", g_Player.grabState);
 }
 #endif
 

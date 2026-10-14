@@ -527,8 +527,8 @@ void RicMain(void) {
                 !(g_Player.timers[PL_T_INVINCIBLE_SCENE] |
                   g_Player.timers[PL_T_INVINCIBLE]) &&
 #endif
-                g_Player.unk60 < 2) {
-                if (g_Player.unk60 == 1) {
+                g_Player.grabState < GRAB_HELD) {
+                if (g_Player.grabState == GRAB_START) {
                     playerStep = PLAYER.step;
                     playerStepS = PLAYER.step_s;
                     RicSetStep(PL_S_BOSS_GRAB);

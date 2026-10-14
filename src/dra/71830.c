@@ -2184,7 +2184,7 @@ void PlayerStepBossGrab(void) {
     switch (g_CurrentEntity->step_s) {
     case 0:
         func_80113EE0();
-        if (g_Player.unk62 == 0) {
+        if (g_Player.grabReactionEffect == GRAB_REACTION_NORMAL) {
             PLAYER.ext.player.anim = 0x37;
             g_Player.timers[2] = 8;
             g_Player.damagePalette = PAL_FLAG(PAL_CC_RED_EFFECT_A);
@@ -2192,39 +2192,39 @@ void PlayerStepBossGrab(void) {
         }
         PLAYER.velocityX = PLAYER.velocityY = 0;
         PLAYER.step_s = 1;
-        g_Player.unk60 = 2;
+        g_Player.grabState = GRAB_HELD;
         return;
     case 1:
-        if (g_Player.unk60 == 3) {
-            temp_s0 = HandleDamage(&damage, DAMAGEKIND_2, g_Player.unk64, 1);
+        if (g_Player.grabState == GRAB_DAMAGE) {
+            temp_s0 = HandleDamage(&damage, DAMAGEKIND_2, g_Player.grabDamage, 1);
             CreateHPNumMove(damage.damageTaken, 0);
             if (temp_s0 == 4) {
                 SetPlayerStep(Player_Kill);
                 PlayerStepKill(&damage, Player_BossGrab, 1);
                 return;
             }
-            if (g_Player.unk62 == 0) {
+            if (g_Player.grabReactionEffect == GRAB_REACTION_NORMAL) {
                 g_Player.timers[2] = 4;
                 g_Player.damagePalette = PAL_FLAG(PAL_CC_RED_EFFECT_A);
                 PlaySfx(SFX_VO_ALU_PAIN_A);
             }
-            if (g_Player.unk62 == 2) {
+            if (g_Player.grabReactionEffect == GRAB_REACTION_STONE) {
                 g_Player.timers[2] = 4;
                 g_Player.damagePalette = PAL_FLAG(PAL_CC_STONE_EFFECT);
             }
-            g_Player.unk60 = 2;
+            g_Player.grabState = GRAB_HELD;
             return;
         }
-        if (g_Player.unk60 == 4) {
+        if (g_Player.grabState == GRAB_RELEASE) {
             PLAYER.step = Player_Hit;
             PLAYER.step_s = 0xF;
-            g_Player.unk60 = 0;
+            g_Player.grabState = GRAB_NONE;
             SetPlayerAnim(0x2E);
-            g_Player.damageTaken = g_Player.unk64;
+            g_Player.damageTaken = g_Player.grabDamage;
             PlaySfx(SFX_VO_ALU_YELL);
             return;
         }
-        if (g_Player.unk60 == 0) {
+        if (g_Player.grabState == GRAB_NONE) {
             PLAYER.step = Player_Hit;
             PLAYER.step_s = 1;
             return;

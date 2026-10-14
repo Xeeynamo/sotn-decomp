@@ -700,9 +700,9 @@ void EntitySuccubus(Entity* self) {
                    PLAYER_STATUS_INVINCIBLE | PLAYER_STATUS_STONE |
                    PLAYER_STATUS_CROUCH | PLAYER_STATUS_MIST_FORM))) {
                 if ((posY < 12) && (posX < 24)) {
-                    g_Player.unk60 = 1;
-                    g_Player.unk64 = 0;
-                    g_Player.unk62 = 0;
+                    g_Player.grabState = GRAB_START;
+                    g_Player.grabDamage = 0;
+                    g_Player.grabReactionEffect = GRAB_REACTION_NORMAL;
                     self->hitboxState = 0;
                     self->step_s++;
                 }
@@ -715,7 +715,7 @@ void EntitySuccubus(Entity* self) {
                 self->posY.i.hi = 176 - g_Tilemap.scrollY.i.hi;
             }
 
-            if (!g_Player.unk60) {
+            if (!g_Player.grabState) {
                 if (!--self->ext.succubus.timer) {
                     self->ext.succubus.unk87 = false;
                     SetStep(SUCCUBUS_FLY);
@@ -739,8 +739,8 @@ void EntitySuccubus(Entity* self) {
 
         case SUCCUBUS_CHARGE_DEAL_DAMAGE:
             if (!AnimateEntity(D_8018071C, self)) {
-                g_Player.unk64 = g_api.enemyDefs[ENEMY_SUCCUBUS_UNK_15B].attack;
-                g_Player.unk60 = 3;
+                g_Player.grabDamage = g_api.enemyDefs[ENEMY_SUCCUBUS_UNK_15B].attack;
+                g_Player.grabState = GRAB_DAMAGE;
                 self->ext.succubus.timer = 48;
                 self->step_s++;
             }
@@ -748,7 +748,7 @@ void EntitySuccubus(Entity* self) {
 
         case SUCCUBUS_CHARGE_FLY_AWAY:
             if (!--self->ext.succubus.timer) {
-                g_Player.unk60 = 0;
+                g_Player.grabState = GRAB_NONE;
                 self->hitboxState = 3;
                 if (self->facingLeft) {
                     self->velocityX = FIX(-4);

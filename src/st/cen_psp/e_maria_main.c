@@ -610,8 +610,8 @@ void MarMain(void) {
 
                     if (!(g_Maria.timers[PL_T_INVINCIBLE_SCENE] |
                           g_Maria.timers[PL_T_INVINCIBLE]) &&
-                        g_Maria.unk60 < 2) {
-                        if (g_Maria.unk60 == 1) {
+                        g_Maria.grabState < GRAB_HELD) {
+                        if (g_Maria.grabState == GRAB_START) {
                             step = MARIA.step;
                             step_s = MARIA.step_s;
                             MarSetStep(PL_S_BOSS_GRAB);
