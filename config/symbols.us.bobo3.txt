@@ -1,5 +1,4 @@
 spriteBanks = 0x8018002C;
-rooms_layers = 0x8018014C;
 entityLayoutHorizontal = 0x80180280;
 entityLayoutVertical = 0x80180354;
 g_EInitParticle = 0x8018054C;

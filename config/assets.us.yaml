@@ -1816,7 +1816,7 @@ files:
         vram: 0x80180000
         assets:
           - [0x8C, paldef, palette_def]
-          - [0xBC, skip]
+          - [0xBC, layers, us/layers]
           - [0x16C, gfx_banks, us/graphics_banks]
           - [0x280, skip]
           - [0x201C, cmpgfx, D_us_8018201C, 128, 128, 4]
@@ -1839,6 +1839,9 @@ files:
           - [0xEAD0, palette, D_us_8018EAD0, 16]
           - [0xEC10, palette, D_us_8018EC10, 16]
           - [0xED10, skip]
+          - [0x11D10, tiledef, load]
+          - [0x12120, tiledef, save]
+          - [0x16130, skip]
   - target: disks/us/BOSS/BO4/BO4.BIN
     asset_path: assets/boss/bo4
     src_path: src/boss/bo4
