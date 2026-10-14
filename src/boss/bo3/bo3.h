@@ -79,7 +79,7 @@ typedef enum EntityID {
     E_LIFE_UP_SPAWN,         // EntityLifeUpSpawn
     E_UNK_41,                // func_us_801A6370
     E_UNK_42,                // func_us_801A6568
-    E_UNK_43,                // func_us_801C123C_from_no4
+    E_UNK_43,                // func_us_801C123C
     NUM_ENTITIES,
 };
 

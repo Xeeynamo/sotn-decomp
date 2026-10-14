@@ -19,7 +19,6 @@ func_us_801A6370 = 0x09245C20;
 func_us_801A6568 = 0x09245E40;
 InitEntityIds = 0x09246010;
 BO3_Load = 0x09246198;
-func_us_801C123C_from_no4 = 0x09246588;
 func_us_801A07CC = 0x09246740;
 func_us_801A0A80 = 0x09246B58;
 func_us_801A1120 = 0x09247448;

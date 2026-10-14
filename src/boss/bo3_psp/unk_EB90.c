@@ -50,9 +50,9 @@ static u16 hitbox_y_offsets[12] = {0x0000, 0x0000, 0xFFE8, 0xFFF0, 0x0000,
 extern s32 E_ID(UNK_43);
 #define E_BREAKABLE_RELIC E_ID(UNK_43)
 
-#include "../../st/e_breakable_no4.h"
+extern EInit g_EInitInteractable;
 
-INCLUDE_ASM("boss/bo3_psp/nonmatchings/bo3_psp/unk_EB90", func_us_801C123C_from_no4);
+#include "../../st/e_breakable_no4.h"
 
 INCLUDE_ASM("boss/bo3_psp/nonmatchings/bo3_psp/unk_EB90", func_pspeu_09246618);
 

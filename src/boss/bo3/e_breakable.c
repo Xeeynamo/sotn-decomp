@@ -47,6 +47,6 @@ static u16 hitbox_y_offsets[] = {0x0000, 0x0000, 0xFFE8, 0xFFF0, 0x0000,
 
 #define E_BREAKABLE_RELIC E_ID(UNK_43)
 
-#include "../../st/e_breakable_no4.h"
+extern EInit g_EInitInteractable;
 
-INCLUDE_ASM("boss/bo3/nonmatchings/e_breakable", func_us_801C123C_from_no4);
+#include "../../st/e_breakable_no4.h"

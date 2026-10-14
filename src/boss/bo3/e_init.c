@@ -67,7 +67,7 @@ void EntityBreakableWallDebris(Entity* self);
 void EntityLifeUpSpawn(Entity* self);
 void func_us_801A6370(Entity* self);
 void func_us_801A6568(Entity* self);
-void func_us_801C123C_from_no4(Entity* self);
+void func_us_801C123C(Entity* self);
 
 PfnEntityUpdate EntityUpdates[] = {
     EntityBreakable,
@@ -136,7 +136,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityLifeUpSpawn,
     func_us_801A6370,
     func_us_801A6568,
-    func_us_801C123C_from_no4,
+    func_us_801C123C,
 };
 
 // clang-format off
