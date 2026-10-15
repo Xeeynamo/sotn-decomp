@@ -25,7 +25,7 @@ void EntityGreyPuff(Entity* self);
 void EntityBackgroundBookcase(Entity* self);
 void EntityBackgroundFurniture(Entity* self);
 void EntityBackgroundShadow(Entity* self);
-void func_us_801AFA80(Entity* self);
+void EntityDistantBookshelves(Entity* self);
 void func_us_801AE8E8(Entity* self);
 void EntityFlyingZombie(Entity* self);
 void EntityFlyingZombieTorso(Entity* self);
@@ -108,7 +108,7 @@ PfnEntityUpdate EntityUpdates[] = {
     /* 0x15 */ EntityBackgroundBookcase,
     /* 0x16 */ EntityBackgroundFurniture,
     /* 0x17 */ EntityBackgroundShadow,
-    /* 0x18 */ func_us_801AFA80,
+    /* 0x18 */ EntityDistantBookshelves,
     /* 0x19 */ func_us_801AE8E8,
     /* 0x1A */ EntityFlyingZombie,
     /* 0x1B */ EntityFlyingZombieTorso,
