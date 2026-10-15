@@ -31,7 +31,7 @@ extern s32 E_ID(SCYLLA);
 extern s32 E_ID(SCYLLA_TENTACLES);
 extern s32 E_ID(SCYLLA_WOLF_HEAD);
 extern s32 E_ID(SCYLLA_WATER_BLADE);
-extern s32 E_ID(UNK_35);
+extern s32 E_ID(SCYLLA_WATER_ORB_BEAM);
 extern s32 E_ID(SCYLLA_BUBBLE_SKULL);
 extern s32 E_ID(SCYLLA_WATER_ORB);
 extern s32 E_ID(SCYLLA_FALLING_ROCK);
@@ -102,7 +102,7 @@ typedef enum EntityID {
     E_SCYLLA_TENTACLES,        // EntityScyllaTentacles
     E_SCYLLA_WOLF_HEAD,        // EntityScyllaWolfHead
     E_SCYLLA_WATER_BLADE,      // EntityScyllaWaterBlade
-    E_UNK_35,                  // func_us_801A42A8
+    E_SCYLLA_WATER_ORB_BEAM,   // EntityScyllaWaterOrbBeam
     E_SCYLLA_BUBBLE_SKULL,     // EntityScyllaBubbleSkull
     E_SCYLLA_WATER_ORB,        // EntityScyllaWaterOrb
     E_SCYLLA_FALLING_ROCK,     // EntityScyllaFallingRock

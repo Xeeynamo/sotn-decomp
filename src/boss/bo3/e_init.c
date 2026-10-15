@@ -53,7 +53,7 @@ void EntityScylla(Entity* self);
 void EntityScyllaTentacles(Entity* self);
 void EntityScyllaWolfHead(Entity* self);
 void EntityScyllaWaterBlade(Entity* self);
-void func_us_801A42A8(Entity* self);
+void EntityScyllaWaterOrbBeam(Entity* self);
 void EntityScyllaBubbleSkull(Entity* self);
 void EntityScyllaWaterOrb(Entity* self);
 void EntityScyllaFallingRock(Entity* self);
@@ -122,7 +122,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityScyllaTentacles,
     EntityScyllaWolfHead,
     EntityScyllaWaterBlade,
-    func_us_801A42A8,
+    EntityScyllaWaterOrbBeam,
     EntityScyllaBubbleSkull,
     EntityScyllaWaterOrb,
     EntityScyllaFallingRock,
@@ -151,9 +151,9 @@ EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABL
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
 EInit g_EInitScylla = {ANIMSET_OVL(2), 0x00, 0x48, PAL_SCYLLA, ENEMY_SCYLLA};
-EInit D_us_801805AC = {ANIMSET_OVL(2), 0x00, 0x48, PAL_SCYLLA, ENEMY_SCYLLA_UNK_120};
-EInit D_us_801805B8 = {ANIMSET_OVL(2), 0x00, 0x48, PAL_SCYLLA, ENEMY_INTERACTABLE};
-EInit D_us_801805C4 = {ANIMSET_OVL(2), 0x00, 0x48, PAL_SCYLLA, ENEMY_SCYLLA_UNK_121};
+EInit g_EInitScyllaWolfHead = {ANIMSET_OVL(2), 0x00, 0x48, PAL_SCYLLA, ENEMY_SCYLLA_UNK_120};
+EInit g_EInitScyllaTentacles = {ANIMSET_OVL(2), 0x00, 0x48, PAL_SCYLLA, ENEMY_INTERACTABLE};
+EInit g_EInitScyllaWaterBlade = {ANIMSET_OVL(2), 0x00, 0x48, PAL_SCYLLA, ENEMY_SCYLLA_UNK_121};
 EInit D_us_801805D0 = {ANIMSET_OVL(2), 0x00, 0x48, PAL_SCYLLA, ENEMY_SCYLLA_UNK_122};
 EInit D_us_801805DC = {ANIMSET_OVL(2), 0x00, 0x48, PAL_SCYLLA, ENEMY_SCYLLA_UNK_124};
 EInit D_us_801805E8 = {ANIMSET_OVL(2), 0x00, 0x48, PAL_SCYLLA, ENEMY_SCYLLA_UNK_125};

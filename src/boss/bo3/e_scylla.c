@@ -275,7 +275,8 @@ void EntityScylla(Entity* self) {
             for (i = 0; i < 6; i++) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID(UNK_35), self, entity);
+                    CreateEntityFromEntity(
+                        E_ID(SCYLLA_WATER_ORB_BEAM), self, entity);
                     entity->posY.i.hi = 0xD8 - g_Tilemap.scrollY.i.hi;
                     entity->posX.i.hi =
                         self->posX.i.hi + 0x30 + (Random() & 0x7F);
@@ -484,8 +485,7 @@ void EntityScylla(Entity* self) {
     }
 }
 
-extern EInit D_us_801805AC;
-extern EInit D_us_801805AC;
+extern EInit g_EInitScyllaWolfHead;
 void EntityScyllaWolfHead(Entity* self) {
     Entity* newEntity;
     s32 i;
@@ -497,7 +497,7 @@ void EntityScyllaWolfHead(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801805AC);
+        InitializeEntity(g_EInitScyllaWolfHead);
         self->hitboxOffX = 0x14;
         self->hitboxOffY = -0xE;
         self->hitboxWidth = 0x18;
@@ -692,7 +692,7 @@ void EntityScyllaWolfHead(Entity* self) {
     }
 }
 
-extern EInit D_us_801805B8;
+extern EInit g_EInitScyllaTentacles;
 void EntityScyllaTentacles(Entity* self) {
     ScyllaPartInit* part;
 
@@ -703,7 +703,7 @@ void EntityScyllaTentacles(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801805B8);
+        InitializeEntity(g_EInitScyllaTentacles);
         part = &D_us_80180F4C[self->params];
         self->zPriority = part->values[0];
         self->posX.i.hi = part->values[1] - g_Tilemap.scrollX.i.hi;
@@ -742,7 +742,7 @@ void EntityScyllaTentacles(Entity* self) {
     }
 }
 
-extern EInit D_us_801805C4;
+extern EInit g_EInitScyllaWaterBlade;
 void EntityScyllaWaterBlade(Entity* self) {
     Entity* entity;
     Primitive* prim;
@@ -762,7 +762,7 @@ void EntityScyllaWaterBlade(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801805C4);
+        InitializeEntity(g_EInitScyllaWaterBlade);
         self->ext.scyllaTail.timer = 0x20;
         self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
         self->scaleX = self->scaleY = 0;
@@ -845,7 +845,7 @@ void EntityScyllaWaterBlade(Entity* self) {
 }
 
 extern EInit g_EInitInteractable;
-void func_us_801A42A8(Entity* self) {
+void EntityScyllaWaterOrbBeam(Entity* self) {
     Primitive* prim;
     s32 dy;
     s32 isDone;
@@ -1101,7 +1101,7 @@ void EntityScyllaWaterOrb(Entity* self) {
         }
         self->velocityX = rcos(angle) * 5 << 4;
         self->velocityY = rsin(angle) * 5 << 4;
-        self->ext.scyllaFireball.angle = angle;
+        self->ext.scyllaWaterOrb.angle = angle;
         PlaySfxPositional(SFX_EXPLODE_B);
         self->step++;
         /* fall through */
@@ -1110,10 +1110,10 @@ void EntityScyllaWaterOrb(Entity* self) {
         MoveEntity();
         entity = &PLAYER;
         angle = GetAngleBetweenEntities(self, entity);
-        angle = LimitAngleChange(8, self->ext.scyllaFireball.angle, angle);
+        angle = LimitAngleChange(8, self->ext.scyllaWaterOrb.angle, angle);
         self->velocityX = rcos(angle) * 5 << 4;
         self->velocityY = rsin(angle) * 5 << 4;
-        self->ext.scyllaFireball.angle = angle;
+        self->ext.scyllaWaterOrb.angle = angle;
         break;
     }
 }
