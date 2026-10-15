@@ -88,7 +88,7 @@ void EntityExplosionPuffOpaque(Entity* self) {
             self->drawFlags = ENTITY_OPACITY;
             self->opacity = 0xC0;
             self->facingLeft = Random() & 1;
-            self->velocityX = (Random() << 8) - 0x8000;
+            self->velocityX = (Random() << 8) - FIX(0.5);
             self->velocityY = FIX(-0.75);
             self->ext.opaquePuff.unk8C = -(Random() << 4) - 0x4000;
             self->step_s++;
@@ -124,7 +124,7 @@ void EntityExplosionPuffOpaque(Entity* self) {
             self->drawFlags = ENTITY_OPACITY;
             self->opacity = 0x80;
             self->facingLeft = Random() & 1;
-            self->velocityX = (Random() << 9) - 0x8000 - 0x8000;
+            self->velocityX = (Random() << 9) - FIX(0.5) - FIX(0.5);
             self->velocityY = FIX(-2.5);
             self->ext.opaquePuff.unk8C = -(Random() << 4) - 0x1000;
             self->step_s++;
