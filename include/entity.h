@@ -3297,46 +3297,17 @@ typedef struct {
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 angle;
     /* 0x84 */ u8 count;
-    /* 0x85 */ u8 unk85;
-    /* 0x86 */ u8 unk86;
-} ET_ScyllaWyrm;
-
-typedef struct {
-    /* 0x7C */ s32 : 32;
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ s16 : 16;
-    /* 0x84 */ u8 pad[0x20];
-    /* 0xA4 */ u8 splashed;
-} ET_ScyllaParticle;
-
-typedef struct {
-    /* 0x7C */ u8 pad[0x10];
-    /* 0x8C */ s16 angle;
-} ET_ScyllaWaterOrb;
-
-typedef struct {
-    /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ s16 timer;
-    /* 0x82 */ s16 : 16;
-    /* 0x84 */ u8 pad[0x18];
-    /* 0x9C */ struct Entity* target;
-} ET_ScyllaTail;
-
-typedef struct {
-    /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ s16 timer;
-    /* 0x82 */ s16 : 16;
-    /* 0x84 */ u8 pad[0x1C];
-    /* 0xA0 */ struct Primitive* curPrim;
-} ET_ScyllaBeam;
-
-typedef struct {
-    /* 0x7C */ s32 : 32;
-    /* 0x80 */ s16 timer;
-    /* 0x82 */ u8 pad[3];
     /* 0x85 */ u8 tailAttack;
     /* 0x86 */ u8 flip;
-} ET_ScyllaBody;
+    /* 0x87 */ u8 : 8;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s16 orbAngle;
+    /* 0x8E */ s16 : 16;
+    /* 0x90 */ u8 pad[0xC];
+    /* 0x9C */ struct Entity* target;
+    /* 0xA0 */ struct Primitive* curPrim;
+    /* 0xA4 */ u8 splashed;
+} ET_Scylla;
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
@@ -4926,12 +4897,7 @@ typedef union { // offset=0x7C
     ET_SurfacingWater et_surfacingWater;
     ET_WaterAlcove et_waterAlcove;
     ET_801C12B0 et_801C12B0;
-    ET_ScyllaWyrm scyllaWyrm;
-    ET_ScyllaParticle scyllaParticle;
-    ET_ScyllaWaterOrb scyllaWaterOrb;
-    ET_ScyllaTail scyllaTail;
-    ET_ScyllaBeam scyllaBeam;
-    ET_ScyllaBody scyllaBody;
+    ET_Scylla scylla;
     ET_BonePillar bonePillar;
     ET_801C4520 et_801C4520;
     ET_801C4980 et_801C4980;

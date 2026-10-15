@@ -227,20 +227,20 @@ void EntityScylla(Entity* self) {
 
     case 2:
         if (!self->step_s) {
-            self->ext.scyllaBody.timer = 0x50;
+            self->ext.scylla.timer = 0x50;
             self->step_s++;
         }
         AnimateEntity(D_us_80180D4C, self);
         if (self->hitFlags & 3) {
             SetStep(5);
         }
-        if (!--self->ext.scyllaBody.timer) {
-            if (self->ext.scyllaBody.flip) {
+        if (!--self->ext.scylla.timer) {
+            if (self->ext.scylla.flip) {
                 SetStep(4);
             } else {
                 SetStep(3);
             }
-            self->ext.scyllaBody.flip ^= 1;
+            self->ext.scylla.flip ^= 1;
         }
         break;
 
@@ -270,7 +270,7 @@ void EntityScylla(Entity* self) {
                 entity->posX.i.hi += 0x14;
                 entity->posY.i.hi -= 0x34;
                 entity->zPriority = self->zPriority - 1;
-                entity->ext.scyllaTail.target = self;
+                entity->ext.scylla.target = self;
             }
             for (i = 0; i < 6; i++) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -283,14 +283,14 @@ void EntityScylla(Entity* self) {
                     entity->params = i;
                 }
             }
-            self->ext.scyllaBody.tailAttack = 0;
-            self->ext.scyllaBody.timer = 0x50;
+            self->ext.scylla.tailAttack = 0;
+            self->ext.scylla.timer = 0x50;
             PlaySfxPositional(SFX_SCYLLA_ATTACK_YELL);
             self->step_s++;
             /* fall through */
         case 2:
             AnimateEntity(D_us_80180D68, self);
-            if (!--self->ext.scyllaBody.timer) {
+            if (!--self->ext.scylla.timer) {
                 SetSubStep(3);
             }
             break;
@@ -301,7 +301,7 @@ void EntityScylla(Entity* self) {
             }
             if (!self->poseTimer && self->pose == 4) {
                 PlaySfxPositional(SFX_SCYLLA_ATTACK_DIE);
-                self->ext.scyllaBody.tailAttack = 1;
+                self->ext.scylla.tailAttack = 1;
             }
             break;
         }
@@ -316,12 +316,12 @@ void EntityScylla(Entity* self) {
             break;
 
         case 1:
-            self->ext.scyllaBody.timer = 0x40;
+            self->ext.scylla.timer = 0x40;
             self->step_s++;
             /* fall through */
         case 2:
             AnimateEntity(D_us_80180D9C, self);
-            if (!(self->ext.scyllaBody.timer & 7)) {
+            if (!(self->ext.scylla.timer & 7)) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(
@@ -330,7 +330,7 @@ void EntityScylla(Entity* self) {
                     entity->posX.i.hi += (Random() & 0x7F) + 0x30;
                 }
             }
-            if (!--self->ext.scyllaBody.timer) {
+            if (!--self->ext.scylla.timer) {
                 SetSubStep(3);
             }
             break;
@@ -361,7 +361,7 @@ void EntityScylla(Entity* self) {
             break;
 
         case 2:
-            self->ext.scyllaBody.timer = 0x80;
+            self->ext.scylla.timer = 0x80;
             g_api.PlaySfx(SFX_BOSS_LARGE_FLAMES);
             g_BossMgrState |= BOSS_MGR_FLAMES_1_START;
             self->step_s++;
@@ -385,14 +385,14 @@ void EntityScylla(Entity* self) {
                     }
                 }
             }
-            if (!--self->ext.scyllaBody.timer) {
+            if (!--self->ext.scylla.timer) {
                 g_BossMgrState |= BOSS_MGR_FLAMES_1_END;
                 self->step_s++;
             }
             break;
 
         case 4:
-            self->ext.scyllaBody.timer = 0x50;
+            self->ext.scylla.timer = 0x50;
             g_BossMgrState |= BOSS_MGR_FLAMES_2_START;
             PlaySfxPositional(SFX_BOSS_LARGE_FLAMES);
             self->step_s++;
@@ -412,14 +412,14 @@ void EntityScylla(Entity* self) {
                     entity->posY.i.hi = 0xC0;
                 }
             }
-            if (!--self->ext.scyllaBody.timer) {
+            if (!--self->ext.scylla.timer) {
                 g_BossMgrState |= BOSS_MGR_FLAMES_2_END;
                 self->step_s++;
             }
             break;
 
         case 6:
-            self->ext.scyllaBody.timer = 0x60;
+            self->ext.scylla.timer = 0x60;
             PlaySfxPositional(SFX_BOSS_LARGE_FLAMES);
             self->step_s++;
             /* fall through */
@@ -438,7 +438,7 @@ void EntityScylla(Entity* self) {
                     entity->posY.i.hi = 0xB0;
                 }
             }
-            if (!--self->ext.scyllaBody.timer) {
+            if (!--self->ext.scylla.timer) {
                 self->step_s++;
             }
             break;
@@ -514,7 +514,7 @@ void EntityScyllaWolfHead(Entity* self) {
     case 2:
         switch (self->step_s) {
         case 0:
-            self->ext.scyllaBody.timer = 0x60;
+            self->ext.scylla.timer = 0x60;
             self->step_s++;
             /* fall through */
         case 1:
@@ -522,13 +522,13 @@ void EntityScyllaWolfHead(Entity* self) {
             if (!(Random() & 0x7F)) {
                 SetSubStep(2);
             }
-            if (!--self->ext.scyllaBody.timer) {
-                if (self->ext.scyllaBody.flip) {
+            if (!--self->ext.scylla.timer) {
+                if (self->ext.scylla.flip) {
                     SetStep(4);
                 } else {
                     SetStep(3);
                 }
-                self->ext.scyllaBody.flip ^= 1;
+                self->ext.scylla.flip ^= 1;
             }
             break;
 
@@ -546,13 +546,13 @@ void EntityScyllaWolfHead(Entity* self) {
     case 5:
         switch (self->step_s) {
         case 0:
-            self->ext.scyllaBody.timer = 0x20;
+            self->ext.scylla.timer = 0x20;
             PlaySfxPositional(SFX_WARG_GROWL);
             self->step_s++;
             /* fall through */
         case 1:
             AnimateEntity(D_us_80180DE0, self);
-            if (!--self->ext.scyllaBody.timer) {
+            if (!--self->ext.scylla.timer) {
                 SetSubStep(2);
             }
             break;
@@ -568,13 +568,13 @@ void EntityScyllaWolfHead(Entity* self) {
     case 3:
         switch (self->step_s) {
         case 0:
-            self->ext.scyllaBody.timer = 0x28;
+            self->ext.scylla.timer = 0x28;
             PlaySfxPositional(SFX_WARG_GROWL);
             self->step_s++;
             /* fall through */
         case 1:
             AnimateEntity(D_us_80180DE0, self);
-            if (!--self->ext.scyllaBody.timer) {
+            if (!--self->ext.scylla.timer) {
                 SetSubStep(2);
             }
             break;
@@ -763,21 +763,21 @@ void EntityScyllaWaterBlade(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitScyllaWaterBlade);
-        self->ext.scyllaTail.timer = 0x20;
+        self->ext.scylla.timer = 0x20;
         self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
         self->scaleX = self->scaleY = 0;
         /* fall through */
     case 1:
-        if (self->ext.scyllaTail.timer) {
-            self->ext.scyllaTail.timer--;
+        if (self->ext.scylla.timer) {
+            self->ext.scylla.timer--;
             break;
         }
         AnimateEntity(D_us_80180ED8, self);
         if (self->scaleX < 0x100) {
             self->scaleX = self->scaleY += 8;
         }
-        entity = self->ext.scyllaTail.target;
-        if (entity->ext.scyllaBody.tailAttack) {
+        entity = self->ext.scylla.target;
+        if (entity->ext.scylla.tailAttack) {
             SetStep(2);
         }
         break;
@@ -799,7 +799,7 @@ void EntityScyllaWaterBlade(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.scyllaTail.prim = prim;
+        self->ext.scylla.prim = prim;
         UnkPolyFunc2(prim);
         prim->tpage = 0x12;
         prim->clut = 0x203;
@@ -814,7 +814,7 @@ void EntityScyllaWaterBlade(Entity* self) {
     case 3:
         MoveEntity();
         self->rotate += ROT(56.25);
-        prim = self->ext.scyllaTail.prim;
+        prim = self->ext.scylla.prim;
         SetGeomScreen(0x400);
         SetGeomOffset(self->posX.i.hi, self->posY.i.hi);
         RotMatrix(&rot, &m);
@@ -868,7 +868,7 @@ void EntityScyllaWaterOrbBeam(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.scyllaBeam.prim = prim;
+        self->ext.scylla.prim = prim;
         while (prim != NULL) {
             prim->r0 = 0x20;
             prim->g0 = 0x28;
@@ -880,11 +880,11 @@ void EntityScyllaWaterOrbBeam(Entity* self) {
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
-        self->ext.scyllaBeam.timer = (Random() & 7) * self->params;
+        self->ext.scylla.timer = (Random() & 7) * self->params;
         /* fall through */
     case 1:
-        if (self->ext.scyllaBeam.timer) {
-            self->ext.scyllaBeam.timer--;
+        if (self->ext.scylla.timer) {
+            self->ext.scylla.timer--;
             break;
         }
         dx = 0x5C - g_Tilemap.scrollX.i.hi;
@@ -894,12 +894,12 @@ void EntityScyllaWaterOrbBeam(Entity* self) {
         dx /= 32;
         self->velocityX = dx;
         self->velocityY = FIX(-8.25);
-        prim = self->ext.scyllaBeam.prim;
-        self->ext.scyllaBeam.curPrim = prim;
+        prim = self->ext.scylla.prim;
+        self->ext.scylla.curPrim = prim;
         prim->x0 = prim->x1 = self->posX.i.hi;
         prim->y0 = prim->y1 = self->posY.i.hi;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
-        self->ext.scyllaBeam.timer = 0x20;
+        self->ext.scylla.timer = 0x20;
         self->step++;
         /* fall through */
     case 2:
@@ -915,23 +915,23 @@ void EntityScyllaWaterOrbBeam(Entity* self) {
         case 1:
             dy = 0x54 - g_Tilemap.scrollY.i.hi;
             dy = (dy - self->posY.i.hi) << 16;
-            self->velocityY = dy / self->ext.scyllaBeam.timer;
+            self->velocityY = dy / self->ext.scylla.timer;
             self->step_s++;
             /* fall through */
         case 2:
             MoveEntity();
             break;
         }
-        prim = self->ext.scyllaBeam.curPrim;
+        prim = self->ext.scylla.curPrim;
         prim->x0 = self->posX.i.hi;
         prim->y0 = self->posY.i.hi;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
-        self->ext.scyllaBeam.timer--;
-        if (!self->ext.scyllaBeam.timer) {
+        self->ext.scylla.timer--;
+        if (!self->ext.scylla.timer) {
             self->step++;
-        } else if (!(self->ext.scyllaBeam.timer & 3)) {
+        } else if (!(self->ext.scylla.timer & 3)) {
             prim = prim->next;
-            self->ext.scyllaBeam.curPrim = prim;
+            self->ext.scylla.curPrim = prim;
             prim->x0 = prim->x1 = self->posX.i.hi;
             prim->y0 = prim->y1 = self->posY.i.hi;
             prim->drawMode =
@@ -940,7 +940,7 @@ void EntityScyllaWaterOrbBeam(Entity* self) {
         /* fall through */
     case 3:
         isDone = true;
-        prim = self->ext.scyllaBeam.prim;
+        prim = self->ext.scylla.prim;
         while (prim->next != NULL) {
             if (prim->drawMode != DRAW_HIDE) {
                 if (!func_us_801A2A90(prim, 1)) {
@@ -993,7 +993,7 @@ void EntityScyllaBubbleSkull(Entity* self) {
     case 1:
         if (!AnimateEntity(D_us_80180F0C, self)) {
             self->velocityY = FIX(-4);
-            self->ext.scyllaParticle.unk80 = 0x50;
+            self->ext.scylla.timer = 0x50;
             self->hitboxState = 2;
             SetStep(2);
         }
@@ -1006,8 +1006,8 @@ void EntityScyllaBubbleSkull(Entity* self) {
         AnimateEntity(D_us_80180F18, self);
         MoveEntity();
         self->velocityY -= self->velocityY >> 4;
-        if (!--self->ext.scyllaParticle.unk80) {
-            self->ext.scyllaParticle.unk80 = 0x80;
+        if (!--self->ext.scylla.timer) {
+            self->ext.scylla.timer = 0x80;
             self->rotate = Random() << 4;
             self->step++;
         }
@@ -1018,7 +1018,7 @@ void EntityScyllaBubbleSkull(Entity* self) {
         MoveEntity();
         angle = self->rotate += ROT(2.8125);
         self->velocityY = rsin(angle) << 3;
-        if (!--self->ext.scyllaParticle.unk80) {
+        if (!--self->ext.scylla.timer) {
             SetStep(4);
         }
         break;
@@ -1101,7 +1101,7 @@ void EntityScyllaWaterOrb(Entity* self) {
         }
         self->velocityX = rcos(angle) * 5 << 4;
         self->velocityY = rsin(angle) * 5 << 4;
-        self->ext.scyllaWaterOrb.angle = angle;
+        self->ext.scylla.orbAngle = angle;
         PlaySfxPositional(SFX_EXPLODE_B);
         self->step++;
         /* fall through */
@@ -1110,10 +1110,10 @@ void EntityScyllaWaterOrb(Entity* self) {
         MoveEntity();
         entity = &PLAYER;
         angle = GetAngleBetweenEntities(self, entity);
-        angle = LimitAngleChange(8, self->ext.scyllaWaterOrb.angle, angle);
+        angle = LimitAngleChange(8, self->ext.scylla.orbAngle, angle);
         self->velocityX = rcos(angle) * 5 << 4;
         self->velocityY = rsin(angle) * 5 << 4;
-        self->ext.scyllaWaterOrb.angle = angle;
+        self->ext.scylla.orbAngle = angle;
         break;
     }
 }
@@ -1157,8 +1157,8 @@ void EntityScyllaFallingRock(Entity* self) {
         posX = self->posX.i.hi;
         posY = self->posY.i.hi + D_us_80180F88[self->params];
         posY += g_Tilemap.scrollY.i.hi;
-        if (posY > 0xD8 && !self->ext.scyllaParticle.splashed) {
-            self->ext.scyllaParticle.splashed = true;
+        if (posY > 0xD8 && !self->ext.scylla.splashed) {
+            self->ext.scylla.splashed = true;
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_ID(SPLASH_WATER), self, newEntity);
@@ -1208,7 +1208,7 @@ void EntityScyllaDroplet(Entity* self) {
         }
         self->posX.val += self->velocityX << 2;
         self->posY.val += self->velocityY << 2;
-        self->ext.scyllaParticle.unk80 = (Random() & 0x1F) + 0x10;
+        self->ext.scylla.timer = (Random() & 0x1F) + 0x10;
         /* fall through */
     case 1:
         AnimateEntity(D_us_80180F24, self);
