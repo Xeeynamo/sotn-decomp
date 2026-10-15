@@ -22,11 +22,14 @@ static EntityConfig puff_config[] = {
 
 void EntityExplosionPuffOpaque(Entity* self) {
     EntityConfig* obj;
-#if defined(STAGE_IS_NZ1) || defined(STAGE_IS_RNZ1) || defined(STAGE_IS_RLIB)
+#if defined(STAGE_IS_NZ1) || defined(STAGE_IS_RNZ1)
     s16 rotate;
 #endif
     s32 params;
     s32 speed;
+#if defined(STAGE_IS_RLIB)
+    s16 rotate;
+#endif
 
     switch (self->step) {
     case 0:
@@ -161,8 +164,8 @@ void EntityExplosionPuffOpaque(Entity* self) {
             self->facingLeft = Random() & 1;
             self->drawFlags |= ENTITY_SCALEX;
             self->scaleX = 0xC0;
-            rotate = self->rotate - ROT(90);
             self->drawFlags |= ENTITY_ROTATE;
+            rotate = self->rotate - ROT(90);
             self->velocityX = rcos(rotate) * FIX(0.875) >> 0xC;
             self->velocityY = rsin(rotate) * FIX(0.875) >> 0xC;
             self->step_s++;
