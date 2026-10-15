@@ -1,4 +1,3 @@
-g_EInitParticle = 0x801805EC;
 g_EInitInteractable = 0x80180604;
 g_EInitLion = 0x80180640;
 g_EInitTinman = 0x80180664;
@@ -14,7 +13,6 @@ g_RlibBreakableHitboxOffsetsY = 0x801808FC;
 g_HarpyKickHitboxes = 0x801817E4;
 g_HarpyKickHitboxIdx = 0x80181804;
 rooms = 0x801819A0;
-EntityBreakableDebris = 0x801A0E6C;
 func_us_801AF280_from_lib = 0x801A0F08;
 func_us_801AE8E8_from_lib = 0x801A1A8C;
 func_us_801BAF60_from_lib = 0x801A28C0;

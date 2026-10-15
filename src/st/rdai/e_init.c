@@ -25,7 +25,7 @@ void EntityGreyPuff(Entity* self);
 void func_us_801B1C34(Entity* self);
 void EntityCastleWall1(Entity* self);
 void EntityCastleWall2(Entity* self);
-void func_us_801B240C(Entity* self);
+void EntityStaircase(Entity* self);
 void func_us_801B2C28(Entity* self);
 void func_us_801B3368(Entity* self);
 void func_us_801BFE6C(Entity* self);
@@ -79,7 +79,7 @@ PfnEntityUpdate EntityUpdates[] = {
     func_us_801B1C34,
     EntityCastleWall1,
     EntityCastleWall2,
-    func_us_801B240C,
+    EntityStaircase,
     func_us_801B2C28,
     func_us_801B3368,
     func_us_801BFE6C,
