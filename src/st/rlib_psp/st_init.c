@@ -9,9 +9,9 @@ void InitEntityIds(void) {
     SET_E_ID(UNK_ID13);
     SET_E_ID(EXPLOSION_VARIANTS);
     SET_E_ID(GREY_PUFF);
-    SET_E_ID(UNK_16);
-    SET_E_ID(UNK_17);
-    SET_E_ID(UNK_18);
+    SET_E_ID(BG_BOOKCASE);
+    SET_E_ID(BG_FURNITURE);
+    SET_E_ID(BG_SHADOW);
     SET_E_ID(UNK_19);
     SET_E_ID(UNK_1A);
     SET_E_ID(UNK_1B);
