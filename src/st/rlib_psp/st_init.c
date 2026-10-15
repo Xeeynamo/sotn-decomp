@@ -13,7 +13,7 @@ void InitEntityIds(void) {
     SET_E_ID(BG_FURNITURE);
     SET_E_ID(BG_SHADOW);
     SET_E_ID(DISTANT_SHELVES);
-    SET_E_ID(UNK_1A);
+    SET_E_ID(THICK_BOOKCASE);
     SET_E_ID(UNK_1B);
     SET_E_ID(UNK_1C);
     SET_E_ID(HARPY_KICK);
