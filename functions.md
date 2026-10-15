@@ -3924,7 +3924,7 @@
 | ric        | func_pspeu_092BA148               |       60 |          8 |        |       |     |
 | lib        | func_psp_09254C00                 |       60 |          8 |        |       |     |
 | nz1        | func_pspeu_0923E800               |       60 |          8 |        |       |     |
-| rlib       | EntityBreakableDebris             |       60 |          8 |        |       |     |
+| rlib       | func_pspeu_09249DB8               |       60 |          8 |        |       |     |
 | sel        | func_psp_09240A88                 |       60 |          9 |        |       |     |
 | dra        | func_psp_09113E70                 |       60 |         11 |        |       |     |
 | main       | func_psp_0892D220                 |       60 |         11 |        |       |     |
