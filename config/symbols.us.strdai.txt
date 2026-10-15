@@ -14,7 +14,6 @@ g_EInitImp = 0x801808F0;
 g_EInitImpSmoke = 0x801808FC;
 g_EInitRdaiUnk33 = 0x80180908;
 g_EInitImpDeathParticle = 0x80180914;
-BackgroundBlockInit = 0x80180930;
 animations = 0x80180A58;
 hitbox_heights = 0x80180A80;
 explosion_types = 0x80180A8C;

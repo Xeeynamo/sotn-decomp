@@ -81,7 +81,6 @@ cloudVectorTwo = 0x09259310;
 cloudVectorThree = 0x09259318;
 cloudVectorFour = 0x09259320;
 data = 0x092593E8;
-BackgroundBlockInit = 0x092834B0;
 g_StainedGlassRecurseIndices = 0x09283540;
 D_psp_E_UNK_34 = 0x09283990;
 D_psp_E_UNK_33 = 0x09283998;
