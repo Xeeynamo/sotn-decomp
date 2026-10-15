@@ -237,7 +237,7 @@ void EntityBackgroundShadow(Entity* self) {
     }
 }
 
-void func_us_801AFA80_from_lib(Entity* self) {
+void func_us_801AFA80(Entity* self) {
     extern Point16 D_us_801809CC[];
     extern SVECTOR D_us_80180944;
     extern SVECTOR D_us_801809DC;

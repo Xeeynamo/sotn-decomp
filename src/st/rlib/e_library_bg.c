@@ -178,58 +178,44 @@ void EntityBackgroundFurniture(Entity* self) {
     }
 }
 
-extern EInit g_EInitInteractable;
-extern SVECTOR D_us_80180934;
-extern SVECTOR D_us_8018093C;
+static SVECTOR D_us_80180DE0 = {0, 0, 448};
+static SVECTOR D_us_80180DE8 = {0};
 
+// parallax column shadow
 void EntityBackgroundShadow(Entity* self) {
-    Primitive* prim;
-    Primitive* last;
+    Primitive *prim, *last;
     s32 primIndex;
+    long p, flag;
     s16 x;
-#ifdef VERSION_PSP
-    long sz;
-    long flag;
     long sxy;
-    VECTOR trans;
+    SVECTOR svector;
+    VECTOR vector;
     MATRIX matrix;
-#else
-    struct {
-        s32 pad[2];
-        VECTOR value;
-    } transStorage;
-    MATRIX matrix;
-    long sxy;
-    long sz;
-    long flag;
-#endif
 
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitInteractable);
-        primIndex = g_api_func_800EDB58(0x11, 0xA);
+        primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, 10);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            self->ext.et_801AF774.prim1 = prim;
-
+            self->ext.libraryShadow.prim = prim;
             while (prim != NULL) {
-                prim->u0 = 0x18;
-                prim->v0 = 0x40;
+                prim->u0 = 24;
+                prim->v0 = 64;
                 prim->r0 = prim->g0 = prim->b0 = 0;
                 prim->priority = 0x60;
                 prim->drawMode = DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
                 last = prim;
                 prim = prim->next;
             }
-
             prim = last;
-            self->ext.et_801AF774.prim2 = prim;
-            prim->u0 = 0xFF;
-            prim->v0 = 0x30;
+            self->ext.libraryShadow.lastPrim = prim;
+            prim->u0 = 255;
+            prim->v0 = 48;
             prim->x0 = 0;
-            prim->y0 = self->posY.i.hi + 0x70;
+            prim->y0 = self->posY.i.hi + 112;
             prim->r0 = prim->g0 = prim->b0 = 0;
             prim->priority = 0x60;
             prim->drawMode = DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
@@ -237,45 +223,39 @@ void EntityBackgroundShadow(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        /* fall through */
+        // fallthrough
     case 1:
-        SetGeomScreen(0x400);
-        SetGeomOffset(0x80, self->posY.i.hi);
-        RotMatrix(&D_us_8018093C, &matrix);
-#ifdef VERSION_PSP
-        trans.vx = self->posX.i.hi - 0x80;
-        trans.vy = 0;
-        trans.vz = 0x400;
-        TransMatrix(&matrix, &trans);
-#else
-        transStorage.value.vx = self->posX.i.hi - 0x80;
-        transStorage.value.vy = 0;
-        transStorage.value.vz = 0x400;
-        TransMatrix(&matrix, &transStorage.value);
-#endif
+        SetGeomScreen(1024);
+        SetGeomOffset(128, self->posY.i.hi);
+        RotMatrix(&D_us_80180DE8, &matrix);
+        vector.vx = self->posX.i.hi - 128;
+        vector.vy = 0;
+        vector.vz = 1024;
+        TransMatrix(&matrix, &vector);
         SetRotMatrix(&matrix);
         SetTransMatrix(&matrix);
-        RotTransPers(&D_us_80180934, &sxy, &sz, &flag);
-        x = (s16)sxy;
+        RotTransPers(&D_us_80180DE0, &sxy, &p, &flag);
 
+        x = sxy & 0xFFFF;
         if (x > 0) {
-            while (x >= -0x3F) {
-                x -= 0x38;
+            while (x > -64) {
+                x -= 56;
             }
         } else {
-            while (x < -0x80) {
-                x += 0x38;
+            while (x < -128) {
+                x += 56;
             }
         }
 
-        prim = self->ext.et_801AF774.prim1;
+        prim = self->ext.libraryShadow.prim;
         while (prim != NULL) {
             prim->x0 = x;
-            x += 0x38;
+            x += 56;
             prim->y0 = self->posY.i.hi;
             prim->drawMode = DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+
             prim = prim->next;
-            if (x >= 0x101) {
+            if (x > 256) {
                 break;
             }
         }
@@ -285,23 +265,53 @@ void EntityBackgroundShadow(Entity* self) {
             prim = prim->next;
         }
 
-        prim = self->ext.et_801AF774.prim2;
-        prim->u0 = 0xFF;
-        prim->v0 = 0x30;
+        prim = self->ext.libraryShadow.lastPrim;
+        prim->u0 = 255;
+        prim->v0 = 48;
         prim->x0 = 0;
-        prim->y0 = self->posY.i.hi + 0x40;
+        prim->y0 = self->posY.i.hi + 64;
         prim->r0 = prim->g0 = prim->b0 = 0;
         prim->priority = 0x60;
         prim->drawMode = DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+        break;
     }
 }
 
-void func_us_801AFA80_from_lib(Entity* self) {
-    extern Point16 D_us_801809CC[];
-    extern SVECTOR D_us_80180944;
-    extern SVECTOR D_us_801809DC;
-    extern u8* D_us_801809BC[];
+static SVECTOR D_us_80180DF0 = {0, 0, 0x400};
+// clang-format off
+static u8 D_us_80180DF8[] = {
+    0x00, 0xF0, 0xF0, 0xF0, 0x00,
+    0x00, 0xC0, 0xF0, 0xC0, 0x00,
+    0x00, 0x40, 0x80, 0x40, 0x00,
+    0x00, 0x20, 0x20, 0x20, 0x00,
+    0x00, 0x20, 0x20, 0x20, 0x00};
+static u8 D_us_80180E14[] = {
+    0x40, 0x20, 0x60, 0xA0, 0x20,
+    0x50, 0x30, 0x70, 0xB0, 0x30,
+    0x60, 0x40, 0x80, 0xC0, 0x40,
+    0x70, 0x50, 0x90, 0xD0, 0x50,
+    0x80, 0x60, 0xA0, 0xE0, 0x60};
+static u8 D_us_80180E30[] = {
+    0x40, 0x20, 0x60, 0xA0, 0x20,
+    0x50, 0x30, 0x70, 0xB0, 0x30,
+    0x60, 0x40, 0x80, 0xC0, 0x40,
+    0x70, 0x50, 0x90, 0xD0, 0x50,
+    0x80, 0x60, 0xA0, 0xE0, 0x60};
+static u8 D_us_80180E4C[] = {
+    0x00, 0xC0, 0xF0, 0xC0, 0x00,
+    0x00, 0x60, 0x60, 0x60, 0x00,
+    0x00, 0x40, 0x80, 0x40, 0x00,
+    0x00, 0x20, 0x20, 0x20, 0x00,
+    0x00, 0x20, 0x20, 0x20, 0x00};
+// clang-format on
+static u8* D_us_80180E68[] = {
+    D_us_80180DF8, D_us_80180E14, D_us_80180E30, D_us_80180E4C};
 
+static Point16 D_us_80180E78[] = {
+    {0x000, 0x000}, {0x420, 0x1E0}, {0x0B0, 0x280}, {0x080, 0x1A0}};
+static SVECTOR D_us_80180E88 = {0};
+
+void func_us_801AFA80(Entity* self) {
     long p, flag;
     u8 pad[4];
     long sxy;
@@ -317,9 +327,9 @@ void func_us_801AFA80_from_lib(Entity* self) {
     case 0:
         InitializeEntity(g_EInitInteractable);
         self->posX.i.hi =
-            D_us_801809CC[self->params].x - g_Tilemap.scrollX.i.hi;
+            D_us_80180E78[self->params].x - g_Tilemap.scrollX.i.hi;
         self->posY.i.hi =
-            D_us_801809CC[self->params].y - g_Tilemap.scrollY.i.hi;
+            D_us_80180E78[self->params].y - g_Tilemap.scrollY.i.hi;
         primIndex = g_api.func_800EDB58(PRIM_GT4, 0x10);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
@@ -352,22 +362,21 @@ void func_us_801AFA80_from_lib(Entity* self) {
         g_GpuBuffers[1].draw.r0 = 0x40;
         g_GpuBuffers[1].draw.g0 = 0x38;
         g_GpuBuffers[1].draw.b0 = 0x28;
-
     case 1:
         SetGeomScreen(0x400);
         SetGeomOffset(0x80, 0x80);
-        RotMatrix(&D_us_801809DC, &m);
+        RotMatrix(&D_us_80180E88, &m);
         trans.vx = self->posX.i.hi - 0x80;
         trans.vy = self->posY.i.hi - 0x80;
         trans.vz = 0x400;
         TransMatrix(&m, &trans);
         SetRotMatrix(&m);
         SetTransMatrix(&m);
-        RotTransPers(&D_us_80180944, &sxy, &p, &flag);
+        RotTransPers(&D_us_80180DF0, &sxy, &p, &flag);
         posX = sxy & 0xFFFF;
         posY = sxy >> 0x10;
         prim = self->ext.prim;
-        ptr = D_us_801809BC[self->params];
+        ptr = D_us_80180E68[self->params];
         for (i = 0; i < 4; i++) {
             for (j = 0; j < 4; j++) {
                 prim->drawMode = DRAW_DITHERING | DRAW_COLORS;
