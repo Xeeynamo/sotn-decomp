@@ -89,6 +89,7 @@ segments:
       - [0x21770, .data, rdai/e_red_door_tiles]
       - [0x217A0, .data, rdai/e_init]
       - [0x219A0, data]
+      - [0x21AF8, .data, rdai/e_breakable]
       - [0x21C50, .data, rdai/e_clouds]
       - [0x21D80, data]
       - [0x4BDC8, .data, rdai/header]
