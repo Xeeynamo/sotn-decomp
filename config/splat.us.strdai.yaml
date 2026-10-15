@@ -59,6 +59,8 @@ segments:
       - [0x17A8, .data, e_particles]
       - [0x1828, .data, e_room_fg]
       - [0x18B4, data]
+      - [0x1BD8, .data, e_clouds]
+      - [0x1D10, data]
       - [0x30FF8, .rodata, e_breakable]
       - [0x31018, .rodata, func_us_801b1c34]
       - [0x3107C, .rodata, unk_327A4]

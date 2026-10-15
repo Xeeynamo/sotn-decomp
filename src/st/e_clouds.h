@@ -3,18 +3,6 @@
 
 extern EInit g_EInitInteractable;
 
-#if defined(E_CLOUDS_EXTERNAL_DATA)
-
-extern MedusaCloudsUVal cloudUVals[];
-extern SVECTOR cloudVectorOne;
-extern SVECTOR cloudVectorTwo;
-extern SVECTOR cloudVectorThree;
-extern SVECTOR cloudVectorFour;
-extern cloudData data[];
-extern SVECTOR empty;
-
-#else
-
 static MedusaCloudsUVal cloudUVals[] = {
     {0x0000, 0x0000, 0x0000, 0x0000}, {0x8181, 0x81BE, 0x9E81, 0x9EBE},
     {0x81C1, 0x81FE, 0x9EC1, 0x9EFE}, {0xA181, 0xA1BE, 0xBE81, 0xBEBE},
@@ -51,13 +39,35 @@ static u8 D_us_801813B4[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x00, 0x00};
 
 static cloudData data[] = {
-    {.unkPtr = D_us_80181334, .unk4 = 0xFF20, .priority = 0x1C},
-    {.unkPtr = D_us_80181374, .unk4 = 0xFF00, .priority = 0x18},
-    {.unkPtr = D_us_801813B4, .unk4 = 0x0060, .priority = 0x1C}};
+    {
+        .unkPtr = D_us_80181334,
+#ifdef STAGE_IS_RDAI
+        .unk4 = 224,
+#else
+        .unk4 = -224,
+#endif
+        .priority = 0x1C,
+    },
+    {
+        .unkPtr = D_us_80181374,
+#ifdef STAGE_IS_RDAI
+        .unk4 = 256,
+#else
+        .unk4 = -256,
+#endif
+        .priority = 0x18,
+    },
+    {
+        .unkPtr = D_us_801813B4,
+#ifdef STAGE_IS_RDAI
+        .unk4 = -128,
+#else
+        .unk4 = 96,
+#endif
+        .priority = 0x1C,
+    }};
 
 static SVECTOR empty = {0};
-
-#endif
 
 void EntityClouds(Entity* self) {
     Primitive* prim;

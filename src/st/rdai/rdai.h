@@ -10,6 +10,7 @@ extern EInit g_EInitSpectralSwordAura;
 
 enum Palettes {
     PAL_NONE,
+    PAL_CLOUDS = 0xC0,
     PAL_ARCHER = 0x212,
     PAL_SPECTRAL_SWORD = 0x215,
     PAL_BREAKABLE = 0x230,
