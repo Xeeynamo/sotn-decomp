@@ -29,23 +29,12 @@ void EntityStaircase(Entity* self) {
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
-#if defined(VERSION_PSP)
         prim->x0 = 0;
         prim->y0 = 0;
         prim->x1 = 0x90;
         prim->y1 = 0;
         prim->x2 = prim->x3 = 0;
         prim->y2 = prim->y3 = 0x90;
-#else
-        prim->x1 = 0x90;
-        prim->y3 = 0x90;
-        prim->y2 = 0x90;
-        prim->x0 = 0;
-        prim->y0 = 0;
-        prim->y1 = 0;
-        prim->x3 = 0;
-        prim->x2 = 0;
-#endif
         prim->priority = 0x5E;
         prim->drawMode = DRAW_DEFAULT;
         /* fallthrough */
