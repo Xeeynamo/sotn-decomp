@@ -310,7 +310,7 @@ static Point16 D_us_80180E78[] = {
     {0x000, 0x000}, {0x420, 0x1E0}, {0x0B0, 0x280}, {0x080, 0x1A0}};
 static SVECTOR D_us_80180E88 = {0};
 
-void func_us_801AFA80(Entity* self) {
+void EntityDistantBookshelves(Entity* self) {
     long p, flag;
     u8 pad[4];
     long sxy;

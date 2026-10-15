@@ -11,6 +11,7 @@ enum Palettes {
     PAL_LION = 0x200,
     PAL_TIN_MAN = 0x206,
     PAL_UNK_20F = 0x20F,
+    PAL_BREAKABLE = 0x213,
     PAL_SCHMOO = 0x21B,
     PAL_SCARECROW = 0x21E,
     // puff params 0,1
@@ -44,10 +45,10 @@ typedef enum EntityID {
     E_UNK_ID13,             // EntityUnkId13
     E_EXPLOSION_VARIANTS,   // EntityExplosionVariants
     E_GREY_PUFF,            // EntityGreyPuff
-    E_UNK_16,               // func_us_801AF280_from_lib
-    E_UNK_17,               // func_us_801AF538_from_lib
-    E_UNK_18,               // func_us_801AF7B8_from_lib
-    E_UNK_19,               // func_us_801AFA80_from_lib
+    E_BG_BOOKCASE,          // EntityBackgroundBookcase
+    E_BG_FURNITURE,         // EntityBackgroundFurniture
+    E_BG_SHADOW,            // EntityBackgroundShadow
+    E_DISTANT_SHELVES,      // EntityDistantBookshelves
     E_UNK_1A,               // func_us_801AE8E8_from_lib
     E_UNK_1B,               // func_us_801AE7AC_from_lib
     E_UNK_1C,               // func_us_801ADBE8

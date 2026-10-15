@@ -122,7 +122,6 @@ void func_us_801AE7AC_from_lib(Entity* self) {
 }
 
 #define BREAKABLE_ANIMSET ANIMSET_OVL(7)
-#define PAL_BREAKABLE 0x213
 extern EInit g_EInitParticle;
 
 enum BreakableDebrisSteps {
