@@ -22,10 +22,10 @@ void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
-void func_us_801AF280_from_lib(Entity* self);
-void func_us_801AF538_from_lib(Entity* self);
-void func_us_801AF7B8_from_lib(Entity* self);
-void func_us_801AFA80_from_lib(Entity* self);
+void EntityBackgroundBookcase(Entity* self);
+void EntityBackgroundFurniture(Entity* self);
+void EntityBackgroundShadow(Entity* self);
+void EntityDistantBookshelves(Entity* self);
 void func_us_801AE8E8_from_lib(Entity* self);
 void func_us_801AE7AC_from_lib(Entity* self);
 void func_us_801ADBE8(Entity* self);
@@ -40,7 +40,7 @@ void func_us_801AF448(Entity* self);
 void func_us_801AF9E8(Entity* self);
 void EntityExplosionPuffOpaque(Entity* self);
 void func_us_801AFC88(Entity* self);
-void func_us_801AE84C_from_lib(Entity* self);
+void EntityBreakableDebris(Entity* self);
 void func_us_801BAF60_from_lib(Entity* self);
 
 PfnEntityUpdate EntityUpdates[] = {
@@ -65,10 +65,10 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
-    func_us_801AF280_from_lib,
-    func_us_801AF538_from_lib,
-    func_us_801AF7B8_from_lib,
-    func_us_801AFA80_from_lib,
+    EntityBackgroundBookcase,
+    EntityBackgroundFurniture,
+    EntityBackgroundShadow,
+    EntityDistantBookshelves,
     func_us_801AE8E8_from_lib,
     func_us_801AE7AC_from_lib,
     func_us_801ADBE8,
@@ -83,7 +83,7 @@ PfnEntityUpdate EntityUpdates[] = {
     func_us_801AF9E8,
     EntityExplosionPuffOpaque,
     func_us_801AFC88,
-    func_us_801AE84C_from_lib,
+    EntityBreakableDebris,
     func_us_801BAF60_from_lib,
 };
 

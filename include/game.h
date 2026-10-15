@@ -1926,6 +1926,19 @@ enum AluTimers {
 #define NUM_HORIZONTAL_SENSORS 4
 #define NUM_VERTICAL_SENSORS 7
 
+typedef enum {
+    GRAB_REACTION_NORMAL,
+    GRAB_REACTION_STONE = 2,
+} GrabReactionEffect; // these depend to the playable character
+
+typedef enum {
+    GRAB_NONE,
+    GRAB_START,   // enemy requests to grab the player
+    GRAB_HELD,    // player is held by the enemy
+    GRAB_DAMAGE,  // set to deal damage while player is grabbed
+    GRAB_RELEASE, // enemy releases the player with optional damage
+} GrabState;
+
 typedef struct {
     /* 0x0 80072BD0 */ Collider colFloor[NUM_HORIZONTAL_SENSORS];
     /* 0x90 80072C60 */ Collider colCeiling[NUM_HORIZONTAL_SENSORS];
@@ -1978,10 +1991,10 @@ typedef struct {
     /* 0x3AA 80072F7A */ u16 damageTaken;
     /* 0x3AC 80072F7C */ u16
         unk5C; // ALU: hellfire spell state, RIC: isPrologue
-    /* 0x3AE 80072F7E */ u16 unk5E; // status ailment timer
-    /* 0x3B0 80072F80 */ u16 unk60;
-    /* 0x3B2 80072F82 */ u16 unk62;
-    /* 0x3B4 80072F84 */ u16 unk64;
+    /* 0x3AE 80072F7E */ u16 unk5E;              // status ailment timer
+    /* 0x3B0 80072F80 */ u16 grabState;          // see GrabState
+    /* 0x3B2 80072F82 */ u16 grabReactionEffect; // see GrabReactionEffect
+    /* 0x3B4 80072F84 */ u16 grabDamage;
     /* 0x3B6 80072F86 */ u16 unk66;
     /* 0x3B8 80072F88 */ u16 unk68;
     /* 0x3BA 80072F8A */ u16 unk6A;

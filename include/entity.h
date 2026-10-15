@@ -3096,6 +3096,30 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 : 8;
+    /* 0x86 */ u8 unk86;
+    /* 0x87 */ u8 grabbing;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s16 savedTileX;
+    /* 0x9E */ s16 savedTileWidth;
+    /* 0xA0 */ s16 savedTileY;
+    /* 0xA2 */ s16 savedTileHeight;
+    /* 0xA4 */ u16 baseZPriority;
+    /* 0xA6 */ s16 : 16;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ Primitive* deathPrim;
+    /* 0xB0 */ s16 deathY;
+} ET_AkmodanII;
+
+typedef struct {
+    /* 0x7C */ Primitive* prim;
     /* 0x80 */ s16 unk80;
 } ET_801B8D30;
 
@@ -4457,12 +4481,39 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ s8 : 8;
+    /* 0x89 */ u8 unk89;
+    /* 0x8A */ s16 : 16;
+    /* 0x8C */ struct Entity* unk8C;
+} ET_801D511C;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
     /* 0x80 */ s16 : 16;
     /* 0x82 */ u16 unk82;
     /* 0x84 */ s32 : 32;
     /* 0x88 */ s16 : 16;
     /* 0x8A */ struct Entity* entity;
 } ET_801D58FC;
+
+typedef struct {
+    struct Primitive* prim7C;
+    s16 unk80;
+    s32 : 32;
+    s32 : 32;
+    s16 unk8C;
+    s16 : 16;
+    u8 unk90;
+    u8 unk91;
+    s16 unk92;
+    s32 : 32;
+    s32 : 32;
+    struct Entity* ent9C;
+} ET_801D5E90;
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim7C;
@@ -4817,6 +4868,7 @@ typedef union { // offset=0x7C
     ET_Clouds clouds;
     ET_TheCreature theCreature;
     ET_TheCreatureFlames theCreatureFlames;
+    ET_AkmodanII akmodanII;
     ET_801C0B9C et_801C0B9C;
     ET_unkDoor unkDoor;
     ET_FrozenShade frozenShade;
@@ -4933,7 +4985,9 @@ typedef union { // offset=0x7C
     ET_801D5BA4 et_801D5BA4;
     ET_801C5C78 et_801C5C78;
     ET_801D68E0 et_801D68E0;
+    ET_801D511C et_801D511C;
     ET_801D58FC et_801D58FC;
+    ET_801D5E90 et_801D5E90;
     ET_801C5364 et_801C5364;
     ET_801C81C8 et_801C81C8;
     ET_801C5EE4 et_801C5EE4;

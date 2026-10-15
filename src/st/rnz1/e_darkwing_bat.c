@@ -117,7 +117,7 @@ static s32 WindAttackHelper(s32 arg0) {
         }
     }
     FntPrint("damage:%x\n", g_CurrentEntity->ext.darkwing.damage);
-    if ((g_Player.unk60) == 2) {
+    if ((g_Player.grabState) == GRAB_HELD) {
         other = &PLAYER;
         other->velocityY -= FIX(1.0 / 8);
         if (g_CurrentEntity->facingLeft) {
@@ -150,11 +150,11 @@ static s32 WindAttackHelper(s32 arg0) {
             return 1;
         }
         var_s2 = g_CurrentEntity->ext.darkwing.damage;
-        g_Player.unk64 =
+        g_Player.grabDamage =
             (g_api.enemyDefs[ENEMY_DARKWING_BAT_UNK_113].attack / var_s2);
-        g_Player.unk60 = 4;
+        g_Player.grabState = GRAB_RELEASE;
         if (var_s2 > 2) {
-            g_Player.unk60 = 0;
+            g_Player.grabState = GRAB_NONE;
         }
         if (g_CurrentEntity->facingLeft) {
             other->velocityX = FIX(10) / var_s2;
@@ -164,7 +164,7 @@ static s32 WindAttackHelper(s32 arg0) {
         other->velocityY = FIX(-3) / var_s2;
         return 1;
     }
-    if ((g_Player.unk60) || (arg0 == 0)) {
+    if ((g_Player.grabState) || (arg0 == 0)) {
         return 0;
     }
     other = &PLAYER;
@@ -187,9 +187,9 @@ static s32 WindAttackHelper(s32 arg0) {
                              PLAYER_STATUS_UNK10000 | PLAYER_STATUS_INVINCIBLE |
                              PLAYER_STATUS_STONE | PLAYER_STATUS_CROUCH |
                              PLAYER_STATUS_MIST_FORM))) {
-        g_Player.unk60 = 1;
-        g_Player.unk64 = 0;
-        g_Player.unk62 = 0;
+        g_Player.grabState = GRAB_START;
+        g_Player.grabDamage = 0;
+        g_Player.grabReactionEffect = GRAB_REACTION_NORMAL;
         var_s2 = GetDistanceToPlayerX();
         var_s2 = (var_s2 - 48) / 24;
         if (var_s2 <= 0) {
@@ -512,10 +512,10 @@ void EntityDarkwingBat(Entity* self) {
                        PLAYER_STATUS_UNK10000 | PLAYER_STATUS_INVINCIBLE |
                        PLAYER_STATUS_STONE | PLAYER_STATUS_CROUCH |
                        PLAYER_STATUS_MIST_FORM))) {
-                    g_Player.unk60 = 1;
-                    g_Player.unk64 =
+                    g_Player.grabState = GRAB_START;
+                    g_Player.grabDamage =
                         g_api.enemyDefs[ENEMY_DARKWING_BAT_UNK_114].attack;
-                    g_Player.unk62 = 0;
+                    g_Player.grabReactionEffect = GRAB_REACTION_NORMAL;
                     SetSubStep(4);
                 }
             }
@@ -537,9 +537,9 @@ void EntityDarkwingBat(Entity* self) {
         case 5:
             if (!AnimateEntity(anim_hugging, self)) {
                 self->ext.darkwing.attackCycles += 1;
-                g_Player.unk64 =
+                g_Player.grabDamage =
                     g_api.enemyDefs[ENEMY_DARKWING_BAT_UNK_114].attack;
-                g_Player.unk60 = 3;
+                g_Player.grabState = GRAB_DAMAGE;
             }
             self->ext.darkwing.timer++;
             if (self->ext.darkwing.timer & 1) {
@@ -548,7 +548,7 @@ void EntityDarkwingBat(Entity* self) {
                 self->posY.i.hi -= 1;
             }
             if ((self->ext.darkwing.attackCycles) > 3) {
-                g_Player.unk60 = 0;
+                g_Player.grabState = GRAB_NONE;
                 SetSubStep(6);
             }
             break;
@@ -610,9 +610,9 @@ void EntityDarkwingBat(Entity* self) {
             if (!--self->ext.darkwing.timer) {
                 self->ext.darkwing.timer = 0x18;
                 self->ext.darkwing.attackCycles += 1;
-                g_Player.unk64 =
+                g_Player.grabDamage =
                     g_api.enemyDefs[ENEMY_DARKWING_BAT_UNK_114].attack;
-                g_Player.unk60 = 3;
+                g_Player.grabState = GRAB_DAMAGE;
             }
             if (self->ext.darkwing.timer & 1) {
                 self->posY.i.hi += 1;
@@ -620,7 +620,7 @@ void EntityDarkwingBat(Entity* self) {
                 self->posY.i.hi -= 1;
             }
             if ((self->ext.darkwing.attackCycles) > 3) {
-                g_Player.unk60 = 0;
+                g_Player.grabState = GRAB_NONE;
                 self->step_s++;
             }
             break;
@@ -668,8 +668,8 @@ void EntityDarkwingBat(Entity* self) {
             self->ext.darkwing.unk87 = 0;
             self->velocityX = 0;
             self->velocityY = FIX(-0.5);
-            if (g_Player.unk60) {
-                g_Player.unk60 = 0;
+            if (g_Player.grabState) {
+                g_Player.grabState = GRAB_NONE;
             }
             self->step_s++;
             /* fallthrough */

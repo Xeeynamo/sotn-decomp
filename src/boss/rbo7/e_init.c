@@ -22,47 +22,47 @@ void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
-void func_us_801BAB18_from_bo0(Entity* self);
+void EntityBossDoors(Entity* self);
 void EntityBossFightManager(Entity* self);
 void EntityLifeUpSpawn(Entity* self);
-void func_us_801940B4(Entity* self);
+void EntityAkmodanII(Entity* self);
 void func_us_801957C0(Entity* self);
-void EntityHarpyKick(Entity* self);
+void EntityAkmodanaAttackHitbox(Entity* self);
 void func_us_80195A8C(Entity* self);
 void func_us_80195D04(Entity* self);
-void EntityCtulhuDeath(Entity* self);
+void EntityAkmodanDeathEffect(Entity* self);
 
 PfnEntityUpdate EntityUpdates[] = {
-    EntityBreakable,
-    EntityExplosion,
-    EntityPrizeDrop,
-    EntityDamageDisplay,
-    EntityRedDoor,
-    EntityIntenseExplosion,
-    EntitySoulStealOrb,
-    EntityRoomForeground,
-    EntityStageNamePopup,
-    EntityEquipItemDrop,
-    EntityRelicOrb,
-    EntityPersistentItemDrop,
-    EntityEnemyBlood,
-    EntityMessageBox,
-    EntityDummy,
-    EntityDummy,
-    EntityBackgroundBlock,
-    EntityLockCamera,
-    EntityUnkId13,
-    EntityExplosionVariants,
-    EntityGreyPuff,
-    func_us_801BAB18_from_bo0,
-    EntityBossFightManager,
-    EntityLifeUpSpawn,
-    func_us_801940B4,
-    func_us_801957C0,
-    EntityHarpyKick,
-    func_us_80195A8C,
-    func_us_80195D04,
-    EntityCtulhuDeath,
+    /* 0x01 */ EntityBreakable,
+    /* 0x02 */ EntityExplosion,
+    /* 0x03 */ EntityPrizeDrop,
+    /* 0x04 */ EntityDamageDisplay,
+    /* 0x05 */ EntityRedDoor,
+    /* 0x06 */ EntityIntenseExplosion,
+    /* 0x07 */ EntitySoulStealOrb,
+    /* 0x08 */ EntityRoomForeground,
+    /* 0x09 */ EntityStageNamePopup,
+    /* 0x0A */ EntityEquipItemDrop,
+    /* 0x0B */ EntityRelicOrb,
+    /* 0x0C */ EntityPersistentItemDrop,
+    /* 0x0D */ EntityEnemyBlood,
+    /* 0x0E */ EntityMessageBox,
+    /* 0x0F */ EntityDummy,
+    /* 0x10 */ EntityDummy,
+    /* 0x11 */ EntityBackgroundBlock,
+    /* 0x12 */ EntityLockCamera,
+    /* 0x13 */ EntityUnkId13,
+    /* 0x14 */ EntityExplosionVariants,
+    /* 0x15 */ EntityGreyPuff,
+    /* 0x16 */ EntityBossDoors,
+    /* 0x17 */ EntityBossFightManager,
+    /* 0x18 */ EntityLifeUpSpawn,
+    /* 0x19 */ EntityAkmodanII,
+    /* 0x1A */ func_us_801957C0,
+    /* 0x1B */ EntityAkmodanaAttackHitbox,
+    /* 0x1C */ func_us_80195A8C,
+    /* 0x1D */ func_us_80195D04,
+    /* 0x1E */ EntityAkmodanDeathEffect,
 };
 
 // clang-format off
@@ -77,7 +77,7 @@ EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABL
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
 EInit g_EInitUnused80180420 = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
-EInit D_us_8018042C = {ANIMSET_OVL(2), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
+EInit g_EInitBossDoors = {ANIMSET_OVL(2), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
 EInit g_EInitAkmodanII = {ANIMSET_OVL(8), 0x01, 0x48, PAL_AKMODAN_II, ENEMY_AKMODAN_II};
 EInit D_us_80180444 = {ANIMSET_OVL(8), 0x00, 0x48, PAL_AKMODAN_II, ENEMY_AKMODAN_II_UNK_10C};
 EInit D_us_80180450 = {ANIMSET_OVL(10), 0x01, 0x4E, PAL_CC_YELLOW_EFFECT, ENEMY_AKMODAN_II_UNK_10D};

@@ -760,7 +760,7 @@ void MarStepBossGrab(void) {
     switch (g_CurrentEntity->step_s) {
     case 0:
         MarResetPose();
-        if (g_Player.unk62 == 0) {
+        if (g_Player.grabReactionEffect == GRAB_REACTION_NORMAL) {
             PLAYER.anim = mar_anim_stun;
             g_Player.timers[PL_T_2] = 8;
             g_Player.damagePalette = PAL_FLAG(PAL_CC_RED_EFFECT_A);
@@ -768,11 +768,11 @@ void MarStepBossGrab(void) {
         }
         PLAYER.velocityX = PLAYER.velocityY = 0;
         PLAYER.step_s = 1;
-        g_Player.unk60 = 2;
+        g_Player.grabState = GRAB_HELD;
         break;
     case 1:
-        // Effectively a switch on g_Player.unk60
-        if (g_Player.unk60 == 3) {
+        // Effectively a switch on g_Player.grabState
+        if (g_Player.grabState == GRAB_DAMAGE) {
             damage.effects = EFFECT_NONE;
             damage.damageKind = DAMAGEKIND_1;
             damage.damageTaken = g_Player.damageTaken;
@@ -782,21 +782,21 @@ void MarStepBossGrab(void) {
                 MarStepDead(0, 2, PL_S_BOSS_GRAB, 1);
                 return;
             }
-            if (g_Player.unk62 == 0) {
+            if (g_Player.grabReactionEffect == GRAB_REACTION_NORMAL) {
                 g_Player.timers[PL_T_2] = 4;
                 g_Player.damagePalette = PAL_FLAG(PAL_CC_RED_EFFECT_A);
                 MARIA_API_PLAY_SFX(SFX_VO_MAR_PAIN_C);
             }
-            if (g_Player.unk62 == 2) {
+            if (g_Player.grabReactionEffect == GRAB_REACTION_STONE) {
             }
-            g_Player.unk60 = 2;
-        } else if (g_Player.unk60 == 4) {
+            g_Player.grabState = GRAB_HELD;
+        } else if (g_Player.grabState == GRAB_RELEASE) {
             PLAYER.step = PL_S_HIT;
             PLAYER.step_s = 2;
-            g_Player.unk60 = 0;
-            g_Player.damageTaken = g_Player.unk64;
+            g_Player.grabState = GRAB_NONE;
+            g_Player.damageTaken = g_Player.grabDamage;
             MARIA_API_PLAY_SFX(SFX_VO_MAR_PAIN_D);
-        } else if (g_Player.unk60 == 0) {
+        } else if (g_Player.grabState == GRAB_NONE) {
             PLAYER.step = PL_S_HIT;
             PLAYER.step_s = 1;
         }
