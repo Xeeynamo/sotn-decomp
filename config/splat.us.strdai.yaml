@@ -82,7 +82,6 @@ segments:
       - [0x31604, c, e_breakable]
       - [0x31C34, c, func_us_801b1c34]
       - [0x320CC, c, e_room_fg_2]
-      - [0x3240C, c, func_us_801b240c]
       - [0x32578, c, e_stained_glass]
       - [0x327A4, c, unk_327A4]
       - [0x33A4C, c, e_background_sky_land]
