@@ -27,9 +27,6 @@ segments:
         file: game_0
         end: 0x92B
       - start: 0x92C
-        type: .data
-        file: game/savemsg
-      - start: 0xB30
         type: c
         file: game_1
         end: 0x1A3B
@@ -37,9 +34,6 @@ segments:
         type: .text
         file: game/cfgjp
       - start: 0x56D4
-        type: .data
-        file: game/cfgstr
-      - start: 0x56F8
         type: c
         file: game_3a
         end: 0x80C7
@@ -95,7 +89,8 @@ segments:
           - [0x129C4, 0x12B3A]
           - [0x12B48, 0x12DE2]
           - [0x12E28, 0x12F0E]
-        end: 0x1614B
+        end: 0x160EF
+      - [0x160F0, .data, game_1]
       - [0x1614C, .data, game/cfgjp]
       - [0x1E6A8, .data, game/cfgrw1]
       - [0x1E6D4, .data, game/cfgrw1b]

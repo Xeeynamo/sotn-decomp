@@ -594,6 +594,7 @@ void func_800F14CC(void) {
     }
 }
 
+// original name: PSX_TO_STAGE_NO_GET
 s32 func_800F16D0(void) {
     s32 stageId;
     RoomTeleport* tele;
@@ -894,6 +895,7 @@ void RevealSecretPassageAtPlayerPositionOnMap(s32 castleFlagId) {
                              g_Tilemap.top + (g_PlayerY >> 8), castleFlagId);
 }
 
+// original name: all_map_check
 void func_800F2014(void) {
     s32 tileX;
     s32 tileY;

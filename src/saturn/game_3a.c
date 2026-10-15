@@ -8,16 +8,23 @@
 
 void DestroyEntity(Entity* entity);
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606B6F8, LoadSubDisplayFiles);
+// func_0606B6F8
+void LoadSubDisplayFiles(void) {
+    ReadFileToAddr("SUB.PRG", 0x060D6000);
+    if (g_FileLoadEnabled != 0) {
+        func_0601AF5C();
+    }
+    ReadFileToAddr("KANJI.FON", 0x00252000);
+    ReadFileToAddr("SUB_DISP.MAP", 0x002B2000);
+}
+
+const char DAT_0606B754[] = "OYAJI.CHR";
 
 // _READ_SUB_OUT_MODE
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606B760, func_0606B760);
 
-extern s32 DAT_0605BEC4;
-extern s32 DAT_060937F8;
 extern char DAT_0606BB34[];
 extern char DAT_0606BB40[];
-extern char DAT_0606B754[];
 extern char* g_StageAlternateMapNames[];
 extern Unk0605D770 DAT_0605D770;
 
@@ -25,8 +32,6 @@ void func_0600C00C();
 void func_0601AC48();
 void func_0600C114();
 void SetStageOverlayAddress();
-void AllocGameSprite(s32);
-void ResetSpriteVram();
 
 s32 func_0606BB4C(void) {
     bool bVar1;
@@ -184,8 +189,6 @@ void func_0606BEE4(void) {
 
 void func_0606C064(void) { ReadFileToAddr("GAMEOVER.MAP", 0x00252000); }
 
-extern s32 DAT_060389F4[];
-
 s32 func_0606C088(u16 arg0) {
     switch (DAT_0605D770.unk8) {
     case 0:
@@ -230,8 +233,6 @@ s32 func_0606C088(u16 arg0) {
     }
     return 0;
 }
-
-void PlaySfx(s32 sfxId);
 
 extern u16 g_ItemIconSlots[];
 extern u16 UNK_Invincibility0[];
@@ -654,7 +655,7 @@ void func_800F2404(s32 arg0) {
         g_unkGraphicsStruct.D_80097450 = 0;
         func_0600FB34();
         func_060195F0();
-        DAT_0605c6e4 = 0;
+        DAT_0605C6E4 = 0;
         break;
     }
 }
@@ -1171,7 +1172,7 @@ void ServantWorkClear(void) {
 }
 
 // original name: init_work_sub_out_p
-void init_work_sub_out_p(void) {
+void func_0606E074(void) {
     s32 i;
     Entity* entity;
 
