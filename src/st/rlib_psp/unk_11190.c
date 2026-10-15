@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rlib/rlib.h"
 
-INCLUDE_ASM("st/rlib_psp/nonmatchings/rlib_psp/unk_11190", func_us_801AF280_from_lib);
+INCLUDE_ASM("st/rlib_psp/nonmatchings/rlib_psp/unk_11190", EntityBackgroundBookcase);
 
 extern EInit g_EInitInteractable;
 extern SVECTOR D_us_80180924;
 extern SVECTOR D_us_8018092C;
 
-void func_us_801AF538_from_lib(Entity* self) {
+void EntityBackgroundFurniture(Entity* self) {
     s32 primIndex;
     s16 x;
 #ifdef VERSION_PSP
@@ -123,7 +123,7 @@ extern EInit g_EInitInteractable;
 extern SVECTOR D_us_80180934;
 extern SVECTOR D_us_8018093C;
 
-void func_us_801AF7B8_from_lib(Entity* self) {
+void EntityBackgroundShadow(Entity* self) {
     Primitive* prim;
     Primitive* last;
     s32 primIndex;
