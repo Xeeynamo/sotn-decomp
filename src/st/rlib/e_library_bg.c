@@ -94,32 +94,18 @@ void EntityBackgroundBookcase(Entity* self) {
     }
 }
 
-extern SVECTOR D_us_80180924;
-extern SVECTOR D_us_8018092C;
+static SVECTOR D_us_80180DD0 = {0, 0, 256};
+static SVECTOR D_us_80180DD8 = {0};
 
 void EntityBackgroundFurniture(Entity* self) {
-    s32 primIndex;
-    s16 x;
-#ifdef VERSION_PSP
-    struct {
-        MATRIX matrix;
-        VECTOR trans;
-        long screenX;
-        long screenZ;
-        long screenY;
-    } geometry;
-#else
-    struct {
-        s32 pad[2];
-        VECTOR trans;
-        MATRIX matrix;
-        s32 screenX;
-        s32 screenY;
-        s32 screenZ;
-    } geometry;
-    MATRIX* matrixPtr;
-#endif
     Primitive* prim;
+    s32 primIndex;
+    long p, flag;
+    s16 x;
+    long sxy;
+    SVECTOR svector;
+    VECTOR vector;
+    MATRIX matrix;
 
     switch (self->step) {
     case 0:
@@ -130,14 +116,13 @@ void EntityBackgroundFurniture(Entity* self) {
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
             self->ext.prim = prim;
-
             while (prim != NULL) {
                 prim->tpage = 0xF;
                 prim->clut = 0x34;
-                prim->u0 = prim->u2 = 0x80;
-                prim->u1 = prim->u3 = 0xF8;
+                prim->u0 = prim->u2 = 128;
+                prim->u1 = prim->u3 = 248;
                 prim->v0 = prim->v1 = 0;
-                prim->v2 = prim->v3 = 0x1C;
+                prim->v2 = prim->v3 = 28;
                 prim->priority = 0x50;
                 prim->drawMode = DRAW_UNK02;
                 prim = prim->next;
@@ -146,54 +131,41 @@ void EntityBackgroundFurniture(Entity* self) {
             DestroyEntity(self);
             return;
         }
-
+        // fallthrough
     case 1:
-        SetGeomScreen(0x400);
-        SetGeomOffset(0x80, self->posY.i.hi);
-#ifdef VERSION_PSP
-        RotMatrix(&D_us_8018092C, &geometry.matrix);
-        geometry.trans.vx = self->posX.i.hi - 0x80;
-        geometry.trans.vy = 0;
-        geometry.trans.vz = 0x400;
-        TransMatrix(&geometry.matrix, &geometry.trans);
-        SetRotMatrix(&geometry.matrix);
-        SetTransMatrix(&geometry.matrix);
-        RotTransPers(&D_us_80180924, &geometry.screenX, &geometry.screenY,
-                     &geometry.screenZ);
-        x = (s16)geometry.screenX;
-#else
-        matrixPtr = &geometry.matrix;
-        RotMatrix(&D_us_8018092C, matrixPtr);
-        geometry.trans.vx = self->posX.i.hi - 0x80;
-        geometry.trans.vy = 0;
-        geometry.trans.vz = 0x400;
-        TransMatrix(matrixPtr, &geometry.trans);
-        SetRotMatrix(matrixPtr);
-        SetTransMatrix(matrixPtr);
-        RotTransPers(&D_us_80180924, &geometry.screenX, &geometry.screenY,
-                     &geometry.screenZ);
-        x = (s16)geometry.screenX;
-#endif
+        SetGeomScreen(1024);
+        SetGeomOffset(128, self->posY.i.hi);
+        RotMatrix(&D_us_80180DD8, &matrix);
+        vector.vx = self->posX.i.hi - 128;
+        vector.vy = 0;
+        vector.vz = 1024;
+        TransMatrix(&matrix, &vector);
+        SetRotMatrix(&matrix);
+        SetTransMatrix(&matrix);
+        RotTransPers(&D_us_80180DD0, &sxy, &p, &flag);
+
+        x = sxy & 0xFFFF;
         if (x > 0) {
-            while (x >= -0x3F) {
-                x -= 0x78;
+            while (x > -64) {
+                x -= 120;
             }
         } else {
-            while (x < -0x80) {
-                x += 0x78;
+            while (x < -128) {
+                x += 120;
             }
         }
 
         prim = self->ext.prim;
         while (prim != NULL) {
             prim->x0 = prim->x2 = x;
-            x += 0x78;
+            x += 120;
             prim->x1 = prim->x3 = x;
-            prim->y0 = prim->y1 = self->posY.i.hi + 0x1C;
+            prim->y0 = prim->y1 = self->posY.i.hi + 28;
             prim->y2 = prim->y3 = self->posY.i.hi;
             prim->drawMode = DRAW_UNK02;
+
             prim = prim->next;
-            if (x >= 0x101) {
+            if (x > 256) {
                 break;
             }
         }
@@ -202,10 +174,7 @@ void EntityBackgroundFurniture(Entity* self) {
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
-        return;
-
-    default:
-        return;
+        break;
     }
 }
 
