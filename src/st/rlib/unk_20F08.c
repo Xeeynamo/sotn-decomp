@@ -238,7 +238,6 @@ void func_us_801AF7B8_from_lib(Entity* self) {
 }
 
 void func_us_801AFA80_from_lib(Entity* self) {
-    extern u16 g_EInitInteractable[];
     extern Point16 D_us_801809CC[];
     extern SVECTOR D_us_80180944;
     extern SVECTOR D_us_801809DC;
@@ -338,5 +337,3 @@ void func_us_801AFA80_from_lib(Entity* self) {
         }
     }
 }
-
-INCLUDE_ASM("st/rlib/nonmatchings/unk_20F08", func_us_801AE8E8_from_lib);
