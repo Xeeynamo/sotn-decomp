@@ -3924,7 +3924,7 @@
 | ric        | func_pspeu_092BA148               |       60 |          8 |        |       |     |
 | lib        | func_psp_09254C00                 |       60 |          8 |        |       |     |
 | nz1        | func_pspeu_0923E800               |       60 |          8 |        |       |     |
-| rlib       | func_pspeu_09249DB8               |       60 |          8 |        |       |     |
+| rlib       | EntityBreakableDebris             |       60 |          8 |        |       |     |
 | sel        | func_psp_09240A88                 |       60 |          9 |        |       |     |
 | dra        | func_psp_09113E70                 |       60 |         11 |        |       |     |
 | main       | func_psp_0892D220                 |       60 |         11 |        |       |     |
@@ -7708,7 +7708,7 @@
 | chi        | func_psp_0924BD20                 |      226 |         27 |        |       |     |
 |            | func_pspeu_0924AE50               |      227 |         18 |        |       |     |
 | lib        | func_psp_09252E70                 |      227 |         29 |        |       |     |
-| rlib       | func_us_801AF280_from_lib         |      227 |         29 |        |       |     |
+| rlib       | EntityBackgroundBookcase          |      227 |         29 |        |       |     |
 | bo0        | EntityChair                       |      227 |         34 |        |       |     |
 | bo2        | func_us_801A7340                  |      227 |         36 | Yes    |       |     |
 | main       | func_psp_08925A04                 |      228 |         11 |        |       |     |
@@ -8577,7 +8577,7 @@
 | nz1        | func_pspeu_09257C20               |      366 |         33 |        |       |     |
 | rnz1       | func_pspeu_09254330               |      366 |         33 |        |       |     |
 | lib        | func_psp_092537F8                 |      367 |         31 |        |       |     |
-| rlib       | func_us_801AFA80_from_lib         |      367 |         31 |        |       |     |
+| rlib       | EntityDistantBookshelves          |      367 |         31 |        |       |     |
 | rnz1       | func_pspeu_092508B8               |      367 |         46 |        |       |     |
 | top        | func_pspeu_09248638               |      367 |         54 |        |       |     |
 | dra        | func_psp_090EB8B8                 |      368 |         17 |        |       |     |
