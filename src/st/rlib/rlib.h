@@ -49,7 +49,7 @@ typedef enum EntityID {
     E_BG_FURNITURE,         // EntityBackgroundFurniture
     E_BG_SHADOW,            // EntityBackgroundShadow
     E_DISTANT_SHELVES,      // EntityDistantBookshelves
-    E_UNK_1A,               // func_us_801AE8E8_from_lib
+    E_THICK_BOOKCASE,       // EntityThickBookcase
     E_UNK_1B,               // func_us_801AE7AC_from_lib
     E_UNK_1C,               // func_us_801ADBE8
     E_HARPY_KICK,           // EntityHarpyKick
