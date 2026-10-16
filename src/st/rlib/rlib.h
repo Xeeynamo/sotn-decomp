@@ -64,7 +64,7 @@ typedef enum EntityID {
     E_EXPLODE_PUFF_OPAQUE,  // EntityExplosionPuffOpaque
     E_UNK_27,               // func_us_801AFC88
     E_UNK_28,               // EntityBreakableDebris
-    E_UNK_29,               // func_us_801BAF60_from_lib
+    E_CANDLE_TABLE,         // EntityCandleTable
     NUM_ENTITIES,
 };
 
