@@ -48,23 +48,23 @@ segments:
       - start: 0xADE5
         type: c
         file: zero
-        end: 0xae07
+        end: 0xAE07
 
       # ratan2
-      - start: 0xae08
+      - start: 0xAE08
         type: c
         file: zero
-        end: 0xaf3b
+        end: 0xAF3B
 
-      - start: 0xaf3c
+      - start: 0xAF3C
         type: data
         file: zero
-        end: 0xb73b
+        end: 0xB73B
 
-      - start: 0xb73c
+      - start: 0xB73C
         type: c
         file: zero
-        end: 0xb893
+        end: 0xB893
         function_ranges:
           - [0xB73C, 0xB79A]
           - [0xB79C, 0xB7FA]
@@ -74,38 +74,31 @@ segments:
       - start: 0xB894
         type: c
         file: zero
-        end: 0xb8eb
+        end: 0xB8EB
 
-      - start: 0xb8ec
+      - start: 0xB8EC
         type: c
         file: zero
-        end: 0xbf37
+        end: 0xBF37
 
       # DestroyEntity
-      - start: 0xBf38
+      - start: 0xBF38
         type: c
         file: zero
-        end: 0xbf87
+        end: 0xBF87
 
       # before DGFS
-      - start: 0xbf88
+      - start: 0xBF88
         type: c
         file: zero
-        end: 0xD1F7
+        end: 0xD03F
 
-      # bug
-      - start: 0xD1F8
-        type: c
-        file: zero
-        end: 0xD9EB
-        function_ranges:
-          - [0xD1F8, 0xD9EA]
-
-      - start: 0xD9EC
+      - start: 0xD040
         type: c
         file: zero_1
         end: 0x14647
         function_ranges:
+          - [0xD1F8, 0xD9EA]
           - [0xF4B8, 0xF942]
           - [0xF944, 0x103A2]
           - [0x1052C, 0x1052C]

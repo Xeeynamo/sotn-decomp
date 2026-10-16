@@ -64,7 +64,6 @@ void func_800F2860(void) {
 
 extern s32 DAT_0605C6D4;
 extern s32 stopMusicFlag;
-extern u16 DAT_0605D744;
 extern s32 DAT_06085508;
 extern s32 DAT_0608550C;
 extern s32 DAT_06085520;
@@ -1101,7 +1100,7 @@ LAB_06072d9e:
             PlaySfx(SET_KEY_ON_20_21);
             PlaySfx(SET_KEY_ON_22_23);
         }
-        DAT_0605c6e4 = 0;
+        DAT_0605C6E4 = 0;
         DAT_0605c110 = 0;
         DAT_06086270 = 0;
         DAT_06057f68 = 0;

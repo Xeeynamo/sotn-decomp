@@ -24,8 +24,6 @@ void entrypoint(void) {
 void MoviePRGClear();
 void func_06010400();
 void PlaySfx();
-void SCL_Vdp2Init();
-void SCL_DisplayFrame();
 void StartColorOffsetFade(s32, s32);
 
 void func_060040d8(void) {
@@ -83,7 +81,7 @@ void func_060040d8(void) {
             }
         } else {
             func_06009838();
-            func_0606463c();
+            func_0606463C();
             UpdateScrollForRoom();
         }
         break;
@@ -138,7 +136,7 @@ void func_060040d8(void) {
                 func_06010400();
                 SCL_DisplayFrame();
             }
-            func_06012fb4();
+            func_06012FB4();
             func_0600652C();
             func_0601333c();
             if (DAT_0605cea0.unk2 == 2) {
@@ -293,7 +291,7 @@ void func_060047E8(void) {
     DAT_0605CE90 = 0;
     DAT_0605C6D4 = 0;
     g_CutsceneHasControl = 0;
-    DAT_0605c6e4 = 0;
+    DAT_0605C6E4 = 0;
     DAT_0605c664 = 0;
     D_80097C98 = 0;
     D_8006C374 = 0;
@@ -567,18 +565,107 @@ void func_06004E94(void) {
     set_imask(msk);
 }
 
-// _RETURN_TO_GAME
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004EF0, func_06004EF0);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004F50, func_06004F50);
+// original name: RETURN_TO_GAME
+void ReturnToGame(void) { SetVblank(0); }
 
-void func_06005208(s32 arg) {
-    u16 mode = arg;
-    Unk0605cd70* state = &DAT_0605cd70;
+void func_06004F50(u16 arg0) {
+    SCL_SET_N1SPRM(0);
+    SCL_SET_N2SPRM(0);
+    switch (arg0) {
+    case 0x6:
+        DAT_0605D770.unk2 = 7;
+        break;
 
-    state->unk4 = state->unk2;
-    state->unk2 = mode;
-    state->unk0 = 0;
-    state->unk8 = 0;
+    case 0x2:
+        DAT_0605D770.unk2 = 2;
+        ((s32(*)(void))func_06009D30)();
+        break;
+
+    case 0x4:
+        DAT_0605D770.unk2 = 13;
+        break;
+
+    case 0x8:
+        DAT_0605D770.unk2 = 14;
+        break;
+
+    case 0x11:
+        DAT_0605D770.unk2 = 3;
+        func_06064640(0);
+        SCL_SET_N1SPRM(1);
+        SCL_SET_N2SPRM(1);
+        break;
+
+    case 0x20:
+        DAT_0605D770.unk2 = 6;
+        break;
+
+    case 0x30:
+        DAT_0605D7F0 = true;
+        Scl_s_reg.tvmode &= 0x7EFF;
+        SclProcess = 1;
+        SCL_DisplayFrame();
+        BlankScreen();
+        DestroyEntitiesFrom(0);
+        func_0600B254();
+        InitPrimBuf();
+        ((s32(*)(void))func_060195F0)();
+        DAT_0605C6E4 = 0;
+        SetSpriteEraseData(0);
+        g_CurrentRoom.stageID = 0;
+        g_CurrentRoom.unk4 = 0;
+        g_CurrentRoom.unk2 = -1;
+        g_CurrentRoom.unk6 = -1;
+        g_CurrentRoom.unk8 = 0;
+        g_CurrentRoom.unkA = -1;
+        ResetLayerColorCalc();
+        Scl_w_reg.win1_start[0] = 0;
+        Scl_w_reg.win1_start[1] = 0;
+        Scl_w_reg.win1_end[0] = 0;
+        Scl_w_reg.win1_end[1] = 0;
+        Scl_w_reg.wincontrl[0] = 0x8383;
+        SclProcess = 1;
+        SetVDP2Vram();
+        DAT_0605cea0.unk2 = arg0;
+        func_06004F50(2);
+        DAT_0605D7F0 = false;
+        return;
+
+    case 5:
+        DAT_0605D770.unk2 = 12;
+        break;
+    }
+
+    if (arg0 != 0x20) {
+        func_06009058(arg0);
+    }
+    Scl_w_reg.win1_start[0] = 0;
+    Scl_w_reg.win1_start[1] = 0;
+    Scl_w_reg.win1_end[0] = 0;
+    Scl_w_reg.win1_end[1] = 0;
+    Scl_w_reg.wincontrl[0] = 0x8383;
+    SclProcess = 1;
+    DAT_0605cea0.unk4 = DAT_0605cea0.unk2;
+    DAT_0605cea0.unk2 = arg0;
+    DAT_0605cea0.unk0 = 0;
+    DAT_0605cea0.unk8 = 0;
+    DAT_0605cd70.unk2 = 0;
+    DAT_0605cd70.unk4 = -1;
+    if ((arg0 == 0x11) && (D_8003C730 == 0)) {
+        g_CurrentRoom.unk2 = -1;
+        g_CurrentRoom.unk6 = -1;
+        g_CurrentRoom.unk8 = 0;
+        g_CurrentRoom.unkA = -1;
+    }
+}
+
+void func_06005208(s32 arg0) {
+    u16 mode = arg0;
+
+    DAT_0605cd70.unk4 = DAT_0605cd70.unk2;
+    DAT_0605cd70.unk2 = mode;
+    DAT_0605cd70.unk0 = 0;
+    DAT_0605cd70.unk8 = 0;
     DAT_0605c110 = 0;
 
     if (mode == 5) {
@@ -597,12 +684,12 @@ void func_06005208(s32 arg) {
             if ((g_CurrentRoom.stageID & 0xDF) == 0xD) {
                 func_06009F10();
             }
-            if (state->unk4 == 4) {
-                state->unk0 += 3;
+            if (DAT_0605cd70.unk4 == 4) {
+                DAT_0605cd70.unk0 += 3;
             } else {
-                DAT_0606465C();
-                if (state->unk4 == 1) {
-                    state->unk0 += 1;
+                func_0606465C();
+                if (DAT_0605cd70.unk4 == 1) {
+                    DAT_0605cd70.unk0 += 1;
                 }
                 SetVdp2BackgroundColor();
             }
@@ -623,7 +710,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6005328, func_06005328);
 void func_0600544C(void) {}
 
 void func_06005470(void) {
-    ReadFileToAddr("LOGO.PRG", (s32)&DAT_060a5000);
+    ReadFileToAddr("LOGO.PRG", 0x060A5000);
     if (g_FileLoadEnabled != 0) {
         func_0601B184();
     }
@@ -637,7 +724,7 @@ void func_06005470(void) {
 extern s16* DAT_0605C120[];
 
 void func_06005508(void) {
-    ReadFileToAddr("TITLE.PRG", (s32)&DAT_060a5000);
+    ReadFileToAddr("TITLE.PRG", 0x060A5000);
     if (g_FileLoadEnabled != 0) {
         func_0601AEF4();
     }
@@ -656,9 +743,6 @@ void func_06005508(void) {
 // original name: READ_LOAD_MODE
 s32 func_060055A4(void) { return 0; }
 
-extern s32 DAT_060937F8;
-void ResetSpriteVram(void);
-void AllocGameSprite(s32);
 void func_06019FA0(s32);
 void func_06019FE4(s32);
 
@@ -744,7 +828,7 @@ s32 func_060055C8(void) {
                            SCL_VDP2_VRAM_A1 + 0x2000);
             ReadFileToAddr(
                 func_06005E3C(1, g_CurrentRoom.stageID), SCL_VDP2_VRAM_B1);
-            DAT_060645C4();
+            func_060645C4();
         }
 
         if (g_CurrentRoom.stageID & 0x20) {
@@ -771,7 +855,7 @@ s32 func_060055C8(void) {
 }
 
 void func_0600583C(void) {
-    ReadFileToAddr("OPEN.PRG", (s32)&DAT_060a5000);
+    ReadFileToAddr("OPEN.PRG", 0x060A5000);
     if (g_FileLoadEnabled != 0) {
         func_0601AF2C();
     }
@@ -784,7 +868,7 @@ void func_0600583C(void) {
 }
 
 void func_060058D0(void) {
-    ReadFileToAddr("STAFF.PRG", (s32)&DAT_060a5000);
+    ReadFileToAddr("STAFF.PRG", 0x060A5000);
     if (g_FileLoadEnabled != 0) {
         func_0601AF44();
     }
@@ -798,7 +882,7 @@ void func_060058D0(void) {
 extern s32 func_0601B1B4(void);
 
 void func_06005944(void) {
-    ReadFileToAddr("MOVIE.PRG", (s32)&DAT_06066000);
+    ReadFileToAddr("MOVIE.PRG", 0x06066000);
     if (g_FileLoadEnabled != 0) {
         func_0601B1B4();
     }
@@ -831,11 +915,8 @@ void func_060059F4(void) {
             DAT_06038A14[DAT_0605D7FC - 1][0], SCL_VDP2_VRAM_A1 + 0x2000);
         ReadFileToAddr(DAT_06038A14[DAT_0605D7FC - 1][1], SCL_VDP2_VRAM_B1);
     }
-    DAT_060645C4();
+    func_060645C4();
 }
-
-extern s32 DAT_060389E0[][2];
-extern s32 DAT_060389F4[];
 
 s32 func_06005A90(void) {
     func_06019FE4(0);
@@ -1394,7 +1475,6 @@ u16 func_06007BE0(s16* colors, s32 arg1) {
     return tblNo;
 }
 
-extern s32 DAT_0605BEC4;
 extern u16 DAT_0605BEC8;
 extern s16 DAT_0605BECA;
 extern s32 d_06038dbc;
@@ -2258,7 +2338,32 @@ void func_060097B4(Unk0605CD90* arg0, s32 arg1) {
     SCL_Close();
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009838, func_06009838);
+void func_06009838(void) {
+    Unk0605CD90* ptr;
+    u16 i;
+
+    ptr = &DAT_0605CD90[0];
+    for (i = 0; i < 3; i++, ptr++) {
+        if (ptr->unk18 != 0) {
+            if ((g_CurrentRoom.stageID == 0x41) &&
+                (g_CurrentRoom.unk4 == 0x12)) {
+                if (i == 0) {
+                    func_06009F84(ptr);
+                } else {
+                    func_060098F0(i, ptr, &DAT_0605c680);
+                }
+            } else {
+                if (DAT_0605c680.unk34 != DAT_0605c680.unk3C) {
+                    func_060098F0(i, ptr, &DAT_0605c680);
+                }
+                if (DAT_0605c680.unk38 != DAT_0605c680.unk40) {
+                    func_06009AE8(i, ptr, &DAT_0605c680);
+                }
+            }
+        }
+    }
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60098F0, func_060098F0);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009AE8, func_06009AE8);
 
@@ -2361,8 +2466,6 @@ void func_0600A330(void) {
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A350, func_0600A350);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A490, func_0600A490);
 
-extern u8 d_060578A0[];
-
 // MapBytesThroughLutPair
 void func_0600A5FC(u8* src, u8* dst0, u8* dst1, s32 count) {
     u8 value;
@@ -2370,7 +2473,7 @@ void func_0600A5FC(u8* src, u8* dst0, u8* dst1, s32 count) {
     while (count > 0) {
         value = *src++;
         *dst0++ = DAT_060577A0[value];
-        *dst1++ = d_060578A0[value];
+        *dst1++ = DAT_060578A0[value];
         count--;
     }
 }
@@ -2378,7 +2481,7 @@ void func_0600A5FC(u8* src, u8* dst0, u8* dst1, s32 count) {
 // func_0600A62C
 void MapBytesThroughLut(u8* src, u8* dst, s32 count) {
     while (count > 0) {
-        *dst++ = d_060578A0[*src++];
+        *dst++ = DAT_060578A0[*src++];
         count--;
     }
 }
@@ -3847,11 +3950,29 @@ s32 DecompressLZSS(u8* src, u8* dst, u32 srclen) {
     return dstCount;
 }
 
-// _PSX_SHAKE_MAIN
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FA4C, func_0600FA4C);
+// original name: PSX_SHAKE_MAIN
+void func_0600FA4C(void) {
+    DAT_0605CD5C = DAT_0605C100;
+    DAT_0605C65C = DAT_0605CD80;
+    switch (DAT_06057A10.id) {
+    case 0:
+        break;
+    case 2:
+        func_0600FACC();
+        DAT_0605C100 = DAT_06057A18;
+        break;
+    case 1:
+    case 3:
+    case 4:
+    case 6:
+        func_0600FACC();
+        DAT_0605CD80 = DAT_06057A18;
+        break;
+    }
+}
 
 void func_0600FACC(void) {
-    struct ShakeState* shake = &DAT_06057A10;
+    ShakeState* shake = &DAT_06057A10;
 
     shake->offset = shake->offsets[shake->index];
     shake->index++;
@@ -3882,7 +4003,7 @@ s32 func_0600FB4C(void) {
 }
 
 // original name: TEST_TEST
-void func_0600FB9C(void) { func_0602A778(0x100, 32, 0); }
+void func_0600FB9C(void) { SCL_AllocColRam(SCL_SP0, 32, 0); }
 
 s32 func_0600FBBC(void) {
     if (!CdSoundCommandQueueEmpty()) {
@@ -3894,17 +4015,55 @@ s32 func_0600FBBC(void) {
     return 0;
 }
 
-// _all_map_check
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FC04, RevealMapCellAtPlayer);
+// original name: all_map_check
+void func_0600FC04(void) {
+    s32 tileX, tileY;
+    s32 subMap;
+    s32 idx;
 
-extern void MarkRoomVisited(s32, s32, s32, Tilemap*);
+    if (DAT_0605D744 != 0 && g_CurrentRoom.stageID != 0x1F) {
+        tileX = g_Tilemap.left + (g_PlayerX / 320);
+        tileY = g_Tilemap.top + (g_PlayerY / 256);
+        if (g_CurrentRoom.stageID & 0x20) {
+            tileX = 0x3F - tileX;
+            tileY = 0x3F - tileY;
+        }
+        switch (tileX & 3) {
+        case 0:
+            subMap = 0x40;
+            break;
+        case 1:
+            subMap = 0x10;
+            break;
+        case 2:
+            subMap = 4;
+            break;
+        case 3:
+            subMap = 1;
+            break;
+        default:
+            subMap = 1;
+            break;
+        }
+        idx = (tileX >> 2) + (tileY << 4);
+        if (g_CurrentRoom.stageID & 0x20) {
+            idx += 0x400;
+        }
+        if ((g_CastleMap[idx] & subMap) == 0) {
+            g_CastleMap[idx] |= subMap;
+            g_RoomCount++;
+        }
+    }
+}
+
+extern void MarkRoomVisited(s32, s32, s32);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FCF8, MarkRoomVisited);
 
 void func_0600FE98(s32 arg0) {
     s32 x = g_Tilemap.left + g_PlayerX / 320;
     s32 y = g_Tilemap.top + g_PlayerY / 240;
 
-    MarkRoomVisited(x, y, arg0, &g_Tilemap);
+    MarkRoomVisited(x, y, arg0);
 }
 
 void func_800F2120(void) {}
@@ -3979,14 +4138,3 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60100DC, func_060100DC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6010274, func_06010274);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6010328, func_06010328);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6010400, func_06010400);
-
-// _pause_seq
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60110C0, func_060110C0);
-
-// func_06011264
-void SignalSlaveSh2(void) {
-    // set input capture flag on sub-sh2
-    *((u16*)SH2_REG_M_FRT_IC) = 0xFFFF;
-}
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011278, func_06011278);

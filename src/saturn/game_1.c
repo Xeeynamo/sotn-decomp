@@ -5,6 +5,44 @@
 #include "lib/spr/spr.h"
 #include <saturn_sprite.h>
 
+char* DAT_0607C0F0[] = {
+    "本体ＲＡＭ",
+    "カートリッジＲＡＭ",
+};
+
+char* DAT_0607C0F8[] = {
+    "はい",
+    "いいえ",
+};
+
+char* DAT_0607C100 = "バックアップＲＡＭを\x01選んで下さい。";
+
+char* DAT_0607C104 = "の全ての記録を";
+
+char* DAT_0607C108 = "消します。（初期化します）\x01　　　　よろしいですか？";
+
+char* DAT_0607C10C = "　　　記録の更新をしますか？";
+
+char* DAT_0607C110 = "　　　　セーブしますか？";
+
+char* DAT_0607C114 = "セーブしました。";
+
+char* DAT_0607C118 = "　データが５つ全てセーブされて　\x01　います。";
+
+char* DAT_0607C11C = "の全ての記録を";
+
+char* DAT_0607C120 =
+    "消すことができませんでした。\x01（初期化できませんでした）";
+
+char* DAT_0607C124 = "のバックアップ";
+
+char* DAT_0607C128 = "の準備がまだできていません。\x01（初期化されていません）";
+
+char* DAT_0607C12C =
+    "このゲームの記録をセーブするため\x01には７０の空き容量が必要です。";
+
+char* DAT_0607C130 = "記録を正しくセーブすることができ\x01ませんでした。";
+
 s32 func_06066B30(Entity* self, s32 arg1) {
     s32 ret;
 
@@ -55,25 +93,6 @@ void func_06066B74(Primitive* prim0, Primitive* prim1, Primitive* prim2) {
     prim2->drawMode = DRAW_HIDE;
 }
 
-extern char* DAT_0607C0F0[];
-extern char* DAT_0607C0F8[];
-extern char* DAT_0607C100[];
-extern char* DAT_0607C104[];
-extern char* DAT_0607C108[];
-extern char* DAT_0607C10C[];
-extern char* DAT_0607C110[];
-extern char* DAT_0607C114[];
-extern char* DAT_0607C118[];
-extern char* DAT_0607C11C[];
-extern char* DAT_0607C120[];
-extern char* DAT_0607C124[];
-extern char* DAT_0607C128[];
-extern char* DAT_0607C12C[];
-extern char* DAT_0607C130[];
-
-extern s16 DAT_0607C134[][2];
-extern s16 DAT_0607C140[][2];
-
 void PlaySfx(s32 sfxId);
 void func_06067958(void);
 void func_0606797C(char*, s16*, s32);
@@ -110,39 +129,39 @@ s32 func_06066CE0(Entity* self) {
         prim2->x1 = prim2->x2 = 0x106;
         switch (self->ext.save.unk4) {
         case 0x28:
-            func_0606797C(DAT_0607C114[0], sp, 0);
+            func_0606797C(DAT_0607C114, sp, 0);
             prim0->x0 = 0x70;
             prim2->x0 = prim2->x3 = prim1->x0 = prim1->x3 = 0x6A;
             prim2->x1 = prim2->x2 = prim1->x1 = prim1->x2 = 0xD6;
             prim0->x3 += 2;
             break;
         case 0x29:
-            func_0606797C(DAT_0607C118[0], sp, 0);
+            func_0606797C(DAT_0607C118, sp, 0);
             prim0->x3 += 2;
             break;
         case 0x2A:
             func_0606797C(DAT_0607C0F0[1], sp, 0);
-            func_0606797C(DAT_0607C11C[0], sp, 0);
+            func_0606797C(DAT_0607C11C, sp, 0);
             sp[0] = 0;
             sp[1] += 0x10;
-            func_0606797C(DAT_0607C120[0], sp, 0);
+            func_0606797C(DAT_0607C120, sp, 0);
             prim0->x3 += 2;
             break;
         case 0x2B:
             func_0606797C(DAT_0607C0F0[1], sp, 0);
-            func_0606797C(DAT_0607C124[0], sp, 0);
+            func_0606797C(DAT_0607C124, sp, 0);
             sp[0] = 0;
             sp[1] += 0x10;
-            func_0606797C(DAT_0607C128[0], sp, 0);
+            func_0606797C(DAT_0607C128, sp, 0);
             prim0->x3 += 2;
             break;
         case 0x2C:
-            func_0606797C(DAT_0607C12C[0], sp, 0);
+            func_0606797C(DAT_0607C12C, sp, 0);
             prim0->x3 += 2;
             break;
         default:
         case 0x2D:
-            func_0606797C(DAT_0607C130[0], sp, 0);
+            func_0606797C(DAT_0607C130, sp, 0);
             prim0->x3 += 2;
             break;
         }
@@ -193,6 +212,12 @@ void func_06066FE0(s32 arg0, Primitive* prim, s32 arg2) {
     }
 }
 
+s16 DAT_0607C134[][2] = {
+    {0x64, 0x78},
+    {0x2C, 0x6C},
+    {0xA8, 0x6C},
+};
+
 s32 func_06067090(Entity* self) {
     Primitive* prim0;
     Primitive* prim1;
@@ -233,7 +258,7 @@ s32 func_06067090(Entity* self) {
         prim2 = self->ext.save.unk18;
         sp[0] = 0;
         sp[1] = 0;
-        func_0606797C(DAT_0607C100[0], sp, 0x10);
+        func_0606797C(DAT_0607C100, sp, 0x10);
         temp2 = sp[1] + 0x10;
         self->ext.save.unk1E = temp2;
         temp2 += 0x40;
@@ -321,6 +346,12 @@ s32 func_06067090(Entity* self) {
     return 0;
 }
 
+s16 DAT_0607C140[][2] = {
+    {0x40, 0xC0},
+    {0x5C, 0x24},
+    {0xC0, 0x24},
+};
+
 s32 func_060674B8(Entity* self, s32 arg1) {
     Primitive* prim0;
     Primitive* prim1;
@@ -363,16 +394,16 @@ s32 func_060674B8(Entity* self, s32 arg1) {
         sp[1] = 0;
         if (arg1 == 2) {
             func_0606797C(DAT_0607C0F0[1], sp, 0x20);
-            func_0606797C(DAT_0607C104[0], sp, 0x20);
+            func_0606797C(DAT_0607C104, sp, 0x20);
             sp[0] = 0;
             sp[1] += 0x10;
-            func_0606797C(DAT_0607C108[0], sp, 0x20);
+            func_0606797C(DAT_0607C108, sp, 0x20);
             self->ext.save.unk1C = 1;
         } else if (arg1 == 3) {
-            func_0606797C(DAT_0607C10C[0], sp, 0x20);
+            func_0606797C(DAT_0607C10C, sp, 0x20);
             self->ext.save.unk1C = 0;
         } else if (arg1 == 4) {
-            func_0606797C(DAT_0607C110[0], sp, 0x20);
+            func_0606797C(DAT_0607C110, sp, 0x20);
             self->ext.save.unk1C = 0;
         }
         temp2 = sp[1] + 0x10;
