@@ -9588,7 +9588,7 @@
 | maria      | func_pspeu_092A9E88               |      800 |         95 |        |       |     |
 | cen        | func_pspeu_09245ED8               |      800 |         95 |        |       |     |
 | are        | func_pspeu_0924CDC8               |      800 |        116 | Yes    |       |     |
-| rlib       | func_us_801AE8E8_from_lib         |      801 |         74 |        |       |     |
+| rlib       | EntityThickBookcase               |      801 |         74 |        |       |     |
 |            | func_pspeu_09246488               |      801 |         75 | Yes    |       |     |
 | bo6        | MarEntityHitByIce                 |      802 |         82 |        |       |     |
 | maria      | func_pspeu_092BC5E8               |      802 |         82 |        |       |     |
