@@ -58,6 +58,7 @@ segments:
       - [0xD8A8, c, rlib/st_common]
       - [0xE998, c, rlib/prim_helpers]
       - [0xF0D8, c, rlib_psp/unk_F0D8]
+      - [0x10548, c, rlib_psp/unk_10548]
       - [0x11190, c, rlib/e_library_bg]
       - [0x12070, c, rlib_psp/st_init]
       - [0x12220, c, rlib/e_breakable]
