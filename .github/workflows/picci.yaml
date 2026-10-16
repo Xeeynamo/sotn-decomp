@@ -24,7 +24,7 @@ on:
   workflow_dispatch:
 
 env:
-  DEMOS: "0 3 6 11 15 16 19"
+  DEMOS: "0 3 6 11 15 16 19 27"
 
 jobs:
   build-linux:
