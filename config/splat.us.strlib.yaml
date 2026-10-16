@@ -89,7 +89,6 @@ segments:
       - [0x22F94, c, collision]
       - [0x24750, c, create_entity]
       - [0x252C8, c, e_red_door]
-      - [0x25340, c, e_red_door]
       - [0x25F78, c, st_common]
       - [0x27428, c, e_collect]
       - [0x29D98, c, e_misc]
