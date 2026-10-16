@@ -1336,6 +1336,36 @@ files:
     asset_path: assets/boss/bo3
     src_path: src/boss/bo3
     splat_config_path: config/splat.pspeu.bobo3.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          - [0x1AD10, sprite_banks, psp/sprite_banks]
+          - [0x1AD70, layers, psp/layers]
+          - [0x1AE10, paldef, palette_def]
+          - [0x1AE48, gfx_banks, psp/graphics_banks]
+          - [0x1AF40, skip]
+          - [0x1B190, rooms, rooms]
+          - [0x1B1C0, skip]
+          - [0x1B2E0, cmpgfx, D_us_801829E4, 128, 128, 4, 0x27420]
+          - [0x1C538, cmpgfx, D_us_80183C3C, 128, 128, 4, 0x27460]
+          - [0x1D8C0, cmpgfx, D_us_80184FC4, 128, 128, 4, 0x27400]
+          - [0x1E890, cmpgfx, D_us_80185F90, 128, 128, 4, 0x27480]
+          - [0x1F4D8, cmpgfx, D_us_80186BD8, 128, 128, 4, 0x27480]
+          - [0x1FF98, cmpgfx, D_us_80187694, 128, 128, 4, 0x27480]
+          - [0x20AD8, cmpgfx, D_us_801881D4, 128, 128, 4, 0x27480]
+          - [0x21AB8, cmpgfx, D_us_801891B4, 128, 128, 4, 0x27400]
+          - [0x22A48, cmpgfx, D_us_8018A144, 128, 128, 4, 0x27440]
+          - [0x236B0, cmpgfx, D_us_8018ADAC, 128, 128, 4, 0x27420]
+          - [0x247D0, cmpgfx, D_us_8018BEC8, 128, 128, 4, 0x27240]
+          - [0x25180, cmpgfx, D_us_8018C874, 128, 128, 4, 0x27240]
+          - [0x26078, cmpgfx, D_us_8018D76C, 128, 128, 4, 0x27240]
+          - [0x26768, cmpgfx, D_us_8018DE5C, 128, 128, 4, 0x275A0]
+          - [0x27120, palette, D_us_8018E810, 16] # 0x2C0
+          - [0x273E0, palette, D_us_8018EAD0, 16]
+          - [0x27520, palette, D_us_8018EC10, 16]
+          - [0x27620, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo4.bin
     asset_path: assets/boss/bo4
     src_path: src/boss/bo4

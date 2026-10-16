@@ -108,7 +108,7 @@ func tiledefNames(tileDefs map[psx.Addr]tiledef.TileDef, ovlName string) map[psx
 }
 
 func (h *handler) Build(e assets.BuildArgs) error {
-	outString, err := buildLayers(e.AssetDir, assetPath(e.AssetDir, e.Name), e.SrcDir, e.OvlName)
+	outString, err := buildLayers(e.AssetDir, assetPath(e.AssetDir, e.Name), e.SrcDir, e.OvlName, tiledefGenDir(e.Name))
 	if err != nil {
 		return err
 	}
@@ -166,6 +166,17 @@ func findRoomsLayerArray(e assets.ExtractArgs) (psx.Addr, error) {
 		layersAddr[offset] = struct{}{}
 	}
 	return 0, fmt.Errorf("EOF")
+}
+
+// tiledefGenDir returns the version directory of a versioned asset name such as
+// "us/layers" or "psp/layers", where the tiledef headers have to be written.
+// It is empty for an unversioned name such as "layers".
+func tiledefGenDir(name string) string {
+	dir := filepath.Dir(name)
+	if dir == "." {
+		return ""
+	}
+	return dir
 }
 
 func tilemapFileName(ovl string, n int) string {

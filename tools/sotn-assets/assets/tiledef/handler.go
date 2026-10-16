@@ -179,6 +179,12 @@ func Write(td TileDef, outPath, ovl, suffix string) error {
 }
 
 func Build(inFile, symbol, outDir string) error {
+	return BuildInDir(inFile, symbol, outDir, "")
+}
+
+// BuildInDir is like Build, but the header is written in gen/<genSubDir>,
+// which allows to keep one header per version when the content differs.
+func BuildInDir(inFile, symbol, outDir, genSubDir string) error {
 	data, err := os.ReadFile(inFile)
 	if err != nil {
 		return err
@@ -189,7 +195,7 @@ func Build(inFile, symbol, outDir string) error {
 		return err
 	}
 
-	outFileName := filepath.Join(outDir, fmt.Sprintf("gen/%s.h", symbol))
+	outFileName := filepath.Join(outDir, "gen", genSubDir, fmt.Sprintf("%s.h", symbol))
 	if err := os.MkdirAll(filepath.Dir(outFileName), 0755); err != nil {
 		return err
 	}

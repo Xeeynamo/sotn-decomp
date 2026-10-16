@@ -77,3 +77,52 @@ func TestInfoNoLayers(t *testing.T) {
 	assert.Empty(t, res.AssetEntries)
 	assert.Empty(t, res.SplatEntries)
 }
+
+// writeLayersAsset creates the files that a layers asset needs to be built:
+// one fg layer with one tilemap and one tiledef, located next to layers.json.
+func writeLayersAsset(t *testing.T, assetDir, name string) {
+	t.Helper()
+	dir := filepath.Dir(filepath.Join(assetDir, name))
+	require.NoError(t, os.MkdirAll(dir, 0755))
+	files := map[string]string{
+		"ovl_tilemap_0.bin":         "\x01\x00\x02\x00",
+		"ovl_tiledef_ovl_tiles.bin": "\x01\x02",
+		"ovl_tiledef_ovl_pages.bin": "\x03\x04",
+		"ovl_tiledef_ovl_cluts.bin": "\x05\x06",
+		"ovl_tiledef_ovl_cols.bin":  "\x07\x08",
+		"ovl_tiledef_ovl.json": `{"tiles":"ovl_tiledef_ovl_tiles.bin","pages":"ovl_tiledef_ovl_pages.bin",` +
+			`"cluts":"ovl_tiledef_ovl_cluts.bin","collisions":"ovl_tiledef_ovl_cols.bin"}`,
+		filepath.Base(name) + ".json": `[{"fg":{"data":"ovl_tilemap_0.bin","tiledef":"ovl_tiledef_ovl.json"}}]`,
+	}
+	for file, content := range files {
+		require.NoError(t, os.WriteFile(filepath.Join(dir, file), []byte(content), 0644))
+	}
+}
+
+func buildLayersAsset(t *testing.T, name string) (srcDir string) {
+	t.Helper()
+	assetDir, srcDir := t.TempDir(), t.TempDir()
+	writeLayersAsset(t, assetDir, name)
+	require.NoError(t, Handler.Build(assets.BuildArgs{
+		AssetDir: assetDir,
+		SrcDir:   srcDir,
+		Name:     name,
+		OvlName:  "ovl",
+	}))
+	return srcDir
+}
+
+func TestBuildVersionedLayersWritesTiledefPerVersion(t *testing.T) {
+	for _, version := range []string{"us", "psp"} {
+		srcDir := buildLayersAsset(t, version+"/layers")
+		assert.FileExists(t, filepath.Join(srcDir, "gen", version, "ovl_tiledef_ovl.h"))
+		assert.NoFileExists(t, filepath.Join(srcDir, "gen", "ovl_tiledef_ovl.h"))
+		assert.FileExists(t, filepath.Join(srcDir, "gen", version, "layers.h"))
+	}
+}
+
+func TestBuildUnversionedLayersWritesTiledefInGen(t *testing.T) {
+	srcDir := buildLayersAsset(t, "layers")
+	assert.FileExists(t, filepath.Join(srcDir, "gen", "ovl_tiledef_ovl.h"))
+	assert.FileExists(t, filepath.Join(srcDir, "gen", "layers.h"))
+}

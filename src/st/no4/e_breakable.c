@@ -46,24 +46,9 @@ static u16 hitbox_y_offsets[] = {0x0000, 0x0000, 0xFFE8, 0xFFF0, 0x0000,
                                  0x0000, 0x0000, 0x0000, 0x0000, 0x0000};
 
 #ifdef VERSION_PSP
-extern s32 E_ID(ID_35);
+extern s32 E_ID(BREAKABLE_STATUE_BROKEN);
 #endif
 
-#define E_BREAKABLE_RELIC E_ID(ID_35)
+#define E_BREAKABLE_RELIC E_ID(BREAKABLE_STATUE_BROKEN)
 
 #include "../e_breakable_no4.h"
-
-void func_us_801C123C(Entity* self) {
-    u32 pad[10];
-    switch (self->step) {
-    case 0:
-        InitializeEntity(g_EInitInteractable);
-        self->animSet = ANIMSET_OVL(0xB);
-        self->unk5A = 0x5B;
-        self->palette = 0x228;
-        self->animCurFrame = 0x15;
-        self->zPriority = 0x6A;
-        self->step = 0x100;
-        break;
-    }
-}

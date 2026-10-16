@@ -71,3 +71,18 @@ void EntityBreakable(Entity* self) {
         ReplaceBreakableWithItemDrop(self);
     }
 }
+
+void EntityBreakableStatueBroken(Entity* self) {
+    u32 pad[10];
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = ANIMSET_OVL(0xB);
+        self->unk5A = 0x5B;
+        self->palette = PAL_BREAKABLE_STATUE;
+        self->animCurFrame = 0x15;
+        self->zPriority = 0x6A;
+        self->step = 0x100;
+        break;
+    }
+}
