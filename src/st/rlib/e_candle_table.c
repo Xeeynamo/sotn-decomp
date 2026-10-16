@@ -16,7 +16,7 @@ extern s32 E_ID(CANDLE_TABLE);
 static s32 D_us_80181A8C = 3;
 #endif
 
-extern EInit gEInitCandleTable;
+extern EInit g_EInitCandleTable;
 
 // There are actually two flames overlaid. When one is created, it spawns one
 // with params 0x100 which tells it to be a faint "shadow" flame.
@@ -25,7 +25,7 @@ void EntityCandleTable(Entity* self) {
 
     switch (self->step) { /* irregular */
     case 0:
-        InitializeEntity(gEInitCandleTable);
+        InitializeEntity(g_EInitCandleTable);
         self->zPriority = 0x74;
 
         // This entity also controls the chairs in the same room.
