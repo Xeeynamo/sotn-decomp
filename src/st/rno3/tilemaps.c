@@ -44,6 +44,6 @@
 #include <gen/rno3_tilemap_40.h>
 #include <gen/rno3_tilemap_41.h>
 #include <gen/rno3_tilemap_42.h>
-#include <gen/rno3_tiledef_rload.h>
-#include <gen/rno3_tiledef_rsave.h>
-#include <gen/rno3_tiledef_rno3.h>
+#include GEN_VERSION(rno3_tiledef_rload.h)
+#include GEN_VERSION(rno3_tiledef_rsave.h)
+#include GEN_VERSION(rno3_tiledef_rno3.h)

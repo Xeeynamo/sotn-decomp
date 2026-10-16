@@ -1811,6 +1811,41 @@ files:
     asset_path: assets/boss/bo3
     src_path: src/boss/bo3
     splat_config_path: config/splat.us.bobo3.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x2C, sprite_banks, us/sprite_banks]
+          - [0x8C, paldef, palette_def]
+          - [0xBC, layers, us/layers]
+          - [0x16C, gfx_banks, us/graphics_banks]
+          - [0x280, layout, entity_layouts]
+          - [0x428, skip]
+          - [0x1C14, rooms, rooms]
+          - [0x1C40, skip]
+          - [0x201C, cmpgfx, D_us_8018201C, 128, 128, 4]
+          - [0x23D0, cmpgfx, D_us_801823D0, 128, 128, 4]
+          - [0x29E4, cmpgfx, D_us_801829E4, 128, 128, 4, 0xEB10]
+          - [0x3C3C, cmpgfx, D_us_80183C3C, 128, 128, 4, 0xEB50]
+          - [0x4FC4, cmpgfx, D_us_80184FC4, 128, 128, 4, 0xEAF0]
+          - [0x5F90, cmpgfx, D_us_80185F90, 128, 128, 4, 0xEB70]
+          - [0x6BD8, cmpgfx, D_us_80186BD8, 128, 128, 4, 0xEB70]
+          - [0x7694, cmpgfx, D_us_80187694, 128, 128, 4, 0xEB70]
+          - [0x81D4, cmpgfx, D_us_801881D4, 128, 128, 4, 0xEB70]
+          - [0x91B4, cmpgfx, D_us_801891B4, 128, 128, 4, 0xEAF0]
+          - [0xA144, cmpgfx, D_us_8018A144, 128, 128, 4, 0xEB30]
+          - [0xADAC, cmpgfx, D_us_8018ADAC, 128, 128, 4, 0xEB10]
+          - [0xBEC8, cmpgfx, D_us_8018BEC8, 128, 128, 4, 0xE930]
+          - [0xC874, cmpgfx, D_us_8018C874, 128, 128, 4, 0xE930]
+          - [0xD76C, cmpgfx, D_us_8018D76C, 128, 128, 4, 0xE930]
+          - [0xDE5C, cmpgfx, D_us_8018DE5C, 128, 128, 4, 0xEC90]
+          - [0xE810, palette, D_us_8018E810, 16] # 0x2C0
+          - [0xEAD0, palette, D_us_8018EAD0, 16]
+          - [0xEC10, palette, D_us_8018EC10, 16]
+          - [0xED10, skip]
+          - [0x11D10, tiledef, load]
+          - [0x12120, tiledef, save]
+          - [0x16130, skip]
   - target: disks/us/BOSS/BO4/BO4.BIN
     asset_path: assets/boss/bo4
     src_path: src/boss/bo4

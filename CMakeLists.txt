@@ -1019,6 +1019,50 @@ SET(SOURCE_FILES_BOSS_BO1
     src/boss/bo1/unk_210A8.c
 )
 
+SET(SOURCE_FILES_BOSS_BO3
+    src/pc/bosses/boss_bo3.c
+    src/boss/bo3/background_block_init.c
+    src/boss/bo3/bss.c
+    src/boss/bo3/cavern_bg_effects.c
+    src/boss/bo3/collision.c
+    src/boss/bo3/create_entity.c
+    src/boss/bo3/d_prize_drops.c
+    src/boss/bo3/e_breakable.c
+    src/boss/bo3/e_breakable_wall.c
+    src/boss/bo3/e_collect.c
+    src/boss/bo3/e_explosion_puff_opaque.c
+    src/boss/bo3/e_init.c
+    src/boss/bo3/e_life_up.c
+    src/boss/bo3/e_lock_camera.c
+    src/boss/bo3/e_misc.c
+    src/boss/bo3/e_particles.c
+    src/boss/bo3/e_red_door.c
+    src/boss/bo3/e_red_door_tiles.c
+    src/boss/bo3/e_room_bg.c
+    src/boss/bo3/e_room_fg.c
+    src/boss/bo3/e_scylla.c
+    src/boss/bo3/e_scylla_wyrm.c
+    src/boss/bo3/e_stage_name.c
+    src/boss/bo3/gen/e_laydef.c
+    src/boss/bo3/gen/e_layout.c
+    src/boss/bo3/gen/rooms.c
+    src/boss/bo3/gen/us/sprites.c
+    src/boss/bo3/graphics_banks.c
+    src/boss/bo3/header.c
+    src/boss/bo3/layers.c
+    src/boss/bo3/pal_unk.c
+    src/boss/bo3/palette_def.c
+    src/boss/bo3/popup.c
+    src/boss/bo3/prim_helpers.c
+    src/boss/bo3/sprite_banks.c
+    src/boss/bo3/st_common.c
+    src/boss/bo3/st_update.c
+    src/boss/bo3/stage_data.c
+    src/boss/bo3/tilemaps.c
+    src/boss/bo3/unk_26370.c
+    src/boss/bo3/water_effects.c
+)
+
 SET(SOURCE_FILES_BOSS_BO4
     src/pc/bosses/boss_bo4.c
     src/boss/bo4/background_block_init.c
@@ -1606,6 +1650,7 @@ add_overlay(no3 ${SOURCE_FILES_STAGE_NO3})
 add_overlay(lib ${SOURCE_FILES_STAGE_LIB})
 add_overlay(mad ${SOURCE_FILES_STAGE_MAD})
 add_overlay(bo1 ${SOURCE_FILES_BOSS_BO1})
+add_overlay(bo3 ${SOURCE_FILES_BOSS_BO3})
 add_overlay(rcen ${SOURCE_FILES_STAGE_RCEN})
 add_overlay(rchi ${SOURCE_FILES_STAGE_RCHI})
 add_overlay(rbo0 ${SOURCE_FILES_BOSS_RBO0})
