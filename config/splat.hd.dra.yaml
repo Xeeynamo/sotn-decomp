@@ -77,8 +77,7 @@ segments:
       - [0xE36C, .data, d_E294]
       - [0x106EE, .data, 84B88]
       - [0x1085C, .data, 8BEF8]
-      - [0x108E4, .data, d_10798]
-      - [0x109E8, .data, wolfForm]
+      - [0x108E4, .data, wolfForm]
       - [0x11140, .data, sound] # aPbav
       # - [0x14140, .data, sound] # aPbav_0
       # - [0x16140, .data, sound] # aPbav_2

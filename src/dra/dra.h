@@ -694,11 +694,6 @@ extern Unkstruct_800BF554 g_SfxData[];
 extern char* aLightTimer02x;
 extern SVECTOR D_800E2024;
 extern SVECTOR D_800E202C;
-extern helper_8012F178 D_800B08CC[6];
-extern s32 D_800B0914;
-extern s32 D_800B0918;
-extern s32 D_800B091C;
-extern s32 D_800B0920;
 
 void func_801072DC(Primitive* prim);
 void InitializePads(void);
