@@ -4622,6 +4622,13 @@ typedef struct {
     /* 0x88 */ s16 halfWidth;
 } ET_801A460C;
 
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x83 */ u8 unk83;
+} ET_Lion;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -5015,6 +5022,7 @@ typedef union { // offset=0x7C
     ET_Malachi malachi;
     ET_801A460C et_801A460C;
     ET_GhostDancer ghostDancer;
+    ET_Lion lion;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);
