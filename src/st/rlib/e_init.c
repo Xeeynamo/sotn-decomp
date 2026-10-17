@@ -30,7 +30,7 @@ void EntityThickBookcase(Entity* self);
 void func_us_801AE7AC_from_lib(Entity* self);
 void EntityLion(Entity* self);
 void EntityHarpyKick(Entity* self);
-void func_us_801AE414(Entity* self);
+void EntityLionDeathParts(Entity* self);
 void func_us_801AE534(Entity* self);
 void func_us_801AED4C(Entity* self);
 void func_us_801D8D44_from_no4(Entity* self);
@@ -73,7 +73,7 @@ PfnEntityUpdate EntityUpdates[] = {
     func_us_801AE7AC_from_lib,
     EntityLion,
     EntityHarpyKick,
-    func_us_801AE414,
+    EntityLionDeathParts,
     func_us_801AE534,
     func_us_801AED4C,
     func_us_801D8D44_from_no4,
