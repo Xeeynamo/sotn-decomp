@@ -5,15 +5,15 @@
 
 #include "../approach_s16.h"
 
-INCLUDE_ASM("st/rdai/nonmatchings/unk_3F6B4", func_us_801BF830);
+INCLUDE_ASM("st/rdai/nonmatchings/e_archer", func_us_801BF830);
 
 // Child parts share one implementation; only the fixed EInit address is local.
 #include "../e_rdai_unk1f.h"
 
 #include "../e_rdai_archer.h"
 
-INCLUDE_ASM("st/rdai/nonmatchings/unk_3F6B4", func_us_801C0240);
+INCLUDE_ASM("st/rdai/nonmatchings/e_archer", func_us_801C0240);
 
-INCLUDE_ASM("st/rdai/nonmatchings/unk_3F6B4", func_us_801C0528);
+INCLUDE_ASM("st/rdai/nonmatchings/e_archer", func_us_801C0528);
 
-INCLUDE_ASM("st/rdai/nonmatchings/unk_3F6B4", func_us_801C0898);
+INCLUDE_ASM("st/rdai/nonmatchings/e_archer", func_us_801C0898);

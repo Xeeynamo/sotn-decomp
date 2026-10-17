@@ -1,23 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#include "rdai.h"
 
 extern EInit g_Rbo3DoorInit;
 extern s32 g_Rbo3DoorFlag;
 #if defined(VERSION_PSP)
 extern s32 E_ID(UNK_2C);
-#endif
-
-#ifndef RBO3_DOOR_INIT
-#define RBO3_DOOR_INIT g_Rbo3DoorInit
-#endif
-#ifndef RBO3_DOOR_FLAG
-#define RBO3_DOOR_FLAG g_Rbo3DoorFlag
-#endif
-#ifndef RBO3_DOOR_CHILD_ID
-#if defined(VERSION_PSP)
-#define RBO3_DOOR_CHILD_ID E_ID(UNK_2C)
-#else
-#define RBO3_DOOR_CHILD_ID E_UNK_2C
-#endif
 #endif
 
 void EntityRbo3Door(Entity* self) {
@@ -29,7 +16,7 @@ void EntityRbo3Door(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(RBO3_DOOR_INIT);
+        InitializeEntity(g_Rbo3DoorInit);
         self->zPriority = 0x5C;
         if (self->params & 2) {
             self->animCurFrame = 0xE;
@@ -46,7 +33,7 @@ void EntityRbo3Door(Entity* self) {
         }
 
         next = self + 1;
-        CreateEntityFromEntity(RBO3_DOOR_CHILD_ID, self, next);
+        CreateEntityFromEntity(E_ID(UNK_2C), self, next);
 
         next->params = 2;
         next->posY.i.hi = 96;
@@ -56,7 +43,7 @@ void EntityRbo3Door(Entity* self) {
         break;
 
     case 1:
-        if (RBO3_DOOR_FLAG) {
+        if (g_Rbo3DoorFlag) {
             if (self->params & 2) {
                 self->step = 8;
                 break;
@@ -81,7 +68,7 @@ void EntityRbo3Door(Entity* self) {
         }
         break;
     case 3:
-        if (RBO3_DOOR_FLAG == 0) {
+        if (g_Rbo3DoorFlag == 0) {
             if (self->params) {
                 fgIndex = 0xC1;
             } else {
@@ -114,7 +101,7 @@ void EntityRbo3Door(Entity* self) {
         }
         break;
     case 9:
-        if (RBO3_DOOR_FLAG == 0) {
+        if (g_Rbo3DoorFlag == 0) {
             self->step++;
         }
         break;

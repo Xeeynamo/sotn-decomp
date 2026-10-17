@@ -406,8 +406,8 @@ INCLUDE_ASM("st/rno4/nonmatchings/unk_58A30", EntityImp);
 
 #include "../e_imp_smoke.h"
 
-#define RDAI_UNK33_DEATH_PARTICLE E_IMP_DEATH_PARTICLE
-#include "../e_rdai_unk33.h"
-#undef RDAI_UNK33_DEATH_PARTICLE
+#define BALLOON_POD_DEATH_PARTICLE E_IMP_DEATH_PARTICLE
+#include "../e_balloon_pod.h"
+#undef BALLOON_POD_DEATH_PARTICLE
 
 #include "../e_imp_death_particle.h"

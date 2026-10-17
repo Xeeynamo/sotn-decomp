@@ -50,8 +50,8 @@ void EntitySpikesParts(Entity* self);
 void EntitySpikesDust(Entity* self);
 void EntitySpikesDamage(Entity* self);
 void EntityBreakableDebris(Entity* self);
-void func_us_801C6040(Entity* self);
-void EntityRdaiUnk33(Entity* self);
+void EntityBlackPanther(Entity* self);
+void EntityBalloonPod(Entity* self);
 void EntityImpDeathParticle(Entity* self);
 
 PfnEntityUpdate EntityUpdates[] = {
@@ -104,8 +104,8 @@ PfnEntityUpdate EntityUpdates[] = {
     EntitySpikesDust,
     EntitySpikesDamage,
     EntityBreakableDebris,
-    func_us_801C6040,
-    EntityRdaiUnk33,
+    EntityBlackPanther,
+    EntityBalloonPod,
     EntityImpDeathParticle,
 };
 
@@ -130,4 +130,12 @@ EInit g_EInitSpectralSwordRDAI = {ANIMSET_OVL(4), 0x00, 0x51, PAL_SPECTRAL_SWORD
 EInit g_EInitSpectralSwordAura = {ANIMSET_OVL(4), 0x00, 0x51, PAL_SPECTRAL_SWORD, ENEMY_PARTICLE};
 EInit g_EInitSpear = {ANIMSET_OVL(4), 0x00, 0x51, PAL_SPECTRAL_SWORD, ENEMY_SPEAR};
 EInit g_EInitShield = {ANIMSET_OVL(4), 0x00, 0x51, PAL_SPECTRAL_SWORD, ENEMY_SHIELD};
+EInit g_EInitSniperOfGoth = {ANIMSET_OVL(5), 0x00, 0x4C, PAL_SNIPER_OF_GOTH, ENEMY_SNIPER_OF_GOTH};
+EInit D_us_801808D8 = {ANIMSET_OVL(5), 0x11, 0x4C, PAL_SNIPER_OF_GOTH, ENEMY_SNIPER_OF_GOTH_UNK_C4};
+EInit D_us_801808E4 = {ANIMSET_OVL(5), 0x3A, 0x4C, PAL_SNIPER_OF_GOTH, ENEMY_SNIPER_OF_GOTH_UNK_C5};
+EInit g_EInitImp = {ANIMSET_OVL(6), 0x01, 0x4F, PAL_IMP, ENEMY_IMP};
+EInit g_EInitImpSmoke = {ANIMSET_OVL(6), 0x01, 0x4F, PAL_IMP, ENEMY_PARTICLE};
+EInit g_EInitBalloonPod = {ANIMSET_OVL(6), 0x13, 0x4F, PAL_IMP, ENEMY_BALLOON_POD};
+EInit g_EInitImpDeathParticle = {ANIMSET_OVL(6), 0x2A, 0x4F, PAL_IMP, ENEMY_IMP_DEATH_PARTICLE};
+EInit g_EInitBlackPanther = {ANIMSET_OVL(9), 0x00, 0x4A, PAL_BLACK_PANTHER, ENEMY_BLACK_PANTHER};
 // clang-format on
