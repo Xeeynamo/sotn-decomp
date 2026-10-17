@@ -52,7 +52,7 @@ typedef enum EntityID {
     E_THICK_BOOKCASE,       // EntityThickBookcase
     E_UNK_1B,               // func_us_801AE7AC_from_lib
     E_LION,                 // EntityLion
-    E_HARPY_KICK,           // EntityHarpyKick
+    E_LION_ATTACK,          // EntityLionAttack
     E_LION_DEATH_PARTS,     // EntityLionDeathParts
     E_UNK_1F,               // func_us_801AE534
     E_UNK_20,               // func_us_801AED4C

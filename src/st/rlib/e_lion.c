@@ -18,11 +18,17 @@ static AnimateEntityFrame anim_dying[] = {
 static AnimateEntityFrame anim_grab_crotch[] = {
     {16, 1}, {5, 21}, {13, 22}, {7, 21}, {7, 1}, POSE_LOOP(0)};
 
-static s32 D_us_801817CC[] = {FIX(8.0 / 1024), FIX(7.0 / 1024), FIX(4.0 / 1024), FIX(6.0 / 1024), FIX(12.0 / 1024), FIX(14.0 / 1024),};
-static s8 g_HarpyKickHitboxes[][4] = {{0, 0, 0, 0}, {-61, -98, 0, 0}, {20, -21, 16, 31}, {25, -4, 15, 14}, {53, -1, 33, 26}, {82, -9, 4, 17}, {45, -10, 33, 26}, {74, -3, 4, 17}};
-static u8 g_HarpyKickHitboxIdx[] = {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 5, 6, 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+static s32 D_us_801817CC[] = {
+    FIX(8.0 / 1024), FIX(7.0 / 1024),  FIX(4.0 / 1024),
+    FIX(6.0 / 1024), FIX(12.0 / 1024), FIX(14.0 / 1024),
+};
+static s8 g_AttackHitboxes[][4] = {
+    {0, 0, 0, 0},     {-61, -98, 0, 0}, {20, -21, 16, 31}, {25, -4, 15, 14},
+    {53, -1, 33, 26}, {82, -9, 4, 17},  {45, -10, 33, 26}, {74, -3, 4, 17}};
+static u8 g_AttackHitboxIdx[] = {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 4,
+                                 5, 6, 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
 
-typedef enum{
+typedef enum {
     LION_INIT,
     LION_GROUND,
     LION_IDLE,
@@ -47,7 +53,7 @@ void EntityLion(Entity* self) {
     case LION_INIT:
         InitializeEntity(g_EInitLion);
         other = self + 1;
-        CreateEntityFromCurrentEntity(E_HARPY_KICK, other);
+        CreateEntityFromCurrentEntity(E_LION_ATTACK, other);
         /* fallthrough */
     case LION_GROUND:
         if (UnkCollisionFunc3(sensors1) & 1) {
@@ -212,16 +218,16 @@ void EntityLion(Entity* self) {
     }
 }
 
-extern EInit D_us_8018064C;
+extern EInit g_EInitLionAttack;
 
-void EntityHarpyKick(Entity* self) {
+void EntityLionAttack(Entity* self) {
     s32 animFrame;
     s8* hitbox;
     Entity* lion;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_8018064C);
+        InitializeEntity(g_EInitLionAttack);
         /* fall through */
     case 1:
         lion = self - 1;
@@ -229,8 +235,8 @@ void EntityHarpyKick(Entity* self) {
         self->posX.val = lion->posX.val;
         self->posY.val = lion->posY.val;
         animFrame = lion->animCurFrame;
-        hitbox = (s8*)g_HarpyKickHitboxes;
-        animFrame = g_HarpyKickHitboxIdx[animFrame];
+        hitbox = (s8*)g_AttackHitboxes;
+        animFrame = g_AttackHitboxIdx[animFrame];
         hitbox += animFrame * 4;
         self->hitboxOffX = *hitbox++;
         self->hitboxOffY = *hitbox++;
@@ -243,12 +249,12 @@ void EntityHarpyKick(Entity* self) {
     }
 }
 
-extern EInit D_us_80180658;
+extern EInit g_EInitLionDeathParts;
 
 void EntityLionDeathParts(Entity* self) {
     switch (self->step_s) {
     case 0:
-        InitializeEntity(D_us_80180658);
+        InitializeEntity(g_EInitLionDeathParts);
         self->animCurFrame = self->params + 28;
         /* fall through */
     case 1:

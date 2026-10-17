@@ -16,7 +16,7 @@ void InitEntityIds(void) {
     SET_E_ID(THICK_BOOKCASE);
     SET_E_ID(UNK_1B);
     SET_E_ID(LION);
-    SET_E_ID(HARPY_KICK);
+    SET_E_ID(LION_ATTACK);
     SET_E_ID(LION_DEATH_PARTS);
     SET_E_ID(UNK_1F);
     SET_E_ID(UNK_20);
