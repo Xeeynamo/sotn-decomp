@@ -68,19 +68,7 @@ static s8 D_us_8018074C[][4] = {
     {0, 0, 0, 0},     {-20, -4, 4, 4},  {-16, -4, 8, 4},
     {-16, -4, 16, 4}, {-24, -4, 16, 4}, {-32, -4, 24, 4}};
 static u8 D_us_80180764[] = {0, 1, 2, 3, 4, 5, 0, 0};
-#ifdef VERSION_PSP
-char D_pspeu_09255468[] = "step %x\n";
-char D_pspeu_09255478[] = "step_s %x\n";
-char D_pspeu_09255488[] = "NO DR_ENV \n";
-char D_pspeu_09255498[] = "timer %x\n";
-char D_pspeu_092554A8[] = "charal %x\n";
-char D_pspeu_092554B8[] = "tsukami %x\n";
-#endif
 
-#if defined(VERSION_PSP) && !defined(NON_MATCHINGS)
-INCLUDE_ASM("boss/rbo7/nonmatchings/e_akmodan_ii", EntityAkmodanII);
-#else
-// matches on US; PSP is close but has register allocation differences
 void EntityAkmodanII(Entity* self) {
     Primitive* prim;
     Entity* entity;
@@ -122,7 +110,6 @@ void EntityAkmodanII(Entity* self) {
         entity->params = 3;
         entity->zPriority = self->zPriority - 1;
         SetStep(2);
-        /* fall through */
     case 2:
         switch (self->step_s) {
         case 0:
@@ -165,7 +152,7 @@ void EntityAkmodanII(Entity* self) {
         UnkCollisionFunc2(D_us_801805DC);
         if (!(Random() & 0xF)) {
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-            if (entity != NULL) {
+            if (entity) {
                 CreateEntityFromEntity(E_ID(UNK_1D), self, entity);
                 entity->posY.i.hi += 0x20;
                 entity->zPriority = self->zPriority + 1;
@@ -185,7 +172,7 @@ void EntityAkmodanII(Entity* self) {
         if (self->facingLeft) {
             x = -x;
         }
-        if (GetDistanceToPlayerX() < 64 && GetDistanceToPlayerX() >= 57 &&
+        if (GetDistanceToPlayerX() < 64 && GetDistanceToPlayerX() > 56 &&
             self->facingLeft == side && x > 0) {
             SetStep(4);
         }
@@ -265,16 +252,16 @@ void EntityAkmodanII(Entity* self) {
             x -= entity->posX.i.hi;
             y -= entity->posY.i.hi;
             if (x > 0) {
-                entity->posX.i.hi += 1;
+                entity->posX.i.hi++;
             }
             if (x < 0) {
-                entity->posX.i.hi -= 1;
+                entity->posX.i.hi--;
             }
             if (y > 0) {
-                entity->posY.i.hi += 1;
+                entity->posY.i.hi++;
             }
             if (y < 0) {
-                entity->posY.i.hi -= 1;
+                entity->posY.i.hi--;
             }
             if (x == 0 && y == 0) {
                 self->step_s++;
@@ -296,12 +283,12 @@ void EntityAkmodanII(Entity* self) {
                     g_api.enemyDefs[ENEMY_AKMODAN_II_GRAB].attack / 2;
                 g_Player.grabState = GRAB_DAMAGE;
             }
-            if (self->animCurFrame >= 0x15 && self->animCurFrame < 0x1A) {
+            if (self->animCurFrame > 0x14 && self->animCurFrame < 0x1A) {
                 self->zPriority = g_unkGraphicsStruct.g_zEntityCenter + 4;
             } else {
                 self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 4;
             }
-            if (self->ext.akmodanII.unk86 >= 4) {
+            if (self->ext.akmodanII.unk86 > 3) {
                 SetSubStep(5);
             }
             break;
@@ -330,7 +317,7 @@ void EntityAkmodanII(Entity* self) {
             }
             break;
         }
-        if (self->step_s >= 3 && self->step_s < 6) {
+        if (self->step_s > 2 && self->step_s < 6) {
             idx = self->animCurFrame - 0x11;
             x = D_us_801806CC[idx][0];
             y = D_us_801806CC[idx][1];
@@ -398,7 +385,7 @@ void EntityAkmodanII(Entity* self) {
             prim = &g_PrimBuf[primIndex];
             self->ext.akmodanII.prim = prim;
             dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
-            if (dr_env == NULL) {
+            if (!dr_env) {
                 FntPrint("NO DR_ENV \n");
                 DestroyEntity(self);
                 return;
@@ -426,7 +413,7 @@ void EntityAkmodanII(Entity* self) {
             SetDrawEnv(dr_env, &drawEnv);
             prim = prim->next;
             dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
-            if (dr_env == NULL) {
+            if (!dr_env) {
                 FntPrint("NO DR_ENV \n");
                 DestroyEntity(self);
                 return;
@@ -475,7 +462,7 @@ void EntityAkmodanII(Entity* self) {
             }
             prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
             prim = prim->next;
-            while (prim != NULL) {
+            while (prim) {
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
@@ -541,7 +528,7 @@ void EntityAkmodanII(Entity* self) {
             }
             entity = AllocEntity(&g_Entities[STAGE_ENTITY_START],
                                  &g_Entities[TOTAL_ENTITY_COUNT]);
-            if (entity != NULL) {
+            if (entity) {
                 CreateEntityFromCurrentEntity(
                     E_ID(AKMODAN_DEATH_EFFECT), entity);
                 entity->posX.i.hi += x;
@@ -552,7 +539,7 @@ void EntityAkmodanII(Entity* self) {
             if (!(g_Timer & 7)) {
                 entity = AllocEntity(&g_Entities[STAGE_ENTITY_START],
                                      &g_Entities[TOTAL_ENTITY_COUNT]);
-                if (entity != NULL) {
+                if (entity) {
                     CreateEntityFromCurrentEntity(
                         E_ID(AKMODAN_DEATH_EFFECT), entity);
                     entity->posX.i.hi = x + 0x20;
@@ -593,8 +580,7 @@ void EntityAkmodanII(Entity* self) {
             prim->tpage = 0x12;
             prim->clut = 0x1C7;
             prim->u0 = prim->u2 = 0x28;
-            prim->u3 = 0;
-            prim->u1 = 0;
+            prim->u1 = prim->u3 = 0;
             prim->v0 = prim->v1 = 0x80;
             prim->v2 = prim->v3 = 0xC0;
             x = self->posX.i.hi;
@@ -612,7 +598,7 @@ void EntityAkmodanII(Entity* self) {
             prim->drawMode = DRAW_UNK02;
             prim = prim->next;
             self->ext.akmodanII.prim = prim;
-            while (prim != NULL) {
+            while (prim) {
                 prim->tpage = 0x12;
                 prim->clut = 0x1C7;
                 prim->u1 = prim->v1 = 1;
@@ -635,7 +621,7 @@ void EntityAkmodanII(Entity* self) {
                 for (i = 0; i < 0x28; i++) {
                     prim = self->ext.akmodanII.prim;
                     prim = FindFirstUnkPrim(prim);
-                    if (prim != NULL) {
+                    if (prim) {
                         prim->p3 = 2;
                         prim->u0 = i;
                         prim->v0 = self->ext.akmodanII.deathY + 0x80;
@@ -665,11 +651,10 @@ void EntityAkmodanII(Entity* self) {
                     self->step_s++;
                 }
             }
-            /* fall through */
         case 8:
             prim = self->ext.akmodanII.prim;
             side = 0;
-            while (prim->next != NULL) {
+            while (prim->next) {
                 if (prim->p3 == 2) {
                     side |= 1;
                     if (!LOH(prim->u2)) {
@@ -684,7 +669,7 @@ void EntityAkmodanII(Entity* self) {
                     x = prim->x0 << 16;
                     x += LOHU(prim->x3);
                     y = prim->y0 << 16;
-                    y = y + LOHU(prim->y3);
+                    y += LOHU(prim->y3);
                     x += LOW(prim->x1);
                     y += LOW(prim->x2);
                     prim->x0 = x >> 16;
@@ -734,9 +719,9 @@ void EntityAkmodanII(Entity* self) {
             }
             self->animCurFrame--;
             self->step_s |= 1;
-            return;
+        } else {
+            self->step_s = 0;
         }
-        self->step_s = 0;
         return;
     }
     hitbox = D_us_80180704[0];
@@ -747,7 +732,6 @@ void EntityAkmodanII(Entity* self) {
     self->hitboxHeight = *hitbox++;
     FntPrint("tsukami %x\n", g_Player.grabState);
 }
-#endif
 
 void func_us_801957C0(Entity* self) {
     Entity* entity;
