@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-extern EInit g_EInitRdaiUnk33;
+extern EInit g_EInitBalloonPod;
 extern u8 g_RdaiUnk33Anim2[];
 extern u8 g_RdaiUnk33Anim3[];
 extern u8 g_RdaiUnk33Anim4[];
@@ -9,18 +9,18 @@ extern u8 g_RdaiUnk33Anim5[];
 extern char g_RdaiUnk33DebugText[];
 #endif
 
-#ifndef RDAI_UNK33_DEATH_PARTICLE
-#define RDAI_UNK33_DEATH_PARTICLE E_UNK_34
-#define RDAI_UNK33_LOCAL_DEATH_PARTICLE
+#ifndef BALLOON_POD_DEATH_PARTICLE
+#define BALLOON_POD_DEATH_PARTICLE E_UNK_34
+#define BALLOON_POD_LOCAL_DEATH_PARTICLE
 #endif
 #if defined(VERSION_PSP)
-#define RDAI_UNK33_PAD_PRESSED g_pads[1].pressed
+#define BALLOON_POD_PAD_PRESSED g_pads[1].pressed
 #else
 extern u16 g_pads_1_pressed;
-#define RDAI_UNK33_PAD_PRESSED g_pads_1_pressed
+#define BALLOON_POD_PAD_PRESSED g_pads_1_pressed
 #endif
 
-void EntityRdaiUnk33(Entity* self) {
+void EntityBalloonPod(Entity* self) {
     Entity* entity;
     s32 i;
 
@@ -36,7 +36,7 @@ void EntityRdaiUnk33(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitRdaiUnk33);
+        InitializeEntity(g_EInitBalloonPod);
         if (self->params) {
             SetStep(4);
             break;
@@ -55,7 +55,7 @@ void EntityRdaiUnk33(Entity* self) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(
-                        RDAI_UNK33_DEATH_PARTICLE, self, entity);
+                        BALLOON_POD_DEATH_PARTICLE, self, entity);
                 }
             }
             DestroyEntity(self);
@@ -72,7 +72,7 @@ void EntityRdaiUnk33(Entity* self) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(
-                        RDAI_UNK33_DEATH_PARTICLE, self, entity);
+                        BALLOON_POD_DEATH_PARTICLE, self, entity);
                 }
             }
             DestroyEntity(self);
@@ -85,7 +85,7 @@ void EntityRdaiUnk33(Entity* self) {
 #else
         FntPrint("charal %x\n", self->animCurFrame);
 #endif
-        if (RDAI_UNK33_PAD_PRESSED & PAD_SQUARE) {
+        if (BALLOON_POD_PAD_PRESSED & PAD_SQUARE) {
             if (self->params) {
                 break;
             }
@@ -94,7 +94,7 @@ void EntityRdaiUnk33(Entity* self) {
         } else {
             self->params = 0;
         }
-        if (RDAI_UNK33_PAD_PRESSED & PAD_CIRCLE) {
+        if (BALLOON_POD_PAD_PRESSED & PAD_CIRCLE) {
             if (self->step_s) {
                 break;
             }
@@ -107,8 +107,8 @@ void EntityRdaiUnk33(Entity* self) {
     }
 }
 
-#undef RDAI_UNK33_PAD_PRESSED
-#ifdef RDAI_UNK33_LOCAL_DEATH_PARTICLE
-#undef RDAI_UNK33_DEATH_PARTICLE
-#undef RDAI_UNK33_LOCAL_DEATH_PARTICLE
+#undef BALLOON_POD_PAD_PRESSED
+#ifdef BALLOON_POD_LOCAL_DEATH_PARTICLE
+#undef BALLOON_POD_DEATH_PARTICLE
+#undef BALLOON_POD_LOCAL_DEATH_PARTICLE
 #endif
