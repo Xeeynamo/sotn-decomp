@@ -2,157 +2,21 @@
 #include "dra.h"
 #include "dra_bss.h"
 
-u16 D_800AD4CC[] = {
-    0x0200, 0x0600, 0x0800, 0x0800, 0x0800,
-    0x0200, 0x0200, 0x0200, 0x0200, 0xFFFF,
-};
-
-u16 D_800AD4E0[] = {
-    0x0200, 0x0A00, 0x0C00, 0x0C00, 0x0C00, 0x0A00, 0x0200, 0x0200, 0xFFFF,
-};
-
-u16 D_800AD4F4[] = {
-    0x0E00, 0x1000, 0x1000, 0x1000, 0x0E00, 0xFFFF,
-};
-
-u16 D_800AD500[] = {
-    0x1200, 0x1400, 0x1400, 0x1400, 0x1200, 0xFFFF,
-};
-
-u16 D_800AD50C[] = {
-    0x0200, 0x1600, 0x0200, 0x0200, 0x0200,
-    0x0200, 0x0200, 0x0200, 0x0200, 0xFFFF,
-};
-
-u16* D_800AD520[] = {
-    D_800AD4CC, D_800AD4CC, D_800AD4E0, D_800AD4E0,
-    D_800AD4F4, D_800AD500, D_800AD50C,
-};
-
-extern s8 D_800B0188[];
-// TODO: move to 7A4D0.c
-WeaponAnimation D_800AD53C[] = {
-    {D_800AD520, D_800B0188, 0x0000, SFX_WEAPON_SWISH_C, 0x24, 1},
-};
-
-s16 D_800AD54C[] = {
-    0, -4, -8, -12, -16, -20,
-};
-
-s32 D_800AD558[] = {
-    -0x3000, -0x4000, -0x6000, -0x8000, -0xA000, -0xC000,
-};
-
-s16 D_800AD570[] = {
-    0x30, 0x40, 0x50, 0x60, 0x70, 0x80,
-};
-
-AnimationFrame D_800AD57C[] = {
-    {0x0001, 0x0001}, {0x0001, 0x0002}, {0x0001, 0x0003}, {0x0001, 0x0004},
-    {0x0001, 0x0005}, {0x0001, 0x0006}, {0x0001, 0x0007}, {0x0001, 0x0008},
-    {0x0001, 0x0009}, {0x0001, 0x000A}, {0x0001, 0x000B}, {0x0001, 0x000C},
-    {0x0001, 0x000D}, {0x0001, 0x000E}, {0x0001, 0x000F}, {0x0001, 0x0010},
-    {0x0001, 0x0011}, {0x0001, 0x0012}, {0x0001, 0x0013}, {0x0001, 0x0014},
-    {0x0001, 0x0015}, {0x0001, 0x0016}, {0x0001, 0x0017}, {0x0001, 0x0018},
-    {0xFFFF, 0x0000},
-};
-
-u8 D_800AD5E0[NUM_VERTICAL_SENSORS * 2] = {
-    0x02, 0x09, 0x03, 0x0A, 0x01, 0x08, 0x04,
-    0x0B, 0x00, 0x07, 0x05, 0x0C, 0x06, 0x0D,
-};
-
-u8 D_800AD5F0[] = {
-    0x02, 0x09, 0x03, 0x0A, 0x04, 0x0B, 0x05, 0x0C, 0x06, 0x0D,
-};
-
-AnimationFrame D_800AD5FC[] = {
-    {0x0001, 0x0009}, {0x0002, 0x000A}, {0x0002, 0x000B}, {0x0002, 0x000C},
-    {0x0002, 0x000D}, {0x0002, 0x000E}, {0x0002, 0x000F}, {0x0002, 0x0010},
-    {0x0002, 0x0011}, {0x0002, 0x0012}, {0x0003, 0x0013}, {0x0004, 0x0014},
-    {0xFFFF, 0x0000},
-};
-
-// This is BSS on PSP.
-#ifndef VERSION_PSP
-s32 D_800AD630[] = {
-    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
-};
-#endif
-
-s16 D_800AD670[42][10] = {
-    {0, 0, 0, 351, 256, 256, 256, 96, 49, 512},
-    {0, 2, 6, 351, 256, 256, 256, 16, 49, 512},
-    {0, 0, 0, 351, 256, 1024, 1024, 16, 49, 512},
-    {0, 0, 0, 351, 28928, 256, 28672, 16, 49, 512},
-    {0, 0, 0, 351, 28928, 28672, 256, 16, 49, 512},
-    {0, 0, 0, 351, 256, 28672, 512, 16, 49, 512},
-    {0, 0, 0, 351, 256, 28672, 256, 28673, 49, 256},
-    {0, 0, 0, 351, 256, 256, 28672, 112, 49, 512},
-    {0, 0, 0, 259, 512, 512, 128, 96, 49, 512},
-    {0, 0, 0, 351, 256, 256, 256, 16, 49, 512},
-    {0, 2, 6, 351, 256, 256, 256, 96, 49, 512},
-    {0, 0, 0, 351, 256, 28672, 256, 16, 49, 512},
-    {0, 0, 0, 351, 28928, 256, 28672, 16, 49, 512},
-    {0, 0, 0, 351, 28928, 28672, 256, 16, 49, 512},
-    {0, 0, 0, 351, 1024, 256, 1024, 28676, 49, 512},
-    {0, 0, 0, 351, 256, 28672, 512, 28678, 49, 512},
-    {0, 0, 0, 351, 256, 256, 28672, 16, 49, 512},
-    {0, 0, 0, 259, 29696, 128, 29696, 96, 49, 512},
-    {0, 0, 0, 351, 512, 256, 1024, 28675, 49, 512},
-    {0, 0, 0, 358, 256, 256, 256, 28677, 49, 512},
-    {0, 0, 0, 351, 256, 256, 256, 16, 49, 512},
-    {0, 0, 0, 351, 192, 192, 256, 16, 49, 512},
-    {8, 0, 4, 360, 256, 256, 256, 28674, 81, 256},
-    {0, 2, 9, 357, 256, 256, 256, 28672, 81, 384},
-    {0, 0, 0, 351, 512, 2048, 2048, 28679, 49, 512},
-    {0, 0, 0, 351, 512, 256, 512, 28677, 49, 512},
-    {0, 0, 0, 351, 256, 256, 256, 28677, 49, 512},
-    {0, 0, 0, 351, 256, 256, 256, 28680, 49, 512},
-    {0, 0, 0, 351, 256, 256, 256, 28681, 49, 512},
-    {0, 0, 0, 351, 256, 256, 256, 28682, 49, 512},
-    {0, 0, 0, 351, 256, 256, 28672, 16, 49, 512},
-    {0, 0, 0, 351, 1024, 256, 1024, 16, 49, 512},
-    {0, 0, 0, 256, 64, 64, 64, 16, 49, 512},
-    {0, 0, 0, 256, 64, 64, 64, 16, 49, 512},
-    {8, 0, 8, 357, 256, 256, 256, 28679, 81, 512},
-    {0, 0, 0, 256, 64, 64, 64, 16, 49, 512},
-    {0, 0, 0, 256, 64, 64, 64, 16, 49, 512},
-    {0, 0, 0, 351, 256, 256, 256, 28683, 49, 512},
-    {0, 0, 0, 259, 256, 256, 256, 16, 49, 512},
-    {0, 2, 6, 259, 256, 256, 256, 16, 49, 512},
-    {0, 0, 0, 360, 28928, 28928, 512, 28679, 49, 512},
-    {0, 0, 0, 351, 256, 256, 256, 28684, 49, 0},
-};
-
-s16 D_800AD9B8[24][5] = {
-    {0, 255, 255, 259, 49},   // Cyan, MP Refill
-    {255, 127, 31, 259, 49},  // Orange, curse attacking effect
-    {63, 31, 255, 259, 49},   // Light blue, Agunea
-    {0, 63, 31, 259, 49},     // Forest green, no known use
-    {63, 63, 63, 259, 49},    // Dark grey, no known use
-    {255, 63, 63, 259, 49},   // Coral, no known use
-    {31, 63, 127, 259, 49},   // Navy blue, no known use
-    {127, 63, 15, 259, 49},   // Brown, no known use
-    {255, 127, 31, 259, 49},  // Orange, same as entry 1, no known use
-    {127, 127, 15, 259, 49},  // Olive green, no known use
-    {15, 15, 127, 259, 49},   // Dark blue, no known use
-    {63, 63, 63, 259, 49},    // Dark grey, same as entry 4, no known use
-    {127, 15, 127, 259, 49},  // Plum, no known use
-    {15, 255, 47, 259, 49},   // Chartreuse, no known use
-    {47, 255, 47, 259, 49},   // Lime green, no known use
-    {95, 15, 95, 259, 49},    // Eggplant, no known use
-    {127, 63, 15, 259, 49},   // Brown, same as entry 7, no known use
-    {255, 15, 15, 259, 49},   // Red, Dark Metamorphosis
-    {127, 63, 63, 259, 49},   // Mahogany, no known use
-    {0, 255, 255, 259, 49},   // Cyan, same as entry 0, no known use
-    {255, 63, 63, 259, 49},   // Red, sword warp spell
-    {255, 63, 63, 259, 49},   // Red, sword warp spell
-    {127, 127, 127, 259, 49}, // Grey, soul steal
-    {0, 255, 127, 259, 49},   // Light green, Sword Brothers
-};
+// BSS
+extern s32 D_8013808C;
+extern s32 D_80138090;
+extern mistStruct D_80138094[16];
+extern s16 D_801381D4;
+extern s16 D_801381D8;
+extern s16 D_801381DC;
+extern s16 D_801381E0;
+extern s16 D_801381E4;
+extern s16 D_801381E8;
+extern s16 D_801381EC;
+extern s16 D_801381F0;
+extern Primitive D_801381F4[8];
+extern s32 D_80138394;
+extern s32 D_80138398;
 
 // clang-format off
 #define UNK_FLAGS_GROUP_1 FLAG_HAS_PRIMS | FLAG_POS_CAMERA_LOCKED
@@ -180,22 +44,6 @@ static unkStr_8011E4BC* D_800ADB98[] = {
     &D_800ADAF8, &D_800ADB08, &D_800ADB18, &D_800ADB28, &D_800ADB38,
     &D_800ADB48, &D_800ADB58, &D_800ADB68, &D_800ADB78, &D_800ADB88,
 };
-
-// BSS
-extern s32 D_8013808C;
-extern s32 D_80138090;
-extern mistStruct D_80138094[16];
-extern s16 D_801381D4;
-extern s16 D_801381D8;
-extern s16 D_801381DC;
-extern s16 D_801381E0;
-extern s16 D_801381E4;
-extern s16 D_801381E8;
-extern s16 D_801381EC;
-extern s16 D_801381F0;
-extern Primitive D_801381F4[8];
-extern s32 D_80138394;
-extern s32 D_80138398;
 
 void func_8011E4BC(Entity* self) {
     byte stackpad[0x28];
@@ -487,6 +335,19 @@ void func_8011E4BC(Entity* self) {
 
 void func_8011EDA0() {}
 
+static AnimationFrame D_800ADBD4[] = {
+    POSE(2, 1, 0), POSE(2, 2, 0), POSE(2, 3, 0), POSE(2, 4, 0), POSE(2, 5, 0),
+    POSE(2, 4, 0), POSE(2, 3, 0), POSE(2, 4, 0), POSE(2, 3, 0), POSE(2, 4, 0),
+    POSE(2, 5, 0), POSE(1, 6, 0), POSE(1, 7, 0), POSE(1, 8, 0), POSE_END,
+};
+
+static AnimationFrame D_800ADC10[] = {
+    POSE(1, 9, 0),  POSE(2, 10, 0), POSE(2, 11, 0), POSE(2, 12, 0),
+    POSE(2, 13, 0), POSE(2, 14, 0), POSE(2, 15, 0), POSE(2, 16, 0),
+    POSE(2, 17, 0), POSE(2, 18, 0), POSE(3, 19, 0), POSE(4, 20, 0),
+    POSE_END,
+};
+
 // RIC function is func_80161C2C
 void func_8011EDA8(Entity* self) {
     s16 paramsLo = self->params & 0xFF;
@@ -559,6 +420,13 @@ void func_8011EDA8(Entity* self) {
     }
 }
 
+static AnimationFrame D_800ADC44[] = {
+    POSE(2, 1, 0),  POSE(2, 2, 0),  POSE(2, 3, 0),  POSE(2, 4, 0),
+    POSE(2, 5, 0),  POSE(2, 6, 0),  POSE(2, 7, 0),  POSE(2, 8, 0),
+    POSE(2, 9, 0),  POSE(2, 10, 0), POSE(2, 11, 0), POSE(2, 12, 0),
+    POSE(2, 13, 0), POSE_END,
+};
+
 // same as RIC/RicEntityHitByDark
 void func_8011F074(Entity* self) {
     switch (self->step) {
@@ -599,6 +467,8 @@ void func_8011F074(Entity* self) {
         break;
     }
 }
+
+u16 D_800ADC7C[] = {PAL_UNK_194, PAL_UNK_199};
 
 // effect when player takes lightning damage
 void EntityHitByLightning(Entity* self) {
@@ -738,6 +608,45 @@ void EntityHitByLightning(Entity* self) {
     prim->v0 = prim->v1 = 0xC0;
     prim->v2 = prim->v3 = 0xCF;
 }
+
+// disable format to allow for extra spaces, to space these out nicely
+// clang-format off
+static Point16 D_800ADC80 = { -2, -24};
+static Point16 D_800ADC84 = {  0,  -8};
+static Point16 D_800ADC88 = {  2,   8};
+static Point16 D_800ADC8C = {  0,  24};
+static Point16 D_800ADC90 = {  6, -12};
+static Point16 D_800ADC94 = {  8,   0};
+static Point16 D_800ADC98 = {  7,  12};
+static Point16 D_800ADC9C = { -8, -12};
+static Point16 D_800ADCA0 = { -9,   0};
+static Point16 D_800ADCA4 = { -7,  12};
+static Point16 D_800ADCA8 = {-14,  -6};
+static Point16 D_800ADCAC = {-15,   7};
+static Point16 D_800ADCB0 = { 13,  -7};
+static Point16 D_800ADCB4 = { 16,   8};
+static Point16 D_800ADCB8 = { -7, -22};
+static Point16 D_800ADCBC = {  6, -21};
+static Point16 D_800ADCC0 = { -8,  21};
+static Point16 D_800ADCC4 = {  7,  22};
+// clang-format on
+static Point16* D_800ADCC8[] = {
+    &D_800ADC80, &D_800ADC90, &D_800ADC84, &D_800ADC90, &D_800ADC94,
+    &D_800ADC84, &D_800ADC94, &D_800ADC88, &D_800ADC84, &D_800ADC94,
+    &D_800ADC98, &D_800ADC88, &D_800ADC98, &D_800ADC8C, &D_800ADC88,
+    &D_800ADC88, &D_800ADC8C, &D_800ADCA4, &D_800ADC88, &D_800ADCA4,
+    &D_800ADCA0, &D_800ADC84, &D_800ADC88, &D_800ADCA0, &D_800ADC84,
+    &D_800ADCA0, &D_800ADC9C, &D_800ADC84, &D_800ADC9C, &D_800ADC80,
+    &D_800ADC90, &D_800ADCB0, &D_800ADC94, &D_800ADCB0, &D_800ADCB4,
+    &D_800ADC94, &D_800ADCB4, &D_800ADC98, &D_800ADC94, &D_800ADC9C,
+    &D_800ADCA0, &D_800ADCA8, &D_800ADCA0, &D_800ADCAC, &D_800ADCA8,
+    &D_800ADCA0, &D_800ADCA4, &D_800ADCAC, &D_800ADC80, &D_800ADC9C,
+    &D_800ADCB8, &D_800ADC80, &D_800ADCBC, &D_800ADC90, &D_800ADC8C,
+    &D_800ADCC0, &D_800ADCA4, &D_800ADC98, &D_800ADCC4, &D_800ADC8C,
+    &D_800ADCB8, &D_800ADC9C, &D_800ADCA8, &D_800ADCBC, &D_800ADCB0,
+    &D_800ADC90, &D_800ADCAC, &D_800ADCA4, &D_800ADCC0, &D_800ADCB4,
+    &D_800ADCC4, &D_800ADC98,
+};
 
 // player gets frozen
 void EntityHitByIce(Entity* self) {
@@ -911,6 +820,31 @@ void EntityHitByIce(Entity* self) {
         }
     }
 }
+
+static s16 D_800ADDE8[22][6] = {
+    {0x0000, 0x0000, 0x0100, 0x0100, 0x0100, 0x0100},
+    {0x0500, 0x0A00, 0x0100, 0x0100, 0x0100, 0x0000},
+    {0x0000, 0x0000, 0x0100, 0x7000, 0x7000, 0x0200},
+    {0x0000, 0x0000, 0x7100, 0x7100, 0x0100, 0x1000},
+    {0x0000, 0x0000, 0x7100, 0x0100, 0x7000, 0x0800},
+    {0x0000, 0x0000, 0x0100, 0x7100, 0x0100, 0x0400},
+    {0x0500, 0x0A00, 0x0100, 0x0100, 0x0100, 0x0100},
+    {0x0500, 0x0A00, 0x0100, 0x0200, 0x7100, 0x0100},
+    {0x0000, 0x0000, 0x0100, 0x0400, 0x0400, 0x0100},
+    {0x0000, 0x0000, 0x7100, 0x0100, 0x7100, 0x0100},
+    {0x0000, 0x0000, 0x7100, 0x7100, 0x0100, 0x0200},
+    {0x0000, 0x0000, 0x7100, 0x7100, 0x0100, 0x0400},
+    {0x0500, 0x0A00, 0x0100, 0x0100, 0x0100, 0x0400},
+    {0x0A00, 0x0500, 0x0100, 0x0100, 0x0100, 0x0800},
+    {0x0500, 0x0A00, 0x0100, 0x0100, 0x0100, 0x0100},
+    {0x0000, 0x0000, 0x0100, 0x0200, 0x7200, 0x0400},
+    {0x0000, 0x0000, 0x0100, 0x0100, 0x7100, 0x0400},
+    {0x0000, 0x0000, 0x7100, 0x7100, 0x0100, 0x0400},
+    {0x0000, 0x0000, 0x7100, 0x0100, 0x7000, 0x0400},
+    {0x0000, 0x0000, 0x0100, 0x7100, 0x0100, 0x0100},
+    {0x0000, 0x0000, 0x0100, 0x0200, 0x7100, 0x0100},
+    {0x0000, 0x0000, 0x0100, 0x7100, 0x0100, 0x0400},
+};
 
 // Transparent white circle closes over player
 // Entity ID #38. Created by blueprint 53. No known callers.
@@ -1105,7 +1039,35 @@ void EntityTransparentWhiteCircle(Entity* self) {
     }
 }
 
-extern Unkstruct_800ADEF0 D_800ADEF0[];
+// clang-format off
+static Unkstruct_800ADEF0 D_800ADEF0[] = {
+    {{1, 0x10, 0x10, 0x20, 0xFF, 0x00}, {0x35, 0x35, 0x35, 0x28, 0x00, 0}, {0x53, 0x53, 0x53, 0x0F, 0x00, 0}, 0x80},
+    {{1, 0x10, 0x10, 0x20, 0xFF, 0x00}, {0x35, 0x35, 0x35, 0x28, 0x00, 0}, {0x54, 0x54, 0x54, 0x10, 0x00, 0}, 0x81},
+    {{2, 0xFF, 0x00, 0x00, 0x00, 0x00}, {0x00, 0x00, 0x00, 0x00, 0x00, 0}, {0x00, 0x00, 0x00, 0x00, 0x00, 0}, 0x82},
+    {{2, 0xFF, 0x00, 0x00, 0x00, 0x00}, {0x00, 0x00, 0x00, 0x00, 0x00, 0}, {0x00, 0x00, 0x00, 0x00, 0x00, 0}, 0x83},
+    {{1, 0x10, 0x10, 0x50, 0x20, 0xFF}, {0x35, 0x35, 0x35, 0x28, 0x2C, 0}, {0x06, 0x0C, 0x0D, 0x07, 0x01, 0}, 0x04},
+    {{1, 0x10, 0x10, 0x50, 0x20, 0xFF}, {0x35, 0x35, 0x35, 0x28, 0x2C, 0}, {0x03, 0x0A, 0x0B, 0x06, 0x03, 0}, 0x02},
+    {{1, 0x10, 0x10, 0x50, 0x20, 0xFF}, {0x35, 0x35, 0x35, 0x28, 0x2C, 0}, {0x04, 0x09, 0x09, 0x03, 0x04, 0}, 0x03},
+    {{1, 0x10, 0x10, 0x50, 0x20, 0xFF}, {0x35, 0x35, 0x35, 0x28, 0x2C, 0}, {0x01, 0x08, 0x08, 0x05, 0x02, 0}, 0x01},
+    {{1, 0x10, 0x10, 0x50, 0x20, 0xFF}, {0x35, 0x35, 0x35, 0x28, 0x2C, 0}, {0x00, 0x00, 0x00, 0x04, 0x14, 0}, 0x00},
+    {{1, 0x10, 0x10, 0x20, 0x20, 0xFF}, {0x35, 0x35, 0x35, 0x28, 0x2C, 0}, {0x4E, 0x4F, 0x4F, 0x08, 0x45, 0}, 0x05},
+    {{1, 0x10, 0x10, 0x20, 0x20, 0xFF}, {0x35, 0x35, 0x35, 0x28, 0x2C, 0}, {0x4E, 0x50, 0x50, 0x09, 0x4B, 0}, 0x07},
+    {{1, 0x10, 0x10, 0x20, 0x20, 0xFF}, {0x35, 0x35, 0x35, 0x28, 0x2C, 0}, {0x4E, 0x51, 0x51, 0x0A, 0x4C, 0}, 0x06},
+    {{1, 0x10, 0x10, 0x20, 0x20, 0xFF}, {0x35, 0x35, 0x35, 0x28, 0x2C, 0}, {0x4E, 0x40, 0x40, 0x0B, 0x49, 0}, 0x0A},
+    {{1, 0x10, 0x10, 0x20, 0x20, 0xFF}, {0x35, 0x35, 0x35, 0x28, 0x2C, 0}, {0x4E, 0x45, 0x45, 0x0C, 0x50, 0}, 0x08},
+    {{1, 0x10, 0x10, 0x20, 0x20, 0xFF}, {0x35, 0x35, 0x35, 0x28, 0x2C, 0}, {0x4E, 0x52, 0x52, 0x0D, 0x4D, 0}, 0x09},
+    {{1, 0x10, 0x10, 0x20, 0x20, 0xFF}, {0x35, 0x35, 0x35, 0x28, 0x2C, 0}, {0x4E, 0x55, 0x55, 0x12, 0x5E, 0}, 0x0B},
+    {{1, 0x10, 0x10, 0x50, 0x20, 0xFF}, {0x35, 0x35, 0x35, 0x28, 0x2C, 0}, {0x07, 0x02, 0x12, 0x0E, 0x48, 0}, 0x84},
+    {{1, 0x10, 0x10, 0x50, 0x20, 0xFF}, {0x35, 0x35, 0x35, 0x28, 0x2C, 0}, {0x07, 0x02, 0x12, 0x0E, 0x48, 0}, 0x85},
+    {{1, 0x10, 0x10, 0x50, 0x20, 0xFF}, {0x35, 0x35, 0x35, 0x28, 0x2C, 0}, {0x07, 0x02, 0x12, 0x0E, 0x48, 0}, 0x86},
+    {{1, 0x10, 0x10, 0x50, 0x20, 0xFF}, {0x35, 0x35, 0x35, 0x28, 0x2C, 0}, {0x07, 0x02, 0x12, 0x13, 0x5F, 0}, 0x87},
+};
+// clang-format on
+
+static u8 D_800AE120[] = {
+    0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F,
+    0x10, 0x11, 0x12, 0x13, 0x12, 0x12, 0x12, 0x12,
+};
 
 // Potion Entity. Has different effects based on a parameter.
 void EntityPlayerPinkEffect(Entity* self) {
@@ -1194,6 +1156,19 @@ void EntityPlayerPinkEffect(Entity* self) {
         break;
     }
 }
+
+RECT D_800AE130 = {512, 256, 32, 80};
+
+static RECT D_800AE138 = {512 + 32, 256, 32, 80};
+
+static u8 D_800AE140[][8] = {
+    0x00, 0x11, 0x21, 0x22, 0x32, 0x43, 0x44, 0x54, 0x90, 0x91, 0x82,
+    0x83, 0x94, 0xA5, 0xB6, 0xB7, 0xC7, 0xD8, 0xE8, 0xF7, 0xE9, 0xEA,
+    0xEB, 0xEC, 0x7F, 0x7E, 0x7D, 0x8C, 0x9B, 0xAA, 0xB9, 0xA8, 0x07,
+    0x17, 0x27, 0x38, 0x47, 0x57, 0x56, 0x58, 0x7A, 0x6B, 0x5C, 0x4D,
+    0x3E, 0x2D, 0x1C, 0x0C, 0xE0, 0xF1, 0xF2, 0xF3, 0xF4, 0xE4, 0xF5,
+    0xF6, 0xB9, 0xC9, 0xCA, 0xCB, 0xCC, 0xDD, 0xEE, 0xEF,
+};
 
 // player dissolves into pixels
 void EntityPlayerDissolves(Entity* self) {
@@ -1439,6 +1414,18 @@ void EntityPlayerDissolves(Entity* self) {
     func_8010DFF0(1, 1);
 }
 
+static Unkstruct_800AE180 D_800AE180[] = {
+    {PAL_UNK_19F, 0x0030},
+    {PAL_UNK_19F, 0x0018},
+    {PAL_UNK_19F, 0x0000},
+    {PAL_UNK_19F, 0x0048},
+};
+
+static s16 D_800AE190[] = {
+    0x0000, 0x0200, 0x0400, 0x0600, 0x0800, 0x0A00, 0x0C00, 0x0E00,
+    0x1000, 0x1200, 0x1400, 0x1600, 0x1800, 0x1A00, 0x1C00, 0x1E00,
+};
+
 void EntityLevelUpAnimation(Entity* self) {
     Primitive* prim;
     Unkstruct_800AE180* unkstruct;
@@ -1585,6 +1572,25 @@ void func_80121F14(s32 arg0, s32 arg1) {
         ptr->posY.val += (s32)arg1;
     }
 }
+
+static s16 D_800AE1B0[] = {
+    0x48, 0x48, 0x48, 0x44, 0x44, 0x40, 0x40, 0x3C, 0x40, 0x40, 0x44,
+    0x48, 0x4C, 0x50, 0x58, 0x60, 0x60, 0x58, 0x50, 0x4C, 0x48, 0x44,
+    0x40, 0x40, 0x3C, 0x40, 0x40, 0x44, 0x44, 0x48, 0x48, 0x48,
+};
+
+static s16 D_800AE1F0[] = {
+    -1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,  0,
+    0,  0,  0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, -1,
+};
+
+static u32 D_800AE230[] = {
+    7, 0, 1, 2, 3, 4, 5, 6,
+};
+
+static u32 D_800AE250[] = {
+    2, 1, 0, 7, 6, 5, 4, 3,
+};
 
 Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
     s32 primU0;
@@ -2345,6 +2351,16 @@ void func_80123F78(Entity* self) {
     }
 }
 
+static s32 D_800AE270 = 0xFF;
+static s32 D_800AE274 = 0xFF;
+static s32 D_800AE278 = 0xFF;
+static s32 D_800AE27C = 0x7F;
+static s32 D_800AE280 = 0x7F;
+static s32 D_800AE284 = 0x3F;
+static s32 D_800AE288 = 0x7F;
+static s32 D_800AE28C = 0x3F;
+static s32 D_800AE290 = 0x7F;
+
 // Corresponding RIC function is func_80165DD8
 static void func_80124164(
     Primitive* prim, s32 colorMul, s32 y, s32 radius, bool arg4) {
@@ -2619,6 +2635,10 @@ void EntityTeleport(Entity* self) {
         }
     }
 }
+
+static AnimationFrame D_800AE294[] = {
+    POSE(8, 1, 0), POSE(8, 2, 0), POSE(8, 3, 0), POSE(8, 4, 0), POSE_END,
+};
 
 // Entity #66. Made by final blueprint, #122. Created in PlayerStepStand.
 void EntityPlayerSleepZ(Entity* self) {

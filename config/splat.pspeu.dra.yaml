@@ -114,7 +114,6 @@ segments:
       - [0xA69C8, .data, dra/84B88]
       - [0xA6C38, .data, dra/7879C]
       - [0xA72E4, .data, dra/7E4BC]
-      - [0xA79D0, .data, dra/d_DBD4]
       - [0xA8120, .data, dra/wolfForm]
       - [0xA8888, .data, dra_psp/cd]
       - [0xA88D8, .data, dra/d_CD80]

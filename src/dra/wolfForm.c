@@ -2,6 +2,21 @@
 #include "dra.h"
 #include "dra_bss.h"
 
+#ifndef VERSION_PSP
+helper_8012F178 D_800B08CC[6] = {0};
+
+s32 D_800B0914 = 0;
+s32 D_800B0918 = 0;
+s32 D_800B091C = 0;
+s32 D_800B0920 = 0;
+#else
+extern helper_8012F178 D_800B08CC[6];
+extern s32 D_800B0914;
+extern s32 D_800B0918;
+extern s32 D_800B091C;
+extern s32 D_800B0920;
+#endif
+
 void func_8012C600(void) {
 #ifdef VERSION_PSP
     const s32 limiting_value = 0x13;
