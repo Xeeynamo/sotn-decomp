@@ -3925,7 +3925,7 @@
 | ric        | func_pspeu_092BA148               |       60 |          8 |        |       |     |
 | lib        | func_psp_09254C00                 |       60 |          8 |        |       |     |
 | nz1        | func_pspeu_0923E800               |       60 |          8 |        |       |     |
-| rlib       | EntityBreakableDebris             |       60 |          8 |        |       |     |
+| rlib       | func_pspeu_09249DB8               |       60 |          8 |        |       |     |
 | sel        | func_psp_09240A88                 |       60 |          9 |        |       |     |
 | dra        | func_psp_09113E70                 |       60 |         11 |        |       |     |
 | main       | func_psp_0892D220                 |       60 |         11 |        |       |     |
@@ -7709,7 +7709,7 @@
 | chi        | func_psp_0924BD20                 |      226 |         27 |        |       |     |
 |            | func_pspeu_0924AE50               |      227 |         18 |        |       |     |
 | lib        | func_psp_09252E70                 |      227 |         29 |        |       |     |
-| rlib       | EntityBackgroundBookcase          |      227 |         29 |        |       |     |
+| rlib       | func_pspeu_09248810               |      227 |         29 |        |       |     |
 | bo0        | EntityChair                       |      227 |         34 |        |       |     |
 | bo2        | func_us_801A7340                  |      227 |         36 | Yes    |       |     |
 | main       | func_psp_08925A04                 |      228 |         11 |        |       |     |
@@ -7853,7 +7853,7 @@
 | np3        | EntityPathBlockSmallWeight        |      247 |         26 |        |       |     |
 | dra        | func_psp_090FCEE0                 |      247 |         31 |        |       |     |
 | rbo2       | func_us_801A17C8                  |      247 |         35 | Yes    |       |     |
-| rlib       | EntityCandleTable                 |      247 |         35 |        |       |     |
+| rlib       | func_pspeu_0924ADB0               |      247 |         35 |        |       |     |
 | main       | func_psp_08933F7C                 |      248 |         17 |        |       |     |
 | rno3       | func_pspeu_092577B8               |      248 |         31 |        |       |     |
 | rno4       | func_pspeu_09250E30               |      248 |         33 |        |       |     |
@@ -8578,7 +8578,7 @@
 | nz1        | func_pspeu_09257C20               |      366 |         33 |        |       |     |
 | rnz1       | func_pspeu_09254330               |      366 |         33 |        |       |     |
 | lib        | func_psp_092537F8                 |      367 |         31 |        |       |     |
-| rlib       | EntityDistantBookshelves          |      367 |         31 |        |       |     |
+| rlib       | func_pspeu_09249190               |      367 |         31 |        |       |     |
 | rnz1       | func_pspeu_092508B8               |      367 |         46 |        |       |     |
 | top        | func_pspeu_09248638               |      367 |         54 |        |       |     |
 | dra        | func_psp_090EB8B8                 |      368 |         17 |        |       |     |
@@ -8717,7 +8717,7 @@
 | rno0       | func_pspeu_09251948               |      400 |         50 |        |       |     |
 |            | func_092ECC98                     |      401 |         36 |        |       |     |
 | no1        | func_pspeu_0923D048               |      402 |         51 |        |       |     |
-| rlib       | EntityExplosionPuffOpaque         |      402 |         52 |        |       |     |
+| rlib       | func_pspeu_0924B140               |      402 |         52 |        |       |     |
 | main       | func_psp_08922C14                 |      405 |         36 |        |       |     |
 | main       | func_psp_0891881C                 |      405 |         51 |        |       |     |
 | bo0        | func_pspeu_09248DA0               |      406 |         25 |        |       |     |
@@ -9398,7 +9398,7 @@
 | no1        | func_pspeu_09262CD0               |      662 |         50 | Yes    |       |     |
 | bo0        | UnkRecursivePrimFunc2             |      663 |         11 |        |       |     |
 | lib        | func_psp_09248588                 |      663 |         11 |        |       |     |
-| rlib       | UnkRecursivePrimFunc2             |      663 |         11 |        |       |     |
+| rlib       | func_pspeu_09240AF8               |      663 |         11 |        |       |     |
 | bo6        | func_pspeu_0925D980               |      663 |         70 |        |       |     |
 | ric        | func_pspeu_092B4DE0               |      663 |         70 |        |       |     |
 | maria      | func_pspeu_092BD1B8               |      670 |         62 |        |       |     |
@@ -9492,7 +9492,7 @@
 | np3        | EntityBloodyZombie                |      703 |        118 | Yes    |       |     |
 | st0        | func_pspeu_09242FF8               |      705 |         69 |        |       |     |
 | bo2        | func_us_801A3E04                  |      705 |         86 | Yes    |       |     |
-| rlib       | func_us_801ADBE8                  |      709 |        122 |        |       |     |
+| rlib       | EntityLion                        |      709 |        122 |        |       |     |
 | lib        | func_psp_09265608                 |      711 |         73 | Yes    |       |     |
 | cat        | func_pspeu_092566B8               |      720 |         67 |        |       |     |
 | bo0        | EntityBloodyZombie                |      722 |        118 | Yes    |       |     |
@@ -9589,7 +9589,7 @@
 | maria      | func_pspeu_092A9E88               |      800 |         95 |        |       |     |
 | cen        | func_pspeu_09245ED8               |      800 |         95 |        |       |     |
 | are        | func_pspeu_0924CDC8               |      800 |        116 | Yes    |       |     |
-| rlib       | EntityThickBookcase               |      801 |         74 |        |       |     |
+| rlib       | func_pspeu_09249E88               |      801 |         74 |        |       |     |
 |            | func_pspeu_09246488               |      801 |         75 | Yes    |       |     |
 | bo6        | MarEntityHitByIce                 |      802 |         82 |        |       |     |
 | maria      | func_pspeu_092BC5E8               |      802 |         82 |        |       |     |
