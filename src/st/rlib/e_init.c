@@ -41,7 +41,7 @@ void func_us_801AF9E8(Entity* self);
 void EntityExplosionPuffOpaque(Entity* self);
 void func_us_801AFC88(Entity* self);
 void EntityBreakableDebris(Entity* self);
-void func_us_801BAF60_from_lib(Entity* self);
+void EntityCandleTable(Entity* self);
 
 PfnEntityUpdate EntityUpdates[] = {
     EntityBreakable,
@@ -84,7 +84,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityExplosionPuffOpaque,
     func_us_801AFC88,
     EntityBreakableDebris,
-    func_us_801BAF60_from_lib,
+    EntityCandleTable,
 };
 
 // clang-format off
@@ -108,5 +108,5 @@ EInit D_us_80180688 = {ANIMSET_OVL(4), 0x00, 0x53, PAL_TIN_MAN, ENEMY_PARTICLE};
 EInit g_EInitScarecrow = {ANIMSET_OVL(5), 0x00, 0x54, PAL_SCARECROW, ENEMY_SCARECROW};
 EInit D_us_801806A0 = {ANIMSET_OVL(5), 0x00, 0x54, PAL_SCARECROW, ENEMY_INTERACTABLE};
 EInit g_EInitSchmoo = {ANIMSET_OVL(5), 0x08, 0x54, PAL_SCHMOO, ENEMY_SCHMOO};
-EInit D_us_801806B8 = {ANIMSET_OVL(6), 0x00, 0x50, PAL_UNK_20F, ENEMY_INTERACTABLE};
+EInit g_EInitCandleTable = {ANIMSET_OVL(6), 0x00, 0x50, PAL_UNK_20F, ENEMY_INTERACTABLE};
 // clang-format on

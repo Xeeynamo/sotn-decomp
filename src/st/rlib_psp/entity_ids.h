@@ -26,6 +26,6 @@ extern s32 E_ID(UNK_25);
 extern s32 E_ID(EXPLODE_PUFF_OPAQUE);
 extern s32 E_ID(UNK_27);
 extern s32 E_ID(UNK_28);
-extern s32 E_ID(UNK_29);
+extern s32 E_ID(CANDLE_TABLE);
 
 #endif

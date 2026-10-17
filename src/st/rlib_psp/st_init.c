@@ -28,7 +28,7 @@ void InitEntityIds(void) {
     SET_E_ID(EXPLODE_PUFF_OPAQUE);
     SET_E_ID(UNK_27);
     SET_E_ID(UNK_28);
-    SET_E_ID(UNK_29);
+    SET_E_ID(CANDLE_TABLE);
 }
 
 extern LayoutEntity* D_8D2DFC8;
