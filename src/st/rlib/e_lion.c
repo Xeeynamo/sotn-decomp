@@ -73,32 +73,32 @@ void EntityLion(Entity* self) {
         if (coll & 0x60) {
             self->posX.val -= self->velocityX;
         }
-        if (self->facingLeft ^ self->ext.lion.unk83) {
+        if (self->facingLeft ^ self->ext.lion.facingbool) {
             self->velocityX = FIX(-0.75);
         } else {
             self->velocityX = FIX(0.75);
         }
-        if (self->ext.lion.unk83) {
+        if (self->ext.lion.facingbool) {
             self->velocityX -= self->velocityX / 4;
         }
         switch (self->step_s) {
         case 0:
             self->facingLeft = GetSideToPlayer() & 1;
-            self->ext.lion.unk83 = 1;
-            self->ext.lion.unk82 = 0x60;
+            self->ext.lion.facingbool = true;
+            self->ext.lion.timer = 0x60;
             self->step_s++;
             /* fallthrough */
         case 1:
             self->facingLeft = GetSideToPlayer() & 1;
             other = &PLAYER;
             if (other->facingLeft != self->facingLeft) {
-                self->ext.lion.unk82--;
+                self->ext.lion.timer--;
             }
             if ((GetDistanceToPlayerX() > 0x60) &&
                 other->facingLeft == self->facingLeft) {
                 SetStep(LION_ADVANCE);
             } else {
-                if (!self->ext.lion.unk82) {
+                if (!self->ext.lion.timer) {
                     self->step_s++;
                 }
                 if (GetDistanceToPlayerX() < 0x28) {
@@ -108,7 +108,7 @@ void EntityLion(Entity* self) {
             break;
         case 2:
             self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
-            self->ext.lion.unk83 = 0;
+            self->ext.lion.facingbool = false;
             if (GetDistanceToPlayerX() > 0xA0) {
                 SetStep(LION_IDLE);
             }
@@ -128,29 +128,29 @@ void EntityLion(Entity* self) {
         self->facingLeft = GetSideToPlayer() & 1;
         other = &PLAYER;
         if (other->facingLeft != self->facingLeft) {
-            self->ext.lion.unk82--;
-            self->ext.lion.unk83 = 1;
-            if (!self->ext.lion.unk82) {
+            self->ext.lion.timer--;
+            self->ext.lion.facingbool = true;
+            if (!self->ext.lion.timer) {
                 SetStep(LION_RETREAT);
                 return;
             }
         } else {
-            self->ext.lion.unk82 = 0x20;
-            self->ext.lion.unk83 = 0;
+            self->ext.lion.timer = 0x20;
+            self->ext.lion.facingbool = false;
         }
-        if (self->facingLeft ^ self->ext.lion.unk83) {
+        if (self->facingLeft ^ self->ext.lion.facingbool) {
             self->velocityX = FIX(-0.75);
         } else {
             self->velocityX = FIX(0.75);
         }
-        if (self->ext.lion.unk83) {
+        if (self->ext.lion.facingbool) {
             self->velocityX -= self->velocityX / 4;
         }
         switch (self->step_s) {
         case 0:
             self->facingLeft = GetSideToPlayer() & 1;
-            self->ext.lion.unk83; // Need a line here to touch self.
-            self->ext.lion.unk80 = 0x30;
+            self->ext.lion.timer; // Need a line here to touch self.
+            self->ext.lion.attackDelay = 0x30;
             self->step_s++;
             /* fallthrough */
         case 1:
@@ -158,7 +158,7 @@ void EntityLion(Entity* self) {
             if (g_Timer & 1) {
                 self->poseTimer++;
             }
-            if (!--self->ext.lion.unk80) {
+            if (!--self->ext.lion.attackDelay) {
                 self->step_s++;
             }
             /* fallthrough */
