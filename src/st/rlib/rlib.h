@@ -51,9 +51,9 @@ typedef enum EntityID {
     E_DISTANT_SHELVES,      // EntityDistantBookshelves
     E_THICK_BOOKCASE,       // EntityThickBookcase
     E_UNK_1B,               // func_us_801AE7AC_from_lib
-    E_UNK_1C,               // func_us_801ADBE8
-    E_HARPY_KICK,           // EntityHarpyKick
-    E_UNK_1E,               // func_us_801AE414
+    E_LION,                 // EntityLion
+    E_LION_ATTACK,          // EntityLionAttack
+    E_LION_DEATH_PARTS,     // EntityLionDeathParts
     E_UNK_1F,               // func_us_801AE534
     E_UNK_20,               // func_us_801AED4C
     E_UNK_21,               // func_us_801D8D44_from_no4

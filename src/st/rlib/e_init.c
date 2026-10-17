@@ -28,9 +28,9 @@ void EntityBackgroundShadow(Entity* self);
 void EntityDistantBookshelves(Entity* self);
 void EntityThickBookcase(Entity* self);
 void func_us_801AE7AC_from_lib(Entity* self);
-void func_us_801ADBE8(Entity* self);
-void EntityHarpyKick(Entity* self);
-void func_us_801AE414(Entity* self);
+void EntityLion(Entity* self);
+void EntityLionAttack(Entity* self);
+void EntityLionDeathParts(Entity* self);
 void func_us_801AE534(Entity* self);
 void func_us_801AED4C(Entity* self);
 void func_us_801D8D44_from_no4(Entity* self);
@@ -71,9 +71,9 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityDistantBookshelves,
     EntityThickBookcase,
     func_us_801AE7AC_from_lib,
-    func_us_801ADBE8,
-    EntityHarpyKick,
-    func_us_801AE414,
+    EntityLion,
+    EntityLionAttack,
+    EntityLionDeathParts,
     func_us_801AE534,
     func_us_801AED4C,
     func_us_801D8D44_from_no4,
@@ -99,8 +99,8 @@ EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABL
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
 EInit g_EInitLion = {ANIMSET_OVL(3), 0x01, 0x50, PAL_LION, ENEMY_LION};
-EInit D_us_8018064C = {ANIMSET_OVL(0), 0x00, 0x00, PAL_NONE, ENEMY_LION_UNK_107};
-EInit D_us_80180658 = {ANIMSET_OVL(3), 0x00, 0x50, PAL_LION, ENEMY_PARTICLE};
+EInit g_EInitLionAttack = {ANIMSET_OVL(0), 0x00, 0x00, PAL_NONE, ENEMY_LION_UNK_107};
+EInit g_EInitLionDeathParts = {ANIMSET_OVL(3), 0x00, 0x50, PAL_LION, ENEMY_PARTICLE};
 EInit g_EInitTinman = {ANIMSET_OVL(4), 0x01, 0x53, PAL_TIN_MAN, ENEMY_TIN_MAN};
 EInit D_us_80180670 = {ANIMSET_OVL(4), 0x05, 0x53, PAL_TIN_MAN, ENEMY_TIN_MAN_UNK_109};
 EInit D_us_8018067C = {ANIMSET_OVL(4), 0x00, 0x53, PAL_TIN_MAN, ENEMY_TIN_MAN_UNK_10A};
