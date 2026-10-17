@@ -77,7 +77,7 @@ segments:
       - [0xCF74, .data, 71830]
       - [0xCFB4, .data, 7879C]
       # - [0xD1D4, .data, 7879C] # blueprints
-      - [0xD4CC, .data, 7E4BC]
+      - [0xDAA8, .data, 7E4BC]
       - [0xE2A8, .data, d_E294]
       - [0x10628, .data, 84B88]
       - [0x10884, .data, 8BEF8]
