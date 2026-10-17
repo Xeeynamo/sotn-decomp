@@ -332,28 +332,6 @@ static s16 D_800AE1F0[] = {
     0,  0,  0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, -1,
 };
 
-static u32 D_800AE230[] = {
-    7, 0, 1, 2, 3, 4, 5, 6,
-};
-
-static u32 D_800AE250[] = {
-    2, 1, 0, 7, 6, 5, 4, 3,
-};
-
-static s32 D_800AE270 = 0xFF;
-static s32 D_800AE274 = 0xFF;
-static s32 D_800AE278 = 0xFF;
-static s32 D_800AE27C = 0x7F;
-static s32 D_800AE280 = 0x7F;
-static s32 D_800AE284 = 0x3F;
-static s32 D_800AE288 = 0x7F;
-static s32 D_800AE28C = 0x3F;
-static s32 D_800AE290 = 0x7F;
-
-static AnimationFrame D_800AE294[] = {
-    POSE(8, 1, 0), POSE(8, 2, 0), POSE(8, 3, 0), POSE(8, 4, 0), POSE_END,
-};
-
 // BSS
 extern s32 D_8013808C;
 extern s32 D_80138090;
@@ -1759,6 +1737,14 @@ void func_80121F14(s32 arg0, s32 arg1) {
     }
 }
 
+static u32 D_800AE230[] = {
+    7, 0, 1, 2, 3, 4, 5, 6,
+};
+
+static u32 D_800AE250[] = {
+    2, 1, 0, 7, 6, 5, 4, 3,
+};
+
 Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
     s32 primU0;
     s32 tempU;
@@ -2518,6 +2504,16 @@ void func_80123F78(Entity* self) {
     }
 }
 
+static s32 D_800AE270 = 0xFF;
+static s32 D_800AE274 = 0xFF;
+static s32 D_800AE278 = 0xFF;
+static s32 D_800AE27C = 0x7F;
+static s32 D_800AE280 = 0x7F;
+static s32 D_800AE284 = 0x3F;
+static s32 D_800AE288 = 0x7F;
+static s32 D_800AE28C = 0x3F;
+static s32 D_800AE290 = 0x7F;
+
 // Corresponding RIC function is func_80165DD8
 static void func_80124164(
     Primitive* prim, s32 colorMul, s32 y, s32 radius, bool arg4) {
@@ -2792,6 +2788,10 @@ void EntityTeleport(Entity* self) {
         }
     }
 }
+
+static AnimationFrame D_800AE294[] = {
+    POSE(8, 1, 0), POSE(8, 2, 0), POSE(8, 3, 0), POSE(8, 4, 0), POSE_END,
+};
 
 // Entity #66. Made by final blueprint, #122. Created in PlayerStepStand.
 void EntityPlayerSleepZ(Entity* self) {
