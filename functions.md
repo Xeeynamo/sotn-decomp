@@ -1154,8 +1154,8 @@
 | rdai       | SetSubStep                        |       21 |          1 |        |       |     |
 | rdai       | Random                            |       21 |          1 |        |       |     |
 | rdai       | func_pspeu_09241E60               |       21 |          1 |        |       |     |
-| rlib       | Random                            |       21 |          1 |        |       |     |
 | rlib       | func_pspeu_0923C390               |       21 |          1 |        |       |     |
+| rlib       | Random                            |       21 |          1 |        |       |     |
 | rno0       | func_pspeu_092472F0               |       21 |          1 |        |       |     |
 | rno0       | func_pspeu_09253528               |       21 |          1 |        |       |     |
 | rno0       | func_pspeu_0923C758               |       21 |          1 |        |       |     |
@@ -7853,7 +7853,7 @@
 | np3        | EntityPathBlockSmallWeight        |      247 |         26 |        |       |     |
 | dra        | func_psp_090FCEE0                 |      247 |         31 |        |       |     |
 | rbo2       | func_us_801A17C8                  |      247 |         35 | Yes    |       |     |
-| rlib       | func_us_801BAF60_from_lib         |      247 |         35 |        |       |     |
+| rlib       | EntityCandleTable                 |      247 |         35 |        |       |     |
 | main       | func_psp_08933F7C                 |      248 |         17 |        |       |     |
 | rno3       | func_pspeu_092577B8               |      248 |         31 |        |       |     |
 | rno4       | func_pspeu_09250E30               |      248 |         33 |        |       |     |
@@ -8717,6 +8717,7 @@
 | rno0       | func_pspeu_09251948               |      400 |         50 |        |       |     |
 |            | func_092ECC98                     |      401 |         36 |        |       |     |
 | no1        | func_pspeu_0923D048               |      402 |         51 |        |       |     |
+| rlib       | EntityExplosionPuffOpaque         |      402 |         52 |        |       |     |
 | main       | func_psp_08922C14                 |      405 |         36 |        |       |     |
 | main       | func_psp_0891881C                 |      405 |         51 |        |       |     |
 | bo0        | func_pspeu_09248DA0               |      406 |         25 |        |       |     |
@@ -8904,7 +8905,6 @@
 | rno4       | EntityVenusWeedTendril            |      423 |         63 | Yes    |       |     |
 | rare       | func_pspeu_0923AF80               |      424 |         37 |        |       |     |
 | rno2       | func_pspeu_0923BF50               |      424 |         37 |        |       |     |
-| rlib       | EntityExplosionPuffOpaque         |      424 |         52 |        |       |     |
 | lib        | func_psp_092564B8                 |      425 |         35 | Yes    |       |     |
 | cat        | func_pspeu_09260768               |      426 |         41 | Yes    |       |     |
 | nz0        | func_pspeu_09238700               |      426 |         56 |        |       |     |
