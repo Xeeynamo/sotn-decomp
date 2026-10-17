@@ -4375,11 +4375,6 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ u32 unk7C[8];
-    /* 0x9C */ s32 accelY;
-} ET_801AE414;
-
-typedef struct {
-    /* 0x7C */ u32 unk7C[8];
     /* 0x9C */ struct Entity* parent;
 } ET_801AEFE0;
 
@@ -4622,11 +4617,23 @@ typedef struct {
     /* 0x88 */ s16 halfWidth;
 } ET_801A460C;
 
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ s16 attackDelay;
+    /* 0x82 */ s16 timer;
+    /* 0x83 */ u8 facingbool;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ s32 accelY; // death parts
+} ET_Lion;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
     ET_RdaiArcher rdaiArcher;
-    ET_801AE414 et_801AE414;
     ET_801AEFE0 et_801AEFE0;
     ET_TimerOnly timer;
     ET_UTimerOnly utimer;
@@ -5015,6 +5022,7 @@ typedef union { // offset=0x7C
     ET_Malachi malachi;
     ET_801A460C et_801A460C;
     ET_GhostDancer ghostDancer;
+    ET_Lion lion;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);
