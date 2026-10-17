@@ -470,7 +470,6 @@ void func_8011F074(Entity* self) {
 
 u16 D_800ADC7C[] = {PAL_UNK_194, PAL_UNK_199};
 
-
 // effect when player takes lightning damage
 void EntityHitByLightning(Entity* self) {
     s16 xBase;
