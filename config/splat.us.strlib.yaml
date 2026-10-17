@@ -64,7 +64,8 @@ segments:
       - [0x158C, .data, e_misc]
       - [0x1644, .data, e_particles]
       - [0x16C4, .data, e_room_fg]
-      - [0x1750, data]
+      - [0x1750, .data, unk_2DBE8]
+      - [0x17CC, data]
       - [0x1A24, .data, gen/e_layout] # layout entries data
       - [0x2564, data]
       - [0x3140, .data, stage_data]

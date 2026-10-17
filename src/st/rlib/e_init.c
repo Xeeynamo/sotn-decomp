@@ -28,7 +28,7 @@ void EntityBackgroundShadow(Entity* self);
 void EntityDistantBookshelves(Entity* self);
 void EntityThickBookcase(Entity* self);
 void func_us_801AE7AC_from_lib(Entity* self);
-void func_us_801ADBE8(Entity* self);
+void EntityLion(Entity* self);
 void EntityHarpyKick(Entity* self);
 void func_us_801AE414(Entity* self);
 void func_us_801AE534(Entity* self);
@@ -71,7 +71,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityDistantBookshelves,
     EntityThickBookcase,
     func_us_801AE7AC_from_lib,
-    func_us_801ADBE8,
+    EntityLion,
     EntityHarpyKick,
     func_us_801AE414,
     func_us_801AE534,

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rlib/rlib.h"
 
-INCLUDE_ASM("st/rlib_psp/nonmatchings/rlib_psp/unk_10548", func_us_801ADBE8);
+INCLUDE_ASM("st/rlib_psp/nonmatchings/rlib_psp/unk_10548", EntityLion);
 
 extern EInit D_us_8018064C;
 extern s8 g_HarpyKickHitboxes[];
@@ -29,7 +29,7 @@ void EntityHarpyKick(Entity* self) {
         self->hitboxOffY = *hitbox++;
         self->hitboxWidth = *hitbox++;
         self->hitboxHeight = *hitbox++;
-        if (harpy->entityId != E_UNK_1C) {
+        if (harpy->entityId != E_LION) {
             DestroyEntity(self);
         }
         break;

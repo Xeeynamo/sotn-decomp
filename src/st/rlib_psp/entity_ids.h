@@ -13,7 +13,7 @@ extern s32 E_ID(BG_SHADOW);
 extern s32 E_ID(DISTANT_SHELVES);
 extern s32 E_ID(THICK_BOOKCASE);
 extern s32 E_ID(UNK_1B);
-extern s32 E_ID(UNK_1C);
+extern s32 E_ID(LION);
 extern s32 E_ID(HARPY_KICK);
 extern s32 E_ID(UNK_1E);
 extern s32 E_ID(UNK_1F);
