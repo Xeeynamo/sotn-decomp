@@ -10,7 +10,7 @@ enum Palettes {
     PAL_NONE,
     PAL_LION = 0x200,
     PAL_TIN_MAN = 0x206,
-    PAL_TINMAN_ARMF = 0x20F,
+    PAL_CANDLE_TABLE = 0x20F,
     PAL_BREAKABLE = 0x213,
     PAL_SCHMOO = 0x21B,
     PAL_SCARECROW = 0x21E,
