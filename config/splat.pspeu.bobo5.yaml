@@ -68,7 +68,7 @@ segments:
       - [0x149E8, c, e_cutscene_actors]
       - [0x14AA8, c, e_richter_prologue]
       - [0x15AF8, c, ../bo5_psp/e_cutscene_dialogue]
-      - [0x18650, c, ../bo5_psp/unk_18650]
+      - [0x18650, c, e_room_bg]
       - [0x18730, c, e_lock_camera]
       - [0x18990, c, ../bo5_psp/e_rbo3door]
       - [0x18E30, c, e_dai_no2_shortcut]
