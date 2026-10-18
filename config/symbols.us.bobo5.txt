@@ -4,7 +4,6 @@ g_EInitInteractable = 0x80180484;
 g_EInitCommon = 0x801804A8;
 g_EInitEnvironment = 0x801804CC;
 g_EInitHippogryph = 0x801804D8;
-BackgroundBlockInit = 0x80180500;
 actor_names = 0x80180C1C;
 func_801A8620 = 0x8019FE84;
 EntityBell = 0x801A0490;

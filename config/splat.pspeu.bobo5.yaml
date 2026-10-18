@@ -99,6 +99,7 @@ segments:
       - [0x31940, .data, tilemaps]
       - [0x36150, .data, header]
       - [0x36180, data]
+      - [0x36AC8, .data, background_block_init]
       - [0x36AE8, .data, e_lock_camera]
       - [0x36B60, .data, e_dai_no2_shortcut]
       - [0x36B68, .data, e_stained_glass]

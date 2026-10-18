@@ -65,7 +65,6 @@ actor_names_fr = 0x0926DF58;
 actor_name_len_fr = 0x0926DFE0;
 actor_names_ge = 0x0926DFF0;
 actor_name_len_ge = 0x0926E078;
-BackgroundBlockInit = 0x0926E150;
 indices = 0x0926E1E8;
 g_eBreakableExplosionTypes = 0x0926EA08;
 D_us_801806E0 = 0x0926EA10;
