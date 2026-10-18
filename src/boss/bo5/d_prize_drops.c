@@ -2,6 +2,5 @@
 #include "bo5.h"
 
 u16 PrizeDrops[] = {
-    0x4000,
-    ITEMDROP_SMALL_HEART,
+    0x4000, // BUG! not sure what's this?!
 };
