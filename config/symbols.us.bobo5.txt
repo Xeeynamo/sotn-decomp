@@ -1,4 +1,3 @@
-spriteBanks = 0x8018002C;
 g_EInitObtainable = 0x80180460;
 g_EInitSpawner = 0x80180478;
 g_EInitInteractable = 0x80180484;
