@@ -15,17 +15,16 @@ static bool ApproachTarget(s16* val, s16 target, s16 step) {
     return false;
 }
 
-extern EInit g_EInitTinman;
 
-extern s16 D_pspeu_0924C2D8[];
-extern s16 D_pspeu_0924C2E8[];
-extern AnimateEntityFrame D_pspeu_0924C2F0[];
-extern AnimateEntityFrame D_pspeu_0924C300[];
-extern AnimateEntityFrame D_pspeu_0924C340[];
-extern AnimationFrame D_us_80181888;
-extern AnimationFrame D_us_8018189C;
-extern AnimateEntityFrame D_pspeu_0924C370[];
-extern AnimateEntityFrame D_pspeu_0924C380[];
+static s16 sensors1[] = {0, 34, 0, 4, 24, -4, -48, 0};
+static s16 sensors2[] = {0, 34, 24, 0};
+static AnimateEntityFrame D_pspeu_0924C2F0[] = {{3, 1}, {3, 2}, {3, 3}, {3, 4}, POSE_LOOP(0)};
+static AnimateEntityFrame D_pspeu_0924C300[] = {{32, 1}, {4, 6}, {3, 7}, {2, 8}, {2, 9}, {8, 10}, {2, 11}, {2, 12}, {2, 13}, {2, 14}, {2, 15}, {2, 16}, {2, 17}, {2, 18}, {8, 17}, {2, 19}, {2, 21}, {2, 20}, {8, 21}, {3, 22}, {3, 23}, {3, 24}, {3, 25}, {3, 26}, {3, 27}, {3, 28}, {3, 29}, {3, 30}, {32, 21}, POSE_END};
+extern AnimateEntityFrame D_pspeu_0924C340[] = {{2, 21}, {2, 31}, POSE_LOOP(0)};
+extern AnimateEntityFrame D_us_80181888[] = {{3, 32}, {3, 33}, {3, 34}, {3, 35}, {3, 36}, {3, 37}, {3, 38}, {3, 39}, {3, 40}, POSE_END};
+extern AnimateEntityFrame D_us_8018189C[] = {{2, 42}, {2, 43}, {2, 44}, {2, 45}, {2, 46}, POSE_LOOP(0)};
+extern AnimateEntityFrame D_pspeu_0924C370[] = {{2, 47}, {2, 48}, {2, 49}, {2, 50}, {2, 51}, {2, 52}, POSE_LOOP(0)};
+extern AnimateEntityFrame D_pspeu_0924C380[] = {{17, 53}, {3, 54}, {3, 55}, {3, 56}, {3, 57}, {17, 58}, {3, 57}, {3, 56}, {3, 55}, {3, 54}, POSE_END};
 
 typedef struct {
     u16 unk0;
@@ -34,7 +33,21 @@ typedef struct {
     s32 unk8;
 } wtf_struct;
 
-extern wtf_struct D_pspeu_0924C398[];
+static wtf_struct D_pspeu_0924C398[] = {
+    {52, 0, -0x18000, 0x0000},
+    {28, 1, 0xC000, -0x14000},
+    {16, 1, 0x10000, -0x40000},
+    {24, 1, 0x8000, -0x18000},
+    {48, 1, 0x6000, -0x10000},
+    {32, 1, 0xE000, -0x10000},
+    {40, 0, 0x30000, 0x0000},
+    {40, 1, 0x0000, -0x30000},
+    {52, 0, -0xC000, 0x0000},
+    {8, 1, 0x8000, -0x20000},
+    {4, 1, -0x4000, -0x10000},
+};
+
+extern EInit g_EInitTinman;
 
 void EntityTinMan(Entity* self) {
     s32 var_s2;
@@ -62,7 +75,7 @@ void EntityTinMan(Entity* self) {
         other->zPriority = self->zPriority + 1;
         /* fallthrough */
     case 0x1:
-        if (UnkCollisionFunc3(&D_pspeu_0924C2D8) & 1) {
+        if (UnkCollisionFunc3(&sensors1) & 1) {
             SetStep(2);
         }
         break;
@@ -111,7 +124,7 @@ void EntityTinMan(Entity* self) {
                 other->zPriority = ((self->zPriority) + 1);
             }
         }
-        if (UnkCollisionFunc2(&D_pspeu_0924C2E8) & 0x60) {
+        if (UnkCollisionFunc2(sensors2) & 0x60) {
             self->posX.val -= self->velocityX;
             self->velocityX = -self->velocityX;
         }
@@ -128,7 +141,7 @@ void EntityTinMan(Entity* self) {
         break;
     case 0x4:
         self->velocityX -= self->velocityX / 32;
-        if (UnkCollisionFunc2(&D_pspeu_0924C2E8) & 0x60) {
+        if (UnkCollisionFunc2(sensors2) & 0x60) {
             self->posX.val -= self->velocityX;
             self->velocityX = -self->velocityX;
         }
@@ -164,7 +177,7 @@ void EntityTinMan(Entity* self) {
             /* fallthrough */
         case 1:
             ApproachTarget(&self->rotate, 0x80, 0x10);
-            if (UnkCollisionFunc3(&D_pspeu_0924C2D8) & 1) {
+            if (UnkCollisionFunc3(&sensors1) & 1) {
                 self->step_s += 1;
             }
             break;
@@ -209,7 +222,7 @@ void EntityTinMan(Entity* self) {
         }
         break;
     case 0x7:
-        if (UnkCollisionFunc3(&D_pspeu_0924C2D8) & 1) {
+        if (UnkCollisionFunc3(&sensors1) & 1) {
         }
         ApproachTarget(&self->rotate, 0, 0x20);
         switch (self->step_s) {

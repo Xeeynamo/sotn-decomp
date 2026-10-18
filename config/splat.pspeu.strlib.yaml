@@ -76,7 +76,7 @@ segments:
       - [0x14780, .data, rlib/collision]
       - [0x14B58, .data, rlib/e_room_fg]
       - [0x14BF8, data, 14BF8]
-      - [0x14DA0, .data, rlib_psp/unk_F0D8]
+      - [0x14C58, .data, rlib_psp/unk_F0D8]
       - [0x14DB0, .data, rlib/e_lion]
       - [0x14E30, data]
       - [0x14E98, .data, rlib/e_library_bg]
