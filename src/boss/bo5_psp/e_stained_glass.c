@@ -7,6 +7,6 @@ extern s16 indices[];
 
 #include "../../st/e_stained_glass_recurse.h"
 
-INCLUDE_ASM("boss/bo5_psp/nonmatchings/bo5_psp/e_stained_glass", EntityStainedGlass);
+INCLUDE_ASM("boss/bo5/bo5_psp/e_stained_glass", EntityStainedGlass);
 
-INCLUDE_ASM("boss/bo5_psp/nonmatchings/bo5_psp/e_stained_glass", EntityStainedGlassBackground);
+INCLUDE_ASM("boss/bo5/bo5_psp/e_stained_glass", EntityStainedGlassBackground);

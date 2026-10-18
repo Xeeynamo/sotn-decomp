@@ -19,8 +19,8 @@ extern Dialogue g_Dialogue;
 
 #include "../../st/set_cutscene_script.h"
 
-INCLUDE_ASM("boss/bo5_psp/nonmatchings/bo5_psp/e_cutscene_dialogue", SetCutsceneEvents);
+INCLUDE_ASM("boss/bo5/bo5_psp/e_cutscene_dialogue", SetCutsceneEvents);
 
-INCLUDE_ASM("boss/bo5_psp/nonmatchings/bo5_psp/e_cutscene_dialogue", RunCutsceneEvents);
+INCLUDE_ASM("boss/bo5/bo5_psp/e_cutscene_dialogue", RunCutsceneEvents);
 
-INCLUDE_ASM("boss/bo5_psp/nonmatchings/bo5_psp/e_cutscene_dialogue", EntityCutscene);
+INCLUDE_ASM("boss/bo5/bo5_psp/e_cutscene_dialogue", EntityCutscene);
