@@ -72,4 +72,37 @@ typedef enum EntityID {
     NUM_ENTITIES,
 };
 
+#ifdef VERSION_PSP
+extern s32 E_ID(BACKGROUND_BLOCK);
+extern s32 E_ID(LOCK_CAMERA);
+extern s32 E_ID(UNK_ID13);
+extern s32 E_ID(EXPLOSION_VARIANTS);
+extern s32 E_ID(GREY_PUFF);
+extern s32 E_ID(UNK_16);
+extern s32 E_ID(STAINED_GLASS);
+extern s32 E_ID(STAINED_GLASS_BACKGROUND);
+extern s32 E_ID(BLOCK);
+extern s32 E_ID(STATUE);
+extern s32 E_ID(BELL);
+extern s32 E_ID(CASTLE_WALL1);
+extern s32 E_ID(CASTLE_WALL2);
+extern s32 E_ID(STAIRCASE);
+extern s32 E_ID(CLOUDS);
+extern s32 E_ID(BACKGROUND_SKY_LAND);
+extern s32 E_ID(RBO3DOOR);
+extern s32 E_ID(UNK_22);
+extern s32 E_ID(UNK_23);
+extern s32 E_ID(UNK_24);
+extern s32 E_ID(UNK_25);
+extern s32 E_ID(UNK_26);
+extern s32 E_ID(UNK_27);
+extern s32 E_ID(LIFE_UP_SPAWN);
+extern s32 E_ID(UNK_29);
+extern s32 E_ID(CUTSCENE);
+extern s32 E_ID(UNK_2B);
+extern s32 E_ID(UNK_2C);
+extern s32 E_ID(UNK_2D);
+extern s32 E_ID(UNK_2E);
+#endif
+
 #endif // BO5_H
