@@ -9493,7 +9493,7 @@
 | np3        | EntityBloodyZombie                |      703 |        118 | Yes    |       |     |
 | st0        | func_pspeu_09242FF8               |      705 |         69 |        |       |     |
 | bo2        | func_us_801A3E04                  |      705 |         86 | Yes    |       |     |
-| rlib       | EntityLion                        |      709 |        122 |        |       |     |
+| rlib       | func_pspeu_09247BC8               |      709 |        122 |        |       |     |
 | lib        | func_psp_09265608                 |      711 |         73 | Yes    |       |     |
 | cat        | func_pspeu_092566B8               |      720 |         67 |        |       |     |
 | bo0        | EntityBloodyZombie                |      722 |        118 | Yes    |       |     |
