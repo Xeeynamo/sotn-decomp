@@ -9,6 +9,8 @@
 enum Palettes {
     PAL_NONE = 0,
     PAL_CASTLE_WALL_1 = 0x74,
+    PAL_BELL = 0x75,
+    PAL_BELL_ROPE = 0x76,
     PAL_BACKGROUND_SKY_LAND = 0xC5,
     PAL_CASTLE_WALL_2 = 0xC8,
     PAL_HIPPOGRYPH = 0x200,

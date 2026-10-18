@@ -1,6 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo5.h"
 
-INCLUDE_ASM("boss/bo5/nonmatchings/e_bell", EntityBell);
-
-INCLUDE_ASM("boss/bo5/nonmatchings/e_bell", EntityBellSpawner);
+#include "../../st/e_bell.h"
