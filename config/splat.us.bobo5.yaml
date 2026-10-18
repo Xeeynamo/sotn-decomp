@@ -52,6 +52,8 @@ segments:
       - [0x6DC, data]
       - [0xB78, .data, d_prize_drops]
       - [0xB7C, data]
+      - [0xC1C, .data, e_cutscene_dialogue]
+      - [0xC24, data]
       - [0xD40, .data, st_update]
       - [0xD8C, data]
       - [0xD8C, .data, collision]

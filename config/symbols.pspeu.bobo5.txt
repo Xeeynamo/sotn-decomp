@@ -97,3 +97,4 @@ func_us_801A19CC = 0x09247CD8;
 func_us_801A19FC = 0x09247D30;
 CheckHippogryphFloorCollision = 0x09247F20;
 CutsceneCameraPan = 0x0924C068;
+g_CutsceneFlags = 0x0926F020;
