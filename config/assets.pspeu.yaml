@@ -1390,6 +1390,25 @@ files:
     asset_path: assets/boss/bo5
     src_path: src/boss/bo5
     splat_config_path: config/splat.pspeu.bobo5.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          - [0x292D8, cmpgfx, D_us_8018680C, 128, 128, 4]
+          - [0x2A270, cmpgfx, D_us_801877A0, 128, 128, 4]
+          - [0x2B338, cmpgfx, D_us_80188868, 128, 128, 4]
+          - [0x2C578, cmpgfx, D_us_80189AA4, 128, 128, 4]
+          - [0x2D400, rawgfx, D_us_8018A928, 48, 72, 8]
+          - [0x2E180, rawgfx, D_us_8018B6A8, 48, 72, 8]
+          - [0x2EF00, cmpgfx, D_us_8018C428, 128, 128, 4]
+          - [0x30160, cmpgfx, D_us_8018D684, 128, 128, 4]
+          - [0x311E0, palette, D_us_8018E704, 16]
+          - [0x314A0, palette, D_us_8018EBE4, 16]
+          - [0x314E0, palette, D_us_8018EC24, 16]
+          - [0x316E0, palette, D_us_8018EE24, 16]
+          - [0x318E0, palette, D_us_8018F024, 16]
+          - [0x31940, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo6.bin
     asset_path: assets/boss/bo6
     src_path: src/boss/bo6
