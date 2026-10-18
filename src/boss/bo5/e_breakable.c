@@ -8,15 +8,8 @@ static AnimateEntityFrame anim_wall_sconce[] = {
 static AnimateEntityFrame* g_eBreakableAnimations[8] = {
     anim_background_flame, anim_wall_sconce};
 static u8 g_eBreakableHitboxes[8] = {8, 8};
-
-#ifndef VERSION_PSP // on PSP this is in the BSS section, not data
 static u8 g_eBreakableExplosionTypes[8] = {EXPLOSION_SMALL, EXPLOSION_SMALL};
-#else
-extern u8 g_eBreakableExplosionTypes[];
-#endif
-
 static u16 g_eBreakableanimSets[8] = {ANIMSET_OVL(1), ANIMSET_OVL(1)};
-
 static u8 blend_modes[8] = {
     BLEND_TRANSP | BLEND_ADD,
     BLEND_TRANSP | BLEND_ADD,

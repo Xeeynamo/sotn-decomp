@@ -8,10 +8,17 @@
 
 enum Palettes {
     PAL_NONE = 0,
+    PAL_STAINED_GLASS = 0xE,
+    PAL_STAINED_GLASS_BG = 0xF,
     PAL_CASTLE_WALL_1 = 0x74,
+    PAL_BELL = 0x75,
+    PAL_BELL_ROPE = 0x76,
+    PAL_CLOUDS = 0xC0,
     PAL_BACKGROUND_SKY_LAND = 0xC5,
     PAL_CASTLE_WALL_2 = 0xC8,
     PAL_HIPPOGRYPH = 0x200,
+    PAL_STAINED_GLASS_LIGHT = 0x204,
+    PAL_STAINED_GLASS_BG_LIGHT = 0x205,
 };
 
 typedef enum EntityID {
@@ -64,5 +71,38 @@ typedef enum EntityID {
     E_UNK_2E,                   // RicSetDeadPrologue
     NUM_ENTITIES,
 };
+
+#ifdef VERSION_PSP
+extern s32 E_ID(BACKGROUND_BLOCK);
+extern s32 E_ID(LOCK_CAMERA);
+extern s32 E_ID(UNK_ID13);
+extern s32 E_ID(EXPLOSION_VARIANTS);
+extern s32 E_ID(GREY_PUFF);
+extern s32 E_ID(UNK_16);
+extern s32 E_ID(STAINED_GLASS);
+extern s32 E_ID(STAINED_GLASS_BACKGROUND);
+extern s32 E_ID(BLOCK);
+extern s32 E_ID(STATUE);
+extern s32 E_ID(BELL);
+extern s32 E_ID(CASTLE_WALL1);
+extern s32 E_ID(CASTLE_WALL2);
+extern s32 E_ID(STAIRCASE);
+extern s32 E_ID(CLOUDS);
+extern s32 E_ID(BACKGROUND_SKY_LAND);
+extern s32 E_ID(RBO3DOOR);
+extern s32 E_ID(UNK_22);
+extern s32 E_ID(UNK_23);
+extern s32 E_ID(UNK_24);
+extern s32 E_ID(UNK_25);
+extern s32 E_ID(UNK_26);
+extern s32 E_ID(UNK_27);
+extern s32 E_ID(LIFE_UP_SPAWN);
+extern s32 E_ID(UNK_29);
+extern s32 E_ID(CUTSCENE);
+extern s32 E_ID(UNK_2B);
+extern s32 E_ID(UNK_2C);
+extern s32 E_ID(UNK_2D);
+extern s32 E_ID(UNK_2E);
+#endif
 
 #endif // BO5_H
