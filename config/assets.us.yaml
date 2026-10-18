@@ -1883,7 +1883,7 @@ files:
         assets:
           - [0xAC, paldef, palette_def]
           - [0xF4, layers, layers]
-          - [0x12C, skip]
+          - [0x12C, gfx_banks, us/graphics_banks]
           - [0x1F4, layout, entity_layouts]
           - [0x39C, skip]
           - [0x187C, rooms, rooms]
