@@ -1080,8 +1080,8 @@
 | rbo6       | Random                            |       21 |          1 |        |       |     |
 | rbo6       | func_pspeu_0923C390               |       21 |          1 |        |       |     |
 |            | func_pspeu_0923D010               |       21 |          1 |        |       |     |
-|            | SetSubStep                        |       21 |          1 |        |       |     |
-|            | Random                            |       21 |          1 |        |       |     |
+|            | func_pspeu_09244B80               |       21 |          1 |        |       |     |
+|            | func_pspeu_0923B4B0               |       21 |          1 |        |       |     |
 | rbo8       | Random                            |       21 |          1 |        |       |     |
 | rbo8       | func_pspeu_0923D010               |       21 |          1 |        |       |     |
 | dra        | func_psp_09116B48                 |       21 |          1 |        |       |     |
@@ -1154,7 +1154,7 @@
 | rchi       | func_pspeu_092475E8               |       21 |          1 |        |       |     |
 | rchi       | func_pspeu_0923BCB8               |       21 |          1 |        |       |     |
 | rdai       | func_pspeu_09241E60               |       21 |          1 |        |       |     |
-| rdai       | SetSubStep                        |       21 |          1 |        |       |     |
+| rdai       | func_pspeu_0924E578               |       21 |          1 |        |       |     |
 | rdai       | Random                            |       21 |          1 |        |       |     |
 | rlib       | func_pspeu_0923C390               |       21 |          1 |        |       |     |
 | rlib       | Random                            |       21 |          1 |        |       |     |
@@ -1392,8 +1392,8 @@
 | rbo5       | func_pspeu_092446F8               |       25 |          1 |        |       |     |
 | rbo6       | MoveEntity                        |       25 |          1 |        |       |     |
 | rbo6       | SetStep                           |       25 |          1 |        |       |     |
-|            | SetStep                           |       25 |          1 |        |       |     |
 |            | func_pspeu_09244538               |       25 |          1 |        |       |     |
+|            | func_pspeu_09244B30               |       25 |          1 |        |       |     |
 | rbo8       | MoveEntity                        |       25 |          1 |        |       |     |
 | rbo8       | func_pspeu_09244940               |       25 |          1 |        |       |     |
 | dra        | func_psp_09108938                 |       25 |          1 |        |       |     |
@@ -1824,7 +1824,7 @@
 | bo7        | FindFirstUnkPrim                  |       29 |          5 |        |       |     |
 | rbo2       | FindFirstUnkPrim                  |       29 |          5 |        |       |     |
 | rbo6       | func_us_801A362C                  |       29 |          5 |        |       |     |
-|            | FindFirstUnkPrim                  |       29 |          5 |        |       |     |
+|            | func_pspeu_09245A00               |       29 |          5 |        |       |     |
 | dra        | func_psp_09141878                 |       29 |          5 |        |       |     |
 | main       | func_psp_0891A064                 |       29 |          5 |        |       |     |
 | main       | func_psp_0891AE68                 |       29 |          5 |        |       |     |
@@ -2100,7 +2100,7 @@
 |            | func_pspeu_09244440               |       34 |          2 |        |       |     |
 |            | func_pspeu_09244440               |       34 |          2 |        |       |     |
 | rbo5       | func_pspeu_092442E8               |       34 |          2 |        |       |     |
-|            | GetDistanceToPlayerX              |       34 |          2 |        |       |     |
+|            | func_pspeu_09244440               |       34 |          2 |        |       |     |
 | main       | sceGuEnable                       |       34 |          2 |        |       |     |
 | main       | func_psp_08915F5C                 |       34 |          2 |        |       |     |
 |            | func_092E7680                     |       34 |          2 |        |       |     |
@@ -2418,7 +2418,7 @@
 |            | func_pspeu_09244B58               |       37 |          6 |        |       |     |
 | rbo5       | func_pspeu_09244468               |       37 |          6 |        |       |     |
 | rbo6       | AllocEntity                       |       37 |          6 |        |       |     |
-|            | AllocEntity                       |       37 |          6 |        |       |     |
+|            | func_pspeu_092448A0               |       37 |          6 |        |       |     |
 | rbo8       | AllocEntity                       |       37 |          6 |        |       |     |
 | dra        | func_psp_091162B8                 |       37 |          6 |        |       |     |
 | main       | func_psp_089195C0                 |       37 |          6 |        |       |     |
@@ -2578,8 +2578,8 @@
 | rbo5       | func_pspeu_09238620               |       39 |          2 |        |       |     |
 | rbo6       | CreateEntityFromCurrentEntity     |       39 |          2 |        |       |     |
 | rbo6       | CreateEntityFromEntity            |       39 |          2 |        |       |     |
-|            | CreateEntityFromCurrentEntity     |       39 |          2 |        |       |     |
-|            | CreateEntityFromEntity            |       39 |          2 |        |       |     |
+|            | func_pspeu_09238598               |       39 |          2 |        |       |     |
+|            | func_pspeu_09238620               |       39 |          2 |        |       |     |
 | rbo8       | CreateEntityFromCurrentEntity     |       39 |          2 |        |       |     |
 | rbo8       | CreateEntityFromEntity            |       39 |          2 |        |       |     |
 | are        | func_pspeu_0923C458               |       39 |          2 |        |       |     |
@@ -2827,7 +2827,7 @@
 |            | func_pspeu_092444B0               |       41 |          3 |        |       |     |
 | rbo5       | func_pspeu_09244358               |       41 |          3 |        |       |     |
 | rbo6       | GetSideToPlayer                   |       41 |          3 |        |       |     |
-|            | GetSideToPlayer                   |       41 |          3 |        |       |     |
+|            | func_pspeu_092444B0               |       41 |          3 |        |       |     |
 | rbo8       | GetSideToPlayer                   |       41 |          3 |        |       |     |
 | dra        | func_psp_09103F08                 |       41 |          3 |        |       |     |
 | dra        | func_psp_091272B8                 |       41 |          3 |        |       |     |
@@ -3259,7 +3259,7 @@
 |            | func_pspeu_092441B0               |       46 |          5 |        |       |     |
 | rbo5       | DestroyEntity                     |       46 |          5 |        |       |     |
 | rbo6       | DestroyEntity                     |       46 |          5 |        |       |     |
-|            | DestroyEntity                     |       46 |          5 |        |       |     |
+|            | func_pspeu_092441B0               |       46 |          5 |        |       |     |
 | rbo8       | DestroyEntity                     |       46 |          5 |        |       |     |
 | dra        | func_psp_090FA790                 |       46 |          5 |        |       |     |
 | dra        | MemcardDetectSave                 |       46 |          5 |        |       |     |
@@ -5654,7 +5654,7 @@
 |            | func_pspeu_09241770               |       97 |         12 |        |       |     |
 |            | func_pspeu_09241770               |       97 |         12 |        |       |     |
 | rbo6       | PlaySfxPositional                 |       97 |         12 |        |       |     |
-|            | PlaySfxPositional                 |       97 |         12 |        |       |     |
+|            | func_pspeu_09241770               |       97 |         12 |        |       |     |
 | are        | func_pspeu_09253F90               |       97 |         12 |        |       |     |
 | cat        | func_pspeu_09249FF0               |       97 |         12 |        |       |     |
 | cen        | func_pspeu_0925C668               |       97 |         12 |        |       |     |
@@ -5840,7 +5840,7 @@
 |            | func_pspeu_092442D0               |      101 |          7 |        |       |     |
 | rbo5       | func_pspeu_09244178               |      101 |          7 |        |       |     |
 | rbo6       | AnimateEntity                     |      101 |          7 |        |       |     |
-|            | AnimateEntity                     |      101 |          7 |        |       |     |
+|            | func_pspeu_092442D0               |      101 |          7 |        |       |     |
 | rbo8       | func_pspeu_09244178               |      101 |          7 |        |       |     |
 | are        | func_pspeu_092612D0               |      101 |          7 |        |       |     |
 | cat        | func_pspeu_09252160               |      101 |          7 |        |       |     |
@@ -6316,7 +6316,7 @@
 |            | func_pspeu_09244E78               |      112 |          2 |        |       |     |
 | rbo5       | InitializeEntity                  |      112 |          2 |        |       |     |
 | rbo6       | InitializeEntity                  |      112 |          2 |        |       |     |
-|            | InitializeEntity                  |      112 |          2 |        |       |     |
+|            | func_pspeu_09244BC0               |      112 |          2 |        |       |     |
 | rbo8       | InitializeEntity                  |      112 |          2 |        |       |     |
 | are        | func_pspeu_09262220               |      112 |          2 |        |       |     |
 | cat        | func_pspeu_09252EF8               |      112 |          2 |        |       |     |
@@ -7497,7 +7497,7 @@
 | bo2        | UnkCollisionFunc2                 |      200 |         20 |        |       |     |
 |            | func_pspeu_09244B20               |      200 |         20 |        |       |     |
 |            | func_pspeu_09244878               |      200 |         20 |        |       |     |
-|            | UnkCollisionFunc2                 |      200 |         20 |        |       |     |
+|            | func_pspeu_092445C0               |      200 |         20 |        |       |     |
 | are        | func_pspeu_092618D0               |      200 |         20 |        |       |     |
 | cat        | func_pspeu_09252760               |      200 |         20 |        |       |     |
 | chi        | func_psp_092479D8                 |      200 |         20 |        |       |     |
@@ -7580,7 +7580,7 @@
 | main       | sceGupSetMatrix                   |      211 |          9 |        |       |     |
 | rbo5       | func_us_801C096C                  |      211 |         19 |        |       |     |
 | maria      | func_pspeu_092A9288               |      211 |         19 |        |       |     |
-| rdai       | func_us_801C21E4                  |      211 |         19 |        |       |     |
+| rdai       | func_pspeu_09237700               |      211 |         19 |        |       |     |
 | dra        | func_psp_091012A8                 |      211 |         20 |        |       |     |
 | no0        | func_pspeu_0925A3B0               |      211 |         20 |        |       |     |
 | rno2       | func_pspeu_09238F80               |      211 |         20 |        |       |     |
@@ -8454,7 +8454,7 @@
 | nz1        | func_pspeu_09257108               |      344 |         50 |        |       |     |
 | rno2       | func_pspeu_0923FFB0               |      344 |         50 |        |       |     |
 | dra        | func_psp_091015B8                 |      345 |         35 |        |       |     |
-| rdai       | func_us_801C3580                  |      345 |         38 |        |       |     |
+| rdai       | func_pspeu_092393D8               |      345 |         38 |        |       |     |
 | maria      | func_pspeu_092B85C0               |      346 |         27 |        |       |     |
 | ric        | func_pspeu_092C19B8               |      346 |         27 |        |       |     |
 | cen        | func_pspeu_09249550               |      346 |         27 |        |       |     |
@@ -10114,7 +10114,7 @@
 | dra        | func_psp_090FAB30                 |     1745 |        198 |        |       |     |
 | bo6        | func_pspeu_09265100               |     1749 |        172 |        |       |     |
 | rchi       | func_pspeu_0923C1F0               |     1758 |        255 |        |       |     |
-| rdai       | func_us_801C2418                  |     1765 |        210 | Yes    |       |     |
+| rdai       | func_pspeu_09237A08               |     1765 |        210 | Yes    |       |     |
 | rnz0       | func_pspeu_09250790               |     1771 |        306 |        |       |     |
 | bo2        | func_us_801A269C                  |     1773 |        295 | Yes    |       |     |
 | bo6        | func_pspeu_09262CE8               |     1783 |        130 | Yes    |       |     |
@@ -10146,7 +10146,7 @@
 | st0        | func_pspeu_092396A0               |     2187 |        194 | Yes    |       |     |
 | bo4        | EntityMist                        |     2193 |        159 | Yes    |       |     |
 | rbo5       | EntityMist                        |     2193 |        159 | Yes    |       |     |
-|            | EntityAkmodanII                   |     2200 |        242 | Yes    |       |     |
+|            | func_pspeu_09246228               |     2200 |        242 | Yes    |       |     |
 | no3        | func_pspeu_09243838               |     2232 |        204 | Yes    |       |     |
 | dai        | func_pspeu_092545E0               |     2235 |        203 | Yes    |       |     |
 | nz0        | func_pspeu_0923E810               |     2235 |        203 | Yes    |       |     |
