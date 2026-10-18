@@ -1882,7 +1882,8 @@ files:
         vram: 0x80180000
         assets:
           - [0xAC, paldef, palette_def]
-          - [0xF4, skip]
+          - [0xF4, layers, layers]
+          - [0x12C, skip]
           - [0x1F4, layout, entity_layouts]
           - [0x39C, skip]
           - [0x187C, rooms, rooms]
@@ -1911,6 +1912,9 @@ files:
           - [0xEF24, palette, D_us_8018EF24, 16]
           - [0xF024, palette, D_us_8018F024, 16]
           - [0xF084, skip]
+          - [0xF884, binary, D_us_8018F884]
+          - [0x13CA4, skip]
+          - [0x17CB4, skip]
   - target: disks/us/BOSS/BO6/BO6.BIN
     asset_path: assets/boss/bo6
     src_path: src/boss/bo6
