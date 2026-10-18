@@ -280,7 +280,7 @@ void EntityTinMan(Entity* self) {
     }
 }
 
-extern EInit D_us_80180670;
+extern EInit g_EInitTinManArm;
 
 void EntityTinManArm(Entity* self) {
     Entity* other;
@@ -293,7 +293,7 @@ void EntityTinManArm(Entity* self) {
     self->posY.val = other->posY.val;
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180670);
+        InitializeEntity(g_EInitTinManArm);
         self->drawFlags = ENTITY_ROTATE;
         /* fallthrough */
     case 1:
@@ -355,14 +355,14 @@ void EntityTinManArm(Entity* self) {
         break;
     }
 }
-extern EInit D_us_80180688;
+extern EInit g_EInitTinMan2;
 
 void EntityTinManSmoke(Entity* self) {
     Entity* parent;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180688);
+        InitializeEntity(g_EInitTinMan2);
         self->blendMode = BLEND_TRANSP;
         PlaySfxPositional(SFX_NOISE_SWEEP_DOWN_B);
         /* fall through */
@@ -377,12 +377,12 @@ void EntityTinManSmoke(Entity* self) {
     }
 }
 
-extern EInit D_us_8018067C;
+extern EInit g_EInitTinManProjectile;
 // Created at rapid-fire after transforming
 void EntityTinManProjectile(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_8018067C);
+        InitializeEntity(g_EInitTinManProjectile);
         if (self->facingLeft) {
             self->velocityX = FIX(6);
         } else {
@@ -399,7 +399,7 @@ void EntityTinManProjectile(Entity* self) {
     }
 }
 
-extern EInit D_us_80180688;
+extern EInit g_EInitTinMan2;
 
 void EntityTinManDeathParts(Entity* self) {
     Entity* other;
@@ -409,7 +409,7 @@ void EntityTinManDeathParts(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180688);
+        InitializeEntity(g_EInitTinMan2);
         if (!self->params) {
             self->step = 1;
             temp_s2 = (Random() & 0x1F) + 0x10;
