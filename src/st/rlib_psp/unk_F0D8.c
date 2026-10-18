@@ -1,7 +1,22 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rlib/rlib.h"
 
-INCLUDE_ASM("st/rlib_psp/nonmatchings/rlib_psp/unk_F0D8", func_pspeu_09246758);
+static bool ApproachTarget(s16* val, s16 target, s16 step) {
+    if (abs(*val - target) < step) {
+        *val = target;
+        return true;
+    }
+    if (*val > target) {
+        *val -= step;
+    }
+    if (*val < target) {
+        *val += step;
+    }
+    return false;
+}
+
+extern EInit g_EInitTinman;
+
 
 extern s16 D_pspeu_0924C2D8[];
 extern s16 D_pspeu_0924C2E8[];
@@ -9,7 +24,8 @@ extern AnimateEntityFrame D_pspeu_0924C2F0[];
 extern AnimateEntityFrame D_pspeu_0924C300[];
 extern AnimateEntityFrame D_pspeu_0924C340[];
 extern AnimateEntityFrame D_pspeu_0924C380[];
-extern EInit g_EInitTinman;
+extern AnimationFrame D_us_80181888;
+extern AnimationFrame D_us_8018189C;
 
 void EntityTinMan(Entity* self) {
     s32 var_s2;
@@ -93,7 +109,7 @@ void EntityTinMan(Entity* self) {
             self->ext.ILLEGAL.s16[3] -= 0x100;
             self->ext.ILLEGAL.s16[3] &= 0xFFF;
         } else {
-            func_pspeu_09246758(&self->ext.ILLEGAL.u8[6], 0, 0x80);
+            ApproachTarget(&self->ext.ILLEGAL.s16[3], 0, 0x80);
         }
         var_s2 = GetSideToPlayer() & 1;
         if ((var_s2 == self->facingLeft) && (GetDistanceToPlayerX() > 0x30)) {
@@ -109,7 +125,7 @@ void EntityTinMan(Entity* self) {
         switch (self->step_s) {                          /* switch 2; irregular */
         case 0:                                     /* switch 2 */
             self->ext.ILLEGAL.u8[8] = 0;
-            if (func_pspeu_09246758(&self->ext.ILLEGAL.u8[6], 0, 0x80) != 0) {
+            if (ApproachTarget(&self->ext.ILLEGAL.s16[3], 0, 0x80) != 0) {
                 self->step_s += 1;
             }
             break;
@@ -137,13 +153,13 @@ void EntityTinMan(Entity* self) {
             self->step_s += 1;
             /* fallthrough */
         case 1:                                     /* switch 3 */
-            func_pspeu_09246758(&self->rotate, 0x80, 0x10);
+            ApproachTarget(&self->rotate, 0x80, 0x10);
             if (UnkCollisionFunc3(&D_pspeu_0924C2D8) & 1) {
                 self->step_s += 1;
             }
             break;
         case 2:                                     /* switch 3 */
-            if (func_pspeu_09246758(&self->rotate, 0, 0x10) != 0) {
+            if (ApproachTarget(&self->rotate, 0, 0x10) != 0) {
                 self->ext.ILLEGAL.u8[9] = 1;
                 self->drawFlags = 0;
                 self->rotate = 0;
@@ -186,7 +202,7 @@ void EntityTinMan(Entity* self) {
         if(UnkCollisionFunc3(&D_pspeu_0924C2D8) & 1){
             
         }
-        func_pspeu_09246758(&self->rotate, 0, 0x20);
+        ApproachTarget(&self->rotate, 0, 0x20);
         switch (self->step_s) {                         /* switch 4; irregular */
         case 0:                                     /* switch 4 */
             self->hitboxState = 0;
@@ -222,7 +238,6 @@ void EntityTinMan(Entity* self) {
 INCLUDE_ASM("st/rlib_psp/nonmatchings/rlib_psp/unk_F0D8", func_us_801AED4C);
 
 extern EInit D_us_80180688;
-extern AnimationFrame D_us_80181888;
 
 void func_us_801AEFE0(Entity* self) {
     Entity* parent;
@@ -245,7 +260,6 @@ void func_us_801AEFE0(Entity* self) {
 }
 
 extern EInit D_us_8018067C;
-extern AnimationFrame D_us_8018189C;
 
 void func_us_801D8D44_from_no4(Entity* self) {
     switch (self->step) {
