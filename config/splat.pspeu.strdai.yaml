@@ -44,7 +44,7 @@ segments:
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, rdai_psp/e_sniper_of_goth]
+      - [0x80, c, rdai/e_sniper_of_goth]
       - [0x2260, c, rdai/create_entity]
       - [0x3208, c, rdai_psp/e_archer]
       - [0x5200, c, rdai/unk_44668]
@@ -73,7 +73,8 @@ segments:
       - [0x19F28, c, rdai/unk_33B94]
       - [0x1A3C0, c, rdai_psp/e_stained_glass]
       - [0x1BE48, c, rdai/e_spikes]
-      - [0x1C900, data]
+      - [0x1C900, .data, rdai/e_sniper_of_goth]
+      - [0x1CA18, data]
       - [0x1CB00, .data, rdai/e_red_door]
       - [0x1CB18, .data, rdai/st_update]
       - [0x1CB48, .data, rdai/e_particles]
@@ -98,7 +99,7 @@ segments:
       - [0x4BEC0, data]
       - [0x4C0D8, .data, rdai/e_spikes]
       - [0x4C0F8, data]
-      - [0x4C100, .rodata, rdai_psp/e_sniper_of_goth]
+      - [0x4C100, .rodata, rdai/e_sniper_of_goth]
       - [0x4C118, .rodata, rdai/e_red_door]
       - [0x4C130, .rodata, rdai/e_imp]
       - [0x4C160, .rodata, rdai/e_collect]
