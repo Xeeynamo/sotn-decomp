@@ -62,8 +62,8 @@ enum EntityID {
     E_UNK_23,               // EntitySpectralSwordAura
     E_UNK_24,               // func_us_801C17E8
     E_UNK_25,               // func_us_801C1DE8
-    E_UNK_26,               // func_us_801C2418
-    E_UNK_27,               // func_us_801C3580
+    E_SNIPER_OF_GOTH,       // EntitySniperOfGoth
+    E_SNIPER_OF_GOTH_ARROW, // EntitySniperOfGothArrow
     E_IMP,                  // EntityImp
     E_IMP_SMOKE,            // EntityImpSmoke
     E_CLOUDS,               // EntityClouds

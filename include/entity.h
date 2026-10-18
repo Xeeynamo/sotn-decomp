@@ -4630,6 +4630,31 @@ typedef struct {
     /* 0x9C */ s32 accelY; // death parts
 } ET_Lion;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ u32 timer;
+    /* 0x84 */ u32 : 32;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u8 flapCount;
+    /* 0x91 */ u8 flurryActive;
+    /* 0x92 */ u8 attackCount;
+    /* 0x93 */ u8 : 8;
+    /* 0x94 */ s32 idleTimer;
+    /* 0x98 */ s16 flurryArrowCount;
+    /* 0x9A */ s16 clothSwayAngle;
+} ET_SniperOfGoth;
+
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ u32 timer;
+    /* 0x84 */ u32 : 32;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ s16 hitPlayerX;
+    /* 0x96 */ s16 hitPlayerY;
+} ET_SniperOfGothArrow;
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -5023,6 +5048,8 @@ typedef union { // offset=0x7C
     ET_801A460C et_801A460C;
     ET_GhostDancer ghostDancer;
     ET_Lion lion;
+    ET_SniperOfGoth sniperOfGoth;
+    ET_SniperOfGothArrow sniperOfGothArrow;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);
