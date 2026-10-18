@@ -54,7 +54,7 @@ typedef enum EntityID {
     E_LION,                 // EntityLion
     E_LION_ATTACK,          // EntityLionAttack
     E_LION_DEATH_PARTS,     // EntityLionDeathParts
-    E_UNK_1F,               // func_us_801AE534
+    E_UNK_1F,               // EntityTinMan
     E_UNK_20,               // func_us_801AED4C
     E_UNK_21,               // func_us_801D8D44_from_no4
     E_UNK_22,               // func_us_801AEFE0

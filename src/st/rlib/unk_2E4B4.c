@@ -3,7 +3,7 @@
 
 INCLUDE_ASM("st/rlib/nonmatchings/unk_2E4B4", func_us_801AE4B4);
 
-INCLUDE_ASM("st/rlib/nonmatchings/unk_2E4B4", func_us_801AE534);
+INCLUDE_ASM("st/rlib/nonmatchings/unk_2E4B4", EntityTinMan);
 
 INCLUDE_ASM("st/rlib/nonmatchings/unk_2E4B4", func_us_801AED4C);
 

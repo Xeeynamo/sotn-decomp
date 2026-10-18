@@ -31,7 +31,7 @@ void func_us_801AE7AC_from_lib(Entity* self);
 void EntityLion(Entity* self);
 void EntityLionAttack(Entity* self);
 void EntityLionDeathParts(Entity* self);
-void func_us_801AE534(Entity* self);
+void EntityTinMan(Entity* self);
 void func_us_801AED4C(Entity* self);
 void func_us_801D8D44_from_no4(Entity* self);
 void func_us_801AEFE0(Entity* self);
@@ -74,7 +74,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityLion,
     EntityLionAttack,
     EntityLionDeathParts,
-    func_us_801AE534,
+    EntityTinMan,
     func_us_801AED4C,
     func_us_801D8D44_from_no4,
     func_us_801AEFE0,
