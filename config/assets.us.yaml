@@ -1885,6 +1885,22 @@ files:
           - [0x39C, skip]
           - [0x187C, rooms, rooms]
           - [0x1898, skip]
+          - [0x1D5C, skip]
+          - [0x1FA0, cmpgfx, D_us_80181FA0, 128, 128, 4]
+          - [0x2294, cmpgfx, D_us_80182294, 128, 128, 4]
+          - [0x2720, cmpgfx, D_us_80182720, 128, 128, 4]
+          - [0x3F48, cmpgfx, D_us_80183F48, 128, 128, 4]
+          - [0x57E4, cmpgfx, D_us_801857E4, 128, 128, 4]
+          - [0x6018, cmpgfx, D_us_80186018, 128, 128, 4]
+          - [0x680C, cmpgfx, D_us_8018680C, 128, 128, 4]
+          - [0x77A0, cmpgfx, D_us_801877A0, 128, 128, 4]
+          - [0x8868, cmpgfx, D_us_80188868, 128, 128, 4]
+          - [0x9AA4, cmpgfx, D_us_80189AA4, 128, 128, 4]
+          - [0xA928, rawgfx, D_us_8018A928, 48, 72, 8]
+          - [0xB6A8, rawgfx, D_us_8018B6A8, 48, 72, 8]
+          - [0xC428, cmpgfx, D_us_8018C428, 128, 128, 4]
+          - [0xD684, cmpgfx, D_us_8018D684, 128, 128, 4]
+          - [0xE704, skip]
   - target: disks/us/BOSS/BO6/BO6.BIN
     asset_path: assets/boss/bo6
     src_path: src/boss/bo6
