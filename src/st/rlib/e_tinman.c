@@ -415,7 +415,7 @@ void EntityTinManDeathParts(Entity* self) {
         if (!self->params) {
             self->step = 1;
             temp_s2 = (Random() & 0x1F) + 0x10;
-            angle = (Random() * 6) + rot(202.5);
+            angle = (Random() * 6) + ROT(202.5);
             self->velocityX = temp_s2 * rcos(angle);
             self->velocityY = temp_s2 * rsin(angle);
             return;
