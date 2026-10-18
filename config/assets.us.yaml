@@ -1900,7 +1900,15 @@ files:
           - [0xB6A8, rawgfx, D_us_8018B6A8, 48, 72, 8]
           - [0xC428, cmpgfx, D_us_8018C428, 128, 128, 4]
           - [0xD684, cmpgfx, D_us_8018D684, 128, 128, 4]
-          - [0xE704, skip]
+          - [0xE704, palette, D_us_8018E704, 16]
+          - [0xE904, palette, D_us_8018E904, 16]
+          - [0xEBE4, palette, D_us_8018EBE4, 16]
+          - [0xEC24, palette, D_us_8018EC24, 16]
+          - [0xEDE4, palette, D_us_8018EDE4, 16]
+          - [0xEE24, palette, D_us_8018EE24, 16]
+          - [0xEF24, palette, D_us_8018EF24, 16]
+          - [0xF024, palette, D_us_8018F024, 16]
+          - [0xF084, skip]
   - target: disks/us/BOSS/BO6/BO6.BIN
     asset_path: assets/boss/bo6
     src_path: src/boss/bo6
