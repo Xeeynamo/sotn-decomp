@@ -354,4 +354,87 @@ void func_us_801D8D44_from_no4(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rlib_psp/nonmatchings/rlib_psp/unk_F0D8", func_us_801AF11C);
+extern AnimateEntityFrame D_pspeu_0924C370[];
+typedef struct {
+    u16 unk0;
+    u16 unk2;
+    s32 unk4;
+    s32 unk8;
+} wtf_struct;
+
+extern wtf_struct D_pspeu_0924C398[];
+extern EInit D_us_80180688;
+
+void func_us_801AF11C(Entity* self) {
+    Entity* other;
+    s16 temp_v0;
+    s32 temp_s2;
+    u16 temp_v1;
+    wtf_struct* temp_s0;
+
+    switch (self->step) {                              /* switch 1; irregular */
+    case 0:                                         /* switch 1 */
+        InitializeEntity(D_us_80180688);
+        if (!self->params) {
+            self->step = 1;
+            temp_s2 = (Random() & 0x1F) + 0x10;
+            temp_v0 = (Random() * 6) + 0x900;
+            self->velocityX = temp_s2 * rcos(temp_v0);
+            self->velocityY = temp_s2 * rsin(temp_v0);
+            return;
+        }
+        self->animCurFrame = self->params;
+        if (self->params > 0x3A) {
+            temp_s2 = self->params - 0x3B;
+            temp_s0 = &D_pspeu_0924C398[temp_s2];
+            self->velocityX = temp_s0->unk4;
+            if (self->facingLeft) {
+                self->velocityX = -self->velocityX;
+            }
+            self->velocityY = temp_s0->unk8;
+            self->ext.ILLEGAL.s16[2] = temp_s0->unk0;
+            self->ext.ILLEGAL.u8[10] = temp_s0->unk2;
+            self->step = 3;
+            return;
+        }
+        self->drawFlags = 4;
+        self->step = 2;
+        return;
+    case 1:                                         /* switch 1 */
+        AnimateEntity(&D_pspeu_0924C370, self);
+        MoveEntity();
+        self->velocityY += 0x1800;
+        return;
+    case 2:                                         /* switch 1 */
+        MoveEntity();
+        self->velocityY += 0x1800;
+        self->rotate += 0x80;
+        return;
+    case 3:                                         /* switch 1 */
+        switch (self->step_s) {                        /* switch 2; irregular */
+        case 0:                                     /* switch 2 */
+            if (!--self->ext.ILLEGAL.s16[2]) {
+                self->ext.ILLEGAL.s16[2] = 0x20;
+                self->step_s += 1;
+            }
+            break;
+        case 1:                                     /* switch 2 */
+            MoveEntity();
+            if (self->ext.ILLEGAL.u8[10]) {
+                self->velocityY += 0x2000;
+            }
+            if (!--self->ext.ILLEGAL.s16[2]) {
+                PlaySfxPositional(0x655);
+                other = AllocEntity(&g_Entities[0xE0], (Entity* ) &D_80097C98);
+                if (other != NULL) {
+                    CreateEntityFromEntity(2, self, other);
+                    other->posY.i.hi += 0x10;
+                    other->params = 1;
+                }
+                DestroyEntity(self);
+            }
+            break;
+        }
+        break;
+    }
+}
