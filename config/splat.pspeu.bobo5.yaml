@@ -93,7 +93,7 @@ segments:
       - [0x23C68, .data, e_red_door_tiles]
       - [0x23C98, .data, e_init]
       - [0x23E20, .data, gen/rooms]
-      - [0x23E40, data, 23E40]
+      - [0x23E40, .data, cutscene_data]
       - [0x29278, .data, e_breakable]
       - [0x292D8, .data, stage_data]
       - [0x311E0, .data, pal_unk]
