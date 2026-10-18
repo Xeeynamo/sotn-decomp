@@ -71,7 +71,7 @@ segments:
       - [0x18EC, .data, e_clouds]
       - [0x1A24, .data, e_stained_glass]
       - [0x1C44, .data, gen/e_layout]
-      - [0x1D5C, data]
+      - [0x1D5C, .data, cutscene_data]
       - [0x1FA0, .data, stage_data]
       - [0xE704, .data, pal_unk]
       - [0xF084, .data, tilemaps]

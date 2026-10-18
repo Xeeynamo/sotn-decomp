@@ -44,3 +44,4 @@ EntityStainedGlass = 0x801B39FC;
 EntityStainedGlassBackground = 0x801B4188;
 g_Dialogue = 0x801B553C;
 g_CutsceneFlags = 0x801B55E8;
+cutscene_script = 0x80181D5C;
