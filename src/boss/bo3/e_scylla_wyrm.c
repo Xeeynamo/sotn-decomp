@@ -4,6 +4,17 @@
 extern EInit g_EInitWyrm;
 extern u16 D_us_80180C66;
 
+struct EntityWyrm {
+    ENTITY_SHARED;
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 angle;
+    /* 0x84 */ u8 count;
+    /* 0x85 */ u8 tailAttack;
+    /* 0x86 */ u8 flip;
+};
+SYNC_STRUCT(EntityWyrm);
+
 AnimateEntityFrame D_us_80180FCC[] = {
     POSE(4, 0x49, 0), POSE(8, 0x4C, 0), POSE(8, 0x49, 0),
     POSE(8, 0x4D, 0), POSE(4, 0x49, 0), POSE_END};
@@ -24,7 +35,7 @@ static void DrawWyrmBody(void) {
 
     posX = g_CurrentEntity->posX.val;
     posY = g_CurrentEntity->posY.val;
-    prim = g_CurrentEntity->ext.scylla.prim;
+    prim = ((struct EntityWyrm*)g_CurrentEntity)->prim;
     prim->x1 = prim->x3 = posX;
     prim->y1 = prim->y3 = posY;
     prim->drawMode = DRAW_HIDE;
@@ -103,7 +114,7 @@ void CalcWyrmBodyRotation(void) {
 
     posX = g_CurrentEntity->posX.val;
     posY = g_CurrentEntity->posY.val;
-    baseAngle = g_CurrentEntity->ext.scylla.angle;
+    baseAngle = ((struct EntityWyrm*)g_CurrentEntity)->angle;
     entity = g_CurrentEntity + 1;
     for (i = 0; i < 11; i++, entity++) {
         dx = entity->posX.val - posX;
@@ -123,10 +134,10 @@ void CalcWyrmBodyRotation(void) {
     }
 }
 
-void EntityWyrm(Entity* self) {
+void EntityWyrm(struct EntityWyrm* self) {
+    s32 i;
     Entity* entity;
     Primitive* prim;
-    s32 i;
     s32 primIndex;
 
     if (self->params && (g_BossMgrState & BOSS_MGR_DEFEAT)) {
@@ -141,13 +152,13 @@ void EntityWyrm(Entity* self) {
         InitializeEntity(g_EInitWyrm);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 13);
         if (primIndex == -1) {
-            DestroyEntity(self);
+            DestroyEntity((Entity*)self);
             return;
         }
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.scylla.prim = prim;
+        self->prim = prim;
         for (i = 0; i < 13; i++) {
             prim->tpage = 0x13;
             prim->clut = 0x205;
@@ -160,40 +171,40 @@ void EntityWyrm(Entity* self) {
             prim = prim->next;
         }
         if (!self->params && g_CastleFlags[SCYLLA_WYRM_DEFEATED]) {
-            DestroyEntity(self);
+            DestroyEntity((Entity*)self);
             return;
         }
-        self->nextPart = self + 1;
+        self->nextPart = (Entity*)self + 1;
         self->parent = NULL;
-        entity = self + 1;
+        entity = (Entity*)self + 1;
         for (i = 0; i < 11; i++, entity++) {
-            CreateEntityFromEntity(E_ID(WYRM_BODY_PART), self, entity);
-            entity->parent = self;
+            CreateEntityFromEntity(E_ID(WYRM_BODY_PART), (Entity*)self, entity);
+            entity->parent = (Entity*)self;
             entity->nextPart = entity + 1;
             entity->params = i & 3;
         }
-        entity = self + 12;
-        CreateEntityFromEntity(E_ID(WYRM_HEAD), self, entity);
-        entity->parent = self;
-        entity->nextPart = self;
+        entity = (Entity*)self + 12;
+        CreateEntityFromEntity(E_ID(WYRM_HEAD), (Entity*)self, entity);
+        entity->parent = (Entity*)self;
+        entity->nextPart = (Entity*)self;
         entity->params = self->params;
         entity->zPriority = self->zPriority + 1;
-        self->ext.scylla.timer = self->params * 0x30;
+        self->timer = self->params * 0x30;
         /* fall through */
     case 1:
         if (!self->params) {
-            self->ext.scylla.flip = 1;
+            self->flip = 1;
             if (GetDistanceToPlayerX() < 192) {
-                self->ext.scylla.flip = 0;
+                self->flip = 0;
                 D_us_80180C66 |= 2;
                 D_us_80180C66 |= 4;
                 D_us_80180C66 |= 8;
                 SetStep(2);
             }
         } else {
-            self->ext.scylla.flip = 1;
-            if (!--self->ext.scylla.timer) {
-                self->ext.scylla.flip = 0;
+            self->flip = 1;
+            if (!--self->timer) {
+                self->flip = 0;
                 SetStep(2);
             }
         }
@@ -203,18 +214,18 @@ void EntityWyrm(Entity* self) {
         CalcWyrmBodyPosition();
         CalcWyrmBodyRotation();
         DrawWyrmBody();
-        self->ext.scylla.angle += 0x40;
+        self->angle += 0x40;
         break;
 
     case 3:
         CalcWyrmBodyPosition();
         CalcWyrmBodyRotation();
         DrawWyrmBody();
-        self->ext.scylla.angle += 0x80;
+        self->angle += 0x80;
         switch (self->step_s) {
         case 0:
-            self->ext.scylla.count = 11;
-            self->ext.scylla.timer = 1;
+            self->count = 11;
+            self->timer = 1;
             if (!self->params) {
                 g_CastleFlags[SCYLLA_WYRM_DEFEATED] |= 1;
                 D_us_80180C66 &= ~2;
@@ -224,36 +235,36 @@ void EntityWyrm(Entity* self) {
             self->step_s++;
             /* fall through */
         case 1:
-            if (!--self->ext.scylla.timer) {
-                self->ext.scylla.timer = 0x10;
-                entity = self + 1;
-                prim = self->ext.scylla.prim;
-                for (i = 0; i < self->ext.scylla.count; i++) {
+            if (!--self->timer) {
+                self->timer = 0x10;
+                entity = (Entity*)self + 1;
+                prim = self->prim;
+                for (i = 0; i < self->count; i++) {
                     prim = prim->next;
                     entity++;
                 }
                 prim = prim->next;
                 prim->drawMode = DRAW_HIDE;
-                entity->ext.scylla.tailAttack = 1;
-                if (!--self->ext.scylla.count) {
+                ((struct EntityWyrm*)entity)->tailAttack = 1;
+                if (!--self->count) {
                     self->step_s++;
                 }
             }
             break;
 
         case 2:
-            entity = self + 1;
+            entity = (Entity*)self + 1;
             for (i = 0; i < 12; i++, entity++) {
                 DestroyEntity(entity);
             }
-            DestroyEntity(self);
+            DestroyEntity((Entity*)self);
             break;
         }
         break;
     }
 }
 
-void EntityWyrmBodyPart(Entity* self) {
+void EntityWyrmBodyPart(struct EntityWyrm* self) {
     Entity* newEntity;
 
     switch (self->step) {
@@ -270,7 +281,7 @@ void EntityWyrmBodyPart(Entity* self) {
         } else {
             self->hitboxState = 0;
         }
-        if (self->ext.scylla.tailAttack) {
+        if (self->tailAttack) {
             SetStep(2);
         }
         break;
@@ -279,24 +290,24 @@ void EntityWyrmBodyPart(Entity* self) {
         switch (self->step_s) {
         case 0:
             self->hitboxState = 0;
-            self->ext.scylla.timer = 0x10;
+            self->timer = 0x10;
             self->step_s++;
             /* fall through */
         case 1:
             if (!(g_Timer & 0xF)) {
                 PlaySfxPositional(SFX_FIREBALL_SHOT_C);
             }
-            if (!(self->ext.scylla.timer & 3)) {
+            if (!(self->timer & 3)) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(
-                        E_ID(EXPLODE_PUFF_OPAQUE), self, newEntity);
+                        E_ID(EXPLODE_PUFF_OPAQUE), (Entity*)self, newEntity);
                     newEntity->rotate = self->rotate - 0x400;
                     newEntity->params = 0;
                     newEntity->zPriority = 0x89;
                 }
             }
-            if (!--self->ext.scylla.timer) {
+            if (!--self->timer) {
                 self->step_s++;
             }
             break;
@@ -308,7 +319,7 @@ void EntityWyrmBodyPart(Entity* self) {
     }
 }
 
-void EntityWyrmHead(Entity* self) {
+void EntityWyrmHead(struct EntityWyrm* self) {
     Entity* entity;
     s16 angle;
     s32 dx;
@@ -333,21 +344,21 @@ void EntityWyrmHead(Entity* self) {
         }
         /* fall through */
     case 1:
-        entity = self - 12;
-        if (entity->ext.scylla.flip) {
+        entity = (Entity*)self - 12;
+        if (((struct EntityWyrm*)entity)->flip) {
             break;
         }
         self->step = 2;
         /* fall through */
     case 2:
-        if (!AnimateEntity(D_us_80180FCC, self)) {
+        if (!AnimateEntity(D_us_80180FCC, (Entity*)self)) {
             entity = &PLAYER;
             dx = entity->posX.val - self->posX.val;
             dy = entity->posY.val - self->posY.val;
             angle = ratan2(dy, dx);
             self->velocityX = rcos(angle) << 5;
             self->velocityY = rsin(angle) << 5;
-            self->ext.scylla.timer = 0x40;
+            self->timer = 0x40;
             self->animCurFrame = 0x49;
             SetStep(3);
         }
@@ -362,12 +373,12 @@ void EntityWyrmHead(Entity* self) {
         }
         MoveEntity();
         if (GetDistanceToPlayerX() < 0x38) {
-            AnimateEntity(D_us_80180FD8, self);
+            AnimateEntity(D_us_80180FD8, (Entity*)self);
             if (!self->poseTimer && self->pose == 2) {
                 PlaySfxPositional(SFX_SCYLLA_WYRM_ATTACK);
             }
         }
-        if (!--self->ext.scylla.timer) {
+        if (!--self->timer) {
             SetStep(4);
         }
         if (!self->params && !(g_Timer & 7)) {
@@ -385,21 +396,21 @@ void EntityWyrmHead(Entity* self) {
         break;
 
     case 4:
-        if (!AnimateEntity(D_us_80180FE0, self)) {
+        if (!AnimateEntity(D_us_80180FE0, (Entity*)self)) {
             SetStep(5);
         }
         break;
 
     case 5:
-        entity = self - 12;
+        entity = (Entity*)self - 12;
         dx = entity->posX.val - self->posX.val;
         dy = entity->posY.val - self->posY.val;
         angle = ratan2(dy, dx);
-        angle += (rsin(self->ext.scylla.angle) << 9) >> 12;
+        angle += (rsin(self->angle) << 9) >> 12;
         self->velocityX = rcos(angle) << 5;
         self->velocityY = rsin(angle) << 5;
         MoveEntity();
-        self->ext.scylla.angle += 0x80;
+        self->angle += 0x80;
         self->animCurFrame = 0x49;
         if (self->velocityY > FIX(0.5)) {
             self->animCurFrame = 0x4A;
@@ -419,13 +430,13 @@ void EntityWyrmHead(Entity* self) {
         case 0:
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                CreateEntityFromEntity(E_EXPLOSION, (Entity*)self, entity);
                 entity->params = 3;
                 entity->zPriority = self->zPriority + 1;
             }
             self->animCurFrame = 0;
             self->hitboxState = 0;
-            entity = self - 12;
+            entity = (Entity*)self - 12;
             dx = entity->posX.val - self->posX.val;
             dy = entity->posY.val - self->posY.val;
             angle = ratan2(dy, dx);
@@ -435,7 +446,7 @@ void EntityWyrmHead(Entity* self) {
             /* fall through */
         case 1:
             MoveEntity();
-            entity = self - 12;
+            entity = (Entity*)self - 12;
             dx = entity->posX.val - self->posX.val;
             if (abs(dx) < 0x40) {
                 self->velocityX = 0;
@@ -446,7 +457,7 @@ void EntityWyrmHead(Entity* self) {
         break;
     }
 
-    entity = self - 1;
+    entity = (Entity*)self - 1;
     dx = self->posX.val - entity->posX.val;
     dy = self->posY.val - entity->posY.val;
     angle = ratan2(dy, dx);

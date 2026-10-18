@@ -13,6 +13,25 @@ extern s32 E_ID(MEDUSA);
 extern EInit g_EInitMedusa;
 extern s32 g_BossMgrState;
 
+struct EntityMedusa {
+    ENTITY_SHARED;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ u8 attackMode;
+    /* 0x85 */ u8 flag;
+};
+SYNC_STRUCT(EntityMedusa);
+
+struct func_us_801923DC {
+    ENTITY_SHARED;
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 angle;
+    /* 0x84 */ s16 offsets[28];
+};
+SYNC_STRUCT(func_us_801923DC);
+
 static u8 D_us_801805F0[] = {15, 1, 12, 2, 7, 3, 4, 4, 32, 5, 255, 0};
 static u8 D_us_801805FC[] = {8, 5, 9, 6, 10, 7, 14, 8, 10, 7, 9, 6, 0, 0};
 static u8 D_us_8018060C[] = {21, 9, 6, 10, 4, 11, 10, 12, 16, 12, 255, 0};
@@ -37,7 +56,7 @@ static u8 D_us_801806B0[] = {
     0, 0, 0, 0, 0, 1, 2, 3, 3, 4, 5, 6, 7, 4, 8, 9, 10, 0, 0, 0,
 };
 
-void EntityMedusa(Entity* self) {
+void EntityMedusa(struct EntityMedusa* self) {
     Entity* entity;
     s32 x;
     s32 y;
@@ -56,8 +75,8 @@ void EntityMedusa(Entity* self) {
         InitializeEntity(g_EInitMedusa);
         self->animCurFrame = 1;
         self->hitboxState = 0;
-        entity = self + 1;
-        CreateEntityFromEntity(E_ID(UNK_25), self, entity);
+        entity = (Entity*)self + 1;
+        CreateEntityFromEntity(E_ID(UNK_25), (Entity*)self, entity);
         SetStep(1);
         // fallthrough
 
@@ -69,30 +88,30 @@ void EntityMedusa(Entity* self) {
 
     case 2:
         // n.b.! AnimateEntity is not declared
-        if (!AnimateEntity(D_us_801805F0, self)) {
+        if (!AnimateEntity(D_us_801805F0, (Entity*)self)) {
             self->hitboxState = 3;
             SetStep(3);
         }
         break;
 
     case 3:
-        AnimateEntity(D_us_801805FC, self);
+        AnimateEntity(D_us_801805FC, (Entity*)self);
         if (!self->step_s) {
-            self->ext.GS_Props.timer = 64;
+            self->timer = 64;
             self->step_s++;
         }
         if (GetDistanceToPlayerX() < 104) {
-            self->ext.GS_Props.attackMode = 1;
+            self->attackMode = 1;
         }
         if (GetDistanceToPlayerX() > 128) {
-            self->ext.GS_Props.attackMode = 0;
+            self->attackMode = 0;
         }
         if (GetDistanceToPlayerX() > 32) {
             self->facingLeft = GetSideToPlayer() & 1;
         }
         MoveEntity();
 
-        if (self->facingLeft ^ self->ext.GS_Props.attackMode) {
+        if (self->facingLeft ^ self->attackMode) {
             self->velocityX = -FIX(1.0 / 2.0);
         } else {
             self->velocityX = FIX(1.0 / 2.0);
@@ -109,7 +128,7 @@ void EntityMedusa(Entity* self) {
             }
         }
 
-        if (!--self->ext.GS_Props.timer) {
+        if (!--self->timer) {
             x = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
             entity = &PLAYER;
             if (!self->facingLeft) {
@@ -134,9 +153,9 @@ void EntityMedusa(Entity* self) {
             PlaySfxPositional(SFX_MEDUSA_WEAPON_SWING);
             self->step_s++;
         }
-        self->ext.GS_Props.flag = 1;
-        if (AnimateEntity(D_us_80180624, self) == 0) {
-            self->ext.GS_Props.flag = 0;
+        self->flag = 1;
+        if (AnimateEntity(D_us_80180624, (Entity*)self) == 0) {
+            self->flag = 0;
             SetStep(3);
         }
         break;
@@ -147,7 +166,7 @@ void EntityMedusa(Entity* self) {
             }
             self->step_s++;
         }
-        if (AnimateEntity(D_us_8018060C, self) == 0) {
+        if (AnimateEntity(D_us_8018060C, (Entity*)self) == 0) {
             SetStep(3);
             if (g_Player.status & PLAYER_STATUS_STONE) {
                 SetStep(8);
@@ -157,7 +176,7 @@ void EntityMedusa(Entity* self) {
         if (!self->poseTimer && self->pose == 4) {
             entity = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_ID(UNK_24), self, entity);
+                CreateEntityFromEntity(E_ID(UNK_24), (Entity*)self, entity);
                 entity->facingLeft = self->facingLeft;
                 if (self->facingLeft) {
                     entity->posX.i.hi -= 13;
@@ -174,7 +193,7 @@ void EntityMedusa(Entity* self) {
             PlaySfxPositional(SFX_MEDUSA_VENOM);
             self->step_s++;
         }
-        if (AnimateEntity(D_us_80180618, self) == 0) {
+        if (AnimateEntity(D_us_80180618, (Entity*)self) == 0) {
             SetStep(3);
         }
         if (!self->poseTimer && self->pose == 3) {
@@ -184,7 +203,7 @@ void EntityMedusa(Entity* self) {
             for (i = 0; i < 2; i++) {
                 entity = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID(UNK_26), self, entity);
+                    CreateEntityFromEntity(E_ID(UNK_26), (Entity*)self, entity);
                     entity->rotate = i * 1024 - 512;
                     if (!self->facingLeft) {
                         entity->rotate += ROT(180);
@@ -205,7 +224,7 @@ void EntityMedusa(Entity* self) {
             self->step_s++;
         }
 
-        if (!AnimateEntity(D_us_80180630, self)) {
+        if (!AnimateEntity(D_us_80180630, (Entity*)self)) {
             self->facingLeft = GetSideToPlayer() & 1;
             SetStep(4);
         }
@@ -219,8 +238,8 @@ void EntityMedusa(Entity* self) {
             self->step_s++;
             // fallthrough
         case 1:
-            if (!AnimateEntity(D_us_8018063C, self)) {
-                self->ext.GS_Props.timer = 80;
+            if (!AnimateEntity(D_us_8018063C, (Entity*)self)) {
+                self->timer = 80;
                 // This sfxID is used by several bosses during death anim,
                 // however it was purposely muted for Medusa and Death
                 PlaySfxPositional(SFX_BOSS_LARGE_FLAMES);
@@ -231,17 +250,17 @@ void EntityMedusa(Entity* self) {
         case 2:
             entity = AllocEntity(&g_Entities[0xC0], &g_Entities[0x100]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_ID(UNK_27), self, entity);
+                CreateEntityFromEntity(E_ID(UNK_27), (Entity*)self, entity);
                 entity->params = 0;
                 entity->zPriority = self->zPriority + 1;
                 entity->posX.i.hi += (Random() & 31) - 16;
                 entity->posY.i.hi += 24;
             }
-            if (!(self->ext.GS_Props.timer & 0xF)) {
+            if (!(self->timer & 0xF)) {
                 PlaySfxPositional(SFX_FIREBALL_SHOT_B);
             }
 
-            if (!--self->ext.GS_Props.timer) {
+            if (!--self->timer) {
                 self->animCurFrame = 0;
                 g_BossMgrState |= BOSS_MGR_TERMINATED;
                 self->step_s++;
@@ -257,7 +276,7 @@ void EntityMedusa(Entity* self) {
 #include "../../st/pad2_anim_debug.h"
     }
 
-    entity = self;
+    entity = (Entity*)self;
     x = entity->posX.i.hi + g_Tilemap.scrollX.i.hi;
     y = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
     if (self->velocityX < 0) {
@@ -377,7 +396,7 @@ void func_us_80192020(Entity* self) {
 extern EInit D_us_8018048C;
 
 void func_us_801922EC(Entity* self) {
-    Entity* prev;
+    struct EntityMedusa* prev;
     s32 animCurFrame;
     s8* rect;
 
@@ -385,13 +404,13 @@ void func_us_801922EC(Entity* self) {
         InitializeEntity(D_us_8018048C);
     }
 
-    prev = self - 1;
+    prev = (struct EntityMedusa*)(self - 1);
     animCurFrame = prev->animCurFrame;
     self->posX.i.hi = prev->posX.i.hi;
     self->posY.i.hi = prev->posY.i.hi;
     self->facingLeft = prev->facingLeft;
 
-    if (prev->ext.GS_Props.flag) {
+    if (prev->flag) {
         self->hitboxState = 1;
     } else {
         self->hitboxState = 2;
@@ -413,7 +432,7 @@ void func_us_801922EC(Entity* self) {
 
 extern EInit D_us_801804A4;
 
-void func_us_801923DC(Entity* self) {
+void func_us_801923DC(struct func_us_801923DC* self) {
     const int PrimCount = 13;
     s32 i;
     s32 primIndex;
@@ -433,14 +452,14 @@ void func_us_801923DC(Entity* self) {
         InitializeEntity(D_us_801804A4);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, PrimCount);
         if (primIndex == -1) {
-            DestroyEntity(self);
+            DestroyEntity((Entity*)self);
             return;
         }
 
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
+        self->prim = prim;
 
         for (i = 0; i < PrimCount; i++) {
             prim->tpage = 0x1A;
@@ -463,7 +482,7 @@ void func_us_801923DC(Entity* self) {
             prim = prim->next;
         }
 
-        offsets = self->ext.medusaUnk1A.offsets;
+        offsets = self->offsets;
         for (i = 0; i < (PrimCount + 1); i++) {
             offsets[0] = self->posX.i.hi;
             offsets[1] = self->posY.i.hi;
@@ -473,20 +492,20 @@ void func_us_801923DC(Entity* self) {
         angle = self->rotate;
         self->velocityX = rcos(angle) * 160;
         self->velocityY = rsin(angle) * 160;
-        self->ext.factory.unk82 = angle;
-        self->ext.factory.unk80 = 0x40;
+        self->angle = angle;
+        self->timer = 0x40;
 
     case 1:
         MoveEntity();
         player = &PLAYER;
-        angle = GetAngleBetweenEntities(self, player);
-        tempY = 96 - self->ext.factory.unk80;
-        angle = LimitAngleChange(tempY, self->ext.factory.unk82, angle);
+        angle = GetAngleBetweenEntities((Entity*)self, player);
+        tempY = 96 - self->timer;
+        angle = LimitAngleChange(tempY, self->angle, angle);
         self->velocityX = rcos(angle) * 160;
         self->velocityY = rsin(angle) * 160;
-        self->ext.factory.unk82 = angle;
+        self->angle = angle;
 
-        if (!--self->ext.factory.unk80 || self->hitFlags & 0x80) {
+        if (!--self->timer || self->hitFlags & 0x80) {
             self->step++;
         }
         break;
@@ -497,7 +516,7 @@ void func_us_801923DC(Entity* self) {
         yOffset = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
         if ((xOffset < -64) || (yOffset < -64) || (xOffset > 576) ||
             (yOffset > 320)) {
-            DestroyEntity(self);
+            DestroyEntity((Entity*)self);
             return;
         }
         break;
@@ -507,11 +526,7 @@ void func_us_801923DC(Entity* self) {
         PlaySfxPositional(SFX_ELECTRICITY);
     }
 
-    // this is the same as self->ext.unkB8. for this
-    // entity 0xB8 is not an entity pointer but the
-    // last pair of offsets.
-    offsets = &self->ext.medusaUnk1A
-                   .offsets[sizeof(self->ext.medusaUnk1A.offsets) / 2];
+    offsets = &self->offsets[26];
 
     for (i = 0; i < PrimCount; i++) {
         offsets[0] = offsets[-2] - g_ScrollDeltaX;
@@ -519,15 +534,15 @@ void func_us_801923DC(Entity* self) {
         offsets -= 2;
     }
 
-    offsets = self->ext.medusaUnk1A.offsets;
+    offsets = self->offsets;
 
     offsets[0] = self->posX.i.hi;
     offsets[1] = self->posY.i.hi;
-    offsets = self->ext.medusaUnk1A.offsets;
-    prim = self->ext.prim;
+    offsets = self->offsets;
+    prim = self->prim;
     x = offsets[0];
     y = offsets[1];
-    prim = self->ext.prim;
+    prim = self->prim;
 
     xOffset = offsets[2] - x;
     yOffset = offsets[3] - y;
@@ -581,7 +596,7 @@ void func_us_801923DC(Entity* self) {
         prim = prim->next;
     }
 
-    for (prim = self->ext.prim; prim != NULL; prim = prim->next) {
+    for (prim = self->prim; prim != NULL; prim = prim->next) {
         if (g_Timer & 1) {
             prim->v0 = prim->v2 = 208;
             prim->v1 = prim->v3 = 192;
