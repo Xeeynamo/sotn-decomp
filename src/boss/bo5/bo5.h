@@ -8,6 +8,8 @@
 
 enum Palettes {
     PAL_NONE = 0,
+    PAL_STAINED_GLASS = 0xE,
+    PAL_STAINED_GLASS_BG = 0xF,
     PAL_CASTLE_WALL_1 = 0x74,
     PAL_BELL = 0x75,
     PAL_BELL_ROPE = 0x76,
@@ -15,6 +17,8 @@ enum Palettes {
     PAL_BACKGROUND_SKY_LAND = 0xC5,
     PAL_CASTLE_WALL_2 = 0xC8,
     PAL_HIPPOGRYPH = 0x200,
+    PAL_STAINED_GLASS_LIGHT = 0x204,
+    PAL_STAINED_GLASS_BG_LIGHT = 0x205,
 };
 
 typedef enum EntityID {
