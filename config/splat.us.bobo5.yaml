@@ -49,7 +49,6 @@ segments:
       - [0x39C, .data, e_init]
       - [0x4FC, data]
       - [0x514, .data, e_red_door_tiles]
-      - [0x534, data]
       - [0x544, .data, e_lock_camera]
       - [0x5C4, .data, e_breakable]
       - [0x62C, .data, e_dai_no2_shortcut]
