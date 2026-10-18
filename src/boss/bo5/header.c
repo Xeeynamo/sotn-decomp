@@ -2,7 +2,6 @@
 #include "bo5.h"
 #include "../../st/pfn_entity_update.h"
 
-// common
 extern RoomHeader rooms[];
 extern SpriteParts* spriteBanks[];
 extern u_long* cluts[];

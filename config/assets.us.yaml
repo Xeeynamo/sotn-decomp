@@ -1877,6 +1877,14 @@ files:
     asset_path: assets/boss/bo5
     src_path: src/boss/bo5
     splat_config_path: config/splat.us.bobo5.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x1F4, layout, entity_layouts]
+          - [0x39C, skip]
+          - [0x187C, rooms, rooms]
+          - [0x1898, skip]
   - target: disks/us/BOSS/BO6/BO6.BIN
     asset_path: assets/boss/bo6
     src_path: src/boss/bo6
