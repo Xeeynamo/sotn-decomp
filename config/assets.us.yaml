@@ -1907,6 +1907,7 @@ files:
           - [0xD684, cmpgfx, D_us_8018D684, 128, 128, 4]
           - [0xE704, palette, D_us_8018E704, 16]
           - [0xE904, palette, D_us_8018E904, 16]
+          - [0xE9C4, palette, D_us_8018E9C4, 16]
           - [0xEBE4, palette, D_us_8018EBE4, 16]
           - [0xEC24, palette, D_us_8018EC24, 16]
           - [0xEDE4, palette, D_us_8018EDE4, 16]

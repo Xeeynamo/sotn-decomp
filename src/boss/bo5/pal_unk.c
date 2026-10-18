@@ -7,6 +7,12 @@ u16 D_us_8018E704[] = {
 u16 D_us_8018E904[] = {
 #include "gen/D_us_8018E904.h"
 };
+#ifndef VERSION_PSP
+// unreferenced
+u16 D_us_8018E9C4[] = {
+#include "gen/D_us_8018E9C4.h"
+};
+#endif
 u16 D_us_8018EBE4[] = {
 #include "gen/D_us_8018EBE4.h"
 };
