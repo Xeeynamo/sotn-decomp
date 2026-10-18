@@ -4374,11 +4374,6 @@ typedef struct {
 } ET_RdaiArcher;
 
 typedef struct {
-    /* 0x7C */ u32 unk7C[8];
-    /* 0x9C */ struct Entity* parent;
-} ET_801AEFE0;
-
-typedef struct {
     /* 0x7C */ Primitive* prim1;
     /* 0x80 */ Primitive* prim2;
     /* 0x84 */ Primitive* prim3;
@@ -4655,11 +4650,26 @@ typedef struct {
     /* 0x94 */ s16 hitPlayerX;
     /* 0x96 */ s16 hitPlayerY;
 } ET_SniperOfGothArrow;
+
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 unk85;
+    /* 0x86 */ u8 unk86;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ struct Entity* parent;
+} ET_TinMan;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
     ET_RdaiArcher rdaiArcher;
-    ET_801AEFE0 et_801AEFE0;
     ET_TimerOnly timer;
     ET_UTimerOnly utimer;
     ET_EntFactory factory;
@@ -5050,6 +5060,7 @@ typedef union { // offset=0x7C
     ET_Lion lion;
     ET_SniperOfGoth sniperOfGoth;
     ET_SniperOfGothArrow sniperOfGothArrow;
+    ET_TinMan tinman;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);

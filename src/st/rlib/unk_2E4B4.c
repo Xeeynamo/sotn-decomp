@@ -20,7 +20,7 @@ void func_us_801AEFE0(Entity* self) {
         PlaySfxPositional(SFX_NOISE_SWEEP_DOWN_B);
         /* fall through */
     case 1:
-        parent = self->ext.et_801AEFE0.parent;
+        parent = self->ext.tinman.parent;
         self->posX.val = parent->posX.val;
         self->posY.val = parent->posY.val;
         if (AnimateEntity(&D_us_80181888, self) == 0) {
