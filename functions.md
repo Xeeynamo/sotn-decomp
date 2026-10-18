@@ -10145,7 +10145,7 @@
 | st0        | func_pspeu_092396A0               |     2187 |        194 | Yes    |       |     |
 | bo4        | EntityMist                        |     2193 |        159 | Yes    |       |     |
 | rbo5       | EntityMist                        |     2193 |        159 | Yes    |       |     |
-| rbo7       | EntityAkmodanII                   |     2200 |        242 | Yes    |       |     |
+|            | EntityAkmodanII                   |     2200 |        242 | Yes    |       |     |
 | no3        | func_pspeu_09243838               |     2232 |        204 | Yes    |       |     |
 | dai        | func_pspeu_092545E0               |     2235 |        203 | Yes    |       |     |
 | nz0        | func_pspeu_0923E810               |     2235 |        203 | Yes    |       |     |
