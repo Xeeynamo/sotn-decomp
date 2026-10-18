@@ -1881,6 +1881,8 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
+          - [0xAC, paldef, palette_def]
+          - [0xF4, skip]
           - [0x1F4, layout, entity_layouts]
           - [0x39C, skip]
           - [0x187C, rooms, rooms]

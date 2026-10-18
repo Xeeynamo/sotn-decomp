@@ -1,5 +1,4 @@
 spriteBanks = 0x8018002C;
-cluts = 0x801800F0;
 rooms_layers = 0x80180124;
 gfxBanks = 0x801801B0;
 g_EInitObtainable = 0x80180460;
