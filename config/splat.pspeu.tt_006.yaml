@@ -4,9 +4,9 @@ options:
   base_path: ..
   build_path: build/pspeu
   target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_006.bin
-  asm_path: asm/pspeu/servant/tt_006_psp
+  asm_path: asm/pspeu/servant/tt_006
   asset_path: assets/servant/tt_006
-  src_path: src/servant
+  src_path: src/servant/tt_006
   ld_script_path: build/pspeu/tt_006.ld
   compiler: GCC
   symbol_addrs_path:
@@ -39,12 +39,16 @@ segments:
     type: code
     start: 0x80
     vram:  0x092E7680
-    bss_size: 0x480
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, tt_006_psp/nosedevil]
-      - [0x8380, data]
-      - [0xAB80, .rodata, tt_006_psp/nosedevil]
-      - {start: 0xAC00, type: bss, vram: 0x092F2200}
-  - [0xAC00]
+      - [0x80, c, nosedevil]
+      - [0x8308, c, init]
+      - [0x8380, .data, nosedevil_spriteparts]
+      - [0x9A90, .data, servant_clutdata]
+      - [0x9AF0, .data, nosedevil]
+      - [0xAB40, .data, init]
+      - [0xAB80, .rodata, nosedevil]
+      - [0xAC00, .bss, nosedevil_spriteparts]
+      - [0xAC30, .bss, nosedevil]
+  - [0xB080]
