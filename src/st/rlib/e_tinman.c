@@ -83,7 +83,7 @@ void EntityTinMan(Entity* self) {
         }
     }
     if (self->hitFlags & 3) {
-        PlaySfxPositional(SFX_UNK_RLIB_73D);
+        PlaySfxPositional(SFX_TIN_MAN_HIT);
     }
     if ((self->flags & FLAG_DEAD) && (self->step != TM_DEAD)) {
         SetStep(TM_DEAD);
@@ -298,6 +298,8 @@ void EntityTinManArm(Entity* self) {
         /* fallthrough */
     case 1:
         other = self - 1;
+        // the turning around animation draws the arm in 3D (ish) so we
+        // hide ourself during that period
         if (other->ext.tinman.turningAround == true) {
             self->hitboxState = 0;
             self->animCurFrame = 0;
@@ -349,20 +351,20 @@ void EntityTinManArm(Entity* self) {
         break;
     case 3:
         other = self - 1;
-        if ((other->entityId != 0x1F) || (other->flags & FLAG_DEAD)) {
+        if ((other->entityId != E_TINMAN) || (other->flags & FLAG_DEAD)) {
             DestroyEntity(self);
         }
         break;
     }
 }
-extern EInit g_EInitTinMan2;
+extern EInit g_EInitTinManDecoration;
 
 void EntityTinManSmoke(Entity* self) {
     Entity* parent;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitTinMan2);
+        InitializeEntity(g_EInitTinManDecoration);
         self->blendMode = BLEND_TRANSP;
         PlaySfxPositional(SFX_NOISE_SWEEP_DOWN_B);
         /* fall through */
@@ -399,7 +401,7 @@ void EntityTinManProjectile(Entity* self) {
     }
 }
 
-extern EInit g_EInitTinMan2;
+extern EInit g_EInitTinManDecoration;
 
 void EntityTinManDeathParts(Entity* self) {
     Entity* other;
@@ -409,11 +411,11 @@ void EntityTinManDeathParts(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitTinMan2);
+        InitializeEntity(g_EInitTinManDecoration);
         if (!self->params) {
             self->step = 1;
             temp_s2 = (Random() & 0x1F) + 0x10;
-            angle = (Random() * 6) + 0x900;
+            angle = (Random() * 6) + rot(202.5);
             self->velocityX = temp_s2 * rcos(angle);
             self->velocityY = temp_s2 * rsin(angle);
             return;
