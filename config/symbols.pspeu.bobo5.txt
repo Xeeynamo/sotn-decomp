@@ -94,3 +94,6 @@ D_psp_E_UNK_26 = 0x0926E958;
 D_psp_E_UNK_27 = 0x0926E950;
 D_psp_E_LIFE_UP_SPAWN = 0x0926E948;
 D_psp_E_CUTSCENE = 0x0926E938;
+func_us_801A19CC = 0x09247CD8;
+func_us_801A19FC = 0x09247D30;
+CheckHippogryphFloorCollision = 0x09247F20;

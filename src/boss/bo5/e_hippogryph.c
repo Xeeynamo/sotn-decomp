@@ -1,21 +1,24 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo5.h"
 
-void func_us_801A19CC(s32 arg0) {
+void func_us_801A19CC(u8 arg0) {
     g_CurrentEntity->poseTimer = 0;
     g_CurrentEntity->pose = 0;
     g_CurrentEntity->ext.et_801A19CC.unk7D = 0;
-    g_CurrentEntity->step = arg0 & 0xFF;
+    g_CurrentEntity->step = arg0;
     g_CurrentEntity->step_s = 0;
 }
 
 INCLUDE_ASM("boss/bo5/nonmatchings/e_hippogryph", func_us_801A19FC);
 
 bool CheckHippogryphFloorCollision(s16* sensors) {
+    s32 posY;
+
     if (UnkCollisionFunc3(sensors) & 1) {
         return true;
     } else {
-        if (g_CurrentEntity->posY.i.hi + g_Tilemap.scrollY.i.hi >= 184) {
+        posY = g_CurrentEntity->posY.i.hi + g_Tilemap.scrollY.i.hi;
+        if (posY > 183) {
             g_CurrentEntity->posY.i.hi = 183 - g_Tilemap.scrollY.i.hi;
             g_CurrentEntity->velocityX = 0;
             g_CurrentEntity->velocityY = 0;
