@@ -2,3 +2,5 @@
 #include "bo5.h"
 
 INCLUDE_ASM("boss/bo5/nonmatchings/e_bell", EntityBell);
+
+INCLUDE_ASM("boss/bo5/nonmatchings/e_bell", EntityBellSpawner);

@@ -78,7 +78,6 @@ segments:
       - [0x1FE84, c, e_unk_16]
       - [0x20184, c, e_dai_no2_shortcut]
       - [0x20490, c, e_bell]
-      - [0x21010, c, e_bell_spawner]
       - [0x210DC, c, e_room_fg_2]
       - [0x2159C, c, unk_2159C]
       - [0x2459C, c, e_cutscene_dialogue]
