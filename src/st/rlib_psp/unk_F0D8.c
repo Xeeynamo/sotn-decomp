@@ -235,8 +235,81 @@ void EntityTinMan(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rlib_psp/nonmatchings/rlib_psp/unk_F0D8", func_us_801AED4C);
+extern EInit D_us_80180670;
 
+void func_us_801AED4C(Entity* self) {
+    Entity* other;
+    s16 temp_v0;
+    s32 var_s1;
+
+    other = self - 1;
+    self->facingLeft = other->facingLeft;
+    self->posX.val = other->posX.val;
+    self->posY.val = other->posY.val;
+    switch (self->step) {                              /* irregular */
+    case 0:
+        InitializeEntity(D_us_80180670);
+        self->drawFlags = 4;
+        /* fallthrough */
+    case 1:
+        other = self - 1;
+        if ((other->ext.ILLEGAL.u8[8]) == 1) {
+            self->hitboxState = 0;
+            self->animCurFrame = 0;
+        } else {
+            self->animCurFrame = 5;
+            self->rotate = other->ext.ILLEGAL.s16[3];
+            self->hitboxState = 1;
+            temp_v0 = self->rotate + 0x200;
+            self->hitboxOffX = ((rcos(temp_v0) * 0x1C) >> 0xC);
+            self->hitboxOffY = ((rsin(temp_v0) * 0x1C) >> 0xC);
+            if (self->rotate >= 0xF00) {
+                PlaySfxPositional(0x6C7);
+            }
+        }
+        if ((other->ext.ILLEGAL.u8[9]) || (other->flags & 0x100)) {
+            self->hitboxState = 0;
+            self->step += 1;
+        }
+        break;
+    case 2:
+        other = AllocEntity(&g_Entities[0xE0], (Entity* ) &D_80097C98);
+        if (other != NULL) {
+            CreateEntityFromEntity(0x23, self, other);
+            other->facingLeft = self->facingLeft;
+            other->rotate = self->rotate;
+            other->zPriority = self->zPriority;
+            other->params = 5;
+        }
+        for(var_s1 = 0; var_s1 < 8; var_s1++) {
+            other = AllocEntity(&g_Entities[0xE0], (Entity* ) &D_80097C98);
+            if (other != NULL) {
+                CreateEntityFromEntity(0x23, self, other);
+                other->params = 0;
+                other->zPriority = self->zPriority;
+            }
+        }
+        PlaySfxPositional(0x645);
+        other = self - 1;
+        self->hitboxState = other->hitboxState;
+        self->attackElement = other->attackElement;
+        self->attack = other->attack;
+        self->parent = self - 1;
+        self->animCurFrame = 0;
+        self->hitboxWidth = 0xF;
+        self->hitboxHeight = 0xB;
+        self->hitboxOffX = 0x17;
+        self->hitboxOffY = -5;
+        self->step += 1;
+        return;
+    case 3:
+        other = self - 1;
+        if ((other->entityId != 0x1F) || (other->flags & 0x100)) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 extern EInit D_us_80180688;
 
 void func_us_801AEFE0(Entity* self) {
