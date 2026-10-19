@@ -713,7 +713,7 @@ enum Sfx {
     /* 0x73A */ SFX_ECTOPLASM_BOING,
     /* 0x73B */ SFX_ECTOPLASM_DEATH,
     /* 0x73C */ SFX_SPITTLEBONE_ACID_SPLAT,
-    /* 0x73D */ SFX_UNK_RLIB_73D,
+    /* 0x73D */ SFX_TIN_MAN_HIT,
 
     // vabid 9
     /* 0x73E */ SFX_UNUSED_73E,
