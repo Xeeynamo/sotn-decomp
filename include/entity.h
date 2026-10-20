@@ -4666,6 +4666,13 @@ typedef struct {
     /* 0x9C */ struct Entity* parent;
 } ET_TinMan;
 
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ s16 turnAroundTimer;
+    /* 0x84 */ s32 prevXVel;
+    /* 0x88 */ s32 prevYVel;
+} ET_Scarecrow;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -5061,6 +5068,7 @@ typedef union { // offset=0x7C
     ET_SniperOfGoth sniperOfGoth;
     ET_SniperOfGothArrow sniperOfGothArrow;
     ET_TinMan tinman;
+    ET_Scarecrow scarecrow;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);

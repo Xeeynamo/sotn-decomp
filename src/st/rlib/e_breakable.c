@@ -13,7 +13,7 @@ extern u16 g_RlibBreakableHitboxOffsetsY[];
 
 #ifdef VERSION_PSP
 extern s32 E_ID(UNK_1B);
-extern s32 E_ID(UNK_28);
+extern s32 E_ID(BREAKABLE_DEBRIS);
 #endif
 
 void EntityBreakable(Entity* self) {
@@ -52,7 +52,7 @@ void EntityBreakable(Entity* self) {
         case 9:
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromCurrentEntity(E_ID(UNK_28), entity);
+                CreateEntityFromCurrentEntity(E_ID(BREAKABLE_DEBRIS), entity);
                 entity->params = 0x100;
             }
             g_api.PlaySfx(SFX_GLASS_BREAK_E);

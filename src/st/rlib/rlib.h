@@ -59,11 +59,11 @@ typedef enum EntityID {
     E_TINMAN_PROJECTILE,    // EntityTinManProjectile
     E_TINMAN_SMOKE,         // EntityTinManSmoke
     E_TINMAN_DEATH_PARTS,   // EntityTinManDeathParts
-    E_UNK_24,               // func_us_801AF448
-    E_UNK_25,               // func_us_801AF9E8
+    E_SCARECROW,            // EntityScarecrow
+    E_SCARECROW_LIMB,       // EntityScarecrowLimb
     E_EXPLODE_PUFF_OPAQUE,  // EntityExplosionPuffOpaque
-    E_UNK_27,               // func_us_801AFC88
-    E_UNK_28,               // EntityBreakableDebris
+    E_SCHMOO,               // EntitySchmoo
+    E_BREAKABLE_DEBRIS,     // EntityBreakableDebris
     E_CANDLE_TABLE,         // EntityCandleTable
     NUM_ENTITIES,
 };

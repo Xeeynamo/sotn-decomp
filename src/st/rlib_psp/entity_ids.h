@@ -21,11 +21,11 @@ extern s32 E_ID(TINMAN_ARM);
 extern s32 E_ID(TINMAN_PROJECTILE);
 extern s32 E_ID(TINMAN_SMOKE);
 extern s32 E_ID(TINMAN_DEATH_PARTS);
-extern s32 E_ID(UNK_24);
-extern s32 E_ID(UNK_25);
+extern s32 E_ID(SCARECROW);
+extern s32 E_ID(SCARECROW_LIMB);
 extern s32 E_ID(EXPLODE_PUFF_OPAQUE);
-extern s32 E_ID(UNK_27);
-extern s32 E_ID(UNK_28);
+extern s32 E_ID(SCHMOO);
+extern s32 E_ID(BREAKABLE_DEBRIS);
 extern s32 E_ID(CANDLE_TABLE);
 
 #endif

@@ -21,29 +21,32 @@ typedef struct {
     s16 yPos;
     s16 minRot;
     s16 maxRot;
-} unkParams;
+} limbParams;
 
-static unkParams D_pspeu_0924C278[] = {
-    {3, -1, 5, -11, -1024, 384},
-    {4, -1, -9, -6, -4095, 4095},
-    {5, 1, -9, -6, -4095, 4095},
-    {6, 1, 5, -11, -1024, 256}};
+static limbParams limbs[] = {
+    {3, -1,  5, -11, ROT(-90), ROT(33.75)}, // Background leg
+    {4, -1, -9,  -6, ROT(-360) + 1, ROT(360) - 1}, // Background arm
+    {5,  1, -9,  -6, ROT(-360) + 1, ROT(360) - 1}, // foreground arm
+    {6,  1,  5, -11, ROT(-90), ROT(22.5)}}; // foreground leg
 static s16 sensors[] = {
     0,
     48,
     1,
     0,
 };
-static AnimateEntityFrame schmoo_hover[] = {
+static AnimateEntityFrame schmoo_normal[] = {
     {5, 8}, {5, 9}, {5, 10}, {5, 11}, POSE_LOOP(0)};
 static AnimateEntityFrame schmoo_turn[] = {{8, 12}, {8, 13}, {8, 12}, POSE_END};
 
 extern EInit g_EInitScarecrow;
 
-void func_us_801AF448(Entity* self) {
+// Scarecrow entity is just a stick with a torso on it.
+// It has 4 EntityScarecrowLimb entities attached, which represent the
+// flopping limbs that bounce with the scarecrow.
+void EntityScarecrow(Entity* self) {
     Collider sp2C;
     Entity* other;
-    s16 var_s5;
+    s16 explode_angle;
     s32 yVar;
     s32 xVar;
     s32 var_s2;
@@ -56,8 +59,8 @@ void func_us_801AF448(Entity* self) {
     case 0x0:
         InitializeEntity(g_EInitScarecrow);
         self->drawFlags = ENTITY_ROTATE;
-        self->animCurFrame = 2;
-        self->hitboxWidth = 0xC;
+        self->animCurFrame = 2; // Scarecrow body on stick
+        self->hitboxWidth = 12;
         self->hitboxHeight = 8;
         self->hitboxOffY = -6;
         if (!(Random() & 0xF)) {
@@ -65,14 +68,14 @@ void func_us_801AF448(Entity* self) {
         }
         if (self->params) {
             self->palette -= 1;
-            self->animCurFrame = 7;
+            self->animCurFrame = 7; // Wrapped scarecrow
             self->hitboxWidth = 9;
-            self->hitboxHeight = 0xC;
+            self->hitboxHeight = 12;
             self->hitboxOffY = -6;
             return;
         }
         for (other = self + 1, i = 0; i < 4; i++, other++) {
-            CreateEntityFromEntity(E_UNK_25, self, other);
+            CreateEntityFromEntity(E_SCARECROW_LIMB, self, other);
             other->params = i;
             other->nextPart = other - 1;
             other->parent = self;
@@ -95,10 +98,10 @@ void func_us_801AF448(Entity* self) {
             if (self->velocityY > 0) {
                 ApproachTarget(&self->rotate, 0x100, 8);
             } else {
-                ApproachTarget(&self->rotate, -0x100, 0x10);
+                ApproachTarget(&self->rotate, -0x100, 16);
             }
             xVar = self->posX.i.hi;
-            yVar = self->posY.i.hi + 0x30;
+            yVar = self->posY.i.hi + 0x30; // offset to detect bottom of stick
             g_api.CheckCollision(xVar, yVar, &sp2C, 0);
             if (sp2C.effects & EFFECT_SOLID) {
                 self->step_s = 0;
@@ -118,7 +121,6 @@ void func_us_801AF448(Entity* self) {
                     self->facingLeft ^= 1;
                     if (!(Random() & 3)) {
                         SetStep(2);
-                        return;
                     }
                 }
             }
@@ -129,7 +131,7 @@ void func_us_801AF448(Entity* self) {
         if (!self->step_s) {
             self->velocityX = 0;
             self->velocityY = 0;
-            self->ext.ILLEGAL.s16[2] = (Random() & 0x1F) + 0x20;
+            self->ext.scarecrow.turnAroundTimer = (Random() & 0x1F) + 0x20;
             self->step_s += 1;
         }
         var_s2 = UnkCollisionFunc2(sensors);
@@ -139,9 +141,9 @@ void func_us_801AF448(Entity* self) {
             self->velocityX -= FIX(0.0625);
         }
         if (var_s2 == 0xFF) {
-            self->ext.ILLEGAL.s16[2] = 1;
+            self->ext.scarecrow.turnAroundTimer = 1;
         }
-        if (!--self->ext.ILLEGAL.s16[2]) {
+        if (!--self->ext.scarecrow.turnAroundTimer) {
             self->facingLeft = GetSideToPlayer() & 1;
             SetStep(1);
         }
@@ -152,14 +154,16 @@ void func_us_801AF448(Entity* self) {
             CreateEntityFromEntity(E_EXPLOSION, self, other);
             other->params = 3;
         }
+        // Create explosion puffs, starting from the bottom of the stick
+        // which is 0x30 long. Make a new one every 8 pixels.
         var_s2 = 0x30;
-        var_s5 = self->rotate + 0x400;
+        explode_angle = self->rotate + 0x400;
         if (self->facingLeft) {
-            var_s5 = 0x800 - var_s5;
+            explode_angle = 0x800 - explode_angle;
         }
         for (i = 0; i < 8; i++) {
-            xVar = (var_s2 * rcos(var_s5)) >> 0xC;
-            yVar = (var_s2 * rsin(var_s5)) >> 0xC;
+            xVar = (var_s2 * rcos(explode_angle)) >> 0xC;
+            yVar = (var_s2 * rsin(explode_angle)) >> 0xC;
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
                 CreateEntityFromEntity(E_EXPLODE_PUFF_OPAQUE, self, other);
@@ -180,7 +184,7 @@ void func_us_801AF448(Entity* self) {
 
 extern EInit D_us_801806A0;
 
-void func_us_801AF9E8(Entity* self) {
+void EntityScarecrowLimb(Entity* self) {
     s32 yOffset;
     s32 xOffset;
     s32 sine;
@@ -190,29 +194,37 @@ void func_us_801AF9E8(Entity* self) {
     s32 yVar;
     s32 xVar;
     Entity* other;
-    unkParams* temp_s1;
+    limbParams* limb;
 
     switch (self->step) { /* irregular */
     case 0:
         InitializeEntity(D_us_801806A0);
         self->drawFlags |= ENTITY_ROTATE;
         other = (self - 1) - (self->params);
-        temp_s1 = &D_pspeu_0924C278[self->params];
-        self->animCurFrame = temp_s1->animFrame;
-        self->zPriority = other->zPriority + temp_s1->zOffset;
-        self->ext.ILLEGAL.u32[2] = other->velocityX;
-        self->ext.ILLEGAL.u32[3] = other->velocityY;
+        limb = &limbs[self->params];
+        self->animCurFrame = limb->animFrame;
+        self->zPriority = other->zPriority + limb->zOffset;
+        self->ext.scarecrow.prevXVel = other->velocityX;
+        self->ext.scarecrow.prevYVel = other->velocityY;
         /* fallthrough */
     case 1:
+        // get the scarecrow
         other = (self - 1) - (self->params);
-        temp_s1 = &D_pspeu_0924C278[self->params];
+        // get our parameters
+        limb = &limbs[self->params];
+        // copy the scarecrow's stuff into us
         self->posX.i.hi = other->posX.i.hi;
         self->posY.i.hi = other->posY.i.hi;
         self->facingLeft = other->facingLeft;
         self->palette = other->palette;
+        // Now get our position in world-space.
+        // We need to take the X,Y position of ourself,
+        // relative to the scarecrow's stick axis, and
+        // rotate by the scarecrow rotation to find our position
+        // in world space.
         angle = other->rotate;
-        xVar = temp_s1->xPos;
-        yVar = temp_s1->yPos;
+        xVar = limb->xPos;
+        yVar = limb->yPos;
         sine = rsin(angle);
         cosine = rcos(angle);
         // This is doing a 2D rotation matrix!
@@ -224,24 +236,28 @@ void func_us_801AF9E8(Entity* self) {
             self->posX.i.hi += xOffset;
         }
         self->posY.i.hi += yOffset;
-        xVar = other->velocityX - self->ext.ILLEGAL.u32[2];
+
+        // Now that we have our position set, control our angle.
+        // See how much velocity is changing to get acceleration.
+        // Use those accelerations to control our flopping angle.
+        xVar = other->velocityX - self->ext.scarecrow.prevXVel;
         if (self->facingLeft) {
             xVar = -xVar;
         }
-        yVar = -(other->velocityY - self->ext.ILLEGAL.u32[3]);
+        yVar = -(other->velocityY - self->ext.scarecrow.prevYVel);
         angleChange = xVar >> 8;
         angleChange += yVar >> 8;
         self->rotate += angleChange;
-        ApproachTarget(&self->rotate, 0, 0x10);
-        if (self->rotate > temp_s1->maxRot) {
-            self->rotate = temp_s1->maxRot;
+        ApproachTarget(&self->rotate, 0, 16);
+        if (self->rotate > limb->maxRot) {
+            self->rotate = limb->maxRot;
         }
-        if (self->rotate < temp_s1->minRot) {
-            self->rotate = temp_s1->minRot;
+        if (self->rotate < limb->minRot) {
+            self->rotate = limb->minRot;
         }
-        self->ext.ILLEGAL.u32[2] = other->velocityX;
-        self->ext.ILLEGAL.u32[3] = other->velocityY;
-        if (other->entityId != E_UNK_24) {
+        self->ext.scarecrow.prevXVel = other->velocityX;
+        self->ext.scarecrow.prevYVel = other->velocityY;
+        if (other->entityId != E_SCARECROW) {
             DestroyEntity(self);
         }
     }
@@ -249,7 +265,7 @@ void func_us_801AF9E8(Entity* self) {
 
 extern EInit g_EInitSchmoo;
 
-void func_us_801AFC88(Entity* self) {
+void EntitySchmoo(Entity* self) {
     Entity* other;
     s32 side;
     s32 xDist;
@@ -264,34 +280,35 @@ void func_us_801AFC88(Entity* self) {
         DestroyEntity(self);
         return;
     }
-    switch (self->step) { /* switch 1; irregular */
-    case 0:               /* switch 1 */
+    switch (self->step) { 
+    case 0:               
         InitializeEntity(g_EInitSchmoo);
         self->drawFlags = ENTITY_ROTATE;
         self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
         /* fallthrough */
-    case 1: /* switch 1 */
-        AnimateEntity(schmoo_hover, self);
+    case 1: 
+        AnimateEntity(schmoo_normal, self);
         MoveEntity();
         side = GetSideToPlayer();
         if (self->facingLeft) {
-            self->velocityX += 0xC00;
+            self->velocityX += FIX(6.0/128);
             if (self->velocityX > FIX(3)) {
                 self->velocityX = FIX(3);
             }
         } else {
-            self->velocityX -= 0xC00;
+            self->velocityX -= FIX(6.0/128);
             if (self->velocityX < FIX(-3)) {
                 self->velocityX = FIX(-3);
             }
         }
+        // If player is above the schmoo
         if (side & 2) {
-            self->velocityY -= 0xC00;
+            self->velocityY -= FIX(6.0/128);
             if (self->velocityY < FIX(-1.5)) {
                 self->velocityY = FIX(-1.5);
             }
         } else {
-            self->velocityY += 0xC00;
+            self->velocityY += FIX(6.0/128);
             if (self->velocityY > FIX(1.5)) {
                 self->velocityY = FIX(1.5);
             }
@@ -299,20 +316,20 @@ void func_us_801AFC88(Entity* self) {
         side = (side & 1) ^ 1;
         xDist = GetDistanceToPlayerX();
         if ((side != self->facingLeft) && (xDist > 0x58)) {
-            SetStep(2);
+            SetStep(2); // turn around
         }
         break;
-    case 2: /* switch 1 */
+    case 2: 
         MoveEntity();
-        switch (self->step_s) { /* switch 2; irregular */
-        case 0:                 /* switch 2 */
+        switch (self->step_s) { 
+        case 0: // slow down until we are under 0.25
             self->velocityX -= self->velocityX >> 4;
             self->velocityY -= self->velocityY >> 4;
-            if (abs(self->velocityX) < 0x4000) {
+            if (abs(self->velocityX) < FIX(0.25)) {
                 self->step_s += 1;
             }
             break;
-        case 1: /* switch 2 */
+        case 1: // now we can turn around
             self->velocityX -= self->velocityX >> 8;
             self->velocityY -= self->velocityY >> 8;
             if (AnimateEntity(schmoo_turn, self) == 0) {

@@ -36,10 +36,10 @@ void EntityTinManArm(Entity* self);
 void EntityTinManProjectile(Entity* self);
 void EntityTinManSmoke(Entity* self);
 void EntityTinManDeathParts(Entity* self);
-void func_us_801AF448(Entity* self);
-void func_us_801AF9E8(Entity* self);
+void EntityScarecrow(Entity* self);
+void EntityScarecrowLimb(Entity* self);
 void EntityExplosionPuffOpaque(Entity* self);
-void func_us_801AFC88(Entity* self);
+void EntitySchmoo(Entity* self);
 void EntityBreakableDebris(Entity* self);
 void EntityCandleTable(Entity* self);
 
@@ -79,10 +79,10 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityTinManProjectile,
     EntityTinManSmoke,
     EntityTinManDeathParts,
-    func_us_801AF448,
-    func_us_801AF9E8,
+    EntityScarecrow,
+    EntityScarecrowLimb,
     EntityExplosionPuffOpaque,
-    func_us_801AFC88,
+    EntitySchmoo,
     EntityBreakableDebris,
     EntityCandleTable,
 };
