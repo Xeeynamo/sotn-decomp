@@ -68,7 +68,6 @@ D_psp_E_UNK_25 = 0x0926E960;
 D_psp_E_UNK_23 = 0x0926E970;
 D_psp_E_UNK_22 = 0x0926E978;
 D_psp_E_RBO3DOOR = 0x0926E980;
-g_eBreakableExplosionTypes = 0x0926EA08;
 D_us_801806E0 = 0x0926EA10;
 PrizeDrops = 0x0926EA18;
 cutsceneUnk3Unknown = 0x0926EC30;

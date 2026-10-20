@@ -24,14 +24,19 @@ typedef struct {
 } unkParams;
 
 static unkParams D_pspeu_0924C278[] = {
-    {3, -1, 5, -11, -1024, 384}, 
+    {3, -1, 5, -11, -1024, 384},
     {4, -1, -9, -6, -4095, 4095},
     {5, 1, -9, -6, -4095, 4095},
-    {6, 1, 5, -11, -1024, 256}
+    {6, 1, 5, -11, -1024, 256}};
+static s16 sensors[] = {
+    0,
+    48,
+    1,
+    0,
 };
-static s16 D_pspeu_0924C2A8[] = {0, 48, 1, 0,};
-static AnimateEntityFrame D_us_8018198C[] = {{5, 8}, {5, 9}, {5, 10}, {5, 11}, POSE_LOOP(0)};
-static AnimateEntityFrame D_us_80181998[] = {{8, 12}, {8, 13}, {8, 12}, POSE_END};
+static AnimateEntityFrame schmoo_hover[] = {
+    {5, 8}, {5, 9}, {5, 10}, {5, 11}, POSE_LOOP(0)};
+static AnimateEntityFrame schmoo_turn[] = {{8, 12}, {8, 13}, {8, 12}, POSE_END};
 
 extern EInit g_EInitScarecrow;
 
@@ -44,13 +49,13 @@ void func_us_801AF448(Entity* self) {
     s32 var_s2;
     s32 i;
 
-    if ((self->flags & 0x100) && ((self->step) != 3)) {
+    if ((self->flags & FLAG_DEAD) && (self->step != 3)) {
         SetStep(3);
     }
-    switch (self->step) {                              
-    case 0x0:                                       
+    switch (self->step) {
+    case 0x0:
         InitializeEntity(g_EInitScarecrow);
-        self->drawFlags = 4;
+        self->drawFlags = ENTITY_ROTATE;
         self->animCurFrame = 2;
         self->hitboxWidth = 0xC;
         self->hitboxHeight = 8;
@@ -66,27 +71,27 @@ void func_us_801AF448(Entity* self) {
             self->hitboxOffY = -6;
             return;
         }
-        for(other = self + 1, i = 0; i < 4; i++, other++){
-            CreateEntityFromEntity(0x25, self, other);
+        for (other = self + 1, i = 0; i < 4; i++, other++) {
+            CreateEntityFromEntity(E_UNK_25, self, other);
             other->params = i;
             other->nextPart = other - 1;
             other->parent = self;
         }
         self->nextPart = self + 4;
-    case 0x1:                                       
-        switch (self->step_s) {                        
-        case 0:                                     
-            self->velocityY = -0x28000;
+    case 0x1:
+        switch (self->step_s) {
+        case 0:
+            self->velocityY = FIX(-2.5);
             if (self->facingLeft) {
-                self->velocityX = 0x18000;
+                self->velocityX = FIX(1.5);
             } else {
-                self->velocityX = -0x18000;
+                self->velocityX = FIX(-1.5);
             }
             self->step_s += 1;
             /* fallthrough */
-        case 1:                                     
+        case 1:
             MoveEntity();
-            self->velocityY += 0x2000;
+            self->velocityY += FIX(0.125);
             if (self->velocityY > 0) {
                 ApproachTarget(&self->rotate, 0x100, 8);
             } else {
@@ -95,14 +100,14 @@ void func_us_801AF448(Entity* self) {
             xVar = self->posX.i.hi;
             yVar = self->posY.i.hi + 0x30;
             g_api.CheckCollision(xVar, yVar, &sp2C, 0);
-            if (sp2C.effects & 1) {
+            if (sp2C.effects & EFFECT_SOLID) {
                 self->step_s = 0;
-                PlaySfxPositional(0x649);
+                PlaySfxPositional(SFX_STOMP_HARD_D);
                 var_s2 = sp2C.unk18;
                 xVar = self->posX.i.hi;
                 yVar = self->posY.i.hi + 0x28;
-                g_api.CheckCollision(xVar, yVar, &sp2C, 0);                
-                if (sp2C.effects & 1) {
+                g_api.CheckCollision(xVar, yVar, &sp2C, 0);
+                if (sp2C.effects & EFFECT_SOLID) {
                     self->facingLeft ^= 1;
                     return;
                 }
@@ -120,18 +125,18 @@ void func_us_801AF448(Entity* self) {
             break;
         }
         break;
-    case 0x2:                                       
+    case 0x2:
         if (!self->step_s) {
             self->velocityX = 0;
             self->velocityY = 0;
             self->ext.ILLEGAL.s16[2] = (Random() & 0x1F) + 0x20;
             self->step_s += 1;
         }
-        var_s2 = UnkCollisionFunc2(&D_pspeu_0924C2A8);
+        var_s2 = UnkCollisionFunc2(sensors);
         if (self->facingLeft) {
-            self->velocityX += 0x1000;
+            self->velocityX += FIX(0.0625);
         } else {
-            self->velocityX -= 0x1000;
+            self->velocityX -= FIX(0.0625);
         }
         if (var_s2 == 0xFF) {
             self->ext.ILLEGAL.s16[2] = 1;
@@ -141,10 +146,10 @@ void func_us_801AF448(Entity* self) {
             SetStep(1);
         }
         break;
-    case 0x3:                                       
+    case 0x3:
         other = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (other != NULL) {
-            CreateEntityFromEntity(2, self, other);
+            CreateEntityFromEntity(E_EXPLOSION, self, other);
             other->params = 3;
         }
         var_s2 = 0x30;
@@ -152,12 +157,12 @@ void func_us_801AF448(Entity* self) {
         if (self->facingLeft) {
             var_s5 = 0x800 - var_s5;
         }
-        for(i = 0; i < 8; i++){
+        for (i = 0; i < 8; i++) {
             xVar = (var_s2 * rcos(var_s5)) >> 0xC;
             yVar = (var_s2 * rsin(var_s5)) >> 0xC;
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
-                CreateEntityFromEntity(0x26, self, other);
+                CreateEntityFromEntity(E_EXPLODE_PUFF_OPAQUE, self, other);
                 other->params = 3;
                 other->rotate = self->rotate;
                 other->posX.i.hi += xVar;
@@ -165,10 +170,10 @@ void func_us_801AF448(Entity* self) {
             }
             var_s2 -= 8;
         }
-        PlaySfxPositional(0x62C);
+        PlaySfxPositional(SFX_FIRE_SHOT);
         DestroyEntity(self);
         return;
-    case 0xFF:                                      
+    case 0xFF:
 #include "../pad2_anim_debug.h"
     }
 }
@@ -187,10 +192,10 @@ void func_us_801AF9E8(Entity* self) {
     Entity* other;
     unkParams* temp_s1;
 
-    switch (self->step) {                              /* irregular */
+    switch (self->step) { /* irregular */
     case 0:
         InitializeEntity(D_us_801806A0);
-        self->drawFlags |= 4;
+        self->drawFlags |= ENTITY_ROTATE;
         other = (self - 1) - (self->params);
         temp_s1 = &D_pspeu_0924C278[self->params];
         self->animCurFrame = temp_s1->animFrame;
@@ -236,7 +241,7 @@ void func_us_801AF9E8(Entity* self) {
         }
         self->ext.ILLEGAL.u32[2] = other->velocityX;
         self->ext.ILLEGAL.u32[3] = other->velocityY;
-        if (other->entityId != 0x24) {
+        if (other->entityId != E_UNK_24) {
             DestroyEntity(self);
         }
     }
@@ -249,24 +254,24 @@ void func_us_801AFC88(Entity* self) {
     s32 side;
     s32 xDist;
 
-    if (self->flags & 0x100) {
-        PlaySfxPositional(0x655);
+    if (self->flags & FLAG_DEAD) {
+        PlaySfxPositional(SFX_EXPLODE_B);
         other = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (other != NULL) {
-            CreateEntityFromEntity(2, self, other);
+            CreateEntityFromEntity(E_EXPLOSION, self, other);
             other->params = 1;
         }
         DestroyEntity(self);
         return;
     }
-    switch (self->step) {                              /* switch 1; irregular */
-    case 0:                                         /* switch 1 */
+    switch (self->step) { /* switch 1; irregular */
+    case 0:               /* switch 1 */
         InitializeEntity(g_EInitSchmoo);
-        self->drawFlags = 4;
+        self->drawFlags = ENTITY_ROTATE;
         self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
         /* fallthrough */
-    case 1:                                         /* switch 1 */
-        AnimateEntity(&D_us_8018198C, self);
+    case 1: /* switch 1 */
+        AnimateEntity(schmoo_hover, self);
         MoveEntity();
         side = GetSideToPlayer();
         if (self->facingLeft) {
@@ -297,20 +302,20 @@ void func_us_801AFC88(Entity* self) {
             SetStep(2);
         }
         break;
-    case 2:                                         /* switch 1 */
+    case 2: /* switch 1 */
         MoveEntity();
-        switch (self->step_s) {                        /* switch 2; irregular */
-        case 0:                                     /* switch 2 */
+        switch (self->step_s) { /* switch 2; irregular */
+        case 0:                 /* switch 2 */
             self->velocityX -= self->velocityX >> 4;
             self->velocityY -= self->velocityY >> 4;
             if (abs(self->velocityX) < 0x4000) {
                 self->step_s += 1;
             }
             break;
-        case 1:                                     /* switch 2 */
+        case 1: /* switch 2 */
             self->velocityX -= self->velocityX >> 8;
             self->velocityY -= self->velocityY >> 8;
-            if (AnimateEntity(&D_us_80181998, self) == 0) {
+            if (AnimateEntity(schmoo_turn, self) == 0) {
                 SetStep(1);
             }
             if (!self->poseTimer && self->pose == 2) {
