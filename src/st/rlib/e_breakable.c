@@ -1,8 +1,29 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rlib.h"
 
-extern EInit g_EInitBreakable;
-extern AnimationFrame* g_RlibBreakableAnimations[];
+static AnimateEntityFrame D_us_80180824[] = {{3, 4}, {3, 5}, POSE_LOOP(0)};
+extern AnimateEntityFrame D_us_8018082C[] = {{3, 6}, {3, 7}, POSE_LOOP(0)};
+static AnimateEntityFrame anim3[] = {{6, 8}, {6, 9}, {6, 10}, {6, 11}, {6, 12}, POSE_LOOP(0)};
+static AnimateEntityFrame anim4[] = {{5, 9}, {5, 10}, {5, 11}, {5, 12}, POSE_LOOP(0)};
+static AnimateEntityFrame anim5[] = {{5, 13}, {5, 14}, {5, 15}, {5, 16}, POSE_LOOP(0)};
+static AnimateEntityFrame anim6[] = {{5, 17}, {5, 18}, {5, 19}, POSE_LOOP(0)};
+static AnimateEntityFrame anim7[] = {{5, 23}, POSE_LOOP(0)};
+static AnimateEntityFrame anim8[] = {{5, 22}, POSE_LOOP(0)};
+static AnimateEntityFrame anim9[] = {{5, 20}, {255, 255}, {5, 21}, {5, 21}, POSE_END};
+static AnimateEntityFrame* g_RlibBreakableAnimations[] = {
+    anim3,
+    anim3,
+    D_us_80180824,
+    D_us_8018082C,
+    anim4,
+    anim5,
+    anim6,
+    anim7,
+    anim8,
+    anim9
+};
+
+
 extern u8 g_RlibBreakableHitboxHeights[];
 extern u8 g_RlibBreakableExplosionTypes[];
 extern u16 g_RlibBreakablePalettes[];
@@ -15,6 +36,8 @@ extern u16 g_RlibBreakableHitboxOffsetsY[];
 extern s32 E_ID(UNK_1B);
 extern s32 E_ID(BREAKABLE_DEBRIS);
 #endif
+
+extern EInit g_EInitBreakable;
 
 void EntityBreakable(Entity* self) {
     Entity* entity;
@@ -93,8 +116,6 @@ void EntityBreakable(Entity* self) {
 }
 
 extern EInit g_EInitInteractable;
-extern u8 D_us_80180824[];
-extern u8 D_us_8018082C[];
 
 void func_us_801AE7AC_from_lib(Entity* self) {
     Entity* breakable;
