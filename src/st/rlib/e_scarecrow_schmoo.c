@@ -163,9 +163,9 @@ void EntityScarecrow(Entity* self) {
         // Create explosion puffs, starting from the bottom of the stick
         // which is 0x30 long. Make a new one every 8 pixels.
         var_s2 = 0x30;
-        explode_angle = self->rotate + 0x400;
+        explode_angle = self->rotate + ROT(90);
         if (self->facingLeft) {
-            explode_angle = 0x800 - explode_angle;
+            explode_angle = ROT(180) - explode_angle;
         }
         for (i = 0; i < 8; i++) {
             xVar = (var_s2 * rcos(explode_angle)) >> 0xC;
