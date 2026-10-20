@@ -71,7 +71,7 @@ typedef struct {
 } Unk0605CD90;
 
 typedef struct {
-    s32 unk0;
+    char* unk0;
     s32 unk4;
     s32 unk8;
     s32 unkA;

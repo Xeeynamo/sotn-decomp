@@ -1204,7 +1204,7 @@ void func_0600652C(void) {
 // func_0600654C
 s32 ReadFileToAddr(char* path, s32 addr) {
     Unk0600654C unk;
-    unk.unk0 = (s32)path;
+    unk.unk0 = path;
     unk.unk4 = addr;
     unk.unk8 = -1;
     unk.unkA = 0;
@@ -1215,7 +1215,7 @@ s32 ReadFileToAddr(char* path, s32 addr) {
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006574, func_06006574);
 
 // func_060066F0
-void ReadFileToAddrAsync(u32 arg0, u32 arg1, u32 arg2, u32 arg3) {
+void ReadFileToAddrAsync(char* arg0, u32 arg1, u32 arg2, u32 arg3) {
     Unk0600654C unk;
     unk.unk0 = arg0;
     unk.unk4 = arg1;
@@ -1312,12 +1312,42 @@ bool GetFileReadStat(void) { return 0; }
 s32 func_06006F74(void) { return 1; }
 
 const u16 DAT_06006F7E = 0x0000;
-const u16 DAT_06006F80 = 0x0000;
-const char weapon0_prg[] = "WEAPON0.PRG";
-const char weapon0_chr[] = "WEAPON0.CHR";
-const char dummy_dat[] = "DUMMY.DAT";
+const char DAT_06006F80[] = "";
+const char DAT_06006F84[] = "WEAPON0.PRG";
+const char DAT_06006F90[] = "WEAPON0.CHR";
+const char DAT_06006F9C[] = "DUMMY.DAT";
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006FA8, func_06006FA8);
+
+const char DAT_06007060[] = "RIC_W2.CHR";
+const char DAT_0600706C[] = "RICHTER2.CHR";
+const char DAT_0600707C[] = "RICHTER2.PRG";
+const char DAT_0600708C[] = "MAR_W.CHR";
+const char DAT_06007098[] = "MARIA.CHR";
+const char DAT_060070A4[] = "MARIA.PRG";
+const char DAT_060070B0[] = "RIC_W.CHR";
+const char DAT_060070BC[] = "RICHTER.CHR";
+const char DAT_060070C8[] = "RICHTER.PRG";
+const char DAT_060070D4[] = "ALC_W.CHR";
+const char DAT_060070E0[] = "ALUCARD.CHR";
+const char DAT_060070EC[] = "ALUCARD.PRG";
+const char DAT_060070F8[] = "T_DEVIL2.CHR";
+const char DAT_06007108[] = "T_DEVIL2.PRG";
+const char DAT_06007118[] = "T_FAIRY2.CHR";
+const char DAT_06007128[] = "T_FAIRY2.PRG";
+const char DAT_06007138[] = "T_SWORD.CHR";
+const char DAT_06007144[] = "T_SWORD.PRG";
+const char DAT_06007150[] = "T_DEVIL.CHR";
+const char DAT_0600715C[] = "T_DEVIL.PRG";
+const char DAT_06007168[] = "T_FAIRY.CHR";
+const char DAT_06007174[] = "T_FAIRY.PRG";
+const char DAT_06007180[] = "T_GHOST.CHR";
+const char DAT_0600718C[] = "T_GHOST.PRG";
+const char DAT_06007198[] = "T_BAT.CHR";
+const char DAT_060071A4[] = "T_BAT.PRG";
+const char DAT_060071B0[] = "WEAPON1.PRG";
+const char DAT_060071BC[] = "WEAPON1.CHR";
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60071C8, func_060071C8);
 
 Equipment* func_060076D0(s32 arg0) {
@@ -1408,9 +1438,9 @@ void func_06007824(s32 arg0, s32 arg1) {
         DAT_06038AAC.unkA = arg1 * 6;
         DAT_06038AEC.unkA = arg1 * 8;
         if (arg0 == 0) {
-            DAT_06038AAC.unk0 = weapon0_prg;
+            DAT_06038AAC.unk0 = DAT_06006F84;
             DAT_06038AAC.unk4 = 0x060D6000;
-            DAT_06038AEC.unk0 = weapon0_chr;
+            DAT_06038AEC.unk0 = DAT_06006F90;
             DAT_06038AEC.unk4 = VRAM_ADDR + 0x1D980;
         } else {
             DAT_06038AAC.unk0 = &WEAPON1_PRG;
@@ -1429,7 +1459,7 @@ void func_06007824(s32 arg0, s32 arg1) {
 extern Unk0600654C DAT_06038B6C;
 extern Unk0600654C DAT_06038BAC;
 
-extern s32 DAT_06038C24[][2];
+extern char* DAT_06038C24[][2];
 
 void func_060078EC(s32 arg0) {
     if (g_FileLoadEnabled != 0) {
@@ -1587,15 +1617,15 @@ void func_06007D54(void) {
     d_0605AEAC = &DAT_06050684[SpMstCmdPos];
 }
 
-extern s32 d_06038c5c;
+extern s32 DAT_06038C5C;
 extern s32 d_0605BEBE;
 
 // func_06007E14
 void CloseSpriteList(void) {
     SprSpCmd cmd;
 
-    if (d_06038c5c) {
-        d_06038c5c--;
+    if (DAT_06038C5C) {
+        DAT_06038C5C--;
         cmd.control = JUMP_ASSIGN | FUNC_TEXTURE;
         cmd.drawMode = ECDSPD_DISABLE;
         cmd.color = RGB16_COLOR(0, 0, 0);

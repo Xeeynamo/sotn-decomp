@@ -240,7 +240,6 @@ _strncpy = 0x060330F8;
 ___ashrsi3 = 0x06038948;
 _DAT_060389F8 = 0x060389F8;
 _DAT_06038a44 = 0x06038A44;
-_d_06038c5c = 0x06038C5C;
 _g_SpriteListCount = 0x06038DB0;
 _g_SpriteObjectsInUse = 0x06038DB4;
 _g_SpritePartsInUse = 0x06038DB8;

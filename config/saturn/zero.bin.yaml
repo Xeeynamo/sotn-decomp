@@ -23,13 +23,23 @@ segments:
       - start: 0x58
         type: c
         file: zero
-        end: 0xA5C3
+        end: 0x2FDF
         function_ranges:
           - [0x0768, 0x07C2]
           - [0x0806, 0x0874]
           - [0x08A4, 0x08A4]
           - [0x09C6, 0x09E2]
-          - [0x09F4, 0x09F4]
+
+      - start: 0x2FE0
+        type: text
+        file: zero
+        end: 0x3147
+
+      - start: 0x3148
+        type: c
+        file: zero
+        end: 0xA5C3
+        function_ranges:
           - [0x40DC, 0x4110]
           - [0x411C, 0x419C]
           - [0x4BAC, 0x4C5E]
