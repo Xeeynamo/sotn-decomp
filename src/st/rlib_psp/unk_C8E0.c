@@ -14,8 +14,17 @@ static bool func_pspeu_09243F60(s16* val, s16 target, s16 step) {
     }
     return false;
 }
-
+typedef struct {
+    s16 animFrame;
+    s16 zOffset;
+    s16 xPos;
+    s16 yPos;
+    s16 minRot;
+    s16 maxRot;
+} unkParams;
+extern unkParams D_pspeu_0924C278[];
 extern s16 D_pspeu_0924C2A8[];
+
 extern EInit g_EInitScarecrow;
 
 void func_us_801AF448(Entity* self) {
@@ -156,16 +165,6 @@ void func_us_801AF448(Entity* self) {
     }
 }
 
-typedef struct {
-    s16 animFrame;
-    s16 zOffset;
-    s16 xPos;
-    s16 yPos;
-    s16 minRot;
-    s16 maxRot;
-} unkParams;
-
-extern unkParams D_pspeu_0924C278[];
 extern EInit D_us_801806A0;
 
 void func_us_801AF9E8(Entity* self) {
@@ -235,4 +234,85 @@ void func_us_801AF9E8(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rlib_psp/nonmatchings/rlib_psp/unk_C8E0", func_us_801AFC88);
+extern AnimateEntityFrame D_us_8018198C[];
+extern AnimateEntityFrame D_us_80181998[];
+extern EInit g_EInitSchmoo;
+
+void func_us_801AFC88(Entity* self) {
+    Entity* other;
+    s32 side;
+    s32 xDist;
+
+    if (self->flags & 0x100) {
+        PlaySfxPositional(0x655);
+        other = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (other != NULL) {
+            CreateEntityFromEntity(2, self, other);
+            other->params = 1;
+        }
+        DestroyEntity(self);
+        return;
+    }
+    switch (self->step) {                              /* switch 1; irregular */
+    case 0:                                         /* switch 1 */
+        InitializeEntity(g_EInitSchmoo);
+        self->drawFlags = 4;
+        self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
+        /* fallthrough */
+    case 1:                                         /* switch 1 */
+        AnimateEntity(&D_us_8018198C, self);
+        MoveEntity();
+        side = GetSideToPlayer();
+        if (self->facingLeft) {
+            self->velocityX += 0xC00;
+            if (self->velocityX > FIX(3)) {
+                self->velocityX = FIX(3);
+            }
+        } else {
+            self->velocityX -= 0xC00;
+            if (self->velocityX < FIX(-3)) {
+                self->velocityX = FIX(-3);
+            }
+        }
+        if (side & 2) {
+            self->velocityY -= 0xC00;
+            if (self->velocityY < FIX(-1.5)) {
+                self->velocityY = FIX(-1.5);
+            }
+        } else {
+            self->velocityY += 0xC00;
+            if (self->velocityY > FIX(1.5)) {
+                self->velocityY = FIX(1.5);
+            }
+        }
+        side = (side & 1) ^ 1;
+        xDist = GetDistanceToPlayerX();
+        if ((side != self->facingLeft) && (xDist > 0x58)) {
+            SetStep(2);
+        }
+        break;
+    case 2:                                         /* switch 1 */
+        MoveEntity();
+        switch (self->step_s) {                        /* switch 2; irregular */
+        case 0:                                     /* switch 2 */
+            self->velocityX -= self->velocityX >> 4;
+            self->velocityY -= self->velocityY >> 4;
+            if (abs(self->velocityX) < 0x4000) {
+                self->step_s += 1;
+            }
+            break;
+        case 1:                                     /* switch 2 */
+            self->velocityX -= self->velocityX >> 8;
+            self->velocityY -= self->velocityY >> 8;
+            if (AnimateEntity(&D_us_80181998, self) == 0) {
+                SetStep(1);
+            }
+            if (!self->poseTimer && self->pose == 2) {
+                self->facingLeft ^= 1;
+            }
+            break;
+        }
+        break;
+    }
+    self->rotate = -abs(self->velocityX >> 8);
+}
