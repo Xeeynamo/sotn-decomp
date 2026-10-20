@@ -156,6 +156,83 @@ void func_us_801AF448(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rlib_psp/nonmatchings/rlib_psp/unk_C8E0", func_us_801AF9E8);
+typedef struct {
+    s16 animFrame;
+    s16 zOffset;
+    s16 xPos;
+    s16 yPos;
+    s16 minRot;
+    s16 maxRot;
+} unkParams;
+
+extern unkParams D_pspeu_0924C278[];
+extern EInit D_us_801806A0;
+
+void func_us_801AF9E8(Entity* self) {
+    s32 yOffset;
+    s32 xOffset;
+    s32 sine;
+    s32 cosine;
+    s16 angle;
+    s16 angleChange;
+    s32 yVar;
+    s32 xVar;
+    Entity* other;
+    unkParams* temp_s1;
+
+    switch (self->step) {                              /* irregular */
+    case 0:
+        InitializeEntity(D_us_801806A0);
+        self->drawFlags |= 4;
+        other = (self - 1) - (self->params);
+        temp_s1 = &D_pspeu_0924C278[self->params];
+        self->animCurFrame = temp_s1->animFrame;
+        self->zPriority = other->zPriority + temp_s1->zOffset;
+        self->ext.ILLEGAL.u32[2] = other->velocityX;
+        self->ext.ILLEGAL.u32[3] = other->velocityY;
+        /* fallthrough */
+    case 1:
+        other = (self - 1) - (self->params);
+        temp_s1 = &D_pspeu_0924C278[self->params];
+        self->posX.i.hi = other->posX.i.hi;
+        self->posY.i.hi = other->posY.i.hi;
+        self->facingLeft = other->facingLeft;
+        self->palette = other->palette;
+        angle = other->rotate;
+        xVar = temp_s1->xPos;
+        yVar = temp_s1->yPos;
+        sine = rsin(angle);
+        cosine = rcos(angle);
+        // This is doing a 2D rotation matrix!
+        xOffset = ((xVar * cosine) - (yVar * sine)) >> 0xC;
+        yOffset = ((xVar * sine) + (yVar * cosine)) >> 0xC;
+        if (self->facingLeft) {
+            self->posX.i.hi -= xOffset;
+        } else {
+            self->posX.i.hi += xOffset;
+        }
+        self->posY.i.hi += yOffset;
+        xVar = other->velocityX - self->ext.ILLEGAL.u32[2];
+        if (self->facingLeft) {
+            xVar = -xVar;
+        }
+        yVar = -(other->velocityY - self->ext.ILLEGAL.u32[3]);
+        angleChange = xVar >> 8;
+        angleChange += yVar >> 8;
+        self->rotate += angleChange;
+        func_pspeu_09243F60(&self->rotate, 0, 0x10);
+        if (self->rotate > temp_s1->maxRot) {
+            self->rotate = temp_s1->maxRot;
+        }
+        if (self->rotate < temp_s1->minRot) {
+            self->rotate = temp_s1->minRot;
+        }
+        self->ext.ILLEGAL.u32[2] = other->velocityX;
+        self->ext.ILLEGAL.u32[3] = other->velocityY;
+        if (other->entityId != 0x24) {
+            DestroyEntity(self);
+        }
+    }
+}
 
 INCLUDE_ASM("st/rlib_psp/nonmatchings/rlib_psp/unk_C8E0", func_us_801AFC88);
