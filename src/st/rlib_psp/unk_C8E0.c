@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rlib/rlib.h"
 
-static bool func_pspeu_09243F60(s16* val, s16 target, s16 step) {
+static bool ApproachTarget(s16* val, s16 target, s16 step) {
     if (abs(*val - target) < step) {
         *val = target;
         return true;
@@ -88,9 +88,9 @@ void func_us_801AF448(Entity* self) {
             MoveEntity();
             self->velocityY += 0x2000;
             if (self->velocityY > 0) {
-                func_pspeu_09243F60(&self->rotate, 0x100, 8);
+                ApproachTarget(&self->rotate, 0x100, 8);
             } else {
-                func_pspeu_09243F60(&self->rotate, -0x100, 0x10);
+                ApproachTarget(&self->rotate, -0x100, 0x10);
             }
             xVar = self->posX.i.hi;
             yVar = self->posY.i.hi + 0x30;
@@ -227,7 +227,7 @@ void func_us_801AF9E8(Entity* self) {
         angleChange = xVar >> 8;
         angleChange += yVar >> 8;
         self->rotate += angleChange;
-        func_pspeu_09243F60(&self->rotate, 0, 0x10);
+        ApproachTarget(&self->rotate, 0, 0x10);
         if (self->rotate > temp_s1->maxRot) {
             self->rotate = temp_s1->maxRot;
         }
