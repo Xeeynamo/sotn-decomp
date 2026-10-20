@@ -577,7 +577,9 @@ u16 DAT_06038FDC[] = {
     /* 0x06038FDE */ 0x0000,
 };
 
-char* DAT_06038FE0 = (char*)0x0600CB68;
+extern char DAT_0600CB68[];
+
+char* DAT_06038FE0 = DAT_0600CB68;
 
 char DAT_06038FE4[][4] = {
     "SUN", "MON", "TUE", "WEN", "THU", "FRI", "SAT",
