@@ -22,8 +22,16 @@ typedef struct {
     s16 minRot;
     s16 maxRot;
 } unkParams;
-extern unkParams D_pspeu_0924C278[];
-extern s16 D_pspeu_0924C2A8[];
+
+static unkParams D_pspeu_0924C278[] = {
+    {3, -1, 5, -11, -1024, 384}, 
+    {4, -1, -9, -6, -4095, 4095},
+    {5, 1, -9, -6, -4095, 4095},
+    {6, 1, 5, -11, -1024, 256}
+};
+static s16 D_pspeu_0924C2A8[] = {0, 48, 1, 0,};
+static AnimateEntityFrame D_us_8018198C[] = {{5, 8}, {5, 9}, {5, 10}, {5, 11}, POSE_LOOP(0)};
+static AnimateEntityFrame D_us_80181998[] = {{8, 12}, {8, 13}, {8, 12}, POSE_END};
 
 extern EInit g_EInitScarecrow;
 
@@ -234,8 +242,6 @@ void func_us_801AF9E8(Entity* self) {
     }
 }
 
-extern AnimateEntityFrame D_us_8018198C[];
-extern AnimateEntityFrame D_us_80181998[];
 extern EInit g_EInitSchmoo;
 
 void func_us_801AFC88(Entity* self) {
