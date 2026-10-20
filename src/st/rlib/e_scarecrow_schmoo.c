@@ -1,6 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rlib.h"
 
+// It is tempting to split up this file into scarecrow and Schmoo (especially
+// since by coincidence those are alphabetical, and we know PSP linker places
+// files into the overlay in alphabetical order), but sadly charal string for
+// scarecrow is in PSP data after the schmoo animations, so schmoo animations
+// are before scarecrow and therefore schmoo shares a file with the scarecrow.
+
 static bool ApproachTarget(s16* val, s16 target, s16 step) {
     if (abs(*val - target) < step) {
         *val = target;
@@ -182,7 +188,7 @@ void EntityScarecrow(Entity* self) {
     }
 }
 
-extern EInit D_us_801806A0;
+extern EInit g_EInitScarecrowLimb;
 
 void EntityScarecrowLimb(Entity* self) {
     s32 yOffset;
@@ -198,7 +204,7 @@ void EntityScarecrowLimb(Entity* self) {
 
     switch (self->step) { /* irregular */
     case 0:
-        InitializeEntity(D_us_801806A0);
+        InitializeEntity(g_EInitScarecrowLimb);
         self->drawFlags |= ENTITY_ROTATE;
         other = (self - 1) - (self->params);
         limb = &limbs[self->params];
