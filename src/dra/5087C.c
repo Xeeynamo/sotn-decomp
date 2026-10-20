@@ -800,7 +800,7 @@ void func_800F1B08(s32 tileX, s32 tileY, s32 arg2) {
         (u_long*)buffer, 0, 0, VramPosX + tileX, VramPosY + tileY * 4, 8, 5);
 }
 
-void DrawSecretPassageOnMap(s32 x, s32 y, s32 direction) {
+void DrawSecretPassageOnMap(s32 x, s32 y, s32 dir) {
 #define VramPosX 0x340
 #define VramPosY 0x100
     RECT rect;
@@ -813,16 +813,16 @@ void DrawSecretPassageOnMap(s32 x, s32 y, s32 direction) {
     rect.h = 5;
     StoreImage(&rect, (u_long*)bitmap);
     DrawSync(0);
-    if (direction == WALL_TOP) {
+    if (dir == WALL_TOP) {
         writeColorToBuffer(bitmap, 2, 0, readColorFromBuffer(bitmap, 2, 1));
     }
-    if (direction == WALL_LEFT) {
+    if (dir == WALL_LEFT) {
         writeColorToBuffer(bitmap, 0, 2, readColorFromBuffer(bitmap, 1, 2));
     }
-    if (direction == WALL_BOTTOM) {
+    if (dir == WALL_BOTTOM) {
         writeColorToBuffer(bitmap, 2, 4, readColorFromBuffer(bitmap, 2, 3));
     }
-    if (direction == WALL_RIGHT) {
+    if (dir == WALL_RIGHT) {
         writeColorToBuffer(bitmap, 4, 2, readColorFromBuffer(bitmap, 3, 2));
     }
     LoadTPage((u_long*)bitmap, 0, 0, x + VramPosX, y * 4 + VramPosY, 8, 5);
@@ -850,40 +850,32 @@ u8 D_800A2BC0[] = {
 // clang-format on
 
 void RevealSecretPassageOnMap(s32 playerTileX, s32 playerTileY, s32 flagId) {
-    s32 currentTileX;
-    s32 currentTileY;
-    s32 passageDirection;
-    s32 castleFlagId;
-    s32 reverseCastleFlagId;
-    u8* secretMapWallEntry;
+    u8* ptr;
 
     if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
-        playerTileX = 63 - playerTileX;
-        playerTileY = 63 - playerTileY;
+        playerTileX = 0x3F - playerTileX;
+        playerTileY = 0x3F - playerTileY;
     }
-    secretMapWallEntry = D_800A2BC0;
-    while (*secretMapWallEntry) {
-        currentTileX = *secretMapWallEntry++;
-        currentTileY = *secretMapWallEntry++;
-        passageDirection = *secretMapWallEntry++;
-        castleFlagId = *secretMapWallEntry++;
-        reverseCastleFlagId = *secretMapWallEntry++;
+    ptr = D_800A2BC0;
+    while (*ptr) {
+        s32 tileX = *ptr++;
+        s32 tileY = *ptr++;
+        s32 dir = *ptr++;
+        s32 castleFlagId = *ptr++;
+        s32 invertedCastleFlagId = *ptr++;
+
         if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
-            // Use the equivalent flag in Reverse Castle instead
-            castleFlagId = reverseCastleFlagId;
+            castleFlagId = invertedCastleFlagId;
         }
+
         if (castleFlagId != 0xFF) {
             if (flagId != 0xFFFF) {
                 if (flagId == castleFlagId) {
-                    DrawSecretPassageOnMap(
-                        currentTileX, currentTileY, passageDirection);
+                    DrawSecretPassageOnMap(tileX, tileY, dir);
                 }
-            } else {
-                if (currentTileX == playerTileX &&
-                    currentTileY == playerTileY &&
-                    g_CastleFlags[castleFlagId]) {
-                    DrawSecretPassageOnMap(
-                        currentTileX, currentTileY, passageDirection);
+            } else if (tileX == playerTileX && tileY == playerTileY) {
+                if (g_CastleFlags[castleFlagId]) {
+                    DrawSecretPassageOnMap(tileX, tileY, dir);
                 }
             }
         }

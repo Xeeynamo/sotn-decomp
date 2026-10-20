@@ -62,9 +62,9 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6030D78, func_06030D78);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6030DAC, func_06030DAC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6030DF0, func_06030DF0);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6030E38, func_06030E38);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6030E6C, func_06030E6C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6030F0C, func_06030F0C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6031048, func_06031048);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6030E6C, __sdivsi3);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6030F0C, __ashlsi3);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6031048, __udivsi3);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60310D4, func_060310D4);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6031174, func_06031174);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60312EC, func_060312EC);
@@ -122,7 +122,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6032EFC, func_06032EFC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6032F50, sprintf);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6032FAC, memcmp);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6032FDC, func_06032FDC);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6033024, func_06033024);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6033024, memcpy);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60330C0, strncmp);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60330F8, strncpy);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6033134, func_06033134);
@@ -223,8 +223,3 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60388C4, func_060388C4);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60388F8, func_060388F8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6038930, func_06038930);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6038948, func_06038948);
-
-// 68k sound driver
-const u16 g_SoundDriver68k[] = {
-#include "snd_driver_68k.inc"
-};
