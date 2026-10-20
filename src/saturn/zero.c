@@ -1395,8 +1395,8 @@ s32 func_06007714(void) {
     return ret;
 }
 
-extern Unk0600654C prg_info;
-extern Unk0600654C chr_info;
+extern Unk0600654C DAT_06038AAC;
+extern Unk0600654C DAT_06038AEC;
 
 char* WEAPON1_PRG;
 char* WEAPON1_CHR;
@@ -1405,22 +1405,22 @@ void func_06007824(s32 arg0, s32 arg1) {
     if ((g_FileLoadEnabled == 0) || (arg1 > 0x3F)) {
         func_0601AE5C(arg0, arg1);
     } else {
-        prg_info.unkA = arg1 * 6;
-        chr_info.unkA = arg1 * 8;
+        DAT_06038AAC.unkA = arg1 * 6;
+        DAT_06038AEC.unkA = arg1 * 8;
         if (arg0 == 0) {
-            prg_info.unk0 = weapon0_prg;
-            prg_info.unk4 = 0x060D6000;
-            chr_info.unk0 = weapon0_chr;
-            chr_info.unk4 = VRAM_ADDR + 0x1D980;
+            DAT_06038AAC.unk0 = weapon0_prg;
+            DAT_06038AAC.unk4 = 0x060D6000;
+            DAT_06038AEC.unk0 = weapon0_chr;
+            DAT_06038AEC.unk4 = VRAM_ADDR + 0x1D980;
         } else {
-            prg_info.unk0 = &WEAPON1_PRG;
-            prg_info.unk4 = 0x060D9000;
-            chr_info.unk0 = &WEAPON1_CHR;
-            chr_info.unk4 = VRAM_ADDR + 0x21980;
+            DAT_06038AAC.unk0 = &WEAPON1_PRG;
+            DAT_06038AAC.unk4 = 0x060D9000;
+            DAT_06038AEC.unk0 = &WEAPON1_CHR;
+            DAT_06038AEC.unk4 = VRAM_ADDR + 0x21980;
         }
-        func_06006574(&prg_info);
+        func_06006574(&DAT_06038AAC);
         func_0601AE2C(arg0);
-        func_06006574(&chr_info);
+        func_06006574(&DAT_06038AEC);
         func_0600C298(arg0);
         func_0600C0C4(arg0);
     }
@@ -3424,9 +3424,9 @@ s32 func_0600DDD4(Primitive* prim) {
     return visible;
 }
 
-bool func_0600DE20(void) { return 0; }
+s32 func_0600DE20(Primitive* prim) { return 0; }
 
-bool func_0600DE2C(void) { return 1; }
+s32 func_0600DE2C(Primitive* prim) { return 1; }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DE38, func_0600DE38);
 
@@ -3460,14 +3460,14 @@ void func_0600E070(Primitive* prim, s16 x, s16 y) {
     prim->y1 += y;
 }
 
-void func_0600E0A4(Primitive* prim, s16 arg1, s16 arg2) {
-    prim->unk4 += arg1;
-    prim->unk8 += arg2;
+void func_0600E0A4(Primitive* prim, s16 x, s16 y) {
+    prim->unk4 += x;
+    prim->unk8 += y;
 }
 
-void func_0600E0C4() {}
+void func_0600E0C4(Primitive* prim, s16 x, s16 y) {}
 
-void func_0600E0D0(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
+void func_0600E0D0(s16 x, s16 y, s16 x2, s16 y2) {
     Primitive* prim;
     s32 i;
     u16 mode;
@@ -3478,9 +3478,9 @@ void func_0600E0D0(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
         mode = prim->drawMode;
         if (mode != 0xFFFF) {
             if (mode & 2) {
-                DAT_0603908C[prim->type & 0x0F](prim, arg0, arg1);
+                DAT_0603908C[prim->type & 0xF](prim, x, y);
             } else if (mode & 0x200) {
-                DAT_0603908C[prim->type & 0x0F](prim, -arg2, -arg3);
+                DAT_0603908C[prim->type & 0xF](prim, -x2, -y2);
             }
         }
         prim++;

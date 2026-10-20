@@ -127,6 +127,20 @@ s8 func_0600D47C(u32 device, s8 arg1);
 void InitSystem();
 void func_060040D8();
 
+s32 func_0600DCF0(Primitive* prim);
+s32 func_0600DD38(Primitive* prim);
+s32 func_0600DD84(Primitive* prim);
+s32 func_0600DDD4(Primitive* prim);
+s32 func_0600DE20(Primitive* prim);
+s32 func_0600DE2C(Primitive* prim);
+
+void func_0600DFC0(Primitive* prim, s16 x, s16 y);
+void func_0600E01C(Primitive* prim, s16 x, s16 y);
+void func_0600E050(Primitive* prim, s16 x, s16 y);
+void func_0600E070(Primitive* prim, s16 x, s16 y);
+void func_0600E0A4(Primitive* prim, s16 x, s16 y);
+void func_0600E0C4(Primitive* prim, s16 x, s16 y);
+
 /* Declarations moved here by tools/saturn/move_declarations.py */
 extern s32 DAT_0605CD5C;
 void func_0600971C(void);
