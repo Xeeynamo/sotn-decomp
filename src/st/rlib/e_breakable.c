@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rlib.h"
 
-static AnimateEntityFrame D_us_80180824[] = {{3, 4}, {3, 5}, POSE_LOOP(0)};
-extern AnimateEntityFrame D_us_8018082C[] = {{3, 6}, {3, 7}, POSE_LOOP(0)};
-static AnimateEntityFrame anim3[] = {{6, 8}, {6, 9}, {6, 10}, {6, 11}, {6, 12}, POSE_LOOP(0)};
+static AnimateEntityFrame lamp_tall[] = {{3, 4}, {3, 5}, POSE_LOOP(0)};
+static AnimateEntityFrame lamp_small[] = {{3, 6}, {3, 7}, POSE_LOOP(0)};
+static AnimateEntityFrame burning_flame[] = {{6, 8}, {6, 9}, {6, 10}, {6, 11}, {6, 12}, POSE_LOOP(0)};
 static AnimateEntityFrame anim4[] = {{5, 9}, {5, 10}, {5, 11}, {5, 12}, POSE_LOOP(0)};
 static AnimateEntityFrame anim5[] = {{5, 13}, {5, 14}, {5, 15}, {5, 16}, POSE_LOOP(0)};
 static AnimateEntityFrame anim6[] = {{5, 17}, {5, 18}, {5, 19}, POSE_LOOP(0)};
@@ -11,10 +11,10 @@ static AnimateEntityFrame anim7[] = {{5, 23}, POSE_LOOP(0)};
 static AnimateEntityFrame anim8[] = {{5, 22}, POSE_LOOP(0)};
 static AnimateEntityFrame anim9[] = {{5, 20}, {255, 255}, {5, 21}, {5, 21}, POSE_END};
 static AnimateEntityFrame* g_RlibBreakableAnimations[] = {
-    anim3,
-    anim3,
-    D_us_80180824,
-    D_us_8018082C,
+    burning_flame,
+    burning_flame,
+    lamp_tall,
+    lamp_small,
     anim4,
     anim5,
     anim6,
@@ -24,16 +24,30 @@ static AnimateEntityFrame* g_RlibBreakableAnimations[] = {
 };
 
 
-extern u8 g_RlibBreakableHitboxHeights[];
-extern u8 g_RlibBreakableExplosionTypes[];
-extern u16 g_RlibBreakablePalettes[];
-extern u16 g_RlibBreakableAnimSets[];
-extern u8 g_RlibBreakableBlendModes[];
-extern u16 g_RlibBreakableUnk5A[];
-extern u16 g_RlibBreakableHitboxOffsetsY[];
+static u8 hitbox_heights[] = {8, 8, 8, 8, 
+                                            16, 16, 8, 8, 
+                                            8, 8, 8};
+static u8 explosion_types[] = {2, 2, 0, 0, 
+                                            2, 2, 2, 2, 
+                                            2, 2};
+extern u16 palettes[] = {PAL_NONE, PAL_NONE, PAL_NONE, PAL_NONE, 
+                                        PAL_BREAKABLE, PAL_BREAKABLE, PAL_BREAKABLE, PAL_BREAKABLE, 
+                                        PAL_BREAKABLE, PAL_BREAKABLE};
+extern u16 anim_sets[] = {ANIMSET_OVL(2), ANIMSET_OVL(2), ANIMSET_OVL(2), ANIMSET_OVL(2), 
+                                        ANIMSET_OVL(7), ANIMSET_OVL(7), ANIMSET_OVL(7), ANIMSET_OVL(7), 
+                                        ANIMSET_OVL(7), ANIMSET_OVL(7)};
+static u8 blend_modes[] = {
+    BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
+};
+static u16 g_RlibBreakableUnk5A[] = {0, 0, 0, 0, 0x5B, 0x5B, 0x5B, 0x5B, 0x5B, 0x5B};
+static u16 g_RlibBreakableHitboxOffsetsY[12] = {0};
 
 #ifdef VERSION_PSP
-extern s32 E_ID(UNK_1B);
+extern s32 E_ID(METAL_LAMP);
 extern s32 E_ID(BREAKABLE_DEBRIS);
 #endif
 
@@ -49,15 +63,15 @@ void EntityBreakable(Entity* self) {
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 20;
         if (breakableType < 5) {
             entity = self + 1;
-            CreateEntityFromEntity(E_ID(UNK_1B), self, entity);
+            CreateEntityFromEntity(E_ID(METAL_LAMP), self, entity);
             entity->params = breakableType;
             entity->zPriority = self->zPriority;
         }
-        self->blendMode = g_RlibBreakableBlendModes[breakableType];
-        self->hitboxHeight = g_RlibBreakableHitboxHeights[breakableType];
-        self->animSet = g_RlibBreakableAnimSets[breakableType];
+        self->blendMode = blend_modes[breakableType];
+        self->hitboxHeight = hitbox_heights[breakableType];
+        self->animSet = anim_sets[breakableType];
         self->unk5A = g_RlibBreakableUnk5A[breakableType];
-        self->palette = g_RlibBreakablePalettes[breakableType];
+        self->palette = palettes[breakableType];
         self->hitboxOffY = g_RlibBreakableHitboxOffsetsY[breakableType];
     }
     AnimateEntity(g_RlibBreakableAnimations[breakableType], self);
@@ -65,7 +79,7 @@ void EntityBreakable(Entity* self) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             CreateEntityFromCurrentEntity(E_EXPLOSION, entity);
-            entity->params = g_RlibBreakableExplosionTypes[breakableType];
+            entity->params = explosion_types[breakableType];
         }
         switch (breakableType) {
         case 2:
@@ -117,7 +131,7 @@ void EntityBreakable(Entity* self) {
 
 extern EInit g_EInitInteractable;
 
-void func_us_801AE7AC_from_lib(Entity* self) {
+void EntityMetalLamp(Entity* self) {
     Entity* breakable;
 
     if (!self->step) {
@@ -127,17 +141,17 @@ void func_us_801AE7AC_from_lib(Entity* self) {
     }
 
     if (!self->params) {
-        AnimateEntity(D_us_80180824, self);
+        AnimateEntity(lamp_tall, self);
     } else {
-        AnimateEntity(D_us_8018082C, self);
+        AnimateEntity(lamp_small, self);
     }
 
     breakable = self - 1;
     if (breakable->entityId != E_BREAKABLE) {
         if (!self->params) {
-            self->animCurFrame = 0xD;
+            self->animCurFrame = 13;
         } else {
-            self->animCurFrame = 0xE;
+            self->animCurFrame = 14;
         }
     }
 }

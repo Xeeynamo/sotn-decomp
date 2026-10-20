@@ -50,7 +50,6 @@ segments:
       - [0x794, .data, e_red_door_tiles]
       - [0x7A4, .data, e_lock_camera]
       - [0x824, .data, e_breakable]
-      - [0x89C, data]
       - [0x914, .data, e_library_bg]
       - [0x9E4, .data, e_thick_bookcase]
       - [0xB5C, .data, e_explosion_puff_opaque]

@@ -104,12 +104,15 @@ def load_init_from_ovl(ovl_name, init_name):
             # find the palette and swap it out
             if pal_match := re.search(r"PAL_[^,]*", line):
                 pal_name = pal_match.group(0)
-                # now find that in the overlay .h file to pull it in
-                with open(f"src/st/{ovl_name}/{ovl_name}.h") as hfile:
-                    for hline in hfile:
-                        if pal_def := re.search(f"{pal_name} = ([^,]*)", hline):
-                            pal_value = pal_def.group(1)
-                            line = line.replace(pal_name, pal_value)
+                if "PAL_NONE" in pal_name:
+                    pal_value = "0"
+                else:
+                    # now find that in the overlay .h file to pull it in
+                    with open(f"src/st/{ovl_name}/{ovl_name}.h") as hfile:
+                        for hline in hfile:
+                            if pal_def := re.search(f"{pal_name} = ([^,]*)", hline):
+                                pal_value = pal_def.group(1)
+                line = line.replace(pal_name, pal_value)
 
             initSet = re.findall(r"(?<={)[^}]*", line)[0].split(",")
             if "ANIMSET_OVL" in initSet[0]:

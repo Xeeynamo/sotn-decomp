@@ -27,7 +27,7 @@ void EntityBackgroundFurniture(Entity* self);
 void EntityBackgroundShadow(Entity* self);
 void EntityDistantBookshelves(Entity* self);
 void EntityThickBookcase(Entity* self);
-void func_us_801AE7AC_from_lib(Entity* self);
+void EntityMetalLamp(Entity* self);
 void EntityLion(Entity* self);
 void EntityLionAttack(Entity* self);
 void EntityLionDeathParts(Entity* self);
@@ -70,7 +70,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityBackgroundShadow,
     EntityDistantBookshelves,
     EntityThickBookcase,
-    func_us_801AE7AC_from_lib,
+    EntityMetalLamp,
     EntityLion,
     EntityLionAttack,
     EntityLionDeathParts,
