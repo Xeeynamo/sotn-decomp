@@ -297,12 +297,17 @@ segments:
       - start: 0x2CB74
         type: c
         file: lib/sys
+        end: 0x34949
+
+      - start: 0x3494A
+        type: .data
+        file: zero/zero_data
         end: 0x369FB
 
       # 68k sound driver
       - start: 0x369FC
-        type: .text
-        file: lib/sys
+        type: .data
+        file: lib/sound_driver
         end: 0x3D1EF
 
       # post-SYS
