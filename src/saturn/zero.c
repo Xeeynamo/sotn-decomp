@@ -4131,14 +4131,83 @@ void func_0600FC04(void) {
     }
 }
 
-extern void MarkRoomVisited(s32, s32, s32);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FCF8, MarkRoomVisited);
+typedef struct {
+    u8 tileX;
+    u8 tileY;
+    u8 dir;
+    u8 inverted;
+} Unk0600FCF8;
 
-void func_0600FE98(s32 arg0) {
-    s32 x = g_Tilemap.left + g_PlayerX / 320;
-    s32 y = g_Tilemap.top + g_PlayerY / 240;
+extern Unk0600FCF8 DAT_06039144[0x20];
+extern u8 DAT_060391C4[];
 
-    MarkRoomVisited(x, y, arg0);
+static void DrawSecretPassageOnMap(s32 x, s32 y, s32 dir) {
+    Unk0600FCF8 room;
+    u32 i;
+
+    if (dir == WALL_NONE) {
+        return;
+    }
+
+    room.tileX = x;
+    room.tileY = y;
+    room.dir = dir;
+    if (g_CurrentRoom.stageID & STAGE_INVERTEDCASTLE_FLAG) {
+        room.inverted = true;
+    } else {
+        room.inverted = false;
+    }
+    for (i = 0; i < 0x20; i++) {
+        if (memcmp(&DAT_06039144[i], &room, 4) == 0) {
+            return;
+        }
+        if (DAT_06039144[i].dir == WALL_NONE) {
+            break;
+        }
+    }
+    if (i < 0x20) {
+        DAT_06039144[i] = room;
+    }
+}
+
+void RevealSecretPassageOnMap(s32 playerTileX, s32 playerTileY, s32 flagId) {
+    u8* ptr;
+
+    if (g_CurrentRoom.stageID & STAGE_INVERTEDCASTLE_FLAG) {
+        playerTileX = 0x3F - playerTileX;
+        playerTileY = 0x3F - playerTileY;
+    }
+    ptr = DAT_060391C4;
+    while (*ptr) {
+        s32 tileX = *ptr++;
+        s32 tileY = *ptr++;
+        s32 dir = *ptr++;
+        s32 castleFlagId = *ptr++;
+        s32 invertedCastleFlagId = *ptr++;
+
+        if (g_CurrentRoom.stageID & STAGE_INVERTEDCASTLE_FLAG) {
+            castleFlagId = invertedCastleFlagId;
+        }
+
+        if (castleFlagId != 0xFF) {
+            if (flagId != 0xFFFF) {
+                if (flagId == castleFlagId) {
+                    DrawSecretPassageOnMap(tileX, tileY, dir);
+                }
+            } else if (tileX == playerTileX && tileY == playerTileY) {
+                if (g_CastleFlags[castleFlagId] != 0) {
+                    DrawSecretPassageOnMap(tileX, tileY, dir);
+                }
+            }
+        }
+    }
+}
+
+void RevealSecretPassageAtPlayerPositionOnMap(s32 castleFlagId) {
+    s32 playerTileX = g_Tilemap.left + g_PlayerX / 320;
+    s32 playerTileY = g_Tilemap.top + g_PlayerY / 240;
+
+    RevealSecretPassageOnMap(playerTileX, playerTileY, castleFlagId);
 }
 
 void func_800F2120(void) {}
