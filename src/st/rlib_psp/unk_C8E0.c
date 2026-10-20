@@ -1,7 +1,19 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rlib/rlib.h"
 
-INCLUDE_ASM("st/rlib_psp/nonmatchings/rlib_psp/unk_C8E0", func_pspeu_09243F60);
+static bool func_pspeu_09243F60(s16* val, s16 target, s16 step) {
+    if (abs(*val - target) < step) {
+        *val = target;
+        return true;
+    }
+    if (*val > target) {
+        *val -= step;
+    }
+    if (*val < target) {
+        *val += step;
+    }
+    return false;
+}
 
 extern s16 D_pspeu_0924C2A8[];
 extern EInit g_EInitScarecrow;
