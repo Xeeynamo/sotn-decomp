@@ -271,7 +271,7 @@ void func_0601AE2C(s32);
 s32 func_06006574(Unk0600654C*);
 extern s32 DAT_0605d7f8;
 extern s32 DAT_06057f34;
-void func_06012FB4();
+void func_06012FB4(void);
 void func_0600D8BC();
 void func_06009838();
 void func_0601AC48(void);

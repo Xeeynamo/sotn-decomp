@@ -27,13 +27,16 @@ typedef struct {
     s32 unk4;
 } SoundMemoryLayout;
 
-extern SoundRequest DAT_06063C30[];
+extern volatile SoundRequest DAT_06063C30[];
 extern SoundMemoryLayout DAT_06062270;
 
 #define UNCACHED_SOUND_REQUESTS ((volatile SoundRequest*)0x26063C30)
 
 s32 PcmOpen(s32 code);
 void PcmClose(GfsHn gfs, s32 type);
+
+extern u16 DAT_0603AA40[];
+extern u16 g_SoundDriver68k[]; // 0x0603AA7C
 
 extern s32 DAT_06041280;
 extern s32 DAT_06041284;
@@ -45,6 +48,7 @@ extern s32 DAT_06057C28;
 extern s32 DAT_06057C2C;
 extern s32 DAT_06057C30;
 extern s32 DAT_06062238;
+extern GfsHn DAT_0606223C;
 extern s32 DAT_06062244;
 extern s32 DAT_06062248;
 extern s32 DAT_06062250;
@@ -61,6 +65,7 @@ extern s32 DAT_06062390[4];
 extern s32 DAT_060623A0;
 extern s32 DAT_060623B0[3];
 extern s32 DAT_060623BC;
+extern GfsDirName DAT_060623D0;
 extern s32 DAT_06063BD0;
 extern s32 DAT_06063BD4;
 extern s32 DAT_06063BD8;
@@ -69,6 +74,7 @@ extern s32 DAT_06063BE4;
 extern s32 DAT_06063BF8;
 extern s32 DAT_06063BFC;
 extern s32 DAT_06063C00;
+extern s32 DAT_06063C0C;
 extern s32 DAT_06063C18;
 extern s32 DAT_06063C1C;
 extern s32 DAT_06063E64;
@@ -80,6 +86,7 @@ extern s32 DAT_06063EA4;
 extern u32 DAT_06063EA8;
 extern s32 DAT_06063EB0;
 extern s32 DAT_06063EB4;
+extern s32 DAT_06063EBC;
 extern s32 DAT_06063EC0;
 extern s8 DAT_06063ED0[0x80][6];
 extern s32 DAT_060641D0;
@@ -145,17 +152,20 @@ extern s32 DAT_060643C0;
 extern s16 DAT_060643C4;
 extern s8 DAT_060643C6;
 extern s8 DAT_060643C7;
+extern s8 DAT_060643C8;
 extern s32 DAT_060643CC;
 extern GfsHn DAT_060643D0;
 extern s32 DAT_060643E0[8];
 extern s8 DAT_06064400;
 extern s8 DAT_06064401;
+extern s8 DAT_06064404[];
 extern s32 DAT_06064408;
 extern s8 DAT_0606440C;
 extern s8 DAT_0606440D;
 extern s8 DAT_0606440E;
 extern u8 DAT_06064414;
 extern s32 DAT_06064418;
+extern s32 DAT_0606441C;
 extern s32 DAT_06064420;
 extern s8 DAT_0606442C;
 extern s32 DAT_06064430;
@@ -182,6 +192,7 @@ extern s8 DAT_060644C2;
 extern s8 DAT_060644C3;
 extern u8 DAT_060644C4;
 extern s8 DAT_060644C5;
+extern s32 DAT_060644C8;
 extern u8 DAT_060644DC;
 extern s32 DAT_060644E0;
 extern s8 DAT_060644E4;
