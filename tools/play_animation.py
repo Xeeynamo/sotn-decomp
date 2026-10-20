@@ -96,9 +96,10 @@ def load_anims(src_file):
             loaded_anims[anim_name] = anim_data
     return loaded_anims
 
+
 def load_init_from_ovl(ovl_name, init_name):
     with open("src/st/" + ovl_name + "/e_init.c") as f:
-            initlines = f.readlines()
+        initlines = f.readlines()
     for line in initlines:
         if init_name in line:
             # find the palette and swap it out
@@ -122,6 +123,7 @@ def load_init_from_ovl(ovl_name, init_name):
                 arg = re.findall(r"(?<=\()[^\)]*", initSet[0])[0]
                 initSet[0] = arg
     return [int(x, 0) for x in initSet[:-1]]  # chop off the enemy num
+
 
 def get_initializer_for_ent(anim_name, src_file, overlay):
     initName = None
@@ -155,6 +157,7 @@ def get_initializer_for_ent(anim_name, src_file, overlay):
         initName = options[initializer_idx]
     # Now we know the name of the entity initializer. Get it.
     return load_init_from_ovl(overlay, initName)
+
 
 class AnimationShower:
     def __init__(self, dump_filename, anim_num, overlay, palette, unk5A):

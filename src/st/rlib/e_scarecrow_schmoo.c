@@ -30,10 +30,10 @@ typedef struct {
 } limbParams;
 
 static limbParams limbs[] = {
-    {3, -1,  5, -11, ROT(-90), ROT(33.75)}, // Background leg
-    {4, -1, -9,  -6, ROT(-360) + 1, ROT(360) - 1}, // Background arm
-    {5,  1, -9,  -6, ROT(-360) + 1, ROT(360) - 1}, // foreground arm
-    {6,  1,  5, -11, ROT(-90), ROT(22.5)}}; // foreground leg
+    {3, -1, 5, -11, ROT(-90), ROT(33.75)},        // Background leg
+    {4, -1, -9, -6, ROT(-360) + 1, ROT(360) - 1}, // Background arm
+    {5, 1, -9, -6, ROT(-360) + 1, ROT(360) - 1},  // foreground arm
+    {6, 1, 5, -11, ROT(-90), ROT(22.5)}};         // foreground leg
 static s16 sensors[] = {
     0,
     48,
@@ -286,35 +286,35 @@ void EntitySchmoo(Entity* self) {
         DestroyEntity(self);
         return;
     }
-    switch (self->step) { 
-    case 0:               
+    switch (self->step) {
+    case 0:
         InitializeEntity(g_EInitSchmoo);
         self->drawFlags = ENTITY_ROTATE;
         self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
         /* fallthrough */
-    case 1: 
+    case 1:
         AnimateEntity(schmoo_normal, self);
         MoveEntity();
         side = GetSideToPlayer();
         if (self->facingLeft) {
-            self->velocityX += FIX(6.0/128);
+            self->velocityX += FIX(6.0 / 128);
             if (self->velocityX > FIX(3)) {
                 self->velocityX = FIX(3);
             }
         } else {
-            self->velocityX -= FIX(6.0/128);
+            self->velocityX -= FIX(6.0 / 128);
             if (self->velocityX < FIX(-3)) {
                 self->velocityX = FIX(-3);
             }
         }
         // If player is above the schmoo
         if (side & 2) {
-            self->velocityY -= FIX(6.0/128);
+            self->velocityY -= FIX(6.0 / 128);
             if (self->velocityY < FIX(-1.5)) {
                 self->velocityY = FIX(-1.5);
             }
         } else {
-            self->velocityY += FIX(6.0/128);
+            self->velocityY += FIX(6.0 / 128);
             if (self->velocityY > FIX(1.5)) {
                 self->velocityY = FIX(1.5);
             }
@@ -325,9 +325,9 @@ void EntitySchmoo(Entity* self) {
             SetStep(2); // turn around
         }
         break;
-    case 2: 
+    case 2:
         MoveEntity();
-        switch (self->step_s) { 
+        switch (self->step_s) {
         case 0: // slow down until we are under 0.25
             self->velocityX -= self->velocityX >> 4;
             self->velocityY -= self->velocityY >> 4;

@@ -31,6 +31,7 @@ DRA_ANIM_ARRAY = "D_800A3B70"
 # holds the individual animsets
 DRA_ANIMSET_FILE = "src/dra/d_2F324.c"
 
+
 def show_animset(ovl_name, anim_num, arg_palette, view_w, view_h, unk5A, dump_filename):
 
     # Now we have an array that tells us the name of all the frames.
@@ -112,7 +113,9 @@ if args.mode == "CUST":
         unk5A = int(unk5A, 0)
 elif args.mode == "INIT":
     initName = input("Give name of the EInit from the overlay's e_init.c file:\n")
-    animset_num, initframe, unk5A, e_palette = load_init_from_ovl(args.overlay, initName)
+    animset_num, initframe, unk5A, e_palette = load_init_from_ovl(
+        args.overlay, initName
+    )
 else:
     print('Mode is not one of "CUST" or "INIT", exiting')
     exit()

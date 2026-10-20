@@ -56,7 +56,6 @@ segments:
       - [0xBC8, .data, d_prize_drops]
       - [0xBEC, .data, e_candle_table]
       - [0xC14, .data, st_update]
-      - [0xC60, data]
       - [0xC60, .data, collision]
       - [0x1020, .data, e_red_door]
       - [0x1038, .data, st_common]

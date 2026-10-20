@@ -3,39 +3,30 @@
 
 static AnimateEntityFrame lamp_tall[] = {{3, 4}, {3, 5}, POSE_LOOP(0)};
 static AnimateEntityFrame lamp_small[] = {{3, 6}, {3, 7}, POSE_LOOP(0)};
-static AnimateEntityFrame burning_flame[] = {{6, 8}, {6, 9}, {6, 10}, {6, 11}, {6, 12}, POSE_LOOP(0)};
-static AnimateEntityFrame anim4[] = {{5, 9}, {5, 10}, {5, 11}, {5, 12}, POSE_LOOP(0)};
-static AnimateEntityFrame anim5[] = {{5, 13}, {5, 14}, {5, 15}, {5, 16}, POSE_LOOP(0)};
+static AnimateEntityFrame burning_flame[] = {
+    {6, 8}, {6, 9}, {6, 10}, {6, 11}, {6, 12}, POSE_LOOP(0)};
+static AnimateEntityFrame anim4[] = {
+    {5, 9}, {5, 10}, {5, 11}, {5, 12}, POSE_LOOP(0)};
+static AnimateEntityFrame anim5[] = {
+    {5, 13}, {5, 14}, {5, 15}, {5, 16}, POSE_LOOP(0)};
 static AnimateEntityFrame anim6[] = {{5, 17}, {5, 18}, {5, 19}, POSE_LOOP(0)};
 static AnimateEntityFrame anim7[] = {{5, 23}, POSE_LOOP(0)};
 static AnimateEntityFrame anim8[] = {{5, 22}, POSE_LOOP(0)};
-static AnimateEntityFrame anim9[] = {{5, 20}, {255, 255}, {5, 21}, {5, 21}, POSE_END};
+static AnimateEntityFrame anim9[] = {
+    {5, 20}, {255, 255}, {5, 21}, {5, 21}, POSE_END};
 static AnimateEntityFrame* g_RlibBreakableAnimations[] = {
-    burning_flame,
-    burning_flame,
-    lamp_tall,
-    lamp_small,
-    anim4,
-    anim5,
-    anim6,
-    anim7,
-    anim8,
-    anim9
-};
+    burning_flame, burning_flame, lamp_tall, lamp_small, anim4,
+    anim5,         anim6,         anim7,     anim8,      anim9};
 
-
-static u8 hitbox_heights[] = {8, 8, 8, 8, 
-                                            16, 16, 8, 8, 
-                                            8, 8, 8};
-static u8 explosion_types[] = {2, 2, 0, 0, 
-                                            2, 2, 2, 2, 
-                                            2, 2};
-extern u16 palettes[] = {PAL_NONE, PAL_NONE, PAL_NONE, PAL_NONE, 
-                                        PAL_BREAKABLE, PAL_BREAKABLE, PAL_BREAKABLE, PAL_BREAKABLE, 
-                                        PAL_BREAKABLE, PAL_BREAKABLE};
-extern u16 anim_sets[] = {ANIMSET_OVL(2), ANIMSET_OVL(2), ANIMSET_OVL(2), ANIMSET_OVL(2), 
-                                        ANIMSET_OVL(7), ANIMSET_OVL(7), ANIMSET_OVL(7), ANIMSET_OVL(7), 
-                                        ANIMSET_OVL(7), ANIMSET_OVL(7)};
+static u8 hitbox_heights[] = {8, 8, 8, 8, 16, 16, 8, 8, 8, 8, 8};
+static u8 explosion_types[] = {2, 2, 0, 0, 2, 2, 2, 2, 2, 2};
+static u16 palettes[] = {
+    PAL_NONE,      PAL_NONE,      PAL_NONE,      PAL_NONE,      PAL_BREAKABLE,
+    PAL_BREAKABLE, PAL_BREAKABLE, PAL_BREAKABLE, PAL_BREAKABLE, PAL_BREAKABLE};
+static u16 anim_sets[] = {
+    ANIMSET_OVL(2), ANIMSET_OVL(2), ANIMSET_OVL(2), ANIMSET_OVL(2),
+    ANIMSET_OVL(7), ANIMSET_OVL(7), ANIMSET_OVL(7), ANIMSET_OVL(7),
+    ANIMSET_OVL(7), ANIMSET_OVL(7)};
 static u8 blend_modes[] = {
     BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
     BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
@@ -43,7 +34,8 @@ static u8 blend_modes[] = {
     BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
     BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
 };
-static u16 g_RlibBreakableUnk5A[] = {0, 0, 0, 0, 0x5B, 0x5B, 0x5B, 0x5B, 0x5B, 0x5B};
+static u16 g_RlibBreakableUnk5A[] = {
+    0, 0, 0, 0, 0x5B, 0x5B, 0x5B, 0x5B, 0x5B, 0x5B};
 static u16 g_RlibBreakableHitboxOffsetsY[12] = {0};
 
 #ifdef VERSION_PSP

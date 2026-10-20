@@ -50,7 +50,7 @@ typedef enum EntityID {
     E_BG_SHADOW,            // EntityBackgroundShadow
     E_DISTANT_SHELVES,      // EntityDistantBookshelves
     E_THICK_BOOKCASE,       // EntityThickBookcase
-    E_METAL_LAMP,               // EntityMetalLamp
+    E_METAL_LAMP,           // EntityMetalLamp
     E_LION,                 // EntityLion
     E_LION_ATTACK,          // EntityLionAttack
     E_LION_DEATH_PARTS,     // EntityLionDeathParts
