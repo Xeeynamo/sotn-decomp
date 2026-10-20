@@ -39,10 +39,11 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, data, init]
-      - [0x40, data, nosedevil_spriteparts]
-      - [0x1798, data, nosedevil]
+      - [0x0, .data, init]
+      - [0x40, .data, nosedevil_spriteparts]
+      - [0x1738, .data, servant_clutdata]
+      - [0x1798, .data, nosedevil]
       - [0x27B0, .rodata, nosedevil]
       - [0x283C, c, nosedevil]
-      - [0x8198, sbss]
+      - [0x8198, .bss, nosedevil]
   - [0xA000]
