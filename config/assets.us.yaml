@@ -1344,7 +1344,7 @@ files:
           - [0x2C, sprite_banks, us/sprite_banks]
           - [0x8C, paldef, palette_def]
           - [0xEC, layers, layers]
-          - [0x264, gfx_banks, graphics_banks]
+          - [0x264, gfx_banks, us/graphics_banks]
           - [0x388, layout, entity_layouts]
           - [0x530, skip]
           - [0x19A0, rooms, rooms]
