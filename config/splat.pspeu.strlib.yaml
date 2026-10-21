@@ -83,7 +83,7 @@ segments:
       - [0x1A108, .data, layers]
       - [0x1A270, .data, palette_def]
       - [0x1A2D8, .data, graphics_banks]
-      - [0x1A3E0, data]
+      - [0x1A3E0, .data, e_red_door_tiles]
       - [0x1A3F0, .data, e_init]
       - [0x1A5C8, .data, gen/rooms]
       - [0x1A650, .data, e_breakable]
