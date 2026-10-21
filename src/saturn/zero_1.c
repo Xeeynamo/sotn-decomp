@@ -184,10 +184,63 @@ s32 func_06011C28(s32 volume, s16 pan) {
     return result;
 }
 
-const u16 DAT_06011CE0 = 0x5344;
-const u16 DAT_06011CE2 = 0x0000;
+void func_06011CE4(void) {
+    SndIniDt sys_ini;
+    s32 temp_r0;
+    s32 i, j;
+    u32 msk;
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011CE4, func_06011CE4);
+    msk = get_imask();
+    set_imask(15);
+    func_06012108();
+    DAT_06063BD8 = 0;
+    for (i = 0; i < 4; i++) {
+        DAT_06063C30[i].unk0 = 0;
+    }
+    func_06014424();
+    DAT_06063C0C = 0x25A78000;
+    DAT_06063EBC = 0x25A78000;
+    DAT_06064480 = 0x25A76000;
+    SND_INI_PRG_ADR(sys_ini) = g_SoundDriver68k;
+    SND_INI_PRG_SZ(sys_ini) = 0x67F2;
+    SND_INI_ARA_ADR(sys_ini) = DAT_0603AA40;
+    SND_INI_ARA_SZ(sys_ini) = 0x3A;
+    SND_Init(&sys_ini);
+    SND_ChgMap(0);
+    DAT_0606441C = func_06012C4C(0xFF, 0);
+    DAT_060644C8 = func_06012C4C(0x10, 0);
+    SND_SetTlVl(0x7F);
+    DAT_060644C0 = 0;
+    func_06012FB4();
+    DAT_06064390 = NULL;
+    DAT_060643D0 = NULL;
+    DAT_06064404[0] = 0;
+    DAT_06064404[1] = 0;
+    DAT_06064404[2] = 0;
+    DAT_06063E90.type = GFS_DIR_NAME;
+    DAT_06063E90.dir.dir_n = &DAT_060623D0;
+    DAT_06063E90.ndir = 0x100;
+    GFS_LoadDir(GFS_NameToId("SD"), &DAT_06063E90);
+    for (j = 0; j < 0x24; j++) {
+        GFS_SetTransPara(DAT_06062290[j], 1);
+    }
+    GFS_SetTransPara(DAT_06062280, 1);
+    GFS_SetTransPara(DAT_0606223C, 1);
+    temp_r0 = func_06014C54();
+    if (temp_r0 == -1) {
+        DAT_06064218 = 0;
+    } else if (temp_r0 == 0) {
+        DAT_06064218 = 2;
+    }
+    DAT_06064390 = NULL;
+    DAT_060643D0 = NULL;
+    for (j = 0; j < 0x36; j++) {
+        DAT_06062290[j] = NULL;
+    }
+    DAT_0606223C = NULL;
+    DAT_060643C8 = 1;
+    set_imask(msk);
+}
 
 void func_06011EE0(s32 arg0, s32 arg1) {
     s32 i;
@@ -1025,19 +1078,14 @@ void func_06014424(void) {
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601449C, func_0601449C);
 
 void func_06014504(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-    s32 savedArg3;
-
-    savedArg3 = arg3;
-
     while (UNCACHED_SOUND_REQUESTS[arg4].unk0 != 0) {
     }
 
     DAT_06063C30[arg4].unk8 = arg0;
     DAT_06063C30[arg4].unkC = arg1;
     DAT_06063C30[arg4].unk10 = arg2;
-    arg3 = 1;
     DAT_06063C30[arg4].unk14 = 1;
-    DAT_06063C30[arg4].unk18 = savedArg3;
+    DAT_06063C30[arg4].unk18 = arg3;
     DAT_06063C30[arg4].unk4 = 0;
     DAT_06063C30[arg4].unk0 = 1;
 }
@@ -1106,7 +1154,6 @@ void func_060146A4(s32 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4, s32 arg5,
     DAT_06063C30[arg8].unk26 = arg4;
     DAT_06063C30[arg8].unk1C = arg5;
     DAT_06063C30[arg8].unk20 = arg6;
-    arg3 = 1;
     DAT_06063C30[arg8].unk14 = 1;
     DAT_06063C30[arg8].unk18 = arg7;
     DAT_06063C30[arg8].unk4 = 2;
@@ -1114,19 +1161,14 @@ void func_060146A4(s32 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4, s32 arg5,
 }
 
 void func_06014724(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-    s32 savedArg3;
-
-    savedArg3 = arg3;
-
     while (UNCACHED_SOUND_REQUESTS[arg4].unk0 != 0) {
     }
 
     DAT_06063C30[arg4].unk8 = arg0;
     DAT_06063C30[arg4].unkC = arg1;
     DAT_06063C30[arg4].unk10 = arg2;
-    arg3 = 1;
     DAT_06063C30[arg4].unk14 = 1;
-    DAT_06063C30[arg4].unk18 = savedArg3;
+    DAT_06063C30[arg4].unk18 = arg3;
     DAT_06063C30[arg4].unk4 = 2;
     DAT_06063C30[arg4].unk0 = 1;
 }
@@ -1389,7 +1431,7 @@ void func_060174D8(void) {
 
 // original name: voxvdSpuTransOnmemNoloop
 void func_06017508(void) {
-    SndPcmPlayAdr sp0;
+    SndPcmPlayAdr pcm_adr;
     s32 temp_r6;
 
     switch (DAT_06064300 & 0xF) {
@@ -1474,8 +1516,9 @@ void func_06017508(void) {
         break;
 
     case 5:
-        SND_GetPcmPlayAdr(&sp0, 5);
-        if (sp0.radr == (DAT_0606434C >> 0xC) && (DAT_0606434C & 0xFFF) == 0) {
+        SND_GetPcmPlayAdr(&pcm_adr, 5);
+        if (pcm_adr.radr == (DAT_0606434C >> 0xC) &&
+            (DAT_0606434C & 0xFFF) == 0) {
             break;
         }
         if (DAT_06064360 != 0) {
@@ -1506,9 +1549,9 @@ void func_06017508(void) {
         break;
 
     case 6:
-        SND_GetPcmPlayAdr(&sp0, 5);
+        SND_GetPcmPlayAdr(&pcm_adr, 5);
         if (DAT_0604410C == 0) {
-            if (sp0.radr != (DAT_0606434C >> 0xC)) {
+            if (pcm_adr.radr != (DAT_0606434C >> 0xC)) {
                 memset(DAT_06064480 + DAT_0606434C, 0, 0x800);
                 DAT_06044108 = (DAT_0606434C + 0x800) & 0x1FFF;
                 DAT_0604410C = 1;
@@ -1518,7 +1561,7 @@ void func_06017508(void) {
             }
         }
         if (DAT_0604410C == 1) {
-            if (sp0.radr == (DAT_0606434C >> 0xC)) {
+            if (pcm_adr.radr == (DAT_0606434C >> 0xC)) {
                 DAT_06064300++;
             } else if (DAT_06044108 & 0xFFF) {
                 memset(DAT_06064480 + DAT_06044108, 0, 0x800);

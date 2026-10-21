@@ -4,9 +4,9 @@ options:
   base_path: ..
   build_path: build/pspeu
   target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_005.bin
-  asm_path: asm/pspeu/servant/tt_005_psp
+  asm_path: asm/pspeu/servant/tt_005
   asset_path: assets/servant/tt_005
-  src_path: src/servant
+  src_path: src/servant/tt_005
   ld_script_path: build/pspeu/tt_005.ld
   compiler: GCC
   symbol_addrs_path:
@@ -39,12 +39,16 @@ segments:
     type: code
     start: 0x80
     vram:  0x092E7680
-    bss_size: 0x100
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, tt_005_psp/sprite]
-      - [0x7D00, data]
-      - [0xB580, .rodata, tt_005_psp/sprite]
-      - {start: 0xB700, type: bss, vram: 0x092F2D00}
-  - [0xB700]
+      - [0x80, c, sprite]
+      - [0x7C90, c, init]
+      - [0x7D00, .data, sprite_spriteparts]
+      - [0xA0F8, .data, sprite_clutdata]
+      - [0xA178, .data, sprite]
+      - [0xB538, .data, init]
+      - [0xB580, .rodata, sprite]
+      - [0xB700, .bss, sprite_spriteparts]
+      - [0xB708, .bss, sprite]
+  - [0xB7F0]

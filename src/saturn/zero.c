@@ -879,8 +879,6 @@ void func_060058D0(void) {
     }
 }
 
-extern s32 func_0601B1B4(void);
-
 void func_06005944(void) {
     ReadFileToAddr("MOVIE.PRG", 0x06066000);
     if (g_FileLoadEnabled != 0) {
@@ -960,7 +958,7 @@ s32 func_06005A90(void) {
         goto block_43;
 
     case 6:
-        ((s32(*)(s32))PlaySfx)(DAT_060389F4[g_Servant]);
+        ((s32(*)(s32))PlaySfx)(DAT_060389F8[g_Servant - 1]);
         DAT_0605D770.unk8++;
         return 1;
 
@@ -1193,8 +1191,8 @@ s32 func_06006470(void) {
         SYS_EXECDMP();
     }
 
-    DAT_0605AE8C = &DAT_0605064C;
-    *(char*)((char*)&DAT_0605064C - 0x40) = 0;
+    DAT_0605AE8C = &DAT_0605060C[0x40];
+    DAT_0605060C[0] = 0;
     return success;
 }
 
@@ -1203,22 +1201,13 @@ void func_0600652C(void) {
     DAT_06038a44 = 0;
 }
 
-struct Unk0600654C {
-    s32 unk0;
-    s32 unk4;
-    s32 unk8;
-    s32 unka;
-    s32 unkc;
-    s32 unk10;
-};
-
 // func_0600654C
 s32 ReadFileToAddr(char* path, s32 addr) {
-    struct Unk0600654C unk;
-    unk.unk0 = (s32)path;
+    Unk0600654C unk;
+    unk.unk0 = path;
     unk.unk4 = addr;
     unk.unk8 = -1;
-    unk.unka = 0;
+    unk.unkA = 0;
     return func_06006574(&unk);
 }
 
@@ -1226,13 +1215,13 @@ s32 ReadFileToAddr(char* path, s32 addr) {
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006574, func_06006574);
 
 // func_060066F0
-void ReadFileToAddrAsync(u32 arg0, u32 arg1, u32 arg2, u32 arg3) {
-    struct Unk0600654C unk;
+void ReadFileToAddrAsync(char* arg0, u32 arg1, u32 arg2, u32 arg3) {
+    Unk0600654C unk;
     unk.unk0 = arg0;
     unk.unk4 = arg1;
     unk.unk8 = -1;
-    unk.unka = 0;
-    unk.unkc = arg2;
+    unk.unkA = 0;
+    unk.unkC = arg2;
     unk.unk10 = arg3;
     func_06006720(&unk, 3, 0);
 }
@@ -1323,68 +1312,154 @@ bool GetFileReadStat(void) { return 0; }
 s32 func_06006F74(void) { return 1; }
 
 const u16 DAT_06006F7E = 0x0000;
-const u16 DAT_06006F80 = 0x0000;
-const char weapon0_prg[] = "WEAPON0.PRG";
-const char weapon0_chr[] = "WEAPON0.CHR";
-const char dummy_dat[] = "DUMMY.DAT";
+const char DAT_06006F80[] = "";
+const char DAT_06006F84[] = "WEAPON0.PRG";
+const char DAT_06006F90[] = "WEAPON0.CHR";
+const char DAT_06006F9C[] = "DUMMY.DAT";
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006FA8, func_06006FA8);
+
+const char DAT_06007060[] = "RIC_W2.CHR";
+const char DAT_0600706C[] = "RICHTER2.CHR";
+const char DAT_0600707C[] = "RICHTER2.PRG";
+const char DAT_0600708C[] = "MAR_W.CHR";
+const char DAT_06007098[] = "MARIA.CHR";
+const char DAT_060070A4[] = "MARIA.PRG";
+const char DAT_060070B0[] = "RIC_W.CHR";
+const char DAT_060070BC[] = "RICHTER.CHR";
+const char DAT_060070C8[] = "RICHTER.PRG";
+const char DAT_060070D4[] = "ALC_W.CHR";
+const char DAT_060070E0[] = "ALUCARD.CHR";
+const char DAT_060070EC[] = "ALUCARD.PRG";
+const char DAT_060070F8[] = "T_DEVIL2.CHR";
+const char DAT_06007108[] = "T_DEVIL2.PRG";
+const char DAT_06007118[] = "T_FAIRY2.CHR";
+const char DAT_06007128[] = "T_FAIRY2.PRG";
+const char DAT_06007138[] = "T_SWORD.CHR";
+const char DAT_06007144[] = "T_SWORD.PRG";
+const char DAT_06007150[] = "T_DEVIL.CHR";
+const char DAT_0600715C[] = "T_DEVIL.PRG";
+const char DAT_06007168[] = "T_FAIRY.CHR";
+const char DAT_06007174[] = "T_FAIRY.PRG";
+const char DAT_06007180[] = "T_GHOST.CHR";
+const char DAT_0600718C[] = "T_GHOST.PRG";
+const char DAT_06007198[] = "T_BAT.CHR";
+const char DAT_060071A4[] = "T_BAT.PRG";
+const char DAT_060071B0[] = "WEAPON1.PRG";
+const char DAT_060071BC[] = "WEAPON1.CHR";
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60071C8, func_060071C8);
 
-s32 func_060076D0(s32 arg0) {
-    s32 result;
+Equipment* func_060076D0(s32 arg0) {
+    Equipment* ret;
 
     if (g_Status.equipment[4] == 0x19) {
-        result = DAT_060645AC + 0x2D4C;
+        ret = &DAT_060645AC[0xDF];
     } else {
-        result = DAT_060645AC + (g_Status.equipment[arg0] * 0x34);
+        ret = &DAT_060645AC[g_Status.equipment[arg0]];
     }
-    return result;
+    return ret;
 }
 
-// _CD_READ_OUT
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007714, func_06007714);
+// original name: CD_READ_OUT
+s32 func_06007714(void) {
+    s32 ret;
 
-struct Unk0600654C prg_info;
-struct Unk0600654C chr_info;
+    ret = 0;
+    switch (DAT_0605D770.unk8) {
+    case 1:
+        func_0601AD14();
+        break;
 
-char* WEAPON0_PRG;
-char* WEAPON0_CHR;
+    case 2:
+        ret = func_0600C3A8(0x252000, 0x25C000, 0x25E800, 0x260D80);
+        break;
+
+    case 3:
+        func_0600C00C();
+        break;
+
+    case 4:
+        func_0601AE2C(0);
+        break;
+
+    case 6:
+        func_0601AE2C(1);
+        break;
+
+    case 5:
+        if (g_FileLoadEnabled != 0) {
+            func_0600C298(0);
+            func_0600C0C4(0);
+        }
+        break;
+
+    case 7:
+        if (g_FileLoadEnabled != 0) {
+            func_0600C298(1);
+            func_0600C0C4(1);
+        }
+        break;
+
+    case 8:
+        SetStageOverlayAddress();
+        break;
+
+    case 9:
+        func_0600C114();
+        break;
+
+    case 10:
+        func_0601AC48();
+        break;
+
+    case 11:
+        SetServantResourceList();
+        break;
+
+    case 12:
+        func_0600C254();
+        func_0600C0FC();
+        break;
+    }
+    return ret;
+}
+
+extern Unk0600654C DAT_06038AAC;
+extern Unk0600654C DAT_06038AEC;
+
 char* WEAPON1_PRG;
 char* WEAPON1_CHR;
 
 void func_06007824(s32 arg0, s32 arg1) {
-    if ((g_FileLoadEnabled == 0) || (0x3F < arg1)) {
+    if ((g_FileLoadEnabled == 0) || (arg1 > 0x3F)) {
         func_0601AE5C(arg0, arg1);
     } else {
-        prg_info.unka = arg1 * 6;
-        chr_info.unka = arg1 * 8;
+        DAT_06038AAC.unkA = arg1 * 6;
+        DAT_06038AEC.unkA = arg1 * 8;
         if (arg0 == 0) {
-            prg_info.unk0 = &WEAPON0_PRG;
-            prg_info.unk4 = 0x060D6000;
-            chr_info.unk0 = &WEAPON0_CHR;
-            chr_info.unk4 = VRAM_ADDR + 0x1D980;
+            DAT_06038AAC.unk0 = DAT_06006F84;
+            DAT_06038AAC.unk4 = 0x060D6000;
+            DAT_06038AEC.unk0 = DAT_06006F90;
+            DAT_06038AEC.unk4 = VRAM_ADDR + 0x1D980;
         } else {
-            prg_info.unk0 = &WEAPON1_PRG;
-            prg_info.unk4 = 0x060D9000;
-            chr_info.unk0 = &WEAPON1_CHR;
-            chr_info.unk4 = VRAM_ADDR + 0x21980;
+            DAT_06038AAC.unk0 = &WEAPON1_PRG;
+            DAT_06038AAC.unk4 = 0x060D9000;
+            DAT_06038AEC.unk0 = &WEAPON1_CHR;
+            DAT_06038AEC.unk4 = VRAM_ADDR + 0x21980;
         }
-        func_06006574(&prg_info);
+        func_06006574(&DAT_06038AAC);
         func_0601AE2C(arg0);
-        func_06006574(&chr_info);
+        func_06006574(&DAT_06038AEC);
         func_0600C298(arg0);
         func_0600C0C4(arg0);
     }
 }
 
-extern struct Unk0600654C DAT_06038B6C;
-extern struct Unk0600654C DAT_06038BAC;
+extern Unk0600654C DAT_06038B6C;
+extern Unk0600654C DAT_06038BAC;
 
-extern s32 DAT_06038C24[][2];
-void SetServantResourceList(void);
-void func_0600C254(void);
-void func_0600C0FC(void);
+extern char* DAT_06038C24[][2];
 
 void func_060078EC(s32 arg0) {
     if (g_FileLoadEnabled != 0) {
@@ -1427,7 +1502,7 @@ s32 func_06007B8C(s16* colors) {
     s16* dest;
     s32 i;
 
-    charNo = (u16)d_0605AEB0;
+    charNo = d_0605AEB0;
     if (charNo <= 0x3E) {
         if (colors != NULL) {
             dest = (s16*)(SCL_COLRAM_ADDR + 0x800 + charNo * 0x20);
@@ -1454,11 +1529,11 @@ u16 func_06007BE0(s16* colors, s32 arg1) {
     if (tblNo > 0x1FFU) {
         return tblNo;
     }
-    if ((u16)d_0605AEB0 > 0x3EU) {
+    if (d_0605AEB0 > 0x3E) {
         return d_0605AEB0 | 0x4000;
     }
     if (colors != NULL) {
-        dst = (s16*)(SCL_COLRAM_ADDR + 0x800 + ((u16)d_0605AEB0 << 5));
+        dst = (s16*)(SCL_COLRAM_ADDR + 0x800 + (d_0605AEB0 << 5));
         for (i = 0; i < 0x10; i++) {
             *dst++ = *colors++ & 0x7FFF;
         }
@@ -1477,7 +1552,7 @@ u16 func_06007BE0(s16* colors, s32 arg1) {
 
 extern u16 DAT_0605BEC8;
 extern s16 DAT_0605BECA;
-extern s32 d_06038dbc;
+extern s32 DAT_06038DBC;
 extern s32 d_060576AC;
 
 // original name: SprSetGourTbl
@@ -1504,7 +1579,7 @@ void ResetSpriteVram() {
     DAT_0605BEC8 = 0x304;
     d_060576AC = 0;
     DAT_0605BEC4 = 0x11180;
-    d_06038dbc = 0;
+    DAT_06038DBC = 0;
 }
 
 extern XyInt DAT_0605AEA0[2];
@@ -1542,15 +1617,15 @@ void func_06007D54(void) {
     d_0605AEAC = &DAT_06050684[SpMstCmdPos];
 }
 
-extern s32 d_06038c5c;
+extern s32 DAT_06038C5C;
 extern s32 d_0605BEBE;
 
 // func_06007E14
 void CloseSpriteList(void) {
     SprSpCmd cmd;
 
-    if (d_06038c5c) {
-        d_06038c5c--;
+    if (DAT_06038C5C) {
+        DAT_06038C5C--;
         cmd.control = JUMP_ASSIGN | FUNC_TEXTURE;
         cmd.drawMode = ECDSPD_DISABLE;
         cmd.color = RGB16_COLOR(0, 0, 0);
@@ -2269,7 +2344,7 @@ void func_06009570(s32 arg0) {
     scfg.plate_addr[0] = SCL_VDP2_VRAM_B0 + 0x18000;
     SCL_SetConfig(SCL_NBG0, &scfg);
     ptr = &DAT_0605CD90[3];
-    temp_r1 = &DAT_06038CA0[arg0 * 6];
+    temp_r1 = DAT_06038CA0[arg0];
     ptr->unk8 = SCL_VDP2_VRAM_B0 + 0x18000;
     ptr->dst0 = SCL_VDP2_VRAM_A1;
     ptr->dst4 = SCL_COLRAM_ADDR + 0x600;
@@ -3379,9 +3454,9 @@ s32 func_0600DDD4(Primitive* prim) {
     return visible;
 }
 
-bool func_0600DE20(void) { return 0; }
+s32 func_0600DE20(Primitive* prim) { return 0; }
 
-bool func_0600DE2C(void) { return 1; }
+s32 func_0600DE2C(Primitive* prim) { return 1; }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DE38, func_0600DE38);
 
@@ -3415,14 +3490,14 @@ void func_0600E070(Primitive* prim, s16 x, s16 y) {
     prim->y1 += y;
 }
 
-void func_0600E0A4(Primitive* prim, s16 arg1, s16 arg2) {
-    prim->unk4 += arg1;
-    prim->unk8 += arg2;
+void func_0600E0A4(Primitive* prim, s16 x, s16 y) {
+    prim->unk4 += x;
+    prim->unk8 += y;
 }
 
-void func_0600E0C4() {}
+void func_0600E0C4(Primitive* prim, s16 x, s16 y) {}
 
-void func_0600E0D0(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
+void func_0600E0D0(s16 x, s16 y, s16 x2, s16 y2) {
     Primitive* prim;
     s32 i;
     u16 mode;
@@ -3433,9 +3508,9 @@ void func_0600E0D0(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
         mode = prim->drawMode;
         if (mode != 0xFFFF) {
             if (mode & 2) {
-                DAT_0603908C[prim->type & 0x0F](prim, arg0, arg1);
+                DAT_0603908C[prim->type & 0xF](prim, x, y);
             } else if (mode & 0x200) {
-                DAT_0603908C[prim->type & 0x0F](prim, -arg2, -arg3);
+                DAT_0603908C[prim->type & 0xF](prim, -x2, -y2);
             }
         }
         prim++;
@@ -3985,7 +4060,7 @@ void func_0600FACC(void) {
 void func_0600FB0C(s32 arg0) {
     DAT_06057A10.id = arg0;
     DAT_06057A10.index = 0;
-    DAT_06057A10.offsets = (s16*)DAT_06039128[arg0];
+    DAT_06057A10.offsets = DAT_06039128[arg0];
 }
 
 void func_0600FB34(void) {
@@ -4056,14 +4131,83 @@ void func_0600FC04(void) {
     }
 }
 
-extern void MarkRoomVisited(s32, s32, s32);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FCF8, MarkRoomVisited);
+typedef struct {
+    u8 tileX;
+    u8 tileY;
+    u8 dir;
+    u8 inverted;
+} Unk0600FCF8;
 
-void func_0600FE98(s32 arg0) {
-    s32 x = g_Tilemap.left + g_PlayerX / 320;
-    s32 y = g_Tilemap.top + g_PlayerY / 240;
+extern Unk0600FCF8 DAT_06039144[0x20];
+extern u8 DAT_060391C4[];
 
-    MarkRoomVisited(x, y, arg0);
+static void DrawSecretPassageOnMap(s32 x, s32 y, s32 dir) {
+    Unk0600FCF8 room;
+    u32 i;
+
+    if (dir == WALL_NONE) {
+        return;
+    }
+
+    room.tileX = x;
+    room.tileY = y;
+    room.dir = dir;
+    if (g_CurrentRoom.stageID & STAGE_INVERTEDCASTLE_FLAG) {
+        room.inverted = true;
+    } else {
+        room.inverted = false;
+    }
+    for (i = 0; i < 0x20; i++) {
+        if (memcmp(&DAT_06039144[i], &room, 4) == 0) {
+            return;
+        }
+        if (DAT_06039144[i].dir == WALL_NONE) {
+            break;
+        }
+    }
+    if (i < 0x20) {
+        DAT_06039144[i] = room;
+    }
+}
+
+void RevealSecretPassageOnMap(s32 playerTileX, s32 playerTileY, s32 flagId) {
+    u8* ptr;
+
+    if (g_CurrentRoom.stageID & STAGE_INVERTEDCASTLE_FLAG) {
+        playerTileX = 0x3F - playerTileX;
+        playerTileY = 0x3F - playerTileY;
+    }
+    ptr = DAT_060391C4;
+    while (*ptr) {
+        s32 tileX = *ptr++;
+        s32 tileY = *ptr++;
+        s32 dir = *ptr++;
+        s32 castleFlagId = *ptr++;
+        s32 invertedCastleFlagId = *ptr++;
+
+        if (g_CurrentRoom.stageID & STAGE_INVERTEDCASTLE_FLAG) {
+            castleFlagId = invertedCastleFlagId;
+        }
+
+        if (castleFlagId != 0xFF) {
+            if (flagId != 0xFFFF) {
+                if (flagId == castleFlagId) {
+                    DrawSecretPassageOnMap(tileX, tileY, dir);
+                }
+            } else if (tileX == playerTileX && tileY == playerTileY) {
+                if (g_CastleFlags[castleFlagId] != 0) {
+                    DrawSecretPassageOnMap(tileX, tileY, dir);
+                }
+            }
+        }
+    }
+}
+
+void RevealSecretPassageAtPlayerPositionOnMap(s32 castleFlagId) {
+    s32 playerTileX = g_Tilemap.left + g_PlayerX / 320;
+    s32 playerTileY = g_Tilemap.top + g_PlayerY / 240;
+
+    RevealSecretPassageOnMap(playerTileX, playerTileY, castleFlagId);
 }
 
 void func_800F2120(void) {}

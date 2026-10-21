@@ -26,12 +26,6 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606B760, func_0606B760);
 extern char DAT_0606BB34[];
 extern char DAT_0606BB40[];
 extern char* g_StageAlternateMapNames[];
-extern Unk0605D770 DAT_0605D770;
-
-void func_0600C00C();
-void func_0601AC48();
-void func_0600C114();
-void SetStageOverlayAddress();
 
 s32 func_0606BB4C(void) {
     bool bVar1;
@@ -219,7 +213,7 @@ s32 func_0606C088(u16 arg0) {
     case 3:
     case3:
         if (g_Servant != 0) {
-            PlaySfx(DAT_060389F4[g_Servant]);
+            PlaySfx(DAT_060389F8[g_Servant - 1]);
             DAT_0605D770.unk8++;
             return 1;
         }
