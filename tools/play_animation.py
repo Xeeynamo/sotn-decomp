@@ -97,6 +97,34 @@ def load_anims(src_file):
     return loaded_anims
 
 
+def load_init_from_ovl(ovl_name, init_name):
+    with open("src/st/" + ovl_name + "/e_init.c") as f:
+        initlines = f.readlines()
+    for line in initlines:
+        if init_name in line:
+            # find the palette and swap it out
+            if pal_match := re.search(r"PAL_[^,]*", line):
+                pal_name = pal_match.group(0)
+                if "PAL_NONE" in pal_name:
+                    pal_value = "0"
+                else:
+                    # now find that in the overlay .h file to pull it in
+                    with open(f"src/st/{ovl_name}/{ovl_name}.h") as hfile:
+                        for hline in hfile:
+                            if pal_def := re.search(f"{pal_name} = ([^,]*)", hline):
+                                pal_value = pal_def.group(1)
+                line = line.replace(pal_name, pal_value)
+
+            initSet = re.findall(r"(?<={)[^}]*", line)[0].split(",")
+            if "ANIMSET_OVL" in initSet[0]:
+                arg = re.findall(r"(?<=\()[^\)]*", initSet[0])[0]
+                initSet[0] = hex(0x8000 | int(arg, 0))
+            if "ANIMSET_DRA" in initSet[0]:
+                arg = re.findall(r"(?<=\()[^\)]*", initSet[0])[0]
+                initSet[0] = arg
+    return [int(x, 0) for x in initSet[:-1]]  # chop off the enemy num
+
+
 def get_initializer_for_ent(anim_name, src_file, overlay):
     initName = None
     print(f"Getting animset for animation {anim_name} in {src_file}, part of {overlay}")
@@ -127,33 +155,8 @@ def get_initializer_for_ent(anim_name, src_file, overlay):
             print(f" [{i}]: {it}")
         initializer_idx = int(input("Select argument above for InitializeEntity: "))
         initName = options[initializer_idx]
-    # Now we know the name of the entity initializer.
-    # Fetch the value of it from the overlay e_init file.
-    with open("src/st/" + overlay + "/e_init.c") as f:
-        initlines = f.readlines()
-    for line in initlines:
-        if initName in line:
-            # find the palette and swap it out
-            if pal_match := re.search(r"PAL_[^,]*", line):
-                pal_name = pal_match.group(0)
-                # now find that in the overlay .h file to pull it in
-                with open(f"src/st/{overlay}/{overlay}.h") as hfile:
-                    for hline in hfile:
-                        if pal_def := re.search(f"{pal_name} = ([^,]*)", hline):
-                            pal_value = pal_def.group(1)
-                            line = line.replace(pal_name, pal_value)
-
-            initSet = re.findall(r"(?<={)[^}]*", line)[0].split(",")
-            if "ANIMSET_OVL" in initSet[0]:
-                arg = re.findall(r"(?<=\()[^\)]*", initSet[0])[0]
-                initSet[0] = hex(0x8000 | int(arg, 0))
-            if "ANIMSET_DRA" in initSet[0]:
-                arg = re.findall(r"(?<=\()[^\)]*", initSet[0])[0]
-                initSet[0] = arg
-
-            return [
-                int(x, 0) for x in initSet[:-1]
-            ]  # chop off the enemy num, we don't need it
+    # Now we know the name of the entity initializer. Get it.
+    return load_init_from_ovl(overlay, initName)
 
 
 class AnimationShower:
