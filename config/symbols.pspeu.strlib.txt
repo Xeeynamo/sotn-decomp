@@ -1,9 +1,1 @@
-D_us_801817CC = 0x0924C4B0;
-g_HarpyKickHitboxes = 0x0924C4C8;
-g_HarpyKickHitboxIdx = 0x0924C4E8;
-spriteBanks = 0x09251728;
-rooms_layers = 0x09251878;
-cluts = 0x09251950;
-gfxBanks = 0x09251A18;
-g_RedDoorTiles = 0x09251A60;
-rooms = 0x09251C48;
+
