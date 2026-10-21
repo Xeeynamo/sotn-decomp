@@ -3,15 +3,17 @@
 
 #ifndef VERSION_PSP
 u8 unused_gfx[] = {
-#include "gen/unused_gfx.h"
+#include "gen/unused_gfx.h" // totally unused
 };
 
 u8 D_80183140[] = {
-#include "gen/D_80183140.h"
+#include "gen/D_80183140.h" // used in gfxbank_1, but that is itself unused
 };
 u8 D_80183484[] = {
-#include "gen/D_80183484.h"
+#include "gen/D_80183484.h" // used in gfxbank_1, but that is itself unused
 };
+#endif
+
 u8 D_80183A28[] = {
 #include "gen/D_80183A28.h"
 };
@@ -42,7 +44,6 @@ u8 D_80189070[] = {
 u8 D_80189E80[] = {
 #include "gen/D_80189E80.h"
 };
-#endif
 
 u16 D_8018A978[] = {
 #include "gen/D_8018A978.h"
