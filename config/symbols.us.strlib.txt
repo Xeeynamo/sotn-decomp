@@ -1,13 +1,1 @@
-g_EInitScarecrow = 0x80180694;
-rooms = 0x801819A0;
-Random = 0x801A2B60;
-CreateEntityFromEntity = 0x801A524C;
-DestroyEntity = 0x801A5F78;
-GetDistanceToPlayerX = 0x801A6278;
-GetSideToPlayer = 0x801A62E8;
-MoveEntity = 0x801A632C;
-UnkCollisionFunc2 = 0x801A6600;
-AllocEntity = 0x801A67E8;
-SetStep = 0x801A6BB8;
-InitializeEntity = 0x801A6C88;
-PlaySfxPositional = 0x801AC03C;
+

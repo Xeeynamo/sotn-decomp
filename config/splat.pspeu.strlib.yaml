@@ -77,7 +77,6 @@ segments:
       - [0x14BF8, .data, e_scarecrow_schmoo]
       - [0x14C58, .data, e_tinman]
       - [0x14DB0, .data, e_lion]
-      - [0x14E30, data]
       - [0x14E98, .data, e_library_bg]
       - [0x14F58, data]
       - [0x1A3F0, .data, e_init]
