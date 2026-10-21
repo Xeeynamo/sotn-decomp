@@ -988,7 +988,16 @@ files:
           - [0x80, skip]
           - [0x1A0A8, sprite_banks, psp/sprite_banks]
           - [0x1A108, layers, layers]
-          - [0x1A270, skip]
+          - [0x1A270, paldef, palette_def]
+          - [0x1A2D8, skip]
+          - [0x216B8, palette, D_8018A978, 16]
+          - [0x21978, palette, D_8018AC38, 16]
+          - [0x21A38, palette, D_8018ACF8, 16]
+          - [0x21AF8, palette, D_8018ADB8, 16]
+          - [0x21B98, palette, D_8018AE58, 16]
+          - [0x21C98, palette, D_8018AF58, 16]
+          - [0x21D18, palette, D_8018AFD8, 16]
+          - [0x21E58, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno0.bin
     asset_path: assets/st/rno0
     src_path: src/st/rno0

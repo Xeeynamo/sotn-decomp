@@ -5,7 +5,6 @@
 u8 unused_gfx[] = {
 #include "gen/unused_gfx.h"
 };
-#endif
 
 u8 D_80183140[] = {
 #include "gen/D_80183140.h"
@@ -43,6 +42,8 @@ u8 D_80189070[] = {
 u8 D_80189E80[] = {
 #include "gen/D_80189E80.h"
 };
+#endif
+
 u16 D_8018A978[] = {
 #include "gen/D_8018A978.h"
 };
