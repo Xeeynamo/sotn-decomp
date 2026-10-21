@@ -987,8 +987,8 @@ files:
         assets:
           - [0x80, skip]
           - [0x1A0A8, sprite_banks, psp/sprite_banks]
-          - [0x1A108, skip]
-
+          - [0x1A108, layers, layers]
+          - [0x1A270, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno0.bin
     asset_path: assets/st/rno0
     src_path: src/st/rno0
