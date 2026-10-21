@@ -26,7 +26,7 @@ jobs:
     # Building and testing cannot work if the repository owner is not Xeeynamo
     # due to the missing secrets to clone the game's data repository
     if: github.repository == 'Xeeynamo/sotn-decomp'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment: ${{ (github.event_name != 'pull_request_target' || contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.pull_request.author_association)) && '' || 'ci-secrets' }}
     env:
       SOTN_SATURN_COMPILER: ${{ inputs.saturn_compiler || 'native64' }}
@@ -68,7 +68,7 @@ jobs:
 
   function-finder-saturn:
     if: github.repository == 'Xeeynamo/sotn-decomp' && github.ref == 'refs/heads/master' && github.event_name == 'push'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Clone main repo
         uses: actions/checkout@v7
