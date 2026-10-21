@@ -25,7 +25,7 @@ jobs:
     # Building and testing cannot work if the repository owner is not Xeeynamo
     # due to the missing secrets to clone the CI dependencies
     if: github.repository == 'Xeeynamo/sotn-decomp'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment: ${{ (github.event_name != 'pull_request_target' || contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.pull_request.author_association)) && '' || 'ci-secrets' }}
     env:
       VERSION: ${{ matrix.version }}
@@ -84,7 +84,7 @@ jobs:
     # Building and testing cannot work if the repository owner is not Xeeynamo
     # due to the missing secrets to clone the CI dependencies
     if: github.repository == 'Xeeynamo/sotn-decomp'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     # Gate secret access behind a manual-approval environment for untrusted
     # authors; owners, org members and collaborators run without the gate.
     environment: ${{ (github.event_name != 'pull_request_target' || contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.pull_request.author_association)) && '' || 'ci-secrets' }}
@@ -119,7 +119,7 @@ jobs:
         version: ["us"]
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     needs: build-and-test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
       VERSION: ${{ matrix.version }}
     steps:
@@ -176,7 +176,7 @@ jobs:
         version: ["pspeu"]
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     needs: build-and-test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
       VERSION: ${{ matrix.version }}
     steps:
