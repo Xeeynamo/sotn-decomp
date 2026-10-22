@@ -19,6 +19,8 @@ enum Palettes {
     PAL_HIPPOGRYPH = 0x200,
     PAL_STAINED_GLASS_LIGHT = 0x204,
     PAL_STAINED_GLASS_BG_LIGHT = 0x205,
+    PAL_PORTRAIT_ALUCARD = 0x210,
+    PAL_PORTRAIT_MARIA = 0x218,
 };
 
 typedef enum EntityID {

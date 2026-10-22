@@ -93,7 +93,7 @@ void func_us_801A3B88(Entity* self) {
         self->drawFlags |= ENTITY_ROTATE;
         self->blendMode |= BLEND_TRANSP | BLEND_ADD;
         self->opacity = 0x80;
-        self->rotate = 0xE00;
+        self->rotate = ROT(315);
         self->scaleX = self->scaleY = 0x20;
         if (self->facingLeft) {
             self->velocityX = FIX(4.40625);
@@ -297,7 +297,7 @@ void EntityHippogryphHitbox(Entity* self) {
         self->hitboxState = 2;
         self->flags |= FLAG_SUPPRESS_STUN;
         self->attack = 0;
-        self->attackElement = 0;
+        self->attackElement = ELEMENT_NONE;
         self->parent = self - 1;
         self->nextPart = self - 1;
     }
