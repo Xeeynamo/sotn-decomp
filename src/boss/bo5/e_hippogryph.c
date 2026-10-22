@@ -70,7 +70,95 @@ bool CheckHippogryphFloorCollision(s16* sensors) {
 
 INCLUDE_ASM("boss/bo5/nonmatchings/e_hippogryph", func_us_801A1C14);
 
-INCLUDE_ASM("boss/bo5/nonmatchings/e_hippogryph", func_us_801A3B88);
+extern s32 D_us_801806E0;
+extern EInit D_us_801804F0;
+extern AnimateEntityFrame D_us_80180A00[];
+extern AnimateEntityFrame D_us_80180A0C[];
+
+void func_us_801A3B88(Entity* self) {
+    Entity* entity;
+
+    if (D_us_801806E0 & 2) {
+        DestroyEntity(self);
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_801804F0);
+        self->hitboxState = 0;
+        self->animSet = 2;
+        self->animCurFrame = 1;
+        self->drawFlags |= ENTITY_SCALEX | ENTITY_SCALEY | ENTITY_OPACITY;
+        self->drawFlags |= ENTITY_ROTATE;
+        self->blendMode |= BLEND_TRANSP | BLEND_ADD;
+        self->opacity = 0x80;
+        self->rotate = 0xE00;
+        self->scaleX = self->scaleY = 0x20;
+        if (self->facingLeft) {
+            self->velocityX = FIX(4.40625);
+        } else {
+            self->velocityX = -FIX(4.40625);
+        }
+        if (self->params) {
+            self->velocityY = FIX(0.1875);
+        } else {
+            self->velocityY = -FIX(0.375);
+        }
+        if (self->params >= 2) {
+            self->opacity = 0x7C;
+            self->velocityY = 0;
+            if (self->params == 3) {
+                self->hitboxState = 1;
+            }
+        }
+        break;
+
+    case 1:
+        AnimateEntity(D_us_80180A00, self);
+        MoveEntity();
+        self->velocityY -= FIX(0.078125);
+        self->opacity -= 5;
+        self->scaleX += 0x18;
+        self->scaleY = self->scaleX;
+        if (self->scaleX > 0xF0) {
+            self->velocityX = self->velocityX / 4;
+            self->pose = 0;
+            self->poseTimer = 0;
+            self->step++;
+        }
+        if (self->params == 3 && (Random() & 1)) {
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (entity != NULL) {
+                DestroyEntity(entity);
+                CreateEntityFromEntity(E_ID(UNK_26), self, entity);
+                entity->facingLeft = self->facingLeft;
+                entity->params = self->params;
+                entity->scaleX = self->scaleX;
+                entity->scaleY = self->scaleY;
+            }
+        }
+        if (!self->params && (Random() & 7)) {
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (entity != NULL) {
+                DestroyEntity(entity);
+                CreateEntityFromEntity(E_ID(UNK_26), self, entity);
+                entity->facingLeft = self->facingLeft;
+                entity->params = self->params;
+                entity->scaleX = self->scaleX;
+                entity->scaleY = self->scaleY;
+            }
+        }
+        break;
+
+    case 2:
+        MoveEntity();
+        if (!AnimateEntity(D_us_80180A0C, self)) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 extern EInit g_EInitParticle;
 extern AnimateEntityFrame D_us_80180A18[];
@@ -119,7 +207,6 @@ void func_us_801A3E78(Entity* self) {
     }
 }
 
-extern s32 D_us_801806E0;
 extern EInit D_us_801804E4;
 extern s16 D_us_80180ABC[];
 extern AnimateEntityFrame D_us_801809F0[];
@@ -274,8 +361,6 @@ void EntityHippogryphHitbox(Entity* self) {
         DestroyEntity(self);
     }
 }
-
-extern EInit D_us_801804F0;
 
 void EntityFireDamageHitbox(Entity* self) {
     if (!self->step) {
