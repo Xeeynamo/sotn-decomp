@@ -4355,6 +4355,14 @@ typedef struct {
 typedef struct {
     /* 0x7C */ u8 unk7C;
     /* 0x7D */ u8 unk7D;
+    /* 0x7E */ u8 unk7E;
+    /* 0x7F */ u8 : 8;
+    /* 0x80 */ s32 unk80;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 unk88;
+    /* 0x8C */ s32 unk8C;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 unk94;
 } ET_801A19CC;
 
 // func_us_8019921C (rbo8, rbo8_psp)

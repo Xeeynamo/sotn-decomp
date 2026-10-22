@@ -9,7 +9,47 @@ void func_us_801A19CC(u8 arg0) {
     g_CurrentEntity->step_s = 0;
 }
 
-INCLUDE_ASM("boss/bo5/nonmatchings/e_hippogryph", func_us_801A19FC);
+void func_us_801A19FC(u8 count, s16 posY) {
+    Entity* entity;
+    s32 i;
+
+    for (i = 0; i < count; i++) {
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (entity != NULL) {
+            DestroyEntity(entity);
+            MakeEntityFromId(E_ID(UNK_22), g_CurrentEntity, entity);
+            entity->flags = FLAG_DESTROY_IF_OUT_OF_CAMERA |
+                            FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
+                            FLAG_POS_CAMERA_LOCKED | FLAG_UNK_00200000 |
+                            FLAG_UNK_2000;
+            entity->posX.i.hi += (Random() & 0x3F) - 0x20;
+            entity->posY.i.hi += (Random() & 0x3F) - 0x20 + posY;
+            entity->velocityY = -FIX(0.25);
+            if (Random() & 1) {
+                entity->zPriority++;
+            }
+            entity->step = 0x30;
+            entity->params = Random() & 1;
+            if (entity->params) {
+                entity->step = 0x32;
+                if (Random() & 1) {
+                    entity->ext.et_801A19CC.unk8C = 0xD00;
+                    entity->velocityX = -FIX(0.8125);
+                } else {
+                    entity->ext.et_801A19CC.unk8C = -0xD00;
+                    entity->velocityX = FIX(0.8125);
+                }
+            }
+            if (g_CurrentEntity->step == 0x16) {
+                if (g_CurrentEntity->facingLeft) {
+                    g_CurrentEntity->velocityX += FIX(0.25);
+                } else {
+                    g_CurrentEntity->velocityX -= FIX(0.25);
+                }
+            }
+        }
+    }
+}
 
 bool CheckHippogryphFloorCollision(s16* sensors) {
     s32 posY;
