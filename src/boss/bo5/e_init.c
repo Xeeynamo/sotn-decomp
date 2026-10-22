@@ -35,7 +35,7 @@ void EntityClouds(Entity* self);
 void EntityBackgroundSkyLand(Entity* self);
 void EntityRbo3Door(Entity* self);
 void func_us_801A1C14(Entity* self);
-void func_us_801A425C(Entity* self);
+void EntityHippogryphHitbox(Entity* self);
 void EntityFireDamageHitbox(Entity* self);
 void func_us_801A3FD4(Entity* self);
 void func_us_801A3E78(Entity* self);
@@ -83,7 +83,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityBackgroundSkyLand,
     EntityRbo3Door,
     func_us_801A1C14,
-    func_us_801A425C,
+    EntityHippogryphHitbox,
     EntityFireDamageHitbox,
     func_us_801A3FD4,
     func_us_801A3E78,

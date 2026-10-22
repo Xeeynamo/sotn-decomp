@@ -18,10 +18,10 @@ void func_us_801A19FC(u8 count, s16 posY) {
         if (entity != NULL) {
             DestroyEntity(entity);
             MakeEntityFromId(E_ID(UNK_22), g_CurrentEntity, entity);
-            entity->flags = FLAG_DESTROY_IF_OUT_OF_CAMERA |
-                            FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
-                            FLAG_POS_CAMERA_LOCKED | FLAG_UNK_00200000 |
-                            FLAG_UNK_2000;
+            entity->flags =
+                FLAG_DESTROY_IF_OUT_OF_CAMERA |
+                FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA | FLAG_POS_CAMERA_LOCKED |
+                FLAG_UNK_00200000 | FLAG_UNK_2000;
             entity->posX.i.hi += (Random() & 0x3F) - 0x20;
             entity->posY.i.hi += (Random() & 0x3F) - 0x20 + posY;
             entity->velocityY = -FIX(0.25);
@@ -197,7 +197,83 @@ void func_us_801A3FD4(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/bo5/nonmatchings/e_hippogryph", func_us_801A425C);
+extern EInit g_EInitInteractable;
+extern u8 D_us_80180B0C[];
+
+void EntityHippogryphHitbox(Entity* self) {
+    Entity* parent;
+    u8 frame;
+
+    if (!self->step) {
+        InitializeEntity(g_EInitInteractable);
+        self->hitPoints = 0x7FFE;
+        self->hitboxState = 2;
+        self->flags |= FLAG_SUPPRESS_STUN;
+        self->attack = 0;
+        self->attackElement = 0;
+        self->parent = self - 1;
+        self->nextPart = self - 1;
+    }
+
+    parent = self - 1;
+    frame = parent->animCurFrame;
+    if (frame > 0x67) {
+        frame = 0;
+    }
+
+    frame = D_us_80180B0C[frame];
+    switch (frame) {
+    case 0:
+        self->hitboxOffX = 0;
+        self->hitboxOffY = 0;
+        self->hitboxWidth = 0;
+        self->hitboxHeight = 0;
+        break;
+    case 1:
+        self->hitboxOffX = 8;
+        self->hitboxOffY = -24;
+        self->hitboxWidth = 20;
+        self->hitboxHeight = 18;
+        break;
+    case 2:
+        self->hitboxOffX = 12;
+        self->hitboxOffY = -8;
+        self->hitboxWidth = 18;
+        self->hitboxHeight = 8;
+        break;
+    case 3:
+        self->hitboxOffX = -2;
+        self->hitboxOffY = 24;
+        self->hitboxWidth = 8;
+        self->hitboxHeight = 18;
+        break;
+    case 4:
+        self->hitboxOffX = 6;
+        self->hitboxOffY = 10;
+        self->hitboxWidth = 16;
+        self->hitboxHeight = 10;
+        break;
+    case 5:
+        self->hitboxOffX = 16;
+        self->hitboxOffY = -32;
+        self->hitboxWidth = 22;
+        self->hitboxHeight = 22;
+        break;
+    case 6:
+        self->hitboxOffX = 2;
+        self->hitboxOffY = -32;
+        self->hitboxWidth = 12;
+        self->hitboxHeight = 24;
+        break;
+    }
+
+    self->facingLeft = parent->facingLeft;
+    self->posX.i.hi = parent->posX.i.hi;
+    self->posY.i.hi = parent->posY.i.hi;
+    if (parent->entityId != E_ID(UNK_22)) {
+        DestroyEntity(self);
+    }
+}
 
 extern EInit D_us_801804F0;
 
