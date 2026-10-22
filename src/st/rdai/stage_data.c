@@ -61,3 +61,6 @@ u16 pal_A540[] = {
 u16 pal_A640[] = {
 #include "gen/pal_A640.h"
 };
+u16 pal_unused_2[] = {
+#include "gen/pal_unused_2.h"
+};

@@ -1331,7 +1331,8 @@ files:
           - [0xA4E0, palette, pal_A4E0, 16] # 0x22D
           - [0xA540, palette, pal_A540, 16] # 0x230
           - [0xA640, palette, pal_A640, 16] # 0x238
-          - [0xA660, skip] # 0x23250 unreferenced bytes, unrecognized
+          - [0xA660, palette, pal_unused_2, 16]
+          - [0xA680, skip]
           - [0x2D8B0, skip]
   - target: disks/us/ST/RLIB/RLIB.BIN
     asset_path: assets/st/rlib
