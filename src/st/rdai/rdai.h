@@ -68,7 +68,7 @@ enum EntityID {
     E_IMP_SMOKE,            // EntityImpSmoke
     E_CLOUDS,               // EntityClouds
     E_BACKGROUND_SKY_LAND,  // EntityBackgroundSkyLand
-    E_UNK_2C,               // EntityRbo3Door
+    E_BOSS_DOOR,            // EntityBossRoomDoor
     E_SPIKES,               // EntitySpikes
     E_SPIKES_PARTS,         // EntitySpikesParts
     E_SPIKES_DUST,          // EntitySpikesDust
@@ -76,7 +76,7 @@ enum EntityID {
     E_BREAKABLE_DEBRIS,     // EntityBreakableDebris
     E_BLACK_PANTHER,        // EntityBlackPanther
     E_BALLOON_POD,          // EntityBalloonPod
-    E_UNK_34,               // EntityImpDeathParticle
+    E_IMP_DEATH_PARTICLE,   // EntityImpDeathParticle
     NUM_ENTITIES,
 };
 
