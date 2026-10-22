@@ -981,6 +981,36 @@ files:
     asset_path: assets/st/rlib
     src_path: src/st/rlib
     splat_config_path: config/splat.pspeu.strlib.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          - [0x1A0A8, sprite_banks, psp/sprite_banks]
+          - [0x1A108, layers, layers]
+          - [0x1A270, paldef, palette_def]
+          - [0x1A2D8, gfx_banks, psp/graphics_banks]
+          - [0x1A3E0, skip]
+          - [0x1A5C8, rooms, rooms]
+          - [0x1A650, skip]
+          - [0x1A758, cmpgfx, D_80183A28, 128, 128, 4]
+          - [0x1B310, cmpgfx, D_801845DC, 128, 128, 4]
+          - [0x1BF60, cmpgfx, D_8018522C, 128, 128, 4]
+          - [0x1C6E0, cmpgfx, D_801859AC, 128, 128, 4]
+          - [0x1D668, cmpgfx, D_80186934, 128, 128, 4]
+          - [0x1DFC0, cmpgfx, D_80187288, 128, 128, 4]
+          - [0x1E978, cmpgfx, D_80187C3C, 128, 128, 4]
+          - [0x1F098, cmpgfx, D_8018835C, 128, 128, 4]
+          - [0x1FDB0, cmpgfx, D_80189070, 128, 128, 4]
+          - [0x20BC0, cmpgfx, D_80189E80, 128, 128, 4]
+          - [0x216B8, palette, D_8018A978, 16]
+          - [0x21978, palette, D_8018AC38, 16]
+          - [0x21A38, palette, D_8018ACF8, 16]
+          - [0x21AF8, palette, D_8018ADB8, 16]
+          - [0x21B98, palette, D_8018AE58, 16]
+          - [0x21C98, palette, D_8018AF58, 16]
+          - [0x21D18, palette, D_8018AFD8, 16]
+          - [0x21E58, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno0.bin
     asset_path: assets/st/rno0
     src_path: src/st/rno0
