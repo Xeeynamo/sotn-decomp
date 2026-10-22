@@ -43,7 +43,7 @@ void func_us_801A3B88(Entity* self);
 void EntityLifeUpSpawn(Entity* self);
 void EntityPlayDeathBallad(Entity* self);
 void EntityCutscene(Entity* self);
-void func_us_801A5F88(Entity* self);
+void EntityCutsceneStage(Entity* self);
 void func_us_801A62B4(Entity* self);
 void func_801B1D68(Entity* self);
 void BO5_RicSetDeadPrologue(Entity* self);
@@ -91,7 +91,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityLifeUpSpawn,
     EntityPlayDeathBallad,
     EntityCutscene,
-    func_us_801A5F88,
+    EntityCutsceneStage,
     func_us_801A62B4,
     func_801B1D68,
     BO5_RicSetDeadPrologue,

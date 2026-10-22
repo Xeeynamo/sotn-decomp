@@ -4351,6 +4351,11 @@ typedef struct {
     /* 0xA0 */ struct Entity* source;
 } ET_801980E4;
 
+// EntityCutsceneStage (bo5)
+typedef struct {
+    /* 0x7C */ struct Entity* target;
+} ET_CutsceneStage;
+
 // func_us_801A19CC (bo5)
 typedef struct {
     /* 0x7C */ u8 unk7C;
@@ -5049,6 +5054,7 @@ typedef union { // offset=0x7C
     ET_Shaft shaft;
     ET_801980E4 et_801980E4;
     ET_801A19CC et_801A19CC;
+    ET_CutsceneStage cutsceneStage;
     ET_8019921C et_8019921C;
     ET_OlroxDrool olroxDrool;
     ET_OlroxLaser olroxLaser;

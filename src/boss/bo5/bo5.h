@@ -65,7 +65,7 @@ typedef enum EntityID {
     E_LIFE_UP_SPAWN,            // EntityLifeUpSpawn
     E_PLAY_DEATH_BALLAD,        // EntityPlayDeathBallad
     E_CUTSCENE,                 // EntityCutscene
-    E_UNK_2B,                   // func_us_801A5F88
+    E_CUTSCENE_STAGE,           // EntityCutsceneStage
     E_UNK_2C,                   // func_us_801A62B4
     E_UNK_2D,                   // func_801B1D68
     E_UNK_2E,                   // RicSetDeadPrologue
@@ -99,7 +99,7 @@ extern s32 E_ID(UNK_27);
 extern s32 E_ID(LIFE_UP_SPAWN);
 extern s32 E_ID(PLAY_DEATH_BALLAD);
 extern s32 E_ID(CUTSCENE);
-extern s32 E_ID(UNK_2B);
+extern s32 E_ID(CUTSCENE_STAGE);
 extern s32 E_ID(UNK_2C);
 extern s32 E_ID(UNK_2D);
 extern s32 E_ID(UNK_2E);
