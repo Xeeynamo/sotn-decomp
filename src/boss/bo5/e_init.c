@@ -22,7 +22,7 @@ void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
-void func_801A8620(Entity* self);
+void EntityCameraBounds(Entity* self);
 void EntityStainedGlass(Entity* self);
 void EntityStainedGlassBackground(Entity* self);
 void EntityBlock(Entity* self);
@@ -70,7 +70,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
-    func_801A8620,
+    EntityCameraBounds,
     EntityStainedGlass,
     EntityStainedGlassBackground,
     EntityBlock,

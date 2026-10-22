@@ -44,7 +44,7 @@ typedef enum EntityID {
     E_UNK_ID13,                 // EntityUnkId13
     E_EXPLOSION_VARIANTS,       // EntityExplosionVariants
     E_GREY_PUFF,                // EntityGreyPuff
-    E_UNK_16,                   // func_801A8620
+    E_CAMERA_BOUNDS,            // EntityCameraBounds
     E_STAINED_GLASS,            // EntityStainedGlass
     E_STAINED_GLASS_BACKGROUND, // EntityStainedGlassBackground
     E_BLOCK,                    // EntityBlock
@@ -78,7 +78,7 @@ extern s32 E_ID(LOCK_CAMERA);
 extern s32 E_ID(UNK_ID13);
 extern s32 E_ID(EXPLOSION_VARIANTS);
 extern s32 E_ID(GREY_PUFF);
-extern s32 E_ID(UNK_16);
+extern s32 E_ID(CAMERA_BOUNDS);
 extern s32 E_ID(STAINED_GLASS);
 extern s32 E_ID(STAINED_GLASS_BACKGROUND);
 extern s32 E_ID(BLOCK);
