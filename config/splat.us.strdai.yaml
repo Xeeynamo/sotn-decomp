@@ -44,7 +44,8 @@ segments:
       - [0x8C, .data, pal_8C]
       - [0xAC, .data, palette_def]
       - [0x118, .data, layers]
-      - [0x408, data]
+      - [0x408, .data, graphics_banks] # GfxBanks
+      - [0x570, data]
       - [0x718, .data, e_init]
       - [0x92C, .data, e_room_bg]
       - [0x944, .data, e_red_door_tiles]
@@ -68,7 +69,7 @@ segments:
       - [0x1A6C, data]
       - [0x1BD8, .data, e_clouds]
       - [0x1D10, data]
-      - [0x9F20, .data, stage_data]
+      - [0x2FC0, .data, stage_data]
       - [0xA660, data]
       - [0xA680, .data, tilemaps]
       - [0x2D8B0, .data, gen/sprites]
