@@ -41,7 +41,7 @@ void func_us_801A3FD4(Entity* self);
 void func_us_801A3E78(Entity* self);
 void func_us_801A3B88(Entity* self);
 void EntityLifeUpSpawn(Entity* self);
-void EntityPlayDeathBallad(Entity* self);
+void EntityPlayBossMusic(Entity* self);
 void EntityCutscene(Entity* self);
 void EntityCutsceneStage(Entity* self);
 void func_us_801A62B4(Entity* self);
@@ -89,7 +89,7 @@ PfnEntityUpdate EntityUpdates[] = {
     func_us_801A3E78,
     func_us_801A3B88,
     EntityLifeUpSpawn,
-    EntityPlayDeathBallad,
+    EntityPlayBossMusic,
     EntityCutscene,
     EntityCutsceneStage,
     func_us_801A62B4,

@@ -58,7 +58,7 @@ segments:
       - [0xCD80, c, st_common]
       - [0xE3A0, c, prim_helpers]
       - [0xEAE0, c, e_bell]
-      - [0xF9A8, c, e_unk_29]
+      - [0xF9A8, c, e_play_boss_music]
       - [0xFAE8, c, st_init_psp]
       - [0xFE10, c, e_breakable]
       - [0xFFD8, c, e_unk_16]

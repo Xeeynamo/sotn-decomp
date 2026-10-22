@@ -4,7 +4,7 @@
 extern EInit g_EInitInteractable;
 extern s32 D_us_80180B74;
 
-void EntityPlayDeathBallad(Entity* self) {
+void EntityPlayBossMusic(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitInteractable);
