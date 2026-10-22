@@ -1324,7 +1324,7 @@ files:
           - [0x8BF4, cmpgfx, gfx_8BF4, 128, 128, 4]
           - [0x95A8, cmpgfx, gfx_95A8, 128, 128, 4]
           - [0x9F20, palette, pal_9F20, 16] # 0x2E0
-          - [0xA120, palette, pal_A120, 16] # guessed: unused, no palette def refers to it
+          - [0xA120, palette, pal_unused, 16] # no palette def refers to it
           - [0xA1E0, palette, pal_A1E0, 16] # 0x212
           - [0xA220, palette, pal_A220, 16] # 0x214
           - [0xA420, palette, pal_A420, 16] # 0x224
