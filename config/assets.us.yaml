@@ -1324,14 +1324,15 @@ files:
           - [0x8BF4, cmpgfx, gfx_8BF4, 128, 128, 4]
           - [0x95A8, cmpgfx, gfx_95A8, 128, 128, 4]
           - [0x9F20, palette, pal_9F20, 16] # 0x2E0
-          - [0xA120, palette, pal_A120, 16] # guessed: unused, no palette def refers to it
+          - [0xA120, palette, pal_unused, 16] # no palette def refers to it
           - [0xA1E0, palette, pal_A1E0, 16] # 0x212
           - [0xA220, palette, pal_A220, 16] # 0x214
           - [0xA420, palette, pal_A420, 16] # 0x224
           - [0xA4E0, palette, pal_A4E0, 16] # 0x22D
           - [0xA540, palette, pal_A540, 16] # 0x230
           - [0xA640, palette, pal_A640, 16] # 0x238
-          - [0xA660, skip] # 0x23250 unreferenced bytes, unrecognized
+          - [0xA660, palette, pal_unused_2, 16]
+          - [0xA680, skip]
           - [0x2D8B0, skip]
   - target: disks/us/ST/RLIB/RLIB.BIN
     asset_path: assets/st/rlib

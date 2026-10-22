@@ -44,7 +44,7 @@ void EntityImp(Entity* self);
 void EntityImpSmoke(Entity* self);
 void EntityClouds(Entity* self);
 void EntityBackgroundSkyLand(Entity* self);
-void EntityRbo3Door(Entity* self);
+void EntityBossRoomDoor(Entity* self);
 void EntitySpikes(Entity* self);
 void EntitySpikesParts(Entity* self);
 void EntitySpikesDust(Entity* self);
@@ -98,7 +98,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityImpSmoke,
     EntityClouds,
     EntityBackgroundSkyLand,
-    EntityRbo3Door,
+    EntityBossRoomDoor,
     EntitySpikes,
     EntitySpikesParts,
     EntitySpikesDust,
