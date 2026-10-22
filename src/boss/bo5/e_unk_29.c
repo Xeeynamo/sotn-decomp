@@ -2,7 +2,6 @@
 #include "bo5.h"
 
 extern EInit g_EInitInteractable;
-extern s32 D_us_801806DC;
 extern s32 D_us_80180B74;
 
 void EntityPlayDeathBallad(Entity* self) {

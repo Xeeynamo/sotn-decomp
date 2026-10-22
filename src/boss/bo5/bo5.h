@@ -105,4 +105,6 @@ extern s32 E_ID(UNK_2D);
 extern s32 E_ID(UNK_2E);
 #endif
 
+extern s32 D_us_801806DC;
+
 #endif // BO5_H
