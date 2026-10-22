@@ -36,7 +36,7 @@ s32 E_ID(UNK_25);
 s32 E_ID(UNK_26);
 s32 E_ID(UNK_27);
 s32 E_ID(LIFE_UP_SPAWN);
-s32 E_ID(UNK_29);
+s32 E_ID(PLAY_DEATH_BALLAD);
 s32 E_ID(CUTSCENE);
 s32 E_ID(UNK_2B);
 s32 E_ID(UNK_2C);
@@ -74,7 +74,7 @@ static void InitEntityIds(void) {
     SET_E_ID(UNK_26);
     SET_E_ID(UNK_27);
     SET_E_ID(LIFE_UP_SPAWN);
-    SET_E_ID(UNK_29);
+    SET_E_ID(PLAY_DEATH_BALLAD);
     SET_E_ID(CUTSCENE);
     SET_E_ID(UNK_2B);
     SET_E_ID(UNK_2C);
