@@ -35,7 +35,6 @@ u8 gfx_95A8[] = {
 #include "gen/gfx_95A8.h"
 };
 
-
 u16 pal_9F20[] = {
 #include "gen/pal_9F20.h"
 };
