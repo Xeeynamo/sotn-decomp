@@ -55,8 +55,8 @@ enum EntityID {
     E_CASTLE_WALL1,         // EntityCastleWall1
     E_CASTLE_WALL2,         // EntityCastleWall2
     E_STAIRCASE,            // EntityStaircase
-    E_UNK_1A,               // func_us_801B2C28
-    E_UNK_1B,               // func_us_801B3368
+    E_STAINED_GLASS,        // EntityStainedGlass
+    E_STAINED_GLASS_BG,     // EntityStainedGlassBackground
     E_UNK_1C,               // func_us_801BFE6C
     E_UNK_1D,               // func_us_801C0240
     E_UNK_1E,               // func_us_801BF830

@@ -26,8 +26,8 @@ void func_us_801B1C34(Entity* self);
 void EntityCastleWall1(Entity* self);
 void EntityCastleWall2(Entity* self);
 void EntityStaircase(Entity* self);
-void func_us_801B2C28(Entity* self);
-void func_us_801B3368(Entity* self);
+void EntityStainedGlass(Entity* self);
+void EntityStainedGlassBackground(Entity* self);
 void func_us_801BFE6C(Entity* self);
 void func_us_801C0240(Entity* self);
 void func_us_801BF830(Entity* self);
@@ -80,8 +80,8 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityCastleWall1,
     EntityCastleWall2,
     EntityStaircase,
-    func_us_801B2C28,
-    func_us_801B3368,
+    EntityStainedGlass,
+    EntityStainedGlassBackground,
     func_us_801BFE6C,
     func_us_801C0240,
     func_us_801BF830,

@@ -162,7 +162,7 @@ Primitive* StainedGlassRecurse(
 }
 
 // Renders the stained glass and "sunlight" effect
-void func_us_801B2C28(Entity* self) {
+void EntityStainedGlass(Entity* self) {
     s32 primIndex;
     s32 p;
     s32 flag;
@@ -375,7 +375,7 @@ static SVECTOR bg_rot_vector = {0, 0, 0}; // bss on pspeu
 #define LONG6 &rect3.w
 #endif
 
-void func_us_801B3368(Entity* self) {
+void EntityStainedGlassBackground(Entity* self) {
 // psp wants this higher in the stack than psx
 #ifdef VERSION_PSP
     RECT rect3, rect2, rect1;
