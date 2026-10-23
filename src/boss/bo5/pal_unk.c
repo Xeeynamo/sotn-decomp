@@ -12,6 +12,10 @@ u16 D_us_8018E9C4[] = {
 #endif
 u16 D_us_8018EBE4[] = {
 #include "gen/D_us_8018EBE4.h"
+#ifdef FIX_UB
+// fix crash where bo5/gen/palette_def.h copies 0x100 bytes instead of 0x40
+#include "gen/D_us_8018EC24.h"
+#endif
 };
 u16 D_us_8018EC24[] = {
 #include "gen/D_us_8018EC24.h"

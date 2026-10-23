@@ -1,4 +1,3 @@
-g_EInitInteractable = 0x80180818;
 g_EInitCommon = 0x8018083C;
 g_EInitRdaiUnk1F = 0x8018086C;
 g_EInitSpectralSwordRDAI = 0x8018089C;
@@ -14,8 +13,6 @@ g_RdaiUnk33Anim5 = 0x80181AA4;
 g_ImpDeathParticleAnim = 0x80181AB4;
 rooms = 0x80181B04;
 sprites_rdai_2 = 0x801ADD28;
-StainedGlassBlendPalette = 0x801B2578;
-StainedGlassRecurse = 0x801B27A4;
 Random = 0x801B462C;
 CreateEntityFromCurrentEntity = 0x801B6CA4;
 CreateEntityFromEntity = 0x801B6D18;

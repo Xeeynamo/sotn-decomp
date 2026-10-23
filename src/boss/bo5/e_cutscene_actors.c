@@ -116,7 +116,11 @@ void EntityCutsceneStage(Entity* self) {
 }
 #endif
 
+#ifndef VERSION_PC
 INCLUDE_ASM("boss/bo5/nonmatchings/e_cutscene_actors", func_us_801A62B4);
+#else
+void func_us_801A62B4(Entity* self) { NOT_IMPLEMENTED; }
+#endif
 
 void func_us_801A666C(Primitive* prim, s16 arg1) {
     prim->x0 = prim->x2 -= arg1;
@@ -125,7 +129,11 @@ void func_us_801A666C(Primitive* prim, s16 arg1) {
     prim->y2 = prim->y3 += arg1;
 }
 
+#ifndef VERSION_PC
 INCLUDE_ASM("boss/bo5/nonmatchings/e_cutscene_actors", func_us_801A66B0);
+#else
+void func_us_801A66B0(Entity* self, s32 arg1) { NOT_IMPLEMENTED; }
+#endif
 
 void func_801B1D68(Entity* self) { func_us_801A66B0(self, 0); }
 
