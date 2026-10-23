@@ -22,7 +22,7 @@ void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
-void func_801A8620(Entity* self);
+void EntityCameraBounds(Entity* self);
 void EntityStainedGlass(Entity* self);
 void EntityStainedGlassBackground(Entity* self);
 void EntityBlock(Entity* self);
@@ -35,15 +35,15 @@ void EntityClouds(Entity* self);
 void EntityBackgroundSkyLand(Entity* self);
 void EntityRbo3Door(Entity* self);
 void func_us_801A1C14(Entity* self);
-void func_us_801A425C(Entity* self);
+void EntityHippogryphHitbox(Entity* self);
 void EntityFireDamageHitbox(Entity* self);
 void func_us_801A3FD4(Entity* self);
 void func_us_801A3E78(Entity* self);
 void func_us_801A3B88(Entity* self);
 void EntityLifeUpSpawn(Entity* self);
-void func_us_801A4494(Entity* self);
+void EntityPlayBossMusic(Entity* self);
 void EntityCutscene(Entity* self);
-void func_us_801A5F88(Entity* self);
+void EntityCutsceneStage(Entity* self);
 void func_us_801A62B4(Entity* self);
 void func_801B1D68(Entity* self);
 void BO5_RicSetDeadPrologue(Entity* self);
@@ -70,7 +70,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
-    func_801A8620,
+    EntityCameraBounds,
     EntityStainedGlass,
     EntityStainedGlassBackground,
     EntityBlock,
@@ -83,15 +83,15 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityBackgroundSkyLand,
     EntityRbo3Door,
     func_us_801A1C14,
-    func_us_801A425C,
+    EntityHippogryphHitbox,
     EntityFireDamageHitbox,
     func_us_801A3FD4,
     func_us_801A3E78,
     func_us_801A3B88,
     EntityLifeUpSpawn,
-    func_us_801A4494,
+    EntityPlayBossMusic,
     EntityCutscene,
-    func_us_801A5F88,
+    EntityCutsceneStage,
     func_us_801A62B4,
     func_801B1D68,
     BO5_RicSetDeadPrologue,

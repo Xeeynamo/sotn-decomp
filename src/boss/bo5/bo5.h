@@ -19,6 +19,8 @@ enum Palettes {
     PAL_HIPPOGRYPH = 0x200,
     PAL_STAINED_GLASS_LIGHT = 0x204,
     PAL_STAINED_GLASS_BG_LIGHT = 0x205,
+    PAL_PORTRAIT_ALUCARD = 0x210,
+    PAL_PORTRAIT_MARIA = 0x218,
 };
 
 typedef enum EntityID {
@@ -44,7 +46,7 @@ typedef enum EntityID {
     E_UNK_ID13,                 // EntityUnkId13
     E_EXPLOSION_VARIANTS,       // EntityExplosionVariants
     E_GREY_PUFF,                // EntityGreyPuff
-    E_UNK_16,                   // func_801A8620
+    E_CAMERA_BOUNDS,            // EntityCameraBounds
     E_STAINED_GLASS,            // EntityStainedGlass
     E_STAINED_GLASS_BACKGROUND, // EntityStainedGlassBackground
     E_BLOCK,                    // EntityBlock
@@ -57,15 +59,15 @@ typedef enum EntityID {
     E_BACKGROUND_SKY_LAND,      // EntityBackgroundSkyLand
     E_RBO3DOOR,                 // EntityRbo3Door
     E_UNK_22,                   // func_us_801A1C14
-    E_UNK_23,                   // func_us_801A425C
+    E_UNK_23,                   // EntityHippogryphHitbox
     E_UNK_24,                   // EntityFireDamageHitbox
     E_UNK_25,                   // func_us_801A3FD4
     E_UNK_26,                   // func_us_801A3E78
     E_UNK_27,                   // func_us_801A3B88
     E_LIFE_UP_SPAWN,            // EntityLifeUpSpawn
-    E_UNK_29,                   // func_us_801A4494
+    E_PLAY_BOSS_MUSIC,          // EntityPlayBossMusic
     E_CUTSCENE,                 // EntityCutscene
-    E_UNK_2B,                   // func_us_801A5F88
+    E_CUTSCENE_STAGE,           // EntityCutsceneStage
     E_UNK_2C,                   // func_us_801A62B4
     E_UNK_2D,                   // func_801B1D68
     E_UNK_2E,                   // RicSetDeadPrologue
@@ -78,7 +80,7 @@ extern s32 E_ID(LOCK_CAMERA);
 extern s32 E_ID(UNK_ID13);
 extern s32 E_ID(EXPLOSION_VARIANTS);
 extern s32 E_ID(GREY_PUFF);
-extern s32 E_ID(UNK_16);
+extern s32 E_ID(CAMERA_BOUNDS);
 extern s32 E_ID(STAINED_GLASS);
 extern s32 E_ID(STAINED_GLASS_BACKGROUND);
 extern s32 E_ID(BLOCK);
@@ -97,12 +99,14 @@ extern s32 E_ID(UNK_25);
 extern s32 E_ID(UNK_26);
 extern s32 E_ID(UNK_27);
 extern s32 E_ID(LIFE_UP_SPAWN);
-extern s32 E_ID(UNK_29);
+extern s32 E_ID(PLAY_BOSS_MUSIC);
 extern s32 E_ID(CUTSCENE);
-extern s32 E_ID(UNK_2B);
+extern s32 E_ID(CUTSCENE_STAGE);
 extern s32 E_ID(UNK_2C);
 extern s32 E_ID(UNK_2D);
 extern s32 E_ID(UNK_2E);
 #endif
+
+extern s32 D_us_801806DC;
 
 #endif // BO5_H
