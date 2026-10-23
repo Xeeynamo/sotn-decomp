@@ -315,11 +315,26 @@ static VECTOR trans_vectors[] = {
     {0, 240, FLT(0.75)},  {0, 240, FLT(0.875)}, {0, 240, FLT(1)}};
 static SVECTOR bg_rot_vector = {0, 0, 0}; // bss on pspeu
 
-// There are a few things about this function that probably aren't quite right,
-// but it is close enough for now
-// Renders the non-stained glass portion of the background
-void func_us_801B3368(Entity* self) {
+// Big mess of a function, these are probably not rects. Someone should
+// heavily rework the function to make it operate properly.
 
+#ifdef VERSION_PSP
+#define LONG1 &rect2.w
+#define LONG2 &rect3.w
+#define LONG3 &rect3.x
+#define LONG4 &rect2.x
+#define LONG5 &rect1.w
+#define LONG6 &rect1.x
+#else
+#define LONG1 &rect1.x
+#define LONG2 &rect1.w
+#define LONG3 &rect2.x
+#define LONG4 &rect2.w
+#define LONG5 &rect3.x
+#define LONG6 &rect3.w
+#endif
+
+void func_us_801B3368(Entity* self) {
 // psp wants this higher in the stack than psx
 #ifdef VERSION_PSP
     RECT rect3, rect2, rect1;
@@ -457,9 +472,8 @@ void func_us_801B3368(Entity* self) {
             SetTransMatrix(&mtx);
             if (idx == 0) {
                 
-                RotTransPers(&bg_pos_vector, &rect1.x, &rect1.w, &rect2.x);
+                RotTransPers(&bg_pos_vector, (long*)LONG1, (long*)LONG2, (long*)LONG3);
 #ifdef VERSION_PSP
-                gte_stsxy((long*)&rect2.w);
                 tempX = (u16)LOW(rect2.w);
                 tempY = LOW(rect2.w) >> 16;
 #else
@@ -504,9 +518,8 @@ void func_us_801B3368(Entity* self) {
                 prim->drawMode = DRAW_COLORS;
                 prim = prim->next;
             } else {
-                RotTransPers4(&bg_points_0, &bg_points_1, &bg_points_2, &bg_points_3, &rect1.x, &rect2.w, &rect3.x, &rect3.w, &rect1.w, &rect2.x);
+                RotTransPers4(&bg_points_0, &bg_points_1, &bg_points_2, &bg_points_3, (long*)LONG1, (long*)LONG4, (long*)LONG5, (long*)LONG6, (long*)LONG2, (long*)LONG3);
 #ifdef VERSION_PSP
-                gte_stsxy3(&rect2.w, &rect2.x, &rect1.w);
                 if (rect1.h <= 0xF0) {
 #else
                 if (rect3.y <= 0xF0) {
@@ -515,7 +528,6 @@ void func_us_801B3368(Entity* self) {
 // psx uses temp variables here where psp does not and the ordering is a bit
 // different between the two
 #ifdef VERSION_PSP
-                    gte_stsxy((long*)&rect1.x);
                     midindex1 =
                         ((LOW(rect2.w) + LOW(rect2.x)) / 2) & 0xFFFF0000;
                     midindex1 |= (rect2.w + rect2.x) >> 1;
