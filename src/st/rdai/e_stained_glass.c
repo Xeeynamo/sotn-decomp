@@ -34,17 +34,6 @@ static CVECTOR colors[] = {
 
 static SVECTOR light_rot_vector = {0, 0, 0}; // bss on pspeu
 
-static SVECTOR bg_points_0 = {-192, -64, 0};
-static SVECTOR bg_points_1 = {192, -64, 0};
-static SVECTOR bg_points_2 = {-192, 64, 0};
-static SVECTOR bg_points_3 = {192, 64, 0};
-static SVECTOR bg_pos_vector = {0, 0, 0}; // bss on pspeu
-static VECTOR trans_vectors[] = {
-    {0, 0, FLT(1)},        {0, 240, FLT(0.125)}, {0, 240, FLT(0.25)},
-    {0, 240, FLT(0.375)}, {0, 240, FLT(0.5)},   {0, 240, FLT(0.625)},
-    {0, 240, FLT(0.75)},  {0, 240, FLT(0.875)}, {0, 240, FLT(1)}};
-static SVECTOR bg_rot_vector = {0, 0, 0}; // bss on pspeu
-
 
 #include "../e_stained_glass_blend.h"
 
@@ -315,6 +304,17 @@ void func_us_801B2C28(Entity* self) {
     }
 }
 
+static SVECTOR bg_points_0 = {-192, -64, 0};
+static SVECTOR bg_points_1 = {192, -64, 0};
+static SVECTOR bg_points_2 = {-192, 64, 0};
+static SVECTOR bg_points_3 = {192, 64, 0};
+static SVECTOR bg_pos_vector = {0, 0, 0}; // bss on pspeu
+static VECTOR trans_vectors[] = {
+    {0, 0, FLT(1)},        {0, 240, FLT(0.125)}, {0, 240, FLT(0.25)},
+    {0, 240, FLT(0.375)}, {0, 240, FLT(0.5)},   {0, 240, FLT(0.625)},
+    {0, 240, FLT(0.75)},  {0, 240, FLT(0.875)}, {0, 240, FLT(1)}};
+static SVECTOR bg_rot_vector = {0, 0, 0}; // bss on pspeu
+
 // There are a few things about this function that probably aren't quite right,
 // but it is close enough for now
 // Renders the non-stained glass portion of the background
@@ -322,7 +322,7 @@ void func_us_801B3368(Entity* self) {
 
 // psp wants this higher in the stack than psx
 #ifdef VERSION_PSP
-    RECT rect2, rect1;
+    RECT rect3, rect2, rect1;
 #endif
     long unused;
     VECTOR transVector;
