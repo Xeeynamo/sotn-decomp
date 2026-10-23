@@ -8,6 +8,48 @@ extern EInit D_us_80180444;
 extern EInit D_us_80180450;
 extern s32 g_BossMgrState;
 
+struct EntityAkmodanII {
+    ENTITY_SHARED;
+    /* 0x7C */ Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 : 8;
+    /* 0x86 */ u8 unk86;
+    /* 0x87 */ u8 grabbing;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s16 savedTileX;
+    /* 0x9E */ s16 savedTileWidth;
+    /* 0xA0 */ s16 savedTileY;
+    /* 0xA2 */ s16 savedTileHeight;
+    /* 0xA4 */ u16 baseZPriority;
+    /* 0xA6 */ s16 : 16;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ Primitive* deathPrim;
+    /* 0xB0 */ s16 deathY;
+};
+SYNC_STRUCT(EntityAkmodanII);
+
+struct func_us_801957C0 {
+    ENTITY_SHARED;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 timer;
+};
+SYNC_STRUCT(func_us_801957C0);
+
+struct func_us_80195A8C {
+    ENTITY_SHARED;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ u16 : 16;
+    /* 0x86 */ u8 unk86;
+};
+SYNC_STRUCT(func_us_80195A8C);
+
 // unused
 static s16 sensors_unused[][2] = {{0, 32}, {0, 4}, {16, -4}, {-32, 0}};
 s16 D_us_801805DC[] = {0, 32, 8, 0};
@@ -69,7 +111,7 @@ static s8 D_us_8018074C[][4] = {
     {-16, -4, 16, 4}, {-24, -4, 16, 4}, {-32, -4, 24, 4}};
 static u8 D_us_80180764[] = {0, 1, 2, 3, 4, 5, 0, 0};
 
-void EntityAkmodanII(Entity* self) {
+void EntityAkmodanII(struct EntityAkmodanII* self) {
     Primitive* prim;
     Entity* entity;
     s32 x;
@@ -96,17 +138,18 @@ void EntityAkmodanII(Entity* self) {
     case 0:
         InitializeEntity(g_EInitAkmodanII);
         self->hitboxState = 0;
-        self->ext.akmodanII.baseZPriority = self->zPriority;
-        entity = self + 1;
-        CreateEntityFromEntity(E_ID(AKMODAN_ATTACK_HITBOX), self, entity);
+        self->baseZPriority = self->zPriority;
+        entity = (Entity*)self + 1;
+        CreateEntityFromEntity(
+            E_ID(AKMODAN_ATTACK_HITBOX), (Entity*)self, entity);
         /* fall through */
     case 1:
-        entity = self + 2;
-        CreateEntityFromEntity(E_ID(UNK_1A), self, entity);
+        entity = (Entity*)self + 2;
+        CreateEntityFromEntity(E_ID(UNK_1A), (Entity*)self, entity);
         entity->params = 2;
         entity->zPriority = self->zPriority + 1;
-        entity = self + 3;
-        CreateEntityFromEntity(E_ID(UNK_1A), self, entity);
+        entity = (Entity*)self + 3;
+        CreateEntityFromEntity(E_ID(UNK_1A), (Entity*)self, entity);
         entity->params = 3;
         entity->zPriority = self->zPriority - 1;
         SetStep(2);
@@ -118,14 +161,14 @@ void EntityAkmodanII(Entity* self) {
             }
             break;
         case 1:
-            if (!AnimateEntity(D_us_801805E4, self)) {
+            if (!AnimateEntity(D_us_801805E4, (Entity*)self)) {
                 PlaySfxPositional(SFX_STONE_MOVE_B);
-                self->ext.akmodanII.unk84 = 1;
+                self->unk84 = 1;
                 SetSubStep(2);
             }
             break;
         case 2:
-            if (!AnimateEntity(D_us_801805F0, self)) {
+            if (!AnimateEntity(D_us_801805F0, (Entity*)self)) {
                 self->hitboxState = 3;
                 SetStep(3);
             }
@@ -134,11 +177,11 @@ void EntityAkmodanII(Entity* self) {
         break;
     case 3:
         if (!self->step_s) {
-            self->ext.akmodanII.timer = 0x80;
+            self->timer = 0x80;
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step_s++;
         }
-        if (!AnimateEntity(D_us_801805FC, self)) {
+        if (!AnimateEntity(D_us_801805FC, (Entity*)self)) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         if (!self->poseTimer && (self->pose == 2 || self->pose == 8)) {
@@ -153,7 +196,7 @@ void EntityAkmodanII(Entity* self) {
         if (!(Random() & 0xF)) {
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity) {
-                CreateEntityFromEntity(E_ID(UNK_1D), self, entity);
+                CreateEntityFromEntity(E_ID(UNK_1D), (Entity*)self, entity);
                 entity->posY.i.hi += 0x20;
                 entity->zPriority = self->zPriority + 1;
                 if (self->facingLeft) {
@@ -163,7 +206,7 @@ void EntityAkmodanII(Entity* self) {
                 }
             }
         }
-        if (!--self->ext.akmodanII.timer) {
+        if (!--self->timer) {
             SetStep(4);
         }
         side = (GetSideToPlayer() & 1) ^ 1;
@@ -187,7 +230,7 @@ void EntityAkmodanII(Entity* self) {
         }
         break;
     case 4:
-        if (!AnimateEntity(D_us_80180640, self)) {
+        if (!AnimateEntity(D_us_80180640, (Entity*)self)) {
             self->hitboxOffX = 8;
             self->hitboxOffY = -0x24;
             self->hitboxWidth = 0x10;
@@ -205,7 +248,7 @@ void EntityAkmodanII(Entity* self) {
             self->step_s++;
             /* fall through */
         case 1:
-            if (!AnimateEntity(D_us_80180618, self)) {
+            if (!AnimateEntity(D_us_80180618, (Entity*)self)) {
                 SetStep(3);
             }
             entity = &PLAYER;
@@ -228,14 +271,14 @@ void EntityAkmodanII(Entity* self) {
                 g_Player.grabState = GRAB_START;
                 g_Player.grabDamage = 8;
                 g_Player.grabReactionEffect = GRAB_REACTION_NORMAL;
-                self->ext.akmodanII.savedTileX = g_Tilemap.x;
-                self->ext.akmodanII.savedTileWidth = g_Tilemap.width;
-                self->ext.akmodanII.savedTileY = g_Tilemap.y;
-                self->ext.akmodanII.savedTileHeight = g_Tilemap.height;
+                self->savedTileX = g_Tilemap.x;
+                self->savedTileWidth = g_Tilemap.width;
+                self->savedTileY = g_Tilemap.y;
+                self->savedTileHeight = g_Tilemap.height;
                 g_Tilemap.x = g_Tilemap.scrollX.i.hi;
                 g_Tilemap.width = g_Tilemap.scrollX.i.hi + 0x100;
-                self->ext.akmodanII.unk86 = 0;
-                self->ext.akmodanII.grabbing = 1;
+                self->unk86 = 0;
+                self->grabbing = 1;
                 self->step_s = 2;
             }
             break;
@@ -268,17 +311,17 @@ void EntityAkmodanII(Entity* self) {
             }
             break;
         case 3:
-            if (!AnimateEntity(D_us_80180618, self)) {
+            if (!AnimateEntity(D_us_80180618, (Entity*)self)) {
                 SetSubStep(4);
             }
             break;
         case 4:
-            side = AnimateEntity(D_us_80180624, self);
+            side = AnimateEntity(D_us_80180624, (Entity*)self);
             if (side & 0x80) {
-                self->poseTimer -= self->ext.akmodanII.unk86;
+                self->poseTimer -= self->unk86;
             }
             if (!side) {
-                self->ext.akmodanII.unk86++;
+                self->unk86++;
                 g_Player.grabDamage =
                     g_api.enemyDefs[ENEMY_AKMODAN_II_GRAB].attack / 2;
                 g_Player.grabState = GRAB_DAMAGE;
@@ -288,14 +331,14 @@ void EntityAkmodanII(Entity* self) {
             } else {
                 self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 4;
             }
-            if (self->ext.akmodanII.unk86 > 3) {
+            if (self->unk86 > 3) {
                 SetSubStep(5);
             }
             break;
         case 5:
             g_Player.grabDamage = g_api.enemyDefs[ENEMY_AKMODAN_II_GRAB].attack;
             g_Player.grabState = GRAB_RELEASE;
-            self->ext.akmodanII.grabbing = 0;
+            self->grabbing = 0;
             entity = &PLAYER;
             if (self->facingLeft) {
                 entity->velocityX = FIX(6.0);
@@ -306,13 +349,13 @@ void EntityAkmodanII(Entity* self) {
             if (g_Player.status & PLAYER_STATUS_DEAD) {
                 entity->velocityX = 0;
             }
-            self->zPriority = self->ext.akmodanII.baseZPriority;
-            g_Tilemap.x = self->ext.akmodanII.savedTileX;
-            g_Tilemap.width = self->ext.akmodanII.savedTileWidth;
+            self->zPriority = self->baseZPriority;
+            g_Tilemap.x = self->savedTileX;
+            g_Tilemap.width = self->savedTileWidth;
             self->step_s++;
             /* fall through */
         case 6:
-            if (!AnimateEntity(D_us_80180638, self)) {
+            if (!AnimateEntity(D_us_80180638, (Entity*)self)) {
                 SetStep(3);
             }
             break;
@@ -339,7 +382,7 @@ void EntityAkmodanII(Entity* self) {
             for (i = 0; i < 8; i++) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID(UNK_1C), self, entity);
+                    CreateEntityFromEntity(E_ID(UNK_1C), (Entity*)self, entity);
                     entity->rotate = angle;
                     if (self->facingLeft) {
                         entity->posX.i.hi -= 4;
@@ -352,7 +395,7 @@ void EntityAkmodanII(Entity* self) {
             PlaySfxPositional(SFX_AKMODAN_II_PAIN);
             self->step_s++;
         }
-        if (!AnimateEntity(D_us_80180610, self)) {
+        if (!AnimateEntity(D_us_80180610, (Entity*)self)) {
             SetStep(3);
         }
         break;
@@ -361,16 +404,16 @@ void EntityAkmodanII(Entity* self) {
         case 0:
             self->hitboxState = 0;
             g_BossMgrState |= BOSS_MGR_DEFEAT;
-            if (self->ext.akmodanII.grabbing) {
-                g_Tilemap.x = self->ext.akmodanII.savedTileX;
-                g_Tilemap.width = self->ext.akmodanII.savedTileWidth;
+            if (self->grabbing) {
+                g_Tilemap.x = self->savedTileX;
+                g_Tilemap.width = self->savedTileWidth;
                 g_Player.grabState = GRAB_NONE;
             }
             PlaySfxPositional(SFX_AKMODAN_II_DEATH);
             self->step_s++;
             /* fall through */
         case 1:
-            if (!AnimateEntity(D_us_80180610, self)) {
+            if (!AnimateEntity(D_us_80180610, (Entity*)self)) {
                 self->step_s++;
             }
             break;
@@ -383,11 +426,11 @@ void EntityAkmodanII(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            self->ext.akmodanII.prim = prim;
+            self->prim = prim;
             dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
             if (!dr_env) {
                 FntPrint("NO DR_ENV \n");
-                DestroyEntity(self);
+                DestroyEntity((Entity*)self);
                 return;
             }
             prim->type = PRIM_ENV;
@@ -415,7 +458,7 @@ void EntityAkmodanII(Entity* self) {
             dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
             if (!dr_env) {
                 FntPrint("NO DR_ENV \n");
-                DestroyEntity(self);
+                DestroyEntity((Entity*)self);
                 return;
             }
             prim->type = PRIM_ENV;
@@ -425,7 +468,7 @@ void EntityAkmodanII(Entity* self) {
             }
             prim->drawMode = DRAW_UNK_800;
             prim = prim->next;
-            self->ext.akmodanII.deathPrim = prim;
+            self->deathPrim = prim;
             if (self->params) {
                 y = 0xFF;
             } else {
@@ -441,7 +484,7 @@ void EntityAkmodanII(Entity* self) {
             prim->x1 = prim->x3 = prim->x0 + 0x3F;
             prim->y2 = prim->y3 = self->posY.i.hi + 0x1F;
             prim->y0 = prim->y1 = prim->y2 - 0x70;
-            prim->priority = self->ext.akmodanII.baseZPriority + 1;
+            prim->priority = self->baseZPriority + 1;
             prim->drawMode =
                 DRAW_TRANSP | DRAW_UNK02 | DRAW_TPAGE | DRAW_TPAGE2;
             prim = prim->next;
@@ -484,11 +527,11 @@ void EntityAkmodanII(Entity* self) {
         case 3:
             self->palette = PAL_FLAG(0x1C7);
             self->flags |= FLAG_POS_CAMERA_LOCKED;
-            self->zPriority = self->ext.akmodanII.baseZPriority;
-            prim = self->ext.akmodanII.deathPrim;
+            self->zPriority = self->baseZPriority;
+            prim = self->deathPrim;
             self->posX.i.hi = prim->x0 + 0x20;
             self->posY.i.hi = prim->y2 - 0x1F;
-            prim = self->ext.akmodanII.prim;
+            prim = self->prim;
             prim->type = PRIM_ENV;
             dr_env = PRIM_DR_ENV(prim);
             drawEnv = g_CurrentBuffer->draw;
@@ -513,17 +556,17 @@ void EntityAkmodanII(Entity* self) {
             }
             prim->drawMode = DRAW_DEFAULT;
             prim = prim->next;
-            self->ext.akmodanII.timer = 0x100;
+            self->timer = 0x100;
             self->step_s++;
             /* fall through */
         case 4:
-            prim = self->ext.akmodanII.deathPrim;
+            prim = self->deathPrim;
             x = (Random() & 0x1F) - 0x10;
             y = -(Random() & 0x3F) + 0x20;
             side = Random() & 1;
-            FntPrint("timer %x\n", self->ext.akmodanII.timer);
-            if (!--self->ext.akmodanII.timer) {
-                self->ext.akmodanII.timer = 0x50;
+            FntPrint("timer %x\n", self->timer);
+            if (!--self->timer) {
+                self->timer = 0x50;
                 self->step_s++;
             }
             entity = AllocEntity(&g_Entities[STAGE_ENTITY_START],
@@ -558,7 +601,7 @@ void EntityAkmodanII(Entity* self) {
             }
             break;
         case 5:
-            if (!--self->ext.akmodanII.timer) {
+            if (!--self->timer) {
                 self->step_s++;
             }
             break;
@@ -575,7 +618,7 @@ void EntityAkmodanII(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            self->ext.akmodanII.deathPrim = prim;
+            self->deathPrim = prim;
             prim->type = PRIM_GT4;
             prim->tpage = 0x12;
             prim->clut = 0x1C7;
@@ -597,7 +640,7 @@ void EntityAkmodanII(Entity* self) {
             prim->priority = self->zPriority;
             prim->drawMode = DRAW_UNK02;
             prim = prim->next;
-            self->ext.akmodanII.prim = prim;
+            self->prim = prim;
             while (prim) {
                 prim->tpage = 0x12;
                 prim->clut = 0x1C7;
@@ -608,23 +651,23 @@ void EntityAkmodanII(Entity* self) {
                 prim = prim->next;
             }
             self->animCurFrame = 0;
-            self->ext.akmodanII.timer = 1;
-            self->ext.akmodanII.deathY = 0;
+            self->timer = 1;
+            self->deathY = 0;
             PlaySfxPositional(SFX_AKMODAN_II_DISSOLVE);
             self->step_s++;
             break;
         case 7:
-            if (!--self->ext.akmodanII.timer) {
-                self->ext.akmodanII.timer = 6;
+            if (!--self->timer) {
+                self->timer = 6;
                 x = self->posX.i.hi - 0x10;
-                y = self->posY.i.hi - 0x20 + self->ext.akmodanII.deathY;
+                y = self->posY.i.hi - 0x20 + self->deathY;
                 for (i = 0; i < 0x28; i++) {
-                    prim = self->ext.akmodanII.prim;
+                    prim = self->prim;
                     prim = FindFirstUnkPrim(prim);
                     if (prim) {
                         prim->p3 = 2;
                         prim->u0 = i;
-                        prim->v0 = self->ext.akmodanII.deathY + 0x80;
+                        prim->v0 = self->deathY + 0x80;
                         if (self->facingLeft) {
                             prim->x0 = x + 0x20 - i;
                         } else {
@@ -643,16 +686,16 @@ void EntityAkmodanII(Entity* self) {
                         prim->drawMode = DRAW_UNK02;
                     }
                 }
-                prim = self->ext.akmodanII.deathPrim;
+                prim = self->deathPrim;
                 prim->v0 = ++prim->v1;
                 prim->y0 = ++prim->y1;
-                self->ext.akmodanII.deathY++;
-                if (self->ext.akmodanII.deathY >= 0x40) {
+                self->deathY++;
+                if (self->deathY >= 0x40) {
                     self->step_s++;
                 }
             }
         case 8:
-            prim = self->ext.akmodanII.prim;
+            prim = self->prim;
             side = 0;
             while (prim->next) {
                 if (prim->p3 == 2) {
@@ -733,8 +776,8 @@ void EntityAkmodanII(Entity* self) {
     FntPrint("tsukami %x\n", g_Player.grabState);
 }
 
-void func_us_801957C0(Entity* self) {
-    Entity* entity;
+void func_us_801957C0(struct func_us_801957C0* self) {
+    struct EntityAkmodanII* entity;
 
     switch (self->step) {
     case 0:
@@ -751,10 +794,10 @@ void func_us_801957C0(Entity* self) {
         switch (self->step_s) {
         case 0:
             self->animCurFrame = 0;
-            entity = self - self->params;
-            if (entity->ext.akmodanII.unk84) {
+            entity = (struct EntityAkmodanII*)((Entity*)self - self->params);
+            if (entity->unk84) {
                 self->animCurFrame = 4;
-                self->ext.akmodanII.timer = 64;
+                self->timer = 64;
                 self->step_s++;
             }
             break;
@@ -767,7 +810,7 @@ void func_us_801957C0(Entity* self) {
             self->step_s++;
         case 2:
             MoveEntity();
-            if (!--self->ext.akmodanII.timer) {
+            if (!--self->timer) {
                 self->zPriority -= 2;
                 self->step_s++;
             }
@@ -778,8 +821,8 @@ void func_us_801957C0(Entity* self) {
         switch (self->step_s) {
         case 0:
             self->animCurFrame = 0;
-            entity = self - self->params;
-            if (entity->ext.akmodanII.unk84) {
+            entity = (struct EntityAkmodanII*)((Entity*)self - self->params);
+            if (entity->unk84) {
                 self->animCurFrame = 2;
                 self->step_s++;
             }
@@ -827,11 +870,11 @@ void EntityAkmodanaAttackHitbox(Entity* self) {
     }
 }
 
-void func_us_80195A8C(Entity* self) {
+void func_us_80195A8C(struct func_us_80195A8C* self) {
     s16 angle;
 
     if (g_BossMgrState & BOSS_MGR_DEFEAT) {
-        DestroyEntity(self);
+        DestroyEntity((Entity*)self);
         return;
     }
 
@@ -849,10 +892,10 @@ void func_us_80195A8C(Entity* self) {
         self->velocityY = rcos(angle) * -24;
         self->scaleX = 0x60;
         self->scaleY = 0x60;
-        self->ext.akmodanII.unk86 = 0;
+        self->unk86 = 0;
         /* fall through */
     case 1:
-        if (!AnimateEntity(anim_burst_in, self)) {
+        if (!AnimateEntity(anim_burst_in, (Entity*)self)) {
             SetStep(2);
         }
         MoveEntity();
@@ -866,10 +909,10 @@ void func_us_80195A8C(Entity* self) {
             self->step_s++;
         }
         MoveEntity();
-        if (!AnimateEntity(anim_burst_loop, self)) {
-            self->ext.akmodanII.unk86++;
+        if (!AnimateEntity(anim_burst_loop, (Entity*)self)) {
+            self->unk86++;
         }
-        if (self->ext.akmodanII.unk86 > 16) {
+        if (self->unk86 > 16) {
             self->drawFlags |= ENTITY_OPACITY;
             self->opacity = 0x80;
             self->hitboxState = 0;
@@ -880,8 +923,8 @@ void func_us_80195A8C(Entity* self) {
         self->opacity -= 2;
         self->scaleX += 0x18;
         self->scaleY += 0x18;
-        if (!AnimateEntity(anim_burst_out, self)) {
-            DestroyEntity(self);
+        if (!AnimateEntity(anim_burst_out, (Entity*)self)) {
+            DestroyEntity((Entity*)self);
         }
         break;
     }

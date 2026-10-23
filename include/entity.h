@@ -800,13 +800,6 @@ typedef struct {
 } ET_RoomTransition2;
 
 typedef struct {
-    /* 0x7C */ char pad_7C[0x4];
-    /* 0x80 */ u8* anim;
-    /* 0x84 */ char pad_84[0x8];
-    /* 0x8C */ s32 accelY;
-} ET_80192998;
-
-typedef struct {
     /* 0x7C */ s32 : 32;
     /* 0x80 */ u8* anim;
     /* 0x84 */ s16 angle;
@@ -2450,13 +2443,6 @@ typedef struct {
 } ET_GhostEnemy;
 
 typedef struct {
-    /* 0x7C */ struct Entity* next;
-    /* 0x80 */ s16 timer;
-    /* 0x82 */ s16 : 16;
-    /* 0x84 */ s16 offsets[26];
-} ET_MedusaUnk1A;
-
-typedef struct {
     /* 0x7C */ s16 segmentAngle;
     /* 0x7E */ s16 wavePhase;
     /* 0x80 */ s16 swayIndex;
@@ -3078,47 +3064,6 @@ typedef struct {
 } ET_Clouds;
 
 typedef struct {
-    /* 0x7C */ s32 : 32;
-    /* 0x80 */ s16 timer;
-    /* 0x82 */ s16 : 16;
-    /* 0x84 */ u8 backOff;
-    /* 0x85 */ u8 detach;
-} ET_TheCreature;
-
-typedef struct {
-    /* 0x7C */ s32 : 32;
-    /* 0x80 */ u8* anim;
-    /* 0x84 */ s32 : 32;
-    /* 0x88 */ s32 : 32;
-    /* 0x8C */ s32 accelY;
-    /* 0x90 */ s32 accel;
-} ET_TheCreatureFlames;
-
-typedef struct {
-    /* 0x7C */ Primitive* prim;
-    /* 0x80 */ s16 timer;
-    /* 0x82 */ s16 : 16;
-    /* 0x84 */ u8 unk84;
-    /* 0x85 */ u8 : 8;
-    /* 0x86 */ u8 unk86;
-    /* 0x87 */ u8 grabbing;
-    /* 0x88 */ s32 : 32;
-    /* 0x8C */ s32 : 32;
-    /* 0x90 */ s32 : 32;
-    /* 0x94 */ s32 : 32;
-    /* 0x98 */ s32 : 32;
-    /* 0x9C */ s16 savedTileX;
-    /* 0x9E */ s16 savedTileWidth;
-    /* 0xA0 */ s16 savedTileY;
-    /* 0xA2 */ s16 savedTileHeight;
-    /* 0xA4 */ u16 baseZPriority;
-    /* 0xA6 */ s16 : 16;
-    /* 0xA8 */ s32 : 32;
-    /* 0xAC */ Primitive* deathPrim;
-    /* 0xB0 */ s16 deathY;
-} ET_AkmodanII;
-
-typedef struct {
     /* 0x7C */ Primitive* prim;
     /* 0x80 */ s16 unk80;
 } ET_801B8D30;
@@ -3291,23 +3236,6 @@ typedef struct {
     /* 0x82 */ s16 unk82;
     /* 0x84 */ s32 clut;
 } ET_801C12B0;
-
-typedef struct {
-    /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ s16 timer;
-    /* 0x82 */ s16 angle;
-    /* 0x84 */ u8 count;
-    /* 0x85 */ u8 tailAttack;
-    /* 0x86 */ u8 flip;
-    /* 0x87 */ u8 : 8;
-    /* 0x88 */ s32 : 32;
-    /* 0x8C */ s16 orbAngle;
-    /* 0x8E */ s16 : 16;
-    /* 0x90 */ u8 pad[0xC];
-    /* 0x9C */ struct Entity* target;
-    /* 0xA0 */ struct Primitive* curPrim;
-    /* 0xA4 */ u8 splashed;
-} ET_Scylla;
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
@@ -3745,13 +3673,6 @@ typedef struct {
 } ET_801A518C;
 
 typedef struct {
-    /* 0x7C */ Primitive* prim;
-    /* 0x80 */ s16 timer;
-    /* 0x82 */ s16 angle;
-    /* 0x84 */ Point16 trail[13];
-} ET_GranfaloonLaser;
-
-typedef struct {
     /* 0x7C */ s32 : 32;
     /* 0x80 */ u8 playerOnLeft;
 } ET_Coffin;
@@ -4087,52 +4008,6 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ s32 : 32;
-    /* 0x80 */ s16 timer;
-} ET_801806B0;
-
-typedef struct {
-    /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ s16 timer;
-    /* 0x82 */ s16 unk82;
-    /* 0x84 */ s16 unk84;
-    /* 0x86 */ s16 : 16;
-    /* 0x88 */ s16 unk88;
-    /* 0x8A */ s16 unk8A;
-    /* 0x8C */ s32 unk8C;
-} ET_BossCoffin;
-
-typedef struct {
-    /* 0x7C */ s32 : 32;
-    /* 0x80 */ s16 timer;
-    /* 0x82 */ s16 : 16;
-    /* 0x84 */ s32 : 32;
-    /* 0x88 */ s32 : 32;
-    /* 0x8C */ s32 unk8C;
-} ET_FakeGrant;
-
-typedef struct {
-    /* 0x7C */ s32 : 32;
-    /* 0x80 */ s16 timer;
-    /* 0x82 */ s16 : 16;
-    /* 0x84 */ u16 itemEntityId;
-    /* 0x86 */ s16 : 16;
-    /* 0x88 */ s32 : 32;
-    /* 0x8C */ s32 unk8C;
-} ET_FakeRalph;
-
-typedef struct {
-    /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ s16 timer;
-    /* 0x82 */ s16 angle;
-    /* 0x84 */ s16 red;
-    /* 0x86 */ s16 green;
-    /* 0x88 */ s16 blue;
-    /* 0x8A */ s16 : 16;
-    /* 0x8C */ s32 unk8C;
-} ET_FakeSypha;
-
-typedef struct {
-    /* 0x7C */ s32 : 32;
     /* 0x80 */ struct AnimateEntityFrame* frames;
     /* 0x84 */ s16 angle;
     /* 0x86 */ s16 : 16;
@@ -4263,29 +4138,6 @@ typedef struct {
     /* 0xA0 */ u32 : 32;
     /* 0xA4 */ struct Entity* entity;
 } ET_OlroxDrool;
-
-typedef struct {
-    /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ s16 timer;
-    /* 0x82 */ s16 angle;
-    /* 0x84 */ u8 activeParts;
-    /* 0x85 */ u8 partIndex;
-    /* 0x86 */ u8 hitTimer;
-    /* 0x87 */ u8 unk87;
-    /* 0x88 */ s16 hitX;
-    /* 0x8A */ s16 hitY;
-    /* 0x8C */ u32 : 32;
-    /* 0x90 */ u32 : 32;
-    /* 0x94 */ u32 : 32;
-    /* 0x98 */ u8 palIndex;
-    /* 0x99 */ u8 palMask;
-    /* 0x9A */ u16 : 16;
-    /* 0x9C */ struct Entity* parent;
-    /* 0xA0 */ u8 hasHit;
-    /* 0xA1 */ u8 : 8;
-    /* 0xA2 */ u16 : 16;
-    /* 0xA4 */ s32 length;
-} ET_Granfaloon;
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
@@ -4781,7 +4633,6 @@ typedef union { // offset=0x7C
     ET_Succubus succubus;
     ET_StageTitleCard stageTitleCard;
     ET_RoomTransition2 roomTransition2;
-    ET_80192998 e_80192998;
     ET_ExplosionPuffOpaque opaquePuff;
     ET_FireWarg fireWarg;
     ET_FireWargHelper fireWargHelper;
@@ -4887,7 +4738,6 @@ typedef union { // offset=0x7C
     ET_CutscenePhotograph cutscenePhoto;
     ET_ClockTower clockTower;
     ET_BackgroundVortex bgVortex;
-    ET_MedusaUnk1A medusaUnk1A;
     ET_OuijaTable ouijaTable;
     ET_FleaMan fleaMan;
     ET_Ctulhu ctulhu;
@@ -4945,9 +4795,6 @@ typedef union { // offset=0x7C
     ET_801BB200 et_801BB200;
     ET_801B8D30 et_801B8D30;
     ET_Clouds clouds;
-    ET_TheCreature theCreature;
-    ET_TheCreatureFlames theCreatureFlames;
-    ET_AkmodanII akmodanII;
     ET_801C0B9C et_801C0B9C;
     ET_unkDoor unkDoor;
     ET_FrozenShade frozenShade;
@@ -4959,7 +4806,6 @@ typedef union { // offset=0x7C
     ET_SurfacingWater et_surfacingWater;
     ET_WaterAlcove et_waterAlcove;
     ET_801C12B0 et_801C12B0;
-    ET_Scylla scylla;
     ET_BonePillar bonePillar;
     ET_801C4520 et_801C4520;
     ET_801C4980 et_801C4980;
@@ -5005,8 +4851,6 @@ typedef union { // offset=0x7C
     ET_SpikeRoomSwitch spikeRoomSwitch;
     ET_801BA164 et_801BA164;
     ET_801A518C et_801A518C;
-    ET_GranfaloonLaser granfaloonLaser;
-    ET_Granfaloon granfaloon;
     ET_Coffin coffin;
     ET_Lava lava;
     ET_BladeMaster bladeMaster;
@@ -5032,11 +4876,6 @@ typedef union { // offset=0x7C
     ET_FireDemon fireDemon;
     ET_Bitterfly bitterfly;
     ET_Imp imp;
-    ET_801806B0 et_801806B0;
-    ET_BossCoffin bossCoffin;
-    ET_FakeRalph ralph;
-    ET_FakeGrant grant;
-    ET_FakeSypha sypha;
     ET_DeathFlames deathFlames;
     ET_FrozenHalf frozenHalf;
     ET_PlatformUnk platformUnk;

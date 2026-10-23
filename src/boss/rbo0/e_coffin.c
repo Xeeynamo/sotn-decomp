@@ -240,7 +240,7 @@ static SVECTOR* D_us_80181B38[] = {
     &D_us_80181A98, &D_us_80181AA0, &D_us_80181AB8, &D_us_80181AC0,
 };
 
-void EntityCoffin(Entity* self) {
+void EntityCoffin(struct EntityCoffin* self) {
     Primitive* prim;
     s32 i;
     s32 primIndex;
@@ -259,13 +259,13 @@ void EntityCoffin(Entity* self) {
         InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
         if (primIndex == -1) {
-            self->ext.bossCoffin.prim = NULL;
+            self->prim = NULL;
             return;
         }
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.bossCoffin.prim = prim;
+        self->prim = prim;
 
         var_a1 = D_us_801819BC;
         for (i = 0; i < 7; i++, var_a1 += 4) {
@@ -287,7 +287,7 @@ void EntityCoffin(Entity* self) {
             prim = prim->next;
         }
     case 1:
-        self->ext.bossCoffin.unk82 = 0x300;
+        self->unk82 = 0x300;
         if (g_BossMgrState & BOSS_MGR_FIGHT_ON) {
             g_api.PlaySfx(SFX_DOOR_OPEN);
             self->step++;
@@ -295,33 +295,33 @@ void EntityCoffin(Entity* self) {
         break;
 
     case 2:
-        self->ext.bossCoffin.unk82 -= 0x20;
-        if (self->ext.bossCoffin.unk82 < 0) {
-            self->ext.bossCoffin.unk8C = 1;
-            self->ext.bossCoffin.unk82 = 0;
-            self->ext.bossCoffin.timer = 0xC0;
+        self->unk82 -= 0x20;
+        if (self->unk82 < 0) {
+            self->unk8C = 1;
+            self->unk82 = 0;
+            self->timer = 0xC0;
             self->step++;
         }
         break;
 
     case 3:
-        if (self->ext.bossCoffin.unk84 < 0x80) {
-            self->ext.bossCoffin.unk84++;
+        if (self->unk84 < 0x80) {
+            self->unk84++;
         }
-        self->rotate += self->ext.bossCoffin.unk84;
+        self->rotate += self->unk84;
         self->rotate &= 0xFFF;
         if (self->rotate > ROT(343.125)) {
             g_api.PlaySfx(SFX_SAVE_COFFIN_SWISH);
         }
-        if (!--self->ext.bossCoffin.timer) {
+        if (!--self->timer) {
             self->step++;
         }
         break;
 
     case 4:
-        self->rotate += self->ext.bossCoffin.unk84;
+        self->rotate += self->unk84;
         if (self->rotate > ROT(360)) {
-            self->ext.bossCoffin.unk8C = 0;
+            self->unk8C = 0;
             self->rotate = ROT(0);
             g_api.PlaySfx(SFX_DOOR_OPEN);
             self->step++;
@@ -329,8 +329,8 @@ void EntityCoffin(Entity* self) {
         break;
 
     case 5:
-        self->ext.bossCoffin.unk82 += 16;
-        if (self->ext.bossCoffin.unk82 > 0x300) {
+        self->unk82 += 16;
+        if (self->unk82 > 0x300) {
             self->zPriority -= 16;
             self->step++;
         }
@@ -340,7 +340,7 @@ void EntityCoffin(Entity* self) {
         break;
     }
 
-    if (self->ext.bossCoffin.prim != NULL) {
+    if (self->prim != NULL) {
         spTransMatrix = (MATRIX*)SPAD(4);
         spRotVector = (SVECTOR*)SPAD(2);
         spVector = (VECTOR*)SPAD(10);
@@ -354,26 +354,26 @@ void EntityCoffin(Entity* self) {
         SetRotMatrix(spTransMatrix);
         spVector->vx = 0;
         spVector->vy = 0;
-        spVector->vz = self->ext.bossCoffin.unk8A + 0x200;
+        spVector->vz = self->unk8A + 0x200;
         TransMatrix(spTransMatrix, spVector);
         SetTransMatrix(spTransMatrix);
 
         var_s3 = D_us_80181AC8;
-        if (self->ext.bossCoffin.unk82) {
+        if (self->unk82) {
             var_s3 = D_us_80181B38;
         }
-        prim = self->ext.bossCoffin.prim;
+        prim = self->prim;
         spDummyMatrix = (MATRIX*)SPAD(0);
         spVector2 = (VECTOR*)SPAD(1);
 
         for (i = 0; i < 7; i++) {
-            if (self->ext.bossCoffin.unk82) {
+            if (self->unk82) {
                 if (i < 2) {
                     spRotVector->vy = self->rotate;
                     if (i == 0) {
-                        spRotVector->vy += self->ext.bossCoffin.unk82;
+                        spRotVector->vy += self->unk82;
                     } else {
-                        spRotVector->vy -= self->ext.bossCoffin.unk82;
+                        spRotVector->vy -= self->unk82;
                     }
                     RotMatrix(spRotVector, spTransMatrix);
                     gte_SetRotMatrix(spTransMatrix);
@@ -399,8 +399,7 @@ void EntityCoffin(Entity* self) {
             gte_avsz4();
             gte_stotz(spVector2);
             prim->priority =
-                self->zPriority +
-                (((self->ext.bossCoffin.unk8A + 0x200) / 4) - spVector2->vx);
+                self->zPriority + (((self->unk8A + 0x200) / 4) - spVector2->vx);
             prim->drawMode = DRAW_UNK02;
             var_s3 += 4;
             prim = prim->next;

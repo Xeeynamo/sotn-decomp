@@ -1,6 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo0.h"
 
+struct EntityFakeGrant {
+    ENTITY_SHARED;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 timer;
+};
+SYNC_STRUCT(EntityFakeGrant);
+
 static bool func_us_80196838(s16* self) {
     s32 posY;
 
@@ -95,7 +102,7 @@ static AnimateEntityFrame D_us_80180C40[] = {
     POSE(8, 0xA7, 0), POSE(20, 0x91, 0), POSE(24, 0x92, 0), {-1, 0x00},
 };
 
-void EntityFakeGrant(Entity* self) {
+void EntityFakeGrant(struct EntityFakeGrant* self) {
     Entity* entity;
     s8* index;
     s32 offsetX;
@@ -113,10 +120,10 @@ void EntityFakeGrant(Entity* self) {
     case 0:
         InitializeEntity(D_us_801804B8);
         self->hitboxState = 0;
-        entity = self - 1;
+        entity = (Entity*)self - 1;
         CreateEntityFromCurrentEntity(E_ID(COFFIN), entity);
         entity->posY.i.hi = 0xBA - g_Tilemap.scrollY.i.hi;
-        entity = self + 1;
+        entity = (Entity*)self + 1;
         CreateEntityFromCurrentEntity(E_ID(UNK_26), entity);
         SetStep(1);
         // fallthrough
@@ -129,16 +136,16 @@ void EntityFakeGrant(Entity* self) {
         break;
 
     case 2:
-        entity = self - 1;
+        entity = (Entity*)self - 1;
         switch (self->step_s) {
         case 0:
-            if (entity->ext.grant.unk8C) {
+            if (((struct EntityCoffin*)entity)->unk8C) {
                 self->animCurFrame = 0;
                 self->step_s++;
             }
             break;
         case 1:
-            if (!entity->ext.grant.unk8C) {
+            if (!((struct EntityCoffin*)entity)->unk8C) {
                 self->animCurFrame = 4;
                 self->step_s++;
             }
@@ -170,7 +177,7 @@ void EntityFakeGrant(Entity* self) {
             break;
         case 2:
             MoveEntity();
-            if (!AnimateEntity(D_us_80180BE8, self)) {
+            if (!AnimateEntity(D_us_80180BE8, (Entity*)self)) {
                 SetStep(4);
             }
             break;
@@ -179,18 +186,18 @@ void EntityFakeGrant(Entity* self) {
     case 4:
         if (!self->step_s) {
             if (D_us_801806B4 > 1) {
-                self->ext.grant.timer = 32;
+                self->timer = 32;
             }
             self->step_s++;
         }
-        AnimateEntity(D_us_80180B78, self);
+        AnimateEntity(D_us_80180B78, (Entity*)self);
         if (self->facingLeft) {
             self->velocityX = FIX(1.0);
         } else {
             self->velocityX = FIX(-1.0);
         }
         MoveEntity();
-        if (!--self->ext.grant.timer) {
+        if (!--self->timer) {
             SetStep(4);
             if (D_us_801806B4 > 1) {
                 SetStep(6);
@@ -208,14 +215,14 @@ void EntityFakeGrant(Entity* self) {
         }
         break;
     case 7:
-        if (AnimateEntity(D_us_80180B8C, self) == 0) {
+        if (AnimateEntity(D_us_80180B8C, (Entity*)self) == 0) {
             self->facingLeft ^= 1;
             self->animCurFrame = 0x6D;
             SetStep(4);
         }
         break;
     case 5:
-        if (AnimateEntity(D_us_80180BA0, self) == 0) {
+        if (AnimateEntity(D_us_80180BA0, (Entity*)self) == 0) {
             SetStep(4);
         }
         if (!self->poseTimer && self->pose == 2) {
@@ -223,14 +230,15 @@ void EntityFakeGrant(Entity* self) {
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
                 // BUG! additional arg
-                CreateEntityFromEntity(E_ID(VERTICAL_DAGGER), self, entity);
+                CreateEntityFromEntity(
+                    E_ID(VERTICAL_DAGGER), (Entity*)self, entity);
             }
         }
         break;
     case 6:
         switch (self->step_s) {
         case 0:
-            if (AnimateEntity(D_us_80180BB0, self) == 0) {
+            if (AnimateEntity(D_us_80180BB0, (Entity*)self) == 0) {
                 SetSubStep(1);
             }
             if (!self->poseTimer && self->pose == 0xC) {
@@ -245,7 +253,7 @@ void EntityFakeGrant(Entity* self) {
             // fallthrough
         case 2:
             self->rotate -= ROT(33.75);
-            AnimateEntity(D_us_80180BCC, self);
+            AnimateEntity(D_us_80180BCC, (Entity*)self);
             if (self->hitFlags & 0x80) {
                 self->drawFlags = ENTITY_DEFAULT;
                 SetSubStep(3);
@@ -261,7 +269,7 @@ void EntityFakeGrant(Entity* self) {
             }
             break;
         case 3:
-            AnimateEntity(D_us_80180BD4, self);
+            AnimateEntity(D_us_80180BD4, (Entity*)self);
             MoveEntity();
             if (func_us_80194338(D_us_80180B58) & 1) {
                 PlaySfxPositional(SFX_STOMP_HARD_B);
@@ -270,7 +278,7 @@ void EntityFakeGrant(Entity* self) {
             }
             break;
         case 4:
-            if (AnimateEntity(D_us_80180BDC, self) == 0) {
+            if (AnimateEntity(D_us_80180BDC, (Entity*)self) == 0) {
                 SetStep(9);
             }
             break;
@@ -294,7 +302,7 @@ void EntityFakeGrant(Entity* self) {
             break;
         case 2:
             MoveEntity();
-            if (!AnimateEntity(D_us_80180BE8, self)) {
+            if (!AnimateEntity(D_us_80180BE8, (Entity*)self)) {
                 SetStep(4);
             }
             break;
@@ -310,7 +318,7 @@ void EntityFakeGrant(Entity* self) {
             SetSubStep(1);
             self->facingLeft ^= 1;
         case 1:
-            if (AnimateEntity(D_us_80180C40, self) == 0) {
+            if (AnimateEntity(D_us_80180C40, (Entity*)self) == 0) {
                 SetStep(9);
             }
 
@@ -319,13 +327,13 @@ void EntityFakeGrant(Entity* self) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(
-                        E_ID(HORIZONTAL_DAGGER), self, entity);
+                        E_ID(HORIZONTAL_DAGGER), (Entity*)self, entity);
                     entity->facingLeft = self->facingLeft;
                 }
             }
             break;
         case 2:
-            if (AnimateEntity(D_us_80180C14, self) == 0) {
+            if (AnimateEntity(D_us_80180C14, (Entity*)self) == 0) {
                 SetStep(9);
             }
             if (!self->poseTimer && (self->pose == 6 || self->pose == 15)) {
@@ -333,7 +341,7 @@ void EntityFakeGrant(Entity* self) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(
-                        E_ID(HORIZONTAL_DAGGER), self, entity);
+                        E_ID(HORIZONTAL_DAGGER), (Entity*)self, entity);
                     entity->facingLeft = self->facingLeft;
                 }
             }
@@ -364,7 +372,7 @@ void EntityFakeGrant(Entity* self) {
             }
             // fallthrough
         case 1:
-            if (AnimateEntity(D_us_80180BF4, self) == 0) {
+            if (AnimateEntity(D_us_80180BF4, (Entity*)self) == 0) {
                 SetSubStep(3);
             }
             MoveEntity();
@@ -374,7 +382,7 @@ void EntityFakeGrant(Entity* self) {
             }
             break;
         case 2:
-            if (AnimateEntity(D_us_80180C00, self) == 0) {
+            if (AnimateEntity(D_us_80180C00, (Entity*)self) == 0) {
                 SetSubStep(3);
             }
             MoveEntity();
@@ -384,7 +392,7 @@ void EntityFakeGrant(Entity* self) {
             }
             break;
         case 3:
-            AnimateEntity(D_us_80180C0C, self);
+            AnimateEntity(D_us_80180C0C, (Entity*)self);
             MoveEntity();
             self->velocityY += FIX(0.125);
             if (func_us_80194338(D_us_80180B58) & 1) {
@@ -393,12 +401,12 @@ void EntityFakeGrant(Entity* self) {
             break;
         case 4:
             if (self->step == 11) {
-                self->ext.grant.timer = 64;
+                self->timer = 64;
                 PlaySfxPositional(SFX_BOSS_LARGE_FLAMES);
                 self->step_s++;
             } else if (D_us_801806B4 > 1) {
                 SetStep(0xA);
-            } else if (AnimateEntity(D_us_80180BDC, self) == 0) {
+            } else if (AnimateEntity(D_us_80180BDC, (Entity*)self) == 0) {
                 SetStep(9);
             }
             break;
@@ -406,14 +414,15 @@ void EntityFakeGrant(Entity* self) {
             if (!(g_Timer & 3)) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID(DEATH_FLAMES), self, entity);
+                    CreateEntityFromEntity(
+                        E_ID(DEATH_FLAMES), (Entity*)self, entity);
                     entity->zPriority = self->zPriority + 1;
                     entity->params = 8;
                     entity->posY.i.hi += 0xC;
                 }
             }
 
-            if (!--self->ext.grant.timer) {
+            if (!--self->timer) {
                 self->animCurFrame = 0;
                 self->step_s++;
             }

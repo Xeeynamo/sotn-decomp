@@ -5,6 +5,16 @@ extern EInit g_EInitTheCreature;
 extern EInit g_EInitTheCreatureHead;
 extern s32 g_BossMgrState;
 
+struct EntityTheCreature {
+    ENTITY_SHARED;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ u8 backOff;
+    /* 0x85 */ u8 detach;
+};
+SYNC_STRUCT(EntityTheCreature);
+
 enum TheCreatureSteps {
     THE_CREATURE_INIT,
     THE_CREATURE_IDLE,
@@ -91,7 +101,7 @@ static u8 head_hitbox_frames[] = {
     3, 4, 5, 1, 1, 1, 1, 1, 1, 1, 6, 1, 1, 1, 7, 0,
 };
 
-void EntityTheCreature(Entity* self) {
+void EntityTheCreature(struct EntityTheCreature* self) {
     Entity* entity;
     s8* hitbox;
     s32 collision;
@@ -103,11 +113,11 @@ void EntityTheCreature(Entity* self) {
     switch (self->step) {
     case THE_CREATURE_INIT:
         InitializeEntity(g_EInitTheCreature);
-        entity = self + 1;
+        entity = (Entity*)self + 1;
         CreateEntityFromCurrentEntity(E_ID(THE_CREATURE_HEAD), entity);
         SetStep(THE_CREATURE_IDLE);
     case THE_CREATURE_IDLE:
-        AnimateEntity(anim_idle, self);
+        AnimateEntity(anim_idle, (Entity*)self);
         self->hitboxState = 0;
         if (g_BossMgrState & BOSS_MGR_FIGHT_ON) {
             self->hitboxState = 3;
@@ -116,10 +126,10 @@ void EntityTheCreature(Entity* self) {
         break;
     case THE_CREATURE_WALK:
         if (!self->step_s) {
-            self->ext.theCreature.timer = 0x40;
+            self->timer = 0x40;
             self->step_s++;
         }
-        AnimateEntity(anim_walk, self);
+        AnimateEntity(anim_walk, (Entity*)self);
         collision = UnkCollisionFunc2(sensors_walk);
         // blocked by a wall or a slope
         if (collision & 0x60) {
@@ -129,12 +139,12 @@ void EntityTheCreature(Entity* self) {
         // keep 104 to 128 pixels away from the player: back off when closer,
         // walk forward again when farther
         if (GetDistanceToPlayerX() < 104) {
-            self->ext.theCreature.backOff = 1;
+            self->backOff = 1;
         }
         if (GetDistanceToPlayerX() > 128) {
-            self->ext.theCreature.backOff = 0;
+            self->backOff = 0;
         }
-        if (self->facingLeft ^ self->ext.theCreature.backOff) {
+        if (self->facingLeft ^ self->backOff) {
             self->velocityX = FIX(-0.5);
         } else {
             self->velocityX = FIX(0.5);
@@ -142,7 +152,7 @@ void EntityTheCreature(Entity* self) {
         // every 64 frames attack: stomp with the hammer when the player is
         // close, otherwise roll towards them. It also rolls when close but
         // stuck against a wall or at the edge of a ledge.
-        if (!--self->ext.theCreature.timer) {
+        if (!--self->timer) {
             if (GetDistanceToPlayerX() < 80) {
                 SetStep(THE_CREATURE_STOMP);
                 if (collision & 0xE0) {
@@ -159,7 +169,7 @@ void EntityTheCreature(Entity* self) {
         }
         break;
     case THE_CREATURE_TURN:
-        if (!AnimateEntity(anim_turn, self)) {
+        if (!AnimateEntity(anim_turn, (Entity*)self)) {
             SetStep(THE_CREATURE_WALK);
         }
         if (!self->poseTimer && self->pose == 2) {
@@ -168,23 +178,23 @@ void EntityTheCreature(Entity* self) {
         break;
     case THE_CREATURE_STOMP:
         if (!self->step_s) {
-            if (!AnimateEntity(anim_hammer, self)) {
+            if (!AnimateEntity(anim_hammer, (Entity*)self)) {
                 g_api.ShakeCamera(1);
                 PlaySfxPositional(SFX_THE_CREATURE_HAMMER);
-                self->ext.theCreature.timer = 0x20;
+                self->timer = 0x20;
                 self->step_s++;
             }
             if (!self->poseTimer && self->pose == 4) {
                 PlaySfxPositional(SFX_THE_CREATURE_ATTACK);
             }
-        } else if (!--self->ext.theCreature.timer) {
+        } else if (!--self->timer) {
             SetStep(THE_CREATURE_WALK);
         }
         break;
     case THE_CREATURE_ROLL:
         switch (self->step_s) {
         case THE_CREATURE_ROLL_CURL:
-            if (!AnimateEntity(anim_curl, self)) {
+            if (!AnimateEntity(anim_curl, (Entity*)self)) {
                 self->step_s++;
             }
             break;
@@ -192,7 +202,7 @@ void EntityTheCreature(Entity* self) {
             self->animCurFrame = 0x1E;
             self->drawFlags = ENTITY_ROTATE;
             self->rotate = 0;
-            self->ext.theCreature.timer = 0x200;
+            self->timer = 0x200;
             self->step_s++;
         case THE_CREATURE_ROLL_MOVE:
             if (self->facingLeft) {
@@ -213,12 +223,12 @@ void EntityTheCreature(Entity* self) {
                 self->step_s++;
             }
             // after 512 frames, stop once it is in the middle of the arena
-            if (self->ext.theCreature.timer) {
-                self->ext.theCreature.timer--;
+            if (self->timer) {
+                self->timer--;
             } else {
                 posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
                 if (posX > 0xC0 && posX < 0x140) {
-                    self->ext.theCreature.timer = 0x30;
+                    self->timer = 0x30;
                     SetSubStep(THE_CREATURE_ROLL_STOP);
                 }
             }
@@ -241,13 +251,13 @@ void EntityTheCreature(Entity* self) {
             self->rotate -= ROT(22.5);
             self->velocityX -= self->velocityX >> 4;
             collision = UnkCollisionFunc2(sensors_roll);
-            if (!--self->ext.theCreature.timer) {
+            if (!--self->timer) {
                 self->drawFlags = ENTITY_DEFAULT;
                 self->step_s++;
             }
             break;
         case THE_CREATURE_ROLL_UNCURL:
-            if (!AnimateEntity(anim_uncurl, self)) {
+            if (!AnimateEntity(anim_uncurl, (Entity*)self)) {
                 SetStep(THE_CREATURE_WALK);
             }
             break;
@@ -271,16 +281,16 @@ void EntityTheCreature(Entity* self) {
             }
             break;
         case THE_CREATURE_DEATH_DROP_HEAD:
-            if (!AnimateEntity(anim_death, self)) {
+            if (!AnimateEntity(anim_death, (Entity*)self)) {
                 PlaySfxPositional(SFX_THE_CREATURE_HEAD_FALL);
-                entity = self + 1;
-                entity->ext.theCreature.detach = 1;
+                entity = (Entity*)self + 1;
+                ((struct EntityTheCreature*)entity)->detach = 1;
                 self->step_s++;
             }
             break;
         case THE_CREATURE_DEATH_BURN:
-            if (!AnimateEntity(anim_burn, self)) {
-                self->ext.theCreature.timer = 0x50;
+            if (!AnimateEntity(anim_burn, (Entity*)self)) {
+                self->timer = 0x50;
                 PlaySfxPositional(SFX_BOSS_LARGE_FLAMES);
                 self->step_s++;
             }
@@ -288,7 +298,8 @@ void EntityTheCreature(Entity* self) {
         case THE_CREATURE_DEATH_FLAMES:
             entity = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_ID(THE_CREATURE_FLAMES), self, entity);
+                CreateEntityFromEntity(
+                    E_ID(THE_CREATURE_FLAMES), (Entity*)self, entity);
                 entity->params = 0;
                 entity->zPriority = self->zPriority + 2;
                 entity->posX.i.hi += (Random() & 0x1F) - 0x10;
@@ -296,13 +307,14 @@ void EntityTheCreature(Entity* self) {
             }
             entity = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_ID(THE_CREATURE_FLAMES), self, entity);
+                CreateEntityFromEntity(
+                    E_ID(THE_CREATURE_FLAMES), (Entity*)self, entity);
                 entity->params = 2;
                 entity->zPriority = self->zPriority + 2;
                 entity->posX.i.hi += (Random() & 0x1F) - 0x10;
                 entity->posY.i.hi += 0x1C;
             }
-            if (!--self->ext.theCreature.timer) {
+            if (!--self->timer) {
                 g_BossMgrState |= BOSS_MGR_TERMINATED;
                 self->animCurFrame = 0;
                 self->step_s++;
@@ -325,7 +337,7 @@ void EntityTheCreature(Entity* self) {
 
 // The head is an invisible hitbox that follows the body and covers the hammer.
 // When the body dies it detaches, falls and burns.
-void EntityTheCreatureHead(Entity* self) {
+void EntityTheCreatureHead(struct EntityTheCreature* self) {
     Entity* entity;
     s8* hitbox;
     s32 frame;
@@ -335,7 +347,7 @@ void EntityTheCreatureHead(Entity* self) {
     case THE_CREATURE_HEAD_INIT:
         InitializeEntity(g_EInitTheCreatureHead);
     case THE_CREATURE_HEAD_ATTACHED:
-        entity = self - 1;
+        entity = (Entity*)self - 1;
         frame = entity->animCurFrame;
         self->posX.i.hi = entity->posX.i.hi;
         self->posY.i.hi = entity->posY.i.hi;
@@ -347,14 +359,14 @@ void EntityTheCreatureHead(Entity* self) {
         self->hitboxOffY = *hitbox++;
         self->hitboxWidth = *hitbox++;
         self->hitboxHeight = *hitbox++;
-        if (self->ext.theCreature.detach) {
+        if (self->detach) {
             SetStep(THE_CREATURE_HEAD_FALL);
         }
         break;
     case THE_CREATURE_HEAD_FALL:
         switch (self->step_s) {
         case THE_CREATURE_HEAD_FALL_INIT:
-            entity = self - 1;
+            entity = (Entity*)self - 1;
             self->posX.i.hi = entity->posX.i.hi;
             self->posY.i.hi = entity->posY.i.hi;
             self->facingLeft = entity->facingLeft;
@@ -373,26 +385,26 @@ void EntityTheCreatureHead(Entity* self) {
             self->animCurFrame = 26;
             self->rotate += ROT(11.25);
             if (UnkCollisionFunc3(sensors_head) & 1) {
-                self->ext.theCreature.timer = 0x30;
+                self->timer = 0x30;
                 self->step_s++;
             }
             break;
         case THE_CREATURE_HEAD_FALL_BURN:
-            if (!(self->ext.theCreature.timer & 0xF)) {
+            if (!(self->timer & 0xF)) {
                 PlaySfxPositional(SFX_FIREBALL_SHOT_B);
             }
-            if (self->ext.theCreature.timer & 1) {
+            if (self->timer & 1) {
                 entity = AllocEntity(&g_Entities[192], &g_Entities[256]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(
-                        E_ID(THE_CREATURE_FLAMES), self, entity);
+                        E_ID(THE_CREATURE_FLAMES), (Entity*)self, entity);
                     entity->params = 1;
                     entity->zPriority = self->zPriority + 1;
                     entity->posX.i.hi += (Random() & 7) - 4;
                     entity->posY.i.hi += (Random() & 7) - 4;
                 }
             }
-            if (!--self->ext.theCreature.timer) {
+            if (!--self->timer) {
                 self->animCurFrame = 0;
                 self->step_s++;
             }
@@ -400,8 +412,8 @@ void EntityTheCreatureHead(Entity* self) {
         }
         break;
     }
-    entity = self - 1;
+    entity = (Entity*)self - 1;
     if (entity->entityId != E_ID(THE_CREATURE)) {
-        DestroyEntity(self);
+        DestroyEntity((Entity*)self);
     }
 }

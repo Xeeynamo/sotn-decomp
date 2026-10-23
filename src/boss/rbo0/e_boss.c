@@ -1,6 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo0.h"
 
+struct EntityBossFightManager {
+    ENTITY_SHARED;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 timer;
+};
+SYNC_STRUCT(EntityBossFightManager);
+
 bool func_us_80194338(s16* offsets) {
     s32 posY;
 
@@ -104,7 +111,7 @@ static s16 unused_0 UNUSED = 24;
 static s32 unused_1 UNUSED = 8;
 
 // main boss controller
-void EntityBossFightManager(Entity* self) {
+void EntityBossFightManager(struct EntityBossFightManager* self) {
     Entity* entity;
     s32 offsetX;
 
@@ -136,7 +143,7 @@ void EntityBossFightManager(Entity* self) {
                 TIMEATTACK_SET_VISITED);
             g_BossMgrState |= BOSS_MGR_FIGHT_ON;
             D_us_801806AC = 1;
-            self->ext.et_801806B0.timer = 0x140;
+            self->timer = 0x140;
             stopMusicFlag = 0;
             currentMusicId = MU_FESTIVAL_OF_SERVANTS;
             g_api.PlaySfx(currentMusicId);
@@ -144,7 +151,7 @@ void EntityBossFightManager(Entity* self) {
         }
         break;
     case 2:
-        if (!--self->ext.et_801806B0.timer) {
+        if (!--self->timer) {
             g_BossMgrState |= BOSS_MGR_INTRO_DONE;
             self->step++;
         }
@@ -155,21 +162,21 @@ void EntityBossFightManager(Entity* self) {
                 TIMEATTACK_EVENT_RALPH_GRANT_SYPHA_DEFEAT,
                 TIMEATTACK_SET_RECORD);
             g_BossMgrState |= BOSS_MGR_TERMINATED;
-            self->ext.et_801806B0.timer = 0x80;
+            self->timer = 0x80;
             g_api.PlaySfx(SET_UNK_90);
             currentMusicId = MU_DOOR_OF_HOLY_SPIRITS;
             self->step++;
         }
         break;
     case 4:
-        if (!--self->ext.et_801806B0.timer) {
+        if (!--self->timer) {
             self->step++;
         }
         break;
     case 5:
         entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_ID(LIFE_UP_SPAWN), self, entity);
+            CreateEntityFromEntity(E_ID(LIFE_UP_SPAWN), (Entity*)self, entity);
             entity->posX.i.hi = 0x100 - g_Tilemap.scrollX.i.hi;
             entity->posY.i.hi = 0x80 - g_Tilemap.scrollY.i.hi;
             entity->params = 2;
