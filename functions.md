@@ -9239,7 +9239,7 @@
 | maria      | func_pspeu_092B4AF8               |      562 |         55 |        |       |     |
 | ric        | func_pspeu_092B2590               |      562 |         55 |        |       |     |
 | cen        | func_pspeu_09244358               |      562 |         55 |        |       |     |
-| rdai       | func_us_801B2C28                  |      563 |         46 |        |       |     |
+| rdai       | EntityStainedGlass                |      563 |         46 |        |       |     |
 | dra        | func_psp_09139B50                 |      564 |         35 |        |       |     |
 | no4        | func_pspeu_09258E30               |      564 |         51 | Yes    |       |     |
 | maria      | func_pspeu_092ABF80               |      565 |         55 |        |       |     |
@@ -9354,7 +9354,7 @@
 | bo6        | func_pspeu_092615E8               |      624 |         46 | Yes    |       |     |
 | ric        | func_pspeu_092BA5F8               |      624 |         46 | Yes    |       |     |
 |            | func_pspeu_0924A970               |      625 |        121 | Yes    |       |     |
-| rdai       | func_us_801B3368                  |      626 |         34 |        |       |     |
+| rdai       | EntityStainedGlassBackground      |      626 |         34 |        |       |     |
 | rno2       | func_pspeu_09251678               |      626 |         54 |        |       |     |
 | bo6        | func_pspeu_09268448               |      628 |         48 |        |       |     |
 | rbo0       | func_pspeu_0923CA38               |      629 |         77 |        |       |     |
