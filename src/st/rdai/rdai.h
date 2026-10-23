@@ -10,10 +10,15 @@ extern EInit g_EInitSpectralSwordAura;
 
 enum Palettes {
     PAL_NONE,
+    PAL_STAINED_GLASS = 0xE,
+    PAL_STAINED_GLASS_BG = 0xF,
+
     PAL_CASTLE_WALL_1 = 0x74,
     PAL_CLOUDS = 0xC0,
     PAL_BACKGROUND_SKY_LAND = 0xC5,
     PAL_CASTLE_WALL_2 = 0xC8,
+    PAL_STAINED_GLASS_LIGHT = 0x200,
+    PAL_STAINED_GLASS_BG_LIGHT = 0x201,
     PAL_ARCHER = 0x212,
     PAL_SPECTRAL_SWORD = 0x215,
     PAL_SNIPER_OF_GOTH = 0x224,
@@ -50,8 +55,8 @@ enum EntityID {
     E_CASTLE_WALL1,         // EntityCastleWall1
     E_CASTLE_WALL2,         // EntityCastleWall2
     E_STAIRCASE,            // EntityStaircase
-    E_UNK_1A,               // func_us_801B2C28
-    E_UNK_1B,               // func_us_801B3368
+    E_STAINED_GLASS,        // EntityStainedGlass
+    E_STAINED_GLASS_BG,     // EntityStainedGlassBackground
     E_UNK_1C,               // func_us_801BFE6C
     E_UNK_1D,               // func_us_801C0240
     E_UNK_1E,               // func_us_801BF830
