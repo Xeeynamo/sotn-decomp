@@ -34,7 +34,6 @@ static CVECTOR colors[] = {
 
 static SVECTOR light_rot_vector = {0, 0, 0}; // bss on pspeu
 
-
 void StainedGlassBlendPalette(
     RECT* arg0, u16 srcPalIdx, u16 destPalIdx, s32 steps, CVECTOR* color) {
     u16 buffer[COLORS_PER_PAL];
@@ -226,7 +225,7 @@ void func_us_801B2C28(Entity* self) {
             rotVector.vy = *yValsPtr;
             rotVector.vz = 0;
             RotMatrix(&rotVector, &mtx);
-            RotMatrixZ(0x800, &mtx);
+            RotMatrixZ(ROT(180), &mtx);
             transVector = *paramsPtr;
             if (transVector.vx > 0) {
                 transparent = true;
@@ -255,9 +254,10 @@ void func_us_801B2C28(Entity* self) {
                     (u8*)SP(0));
                 glassPrim->drawMode = DRAW_HIDE;
             }
-            RotTransPers4(&glass_points_0, &glass_points_1, &glass_points_2, &glass_points_3, 
-                         (long*)&glassPrim->x0, (long*)&glassPrim->x1, (long*)&glassPrim->x2,
-                  (long*)&glassPrim->x3, (long*)&p, (long*)&flag);
+            RotTransPers4(&glass_points_0, &glass_points_1, &glass_points_2,
+                          &glass_points_3, (long*)&glassPrim->x0,
+                          (long*)&glassPrim->x1, (long*)&glassPrim->x2,
+                          (long*)&glassPrim->x3, (long*)&p, (long*)&flag);
 
             // Renders the light "coming through" the right side glass
             if (transparent) {
@@ -285,7 +285,7 @@ void func_us_801B2C28(Entity* self) {
                 RotMatrix(&light_rot_vector, &mtx);
                 RotMatrixY(rotVector.vy, &mtx);
                 RotMatrixZ(rotVector.vz, &mtx);
-                RotMatrixZ(0x800, &mtx);
+                RotMatrixZ(ROT(180), &mtx);
                 transVector = *paramsPtr;
                 transVector.vx = 96;
                 transVector.vy = -256;
@@ -300,9 +300,10 @@ void func_us_801B2C28(Entity* self) {
                 LOW(lightPrim->r2) = LOW(lightPrim->r0);
                 LOW(lightPrim->r3) = LOW(lightPrim->r0);
                 lightPrim->type = PRIM_GT4;
-                RotTransPers4(&light_points_0, &light_points_1, &light_points_2, &light_points_3, 
-                         (long*)&lightPrim->x0, (long*)&lightPrim->x1, (long*)&lightPrim->x2,
-                  (long*)&lightPrim->x3, (long*)&p, (long*)&flag);
+                RotTransPers4(&light_points_0, &light_points_1, &light_points_2,
+                              &light_points_3, (long*)&lightPrim->x0,
+                              (long*)&lightPrim->x1, (long*)&lightPrim->x2,
+                              (long*)&lightPrim->x3, (long*)&p, (long*)&flag);
                 lightPrim->clut = PAL_STAINED_GLASS_LIGHT;
                 lightPrim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
                                       DRAW_COLORS | DRAW_TRANSP;
@@ -350,7 +351,7 @@ static SVECTOR bg_points_2 = {-192, 64, 0};
 static SVECTOR bg_points_3 = {192, 64, 0};
 static SVECTOR bg_pos_vector = {0, 0, 0}; // bss on pspeu
 static VECTOR trans_vectors[] = {
-    {0, 0, FLT(1)},        {0, 240, FLT(0.125)}, {0, 240, FLT(0.25)},
+    {0, 0, FLT(1)},       {0, 240, FLT(0.125)}, {0, 240, FLT(0.25)},
     {0, 240, FLT(0.375)}, {0, 240, FLT(0.5)},   {0, 240, FLT(0.625)},
     {0, 240, FLT(0.75)},  {0, 240, FLT(0.875)}, {0, 240, FLT(1)}};
 static SVECTOR bg_rot_vector = {0, 0, 0}; // bss on pspeu
@@ -502,7 +503,7 @@ void func_us_801B3368(Entity* self) {
         for (transVectorPtr = trans_vectors, idx = 0; idx < 8; idx++,
             transVectorPtr++) {
             RotMatrix(&bg_rot_vector, &mtx);
-            RotMatrixZ(0x800, &mtx);
+            RotMatrixZ(ROT(180), &mtx);
             transVector = *transVectorPtr;
             transVector.vx += self->posX.i.hi - 128;
             transVector.vy += self->posY.i.hi - 160;
@@ -511,8 +512,9 @@ void func_us_801B3368(Entity* self) {
             SetRotMatrix(&mtx);
             SetTransMatrix(&mtx);
             if (idx == 0) {
-                
-                RotTransPers(&bg_pos_vector, (long*)LONG1, (long*)LONG2, (long*)LONG3);
+
+                RotTransPers(
+                    &bg_pos_vector, (long*)LONG1, (long*)LONG2, (long*)LONG3);
 #ifdef VERSION_PSP
                 tempX = (u16)LOW(rect2.w);
                 tempY = LOW(rect2.w) >> 16;
@@ -558,7 +560,10 @@ void func_us_801B3368(Entity* self) {
                 prim->drawMode = DRAW_COLORS;
                 prim = prim->next;
             } else {
-                RotTransPers4(&bg_points_0, &bg_points_1, &bg_points_2, &bg_points_3, (long*)LONG1, (long*)LONG4, (long*)LONG5, (long*)LONG6, (long*)LONG2, (long*)LONG3);
+                RotTransPers4(
+                    &bg_points_0, &bg_points_1, &bg_points_2, &bg_points_3,
+                    (long*)LONG1, (long*)LONG4, (long*)LONG5, (long*)LONG6,
+                    (long*)LONG2, (long*)LONG3);
 #ifdef VERSION_PSP
                 if (rect1.h <= 0xF0) {
 #else

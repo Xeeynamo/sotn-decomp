@@ -5,7 +5,6 @@ g_EInitSpectralSwordRDAI = 0x8018089C;
 g_EInitSpear = 0x801808B4;
 g_EInitShield = 0x801808C0;
 g_EInitBlackPanther = 0x80180920;
-g_StainedGlassRecurseIndices = 0x80180B0C;
 g_Rbo3DoorFlag = 0x80180D58;
 g_RdaiArcherOffsets = 0x80181904; // allow_duplicated:true
 g_RdaiUnk33Anim2 = 0x80181A6C;

@@ -56,5 +56,4 @@ g_EInitSpear = 0x09259000;
 g_EInitShield = 0x09259010;
 g_EInitBlackPanther = 0x09259090;
 rooms = 0x092590A0;
-g_StainedGlassRecurseIndices = 0x09283540;
 g_Rbo3DoorFlag = 0x09283AC0;
