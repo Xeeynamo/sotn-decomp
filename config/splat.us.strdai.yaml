@@ -52,7 +52,6 @@ segments:
       - [0x974, .data, e_lock_camera]
       - [0x9F4, .data, e_breakable]
       - [0xB0C, .data, e_stained_glass]
-      - [0xC6C, data]
       - [0xD2C, .data, d_prize_drops]
       - [0xD58, data]
       - [0xD5C, .data, e_spikes]
