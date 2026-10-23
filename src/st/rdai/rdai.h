@@ -10,10 +10,12 @@ extern EInit g_EInitSpectralSwordAura;
 
 enum Palettes {
     PAL_NONE,
+    PAL_STAINED_GLASS = 0xE,
     PAL_CASTLE_WALL_1 = 0x74,
     PAL_CLOUDS = 0xC0,
     PAL_BACKGROUND_SKY_LAND = 0xC5,
     PAL_CASTLE_WALL_2 = 0xC8,
+    PAL_STAINED_GLASS_LIGHT = 0x200,
     PAL_ARCHER = 0x212,
     PAL_SPECTRAL_SWORD = 0x215,
     PAL_SNIPER_OF_GOTH = 0x224,
