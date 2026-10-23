@@ -76,6 +76,8 @@ segments:
       - [0x22D38, data]
       - [0x22D50, .data, rno4/st_update]
       - [0x22D80, data, 22D80]
+      - [0x22E80, .data, rno4_psp/e_particles]
+      - [0x22F00, data, 22F00]
       - [0x22F38, .data, rno4/e_collect]
       - [0x23480, .data, rno4/collision]
       - [0x23858, .data, rno4_psp/unk_12B08]

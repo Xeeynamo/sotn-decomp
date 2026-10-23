@@ -4,7 +4,6 @@ g_EInitInteractable = 0x80180484;
 g_EInitCommon = 0x801804A8;
 g_EInitEnvironment = 0x801804CC;
 g_EInitHippogryph = 0x801804D8;
-cutscene_script = 0x80181D5C;
 func_801A8620 = 0x8019FE84;
 EntityRbo3Door = 0x801A159C;
 CheckHippogryphFloorCollision = 0x801A1BA0;
