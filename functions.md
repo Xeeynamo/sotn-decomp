@@ -1535,7 +1535,7 @@
 | cen        | func_pspeu_09251428               |       25 |          4 |        |       |     |
 | cen        | func_pspeu_092514B8               |       25 |          4 |        |       |     |
 | dra        | func_psp_09140E00                 |       25 |          6 |        |       |     |
-|            | e_unk_16.rodata                   |       26 |          0 | Yes    |       |     |
+|            | e_camera_bounds.rodata            |       26 |          0 | Yes    |       |     |
 | mar        | unk_EFF8.rodata                   |       26 |          0 | Yes    |       |     |
 |            | unk_11438.rodata                  |       26 |          0 | Yes    |       |     |
 |            | e_thecreature.rodata              |       26 |          0 | Yes    |       |     |
@@ -3503,7 +3503,7 @@
 | dra        | func_psp_090F1968                 |       49 |          8 |        |       |     |
 | ric        | func_pspeu_092B06F8               |       49 |          8 |        |       |     |
 | dra        | func_psp_09116120                 |       49 |         10 |        |       |     |
-|            | e_richter_prologue.rodata         |       50 |          0 | Yes    |       |     |
+|            | e_cutscene_actors.rodata          |       50 |          0 | Yes    |       |     |
 | no1        | unk_381E8.rodata                  |       50 |          0 | Yes    |       |     |
 | main       | func_psp_08910C74                 |       50 |          1 |        |       |     |
 | main       | sceGupLight                       |       50 |          2 |        |       |     |
@@ -5328,7 +5328,7 @@
 |            | func_pspeu_09250728               |       90 |         10 |        |       |     |
 | dai        | func_pspeu_09256DA0               |       90 |         10 |        |       |     |
 | main       | _getmodreent                      |       90 |         13 |        |       |     |
-| bo5        | func_us_801A4494                  |       90 |         16 |        |       |     |
+|            | func_pspeu_09247028               |       90 |         16 |        |       |     |
 | ric        | func_pspeu_092AF898               |       90 |         17 |        |       |     |
 | main       | func_psp_08926348                 |       90 |         18 |        |       |     |
 | rbo0       | func_pspeu_09237700               |       91 |          1 |        |       |     |
@@ -6771,7 +6771,7 @@
 | cat        | func_pspeu_09254B70               |      136 |         18 |        |       |     |
 | chi        | func_psp_09249370                 |      136 |         18 |        |       |     |
 | rnz0       | func_pspeu_09255A00               |      136 |         18 |        |       |     |
-| bo5        | func_us_801A19FC                  |      136 |         19 |        |       |     |
+|            | func_us_801A19FC                  |      136 |         19 |        |       |     |
 | dra        | func_psp_09141668                 |      136 |         21 |        |       |     |
 | cat        | func_pspeu_09254D60               |      136 |         21 |        |       |     |
 | chi        | func_psp_09249560                 |      136 |         21 |        |       |     |
@@ -7612,7 +7612,7 @@
 | st0        | func_pspeu_09238BF8               |      212 |         14 |        |       |     |
 | top        | DrawCutsceneActorName             |      212 |         14 |        |       |     |
 |            | func_pspeu_0924C588               |      212 |         32 |        |       |     |
-| bo5        | func_us_801A425C                  |      213 |         14 | Yes    |       |     |
+|            | func_pspeu_0924B670               |      213 |         14 | Yes    |       |     |
 | bo0        | func_pspeu_0923C548               |      213 |         15 |        |       |     |
 | no0        | func_pspeu_0923CCA8               |      213 |         15 |        |       |     |
 | lib        | func_psp_092670F8                 |      213 |         19 |        |       |     |
@@ -8075,14 +8075,14 @@
 | no2        | func_pspeu_092529B0               |      275 |         37 |        |       |     |
 | np3        | EntityGurkhaWeapon                |      275 |         37 |        |       |     |
 | rno0       | func_pspeu_09259048               |      275 |         37 |        |       |     |
-| bo5        | func_us_801A3B88                  |      275 |         39 |        |       |     |
+|            | func_us_801A3B88                  |      275 |         39 |        |       |     |
 | dra        | func_psp_090F1078                 |      275 |         39 | Yes    |       |     |
 | bo0        | func_pspeu_0925C178               |      276 |         25 |        |       |     |
 | rnz1       | func_pspeu_0924E0E8               |      276 |         27 |        |       |     |
 | dra        | func_psp_090DDAE0                 |      277 |         20 |        |       |     |
 | no4        | func_pspeu_0923FF60               |      277 |         31 |        |       |     |
 | no4        | func_pspeu_092423C8               |      277 |         33 |        |       |     |
-| bo5        | func_us_801A5F88                  |      277 |         35 | Yes    |       |     |
+| bo5        | EntityCutsceneStage               |      277 |         35 | Yes    |       |     |
 |            | func_pspeu_0925AB28               |      278 |         13 |        |       |     |
 | rbo5       | func_pspeu_0924E260               |      278 |         13 |        |       |     |
 | rno4       | func_us_801C1EE4_from_no4         |      278 |         23 |        |       |     |
@@ -8584,7 +8584,7 @@
 | rnz1       | func_pspeu_092508B8               |      367 |         46 |        |       |     |
 | top        | func_pspeu_09248638               |      367 |         54 |        |       |     |
 | dra        | func_psp_090EB8B8                 |      368 |         17 |        |       |     |
-| bo5        | func_801A8620                     |      368 |         39 | Yes    |       |     |
+|            | func_pspeu_09247658               |      368 |         39 | Yes    |       |     |
 |            | func_pspeu_09250BB8               |      369 |         21 |        |       |     |
 | dai        | func_pspeu_09258EC0               |      369 |         21 |        |       |     |
 | cat        | func_pspeu_092572D0               |      369 |         26 |        |       |     |
@@ -8598,7 +8598,7 @@
 | no3        | func_pspeu_0923D428               |      372 |         50 |        |       |     |
 | np3        | EntityExplosionPuffOpaque         |      372 |         50 |        |       |     |
 | nz0        | func_pspeu_0923AC80               |      372 |         50 |        |       |     |
-| bo5        | EntityRbo3Door                    |      373 |         34 | Yes    |       |     |
+|            | EntityRbo3Door                    |      373 |         34 | Yes    |       |     |
 | dra        | func_psp_090F8348                 |      373 |         35 |        |       |     |
 | rchi       | func_pspeu_0924A838               |      373 |         35 |        |       |     |
 | main       | func_psp_0891DE74                 |      373 |         36 |        |       |     |
@@ -10151,7 +10151,7 @@
 | dai        | func_pspeu_092545E0               |     2235 |        203 | Yes    |       |     |
 | nz0        | func_pspeu_0923E810               |     2235 |        203 | Yes    |       |     |
 | rbo2       | EntityCutsceneDialogue            |     2243 |        204 | Yes    |       |     |
-| bo5        | EntityCutscene                    |     2245 |        204 | Yes    |       |     |
+|            | EntityCutscene                    |     2245 |        204 | Yes    |       |     |
 | rcen       | func_pspeu_09246800               |     2252 |        207 | Yes    |       |     |
 | mar        | EntityCutsceneDialogue            |     2254 |        203 | Yes    |       |     |
 | rbo6       | EntityCutscene                    |     2257 |        206 | Yes    |       |     |
