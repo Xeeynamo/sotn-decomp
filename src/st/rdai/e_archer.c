@@ -70,7 +70,7 @@ static s16 g_RdaiArcherOffsets[][2] = {
 
 extern EInit g_EInitRdaiUnk1F;
 
-void func_us_801BF830(Entity* self) {
+void EntityArcherVehicle(Entity* self) {
     Entity* other;
     s32 velX;
     s32 i;
@@ -78,20 +78,21 @@ void func_us_801BF830(Entity* self) {
 
     if (self->step) {
         other = self + 4;
-        if (other->entityId != E_UNK_1C && self->step != 3) {
+        if (other->entityId != E_ARCHER_MAN && self->step != 3) {
             SetStep(3);
         }
     }
     switch (self->step) {
     case 0x0:
         InitializeEntity(g_EInitRdaiUnk1F);
-        other = self + 1;
-        for (i = 0; i < 3; i++, other++) {
-            CreateEntityFromEntity(E_UNK_1F, self, other);
+        // Create 3 sub-parts of the vehicle, with params 0, 1, 2.
+        // These are the two wheels and the one wheel cover.
+        for (other = self + 1, i = 0; i < 3; i++, other++) {
+            CreateEntityFromEntity(E_ARCHER_WHEEL, self, other);
             other->params = i;
         }
         other = self + 4;
-        CreateEntityFromEntity(E_UNK_1C, self, other);
+        CreateEntityFromEntity(E_ARCHER_MAN, self, other);
         SetStep(1);
         break;
     case 0x1:
@@ -164,7 +165,7 @@ void func_us_801BF830(Entity* self) {
             if (i != 7) {
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
-                    CreateEntityFromEntity(E_UNK_21, self, other);
+                    CreateEntityFromEntity(E_ARCHER_DEATH_PARTS, self, other);
                     other->params = i + 1;
                 }
             }
@@ -179,7 +180,7 @@ void func_us_801BF830(Entity* self) {
 
 extern EInit g_EInitRdaiUnk1F;
 
-void EntityRdaiUnk1F(Entity* self) {
+void EntityArcherWheel(Entity* self) {
     Entity* entity;
     s32 velocity;
 
@@ -192,9 +193,11 @@ void EntityRdaiUnk1F(Entity* self) {
         break;
 
     case 1:
+        // Frame 2: metal rectangle which partially covers the lower-left wheel
+        // This makes the vehicle more 3D, since the wheel has higher priority.
         self->animCurFrame = 2;
         entity = self - 1;
-        if (entity->entityId != E_UNK_1E) {
+        if (entity->entityId != E_ARCHER_VEHICLE) {
             DestroyEntity(self);
             break;
         }
@@ -204,20 +207,21 @@ void EntityRdaiUnk1F(Entity* self) {
         break;
 
     case 2:
+        // Frame 8: one wheel
         self->drawFlags = ENTITY_ROTATE;
         self->animCurFrame = 8;
         entity = self - 2;
-        if (entity->entityId != E_UNK_1E) {
+        if (entity->entityId != E_ARCHER_VEHICLE) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_UNK_21, self, entity);
+                CreateEntityFromEntity(E_ARCHER_DEATH_PARTS, self, entity);
                 entity->params = 8;
             }
             DestroyEntity(self);
             break;
         }
-        self->posX.i.hi = entity->posX.i.hi + 0x1C;
-        self->posY.i.hi = entity->posY.i.hi - 0x26;
+        self->posX.i.hi = entity->posX.i.hi + 28;
+        self->posY.i.hi = entity->posY.i.hi - 38;
         self->zPriority = entity->zPriority - 1;
         velocity = entity->velocityX >> 9;
         self->rotate -= velocity;
@@ -226,20 +230,21 @@ void EntityRdaiUnk1F(Entity* self) {
         break;
 
     case 3:
+        // The other wheel
         self->drawFlags = ENTITY_ROTATE;
         self->animCurFrame = 8;
         entity = self - 3;
-        if (entity->entityId != E_UNK_1E) {
+        if (entity->entityId != E_ARCHER_VEHICLE) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_UNK_21, self, entity);
+                CreateEntityFromEntity(E_ARCHER_DEATH_PARTS, self, entity);
                 entity->params = 8;
             }
             DestroyEntity(self);
             break;
         }
-        self->posX.i.hi = entity->posX.i.hi - 0x20;
-        self->posY.i.hi = entity->posY.i.hi + 0x18;
+        self->posX.i.hi = entity->posX.i.hi - 32;
+        self->posY.i.hi = entity->posY.i.hi + 24;
         self->zPriority = entity->zPriority + 1;
         velocity = entity->velocityX >> 9;
         self->rotate -= velocity;
@@ -251,7 +256,7 @@ void EntityRdaiUnk1F(Entity* self) {
 
 extern EInit g_EInitArcher;
 
-void func_us_801BFE6C(Entity* self) {
+void EntityArcherMan(Entity* self) {
     Entity* entity;
     s32 i;
     s32 animIndex;
@@ -277,17 +282,20 @@ void func_us_801BFE6C(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitArcher);
-        self->animCurFrame = 0x1D;
+        self->animCurFrame = 29;
+        // Params 1 is the arm pulling the bow string
         entity = self + 1;
-        CreateEntityFromEntity(E_UNK_1D, self, entity);
+        CreateEntityFromEntity(E_ARCHER_MAN_ARMS, self, entity);
         entity->params = 1;
         entity->nextPart = self;
         self->nextPart = entity;
+        // Params 2 is background arm holding the bow
         entity = self + 2;
-        CreateEntityFromEntity(E_UNK_1D, self, entity);
+        CreateEntityFromEntity(E_ARCHER_MAN_ARMS, self, entity);
         entity->params = 2;
+        // Params 3 is the bow
         entity = self + 3;
-        CreateEntityFromEntity(E_UNK_1D, self, entity);
+        CreateEntityFromEntity(E_ARCHER_MAN_ARMS, self, entity);
         entity->params = 3;
         // fallthrough
 
@@ -360,7 +368,7 @@ void func_us_801BFE6C(Entity* self) {
         for (i = 0; i < 3; i++) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_UNK_21, self, entity);
+                CreateEntityFromEntity(E_ARCHER_DEATH_PARTS, self, entity);
                 entity->params = i + 0x13;
             }
         }
@@ -369,8 +377,11 @@ void func_us_801BFE6C(Entity* self) {
     }
 }
 extern EInit g_EInitRdaiUnk1F;
-
-void func_us_801C0240(Entity* self) {
+// Archer man creates 3 of these, with params 1, 2, 3.
+// Then the case 0 sets self->step = self->params
+// So each step is a different entity which forms part of the man.
+// These are the two arms and the bow.
+void EntityArcherManArms(Entity* self) {
     Entity* other;
 
     switch (self->step) {
@@ -379,16 +390,16 @@ void func_us_801C0240(Entity* self) {
         self->drawFlags = ENTITY_ROTATE;
         self->step = self->params;
         self->hitboxState = 0;
-        if (self->params == 1) {
+        if (self->params == 1) { // The arm to pull the bow string
             other = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (other != NULL) {
-                CreateEntityFromEntity(E_UNK_20, self, other);
+                CreateEntityFromEntity(E_ARCHER_ARROW, self, other);
                 other->ext.rdaiArcher.unk9C = self;
                 other->zPriority = self->zPriority - 1;
             }
         }
         break;
-    case 1:
+    case 1: // The arm which pulls the bow string
         other = self - 1;
         self->posX.i.hi = other->posX.i.hi;
         self->posY.i.hi = other->posY.i.hi;
@@ -411,7 +422,7 @@ void func_us_801C0240(Entity* self) {
             if ((!self->poseTimer) && (self->pose == 6)) {
                 other = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (other != NULL) {
-                    CreateEntityFromEntity(E_UNK_20, self, other);
+                    CreateEntityFromEntity(E_ARCHER_ARROW, self, other);
                     other->ext.rdaiArcher.unk9C = self;
                     other->zPriority = self->zPriority - 1;
                 }
@@ -425,24 +436,24 @@ void func_us_801C0240(Entity* self) {
             break;
         }
         self->ext.rdaiArcher.mode = other->ext.rdaiArcher.mode;
-        if (other->entityId != E_UNK_1C) {
+        if (other->entityId != E_ARCHER_MAN) {
             DestroyEntity(self);
             return;
         }
         break;
-    case 2:
+    case 2: // The other arm in the background
         other = self - 2;
         self->posX.i.hi = other->posX.i.hi;
         self->posY.i.hi = other->posY.i.hi;
         self->zPriority = ((other->zPriority) - 1);
         self->rotate = other->rotate;
-        self->animCurFrame = 0x1C;
-        if (other->entityId != E_UNK_1C) {
+        self->animCurFrame = 28;
+        if (other->entityId != E_ARCHER_MAN) {
             DestroyEntity(self);
             return;
         }
         break;
-    case 3:
+    case 3: // The bow itself
         other = self - 3;
         self->posX.i.hi = other->posX.i.hi;
         self->posY.i.hi = other->posY.i.hi;
@@ -472,7 +483,7 @@ void func_us_801C0240(Entity* self) {
             break;
         }
         self->ext.rdaiArcher.mode = other->ext.rdaiArcher.mode;
-        if (other->entityId != E_UNK_1C) {
+        if (other->entityId != E_ARCHER_MAN) {
             DestroyEntity(self);
         }
         break;
@@ -481,7 +492,7 @@ void func_us_801C0240(Entity* self) {
 
 extern EInit D_us_80180884;
 
-void func_us_801C0528(Entity* self) {
+void EntityArcherArrow(Entity* self) {
     Entity* other;
     s16 angle;
     s32 i;
@@ -490,7 +501,7 @@ void func_us_801C0528(Entity* self) {
     switch (self->step) { /* irregular */
     case 0:
         InitializeEntity(D_us_80180884);
-        self->animCurFrame = 0x16;
+        self->animCurFrame = 22;
         self->drawFlags |= ENTITY_ROTATE;
         self->hitboxState = 0;
         if (self->params) {
@@ -521,7 +532,7 @@ void func_us_801C0528(Entity* self) {
         }
         self->posX.i.hi += (size * rcos(angle)) >> 0xC;
         self->posY.i.hi += (size * rsin(angle)) >> 0xC;
-        if (other->entityId != E_UNK_1D) {
+        if (other->entityId != E_ARCHER_MAN_ARMS) {
             DestroyEntity(self);
             return;
         }
@@ -542,7 +553,7 @@ void func_us_801C0528(Entity* self) {
             for (i = 0; i < 2; i++) {
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
-                    CreateEntityFromEntity(E_UNK_20, self, other);
+                    CreateEntityFromEntity(E_ARCHER_ARROW, self, other);
                     other->params = i + 1;
                     other->rotate = self->rotate;
                 }
@@ -585,7 +596,7 @@ extern s16* sprites_rdai_2[];
 
 extern EInit D_us_80180890;
 
-void func_us_801C0898(Entity* self) {
+void EntityArcherDeathParts(Entity* self) {
     Entity* other;
     s16 angle;
     s32 xPivot;

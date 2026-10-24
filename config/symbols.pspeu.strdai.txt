@@ -1,10 +1,10 @@
 CreateEntityFromCurrentEntity = 0x0923A778;
 CreateEntityFromEntity = 0x0923A800;
 SpearGuardCheckCollision = 0x0923A888;
-func_us_801BF830 = 0x0923AAF0;
-func_us_801C0240 = 0x0923B970;
-func_us_801C0528 = 0x0923BE30;
-func_us_801C0898 = 0x0923C358;
+EntityArcherVehicle = 0x0923AAF0;
+EntityArcherManArms = 0x0923B970;
+EntityArcherArrow = 0x0923BE30;
+EntityArcherDeathParts = 0x0923C358;
 Random = 0x0923F010;
 CheckColliderOffsets = 0x09246018;
 PlaySfxPositional = 0x09246710;

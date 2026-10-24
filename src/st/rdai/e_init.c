@@ -28,12 +28,12 @@ void EntityCastleWall2(Entity* self);
 void EntityStaircase(Entity* self);
 void EntityStainedGlass(Entity* self);
 void EntityStainedGlassBackground(Entity* self);
-void func_us_801BFE6C(Entity* self);
-void func_us_801C0240(Entity* self);
-void func_us_801BF830(Entity* self);
-void EntityRdaiUnk1F(Entity* self);
-void func_us_801C0528(Entity* self);
-void func_us_801C0898(Entity* self);
+void EntityArcherMan(Entity* self);
+void EntityArcherManArms(Entity* self);
+void EntityArcherVehicle(Entity* self);
+void EntityArcherWheel(Entity* self);
+void EntityArcherArrow(Entity* self);
+void EntityArcherDeathParts(Entity* self);
 void func_us_801C0C44(Entity* self);
 void EntitySpectralSwordAura(Entity* self);
 void func_us_801C17E8(Entity* self);
@@ -82,12 +82,12 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityStaircase,
     EntityStainedGlass,
     EntityStainedGlassBackground,
-    func_us_801BFE6C,
-    func_us_801C0240,
-    func_us_801BF830,
-    EntityRdaiUnk1F,
-    func_us_801C0528,
-    func_us_801C0898,
+    EntityArcherMan,
+    EntityArcherManArms,
+    EntityArcherVehicle,
+    EntityArcherWheel,
+    EntityArcherArrow,
+    EntityArcherDeathParts,
     func_us_801C0C44,
     EntitySpectralSwordAura,
     func_us_801C17E8,
