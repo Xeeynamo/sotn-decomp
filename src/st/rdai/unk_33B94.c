@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rdai.h"
 
+static s32 g_Rbo3DoorFlag = 0;
+
 extern EInit g_Rbo3DoorInit;
-extern s32 g_Rbo3DoorFlag;
 #if defined(VERSION_PSP)
 extern s32 E_ID(BOSS_DOOR);
 #endif

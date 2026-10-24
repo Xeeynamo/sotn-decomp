@@ -28,12 +28,12 @@ void EntityCastleWall2(Entity* self);
 void EntityStaircase(Entity* self);
 void EntityStainedGlass(Entity* self);
 void EntityStainedGlassBackground(Entity* self);
-void func_us_801BFE6C(Entity* self);
-void func_us_801C0240(Entity* self);
-void func_us_801BF830(Entity* self);
-void EntityRdaiUnk1F(Entity* self);
-void func_us_801C0528(Entity* self);
-void func_us_801C0898(Entity* self);
+void EntityArcherMan(Entity* self);
+void EntityArcherManArms(Entity* self);
+void EntityArcherVehicle(Entity* self);
+void EntityArcherWheel(Entity* self);
+void EntityArcherArrow(Entity* self);
+void EntityArcherDeathParts(Entity* self);
 void func_us_801C0C44(Entity* self);
 void EntitySpectralSwordAura(Entity* self);
 void func_us_801C17E8(Entity* self);
@@ -82,12 +82,12 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityStaircase,
     EntityStainedGlass,
     EntityStainedGlassBackground,
-    func_us_801BFE6C,
-    func_us_801C0240,
-    func_us_801BF830,
-    EntityRdaiUnk1F,
-    func_us_801C0528,
-    func_us_801C0898,
+    EntityArcherMan,
+    EntityArcherManArms,
+    EntityArcherVehicle,
+    EntityArcherWheel,
+    EntityArcherArrow,
+    EntityArcherDeathParts,
     func_us_801C0C44,
     EntitySpectralSwordAura,
     func_us_801C17E8,
@@ -122,10 +122,10 @@ EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
 EInit g_EInitEnvironment = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
 EInit g_Rbo3DoorInit = {ANIMSET_OVL(2), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
-EInit g_EInitRdaiUnk1F = {ANIMSET_OVL(3), 0x00, 0x48, PAL_ARCHER, ENEMY_INTERACTABLE};
-EInit g_EInitArcher = {ANIMSET_OVL(3), 0x00, 0x48, PAL_ARCHER, ENEMY_ARCHER};
-EInit D_us_80180884 = {ANIMSET_OVL(3), 0x00, 0x48, PAL_ARCHER, ENEMY_ARCHER_UNK_132};
-EInit D_us_80180890 = {ANIMSET_OVL(3), 0x00, 0x48, PAL_ARCHER, ENEMY_PARTICLE};
+EInit g_EInitArcherVehicle = {ANIMSET_OVL(3), 0x00, 0x48, PAL_ARCHER, ENEMY_INTERACTABLE};
+EInit g_EInitArcherMan = {ANIMSET_OVL(3), 0x00, 0x48, PAL_ARCHER, ENEMY_ARCHER};
+EInit g_EInitArcherArrow = {ANIMSET_OVL(3), 0x00, 0x48, PAL_ARCHER, ENEMY_ARCHER_ARROW};
+EInit g_EInitArcherDeathParts = {ANIMSET_OVL(3), 0x00, 0x48, PAL_ARCHER, ENEMY_PARTICLE};
 EInit g_EInitSpectralSwordRDAI = {ANIMSET_OVL(4), 0x00, 0x51, PAL_SPECTRAL_SWORD, ENEMY_SPECTRAL_SWORD_RDAI};
 EInit g_EInitSpectralSwordAura = {ANIMSET_OVL(4), 0x00, 0x51, PAL_SPECTRAL_SWORD, ENEMY_PARTICLE};
 EInit g_EInitSpear = {ANIMSET_OVL(4), 0x00, 0x51, PAL_SPECTRAL_SWORD, ENEMY_SPEAR};
