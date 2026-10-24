@@ -229,7 +229,7 @@ s32 func_us_801C5168(void) {
     return 0;
 }
 
-static void func_8010ED54(u8 anim) UNUSED {
+static UNUSED void func_8010ED54(u8 anim) {
     DOPPLEGANGER.velocityX = DOPPLEGANGER.velocityY = 0;
     SetDopplegangerStep(16);
     SetDopplegangerAnim(anim);

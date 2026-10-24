@@ -2175,6 +2175,8 @@ files:
           - [0x1274, skip]
           - [0x153C, blueprintsdef, blueprints, DopBlueprints, EntityID]
           - [0x17F0, skip]
+          - [0x4434, spritesheet, doppleganger]
+          - [0x2AE4C, spritesheet, bat_form]
           - [0x2BF78, cmpgfx, D_801ABF78, 128, 128, 4]
           - [0x2C258, cmpgfx, D_801AC258, 128, 128, 4]
           - [0x2C360, palette, D_us_801AC360, 16]
