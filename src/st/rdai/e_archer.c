@@ -615,7 +615,7 @@ void EntityArcherArrow(Entity* self) {
             return;
         }
         break;
-    case 4:
+    case ARROW_BROKEN:
         MoveEntity();
         self->velocityY += FIX(0.125);
         if (self->params == 1) {
