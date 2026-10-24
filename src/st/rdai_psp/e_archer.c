@@ -364,7 +364,120 @@ void func_us_801BFE6C(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rdai_psp/nonmatchings/rdai_psp/e_archer", func_us_801C0240);
+extern AnimateEntityFrame D_pspeu_092540C0[];
+extern AnimateEntityFrame D_pspeu_092540C8[];
+extern AnimateEntityFrame D_pspeu_092540D0[];
+extern AnimateEntityFrame D_pspeu_092540E0[];
+extern EInit g_EInitRdaiUnk1F;
+
+void func_us_801C0240(Entity* self) {
+    Entity* other;
+
+    switch (self->step) {                              /* switch 1; irregular */
+    case 0:                                         /* switch 1 */
+        InitializeEntity(g_EInitRdaiUnk1F);
+        self->drawFlags = 4;
+        self->step = self->params;
+        self->hitboxState = 0;
+        if (self->params == 1) {
+            other = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            if (other != NULL) {
+                CreateEntityFromEntity(0x20, self, other);
+                other->ext.ILLEGAL.u32[8] = (u32) self;
+                other->zPriority = (self->zPriority - 1);
+            }
+        }
+        break;
+    case 1:                                         /* switch 1 */
+        other = self - 1;
+        self->posX.i.hi = other->posX.i.hi;
+        self->posY.i.hi = other->posY.i.hi;
+        self->zPriority = other->zPriority + 3;
+        self->rotate = other->rotate;
+        switch (self->ext.ILLEGAL.u8[9]) {                        /* switch 2; irregular */
+        case 1:                                     /* switch 2 */
+            AnimateEntity(&D_pspeu_092540C8, self);
+            if ((!self->poseTimer) && (self->pose == 1)) {
+                PlaySfxPositional(0x6C9);
+            }
+            break;
+        case 2:                                     /* switch 2 */
+            self->animCurFrame = 0x1B;
+            self->pose = 0;
+            self->poseTimer = 0;
+            break;
+        case 3:                                     /* switch 2 */
+            AnimateEntity(&D_pspeu_092540E0, self);
+            if ((!self->poseTimer) && (self->pose == 6)) {
+                other = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
+                if (other != NULL) {
+                    CreateEntityFromEntity(0x20, self, other);
+                    other->ext.ILLEGAL.u32[8] = (u32) self;
+                    other->zPriority = self->zPriority - 1;
+                }
+                other = self - 1;
+            }
+            break;
+        default:                                    /* switch 2 */
+            self->animCurFrame = 0x19;
+            self->pose = 0;
+            self->poseTimer = 0;
+            break;
+        }
+        self->ext.ILLEGAL.u8[9] = other->ext.ILLEGAL.u8[9];
+        if ((other->entityId) != 0x1C) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    case 2:                                         /* switch 1 */
+        other = self - 2;
+        self->posX.i.hi = other->posX.i.hi;
+        self->posY.i.hi = other->posY.i.hi;
+        self->zPriority = ((other->zPriority) - 1);
+        self->rotate = other->rotate;
+        self->animCurFrame = 0x1C;
+        if ((other->entityId) != 0x1C) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    case 3:                                         /* switch 1 */
+        other = self - 3;
+        self->posX.i.hi = other->posX.i.hi;
+        self->posY.i.hi = other->posY.i.hi;
+        self->zPriority = ((other->zPriority) + 1);
+        self->rotate = other->rotate;
+        switch (self->ext.ILLEGAL.u8[9]) {                        /* switch 3; irregular */
+        case 1:                                     /* switch 3 */
+            AnimateEntity(&D_pspeu_092540C0, self);
+            if (other->ext.ILLEGAL.u8[9] == 2) {
+                self->pose = 0;
+                self->poseTimer = 0;
+                self->ext.ILLEGAL.u8[9] = 2;
+            }
+            break;
+        case 2:                                     /* switch 3 */
+            AnimateEntity(&D_pspeu_092540D0, self);
+            break;
+        case 3:                                     /* switch 3 */
+            self->animCurFrame = 0xB;
+            self->pose = 0;
+            self->poseTimer = 0;
+            break;
+        default:                                    /* switch 3 */
+            self->animCurFrame = 0xB;
+            self->pose = 0;
+            self->poseTimer = 0;
+            break;
+        }
+        self->ext.ILLEGAL.u8[9] = other->ext.ILLEGAL.u8[9];
+        if ((other->entityId) != 0x1C) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("st/rdai_psp/nonmatchings/rdai_psp/e_archer", func_us_801C0528);
 
