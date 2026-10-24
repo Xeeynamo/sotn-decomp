@@ -14,6 +14,7 @@ extern PfnEntityUpdate* PfnEntityUpdates;
 extern LayoutEntity** g_pStObjLayoutHorizontal;
 extern LayoutEntity** g_pStObjLayoutVertical;
 
+extern u8* richter_sprites[];
 extern u8 cutscene_data[];
 extern u8 gfx_portrait_alucard[];
 extern u8 gfx_portrait_maria[];
@@ -33,6 +34,12 @@ void Psyz_ModuleStart(void* param) {
     Overlay* o = param;
 
     memcpy(o, &g_Overlay, sizeof(AbbreviatedOverlay2));
+
+    // MSVC is unable to pre-calculate the pointer for richter_sprites at
+    // compilation time, and it fails if done so in headers.c . The only fix
+    // known is to set it to o->unk30 at runtime.
+    o->unk30 = richter_sprites;
+
     PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = entityLayoutHorizontal;
     g_pStObjLayoutVertical = entityLayoutVertical;
