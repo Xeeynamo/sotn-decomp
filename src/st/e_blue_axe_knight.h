@@ -22,7 +22,19 @@ typedef enum {
 static s16 sensors_move[] = {0, 32, 8, 0};
 static s16 sensors_ground[4][2] = {{0, 32}, {0, 4}, {8, -4}, {-16, 0}};
 static s16 dead_particle_pos[][2] = {
-    {-8, -4}, {8, -6}, {-2, 4}, {-1, -7}, {2, 8}, {11, -7}, {4, 6}, {-3, 0}};
+    {-8, -4},
+    {8, -6},
+    {-2, 4},
+    {-1, -7},
+    {2, 8},
+    {11, -7},
+    {4, 6},
+    {-3, 0},
+#if defined(FIX_UB)
+    // BUG! OOB on death animation
+    {0, 0},
+#endif
+};
 
 static u8 anim_walk_alt[] = {20, 1, 10, 2, 10, 3, 20, 4, 10, 3, 10, 2, 0, 0};
 static u8 anim_throw_stand_alt[] = {
