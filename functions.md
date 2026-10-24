@@ -8075,7 +8075,7 @@
 | no2        | func_pspeu_092529B0               |      275 |         37 |        |       |     |
 | np3        | EntityGurkhaWeapon                |      275 |         37 |        |       |     |
 | rno0       | func_pspeu_09259048               |      275 |         37 |        |       |     |
-|            | func_us_801A3B88                  |      275 |         39 |        |       |     |
+|            | func_pspeu_0924AD58               |      275 |         39 |        |       |     |
 | dra        | func_psp_090F1078                 |      275 |         39 | Yes    |       |     |
 | bo0        | func_pspeu_0925C178               |      276 |         25 |        |       |     |
 | rnz1       | func_pspeu_0924E0E8               |      276 |         27 |        |       |     |
@@ -9239,7 +9239,7 @@
 | maria      | func_pspeu_092B4AF8               |      562 |         55 |        |       |     |
 | ric        | func_pspeu_092B2590               |      562 |         55 |        |       |     |
 | cen        | func_pspeu_09244358               |      562 |         55 |        |       |     |
-| rdai       | EntityStainedGlass                |      563 |         46 |        |       |     |
+| rdai       | func_pspeu_092522F8               |      563 |         46 |        |       |     |
 | dra        | func_psp_09139B50                 |      564 |         35 |        |       |     |
 | no4        | func_pspeu_09258E30               |      564 |         51 | Yes    |       |     |
 | maria      | func_pspeu_092ABF80               |      565 |         55 |        |       |     |
@@ -9354,7 +9354,7 @@
 | bo6        | func_pspeu_092615E8               |      624 |         46 | Yes    |       |     |
 | ric        | func_pspeu_092BA5F8               |      624 |         46 | Yes    |       |     |
 |            | func_pspeu_0924A970               |      625 |        121 | Yes    |       |     |
-| rdai       | EntityStainedGlassBackground      |      626 |         34 |        |       |     |
+| rdai       | func_pspeu_09252B58               |      626 |         34 |        |       |     |
 | rno2       | func_pspeu_09251678               |      626 |         54 |        |       |     |
 | bo6        | func_pspeu_09268448               |      628 |         48 |        |       |     |
 | rbo0       | func_pspeu_0923CA38               |      629 |         77 |        |       |     |
@@ -10171,6 +10171,6 @@
 | no0        | func_pspeu_09240B20               |     2781 |        340 | Yes    |       |     |
 | dra        | func_psp_091296A8                 |     2950 |        257 | Yes    |       |     |
 | rbo8       | func_us_80195D80                  |     2968 |        425 | Yes    |       |     |
-| bo5        | func_us_801A1C14                  |     3100 |        402 | Yes    |       |     |
+|            | func_pspeu_09247FE0               |     3100 |        402 | Yes    |       |     |
 | bo0        | func_pspeu_092611E8               |     3414 |        420 | Yes    |       |     |
 | sel        | func_psp_0923BE20                 |     3499 |        602 |        |       |     |
