@@ -221,7 +221,12 @@ void EntityJackOBones(Entity* self) {
 void EntityJackOBonesDeathParts(Entity* self) {
     if (self->step) {
         if (--self->ext.jackoBones.deathPartLife) {
+#ifdef FIX_UB
+            // BUG! params also holds the parent params in the upper byte
+            self->rotate += death_parts_rotspeeds[self->params & 0xFF];
+#else
             self->rotate += death_parts_rotspeeds[self->params];
+#endif
             FallEntity();
             MoveEntity();
             return;
