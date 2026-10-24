@@ -71,7 +71,8 @@ u16 D_us_801802D4[] = {
 };
 static u_long* pal_def_1[] = {
     MAKE_PAL_OP(PAL_UNK_OP3, 1),
-    (u_long*)0x00B0, (u_long*)0x10,
+    (u_long*)0x00B0,
+    (u_long*)0x10,
     (u_long*)(D_us_80180114),
     (u_long*)(D_us_80180134),
     (u_long*)(D_us_80180154),
@@ -91,7 +92,8 @@ static u_long* pal_def_1[] = {
 };
 static u_long* pal_def_2[] = {
     MAKE_PAL_OP(PAL_UNK_OP3, 1),
-    (u_long*)0x00E0, (u_long*)0x10,
+    (u_long*)0x00E0,
+    (u_long*)0x10,
     (u_long*)(D_us_80180114),
     (u_long*)(D_us_80180134),
     (u_long*)(D_us_80180154),
