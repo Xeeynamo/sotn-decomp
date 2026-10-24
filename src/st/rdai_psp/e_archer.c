@@ -584,16 +584,8 @@ void func_us_801C0528(Entity* self) {
     }
 }
 
-typedef struct {
-    s16 unk0;
-    s16 unk2;
-    s16 unk4;
-    s16 unk6;
-    s16 unk8;
-    s16 unkA;
-} wtf_struct;
+extern s16* sprites_rdai_2[];
 
-extern wtf_struct* D_pspeu_092553F0[];
 extern EInit D_us_80180890;
 
 void func_us_801C0898(Entity* self) {
@@ -601,17 +593,17 @@ void func_us_801C0898(Entity* self) {
     s16 temp_s4;
     s32 temp_s3;
     s32 temp_s2;
-    wtf_struct* temp_s1;
+    s16* temp_s1;
 
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_80180890);
         self->animCurFrame = self->params;
-        temp_s1 = D_pspeu_092553F0[self->animCurFrame];
-        temp_s3 = temp_s1->unk4;
-        temp_s2 = temp_s1->unk6;
-        temp_s3 += temp_s1->unk8 / 2;
-        temp_s2 += temp_s1->unkA / 2;
+        temp_s1 = sprites_rdai_2[self->animCurFrame];
+        temp_s3 = temp_s1[2];
+        temp_s2 = temp_s1[3];
+        temp_s3 += temp_s1[4] / 2;
+        temp_s2 += temp_s1[5] / 2;
         self->ext.rdaiArcher.unk94 = temp_s3;
         self->ext.rdaiArcher.unk96 = temp_s2;
         self->ext.rdaiArcher.timer = ((Random() & 0xF) + 8);
