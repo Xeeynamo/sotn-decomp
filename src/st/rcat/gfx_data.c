@@ -78,64 +78,41 @@ u8 gfx_skeleton[] = {
 };
 
 // Palettes
-// These can't be imported correctly until #2401 is fixed
-
-// u16 pal_21A[] = {
-// #include "gen/pal_21A.h"
-// };
-
-// #ifdef VERSION_US
-
-// u16 pal_unused_12794[] = {
-// #include "gen/pal_unused_12794.h"
-// };
-
-// #endif
-
-// u16 pal_22A[] = {
-// #include "gen/pal_22A.h"
-// };
-
-// #ifdef VERSION_US
-
-// u16 pal_unused_129B4[] = {
-// #include "gen/pal_unused_129B4.h"
-// };
-
-// #endif
-
-// u16 pal_235[] = {
-// #include "gen/pal_235.h"
-// };
-
-// u16 pal_frozen_half[] = {
-// #include "gen/pal_frozen_half.h"
-// };
-
-// u16 pal_salome[] = {
-// #include "gen/pal_salome.h"
-// };
-
-// u16 pal_breakable[] = {
-// #include "gen/pal_breakable.h"
-// };
-
-// u16 pal_blood_skeleton[] = {
-// #include "gen/pal_blood_skeleton.h"
-// };
-
-// #ifdef VERSION_US
-
-// u16 pal_unused_12DD4[] = {
-// #include "gen/pal_unused_12DD4.h"
-// };
-
-// #endif
-
-// u16 pal_bat[] = {
-// #include "gen/pal_bat.h"
-// };
-
-// u16 pal_skeleton[] = {
-// #include "gen/pal_skeleton.h"
-// };
+#ifndef VERSION_PSP
+u16 pal_21A[] = {
+#include <gen/pal_21A.h>
+};
+u16 pal_unused_12794[] = {
+#include <gen/pal_unused_12794.h>
+};
+u16 pal_22A[] = {
+#include <gen/pal_22A.h>
+};
+u16 pal_unused_129B4[] = {
+#include <gen/pal_unused_129B4.h>
+};
+u16 pal_235[] = {
+#include <gen/pal_235.h>
+};
+u16 pal_frozen_half[] = {
+#include <gen/pal_frozen_half.h>
+};
+u16 pal_salome[] = {
+#include <gen/pal_salome.h>
+};
+u16 pal_breakable[] = {
+#include <gen/pal_breakable.h>
+};
+u16 pal_blood_skeleton[] = {
+#include <gen/pal_blood_skeleton.h>
+};
+u16 pal_unused_12DD4[] = {
+#include <gen/pal_unused_12DD4.h>
+};
+u16 pal_bat[] = {
+#include <gen/pal_bat.h>
+};
+u16 pal_skeleton[] = {
+#include <gen/pal_skeleton.h>
+};
+#endif

@@ -87,7 +87,7 @@ segments:
       - [0x2B9A8, .data, rbo5/unk_44C48]
       - [0x2B9C0, .data, rbo5/dop_anim]
       - [0x2B9F8, .data, rbo5/dop_collision]
-      - [0x2BA90, data]
+      - [0x2BA90, .data, rbo5/dop_weapon_anim]
       - [0x2BCC0, .data, rbo5/unk_4907C]
       - [0x2C9B8, .data, rbo5/doors]
       - [0x2CB48, data]

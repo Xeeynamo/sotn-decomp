@@ -9,8 +9,8 @@ extern u_long* cluts[];
 extern RoomDef rooms_layers[];
 extern GfxBank* gfxBanks[];
 
-extern u8* g_SpriteSheet[];
-extern u8* g_PlOvlDopBatSpritesheet[];
+extern u8* doppleganger_sprites[];
+extern u8* bat_form_sprites[];
 
 AbbreviatedOverlay2 g_BossOverlay = {
     .Update = Update,
@@ -24,6 +24,6 @@ AbbreviatedOverlay2 g_BossOverlay = {
     .tileLayers = rooms_layers,
     .gfxBanks = gfxBanks,
     .UpdateStageEntities = UpdateStageEntities,
-    .unk2C = g_SpriteSheet,
-    .unk30 = g_PlOvlDopBatSpritesheet,
+    .unk2C = doppleganger_sprites,
+    .unk30 = bat_form_sprites,
 };

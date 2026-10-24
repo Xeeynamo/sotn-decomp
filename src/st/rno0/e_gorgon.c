@@ -852,7 +852,7 @@ void EntityGorgonFront(Entity* self) {
         self->ext.gorgon.unk82 = -0x80;
         self->ext.gorgon.unk84 = 0x100;
         self->ext.gorgon.unk86 = 0x180;
-        self->ext.gorgon.unk88 = -0x80U;
+        self->ext.gorgon.unk88 = -0x80;
         self->ext.gorgon.unk8A = 0x100;
         self->step = 0x15;
         break;

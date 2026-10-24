@@ -292,6 +292,13 @@ void EntitySpikes(Entity* self) {
         tileIdx = (scrollX >> 4) + (scrollY >> 4) * g_Tilemap.hSize * 16;
         tileIdx -= SPIKES_TILE_WIDTH;
         for (count = 0; count < 3; tileIdx += SPIKES_TILE_WIDTH, count++) {
+#ifdef FIX_UB
+            // BUG: tileIdx may go negative, but since it's unsigned it will
+            // be read as a very big number on 64-bit platforms.
+            if (tileIdx >= (u32)(g_Tilemap.hSize * 16 * g_Tilemap.vSize * 16)) {
+                continue;
+            }
+#endif
             tileType = g_Tilemap.fg[tileIdx];
             collisionType = g_Tilemap.tileDef->collision[tileType];
             if (collisionType > 243 && collisionType < 248) {

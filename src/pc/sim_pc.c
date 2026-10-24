@@ -330,11 +330,17 @@ bool LoadFilePc(const struct FileUseContent* file) {
         StoreImage(&g_Vram.D_800ACDA8, g_Clut[1]);
         break;
     case SIM_STAGE_CHR:
+    case SIM_11:
         LoadStageTileset(sim->addr, file->length, 0);
         StoreImage(&g_Vram.D_800ACDB8, g_Clut[0]);
+        if (sim->kind == SIM_11) {
+            StoreImage(&g_Vram.D_800ACDB8, g_Clut[2]);
+            LoadImage(&g_Vram.D_800ACDB0, g_Clut[2]);
+        }
         break;
     case SIM_12:
         LoadStageTileset(sim->addr, file->length, 0x100);
+        break;
     case SIM_13:
         LoadStageTileset(sim->addr, file->length, 0x100);
         LoadImage(&g_Vram.D_800ACD98, D_800A04CC);

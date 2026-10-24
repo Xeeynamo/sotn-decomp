@@ -5,16 +5,27 @@
 
 #include "mar.h"
 
+static u8 D_us_801805D4[] = {0x00, 0x40, 0x00, 0x00};
+static u8 D_us_801805D8[] = {0x00, 0x00, 0x00, 0x00};
+static u16 D_us_801805DC[] = {
+    PAL_PORTRAIT_ALUCARD, PAL_PORTRAIT_MARIA, PAL_MARIA, PAL_UNK_218};
+static u16 D_us_801805E4[] = {0x0000, 0x0020};
+static u16 D_us_801805E8[] = {0x01A1, 0x01A1, 0x01A1, 0x01A1};
+static s16 D_us_801805F0[] = {
+    8,  19, 17, 49, 79, 38, 54, 29, 27, 51, 44, 33, 25, 10, 51, 31, 72, 47,
+    19, 25, 77, 75, 23, 29, 18, 2,  27, 42, 80, 69, 50, 13, 42, 77, 6,  39,
+    7,  72, 47, 27, 54, 34, 57, 20, 57, 29, 10, 53, 16, 27, 61, 23, 46, 11,
+    73, 66, 61, 42, 1,  12, 27, 52, 65, 53, 8,  14, 77, 17, 52, 65, 41, 72,
+};
 static const char* actor_names[] = {_S("Alucard"), _S("Maria")};
 
 // bss
-static s32 g_SkipCutscene;
+s32 g_SkipCutscene;
 static Dialogue g_Dialogue;
 static s32 D_us_8019AEB8[26];
-static u32 g_CutsceneFlags;
+u32 g_CutsceneFlags;
 STATIC_PAD_BSS(4);
-u16 g_Statues[];
-static s16 D_us_8019AF2A;
+u16 g_Statues[2];
 static s32 D_us_8019AF2C;
 
 #include "../../st/cutscene_unk1.h"
@@ -32,13 +43,6 @@ static s32 D_us_8019AF2C;
 #include "../../st/cutscene_events.h"
 
 #include "../../st/cutscene_scale_avatar.h"
-
-extern u8 D_us_801805D4[];
-extern u8 D_us_801805D8[];
-extern u16 D_us_801805DC[];
-extern u16 D_us_801805E4[];
-extern u16 D_us_801805E8[];
-extern s16 D_us_801805F0[];
 
 extern u8 cutscene_data[];
 void EntityCutscene(Entity* self) {
@@ -296,7 +300,7 @@ void EntityCutscene(Entity* self) {
                 ptr |= *g_Dialogue.scriptCur++;
                 // This needs help. Casting the const to short is good.
                 ptr += (u16)0x100000;
-                g_Dialogue.scriptCur += *(u16*)ptr << 2;
+                g_Dialogue.scriptCur += *CS_NEXT(ptr) << 2;
 
                 ptr = *g_Dialogue.scriptCur++;
                 ptr <<= 4;
@@ -305,7 +309,7 @@ void EntityCutscene(Entity* self) {
                 ptr |= *g_Dialogue.scriptCur++;
                 ptr <<= 4;
                 ptr |= *g_Dialogue.scriptCur;
-                g_Dialogue.scriptCur = (const char*)ptr + 0x100000;
+                g_Dialogue.scriptCur = CS_PTR(ptr);
                 continue;
 
             case 15:
@@ -316,7 +320,7 @@ void EntityCutscene(Entity* self) {
                 ptr |= *g_Dialogue.scriptCur++;
                 ptr <<= 4;
                 ptr |= *g_Dialogue.scriptCur;
-                g_Dialogue.scriptCur = (const char*)ptr + 0x100000;
+                g_Dialogue.scriptCur = CS_PTR(ptr);
                 continue;
 
             case 16:
@@ -347,7 +351,7 @@ void EntityCutscene(Entity* self) {
                     ptr |= *g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= *g_Dialogue.scriptCur++;
-                    ptr += 0x100000;
+                    ptr = (u_long)CS_PTR(ptr);
                     nextChar2 = g_Dialogue.scriptCur++[0];
                     LoadTPage((u_long*)ptr, 1, 0, D_us_801805E4[nextChar2],
                               0x100, 0x30, 0x48);

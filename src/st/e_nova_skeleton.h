@@ -163,8 +163,9 @@ void EntityNovaSkeleton(Entity* self) {
     case NOVA_INIT:
         InitializeEntity(g_EInitNovaSkeleton);
         self->ext.nova.cooldown = 0x50;
-// what. why does psp need to allocate an extra prim.
-#if defined(VERSION_PSP)
+#if defined(VERSION_PSP) || defined(FIX_UB)
+        // BUG: PSP fixes a bug where two primitives are required for the enemy
+        // due to UnkPolyFunc2 using `prim->next`
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
 #else
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);

@@ -1,5 +1,4 @@
 g_EInitCommon = 0x8018083C;
-g_EInitArcherVehicle = 0x8018086C;
 g_EInitSpectralSwordRDAI = 0x8018089C;
 g_EInitSpear = 0x801808B4;
 g_EInitShield = 0x801808C0;

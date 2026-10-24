@@ -181,7 +181,7 @@ bool InitGame(struct InitGameParams* params) {
     api.InitStatsAndGear = InitStatsAndGear;
     api.PlaySfxVolPan = PlaySfxVolPan;
     api.SetVolumeCommand22_23 = SetVolumeCommand22_23;
-    api.MakeAll = NULL;
+    api.MakeAll = make_all;
     api.CheckEquipmentItemCount = CheckEquipmentItemCount;
     api.GetPlayerSensor = GetPlayerSensor;
     api.RevealSecretPassageAtPlayerPositionOnMap =

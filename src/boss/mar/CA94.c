@@ -2,16 +2,44 @@
 #include "mar.h"
 
 extern EInit g_EInitSpawner;
-extern u8 D_us_80180690[];
-extern u8 D_us_801806A4[];
-extern u8 D_us_801806B8[];
-extern u8 D_us_801806CC[];
-extern u8 D_us_801806E4[];
-extern u8 D_us_801806EC[];
-extern u8 D_us_80180700[];
-extern u8 D_us_80180718[];
-extern u8 D_us_80180724[];
-extern u8 D_us_80180738[];
+
+AnimateEntityFrame D_us_80180688[] = {
+    POSE(1, 1, 0), POSE_END, POSE(1, 2, 0), POSE_END};
+static AnimateEntityFrame D_us_80180690[] = {
+    POSE(1, 2, 0), POSE(7, 3, 0), POSE(7, 4, 0), POSE(7, 5, 0),   POSE(7, 6, 0),
+    POSE(7, 7, 0), POSE(7, 8, 0), POSE(7, 9, 0), POSE(16, 10, 0), POSE_END};
+static AnimateEntityFrame D_us_801806A4[] = {
+    POSE(1, 10, 0),  POSE(6, 11, 0),  POSE(6, 12, 0),  POSE(6, 13, 0),
+    POSE(16, 14, 0), POSE(10, 15, 0), POSE(10, 14, 0), POSE(10, 15, 0),
+    POSE(32, 14, 0), POSE_END};
+static AnimateEntityFrame D_us_801806B8[] = {
+    POSE(1, 14, 0), POSE(4, 16, 0), POSE(4, 17, 0), POSE(11, 18, 0), POSE_END,
+    POSE_LOOP(0),   POSE(1, 19, 0), POSE_END,       POSE(1, 18, 0),  POSE_END};
+static AnimateEntityFrame D_us_801806CC[] = {
+    POSE(32, 18, 0), POSE(3, 17, 0),  POSE(3, 16, 0),  POSE(3, 20, 0),
+    POSE(3, 21, 0),  POSE(64, 22, 0), POSE(6, 21, 0),  POSE(5, 13, 0),
+    POSE(5, 12, 0),  POSE(5, 11, 0),  POSE(32, 10, 0), POSE_END};
+static AnimateEntityFrame D_us_801806E4[] = {
+    POSE(16, 10, 0), POSE(16, 23, 0), POSE(8, 10, 0), POSE_END};
+static AnimateEntityFrame D_us_801806EC[] = {
+    POSE(1, 10, 0), POSE(2, 11, 0),  POSE(2, 12, 0), POSE(6, 24, 0),
+    POSE(6, 25, 0), POSE(80, 24, 0), POSE(3, 12, 0), POSE(3, 11, 0),
+    POSE(8, 10, 0), POSE_END};
+static AnimateEntityFrame D_us_80180700[] = {
+    POSE(1, 10, 0), POSE(3, 11, 0), POSE(3, 12, 0),  POSE(3, 13, 0),
+    POSE(3, 14, 0), POSE(6, 27, 0), POSE(16, 26, 0), POSE(32, 27, 0),
+    POSE(3, 14, 0), POSE(3, 13, 0), POSE(3, 12, 0),  POSE_END};
+static AnimateEntityFrame D_us_80180718[] = {
+    POSE(4, 28, 0), POSE(4, 29, 0), POSE(4, 30, 0),
+    POSE(4, 31, 0), POSE_END,       POSE_LOOP(0)};
+static AnimateEntityFrame D_us_80180724[] = {
+    POSE(2, 32, 0), POSE(4, 33, 0), POSE(4, 34, 0), POSE(4, 35, 0),
+    POSE(4, 36, 0), POSE(4, 37, 0), POSE(4, 38, 0), POSE(4, 39, 0),
+    POSE(2, 32, 0), POSE_LOOP(0)};
+static AnimateEntityFrame D_us_80180738[] = {
+    POSE(8, 40, 0), POSE(8, 41, 0), POSE(96, 42, 0),
+    POSE_END,       POSE(1, 12, 0), POSE_END};
+
 extern u32 g_CutsceneFlags;
 extern s32 g_SkipCutscene;
 
@@ -34,7 +62,7 @@ void func_us_8018CA94(Entity* self) {
         self->animSet = ANIMSET_OVL(2);
         self->animCurFrame = 1;
         self->unk5A = 0x48;
-        self->palette = 0x210;
+        self->palette = PAL_MARIA;
         break;
 
     case 1:
