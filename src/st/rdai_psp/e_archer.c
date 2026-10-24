@@ -579,4 +579,118 @@ void func_us_801C0528(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rdai_psp/nonmatchings/rdai_psp/e_archer", func_us_801C0898);
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+    s16 unk8;
+    s16 unkA;
+} wtf_struct;
+
+extern wtf_struct* D_pspeu_092553F0[];
+extern EInit D_us_80180890;
+
+void func_us_801C0898(Entity* self) {
+    Entity* other;
+    s16 temp_s4;
+    s32 temp_s3;
+    s32 temp_s2;
+    wtf_struct* temp_s1;
+
+    switch (self->step) {                              /* switch 1; irregular */
+    case 0:                                         /* switch 1 */
+        InitializeEntity(D_us_80180890);
+        self->animCurFrame = self->params;
+        temp_s1 = D_pspeu_092553F0[self->animCurFrame];
+        temp_s3 = temp_s1->unk4;
+        temp_s2 = temp_s1->unk6;
+        temp_s3 += temp_s1->unk8 / 2;
+        temp_s2 += temp_s1->unkA / 2;
+        self->ext.ILLEGAL.s16[0xC] = temp_s3;
+        self->ext.ILLEGAL.s16[0xD] = temp_s2;
+        self->ext.ILLEGAL.s16[2] = ((Random() & 0xF) + 8);
+        temp_s4 = ratan2(temp_s2, temp_s3);
+        self->velocityX = (rcos(temp_s4) << 0x11) >> 0xC;
+        self->velocityY = (rsin(temp_s4) << 0x11) >> 0xC;
+        other = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (other != NULL) {
+            CreateEntityFromEntity(2, self, other);
+            other->posX.i.hi += temp_s3;
+            other->posY.i.hi += temp_s2;
+            other->params = 1;
+        }
+        if (self->params > 0x12) {
+            self->step = 2;
+        }
+        break;
+    case 1:                                         /* switch 1 */
+        MoveEntity();
+        self->velocityY += 0x2000;
+        if (!--self->ext.ILLEGAL.s16[2]) {
+            PlaySfxPositional(0x657);
+            other = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (other != NULL) {
+                CreateEntityFromEntity(2, self, other);
+                other->posX.i.hi += self->ext.ILLEGAL.s16[0xC];
+                other->posY.i.hi += self->ext.ILLEGAL.s16[0xD];
+                other->params = 1;
+            }
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    case 2:                                         /* switch 1 */
+        switch (self->params) {                        /* switch 2; irregular */
+        case 19:                                    /* switch 2 */
+            if (!self->step_s) {
+                self->velocityY = -0x28000;
+                self->ext.ILLEGAL.s16[2] = 0x10;
+                self->step_s += 1;
+            }
+            MoveEntity();
+            self->velocityY += 0x2000;
+            if (!--self->ext.ILLEGAL.s16[2]) {
+            other = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (other != NULL) {
+                    CreateEntityFromEntity(2, self, other);
+                    other->posX.i.hi += self->ext.ILLEGAL.s16[0xC];
+                    other->posY.i.hi += self->ext.ILLEGAL.s16[0xD];
+                    other->params = 1;
+                }
+                DestroyEntity(self);
+                return;
+            }
+            break;
+        case 20:                                    /* switch 2 */
+            if (!self->step_s) {
+                self->ext.ILLEGAL.s16[2] = 0x18;
+                self->velocityX = 0;
+                self->velocityY = 0;
+                self->step_s += 1;
+            }
+            MoveEntity();
+            self->velocityY += 0x800;
+            if (!--self->ext.ILLEGAL.s16[2]) {
+            other = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (other != NULL) {
+                    CreateEntityFromEntity(2, self, other);
+                    other->posX.i.hi += self->ext.ILLEGAL.s16[0xC];
+                    other->posY.i.hi += self->ext.ILLEGAL.s16[0xD];
+                    other->params = 1;
+                }
+                DestroyEntity(self);
+                return;
+            }
+            break;
+        case 21:                                    /* switch 2 */
+            if (!self->step_s) {
+                self->ext.ILLEGAL.s16[2] = 0x40;
+                self->velocityY = 0;
+            }
+            MoveEntity();
+            self->velocityY += 0x3000;
+        }
+        break;
+    }
+}
