@@ -42,7 +42,19 @@ s32 StairsCheckCollision(void) {
     return true;
 }
 
-#include "../approach_s16.h"
+static bool ApproachTarget(s16* val, s16 target, s16 step) {
+    if (abs(*val - target) < step) {
+        *val = target;
+        return true;
+    }
+    if (*val > target) {
+        *val -= step;
+    }
+    if (*val < target) {
+        *val += step;
+    }
+    return false;
+}
 
 static AnimateEntityFrame anim_chair_running[] = {{8, 30}, {8, 31}, {8, 32}, POSE_LOOP(0)};
 static AnimateEntityFrame anim_chair_seat_lowering[] = {{1, 31}, {2, 33}, {16, 34}, {6, 33}, {1, 31}, POSE_END};
@@ -237,8 +249,6 @@ void EntityRdaiUnk1F(Entity* self) {
     }
 }
 
-#undef RDAI_UNK1F_ANGLE
-
 extern EInit g_EInitArcher;
 
 void func_us_801BFE6C(Entity* self) {
@@ -268,7 +278,6 @@ void func_us_801BFE6C(Entity* self) {
     case 0:
         InitializeEntity(g_EInitArcher);
         self->animCurFrame = 0x1D;
-#if defined(VERSION_PSP)
         entity = self + 1;
         CreateEntityFromEntity(E_UNK_1D, self, entity);
         entity->params = 1;
@@ -280,16 +289,6 @@ void func_us_801BFE6C(Entity* self) {
         entity = self + 3;
         CreateEntityFromEntity(E_UNK_1D, self, entity);
         entity->params = 3;
-#else
-        CreateEntityFromEntity(E_UNK_1D, self, self + 1);
-        (self + 1)->params = 1;
-        (self + 1)->nextPart = self;
-        self->nextPart = self + 1;
-        CreateEntityFromEntity(E_UNK_1D, self, self + 2);
-        (self + 2)->params = 2;
-        CreateEntityFromEntity(E_UNK_1D, self, self + 3);
-        (self + 3)->params = 3;
-#endif
         // fallthrough
 
     case 1:
@@ -308,7 +307,7 @@ void func_us_801BFE6C(Entity* self) {
         if (angle < ROT(-45)) {
             angle = ROT(-45);
         }
-        func_801CDC80(&self->rotate, angle, 8);
+        ApproachTarget(&self->rotate, angle, 8);
         if (!--self->ext.rdaiArcher.timer) {
             SetStep(2);
         }
@@ -332,7 +331,7 @@ void func_us_801BFE6C(Entity* self) {
             if (angle < ROT(-45)) {
                 angle = ROT(-45);
             }
-            func_801CDC80(&self->rotate, angle, 8);
+            ApproachTarget(&self->rotate, angle, 8);
             if (!--self->ext.rdaiArcher.timer) {
                 PlaySfxPositional(SFX_ARROW_SHOT_D);
                 self->ext.rdaiArcher.mode = 2;
