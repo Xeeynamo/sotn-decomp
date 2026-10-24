@@ -1,9 +1,1 @@
-g_EInitObtainable = 0x80180460;
-g_EInitSpawner = 0x80180478;
-DestroyEntity = 0x801A9FCC;
-AnimateEntity = 0x801AA0FC;
-MoveEntity = 0x801AA380;
-SetStep = 0x801AAC0C;
-InitializeEntity = 0x801AACDC;
-g_SkipCutscene = 0x801B5538;
-g_CutsceneFlags = 0x801B55E8;
+
