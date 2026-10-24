@@ -51,9 +51,8 @@ segments:
       - [0x4C8, .data, e_red_door_tiles]
       - [0x4E8, .data, e_lock_camera]
       - [0x568, .data, e_breakable]
-      - [0x5D4, data]
-      - [0x680, .data, cutscene]
-      - [0x688, data]
+      - [0x5D4, .data, cutscene]
+      - [0x688, .data, CA94]
       - [0x744, .data, d_prize_drops]
       - [0x744, .data, st_update]
       - [0x790, .data, collision]
@@ -68,9 +67,7 @@ segments:
       - [0x1308, .data, e_life_up]
       - [0x135C, .data, gen/e_layout] # layout entries data
       - [0x1424, .data, cutscene_data]
-      - [0x15F0, raw, cutscene_alucard]
-      - [0x2370, raw, cutscene_maria]
-      - [0x30F0, .data, stage_data]
+      - [0x15F0, .data, stage_data]
       - [0x9710, .data, gen/sprites]
       - [0xA9D4, .rodata, cutscene] # actor names
       - [0xA9EC, .rodata, cutscene]

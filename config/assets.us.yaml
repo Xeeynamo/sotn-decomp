@@ -1829,6 +1829,8 @@ files:
           - [0x1424, cutscene, cutscene_data]
           - [0x15DB, cutscene_events, cutscene_events]
           - [0x15EF, skip]
+          - [0x15F0, rawgfx, cutscene_alucard, 48, 72, 8]
+          - [0x2370, rawgfx, cutscene_maria, 48, 72, 8]
           - [0x30F0, cmpgfx, D_801830F0, 128, 128, 4]
           - [0x4220, cmpgfx, D_80184220, 128, 128, 4]
           - [0x4EE0, palette, D_80184EE0, 16] # 0x200

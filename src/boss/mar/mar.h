@@ -8,6 +8,10 @@
 
 enum Palettes {
     PAL_NONE = 0,
+    PAL_PORTRAIT_ALUCARD = 0x200,
+    PAL_PORTRAIT_MARIA = 0x208,
+    PAL_MARIA = 0x210,
+    PAL_UNK_218 = 0x218,
 };
 
 typedef enum {
