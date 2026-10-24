@@ -5,56 +5,18 @@
 #include "overlay.h"
 #include "../../st/rno0/rno0.h"
 
-extern RoomHeader rooms[];
-extern RoomDef rooms_layers[];
-extern GfxBank* gfxBanks[];
+extern AbbreviatedOverlay g_Overlay;
+extern PfnEntityUpdate EntityUpdates[];
 extern LayoutEntity* entityLayoutHorizontal[];
 extern LayoutEntity* entityLayoutVertical[];
 extern PfnEntityUpdate* PfnEntityUpdates;
 extern LayoutEntity** g_pStObjLayoutHorizontal;
 extern LayoutEntity** g_pStObjLayoutVertical;
 
-// clang-format off
-EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
-// clang-format on
-EInit g_EInitDamageNum;
-EInit g_EInitParticle;
-EInit g_EInitUnkId13;
-AnimateEntityFrame g_bigRedFireballAnim[1];
-static SpriteParts* s_SpriteBanks[] = {NULL};
-static u_long s_EmptyClut[] = {(u_long)-1};
-static u_long* s_Cluts[] = {s_EmptyClut};
-PfnEntityUpdate EntityUpdates[NUM_ENTITIES];
-
-static void UnsupportedEntity(Entity* entity) { DestroyEntity(entity); }
-static void Noop(void) {}
-void EntityExplosion(Entity* entity) { UnsupportedEntity(entity); }
-void EntityPrizeDrop(Entity* entity) { UnsupportedEntity(entity); }
-void EntityEquipItemDrop(Entity* entity) { UnsupportedEntity(entity); }
-void EntityRedDoor(Entity* entity);
-void EntityRoomForeground(Entity* entity);
-
 void Psyz_ModuleStart(void* param) {
     Overlay* o = param;
 
-    s32 i;
-
-    memset(o, 0, sizeof(*o));
-    for (i = 0; i < LEN(EntityUpdates); i++) {
-        EntityUpdates[i] = UnsupportedEntity;
-    }
-    EntityUpdates[E_RED_DOOR - 1] = EntityRedDoor;
-    EntityUpdates[E_ROOM_FOREGROUND - 1] = EntityRoomForeground;
-    o->Update = Update;
-    o->HitDetection = Noop;
-    o->UpdateRoomPosition = UpdateRoomPosition;
-    o->InitRoomEntities = InitRoomEntities;
-    o->UpdateStageEntities = UpdateStageEntities;
-    o->rooms = rooms;
-    o->spriteBanks = s_SpriteBanks;
-    o->cluts = s_Cluts;
-    o->tileLayers = rooms_layers;
-    o->gfxBanks = gfxBanks;
+    memcpy(o, &g_Overlay, sizeof(AbbreviatedOverlay));
     PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = entityLayoutHorizontal;
     g_pStObjLayoutVertical = entityLayoutVertical;
