@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo5.h"
 
+s32 D_us_801806DC = 0;
+
 extern EInit g_EInitEnvironment;
 
 void EntityRbo3Door(Entity* self) {

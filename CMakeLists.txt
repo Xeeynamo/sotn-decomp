@@ -1107,6 +1107,56 @@ SET(SOURCE_FILES_BOSS_BO4
     src/boss/bo4/bss.c
 )
 
+SET(SOURCE_FILES_BOSS_BO5
+    src/pc/bosses/boss_bo5.c
+    src/boss/bo5/background_block_init.c
+    src/boss/bo5/collision.c
+    src/boss/bo5/create_entity.c
+    src/boss/bo5/cutscene_data.c
+    src/boss/bo5/d_prize_drops.c
+    src/boss/bo5/e_bell.c
+    src/boss/bo5/e_breakable.c
+    src/boss/bo5/e_camera_bounds.c
+    src/boss/bo5/e_clouds.c
+    src/boss/bo5/e_collect.c
+    src/boss/bo5/e_cutscene_actors.c
+    src/boss/bo5/e_cutscene_dialogue.c
+    src/boss/bo5/e_dai_no2_shortcut.c
+    src/boss/bo5/e_hippogryph.c
+    src/boss/bo5/e_init.c
+    src/boss/bo5/e_life_up.c
+    src/boss/bo5/e_lock_camera.c
+    src/boss/bo5/e_misc.c
+    src/boss/bo5/e_particles.c
+    src/boss/bo5/e_play_boss_music.c
+    src/boss/bo5/e_rbo3door.c
+    src/boss/bo5/e_red_door.c
+    src/boss/bo5/e_red_door_tiles.c
+    src/boss/bo5/e_room_bg.c
+    src/boss/bo5/e_room_bg_2.c
+    src/boss/bo5/e_room_fg.c
+    src/boss/bo5/e_room_fg_2.c
+    src/boss/bo5/e_stage_name.c
+    src/boss/bo5/e_stained_glass.c
+    src/boss/bo5/gen/e_laydef.c
+    src/boss/bo5/gen/e_layout.c
+    src/boss/bo5/gen/rooms.c
+    src/boss/bo5/gen/us/sprites.c
+    src/boss/bo5/graphics_banks.c
+    src/boss/bo5/header.c
+    src/boss/bo5/layers.c
+    src/boss/bo5/pal_stained_glass.c
+    src/boss/bo5/pal_unk.c
+    src/boss/bo5/palette_def.c
+    src/boss/bo5/popup.c
+    src/boss/bo5/prim_helpers.c
+    src/boss/bo5/sprite_banks.c
+    src/boss/bo5/st_common.c
+    src/boss/bo5/st_update.c
+    src/boss/bo5/stage_data.c
+    src/boss/bo5/tilemaps.c
+)
+
 SET(SOURCE_FILES_BOSS_RBO0
     src/pc/bosses/boss_rbo0.c
     src/boss/rbo0/header.c
@@ -1649,6 +1699,7 @@ add_overlay(lib ${SOURCE_FILES_STAGE_LIB})
 add_overlay(mad ${SOURCE_FILES_STAGE_MAD})
 add_overlay(bo1 ${SOURCE_FILES_BOSS_BO1})
 add_overlay(bo3 ${SOURCE_FILES_BOSS_BO3})
+add_overlay(bo5 ${SOURCE_FILES_BOSS_BO5})
 add_overlay(rcen ${SOURCE_FILES_STAGE_RCEN})
 add_overlay(rchi ${SOURCE_FILES_STAGE_RCHI})
 add_overlay(rbo0 ${SOURCE_FILES_BOSS_RBO0})

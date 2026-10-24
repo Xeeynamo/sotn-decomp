@@ -2,7 +2,7 @@
 #include "bo5.h"
 
 extern EInit g_EInitInteractable;
-extern s32 D_us_80180B74;
+s32 D_us_80180B74 = 1;
 
 void EntityPlayBossMusic(Entity* self) {
     switch (self->step) {

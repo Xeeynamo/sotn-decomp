@@ -4313,12 +4313,6 @@ typedef struct {
     /* 0xAE */ u8 unkAE;
 } ET_Gorgon;
 
-// func_us_801A3FD4 (bo5, bo5_psp)
-typedef struct {
-    /* 0x7C */ u8 timer;
-    /* 0x7D */ u8 rotateDir;
-} ET_801A3FD4;
-
 // func_us_801C03E8 (bo6)
 typedef struct {
     /* 0x7C */ s16 savedHitboxState;
@@ -4351,24 +4345,27 @@ typedef struct {
     /* 0xA0 */ struct Entity* source;
 } ET_801980E4;
 
-// EntityCutsceneStage (bo5)
 typedef struct {
     /* 0x7C */ struct Entity* target;
 } ET_CutsceneStage;
 
-// func_us_801A19CC (bo5)
 typedef struct {
-    /* 0x7C */ u8 unk7C;
+    /* 0x7C */ u8 flyTimer;
     /* 0x7D */ u8 unk7D;
-    /* 0x7E */ u8 unk7E;
+    /* 0x7E */ u8 zPriority;
     /* 0x7F */ u8 : 8;
-    /* 0x80 */ s32 unk80;
+    /* 0x80 */ Primitive* prim;
     /* 0x84 */ s32 : 32;
-    /* 0x88 */ s32 unk88;
+    /* 0x88 */ Primitive* prim2;
     /* 0x8C */ s32 unk8C;
     /* 0x90 */ s32 : 32;
-    /* 0x94 */ s32 unk94;
-} ET_801A19CC;
+    /* 0x94 */ struct Entity* unk94;
+} ET_Hippogryph;
+
+typedef struct {
+    /* 0x7C */ u8 timer;
+    /* 0x7D */ u8 rotateDir;
+} ET_HippogryphEgg;
 
 // func_us_8019921C (rbo8, rbo8_psp)
 typedef struct {
@@ -5049,11 +5046,11 @@ typedef union { // offset=0x7C
     ET_Dodo dodo;
     ET_B0_Unk b0Unk;
     ET_801B0930 et_801B0930;
-    ET_801A3FD4 et_801A3FD4;
     ET_801C03E8 et_801C03E8;
     ET_Shaft shaft;
     ET_801980E4 et_801980E4;
-    ET_801A19CC et_801A19CC;
+    ET_Hippogryph hippogryph;
+    ET_HippogryphEgg hippogryphEgg;
     ET_CutsceneStage cutsceneStage;
     ET_8019921C et_8019921C;
     ET_OlroxDrool olroxDrool;

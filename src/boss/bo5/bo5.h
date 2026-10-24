@@ -58,12 +58,12 @@ typedef enum EntityID {
     E_CLOUDS,                   // EntityClouds
     E_BACKGROUND_SKY_LAND,      // EntityBackgroundSkyLand
     E_RBO3DOOR,                 // EntityRbo3Door
-    E_UNK_22,                   // func_us_801A1C14
+    E_HIPPOGRYPH,               // EntityHippogryph
     E_UNK_23,                   // EntityHippogryphHitbox
     E_UNK_24,                   // EntityFireDamageHitbox
-    E_UNK_25,                   // func_us_801A3FD4
+    E_HIPPOGRYPH_EGG,           // EntityHippogryphEgg
     E_UNK_26,                   // func_us_801A3E78
-    E_UNK_27,                   // func_us_801A3B88
+    E_FIRE_BREATH,              // EntityFireBreath
     E_LIFE_UP_SPAWN,            // EntityLifeUpSpawn
     E_PLAY_BOSS_MUSIC,          // EntityPlayBossMusic
     E_CUTSCENE,                 // EntityCutscene
@@ -72,6 +72,13 @@ typedef enum EntityID {
     E_UNK_2D,                   // func_801B1D68
     E_UNK_2E,                   // RicSetDeadPrologue
     NUM_ENTITIES,
+};
+
+enum BossMgrState {
+    BOSS_MGR_IDLE = 0,       // initial state, fight not yet engaged
+    BOSS_MGR_FIGHT_ON = 1,   // boss battle started
+    BOSS_MGR_DEFEAT = 2,     // triggered as soon as the boss is defeated
+    BOSS_MGR_TERMINATED = 4, // boss is dead, entity got destroyed
 };
 
 #ifdef VERSION_PSP
@@ -92,12 +99,12 @@ extern s32 E_ID(STAIRCASE);
 extern s32 E_ID(CLOUDS);
 extern s32 E_ID(BACKGROUND_SKY_LAND);
 extern s32 E_ID(RBO3DOOR);
-extern s32 E_ID(UNK_22);
+extern s32 E_ID(HIPPOGRYPH);
 extern s32 E_ID(UNK_23);
 extern s32 E_ID(UNK_24);
-extern s32 E_ID(UNK_25);
+extern s32 E_ID(HIPPOGRYPH_EGG);
 extern s32 E_ID(UNK_26);
-extern s32 E_ID(UNK_27);
+extern s32 E_ID(FIRE_BREATH);
 extern s32 E_ID(LIFE_UP_SPAWN);
 extern s32 E_ID(PLAY_BOSS_MUSIC);
 extern s32 E_ID(CUTSCENE);
@@ -108,5 +115,6 @@ extern s32 E_ID(UNK_2E);
 #endif
 
 extern s32 D_us_801806DC;
+extern s32 g_BossMgrState;
 
 #endif // BO5_H

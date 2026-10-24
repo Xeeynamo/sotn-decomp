@@ -34,12 +34,12 @@ void EntityStaircase(Entity* self);
 void EntityClouds(Entity* self);
 void EntityBackgroundSkyLand(Entity* self);
 void EntityRbo3Door(Entity* self);
-void func_us_801A1C14(Entity* self);
+void EntityHippogryph(Entity* self);
 void EntityHippogryphHitbox(Entity* self);
 void EntityFireDamageHitbox(Entity* self);
-void func_us_801A3FD4(Entity* self);
+void EntityHippogryphEgg(Entity* self);
 void func_us_801A3E78(Entity* self);
-void func_us_801A3B88(Entity* self);
+void EntityFireBreath(Entity* self);
 void EntityLifeUpSpawn(Entity* self);
 void EntityPlayBossMusic(Entity* self);
 void EntityCutscene(Entity* self);
@@ -82,12 +82,12 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityClouds,
     EntityBackgroundSkyLand,
     EntityRbo3Door,
-    func_us_801A1C14,
+    EntityHippogryph,
     EntityHippogryphHitbox,
     EntityFireDamageHitbox,
-    func_us_801A3FD4,
+    EntityHippogryphEgg,
     func_us_801A3E78,
-    func_us_801A3B88,
+    EntityFireBreath,
     EntityLifeUpSpawn,
     EntityPlayBossMusic,
     EntityCutscene,
@@ -111,6 +111,6 @@ EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
 EInit g_EInitUnused801804C0 = {ANIMSET_OVL(1), 0x2B, 0x48, PAL_HIPPOGRYPH, ENEMY_COMMON};
 EInit g_EInitEnvironment = {ANIMSET_OVL(1), 0x00, 0x00, PAL_NONE, ENEMY_INTERACTABLE};
 EInit g_EInitHippogryph = {ANIMSET_OVL(3), 0x00, 0x48, PAL_HIPPOGRYPH, ENEMY_HIPPOGRYPH};
-EInit D_us_801804E4 = {ANIMSET_OVL(3), 0x68, 0x48, PAL_HIPPOGRYPH, ENEMY_HIPPOGRYPH_UNK_12D};
-EInit D_us_801804F0 = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_HIPPOGRYPH_FIRE_DAMAGE_HITBOX};
+EInit g_EInitHippogryphEgg = {ANIMSET_OVL(3), 0x68, 0x48, PAL_HIPPOGRYPH, ENEMY_HIPPOGRYPH_EGGS};
+EInit g_EInitFireBreath = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_HIPPOGRYPH_FIRE_DAMAGE_HITBOX};
 // clang-format on
