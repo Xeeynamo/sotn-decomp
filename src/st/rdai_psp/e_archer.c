@@ -38,9 +38,18 @@ s32 SpearGuardCheckCollision(void) {
 
 #include "../approach_s16.h"
 
-extern AnimateEntityFrame D_pspeu_09254098[];
-extern AnimateEntityFrame D_pspeu_092540A0[];
-extern AnimateEntityFrame D_pspeu_092540B0[];
+static AnimateEntityFrame D_pspeu_09254098[] = {{8, 30}, {8, 31}, {8, 32}, POSE_LOOP(0)};
+static AnimateEntityFrame D_pspeu_092540A0[] = {{1, 31}, {2, 33}, {16, 34}, {6, 33}, {1, 31}, POSE_END};
+static AnimateEntityFrame D_pspeu_092540B0[] = {{1, 31}, {2, 35}, {16, 36}, {6, 35}, {1, 31}, POSE_END};
+static AnimateEntityFrame D_pspeu_092540C0[] = {{22, 11}, {8, 12}, {16, 13}, POSE_END};
+static AnimateEntityFrame D_pspeu_092540C8[] = {{22, 25}, {8, 26}, {16, 27}, POSE_END};
+static AnimateEntityFrame D_pspeu_092540D0[] = {{15, 13}, {5, 12}, {5, 14}, {5, 15}, {2, 14}, {2, 15}, {2, 11}, POSE_END};
+static AnimateEntityFrame D_pspeu_092540E0[] = {{22, 25}, {6, 16}, {6, 17}, {22, 18}, {6, 17}, {6, 16}, {22, 25}, POSE_END};
+static s16 g_RdaiArcherOffsets[][2] = {
+    {3, -4}, {4, -5}, {-5, 4}, {-9, 6}
+};
+
+
 extern EInit g_EInitRdaiUnk1F;
 
 void func_us_801BF830(Entity* self) {
@@ -233,7 +242,6 @@ void EntityRdaiUnk1F(Entity* self) {
 #undef RDAI_UNK1F_ANGLE
 
 extern EInit g_EInitArcher;
-extern s16 g_RdaiArcherOffsets[][2];
 
 void func_us_801BFE6C(Entity* self) {
     Entity* entity;
@@ -363,11 +371,6 @@ void func_us_801BFE6C(Entity* self) {
         break;
     }
 }
-
-extern AnimateEntityFrame D_pspeu_092540C0[];
-extern AnimateEntityFrame D_pspeu_092540C8[];
-extern AnimateEntityFrame D_pspeu_092540D0[];
-extern AnimateEntityFrame D_pspeu_092540E0[];
 extern EInit g_EInitRdaiUnk1F;
 
 void func_us_801C0240(Entity* self) {
