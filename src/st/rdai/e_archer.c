@@ -70,6 +70,14 @@ static s16 g_RdaiArcherOffsets[][2] = {
 
 extern EInit g_EInitRdaiUnk1F;
 
+typedef enum{
+    VEHICLE_INIT,
+    VEHICLE_RUN,
+    VEHICLE_TURNAROUND,
+    VEHICLE_DEAD,
+    VEHICLE_ANIM_DEBUG = 0xFF
+} VehicleSteps;
+
 void EntityArcherVehicle(Entity* self) {
     Entity* other;
     s32 velX;
@@ -78,12 +86,12 @@ void EntityArcherVehicle(Entity* self) {
 
     if (self->step) {
         other = self + 4;
-        if (other->entityId != E_ARCHER_MAN && self->step != 3) {
-            SetStep(3);
+        if (other->entityId != E_ARCHER_MAN && self->step != VEHICLE_DEAD) {
+            SetStep(VEHICLE_DEAD);
         }
     }
     switch (self->step) {
-    case 0x0:
+    case VEHICLE_INIT:
         InitializeEntity(g_EInitRdaiUnk1F);
         // Create 3 sub-parts of the vehicle, with params 0, 1, 2.
         // These are the two wheels and the one wheel cover.
@@ -93,14 +101,17 @@ void EntityArcherVehicle(Entity* self) {
         }
         other = self + 4;
         CreateEntityFromEntity(E_ARCHER_MAN, self, other);
-        SetStep(1);
+        SetStep(VEHICLE_RUN);
         break;
-    case 0x1:
+    case VEHICLE_RUN:
+        // When we first start running, start a timer.
         if (!self->step_s) {
             self->ext.rdaiArcher.timer = 0x80;
             self->step_s++;
         }
-        if (self->ext.rdaiArcher.unk84 == 0) {
+        // Accelerate in the appropriate X direction, until we reach
+        // the speed limit of 0.75
+        if (self->ext.rdaiArcher.accelDir == false) {
             self->velocityX += FIX(1.0/64);
             if (self->velocityX > FIX(0.75)) {
                 self->velocityX = FIX(0.75);
@@ -116,23 +127,28 @@ void EntityArcherVehicle(Entity* self) {
         if (!(g_Timer & 7)) {
             PlaySfxPositional(SFX_UNK_RDAI_76A);
         }
+        // Once we've been running in this direction for long enough,
+        // start the process of turning around.
         if (!--self->ext.rdaiArcher.timer) {
-            SetStep(2);
+            SetStep(VEHICLE_TURNAROUND);
         }
         break;
-    case 0x2:
+
+    case VEHICLE_TURNAROUND:
         switch (self->step_s) {
         case 0:
             StairsCheckCollision();
+            // Step 0: Slow down until we are below 0.5
             velX = self->velocityX -= self->velocityX >> 8;
             if (abs(velX) < FIX(0.5)) {
-                self->ext.rdaiArcher.unk84 ^= 1;
+                self->ext.rdaiArcher.accelDir ^= 1;
                 self->velocityX = 0;
                 self->step_s++;
             }
             break;
+        // Careful here, steps are 2 then 1
         case 2:
-            if (self->ext.rdaiArcher.unk84 == 0) {
+            if (self->ext.rdaiArcher.accelDir == false) {
                 self->velocityX += FIX(1.0/64);
                 if (self->velocityX > FIX(0.75)) {
                     self->velocityX = FIX(0.75);
@@ -146,7 +162,7 @@ void EntityArcherVehicle(Entity* self) {
             /* fallthrough */
         case 1:
             StairsCheckCollision();
-            if (self->ext.rdaiArcher.unk84 == 0) {
+            if (self->ext.rdaiArcher.accelDir == false) {
                 anim_running = AnimateEntity(anim_chair_seat_raising, self);
             } else {
                 anim_running = AnimateEntity(anim_chair_seat_lowering, self);
@@ -155,11 +171,11 @@ void EntityArcherVehicle(Entity* self) {
                 self->step_s = 2;
             }
             if (anim_running == 0) {
-                SetStep(1);
+                SetStep(VEHICLE_RUN);
             }
         }
         break;
-    case 0x3:
+    case VEHICLE_DEAD:
         PlaySfxPositional(SFX_FLEA_ARMOR_EXPLODE);
         for (i = 0; i < 9; i++) {
             if (i != 7) {
@@ -173,7 +189,7 @@ void EntityArcherVehicle(Entity* self) {
         PreventEntityFromRespawning(self);
         DestroyEntity(self);
         return;
-    case 0xFF:
+    case VEHICLE_ANIM_DEBUG:
 #include "../pad2_anim_debug.h"
     }
 }
@@ -225,8 +241,8 @@ void EntityArcherWheel(Entity* self) {
         self->zPriority = entity->zPriority - 1;
         velocity = entity->velocityX >> 9;
         self->rotate -= velocity;
-        self->ext.rdaiArcher.unk88 += velocity * 2;
-        self->posY.i.hi += abs((rsin(self->ext.rdaiArcher.unk88) << 3) >> 12);
+        self->ext.rdaiArcher.wheelBob += velocity * 2;
+        self->posY.i.hi += abs((rsin(self->ext.rdaiArcher.wheelBob) << 3) >> 12);
         break;
 
     case 3:
@@ -248,8 +264,8 @@ void EntityArcherWheel(Entity* self) {
         self->zPriority = entity->zPriority + 1;
         velocity = entity->velocityX >> 9;
         self->rotate -= velocity;
-        self->ext.rdaiArcher.unk88 += velocity * 2;
-        self->posY.i.hi += abs((rsin(self->ext.rdaiArcher.unk88) << 3) >> 12);
+        self->ext.rdaiArcher.wheelBob += velocity * 2;
+        self->posY.i.hi += abs((rsin(self->ext.rdaiArcher.wheelBob) << 3) >> 12);
         break;
     }
 }
@@ -394,7 +410,7 @@ void EntityArcherManArms(Entity* self) {
             other = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (other != NULL) {
                 CreateEntityFromEntity(E_ARCHER_ARROW, self, other);
-                other->ext.rdaiArcher.unk9C = self;
+                other->ext.rdaiArcher.arrowArm = self;
                 other->zPriority = self->zPriority - 1;
             }
         }
@@ -419,11 +435,12 @@ void EntityArcherManArms(Entity* self) {
             break;
         case 3:
             AnimateEntity(anim_arm_reloading, self);
+            // Now we get a new arrow since we lost our previous one
             if ((!self->poseTimer) && (self->pose == 6)) {
                 other = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (other != NULL) {
                     CreateEntityFromEntity(E_ARCHER_ARROW, self, other);
-                    other->ext.rdaiArcher.unk9C = self;
+                    other->ext.rdaiArcher.arrowArm = self;
                     other->zPriority = self->zPriority - 1;
                 }
                 other = self - 1;
@@ -472,12 +489,12 @@ void EntityArcherManArms(Entity* self) {
             AnimateEntity(anim_bow_shooting, self);
             break;
         case 3:
-            self->animCurFrame = 0xB;
+            self->animCurFrame = 11;
             self->pose = 0;
             self->poseTimer = 0;
             break;
         default:
-            self->animCurFrame = 0xB;
+            self->animCurFrame = 11;
             self->pose = 0;
             self->poseTimer = 0;
             break;
@@ -492,14 +509,22 @@ void EntityArcherManArms(Entity* self) {
 
 extern EInit D_us_80180884;
 
+typedef enum{
+    ARROW_INIT,
+    ARROW_NOCKED,
+    ARROW_FLYING,
+    ARROW_IMPALING,
+    ARROW_BROKEN
+} ArrowSteps;
+
 void EntityArcherArrow(Entity* self) {
     Entity* other;
     s16 angle;
     s32 i;
-    s32 size;
+    s32 armDist;
 
     switch (self->step) { /* irregular */
-    case 0:
+    case ARROW_INIT:
         InitializeEntity(D_us_80180884);
         self->animCurFrame = 22;
         self->drawFlags |= ENTITY_ROTATE;
@@ -514,29 +539,32 @@ void EntityArcherArrow(Entity* self) {
             } else {
                 self->velocityX = FIX(-0.5);
             }
-            self->step = 4;
+            self->step = ARROW_BROKEN;
             return;
         }
-    case 1:
-        other = self->ext.rdaiArcher.unk9C;
+        /* fallthrough */
+    case ARROW_NOCKED:
+        // Weirdly, the arrow attaches to the ARM, not to the BOW.
+        other = self->ext.rdaiArcher.arrowArm;
         self->posX.i.hi = other->posX.i.hi;
         self->posY.i.hi = other->posY.i.hi;
         self->rotate = other->rotate;
         angle = self->rotate;
-        size = 24;
-        if (other->animCurFrame == 0x1A) {
-            size = 14;
+        // This handles the action of moving back with the arm as it pulls
+        armDist = 24;
+        if (other->animCurFrame == 26) {
+            armDist = 14;
         }
-        if (other->animCurFrame == 0x1B) {
-            size = 8;
+        if (other->animCurFrame == 27) {
+            armDist = 8;
         }
-        self->posX.i.hi += (size * rcos(angle)) >> 0xC;
-        self->posY.i.hi += (size * rsin(angle)) >> 0xC;
+        self->posX.i.hi += (armDist * rcos(angle)) >> 0xC;
+        self->posY.i.hi += (armDist * rsin(angle)) >> 0xC;
         if (other->entityId != E_ARCHER_MAN_ARMS) {
             DestroyEntity(self);
             return;
         }
-        if ((other->ext.rdaiArcher.mode) == 2) {
+        if (other->ext.rdaiArcher.mode == 2) {
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
             self->velocityX = (rcos(angle) * FIX(5)) >> 0xC;
             self->velocityY = (rsin(angle) * FIX(5)) >> 0xC;
@@ -544,12 +572,13 @@ void EntityArcherArrow(Entity* self) {
             self->hitboxOffX = (rcos(angle) * 8) >> 0xC;
             self->hitboxOffY = (rsin(angle) * 8) >> 0xC;
             self->hitboxWidth = self->hitboxHeight = 4;
-            self->step = 2;
+            self->step = ARROW_FLYING;
         }
         break;
-    case 2:
+    case ARROW_FLYING:
         MoveEntity();
         if (self->flags & FLAG_DEAD) {
+            // Create two broken arrow halves (tip and tail)
             for (i = 0; i < 2; i++) {
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
@@ -563,18 +592,20 @@ void EntityArcherArrow(Entity* self) {
         }
         if (self->hitFlags & 0x80) {
             other = &PLAYER;
-            self->ext.rdaiArcher.unk94 = other->posX.i.hi - self->posX.i.hi;
-            self->ext.rdaiArcher.unk96 = other->posY.i.hi - self->posY.i.hi;
+            // Keep track of what part of player we impaled, so we stay embedded
+            // in them as they continue to move around
+            self->ext.rdaiArcher.impaleOffX = other->posX.i.hi - self->posX.i.hi;
+            self->ext.rdaiArcher.impaleOffY = other->posY.i.hi - self->posY.i.hi;
             self->ext.rdaiArcher.timer = 0x20;
             self->hitboxState = 0;
             self->step++;
             return;
         }
         break;
-    case 3:
+    case ARROW_IMPALING:
         other = &PLAYER;
-        self->posX.i.hi = other->posX.i.hi - self->ext.rdaiArcher.unk94;
-        self->posY.i.hi = other->posY.i.hi - self->ext.rdaiArcher.unk96;
+        self->posX.i.hi = other->posX.i.hi - self->ext.rdaiArcher.impaleOffX;
+        self->posY.i.hi = other->posY.i.hi - self->ext.rdaiArcher.impaleOffY;
         if (!--self->ext.rdaiArcher.timer) {
             DestroyEntity(self);
             return;
@@ -612,8 +643,8 @@ void EntityArcherDeathParts(Entity* self) {
         yPivot = spritePtr[3]; // From sprite definition
         xPivot += spritePtr[4] / 2; // Shift by half width
         yPivot += spritePtr[5] / 2; // Shift by half height
-        self->ext.rdaiArcher.unk94 = xPivot;
-        self->ext.rdaiArcher.unk96 = yPivot;
+        self->ext.rdaiArcher.impaleOffX = xPivot;
+        self->ext.rdaiArcher.impaleOffY = yPivot;
         self->ext.rdaiArcher.timer = ((Random() & 0xF) + 8);
         angle = ratan2(yPivot, xPivot);
         self->velocityX = (rcos(angle) * FIX(2)) >> 0xC;
@@ -637,8 +668,8 @@ void EntityArcherDeathParts(Entity* self) {
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, other);
-                other->posX.i.hi += self->ext.rdaiArcher.unk94;
-                other->posY.i.hi += self->ext.rdaiArcher.unk96;
+                other->posX.i.hi += self->ext.rdaiArcher.impaleOffX;
+                other->posY.i.hi += self->ext.rdaiArcher.impaleOffY;
                 other->params = 1;
             }
             DestroyEntity(self);
@@ -659,8 +690,8 @@ void EntityArcherDeathParts(Entity* self) {
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
                     CreateEntityFromEntity(E_EXPLOSION, self, other);
-                    other->posX.i.hi += self->ext.rdaiArcher.unk94;
-                    other->posY.i.hi += self->ext.rdaiArcher.unk96;
+                    other->posX.i.hi += self->ext.rdaiArcher.impaleOffX;
+                    other->posY.i.hi += self->ext.rdaiArcher.impaleOffY;
                     other->params = 1;
                 }
                 DestroyEntity(self);
@@ -680,8 +711,8 @@ void EntityArcherDeathParts(Entity* self) {
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
                     CreateEntityFromEntity(E_EXPLOSION, self, other);
-                    other->posX.i.hi += self->ext.rdaiArcher.unk94;
-                    other->posY.i.hi += self->ext.rdaiArcher.unk96;
+                    other->posX.i.hi += self->ext.rdaiArcher.impaleOffX;
+                    other->posY.i.hi += self->ext.rdaiArcher.impaleOffY;
                     other->params = 1;
                 }
                 DestroyEntity(self);

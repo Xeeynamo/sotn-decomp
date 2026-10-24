@@ -4379,16 +4379,16 @@ typedef struct {
     /* 0x7C */ s32 : 32;
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 : 16;
-    /* 0x84 */ u8 unk84;
+    /* 0x84 */ u8 accelDir;
     /* 0x85 */ u8 mode;
     /* 0x86 */ s16 : 16;
-    /* 0x88 */ s16 unk88;
+    /* 0x88 */ s16 wheelBob;
     /* 0x8C */ s32 : 32;
     /* 0x90 */ s32 : 32;
-    /* 0x94 */ s16 unk94;
-    /* 0x96 */ s16 unk96;
+    /* 0x94 */ s16 impaleOffX;
+    /* 0x96 */ s16 impaleOffY;
     /* 0x98 */ s32 : 32;
-    /* 0x9C */ struct Entity* unk9C;
+    /* 0x9C */ struct Entity* arrowArm;
 } ET_RdaiArcher;
 
 typedef struct {
