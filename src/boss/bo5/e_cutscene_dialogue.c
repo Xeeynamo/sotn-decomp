@@ -202,7 +202,7 @@ void EntityCutscene(Entity* self) {
     bool endLoop;
 #endif
     RECT rect;
-    s32 ptr;
+    u_long ptr;
 
 #ifdef VERSION_PSP
     DisableAutoPowerOff();
@@ -487,6 +487,8 @@ void EntityCutscene(Entity* self) {
 #ifdef VERSION_PSP
                     ptr += (u_long)cutscene_script_ptr;
                     g_Dialogue.scriptCur += *(u8*)ptr << 2;
+#elif defined(VERSION_PC)
+                g_Dialogue.scriptCur += *(u8*)CS_NEXT(ptr + 0x100000) << 2;
 #else
                 // BUG! PSX reads the switch index without the 0x100000 offset
                 g_Dialogue.scriptCur += *(u16*)ptr << 2;
@@ -503,7 +505,7 @@ void EntityCutscene(Entity* self) {
                     ptr += (u_long)cutscene_script_ptr;
                     g_Dialogue.scriptCur = (u8*)ptr;
 #else
-                g_Dialogue.scriptCur = (u8*)ptr + 0x100000;
+                g_Dialogue.scriptCur = CS_PTR(ptr);
 #endif
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_15:
@@ -518,7 +520,7 @@ void EntityCutscene(Entity* self) {
                     ptr += (u_long)cutscene_script_ptr;
                     g_Dialogue.scriptCur = (u8*)ptr;
 #else
-                g_Dialogue.scriptCur = (u8*)ptr + 0x100000;
+                g_Dialogue.scriptCur = CS_PTR(ptr);
 #endif
                     continue;
                 case CSOP_WAIT_FOR_FLAG:
@@ -583,7 +585,7 @@ void EntityCutscene(Entity* self) {
                             break;
                         }
 #else
-                    ptr += 0x100000;
+                    ptr = (u_long)CS_PTR(ptr);
 #endif
                         j = *g_Dialogue.scriptCur++;
                         LoadTPage((u_long*)ptr, 1, 0, x_vals[j], 256, 48, 72);

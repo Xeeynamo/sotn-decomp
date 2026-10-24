@@ -39,9 +39,9 @@ s32 E_ID(LIFE_UP_SPAWN);
 s32 E_ID(PLAY_BOSS_MUSIC);
 s32 E_ID(CUTSCENE);
 s32 E_ID(CUTSCENE_STAGE);
-s32 E_ID(UNK_2C);
-s32 E_ID(UNK_2D);
-s32 E_ID(UNK_2E);
+s32 E_ID(ACTOR_MARIA);
+s32 E_ID(SPEECH_BALLOON_RICHTER);
+s32 E_ID(SPEECH_BALLOON_TREVOR);
 
 // Used by bo5/e_cutscene_dialogue/EntityCutscene
 u8* cutscene_script;     // bss
@@ -77,9 +77,9 @@ static void InitEntityIds(void) {
     SET_E_ID(PLAY_BOSS_MUSIC);
     SET_E_ID(CUTSCENE);
     SET_E_ID(CUTSCENE_STAGE);
-    SET_E_ID(UNK_2C);
-    SET_E_ID(UNK_2D);
-    SET_E_ID(UNK_2E);
+    SET_E_ID(ACTOR_MARIA);
+    SET_E_ID(SPEECH_BALLOON_RICHTER);
+    SET_E_ID(SPEECH_BALLOON_TREVOR);
 }
 
 void BO5_Load(void) {
