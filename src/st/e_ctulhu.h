@@ -840,7 +840,7 @@ void EntityCtulhuIceShockwave(Entity* self) {
                         prim->p3 = 0;
                         prim->drawMode = DRAW_HIDE;
                     }
-#ifdef VERSION_PSP
+#if defined(FIX_UB) || defined(VERSION_PSP)
                     // Looks to be a bug fix on PSP
                     // PSX can index outside size of ctulhu_shockwave_uvs
                     else {
@@ -852,7 +852,7 @@ void EntityCtulhuIceShockwave(Entity* self) {
                         prim->u1 = prim->u3 = *ptr++;
                         prim->v2 = prim->v3 = *ptr++;
                         prim->p2 = 3;
-#ifdef VERSION_PSP
+#if defined(FIX_UB) || defined(VERSION_PSP)
                     }
 #endif
                 } else {
