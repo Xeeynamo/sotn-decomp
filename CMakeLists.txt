@@ -1863,7 +1863,6 @@ set(SOURCE_FILES_BOSS_RBO5
     src/pc/bosses/boss_rbo5.c
     src/boss/rbo5/header.c
     src/boss/rbo5/sprite_banks.c
-    src/boss/rbo5/palette_def.c
     src/boss/rbo5/layers.c
     src/boss/rbo5/graphics_banks.c
     src/boss/rbo5/gen/e_laydef.c
