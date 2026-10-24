@@ -135,7 +135,7 @@ function(sotn_str_apply_msvc target)
             OUTPUT "${_out}"
             COMMAND ${CMAKE_COMMAND} -E make_directory "${_out_dir}"
             COMMAND "${CMAKE_C_COMPILER}" /nologo /E /DSOTN_STR "${_inc_arg}" "${_def_arg}" ${_sdef_args} "${_abs}" > "${_out}.i"
-            COMMAND "${SOTN_STR_BIN}" process -f "${_out}.i" > "${_out}"
+            COMMAND "${SOTN_STR_BIN}" process --sjis -f "${_out}.i" > "${_out}"
             DEPENDS "${_abs}" "${SOTN_STR_BIN}" ${_sotn_str_headers}
             COMMAND_EXPAND_LISTS
             VERBATIM
