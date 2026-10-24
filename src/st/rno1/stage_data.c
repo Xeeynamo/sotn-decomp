@@ -47,3 +47,42 @@ u8 D_8018ADC4[] = {
 u8 D_8018B778[] = {
 #include "gen/D_8018B778.h"
 };
+
+#ifndef VERSION_PSP
+u16 D_us_8018C680[] = {
+#include "gen/D_us_8018C680.h"
+};
+u16 D_us_8018C6A0[] = {
+#include "gen/D_us_8018C6A0.h"
+};
+u16 D_us_8018C6C0[] = {
+#include "gen/D_us_8018C6C0.h"
+};
+u16 D_us_8018C6E0[] = {
+#include "gen/D_us_8018C6E0.h"
+};
+u16 D_us_8018C7A0[] = {
+#include "gen/D_us_8018C7A0.h"
+};
+u16 D_us_8018C800[] = {
+#include "gen/D_us_8018C800.h"
+};
+u16 D_us_8018C820[] = {
+#include "gen/D_us_8018C820.h"
+};
+u16 D_us_8018CAE0[] = {
+#include "gen/D_us_8018CAE0.h"
+};
+u16 D_us_8018CB20[] = {
+#include "gen/D_us_8018CB20.h"
+};
+u16 D_us_8018CBC0[] = {
+#include "gen/D_us_8018CBC0.h"
+};
+u16 D_us_8018CC20[] = {
+#include "gen/D_us_8018CC20.h"
+};
+u16 D_us_8018CD20[] = {
+#include "gen/D_us_8018CD20.h"
+};
+#endif

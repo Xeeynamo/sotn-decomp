@@ -1457,7 +1457,8 @@ files:
         vram: 0x80180000
         assets:
           - [0x2C, sprite_banks, us/sprite_banks]
-          - [0x8C, skip] #paldef, palette_def]
+          - [0x8C, palette, D_us_8018008C, 16]
+          - [0xAC, paldef, palette_def]
           - [0x154, layers, layers]
           - [0x32C, gfx_banks, graphics_banks]
           - [0x400, layout, entity_layouts]
@@ -1478,7 +1479,19 @@ files:
           - [0x9928, cmpgfx, D_80189928, 128, 128, 4]
           - [0xADC4, cmpgfx, D_8018ADC4, 128, 128, 4]
           - [0xB778, cmpgfx, D_8018B778, 128, 128, 4]
-          - [0xC680, skip]
+          - [0xC680, palette, D_us_8018C680, 16]
+          - [0xC6A0, palette, D_us_8018C6A0, 16]
+          - [0xC6C0, palette, D_us_8018C6C0, 16]
+          - [0xC6E0, palette, D_us_8018C6E0, 16]
+          - [0xC7A0, palette, D_us_8018C7A0, 16]
+          - [0xC800, palette, D_us_8018C800, 16]
+          - [0xC820, palette, D_us_8018C820, 16]
+          - [0xCAE0, palette, D_us_8018CAE0, 16]
+          - [0xCB20, palette, D_us_8018CB20, 16]
+          - [0xCBC0, palette, D_us_8018CBC0, 16]
+          - [0xCC20, palette, D_us_8018CC20, 16]
+          - [0xCD20, palette, D_us_8018CD20, 16]
+          - [0xCE20, skip]
   - target: disks/us/ST/RNO2/RNO2.BIN
     asset_path: assets/st/rno2
     src_path: src/st/rno2
