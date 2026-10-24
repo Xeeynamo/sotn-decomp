@@ -8237,8 +8237,8 @@
 | rno1       | func_pspeu_0923C598               |      307 |         26 |        |       |     |
 | rno2       | func_pspeu_09246EE0               |      307 |         26 |        |       |     |
 | rno3       | func_pspeu_09243698               |      307 |         26 |        |       |     |
-| rno4       | func_us_801C12B0_from_no4         |      307 |         26 |        |       |     |
 | rno4       | func_psp_0923B2F0                 |      307 |         26 |        |       |     |
+| rno4       | func_us_801C12B0_from_no4         |      307 |         26 |        |       |     |
 | rnz0       | func_pspeu_092435D0               |      307 |         26 |        |       |     |
 | rnz1       | func_pspeu_0923E760               |      307 |         26 |        |       |     |
 | rtop       | func_pspeu_0923CA98               |      307 |         26 |        |       |     |
@@ -8563,7 +8563,7 @@
 | rno1       | func_pspeu_0923CA28               |      364 |         33 |        |       |     |
 | rno2       | func_pspeu_09247370               |      364 |         33 |        |       |     |
 | rno3       | func_pspeu_09243B28               |      364 |         33 |        |       |     |
-| rno4       | EntitySoulStealOrb                |      364 |         33 |        |       |     |
+| rno4       | func_pspeu_09242670               |      364 |         33 |        |       |     |
 | rnz0       | func_pspeu_09243A60               |      364 |         33 |        |       |     |
 | rnz1       | func_pspeu_0923EBF0               |      364 |         33 |        |       |     |
 | rtop       | func_pspeu_0923CF28               |      364 |         33 |        |       |     |
@@ -8889,7 +8889,7 @@
 | rno1       | func_pspeu_0923CF88               |      418 |         45 |        |       |     |
 | rno2       | func_pspeu_092478D0               |      418 |         45 |        |       |     |
 | rno3       | func_pspeu_09244088               |      418 |         45 |        |       |     |
-| rno4       | EntityEnemyBlood                  |      418 |         45 |        |       |     |
+| rno4       | func_pspeu_09242BD0               |      418 |         45 |        |       |     |
 | rnz0       | func_pspeu_09243FC0               |      418 |         45 |        |       |     |
 | rnz1       | func_pspeu_0923F150               |      418 |         45 |        |       |     |
 | rtop       | func_pspeu_0923D488               |      418 |         45 |        |       |     |
