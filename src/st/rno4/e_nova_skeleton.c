@@ -1,58 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno4.h"
 
-INCLUDE_ASM("st/rno4/nonmatchings/unk_58A30", func_us_801BBE58_from_rnz1);
+INCLUDE_ASM("st/rno4/nonmatchings/e_nova_skeleton", TryShoot);
 
-INCLUDE_ASM("st/rno4/nonmatchings/unk_58A30", func_us_801BC650_from_rnz1);
+INCLUDE_ASM("st/rno4/nonmatchings/e_nova_skeleton", DrawLaserRing);
 
-INCLUDE_ASM("st/rno4/nonmatchings/unk_58A30", func_us_801BCA5C_from_rnz1);
-
-INCLUDE_ASM("st/rno4/nonmatchings/unk_58A30", func_us_801BCB9C_from_rnz1);
-
-INCLUDE_ASM("st/rno4/nonmatchings/unk_58A30", func_us_801BCD80_from_rnz1);
-
-INCLUDE_ASM("st/rno4/nonmatchings/unk_58A30", func_us_801BCE4C_from_rnz1);
-
-INCLUDE_ASM("st/rno4/nonmatchings/unk_58A30", func_us_801BCFC8_from_rnz1);
-
-INCLUDE_ASM("st/rno4/nonmatchings/unk_58A30", TryThrow);
-
-INCLUDE_ASM("st/rno4/nonmatchings/unk_58A30", EntityJackOBones);
-
-void EntityJackOBonesDeathParts(Entity* self) {
-    extern EInit g_EInitJackOBones2;
-    extern u16 g_JackOBonesDeathPartsRotSpeeds[];
-    if (self->step) {
-        if (--self->ext.jackoBones.deathPartLife) {
-            self->rotate += g_JackOBonesDeathPartsRotSpeeds[self->params];
-            FallEntity();
-            MoveEntity();
-            return;
-        }
-        self->entityId = E_EXPLOSION;
-        self->pfnUpdate = EntityExplosion;
-        self->params = 0;
-        self->step = 0;
-        return;
-    }
-    InitializeEntity(g_EInitJackOBones2);
-    self->animCurFrame = (self->params & 0xFF) + 15;
-    if (self->params & 0x100) {
-        self->palette++;
-    }
-    self->drawFlags = ENTITY_ROTATE;
-    if (self->facingLeft) {
-        self->velocityX = -self->velocityX;
-    }
-}
-
-INCLUDE_ASM("st/rno4/nonmatchings/unk_58A30", EntityJackOBonesJack);
-
-INCLUDE_ASM("st/rno4/nonmatchings/unk_58A30", TryShoot);
-
-INCLUDE_ASM("st/rno4/nonmatchings/unk_58A30", DrawLaserRing);
-
-INCLUDE_RODATA("st/rno4/nonmatchings/unk_58A30", D_us_801C4800);
+INCLUDE_RODATA("st/rno4/nonmatchings/e_nova_skeleton", D_us_801C4800);
 
 void EntityNovaSkeleton(Entity* self) {
     extern u8 g_NovaSkeletonSensors[];
@@ -400,14 +353,4 @@ void EntityNovaLaser(Entity* self) {
     prim = prim->next;
 }
 
-INCLUDE_ASM("st/rno4/nonmatchings/unk_58A30", EntityNovaLaserPulse);
-
-INCLUDE_ASM("st/rno4/nonmatchings/unk_58A30", EntityImp);
-
-#include "../e_imp_smoke.h"
-
-#define BALLOON_POD_DEATH_PARTICLE E_IMP_DEATH_PARTICLE
-#include "../e_balloon_pod.h"
-#undef BALLOON_POD_DEATH_PARTICLE
-
-#include "../e_imp_death_particle.h"
+INCLUDE_ASM("st/rno4/nonmatchings/e_nova_skeleton", EntityNovaLaserPulse);

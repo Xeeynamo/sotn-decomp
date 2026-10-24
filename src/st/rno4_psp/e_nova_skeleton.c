@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rno4/rno4.h"
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_161A0", TryShoot);
+INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/e_nova_skeleton", TryShoot);
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_161A0", DrawLaserRing);
+INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/e_nova_skeleton", DrawLaserRing);
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_161A0", EntityNovaSkeleton);
+INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/e_nova_skeleton", EntityNovaSkeleton);
 
 void EntityBladeSoldierDeathParts(Entity* self) {
     extern u16 g_BladeSoldierDeathPartsRotSpeeds[];
@@ -186,4 +186,4 @@ void EntityNovaLaser(Entity* self) {
     prim = prim->next;
 }
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_161A0", EntityNovaLaserPulse);
+INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/e_nova_skeleton", EntityNovaLaserPulse);
