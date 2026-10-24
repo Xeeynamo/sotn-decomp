@@ -68,7 +68,7 @@ static s16 g_RdaiArcherOffsets[][2] = {
 };
 
 
-extern EInit g_EInitRdaiUnk1F;
+extern EInit g_EInitArcherVehicle;
 
 typedef enum{
     VEHICLE_INIT,
@@ -92,7 +92,7 @@ void EntityArcherVehicle(Entity* self) {
     }
     switch (self->step) {
     case VEHICLE_INIT:
-        InitializeEntity(g_EInitRdaiUnk1F);
+        InitializeEntity(g_EInitArcherVehicle);
         // Create 3 sub-parts of the vehicle, with params 0, 1, 2.
         // These are the two wheels and the one wheel cover.
         for (other = self + 1, i = 0; i < 3; i++, other++) {
@@ -194,15 +194,13 @@ void EntityArcherVehicle(Entity* self) {
     }
 }
 
-extern EInit g_EInitRdaiUnk1F;
-
 void EntityArcherWheel(Entity* self) {
     Entity* entity;
     s32 velocity;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitRdaiUnk1F);
+        InitializeEntity(g_EInitArcherVehicle);
         self->step = self->params + 1;
         self->hitboxOffX = -2;
         self->hitboxOffY = 6;
@@ -270,7 +268,7 @@ void EntityArcherWheel(Entity* self) {
     }
 }
 
-extern EInit g_EInitArcher;
+extern EInit g_EInitArcherMan;
 
 void EntityArcherMan(Entity* self) {
     Entity* entity;
@@ -297,7 +295,7 @@ void EntityArcherMan(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitArcher);
+        InitializeEntity(g_EInitArcherMan);
         self->animCurFrame = 29;
         // Params 1 is the arm pulling the bow string
         entity = self + 1;
@@ -392,7 +390,6 @@ void EntityArcherMan(Entity* self) {
         break;
     }
 }
-extern EInit g_EInitRdaiUnk1F;
 // Archer man creates 3 of these, with params 1, 2, 3.
 // Then the case 0 sets self->step = self->params
 // So each step is a different entity which forms part of the man.
@@ -402,7 +399,7 @@ void EntityArcherManArms(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitRdaiUnk1F);
+        InitializeEntity(g_EInitArcherVehicle);
         self->drawFlags = ENTITY_ROTATE;
         self->step = self->params;
         self->hitboxState = 0;
@@ -507,7 +504,7 @@ void EntityArcherManArms(Entity* self) {
     }
 }
 
-extern EInit D_us_80180884;
+extern EInit g_EInitArcherArrow;
 
 typedef enum{
     ARROW_INIT,
@@ -525,7 +522,7 @@ void EntityArcherArrow(Entity* self) {
 
     switch (self->step) { /* irregular */
     case ARROW_INIT:
-        InitializeEntity(D_us_80180884);
+        InitializeEntity(g_EInitArcherArrow);
         self->animCurFrame = 22;
         self->drawFlags |= ENTITY_ROTATE;
         self->hitboxState = 0;
@@ -625,7 +622,7 @@ void EntityArcherArrow(Entity* self) {
 
 extern s16* sprites_rdai_2[];
 
-extern EInit D_us_80180890;
+extern EInit g_EInitArcherDeathParts;
 
 void EntityArcherDeathParts(Entity* self) {
     Entity* other;
@@ -636,7 +633,7 @@ void EntityArcherDeathParts(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180890);
+        InitializeEntity(g_EInitArcherDeathParts);
         self->animCurFrame = self->params;
         spritePtr = sprites_rdai_2[self->animCurFrame];
         xPivot = spritePtr[2]; // From sprite definition
