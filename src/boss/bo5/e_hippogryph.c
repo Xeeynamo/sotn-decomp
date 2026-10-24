@@ -160,6 +160,7 @@ enum {
     STEP_LAY_EGGS = 20,
     STEP_22 = 22,
     STEP_HIT = 32,
+    STEP_DYING = 34,
     STEP_DEAD = 36,
     STEP_48 = 48,
     STEP_50 = 50,
@@ -187,7 +188,7 @@ void func_us_801A19FC(u8 count, s16 posY) {
 
     for (i = 0; i < count; i++) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-        if (entity != NULL) {
+        if (entity) {
             DestroyEntity(entity);
             MakeEntityFromId(E_ID(HIPPOGRYPH), g_CurrentEntity, entity);
             entity->flags =
@@ -271,13 +272,13 @@ void EntityHippogryph(Entity* self) {
         self->velocityY = -FIX(4);
         SetHippogryphStep(STEP_HIT);
     }
-    if ((self->flags & FLAG_DEAD) && self->step < 0x22) {
+    if ((self->flags & FLAG_DEAD) && self->step < STEP_DYING) {
         self->hitboxState = 0;
         HIH(self->velocityX) = 0; // equivalent of i.hi = 0
         HIH(self->velocityY) = 0; // equivalent of i.hi = 0
         self->ext.hippogryph.flyTimer = 0;
         self->animCurFrame = 0x6E;
-        if (self->ext.hippogryph.unk94 != NULL) {
+        if (self->ext.hippogryph.unk94) {
             DestroyEntity(self->ext.hippogryph.unk94);
         }
         if (self->flags & FLAG_HAS_PRIMS) {
@@ -492,7 +493,7 @@ void EntityHippogryph(Entity* self) {
         case 1:
             if (self->ext.hippogryph.flyTimer % 2) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-                if (entity != NULL) {
+                if (entity) {
                     CreateEntityFromEntity(E_ID(FIRE_BREATH), self, entity);
                     entity->pfnUpdate = EntityFireBreath;
                     entity->facingLeft = self->facingLeft;
@@ -509,7 +510,7 @@ void EntityHippogryph(Entity* self) {
                 } else {
                     entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 }
-                if (entity != NULL) {
+                if (entity) {
                     DestroyEntity(entity);
                     CreateEntityFromEntity(E_ID(FIRE_BREATH), self, entity);
                     entity->pfnUpdate = EntityFireBreath;
@@ -632,7 +633,7 @@ void EntityHippogryph(Entity* self) {
             count = (Random() & 1) + 2;
             for (i = 0; i < count; i++) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-                if (entity != NULL) {
+                if (entity) {
                     CreateEntityFromEntity(E_ID(HIPPOGRYPH_EGG), self, entity);
                     entity->ext.hippogryphEgg.timer = (Random() & 0x1F) + 0xC0;
                     if (self->facingLeft) {
@@ -848,7 +849,7 @@ void EntityHippogryph(Entity* self) {
                 self->primIndex = primIndex;
                 prim = &g_PrimBuf[primIndex];
                 self->ext.hippogryph.prim = prim;
-                while (prim != NULL) {
+                while (prim) {
                     prim->r0 = 0x80;
                     prim->r1 = 0x40;
                     prim->g0 = 0x60;
@@ -1090,7 +1091,7 @@ void EntityHippogryph(Entity* self) {
             x = 0x100 - g_Tilemap.scrollX.i.hi;
             y = 0x80 - g_Tilemap.scrollY.i.hi;
             player = AllocEntity(&g_Entities[160], &g_Entities[192]);
-            if (player != NULL) {
+            if (player) {
                 CreateEntityFromCurrentEntity(E_ID(LIFE_UP_SPAWN), player);
                 player->posX.i.hi = x;
                 player->posY.i.hi = y;
@@ -1212,7 +1213,7 @@ void EntityFireBreath(Entity* self) {
         }
         if (self->params == 3 && (Random() & 1)) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (entity != NULL) {
+            if (entity) {
                 DestroyEntity(entity);
                 CreateEntityFromEntity(E_ID(UNK_26), self, entity);
                 entity->facingLeft = self->facingLeft;
@@ -1223,7 +1224,7 @@ void EntityFireBreath(Entity* self) {
         }
         if (!self->params && (Random() & 7)) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (entity != NULL) {
+            if (entity) {
                 DestroyEntity(entity);
                 CreateEntityFromEntity(E_ID(UNK_26), self, entity);
                 entity->facingLeft = self->facingLeft;
@@ -1300,7 +1301,7 @@ void EntityHippogryphEgg(Entity* self) {
 
     if (self->flags & FLAG_DEAD) {
         entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-        if (entity != NULL) {
+        if (entity) {
             DestroyEntity(entity);
             CreateEntityFromEntity(E_EXPLOSION, self, entity);
             entity->params = 0;
@@ -1327,7 +1328,7 @@ void EntityHippogryphEgg(Entity* self) {
                 return;
             }
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-            if (entity != NULL) {
+            if (entity) {
                 DestroyEntity(entity);
                 CreateEntityFromEntity(E_EXPLOSION, self, entity);
                 entity->params = 0;
