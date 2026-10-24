@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno4.h"
 
-#ifndef VERSION_PC
 extern s32 g_ExplosionVariantVelocity[];
 extern u8 g_ExplosionVariantFrames[];
 extern u16 g_ExplosionVariantDurations[];
@@ -87,7 +86,6 @@ void EntityIntenseExplosion(Entity* self) {
         DestroyEntity(self);
     }
 }
-#endif
 
 void PlaySfxPositional(s16 sfxId) {
     s32 posX, posY;

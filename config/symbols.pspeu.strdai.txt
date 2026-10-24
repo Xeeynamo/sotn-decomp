@@ -1,6 +1,5 @@
 CreateEntityFromCurrentEntity = 0x0923A778;
 CreateEntityFromEntity = 0x0923A800;
-SpearGuardCheckCollision = 0x0923A888;
 Random = 0x0923F010;
 CheckColliderOffsets = 0x09246018;
 PlaySfxPositional = 0x09246710;
@@ -13,7 +12,6 @@ func_us_801C4C4C = 0x0924B298;
 func_us_801C5AA0 = 0x0924C4C8;
 EntityBlackPanther = 0x0924CBB0;
 DestroyEntity = 0x0924D758;
-PreventEntityFromRespawning = 0x0924D7F0;
 AnimateEntity = 0x0924D878;
 GetDistanceToPlayerX = 0x0924D9E8;
 GetSideToPlayer = 0x0924DA58;
