@@ -762,7 +762,7 @@
 | 1.00 | true     | DestroyEntity                       | asm/us/boss/bo2/matchings/st_common/DestroyEntity.s 
 | 1.00 | true     | func_us_801A9B1C                    | asm/us/boss/bo3/matchings/st_common/func_us_801A9B1C.s 
 | 1.00 | true     | func_us_801B9DD4                    | asm/us/boss/bo4/matchings/st_common/func_us_801B9DD4.s 
-| 1.00 | true     | DestroyEntity                       | asm/us/boss/bo5/matchings/st_common/DestroyEntity.s 
+| 1.00 | true     | func_us_801A9FCC                    | asm/us/boss/bo5/matchings/st_common/func_us_801A9FCC.s 
 | 1.00 | true     | DestroyEntity                       | asm/us/boss/bo6/matchings/st_common/DestroyEntity.s 
 | 1.00 | true     | DestroyEntity                       | asm/us/boss/bo7/matchings/st_common/DestroyEntity.s 
 | 1.00 | true     | func_us_80190388                    | asm/us/boss/mar/matchings/st_common/func_us_80190388.s 
@@ -1163,7 +1163,7 @@
 | 1.00 | true     | AnimateEntity                       | asm/us/boss/bo2/matchings/st_common/AnimateEntity.s 
 | 1.00 | true     | func_us_801A9C4C                    | asm/us/boss/bo3/matchings/st_common/func_us_801A9C4C.s 
 | 1.00 | true     | func_us_801B9F04                    | asm/us/boss/bo4/matchings/st_common/func_us_801B9F04.s 
-| 1.00 | true     | AnimateEntity                       | asm/us/boss/bo5/matchings/st_common/AnimateEntity.s 
+| 1.00 | true     | func_us_801AA0FC                    | asm/us/boss/bo5/matchings/st_common/func_us_801AA0FC.s 
 | 1.00 | true     | func_us_801AD09C                    | asm/us/boss/bo6/matchings/st_common/func_us_801AD09C.s 
 | 1.00 | true     | AnimateEntity                       | asm/us/boss/bo7/matchings/st_common/AnimateEntity.s 
 | 1.00 | true     | func_us_801904B8                    | asm/us/boss/mar/matchings/st_common/func_us_801904B8.s 
@@ -2861,7 +2861,7 @@
 | 1.00 | true     | InitializeEntity                    | asm/us/boss/bo2/matchings/st_common/InitializeEntity.s 
 | 1.00 | true     | func_us_801AA82C                    | asm/us/boss/bo3/matchings/st_common/func_us_801AA82C.s 
 | 1.00 | true     | func_us_801BAAE4                    | asm/us/boss/bo4/matchings/st_common/func_us_801BAAE4.s 
-| 1.00 | true     | InitializeEntity                    | asm/us/boss/bo5/matchings/st_common/InitializeEntity.s 
+| 1.00 | true     | func_us_801AACDC                    | asm/us/boss/bo5/matchings/st_common/func_us_801AACDC.s 
 | 1.00 | true     | InitializeEntity                    | asm/us/boss/bo6/matchings/st_common/InitializeEntity.s 
 | 1.00 | true     | InitializeEntity                    | asm/us/boss/bo7/matchings/st_common/InitializeEntity.s 
 | 1.00 | true     | func_us_80191098                    | asm/us/boss/mar/matchings/st_common/func_us_80191098.s 
@@ -2914,7 +2914,7 @@
 | 1.00 | true     | MoveEntity                          | asm/us/boss/bo2/matchings/st_common/MoveEntity.s 
 | 1.00 | true     | func_us_801A9ED0                    | asm/us/boss/bo3/matchings/st_common/func_us_801A9ED0.s 
 | 1.00 | true     | func_us_801BA188                    | asm/us/boss/bo4/matchings/st_common/func_us_801BA188.s 
-| 1.00 | true     | MoveEntity                          | asm/us/boss/bo5/matchings/st_common/MoveEntity.s 
+| 1.00 | true     | func_us_801AA380                    | asm/us/boss/bo5/matchings/st_common/func_us_801AA380.s 
 | 1.00 | true     | func_us_801AD320                    | asm/us/boss/bo6/matchings/st_common/func_us_801AD320.s 
 | 1.00 | true     | MoveEntity                          | asm/us/boss/bo7/matchings/st_common/MoveEntity.s 
 | 1.00 | true     | func_us_8019073C                    | asm/us/boss/mar/matchings/st_common/func_us_8019073C.s 
@@ -3073,7 +3073,7 @@
 | 1.00 | true     | SetStep                             | asm/us/boss/bo2/matchings/st_common/SetStep.s 
 | 1.00 | true     | func_us_801AA75C                    | asm/us/boss/bo3/matchings/st_common/func_us_801AA75C.s 
 | 1.00 | true     | func_us_801BAA14                    | asm/us/boss/bo4/matchings/st_common/func_us_801BAA14.s 
-| 1.00 | true     | SetStep                             | asm/us/boss/bo5/matchings/st_common/SetStep.s 
+| 1.00 | true     | func_us_801AAC0C                    | asm/us/boss/bo5/matchings/st_common/func_us_801AAC0C.s 
 | 1.00 | true     | func_us_801ADBAC                    | asm/us/boss/bo6/matchings/st_common/func_us_801ADBAC.s 
 | 1.00 | true     | SetStep                             | asm/us/boss/bo7/matchings/st_common/SetStep.s 
 | 1.00 | true     | func_us_80190FC8                    | asm/us/boss/mar/matchings/st_common/func_us_80190FC8.s 
@@ -6822,11 +6822,6 @@
 | 0.91 | true     | VSync_memclr                        | asm/us/main/matchings/psxsdk/libetc/intr_vb/VSync_memclr.s 
 | 1.00 | true     | func_8001510C                       | asm/us/main/matchings/psxsdk/libgpu/sys/func_8001510C.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | func_us_80173994                    | asm/us/servant/tt_002/matchings/faerie/func_us_80173994.s 
 | 1.00 | true     | func_us_80172A68                    | asm/us/servant/tt_003/matchings/demon/func_us_80172A68.s 
 | 1.00 | true     | func_us_801739A0                    | asm/us/servant/tt_005/matchings/sprite/func_us_801739A0.s 
@@ -7334,6 +7329,10 @@
 | 0.93 | true     | _SsContRpn1                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn1.s 
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
@@ -8109,6 +8108,9 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
