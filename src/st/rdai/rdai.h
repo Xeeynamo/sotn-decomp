@@ -57,12 +57,12 @@ enum EntityID {
     E_STAIRCASE,            // EntityStaircase
     E_STAINED_GLASS,        // EntityStainedGlass
     E_STAINED_GLASS_BG,     // EntityStainedGlassBackground
-    E_UNK_1C,               // func_us_801BFE6C
-    E_UNK_1D,               // func_us_801C0240
-    E_UNK_1E,               // func_us_801BF830
-    E_UNK_1F,               // EntityRdaiUnk1F
-    E_UNK_20,               // func_us_801C0528
-    E_UNK_21,               // func_us_801C0898
+    E_ARCHER_MAN,           // EntityArcherMan
+    E_ARCHER_MAN_ARMS,      // EntityArcherManArms
+    E_ARCHER_VEHICLE,       // EntityArcherVehicle
+    E_ARCHER_WHEEL,         // EntityArcherWheel
+    E_ARCHER_ARROW,         // EntityArcherArrow
+    E_ARCHER_DEATH_PARTS,   // EntityArcherDeathParts
     E_UNK_22,               // func_us_801C0C44
     E_UNK_23,               // EntitySpectralSwordAura
     E_UNK_24,               // func_us_801C17E8
