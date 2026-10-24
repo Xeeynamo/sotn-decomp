@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rdai.h"
 
-
-// Copied from Spear Guard. 
+// Copied from Spear Guard.
 // Note: We do not use the return value when calling this function.
 // I believe that makes the entire function (besides the first 2 lines)
 // totally pointless. Nothing else modifies anything. So all this really
@@ -56,21 +55,25 @@ static bool ApproachTarget(s16* val, s16 target, s16 step) {
     return false;
 }
 
-static AnimateEntityFrame anim_chair_running[] = {{8, 30}, {8, 31}, {8, 32}, POSE_LOOP(0)};
-static AnimateEntityFrame anim_chair_seat_lowering[] = {{1, 31}, {2, 33}, {16, 34}, {6, 33}, {1, 31}, POSE_END};
-static AnimateEntityFrame anim_chair_seat_raising[] = {{1, 31}, {2, 35}, {16, 36}, {6, 35}, {1, 31}, POSE_END};
-static AnimateEntityFrame anim_bow_drawing[] = {{22, 11}, {8, 12}, {16, 13}, POSE_END};
-static AnimateEntityFrame anim_arm_pulling[] = {{22, 25}, {8, 26}, {16, 27}, POSE_END};
-static AnimateEntityFrame anim_bow_shooting[] = {{15, 13}, {5, 12}, {5, 14}, {5, 15}, {2, 14}, {2, 15}, {2, 11}, POSE_END};
-static AnimateEntityFrame anim_arm_reloading[] = {{22, 25}, {6, 16}, {6, 17}, {22, 18}, {6, 17}, {6, 16}, {22, 25}, POSE_END};
-static s16 g_RdaiArcherOffsets[][2] = {
-    {3, -4}, {4, -5}, {-5, 4}, {-9, 6}
-};
-
+static AnimateEntityFrame anim_chair_running[] = {
+    {8, 30}, {8, 31}, {8, 32}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_chair_seat_lowering[] = {
+    {1, 31}, {2, 33}, {16, 34}, {6, 33}, {1, 31}, POSE_END};
+static AnimateEntityFrame anim_chair_seat_raising[] = {
+    {1, 31}, {2, 35}, {16, 36}, {6, 35}, {1, 31}, POSE_END};
+static AnimateEntityFrame anim_bow_drawing[] = {
+    {22, 11}, {8, 12}, {16, 13}, POSE_END};
+static AnimateEntityFrame anim_arm_pulling[] = {
+    {22, 25}, {8, 26}, {16, 27}, POSE_END};
+static AnimateEntityFrame anim_bow_shooting[] = {
+    {15, 13}, {5, 12}, {5, 14}, {5, 15}, {2, 14}, {2, 15}, {2, 11}, POSE_END};
+static AnimateEntityFrame anim_arm_reloading[] = {
+    {22, 25}, {6, 16}, {6, 17}, {22, 18}, {6, 17}, {6, 16}, {22, 25}, POSE_END};
+static s16 g_RdaiArcherOffsets[][2] = {{3, -4}, {4, -5}, {-5, 4}, {-9, 6}};
 
 extern EInit g_EInitArcherVehicle;
 
-typedef enum{
+typedef enum {
     VEHICLE_INIT,
     VEHICLE_RUN,
     VEHICLE_TURNAROUND,
@@ -112,12 +115,12 @@ void EntityArcherVehicle(Entity* self) {
         // Accelerate in the appropriate X direction, until we reach
         // the speed limit of 0.75
         if (self->ext.rdaiArcher.accelDir == false) {
-            self->velocityX += FIX(1.0/64);
+            self->velocityX += FIX(1.0 / 64);
             if (self->velocityX > FIX(0.75)) {
                 self->velocityX = FIX(0.75);
             }
         } else {
-            self->velocityX -= FIX(1.0/64);
+            self->velocityX -= FIX(1.0 / 64);
             if (self->velocityX < FIX(-0.75)) {
                 self->velocityX = FIX(-0.75);
             }
@@ -149,12 +152,12 @@ void EntityArcherVehicle(Entity* self) {
         // Careful here, steps are 2 then 1
         case 2:
             if (self->ext.rdaiArcher.accelDir == false) {
-                self->velocityX += FIX(1.0/64);
+                self->velocityX += FIX(1.0 / 64);
                 if (self->velocityX > FIX(0.75)) {
                     self->velocityX = FIX(0.75);
                 }
             } else {
-                self->velocityX -= FIX(1.0/64);
+                self->velocityX -= FIX(1.0 / 64);
                 if (self->velocityX < FIX(-0.75)) {
                     self->velocityX = FIX(-0.75);
                 }
@@ -240,7 +243,8 @@ void EntityArcherWheel(Entity* self) {
         velocity = entity->velocityX >> 9;
         self->rotate -= velocity;
         self->ext.rdaiArcher.wheelBob += velocity * 2;
-        self->posY.i.hi += abs((rsin(self->ext.rdaiArcher.wheelBob) << 3) >> 12);
+        self->posY.i.hi +=
+            abs((rsin(self->ext.rdaiArcher.wheelBob) << 3) >> 12);
         break;
 
     case 3:
@@ -263,7 +267,8 @@ void EntityArcherWheel(Entity* self) {
         velocity = entity->velocityX >> 9;
         self->rotate -= velocity;
         self->ext.rdaiArcher.wheelBob += velocity * 2;
-        self->posY.i.hi += abs((rsin(self->ext.rdaiArcher.wheelBob) << 3) >> 12);
+        self->posY.i.hi +=
+            abs((rsin(self->ext.rdaiArcher.wheelBob) << 3) >> 12);
         break;
     }
 }
@@ -506,7 +511,7 @@ void EntityArcherManArms(Entity* self) {
 
 extern EInit g_EInitArcherArrow;
 
-typedef enum{
+typedef enum {
     ARROW_INIT,
     ARROW_NOCKED,
     ARROW_FLYING,
@@ -591,8 +596,10 @@ void EntityArcherArrow(Entity* self) {
             other = &PLAYER;
             // Keep track of what part of player we impaled, so we stay embedded
             // in them as they continue to move around
-            self->ext.rdaiArcher.impaleOffX = other->posX.i.hi - self->posX.i.hi;
-            self->ext.rdaiArcher.impaleOffY = other->posY.i.hi - self->posY.i.hi;
+            self->ext.rdaiArcher.impaleOffX =
+                other->posX.i.hi - self->posX.i.hi;
+            self->ext.rdaiArcher.impaleOffY =
+                other->posY.i.hi - self->posY.i.hi;
             self->ext.rdaiArcher.timer = 0x20;
             self->hitboxState = 0;
             self->step++;
@@ -636,8 +643,8 @@ void EntityArcherDeathParts(Entity* self) {
         InitializeEntity(g_EInitArcherDeathParts);
         self->animCurFrame = self->params;
         spritePtr = sprites_rdai_2[self->animCurFrame];
-        xPivot = spritePtr[2]; // From sprite definition
-        yPivot = spritePtr[3]; // From sprite definition
+        xPivot = spritePtr[2];      // From sprite definition
+        yPivot = spritePtr[3];      // From sprite definition
         xPivot += spritePtr[4] / 2; // Shift by half width
         yPivot += spritePtr[5] / 2; // Shift by half height
         self->ext.rdaiArcher.impaleOffX = xPivot;
