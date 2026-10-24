@@ -1370,8 +1370,8 @@
 |            | func_pspeu_09244B10               |       25 |          1 |        |       |     |
 |            | func_pspeu_092443E0               |       25 |          1 |        |       |     |
 |            | func_pspeu_092446F8               |       25 |          1 |        |       |     |
-|            | MoveEntity                        |       25 |          1 |        |       |     |
-|            | SetStep                           |       25 |          1 |        |       |     |
+|            | func_pspeu_092447E0               |       25 |          1 |        |       |     |
+|            | func_pspeu_09245090               |       25 |          1 |        |       |     |
 | bo6        | func_pspeu_092436F0               |       25 |          1 |        |       |     |
 | bo6        | func_pspeu_09243A08               |       25 |          1 |        |       |     |
 | bo7        | MoveEntity                        |       25 |          1 |        |       |     |
@@ -3059,7 +3059,7 @@
 | bo6        | func_pspeu_09256BA0               |       42 |         11 |        |       |     |
 | ric        | func_pspeu_092A6AF8               |       42 |         11 |        |       |     |
 |            | func_pspeu_09248588               |       43 |          1 |        |       |     |
-|            | func_us_801A666C                  |       43 |          1 |        |       |     |
+|            | func_pspeu_0924C928               |       43 |          1 |        |       |     |
 | bo6        | func_pspeu_09252480_from_rbo5     |       43 |          1 |        |       |     |
 | st_init    | func_pspeu_09245ED8               |       43 |          1 |        |       |     |
 | rbo5       | func_pspeu_09252480               |       43 |          1 |        |       |     |
@@ -3248,7 +3248,7 @@
 | bo2        | DestroyEntity                     |       46 |          5 |        |       |     |
 |            | func_pspeu_092441B8               |       46 |          5 |        |       |     |
 |            | DestroyEntity                     |       46 |          5 |        |       |     |
-|            | DestroyEntity                     |       46 |          5 |        |       |     |
+|            | func_pspeu_09244400               |       46 |          5 |        |       |     |
 | bo6        | DestroyEntity                     |       46 |          5 |        |       |     |
 | bo7        | DestroyEntity                     |       46 |          5 |        |       |     |
 | mar        | DestroyEntity                     |       46 |          5 |        |       |     |
@@ -3768,7 +3768,7 @@
 | no2        | func_pspeu_0924F0B8               |       56 |          4 |        |       |     |
 | np3        | func_pspeu_0925BA78               |       56 |          4 |        |       |     |
 | rno0       | func_pspeu_09254F08               |       56 |          4 |        |       |     |
-|            | CutsceneCameraPan                 |       56 |          5 |        |       |     |
+|            | func_pspeu_0924C068               |       56 |          5 |        |       |     |
 | rbo1       | func_801CDD80                     |       56 |          5 |        |       |     |
 | rbo2       | func_801CDD80                     |       56 |          5 |        |       |     |
 | rbo8       | func_pspeu_09245840               |       56 |          5 |        |       |     |
@@ -5829,7 +5829,7 @@
 | bo2        | AnimateEntity                     |      101 |          7 |        |       |     |
 |            | func_pspeu_092442D8               |      101 |          7 |        |       |     |
 |            | func_pspeu_09244178               |      101 |          7 |        |       |     |
-|            | AnimateEntity                     |      101 |          7 |        |       |     |
+|            | func_pspeu_09244520               |      101 |          7 |        |       |     |
 | bo6        | AnimateEntity                     |      101 |          7 |        |       |     |
 | bo7        | AnimateEntity                     |      101 |          7 |        |       |     |
 | mar        | AnimateEntity                     |      101 |          7 |        |       |     |
@@ -6305,7 +6305,7 @@
 | bo2        | InitializeEntity                  |      112 |          2 |        |       |     |
 |            | func_pspeu_09244BA0               |      112 |          2 |        |       |     |
 |            | func_pspeu_09244748               |      112 |          2 |        |       |     |
-|            | InitializeEntity                  |      112 |          2 |        |       |     |
+|            | func_pspeu_092450E0               |      112 |          2 |        |       |     |
 | bo6        | InitializeEntity                  |      112 |          2 |        |       |     |
 | bo7        | InitializeEntity                  |      112 |          2 |        |       |     |
 | mar        | InitializeEntity                  |      112 |          2 |        |       |     |
@@ -8082,7 +8082,7 @@
 | dra        | func_psp_090DDAE0                 |      277 |         20 |        |       |     |
 | no4        | func_pspeu_0923FF60               |      277 |         31 |        |       |     |
 | no4        | func_pspeu_092423C8               |      277 |         33 |        |       |     |
-| bo5        | EntityCutsceneStage               |      277 |         35 | Yes    |       |     |
+|            | func_pspeu_0924C128               |      277 |         35 | Yes    |       |     |
 |            | func_pspeu_0925AB28               |      278 |         13 |        |       |     |
 | rbo5       | func_pspeu_0924E260               |      278 |         13 |        |       |     |
 | rno4       | func_us_801C1EE4_from_no4         |      278 |         23 |        |       |     |
@@ -8307,7 +8307,7 @@
 | dra        | func_psp_090EE5D0                 |      323 |         37 |        |       |     |
 | bo6        | func_pspeu_0925E578               |      323 |         39 |        |       |     |
 | cat        | func_pspeu_0925D418               |      323 |         41 |        |       |     |
-| bo5        | func_us_801A62B4                  |      323 |         60 | Yes    |       |     |
+|            | func_pspeu_0924C4D8               |      323 |         60 | Yes    |       |     |
 | no4        | func_pspeu_0923F390               |      324 |         16 |        |       |     |
 | no3        | func_pspeu_0924F700               |      324 |         34 |        |       |     |
 | np3        | EntityMermanWaterSplash           |      324 |         34 |        |       |     |
@@ -9163,7 +9163,7 @@
 | cat        | func_pspeu_09257850               |      514 |         66 |        |       |     |
 | chi        | func_psp_09239AC8                 |      516 |         35 |        |       |     |
 | rnz0       | func_pspeu_0923C1B8               |      516 |         35 |        |       |     |
-| bo5        | func_us_801A66B0                  |      516 |         45 | Yes    |       |     |
+|            | func_pspeu_0924C9C0               |      516 |         45 | Yes    |       |     |
 | rno3       | func_pspeu_0924D0A0               |      517 |         38 |        |       |     |
 | rno4       | func_pspeu_0924BDA8               |      517 |         38 |        |       |     |
 | rnz1       | func_pspeu_09249948               |      517 |         38 |        |       |     |
