@@ -479,6 +479,104 @@ void func_us_801C0240(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rdai_psp/nonmatchings/rdai_psp/e_archer", func_us_801C0528);
+extern EInit D_us_80180884;
+
+void func_us_801C0528(Entity* self) {
+    Entity* other;
+    s16 temp_v0;
+    s32 var_s1;
+    s32 var_s3;
+
+    switch (self->step) {                              /* irregular */
+    case 0:
+        InitializeEntity(D_us_80180884);
+        self->animCurFrame = 0x16;
+        self->drawFlags |= 4;
+        self->hitboxState = 0;
+        if (self->params) {
+            self->flags |= 0xC0202000;
+            self->animCurFrame += self->params;
+            if ((self->params) == 1) {
+                self->velocityX = 0x8000;
+            } else {
+                self->velocityX = -0x8000;
+            }
+            self->step = 4;
+            return;
+        }
+    case 1:
+        other = (Entity*)self->ext.ILLEGAL.u32[8];
+        self->posX.i.hi = other->posX.i.hi;
+        self->posY.i.hi = other->posY.i.hi;
+        self->rotate = other->rotate;
+        temp_v0 = self->rotate;
+        var_s3 = 0x18;
+        if (other->animCurFrame == 0x1A) {
+            var_s3 = 0xE;
+        }
+        if (other->animCurFrame == 0x1B) {
+            var_s3 = 8;
+        }
+        self->posX.i.hi += ((var_s3 * rcos(temp_v0)) >> 0xC);
+        self->posY.i.hi += (var_s3 * rsin(temp_v0)) >> 0xC;
+        if ((other->entityId) != 0x1D) {
+            DestroyEntity(self);
+            return;
+        }
+        if ((other->ext.ILLEGAL.u8[9]) == 2) {
+            self->flags |= 0x80000000;
+            self->velocityX = (rcos(temp_v0) * 0x50000) >> 0xC;
+            self->velocityY = (rsin(temp_v0) * 0x50000) >> 0xC;
+            self->hitboxState = 3;
+            self->hitboxOffX = (rcos(temp_v0) * 8) >> 0xC;
+            self->hitboxOffY = (rsin(temp_v0) * 8) >> 0xC;
+            self->hitboxWidth = self->hitboxHeight = 4;
+            self->step = 2;
+        }
+        break;
+    case 2:
+        MoveEntity();
+        if (self->flags & 0x100) {
+            for(var_s1 = 0; var_s1 < 2; var_s1++) {
+                other = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (other != NULL) {
+                    CreateEntityFromEntity(0x20, self, other);
+                    other->params = var_s1 + 1;
+                    other->rotate = self->rotate;
+                }
+            }
+            DestroyEntity(self);
+            return;
+        }
+        if (self->hitFlags & 0x80) {
+            other = &PLAYER;
+            self->ext.ILLEGAL.s16[0xC] = other->posX.i.hi - self->posX.i.hi;
+            self->ext.ILLEGAL.s16[0xD] = other->posY.i.hi - self->posY.i.hi;
+            self->ext.ILLEGAL.s16[2] = 0x20;
+            self->hitboxState = 0;
+            self->step += 1;
+            return;
+        }
+        break;
+    case 3:
+        other = &PLAYER;
+        self->posX.i.hi = other->posX.i.hi - self->ext.ILLEGAL.s16[0xC];
+        self->posY.i.hi = other->posY.i.hi - self->ext.ILLEGAL.s16[0xD];
+        if (!--self->ext.ILLEGAL.s16[2]) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    case 4:
+        MoveEntity();
+        self->velocityY += 0x2000;
+        if (self->params == 1) {
+            self->rotate += 0x20;
+        } else {
+            self->rotate -= 0x20;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("st/rdai_psp/nonmatchings/rdai_psp/e_archer", func_us_801C0898);
