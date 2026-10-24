@@ -1,7 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rdai/rdai.h"
 
-s32 SpearGuardCheckCollision(void) {
+
+// Copied from Spear Guard. 
+// Note: We do not use the return value when calling this function.
+// I believe that makes the entire function (besides the first 2 lines)
+// totally pointless. Nothing else modifies anything. So all this really
+// should do is kepe us moving along the stairs. A bit overkill.
+s32 StairsCheckCollision(void) {
     Collider collider;
     s32 x;
     s32 y;
@@ -38,13 +44,13 @@ s32 SpearGuardCheckCollision(void) {
 
 #include "../approach_s16.h"
 
-static AnimateEntityFrame D_pspeu_09254098[] = {{8, 30}, {8, 31}, {8, 32}, POSE_LOOP(0)};
-static AnimateEntityFrame D_pspeu_092540A0[] = {{1, 31}, {2, 33}, {16, 34}, {6, 33}, {1, 31}, POSE_END};
-static AnimateEntityFrame D_pspeu_092540B0[] = {{1, 31}, {2, 35}, {16, 36}, {6, 35}, {1, 31}, POSE_END};
-static AnimateEntityFrame D_pspeu_092540C0[] = {{22, 11}, {8, 12}, {16, 13}, POSE_END};
-static AnimateEntityFrame D_pspeu_092540C8[] = {{22, 25}, {8, 26}, {16, 27}, POSE_END};
-static AnimateEntityFrame D_pspeu_092540D0[] = {{15, 13}, {5, 12}, {5, 14}, {5, 15}, {2, 14}, {2, 15}, {2, 11}, POSE_END};
-static AnimateEntityFrame D_pspeu_092540E0[] = {{22, 25}, {6, 16}, {6, 17}, {22, 18}, {6, 17}, {6, 16}, {22, 25}, POSE_END};
+static AnimateEntityFrame anim_chair_running[] = {{8, 30}, {8, 31}, {8, 32}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_chair_seat_lowering[] = {{1, 31}, {2, 33}, {16, 34}, {6, 33}, {1, 31}, POSE_END};
+static AnimateEntityFrame anim_chair_seat_raising[] = {{1, 31}, {2, 35}, {16, 36}, {6, 35}, {1, 31}, POSE_END};
+static AnimateEntityFrame anim_bow_drawing[] = {{22, 11}, {8, 12}, {16, 13}, POSE_END};
+static AnimateEntityFrame anim_arm_pulling[] = {{22, 25}, {8, 26}, {16, 27}, POSE_END};
+static AnimateEntityFrame anim_bow_shooting[] = {{15, 13}, {5, 12}, {5, 14}, {5, 15}, {2, 14}, {2, 15}, {2, 11}, POSE_END};
+static AnimateEntityFrame anim_arm_reloading[] = {{22, 25}, {6, 16}, {6, 17}, {22, 18}, {6, 17}, {6, 16}, {22, 25}, POSE_END};
 static s16 g_RdaiArcherOffsets[][2] = {
     {3, -4}, {4, -5}, {-5, 4}, {-9, 6}
 };
@@ -92,8 +98,8 @@ void func_us_801BF830(Entity* self) {
                 self->velocityX = FIX(-0.75);
             }
         }
-        AnimateEntity(D_pspeu_09254098, self);
-        SpearGuardCheckCollision();
+        AnimateEntity(anim_chair_running, self);
+        StairsCheckCollision();
         if (!(g_Timer & 7)) {
             PlaySfxPositional(SFX_UNK_RDAI_76A);
         }
@@ -104,7 +110,7 @@ void func_us_801BF830(Entity* self) {
     case 0x2:
         switch (self->step_s) {
         case 0:
-            SpearGuardCheckCollision();
+            StairsCheckCollision();
             velX = self->velocityX -= self->velocityX >> 8;
             if (abs(velX) < FIX(0.5)) {
                 self->ext.rdaiArcher.unk84 ^= 1;
@@ -126,11 +132,11 @@ void func_us_801BF830(Entity* self) {
             }
             /* fallthrough */
         case 1:
-            SpearGuardCheckCollision();
+            StairsCheckCollision();
             if (self->ext.rdaiArcher.unk84 == 0) {
-                anim_running = AnimateEntity(D_pspeu_092540B0, self);
+                anim_running = AnimateEntity(anim_chair_seat_raising, self);
             } else {
-                anim_running = AnimateEntity(D_pspeu_092540A0, self);
+                anim_running = AnimateEntity(anim_chair_seat_lowering, self);
             }
             if (self->pose > 2) {
                 self->step_s = 2;
@@ -168,15 +174,9 @@ void EntityRdaiUnk1F(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitRdaiUnk1F);
-#if defined(VERSION_PSP)
         self->step = self->params + 1;
         self->hitboxOffX = -2;
         self->hitboxOffY = 6;
-#else
-        self->hitboxOffX = -2;
-        self->hitboxOffY = 6;
-        self->step = self->params + 1;
-#endif
         break;
 
     case 1:
@@ -397,7 +397,7 @@ void func_us_801C0240(Entity* self) {
         self->rotate = other->rotate;
         switch (self->ext.rdaiArcher.mode) {
         case 1:
-            AnimateEntity(D_pspeu_092540C8, self);
+            AnimateEntity(anim_arm_pulling, self);
             if ((!self->poseTimer) && (self->pose == 1)) {
                 PlaySfxPositional(SFX_BONE_CREAK);
             }
@@ -408,9 +408,9 @@ void func_us_801C0240(Entity* self) {
             self->poseTimer = 0;
             break;
         case 3:
-            AnimateEntity(D_pspeu_092540E0, self);
+            AnimateEntity(anim_arm_reloading, self);
             if ((!self->poseTimer) && (self->pose == 6)) {
-                other = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
+                other = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (other != NULL) {
                     CreateEntityFromEntity(E_UNK_20, self, other);
                     other->ext.rdaiArcher.unk9C = self;
@@ -451,7 +451,7 @@ void func_us_801C0240(Entity* self) {
         self->rotate = other->rotate;
         switch (self->ext.rdaiArcher.mode) {
         case 1:
-            AnimateEntity(D_pspeu_092540C0, self);
+            AnimateEntity(anim_bow_drawing, self);
             if (other->ext.rdaiArcher.mode == 2) {
                 self->pose = 0;
                 self->poseTimer = 0;
@@ -459,7 +459,7 @@ void func_us_801C0240(Entity* self) {
             }
             break;
         case 2:
-            AnimateEntity(D_pspeu_092540D0, self);
+            AnimateEntity(anim_bow_shooting, self);
             break;
         case 3:
             self->animCurFrame = 0xB;
