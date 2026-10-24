@@ -51,15 +51,9 @@ void EntityRdaiUnk1F(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitRdaiUnk1F);
-#if defined(VERSION_PSP)
         self->step = self->params + 1;
         self->hitboxOffX = -2;
         self->hitboxOffY = 6;
-#else
-        self->hitboxOffX = -2;
-        self->hitboxOffY = 6;
-        self->step = self->params + 1;
-#endif
         break;
 
     case 1:
