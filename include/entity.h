@@ -4350,6 +4350,10 @@ typedef struct {
 } ET_CutsceneStage;
 
 typedef struct {
+    /* 0x7C */ u16 timer;
+} ET_CutscenePrims;
+
+typedef struct {
     /* 0x7C */ u8 flyTimer;
     /* 0x7D */ u8 unk7D;
     /* 0x7E */ u8 zPriority;
@@ -5060,6 +5064,7 @@ typedef union { // offset=0x7C
     ET_Hippogryph hippogryph;
     ET_HippogryphEgg hippogryphEgg;
     ET_CutsceneStage cutsceneStage;
+    ET_CutscenePrims cutscenePrims;
     ET_8019921C et_8019921C;
     ET_OlroxDrool olroxDrool;
     ET_OlroxLaser olroxLaser;

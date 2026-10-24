@@ -21,6 +21,9 @@ enum Palettes {
     PAL_STAINED_GLASS_BG_LIGHT = 0x205,
     PAL_PORTRAIT_ALUCARD = 0x210,
     PAL_PORTRAIT_MARIA = 0x218,
+    PAL_ACTOR_MARIA = 0x220,
+    PAL_ICON_TREVOR = 0x221,
+    PAL_ICON_RICHTER = 0x222,
 };
 
 typedef enum EntityID {
@@ -68,9 +71,9 @@ typedef enum EntityID {
     E_PLAY_BOSS_MUSIC,          // EntityPlayBossMusic
     E_CUTSCENE,                 // EntityCutscene
     E_CUTSCENE_STAGE,           // EntityCutsceneStage
-    E_UNK_2C,                   // func_us_801A62B4
-    E_UNK_2D,                   // func_801B1D68
-    E_UNK_2E,                   // RicSetDeadPrologue
+    E_ACTOR_MARIA,              // EntityActorMaria
+    E_SPEECH_BALLOON_RICHTER,   // EntitySpeechBalloonRichter
+    E_SPEECH_BALLOON_TREVOR,    // EntitySpeechBalloonTrevor
     NUM_ENTITIES,
 };
 
@@ -109,9 +112,9 @@ extern s32 E_ID(LIFE_UP_SPAWN);
 extern s32 E_ID(PLAY_BOSS_MUSIC);
 extern s32 E_ID(CUTSCENE);
 extern s32 E_ID(CUTSCENE_STAGE);
-extern s32 E_ID(UNK_2C);
-extern s32 E_ID(UNK_2D);
-extern s32 E_ID(UNK_2E);
+extern s32 E_ID(ACTOR_MARIA);
+extern s32 E_ID(SPEECH_BALLOON_RICHTER);
+extern s32 E_ID(SPEECH_BALLOON_TREVOR);
 #endif
 
 extern s32 D_us_801806DC;

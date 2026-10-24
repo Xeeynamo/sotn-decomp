@@ -22,3 +22,5 @@ AbbreviatedOverlay g_BossOverlay = {
     .gfxBanks = gfxBanks,
     .UpdateStageEntities = UpdateStageEntities,
 };
+
+STATIC_PAD_BSS(0x60);

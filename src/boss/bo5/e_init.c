@@ -44,9 +44,9 @@ void EntityLifeUpSpawn(Entity* self);
 void EntityPlayBossMusic(Entity* self);
 void EntityCutscene(Entity* self);
 void EntityCutsceneStage(Entity* self);
-void func_us_801A62B4(Entity* self);
-void func_801B1D68(Entity* self);
-void BO5_RicSetDeadPrologue(Entity* self);
+void EntityActorMaria(Entity* self);
+void EntitySpeechBalloonRichter(Entity* self);
+void EntitySpeechBalloonTrevor(Entity* self);
 
 PfnEntityUpdate EntityUpdates[] = {
     EntityBreakable,
@@ -92,9 +92,9 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityPlayBossMusic,
     EntityCutscene,
     EntityCutsceneStage,
-    func_us_801A62B4,
-    func_801B1D68,
-    BO5_RicSetDeadPrologue,
+    EntityActorMaria,
+    EntitySpeechBalloonRichter,
+    EntitySpeechBalloonTrevor,
 };
 
 // clang-format off
