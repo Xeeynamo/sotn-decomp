@@ -54,9 +54,9 @@ extern EInit g_EInitRdaiUnk1F;
 
 void func_us_801BF830(Entity* self) {
     Entity* other;
-    s32 temp_s3;
+    s32 velX;
     s32 i;
-    s32 var_s2;
+    s32 anim_running;
 
     if (self->step) {
         other = self + 4;
@@ -82,17 +82,17 @@ void func_us_801BF830(Entity* self) {
             self->step_s += 1;
         }
         if (self->ext.rdaiArcher.unk84 == 0) {
-            self->velocityX += 0x400;
+            self->velocityX += FIX(1.0/64);
             if (self->velocityX > FIX(0.75)) {
                 self->velocityX = FIX(0.75);
             }
         } else {
-            self->velocityX -= 0x400;
+            self->velocityX -= FIX(1.0/64);
             if (self->velocityX < FIX(-0.75)) {
                 self->velocityX = FIX(-0.75);
             }
         }
-        AnimateEntity(&D_pspeu_09254098, self);
+        AnimateEntity(D_pspeu_09254098, self);
         SpearGuardCheckCollision();
         if (!(g_Timer & 7)) {
             PlaySfxPositional(SFX_UNK_RDAI_76A);
@@ -105,8 +105,8 @@ void func_us_801BF830(Entity* self) {
         switch (self->step_s) {
         case 0:
             SpearGuardCheckCollision();
-            temp_s3 = self->velocityX -= self->velocityX >> 8;
-            if (abs(temp_s3) < 0x8000) {
+            velX = self->velocityX -= self->velocityX >> 8;
+            if (abs(velX) < FIX(0.5)) {
                 self->ext.rdaiArcher.unk84 ^= 1;
                 self->velocityX = 0;
                 self->step_s += 1;
@@ -114,12 +114,12 @@ void func_us_801BF830(Entity* self) {
             break;
         case 2:
             if (self->ext.rdaiArcher.unk84 == 0) {
-                self->velocityX += 0x400;
+                self->velocityX += FIX(1.0/64);
                 if (self->velocityX > FIX(0.75)) {
                     self->velocityX = FIX(0.75);
                 }
             } else {
-                self->velocityX -= 0x400;
+                self->velocityX -= FIX(1.0/64);
                 if (self->velocityX < FIX(-0.75)) {
                     self->velocityX = FIX(-0.75);
                 }
@@ -128,14 +128,14 @@ void func_us_801BF830(Entity* self) {
         case 1:
             SpearGuardCheckCollision();
             if (self->ext.rdaiArcher.unk84 == 0) {
-                var_s2 = AnimateEntity(&D_pspeu_092540B0, self);
+                anim_running = AnimateEntity(D_pspeu_092540B0, self);
             } else {
-                var_s2 = AnimateEntity(&D_pspeu_092540A0, self);
+                anim_running = AnimateEntity(D_pspeu_092540A0, self);
             }
             if (self->pose > 2) {
                 self->step_s = 2;
             }
-            if (var_s2 == 0) {
+            if (anim_running == 0) {
                 SetStep(1);
             }
         }
@@ -144,10 +144,10 @@ void func_us_801BF830(Entity* self) {
         PlaySfxPositional(SFX_FLEA_ARMOR_EXPLODE);
         for (i = 0; i < 9; i++) {
             if (i != 7) {
-                other = AllocEntity(&g_Entities[0xE0], (Entity*)&D_80097C98);
+                other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
                     CreateEntityFromEntity(E_UNK_21, self, other);
-                    other->params = (i + 1);
+                    other->params = i + 1;
                 }
             }
         }
@@ -160,8 +160,6 @@ void func_us_801BF830(Entity* self) {
 }
 
 extern EInit g_EInitRdaiUnk1F;
-
-#define RDAI_UNK1F_ANGLE(self) (*(s16*)((u8*)&(self)->ext + 0xC))
 
 void EntityRdaiUnk1F(Entity* self) {
     Entity* entity;
@@ -211,8 +209,8 @@ void EntityRdaiUnk1F(Entity* self) {
         self->zPriority = entity->zPriority - 1;
         velocity = entity->velocityX >> 9;
         self->rotate -= velocity;
-        RDAI_UNK1F_ANGLE(self) += velocity * 2;
-        self->posY.i.hi += abs((rsin(RDAI_UNK1F_ANGLE(self)) << 3) >> 12);
+        self->ext.rdaiArcher.unk88 += velocity * 2;
+        self->posY.i.hi += abs((rsin(self->ext.rdaiArcher.unk88) << 3) >> 12);
         break;
 
     case 3:
@@ -233,8 +231,8 @@ void EntityRdaiUnk1F(Entity* self) {
         self->zPriority = entity->zPriority + 1;
         velocity = entity->velocityX >> 9;
         self->rotate -= velocity;
-        RDAI_UNK1F_ANGLE(self) += velocity * 2;
-        self->posY.i.hi += abs((rsin(RDAI_UNK1F_ANGLE(self)) << 3) >> 12);
+        self->ext.rdaiArcher.unk88 += velocity * 2;
+        self->posY.i.hi += abs((rsin(self->ext.rdaiArcher.unk88) << 3) >> 12);
         break;
     }
 }
@@ -304,11 +302,11 @@ void func_us_801BFE6C(Entity* self) {
         deltaX = entity->posX.i.hi - self->posX.i.hi;
         deltaY = entity->posY.i.hi - self->posY.i.hi;
         angle = ratan2(deltaY, deltaX);
-        if (angle > 0x200) {
-            angle = 0x200;
+        if (angle > ROT(45)) {
+            angle = ROT(45);
         }
-        if (angle < -0x200) {
-            angle = -0x200;
+        if (angle < ROT(-45)) {
+            angle = ROT(-45);
         }
         func_801CDC80(&self->rotate, angle, 8);
         if (!--self->ext.rdaiArcher.timer) {
@@ -328,11 +326,11 @@ void func_us_801BFE6C(Entity* self) {
             deltaX = entity->posX.i.hi - self->posX.i.hi;
             deltaY = entity->posY.i.hi - self->posY.i.hi;
             angle = ratan2(deltaY, deltaX);
-            if (angle > 0x200) {
-                angle = 0x200;
+            if (angle > ROT(45)) {
+                angle = ROT(45);
             }
-            if (angle < -0x200) {
-                angle = -0x200;
+            if (angle < ROT(-45)) {
+                angle = ROT(-45);
             }
             func_801CDC80(&self->rotate, angle, 8);
             if (!--self->ext.rdaiArcher.timer) {
@@ -387,7 +385,7 @@ void func_us_801C0240(Entity* self) {
             if (other != NULL) {
                 CreateEntityFromEntity(E_UNK_20, self, other);
                 other->ext.rdaiArcher.unk9C = self;
-                other->zPriority = (self->zPriority - 1);
+                other->zPriority = self->zPriority - 1;
             }
         }
         break;
@@ -399,7 +397,7 @@ void func_us_801C0240(Entity* self) {
         self->rotate = other->rotate;
         switch (self->ext.rdaiArcher.mode) {
         case 1:
-            AnimateEntity(&D_pspeu_092540C8, self);
+            AnimateEntity(D_pspeu_092540C8, self);
             if ((!self->poseTimer) && (self->pose == 1)) {
                 PlaySfxPositional(SFX_BONE_CREAK);
             }
@@ -410,7 +408,7 @@ void func_us_801C0240(Entity* self) {
             self->poseTimer = 0;
             break;
         case 3:
-            AnimateEntity(&D_pspeu_092540E0, self);
+            AnimateEntity(D_pspeu_092540E0, self);
             if ((!self->poseTimer) && (self->pose == 6)) {
                 other = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
                 if (other != NULL) {
@@ -453,7 +451,7 @@ void func_us_801C0240(Entity* self) {
         self->rotate = other->rotate;
         switch (self->ext.rdaiArcher.mode) {
         case 1:
-            AnimateEntity(&D_pspeu_092540C0, self);
+            AnimateEntity(D_pspeu_092540C0, self);
             if (other->ext.rdaiArcher.mode == 2) {
                 self->pose = 0;
                 self->poseTimer = 0;
@@ -461,7 +459,7 @@ void func_us_801C0240(Entity* self) {
             }
             break;
         case 2:
-            AnimateEntity(&D_pspeu_092540D0, self);
+            AnimateEntity(D_pspeu_092540D0, self);
             break;
         case 3:
             self->animCurFrame = 0xB;
@@ -487,8 +485,8 @@ extern EInit D_us_80180884;
 void func_us_801C0528(Entity* self) {
     Entity* other;
     s16 angle;
-    s32 var_s1;
-    s32 var_s3;
+    s32 i;
+    s32 size;
 
     switch (self->step) { /* irregular */
     case 0:
@@ -501,7 +499,7 @@ void func_us_801C0528(Entity* self) {
                            FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
                            FLAG_UNK_00200000 | FLAG_UNK_2000;
             self->animCurFrame += self->params;
-            if ((self->params) == 1) {
+            if (self->params == 1) {
                 self->velocityX = FIX(0.5);
             } else {
                 self->velocityX = FIX(-0.5);
@@ -515,23 +513,23 @@ void func_us_801C0528(Entity* self) {
         self->posY.i.hi = other->posY.i.hi;
         self->rotate = other->rotate;
         angle = self->rotate;
-        var_s3 = 0x18;
+        size = 24;
         if (other->animCurFrame == 0x1A) {
-            var_s3 = 0xE;
+            size = 14;
         }
         if (other->animCurFrame == 0x1B) {
-            var_s3 = 8;
+            size = 8;
         }
-        self->posX.i.hi += (var_s3 * rcos(angle)) >> 0xC;
-        self->posY.i.hi += (var_s3 * rsin(angle)) >> 0xC;
+        self->posX.i.hi += (size * rcos(angle)) >> 0xC;
+        self->posY.i.hi += (size * rsin(angle)) >> 0xC;
         if (other->entityId != E_UNK_1D) {
             DestroyEntity(self);
             return;
         }
         if ((other->ext.rdaiArcher.mode) == 2) {
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
-            self->velocityX = (rcos(angle) * 0x50000) >> 0xC;
-            self->velocityY = (rsin(angle) * 0x50000) >> 0xC;
+            self->velocityX = (rcos(angle) * FIX(5)) >> 0xC;
+            self->velocityY = (rsin(angle) * FIX(5)) >> 0xC;
             self->hitboxState = 3;
             self->hitboxOffX = (rcos(angle) * 8) >> 0xC;
             self->hitboxOffY = (rsin(angle) * 8) >> 0xC;
@@ -542,11 +540,11 @@ void func_us_801C0528(Entity* self) {
     case 2:
         MoveEntity();
         if (self->flags & FLAG_DEAD) {
-            for (var_s1 = 0; var_s1 < 2; var_s1++) {
+            for (i = 0; i < 2; i++) {
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
                     CreateEntityFromEntity(E_UNK_20, self, other);
-                    other->params = var_s1 + 1;
+                    other->params = i + 1;
                     other->rotate = self->rotate;
                 }
             }
@@ -590,31 +588,31 @@ extern EInit D_us_80180890;
 
 void func_us_801C0898(Entity* self) {
     Entity* other;
-    s16 temp_s4;
-    s32 temp_s3;
-    s32 temp_s2;
-    s16* temp_s1;
+    s16 angle;
+    s32 xPivot;
+    s32 yPivot;
+    s16* spritePtr;
 
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_80180890);
         self->animCurFrame = self->params;
-        temp_s1 = sprites_rdai_2[self->animCurFrame];
-        temp_s3 = temp_s1[2];
-        temp_s2 = temp_s1[3];
-        temp_s3 += temp_s1[4] / 2;
-        temp_s2 += temp_s1[5] / 2;
-        self->ext.rdaiArcher.unk94 = temp_s3;
-        self->ext.rdaiArcher.unk96 = temp_s2;
+        spritePtr = sprites_rdai_2[self->animCurFrame];
+        xPivot = spritePtr[2]; // From sprite definition
+        yPivot = spritePtr[3]; // From sprite definition
+        xPivot += spritePtr[4] / 2; // Shift by half width
+        yPivot += spritePtr[5] / 2; // Shift by half height
+        self->ext.rdaiArcher.unk94 = xPivot;
+        self->ext.rdaiArcher.unk96 = yPivot;
         self->ext.rdaiArcher.timer = ((Random() & 0xF) + 8);
-        temp_s4 = ratan2(temp_s2, temp_s3);
-        self->velocityX = (rcos(temp_s4) << 0x11) >> 0xC;
-        self->velocityY = (rsin(temp_s4) << 0x11) >> 0xC;
+        angle = ratan2(yPivot, xPivot);
+        self->velocityX = (rcos(angle) * FIX(2)) >> 0xC;
+        self->velocityY = (rsin(angle) * FIX(2)) >> 0xC;
         other = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (other != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, self, other);
-            other->posX.i.hi += temp_s3;
-            other->posY.i.hi += temp_s2;
+            other->posX.i.hi += xPivot;
+            other->posY.i.hi += yPivot;
             other->params = 1;
         }
         if (self->params > 0x12) {
