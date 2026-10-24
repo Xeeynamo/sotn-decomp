@@ -53,7 +53,7 @@ segments:
       - [0x9F4, .data, e_breakable]
       - [0xB0C, .data, e_stained_glass]
       - [0xD2C, .data, d_prize_drops]
-      - [0xD58, data]
+      - [0xD58, .data, unk_33B94]
       - [0xD5C, .data, e_spikes]
       - [0xD78, .data, st_update]
       - [0xDC4, .data, st_collision]

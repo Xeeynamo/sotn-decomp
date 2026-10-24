@@ -114,6 +114,6 @@ segments:
       - [0x4C310, .bss, rdai/st_init_psp]
       - [0x4C430, .bss, rdai/e_clouds]
       - [0x4C438, .bss, rdai/e_lock_camera]
-      - [0x4C440, bss, 4C440]
+      - [0x4C440, .bss, rdai/unk_33B94]
       - [0x4C448, .bss, rdai/e_stained_glass]
   - [0x4C6C8]
