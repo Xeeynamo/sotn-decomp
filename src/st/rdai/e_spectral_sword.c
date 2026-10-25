@@ -391,7 +391,7 @@ void func_us_801C17E8(Entity* self) {
         break;
     case 2:
         MoveEntity();
-        var_s6 = (Pos*)&self->ext.spectralSwordRdai.unk88;
+        var_s6 = &self->ext.spectralSwordRdai.unk88;
         var_s4 = var_s6->x.i.hi - self->posX.i.hi;
         var_s3 = var_s6->y.i.hi - self->posY.i.hi;
         var_s8 = (var_s4 * var_s4) + (var_s3 * var_s3);
@@ -571,7 +571,7 @@ void func_us_801C1DE8(Entity* self) {
         if (self->animCurFrame != 8) {
             AnimateEntity(D_pspeu_09254CA8, self);
         }
-        var_s3 = (Pos*)&self->ext.spectralSwordRdai.unk88;
+        var_s3 = &self->ext.spectralSwordRdai.unk88;
         var_s1 = var_s3->x.i.hi - self->posX.i.hi;
         var_s4 = var_s3->y.i.hi - self->posY.i.hi;
         var_s5 = (var_s1 * var_s1) + (var_s4 * var_s4);

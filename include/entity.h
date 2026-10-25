@@ -4699,7 +4699,7 @@ typedef struct {
     /* 0x85 */ u8 : 8;
     /* 0x86 */ u8 unk86;
     /* 0x87 */ u8 unk87;
-    /* 0x88 */ Point32 unk88;
+    /* 0x88 */ Pos unk88;
     /* 0x90 */ s16 unk90;
     /* 0x92 */ u16 : 16;
     /* 0x94 */ u8 unk94;
