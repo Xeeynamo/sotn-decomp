@@ -527,11 +527,11 @@ void func_us_801C17E8(Entity* self) {
     self->hitboxOffY = ((sp3C * rsin(var_s0)) >> 0xC);
 }
 
-static AnimateEntityFrame D_pspeu_09254C98[] = {
+static AnimateEntityFrame anim_shield_turnToFront[] = {
     {4, 8}, {4, 7}, {16, 6}, POSE_END};
-static AnimateEntityFrame D_pspeu_09254CA0[] = {
+static AnimateEntityFrame anim_shield_turnToFrontSlow[] = {
     {12, 8}, {12, 7}, {32, 6}, POSE_END};
-static AnimateEntityFrame D_pspeu_09254CA8[] = {
+static AnimateEntityFrame anim_shield_turnToSide[] = {
     {32, 6}, {16, 7}, {16, 8}, POSE_END};
 extern EInit g_EInitShield;
 
@@ -569,7 +569,7 @@ void func_us_801C1DE8(Entity* self) {
     case 3:
         MoveEntity();
         if (self->animCurFrame != 8) {
-            AnimateEntity(D_pspeu_09254CA8, self);
+            AnimateEntity(anim_shield_turnToSide, self);
         }
         var_s3 = &self->ext.spectralSwordRdai.unk88;
         var_s1 = var_s3->x.i.hi - self->posX.i.hi;
@@ -602,9 +602,9 @@ void func_us_801C1DE8(Entity* self) {
         case 1:
             MoveEntity();
             if (self->ext.spectralSwordRdai.unk94 & 2) {
-                var_s7 = AnimateEntity(D_pspeu_09254CA0, self);
+                var_s7 = AnimateEntity(anim_shield_turnToFrontSlow, self);
             } else {
-                var_s7 = AnimateEntity(D_pspeu_09254C98, self);
+                var_s7 = AnimateEntity(anim_shield_turnToFront, self);
             }
             if (var_s7 == 0) {
                 self->ext.spectralSwordRdai.unk80 = 0x20;
