@@ -3375,7 +3375,7 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ s32 : 32;
-    /* 0x80 */ struct Entity* unk80;
+    /* 0x80 */ struct Entity* parent;
 } ET_801CEB08;
 
 typedef struct {
@@ -4693,9 +4693,9 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ s16 unk82;
-    /* 0x84 */ u8 unk84;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 timer2;
+    /* 0x84 */ u8 playerSide;
     /* 0x85 */ u8 : 8;
     /* 0x86 */ u8 unk86;
     /* 0x87 */ u8 unk87;

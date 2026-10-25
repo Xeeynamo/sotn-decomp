@@ -404,7 +404,7 @@ void EntitySpectralSword(Entity* self) {
             ent = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (ent != NULL) {
                 CreateEntityFromEntity(E_UNK_3F, self, ent);
-                ent->ext.et_801CEB08.unk80 = self;
+                ent->ext.et_801CEB08.parent = self;
             }
         }
     }
@@ -426,7 +426,7 @@ void EntitySpectralSwordAura(Entity* self) {
         self->scaleX = self->scaleY = 0x100;
         self->opacity = 0x80;
     }
-    parent = self->ext.et_801CEB08.unk80;
+    parent = self->ext.et_801CEB08.parent;
     self->posX.val = parent->posX.val;
     self->posY.val = parent->posY.val;
     self->scaleX += 6;

@@ -65,8 +65,8 @@ enum EntityID {
     E_ARCHER_DEATH_PARTS,   // EntityArcherDeathParts
     E_UNK_22,               // func_us_801C0C44
     E_UNK_23,               // EntitySpectralSwordAura
-    E_UNK_24,               // func_us_801C17E8
-    E_UNK_25,               // func_us_801C1DE8
+    E_SPECTRAL_SPEAR,       // EntityspectralSwordSpear
+    E_SPECTRAL_SHIELD,      // EntitySpectralSwordShield
     E_SNIPER_OF_GOTH,       // EntitySniperOfGoth
     E_SNIPER_OF_GOTH_ARROW, // EntitySniperOfGothArrow
     E_IMP,                  // EntityImp

@@ -61,16 +61,16 @@ void func_us_801C0C44(Entity* self) {
         prim->priority = 0xC0;
         prim->drawMode = DRAW_HIDE | DRAW_UNK02;
         for (other = self + 1, var_s1 = 0; var_s1 < 6; var_s1++, other++) {
-            CreateEntityFromCurrentEntity(E_UNK_24, other);
+            CreateEntityFromCurrentEntity(E_SPECTRAL_SPEAR, other);
             other->params = var_s1;
             other->params |= D_us_80181914[var_s1] << 8;
         }
         for (var_s1 = 0; var_s1 < 4; var_s1++, other++) {
-            CreateEntityFromCurrentEntity(E_UNK_25, other);
+            CreateEntityFromCurrentEntity(E_SPECTRAL_SHIELD, other);
             other->params = var_s1;
         }
         SetStep(2);
-        self->ext.spectralSwordRdai.unk82 = 0x40;
+        self->ext.spectralSwordRdai.timer2 = 0x40;
         self->ext.spectralSwordRdai.unk96 = 0x40;
         self->ext.spectralSwordRdai.unk86 = 6;
         self->ext.spectralSwordRdai.unk87 = 4;
@@ -82,12 +82,12 @@ void func_us_801C0C44(Entity* self) {
         break;
     case 3:
         SetStep(6);
-        self->ext.spectralSwordRdai.unk84 = GetSideToPlayer() & 1;
+        self->ext.spectralSwordRdai.playerSide = GetSideToPlayer() & 1;
         break;
     case 6:
         if (!self->step_s) {
             var_s2 = Random() * 2;
-            if (self->ext.spectralSwordRdai.unk84) {
+            if (self->ext.spectralSwordRdai.playerSide) {
                 var_s2 = var_s2 + 0x100;
             } else {
                 var_s2 = var_s2 + 0x500;
@@ -103,7 +103,7 @@ void func_us_801C0C44(Entity* self) {
             var_s2 = ratan2(var_s7, var_s3);
             self->velocityX = rcos(var_s2) * 0xC;
             self->velocityY = rsin(var_s2) * 0xC;
-            self->ext.spectralSwordRdai.unk80 = 0x80;
+            self->ext.spectralSwordRdai.timer = 0x80;
             self->step_s++;
         }
         // NO NO NO KONAMI WHAT ARE YOU DOING, MoveEntity DOES NOT RETURN
@@ -115,17 +115,17 @@ void func_us_801C0C44(Entity* self) {
         var_s3 = abs(var_s3);
         var_s7 = abs(var_s7);
         if ((var_s3 < 8 && var_s7 < 8) ||
-            !--self->ext.spectralSwordRdai.unk80) {
+            !--self->ext.spectralSwordRdai.timer) {
             self->step_s = 0;
         }
         player = &PLAYER;
         var_s3 = player->posX.i.hi - self->posX.i.hi;
-        if (self->ext.spectralSwordRdai.unk84) {
+        if (self->ext.spectralSwordRdai.playerSide) {
             var_s3 = -var_s3;
         }
         if (var_s3 > 0x80) {
             self->velocityY = 0;
-            if (self->ext.spectralSwordRdai.unk84) {
+            if (self->ext.spectralSwordRdai.playerSide) {
                 self->velocityX = FIX(-0.75);
             } else {
                 self->velocityX = FIX(0.75);
@@ -133,16 +133,16 @@ void func_us_801C0C44(Entity* self) {
         }
         if (var_s3 < 0x40) {
             self->velocityY = 0;
-            if (self->ext.spectralSwordRdai.unk84) {
+            if (self->ext.spectralSwordRdai.playerSide) {
                 self->velocityX = FIX(0.75);
             } else {
                 self->velocityX = FIX(-0.75);
             }
-            if (!--self->ext.spectralSwordRdai.unk82) {
+            if (!--self->ext.spectralSwordRdai.timer2) {
                 SetStep(5);
             }
         } else {
-            self->ext.spectralSwordRdai.unk82 = 0x40;
+            self->ext.spectralSwordRdai.timer2 = 0x40;
         }
         if (self->ext.spectralSwordRdai.unk86) {
             if (!--self->ext.spectralSwordRdai.unk96) {
@@ -199,13 +199,13 @@ void func_us_801C0C44(Entity* self) {
             var_s2 = ratan2(var_s7, var_s3);
             self->velocityX = rcos(var_s2) * 0x30;
             self->velocityY = rsin(var_s2) * 0x30;
-            self->ext.spectralSwordRdai.unk84 ^= 1;
+            self->ext.spectralSwordRdai.playerSide ^= 1;
             self->step_s++;
             break;
         case 1:
             MoveEntity();
             var_s3 = self->posX.i.hi;
-            if (self->ext.spectralSwordRdai.unk84) {
+            if (self->ext.spectralSwordRdai.playerSide) {
                 if (var_s3 > 0x80) {
                     self->velocityX = FIX(3.0);
                     self->step_s++;
@@ -222,7 +222,7 @@ void func_us_801C0C44(Entity* self) {
             self->velocityY += FIX(0.125);
             player = &PLAYER;
             var_s3 = player->posX.i.hi - self->posX.i.hi;
-            if (self->ext.spectralSwordRdai.unk84) {
+            if (self->ext.spectralSwordRdai.playerSide) {
                 var_s3 = -var_s3;
             }
             if (var_s3 > 0x70) {
@@ -326,7 +326,7 @@ void func_us_801C0C44(Entity* self) {
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
                 CreateEntityFromEntity(E_UNK_23, self, other);
-                other->ext.et_801CEB08.unk80 = self;
+                other->ext.et_801CEB08.parent = self;
                 other->zPriority = ((self->zPriority) + 1);
             }
         }
@@ -349,7 +349,7 @@ void EntitySpectralSwordAura(Entity* self) {
         self->scaleX = self->scaleY = 0x100;
         self->opacity = 0x80;
     }
-    parent = self->ext.et_801CEB08.unk80;
+    parent = self->ext.et_801CEB08.parent;
     self->posX.val = parent->posX.val;
     self->posY.val = parent->posY.val;
     self->scaleX += 6;
@@ -362,7 +362,7 @@ void EntitySpectralSwordAura(Entity* self) {
 
 extern EInit g_EInitSpear;
 
-void func_us_801C17E8(Entity* self) {
+void EntityspectralSwordSpear(Entity* self) {
     s16 sp3C;
     s32 sp38;
     Entity* other;
@@ -461,7 +461,7 @@ void func_us_801C17E8(Entity* self) {
             if (StepTowards(&self->rotate, var_s0 - 0x400, 0x20) != 0) {
                 self->velocityX = rcos(var_s0) << 7;
                 self->velocityY = rsin(var_s0) << 7;
-                self->ext.spectralSwordRdai.unk80 = 0x30;
+                self->ext.spectralSwordRdai.timer = 0x30;
                 PlaySfxPositional(SFX_WEAPON_SWISH_A);
                 self->step_s++;
             }
@@ -480,7 +480,7 @@ void func_us_801C17E8(Entity* self) {
                     var_s2 ^= 2;
                 }
             }
-            if ((var_s2) || !--self->ext.spectralSwordRdai.unk80) {
+            if ((var_s2) || !--self->ext.spectralSwordRdai.timer) {
                 self->ext.spectralSwordRdai.unk94 = 0;
                 SetStep(2);
             }
@@ -535,7 +535,7 @@ static AnimateEntityFrame anim_shield_turnToSide[] = {
     {32, 6}, {16, 7}, {16, 8}, POSE_END};
 extern EInit g_EInitShield;
 
-void func_us_801C1DE8(Entity* self) {
+void EntitySpectralSwordShield(Entity* self) {
     s32 var_s7;
     s16 var_s6;
     s32 var_s5;
@@ -607,13 +607,13 @@ void func_us_801C1DE8(Entity* self) {
                 var_s7 = AnimateEntity(anim_shield_turnToFront, self);
             }
             if (var_s7 == 0) {
-                self->ext.spectralSwordRdai.unk80 = 0x20;
+                self->ext.spectralSwordRdai.timer = 0x20;
                 self->step_s += 1;
                 return;
             }
             break;
         case 2:
-            if (!--self->ext.spectralSwordRdai.unk80) {
+            if (!--self->ext.spectralSwordRdai.timer) {
                 self->ext.spectralSwordRdai.unk94 = 0;
                 SetStep(3);
                 return;

@@ -36,8 +36,8 @@ void EntityArcherArrow(Entity* self);
 void EntityArcherDeathParts(Entity* self);
 void func_us_801C0C44(Entity* self);
 void EntitySpectralSwordAura(Entity* self);
-void func_us_801C17E8(Entity* self);
-void func_us_801C1DE8(Entity* self);
+void EntityspectralSwordSpear(Entity* self);
+void EntitySpectralSwordShield(Entity* self);
 void EntitySniperOfGoth(Entity* self);
 void EntitySniperOfGothArrow(Entity* self);
 void EntityImp(Entity* self);
@@ -90,8 +90,8 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityArcherDeathParts,
     func_us_801C0C44,
     EntitySpectralSwordAura,
-    func_us_801C17E8,
-    func_us_801C1DE8,
+    EntityspectralSwordSpear,
+    EntitySpectralSwordShield,
     EntitySniperOfGoth,
     EntitySniperOfGothArrow,
     EntityImp,
