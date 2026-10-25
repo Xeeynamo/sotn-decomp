@@ -341,6 +341,81 @@ files:
     asset_path: assets/st/tek
     src_path: src/st/tek
     splat_config_path: config/splat.hd.sttek.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x2C, sprite_banks, sprite_banks]
+          - [0xB0, paldef, palette_def]
+          - [0x1AC, skip]
+          - [0x1BC, layers, layers]
+          - [0x3EC, gfx_banks, graphics_banks]
+          - [0x630, layout, entity_layouts]
+          - [0x7D8, skip]
+          - [0x2EA4, rooms, rooms]
+          - [0x2F18, skip]
+          - [0x3318, skip]
+          - [0x359C, cmpgfx, gfx_359C, 128, 128, 4]
+          - [0x4194, cmpgfx, gfx_4194, 128, 128, 4]
+          - [0x4A08, cmpgfx, gfx_4A08, 128, 128, 4]
+          - [0x55E4, cmpgfx, gfx_55E4, 128, 128, 4]
+          - [0x60C0, cmpgfx, gfx_60C0, 128, 128, 4]
+          - [0x67FC, cmpgfx, gfx_67FC, 128, 128, 4]
+          - [0x7460, cmpgfx, gfx_7460, 128, 128, 4]
+          - [0x7D54, cmpgfx, gfx_7D54, 128, 128, 4]
+          - [0x83E8, cmpgfx, gfx_83E8, 128, 128, 4]
+          - [0x8E18, cmpgfx, gfx_8E18, 128, 128, 4]
+          - [0x991C, cmpgfx, gfx_991C, 128, 128, 4]
+          - [0xA528, cmpgfx, gfx_A528, 128, 128, 4]
+          - [0xAE98, cmpgfx, gfx_AE98, 128, 128, 4]
+          - [0xB7B0, cmpgfx, gfx_B7B0, 128, 128, 4]
+          - [0xBA5C, cmpgfx, gfx_BA5C, 128, 128, 4]
+          - [0xC550, cmpgfx, gfx_C550, 128, 128, 4]
+          - [0xD338, cmpgfx, gfx_D338, 128, 128, 4]
+          - [0xDC84, cmpgfx, gfx_DC84, 128, 128, 4]
+          - [0xE7C0, cmpgfx, gfx_E7C0, 128, 128, 4]
+          - [0xF188, cmpgfx, gfx_F188, 128, 128, 4]
+          - [0xFA7C, cmpgfx, gfx_FA7C, 128, 128, 4]
+          - [0x10598, cmpgfx, gfx_10598, 128, 128, 4]
+          - [0x113E8, cmpgfx, gfx_113E8, 128, 128, 4]
+          - [0x125CC, cmpgfx, gfx_125CC, 128, 128, 4]
+          - [0x133C8, cmpgfx, gfx_133C8, 128, 128, 4]
+          - [0x13B40, cmpgfx, gfx_13B40, 128, 128, 4]
+          - [0x147C8, cmpgfx, gfx_147C8, 128, 128, 4]
+          - [0x15354, cmpgfx, gfx_15354, 128, 128, 4]
+          - [0x1647C, cmpgfx, gfx_1647C, 128, 128, 4]
+          - [0x171A8, cmpgfx, gfx_171A8, 128, 128, 4]
+          - [0x179AC, cmpgfx, gfx_179AC, 128, 128, 4]
+          - [0x18850, cmpgfx, gfx_18850, 128, 128, 4]
+          - [0x18A04, cmpgfx, gfx_18A04, 128, 128, 4]
+          - [0x19790, palette, pal_19790, 16] # unused
+          - [0x197B0, palette, pal_197B0, 16] # 0x200
+          - [0x197D0, palette, pal_197D0, 16] # 0x201
+          - [0x197F0, palette, pal_197F0, 16] # guessed: unused, no palette def refers to it
+          - [0x19830, palette, pal_19830, 16] # 0x202
+          - [0x19870, palette, pal_19870, 16] # 0x204
+          - [0x19890, palette, pal_19890, 16] # 0x208
+          - [0x198D0, palette, pal_198D0, 16] # 0x20A
+          - [0x19910, palette, pal_19910, 16] # 0x20C
+          - [0x19950, palette, pal_19950, 16] # 0x20E
+          - [0x19970, palette, pal_19970, 16] # 0x20F
+          - [0x19990, palette, pal_19990, 16] # 0x210
+          - [0x199D0, palette, pal_199D0, 16] # 0x212
+          - [0x19A10, palette, pal_19A10, 16] # 0x214
+          - [0x19AB0, palette, pal_19AB0, 16] # 0x219
+          - [0x19B30, palette, pal_19B30, 16] # 0x21D
+          - [0x19B50, palette, pal_19B50, 16] # 0x21E
+          - [0x19D50, palette, pal_19D50, 16] # 0x22E
+          - [0x19DB0, palette, pal_19DB0, 16] # 0x231
+          - [0x19E30, palette, pal_19E30, 16] # 0x240
+          - [0x1A350, palette, pal_1A350, 16] # guessed: unused, no palette def refers to it
+          - [0x1A870, palette, pal_1A870, 16] # 0x236
+          - [0x1A930, palette, pal_1A930, 16] # 0x23C
+          - [0x1A9B0, skip] # tile data
+          - [0x2C9C0, tiledef, load]
+          - [0x2CDD0, tiledef, unused_1]
+          - [0x30DE0, skip] # unused sprites
+          - [0x31964, skip] # sprites
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/top.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/wrp.bin
     asset_path: assets/st/wrp

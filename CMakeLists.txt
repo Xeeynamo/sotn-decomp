@@ -2184,6 +2184,64 @@ endif()
 
 psyz_exports(${PROJECT_NAME})
 
+set(SOURCE_FILES_STAGE_TEK
+    src/pc/stages/stage_tek.c
+    src/st/tek/header.c
+    src/st/tek/sprite_banks.c
+    src/st/tek/palette_def.c
+    src/st/tek/layers.c
+    src/st/tek/graphics_banks.c
+    src/st/tek/gen/e_laydef.c
+    src/st/tek/e_init.c
+    src/st/tek/e_red_door_tiles.c
+    src/st/tek/e_room_bg.c
+    src/st/tek/e_lock_camera.c
+    src/st/tek/e_breakable.c
+    src/st/tek/st_update.c
+    src/st/tek/st_collision.c
+    src/st/tek/e_red_door.c
+    src/st/tek/e_room_fg.c
+    src/st/tek/e_particles.c
+    src/st/tek/st_common.c
+    src/st/tek/e_collect.c
+    src/st/tek/e_misc.c
+    src/st/tek/e_stage_name.c
+    src/st/tek/gen/rooms.c
+    src/st/tek/gen/e_layout.c
+    src/st/tek/gfx_data.c
+    src/st/tek/tilemaps.c
+    src/st/tek/gen/sprites.c
+    src/st/tek/prim_helpers.c
+    src/st/tek/create_entity.c
+    src/st/tek/popup.c
+    src/st/tek/e_dodo.c
+    src/st/tek/e_bone_scimitar.c
+    src/st/tek/e_toad.c
+    src/st/tek/e_frog.c
+    src/st/tek/e_bone_archer.c
+    src/st/tek/e_grave_keeper.c
+    src/st/tek/e_tombstone.c
+    src/st/tek/e_crow.c
+    src/st/tek/e_jack_o_bones.c
+    src/st/tek/e_bone_halberd.c
+    src/st/tek/e_yorick.c
+    src/st/tek/e_blade_master.c
+    src/st/tek/e_blade_soldier.c
+    src/st/tek/e_nova_skeleton.c
+    src/st/tek/e_bone_musket.c
+    src/st/tek/e_winged_guard.c
+    src/st/tek/e_spectral_sword_dai.c
+    src/st/tek/e_valhalla_knight.c
+    src/st/tek/e_spectral_sword_rdai.c
+    src/st/tek/e_orobourous.c
+    src/st/tek/e_dragon_rider.c
+    src/st/tek/e_venus_weed.c
+    src/st/tek/e_bomb_knight.c
+    src/st/tek/e_thornweed_corpseweed.c
+    src/st/tek/e_spectral_sword_no2.c
+    src/st/tek/bss.c
+)
+
 function(add_overlay name)
     psyz_add_module(${name} SOURCES ${ARGN} HOST ${PROJECT_NAME})
     set(_target ${name})
@@ -2258,6 +2316,7 @@ add_overlay(rbo3 ${SOURCE_FILES_BOSS_RBO3})
 add_overlay(rbo0 ${SOURCE_FILES_BOSS_RBO0})
 add_overlay(mad ${SOURCE_FILES_STAGE_MAD})
 add_overlay(no3 ${SOURCE_FILES_STAGE_NO3})
+add_overlay(tek ${SOURCE_FILES_STAGE_TEK})
 
 foreach(id 000 002 007 008 010 012 034 035 037 040 041 043 045 046 050 051 052)
     add_overlay(w0_${id} src/weapon/w_${id}.c)
