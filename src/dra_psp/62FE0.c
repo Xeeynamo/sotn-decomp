@@ -2,10 +2,10 @@
 //! PSPO=4,p
 #include "../dra/dra.h"
 
-extern u16 D_800AC910[];
-extern u8 D_800AC914[10][30];
+extern u16 g_SjisPages[];
+extern u8 g_CustomGlyphs[10][30];
 extern u16 D_800AC934[];
-extern u16 D_80137EF8[];
+extern u16 g_CharBuffer[];
 
 static char D_psp_09187068[] =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -77,10 +77,10 @@ u16* func_psp_0913FA28(u16 ch, u16 kind) {
     // bitmap of size 16x15.
     bitmap = (u8*)Krom2RawAdd(ch);
     if (bitmap == (u8*)-1) {
-        srcPtr = D_800AC910;
-        for (i = 0; i < LEN(D_800AC914); i++) {
+        srcPtr = g_SjisPages;
+        for (i = 0; i < LEN(g_CustomGlyphs); i++) {
             if (ch == *srcPtr++) {
-                bitmap = D_800AC914[i];
+                bitmap = g_CustomGlyphs[i];
             }
         }
         if (bitmap == (u8*)-1) {
@@ -89,7 +89,7 @@ u16* func_psp_0913FA28(u16 ch, u16 kind) {
         }
     }
 
-    srcPtr = D_80137EF8;
+    srcPtr = g_CharBuffer;
     for (i = 0; i < 15; i++) {
         val0 = val2 = val1 = 0;
 
@@ -142,8 +142,8 @@ u16* func_psp_0913FA28(u16 ch, u16 kind) {
         bitmap++;
     }
 
-    destPtr = D_80137EF8;
-    srcPtr = D_80137EF8;
+    destPtr = g_CharBuffer;
+    srcPtr = g_CharBuffer;
     switch (kind) {
     case 0:
     case 3:
@@ -232,28 +232,28 @@ u16* func_psp_0913FA28(u16 ch, u16 kind) {
     }
     if (kind == 3) {
         for (i = 0; i < 0x42; i++) {
-            dest2 = D_80137EF8[i];
+            dest2 = g_CharBuffer[i];
             if (dest2 & 4) {
-                if ((D_80137EF8[i] & 0xF0) == 0) {
-                    D_80137EF8[i] |= 0x10;
+                if ((g_CharBuffer[i] & 0xF0) == 0) {
+                    g_CharBuffer[i] |= 0x10;
                 }
             }
             if (dest2 & 0x40) {
-                if ((D_80137EF8[i] & 0xF00) == 0) {
-                    D_80137EF8[i] |= 0x100;
+                if ((g_CharBuffer[i] & 0xF00) == 0) {
+                    g_CharBuffer[i] |= 0x100;
                 }
             }
             if (dest2 & 0x400) {
-                if ((D_80137EF8[i] & 0xF000) == 0) {
-                    D_80137EF8[i] |= 0x1000;
+                if ((g_CharBuffer[i] & 0xF000) == 0) {
+                    g_CharBuffer[i] |= 0x1000;
                 }
             }
             if ((dest2 & 0x4000) && (i < 0x41)) {
-                if ((D_80137EF8[i + 1] & 0xF) == 0) {
-                    D_80137EF8[i + 1] |= 1;
+                if ((g_CharBuffer[i + 1] & 0xF) == 0) {
+                    g_CharBuffer[i + 1] |= 1;
                 }
             }
         }
     }
-    return D_80137EF8;
+    return g_CharBuffer;
 }

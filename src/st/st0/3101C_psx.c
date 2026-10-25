@@ -99,28 +99,39 @@ void func_801B1198(s16 yVal) {
 
 u16* func_801B11E8(u8 ch) {
     u16 jCh;
-#ifndef VERSION_PC
+#ifdef VERSION_PC
+// use raw Shift-JIS values
+#define SJIS_A 0x8260
+#define SJIS_a 0x8281
+#define SJIS_COMMA 0x8143
+#define SJIS_PERIOD 0x8144
+#define SJIS_APOSTROPHE 0x8166
+#else
+#define SJIS_A 'Ａ'
+#define SJIS_a 'ａ'
+#define SJIS_COMMA '，'
+#define SJIS_PERIOD '．'
+#define SJIS_APOSTROPHE '’'
+#endif
+
     if (ch >= 'a') {
-        jCh = ('ａ' - 'a') + ch;
+        jCh = (SJIS_a - 'a') + ch;
     } else if (ch >= 'A') {
-        jCh = ('Ａ' - 'A') + ch;
+        jCh = (SJIS_A - 'A') + ch;
     } else if (ch == ',') {
-        jCh = '，';
+        jCh = SJIS_COMMA;
     } else if (ch == '.') {
-        jCh = '．';
+        jCh = SJIS_PERIOD;
     } else if (ch == '\'') {
-        jCh = '’';
+        jCh = SJIS_APOSTROPHE;
     } else if (ch == ' ') {
         return NULL;
     } else {
-        jCh = ('Ａ' - 'A') + ch;
+        jCh = (SJIS_A - 'A') + ch;
         if (ch >= 'a') {
             ++jCh;
         }
     }
-#else
-    jCh = 'A';
-#endif
 
     return g_api.func_80106A28(jCh, 0);
 }
