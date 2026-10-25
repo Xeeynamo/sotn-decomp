@@ -124,18 +124,21 @@ void DrawEntitiesHitbox(s32 drawMode) {
     }
 }
 
-#ifndef VERSION_PC
+u16 g_CharBuffer[0x30];
 
-u16 D_80137EF8[0x30];
-
-u16 D_800AC910[] = {
+u16 g_SjisPages[] = {
 #ifndef VERSION_US
-    '踪', '眷', '翔', '彷', '徨', '苺', '獰', '賤', '贄',
+    '踪',   '眷', '翔', '彷', '徨', '苺', '獰', '賤', '贄',
 #endif
-    '鬱', // last one should be a copyright symbol
+
+#ifdef VERSION_PC
+    0x9F54, // use raw Shift-JIS value for the copyright symbol
+#else
+    '鬱', // last one is the copyright symbol
+#endif
 };
 
-u8 D_800AC914[][30] = {
+u8 g_CustomGlyphs[][30] = {
 #ifndef VERSION_US
     {
         0x00, 0x20, // □□□□□□□□□□■□□□□□
@@ -316,6 +319,7 @@ u16 D_800AC934[] = {0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8};
     x & 1;                                                                     \
     x >>= 1
 
+void* Krom2RawAdd(int sjiscode);
 u16* func_80106A28(u16 ch, u16 kind) {
     u8* bitmap;
     u16* srcPtr;
@@ -330,19 +334,20 @@ u16* func_80106A28(u16 ch, u16 kind) {
     // bitmap of size 16x15.
     bitmap = (u8*)Krom2RawAdd(ch);
     if (bitmap == (u8*)-1) {
-        srcPtr = D_800AC910;
-        for (i = 0; i < LEN(D_800AC914); i++) {
+        // If the BIOS doesn't contain the character, look up a custom glyph
+        srcPtr = g_SjisPages;
+        for (i = 0; i < LEN(g_CustomGlyphs); i++) {
             if (ch == *srcPtr++) {
-                bitmap = D_800AC914[i];
+                bitmap = g_CustomGlyphs[i];
             }
         }
         if (bitmap == (u8*)-1) {
-            ch = 0x819A;
+            ch = 0x819A; // Use ★ when a character is not found
             bitmap = (u8*)Krom2RawAdd(ch);
         }
     }
 
-    srcPtr = D_80137EF8;
+    srcPtr = g_CharBuffer;
     for (i = 0; i < 15; i++) {
         val0 = val2 = val1 = 0;
 
@@ -395,8 +400,8 @@ u16* func_80106A28(u16 ch, u16 kind) {
         bitmap++;
     }
 
-    destPtr = D_80137EF8;
-    srcPtr = D_80137EF8;
+    destPtr = g_CharBuffer;
+    srcPtr = g_CharBuffer;
     switch (kind) {
     case 0:
     case 3:
@@ -412,7 +417,6 @@ u16* func_80106A28(u16 ch, u16 kind) {
             *destPtr++ = 0;
         }
         break;
-
     case 1:
         for (i = 0; i < 2; i++) {
             for (j = 0; j < 3; j++) {
@@ -449,7 +453,6 @@ u16* func_80106A28(u16 ch, u16 kind) {
             *destPtr++ = 0;
         }
         break;
-
     case 2:
         for (i = 0; i < 4; i++) {
             for (j = 0; j < 3; j++) {
@@ -485,33 +488,31 @@ u16* func_80106A28(u16 ch, u16 kind) {
     }
     if (kind == 3) {
         for (i = 0; i < 0x42; i++) {
-            dest2 = D_80137EF8[i];
+            dest2 = g_CharBuffer[i];
             if (dest2 & 4) {
-                if ((D_80137EF8[i] & 0xF0) == 0) {
-                    D_80137EF8[i] |= 0x10;
+                if ((g_CharBuffer[i] & 0xF0) == 0) {
+                    g_CharBuffer[i] |= 0x10;
                 }
             }
             if (dest2 & 0x40) {
-                if ((D_80137EF8[i] & 0xF00) == 0) {
-                    D_80137EF8[i] |= 0x100;
+                if ((g_CharBuffer[i] & 0xF00) == 0) {
+                    g_CharBuffer[i] |= 0x100;
                 }
             }
             if (dest2 & 0x400) {
-                if ((D_80137EF8[i] & 0xF000) == 0) {
-                    D_80137EF8[i] |= 0x1000;
+                if ((g_CharBuffer[i] & 0xF000) == 0) {
+                    g_CharBuffer[i] |= 0x1000;
                 }
             }
             if ((dest2 & 0x4000) && (i < 0x41)) {
-                if ((D_80137EF8[i + 1] & 0xF) == 0) {
-                    D_80137EF8[i + 1] |= 1;
+                if ((g_CharBuffer[i + 1] & 0xF) == 0) {
+                    g_CharBuffer[i + 1] |= 1;
                 }
             }
         }
     }
-    return D_80137EF8;
+    return g_CharBuffer;
 }
-
-#endif
 
 bool LoadMonsterLibrarianPreview(s32 monsterId) {
     if (g_IsUsingCd)
