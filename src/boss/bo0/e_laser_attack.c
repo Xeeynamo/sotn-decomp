@@ -603,8 +603,9 @@ void EntityLaserAttack(Entity* self) {
 }
 
 extern EInit g_EInitFireballAttack;
-extern s16 g_animFireballAttack1[];
-extern s16 g_animFireballAttack2[];
+static u8 g_animFireballAttack1[] = {
+    1, 1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1, 8, 0, 0, 0, 0};
+static s16 g_animFireballAttack2[] = {0x20, 0x30, 0x48, 0x80};
 
 void EntityFireballAttack(Entity* self) {
     Entity* entity;

@@ -5,7 +5,7 @@ extern EInit g_EInitMarionette;
 #ifdef STAGE_IS_NO0
 #define SPRITES sprites_no0_8
 #else // BO0
-#define SPRITES sprites_bo0_8
+#define SPRITES sprites_bo0_3
 #endif
 
 extern s16* SPRITES[];

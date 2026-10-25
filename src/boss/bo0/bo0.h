@@ -51,47 +51,54 @@ typedef enum EntityID {
     E_UNK_2B,               // func_us_801AD338
     E_OLROX_AFTER_IMAGE,    // EntityOlroxAfterImage
     E_UNK_2D,               // func_us_801AFAF4
-    E_UNK_2E,           // func_us_801AF8C0 (EntityPortal)
-    E_UNK_2F,           // func_us_801AF604
-    E_UNK_30,           // func_us_801AF31C
-    E_UNK_31,           // func_us_801AE858
-    E_UNK_32,           // func_us_801B0930
-    E_UNK_33,           // func_us_801B365C
-    E_UNK_34,           // func_us_801B5470
-    E_UNK_35,           // func_us_801B551C
-    E_UNK_36,           // func_us_801B619C
-    E_UNK_37,           // func_us_801B6CA4
-    E_UNK_38,           // func_us_801B76E4
-    E_LASER_ATTACK,     // EntityLaserAttack
-    E_FIREBALL_ATTACK,  // EntityFireballAttack
-    E_UNK_3B,           // func_us_801B7BAC
-    E_UNK_3C,           // func_us_801B7CC8
-    E_OLROX_DROOL,      // EntityRealOlroxDrool
-    E_UNK_3E,           // func_us_801BA4AC
-    E_LIFE_UP_SPAWN,    // EntityLifeUpSpawn
-    E_OWL_KNIGHT,       // EntityOwlKnight
-    E_OWL,              // EntityOwl
-    E_OWL_KNIGHT_SWORD, // EntityOwlKnightSword
-    E_OWL_TARGET,       // EntityOwlTarget
-    E_BLOODY_ZOMBIE,    // EntityBloodyZombie
-    E_BLOOD_DRIPS,      // EntityBloodDrips
-    E_BLOOD_SPLATTER,   // EntityBloodSplatter
-    E_LASER_EXPLOSION,  // EntityLaserExplosion
-    E_SPIKES_DAMAGE,    // EntitySpikesDamage
-    E_BOSS_DOORS,       // EntityBossDoors
-    E_UNK_4A,           // EntitySealedDoor
-    E_CHAIR,            // EntityChair
-    E_UNK_4C,           // 0x00000000
+    E_UNK_2E,               // func_us_801AF8C0 (EntityPortal)
+    E_UNK_2F,               // func_us_801AF604
+    E_UNK_30,               // func_us_801AF31C
+    E_UNK_31,               // func_us_801AE858
+    E_UNK_32,               // func_us_801B0930
+    E_UNK_33,               // func_us_801B365C
+    E_UNK_34,               // func_us_801B5470
+    E_UNK_35,               // func_us_801B551C
+    E_UNK_36,               // func_us_801B619C
+    E_UNK_37,               // func_us_801B6CA4
+    E_UNK_38,               // func_us_801B76E4
+    E_LASER_ATTACK,         // EntityLaserAttack
+    E_FIREBALL_ATTACK,      // EntityFireballAttack
+    E_UNK_3B,               // func_us_801B7BAC
+    E_UNK_3C,               // func_us_801B7CC8
+    E_OLROX_DROOL,          // EntityRealOlroxDrool
+    E_UNK_3E,               // func_us_801BA4AC
+    E_LIFE_UP_SPAWN,        // EntityLifeUpSpawn
+    E_OWL_KNIGHT,           // EntityOwlKnight
+    E_OWL,                  // EntityOwl
+    E_OWL_KNIGHT_SWORD,     // EntityOwlKnightSword
+    E_OWL_TARGET,           // EntityOwlTarget
+    E_BLOODY_ZOMBIE,        // EntityBloodyZombie
+    E_BLOOD_DRIPS,          // EntityBloodDrips
+    E_BLOOD_SPLATTER,       // EntityBloodSplatter
+    E_LASER_EXPLOSION,      // EntityLaserExplosion
+    E_SPIKES_DAMAGE,        // EntitySpikesDamage
+    E_BOSS_DOORS,           // EntityBossDoors
+    E_UNK_4A,               // EntitySealedDoor
+    E_CHAIR,                // EntityChair
+    E_UNK_4C,               // 0x00000000
     NUM_ENTITIES,
 };
 
 enum Palettes {
     PAL_NONE,
     PAL_SPIKES_DUST = 0x161,
+    PAL_SKELERANG = 0x200,
+    PAL_UNK_203 = 0x203,
+    PAL_UNK_205 = 0x205,
+    PAL_UNK_209 = 0x209,
+    PAL_UNK_20B = 0x20B,
     PAL_BREAKABLE = 0x219,
     PAL_UNK_21B = 0x21B,
-    PAL_UNK_21C,
+    PAL_OWL_KNIGHT = 0x21C,
+    PAL_BLOODY_ZOMBIE = 0x223,
     PAL_UNK_237 = 0x237,
+    PAL_OWL_KNIGHT_SWORD = 0x2CB,
     PAL_PUFF_OPAQUE_OFFSET = 0x2E0,
 };
 

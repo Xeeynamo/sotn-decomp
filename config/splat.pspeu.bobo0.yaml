@@ -94,24 +94,27 @@ segments:
       - [0x34380, .data, e_owl_knight]
       - [0x34670, .data, st_common]
       - [0x34870, .data, e_secrets]
-      - [0x34988, data]
-      - [0x3E330, data, sprite_banks]
-      - [0x3E390, data, layers]
-      - [0x3E3A8, data, palette_def]
-      - [0x3E418, data, gfx_banks]
-      - [0x3E630, data]
-      - [0x3E7A0, data, e_init]
-      - [0x3E960, data, rooms]
+      - [0x34988, .data, gen/psp/sprites]
+      - [0x3E330, .data, sprite_banks]
+      - [0x3E390, .data, layers]
+      - [0x3E3A8, .data, palette_def]
+      - [0x3E418, .data, graphics_banks]
+      - [0x3E630, .data, e_red_door_tiles]
+      - [0x3E670, .data, e_init]
+      - [0x3E960, .data, gen/rooms]
       - [0x3E980, .data, e_breakable]
-      - [0x3E9D0, data]
+      - [0x3E9D0, .data, stage_data]
+      - [0x52BF8, .data, palettes]
+      - [0x53338, .data, tilemaps]
+      - [0x57B48, .data, header]
       - [0x57B78, .data, e_sealed_door]
       - [0x57BE8, .data, e_background_house]
       - [0x57D78, .data, e_chair]
       - [0x57DB0, .data, 34DA4]
       - [0x57DB8, .data, no2_bg]
-      - [0x57E00, data]
+      - [0x57E00, .data, e_room_bg]
       - [0x57E20, .data, 3053C]
-      - [0x58218, data, e_laser_attack]
+      - [0x58218, .data, e_laser_attack]
       - [0x58238, data, 2D26C]
       - [0x58618, .data, e_prisoner]
       - [0x58690, .data, e_lock_camera]
@@ -133,12 +136,13 @@ segments:
       - [0x58A90, .rodata, 2D26C]
       - [0x58B08, .rodata, 313A8]
       - {start: 0x58C80, type: .bss, vram: 0x09290300, name: create_entity}
-      - {start: 0x58C80, type: bss, vram: 0x09290320, name: 09290320}
+      - {start: 0x58C80, type: .bss, vram: 0x09290320, name: e_life_up}
       - {start: 0x58C80, type: .bss, vram: 0x09290328, name: st_update}
       - {start: 0x58C80, type: .bss, vram: 0x09290368, name: e_collect}
-      - {start: 0x58C80, type: bss, vram: 0x09290388, name: layers}
+      - {start: 0x58C80, type: .bss, vram: 0x09290388, name: layers}
       - {start: 0x58C80, type: .bss, vram: 0x09290398, name: st_init_psp}
       - {start: 0x58C80, type: .bss, vram: 0x09290570, name: e_breakable}
-      - {start: 0x58C80, type: bss, vram: 0x09290578, name: prize_drops}
+      - {start: 0x58C80, type: .bss, vram: 0x09290578, name: d_prize_drops}
+      - {start: 0x58C80, type: bss, vram: 0x09290580, name: 09290580}
       - {start: 0x58C80, type: .bss, vram: 0x092907B0, name: e_lock_camera}
   - [0x59180]
