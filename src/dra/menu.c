@@ -2260,7 +2260,6 @@ void func_800F98AC(const char* str, u32 y) {
     }
     y = func_800F548C(y);
 
-
     while (*str != 0) {
         // Loads a big-endian u16 from str.
         // This is connected to shift-jis.
