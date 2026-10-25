@@ -40,8 +40,8 @@ void func_us_801C0C44(Entity* self) {
     if ((self->flags & 0x100) && ((self->step) < 8)) {
         SetStep(8);
     }
-    switch (self->step) {                          /* switch 1 */
-    case 0:                                     /* switch 1 */
+    switch (self->step) {                          
+    case 0:                                     
         InitializeEntity(g_EInitSpectralSwordRDAI);
         self->animCurFrame = 1;
         self->blendMode = 0x30;
@@ -75,16 +75,16 @@ void func_us_801C0C44(Entity* self) {
         self->ext.ILLEGAL.u8[10] = 6;
         self->ext.ILLEGAL.s8[0xB] = 4;
         break;
-    case 2:                                     /* switch 1 */
+    case 2:                                     
         if (GetDistanceToPlayerX() < 0x60) {
             SetStep(3);
         }
         break;
-    case 3:                                     /* switch 1 */
+    case 3:                                     
         SetStep(6);
         self->ext.ILLEGAL.u8[8] = GetSideToPlayer() & 1;
         break;
-    case 6:                                     /* switch 1 */
+    case 6:                                     
         if (!self->step_s) {
             var_s2 = Random() * 2;
             if (self->ext.ILLEGAL.u8[8]) {
@@ -145,9 +145,9 @@ void func_us_801C0C44(Entity* self) {
         if (self->ext.ILLEGAL.u8[10]) {
             if (!--self->ext.ILLEGAL.s16[0xD]) {
                 var_s5 = Random() & 3;
-                switch (var_s5) {              /* switch 2; irregular */
-                case 0:                         /* switch 2 */
-                case 1:                         /* switch 2 */
+                switch (var_s5) {              
+                case 0:                         
+                case 1:                         
                     self->ext.ILLEGAL.s16[0xD] = 0x100;
                     var_s5 = (Random() % (self->ext.ILLEGAL.u8[10])) + 1;
                     other = self + 1;
@@ -161,7 +161,7 @@ void func_us_801C0C44(Entity* self) {
                     }
                     other->ext.ILLEGAL.s8[0x18] = 1;
                     break;
-                case 2:                         /* switch 2 */
+                case 2:                         
                     self->ext.ILLEGAL.s16[0xD] = 0x180;
                     player = &PLAYER;
                     var_s2 = GetAngleBetweenEntities(self, player);
@@ -171,7 +171,7 @@ void func_us_801C0C44(Entity* self) {
                         other->ext.ILLEGAL.s16[0xA] = var_s2;
                     }
                     break;
-                case 3:                         /* switch 2 */
+                case 3:                         
                     self->ext.ILLEGAL.s16[0xD] = 0x280;
                     other = self + 1;
                     var_s5 = 0x40;
@@ -188,9 +188,9 @@ void func_us_801C0C44(Entity* self) {
             }
         }
         break;
-    case 5:                                     /* switch 1 */
-        switch (self->step_s) {                    /* switch 3; irregular */
-        case 0:                                 /* switch 3 */
+    case 5:                                     
+        switch (self->step_s) {                    
+        case 0:                                 
             var_s3 = 0x80 - self->posX.i.hi;
             var_s7 = 0x40 - self->posY.i.hi;
             var_s2 = ratan2(var_s7, var_s3);
@@ -199,7 +199,7 @@ void func_us_801C0C44(Entity* self) {
             self->ext.ILLEGAL.u8[8] ^= 1;
             self->step_s++;
             break;
-        case 1:                                 /* switch 3 */
+        case 1:                                 
             MoveEntity();
             var_s3 = self->posX.i.hi;
             if (self->ext.ILLEGAL.u8[8]) {
@@ -214,7 +214,7 @@ void func_us_801C0C44(Entity* self) {
                 }
             }
             break;
-        case 2:                                 /* switch 3 */
+        case 2:                                 
             MoveEntity();
             self->velocityY += 0x2000;
             player = &PLAYER;
@@ -228,9 +228,9 @@ void func_us_801C0C44(Entity* self) {
             break;
         }
         break;
-    case 8:                                     /* switch 1 */
-        switch (self->step_s) {                    /* switch 4; irregular */
-        case 0:                                 /* switch 4 */
+    case 8:                                     
+        switch (self->step_s) {                    
+        case 0:                                 
             self->hitboxState = 0;
             for(other = self + 1, var_s1 = 0; var_s1 < 10; var_s1++, other++) {
                 other->flags |= 0x100;
@@ -240,7 +240,7 @@ void func_us_801C0C44(Entity* self) {
             PlaySfxPositional(0x697);
             self->step_s++;
             break;
-        case 1:                                 /* switch 4 */
+        case 1:                                 
             MoveEntity();
             self->velocityY += 0x1800;
             self->rotate -= 4;
@@ -256,7 +256,7 @@ void func_us_801C0C44(Entity* self) {
                 self->step_s++;
             }
             break;
-        case 2:                                 /* switch 4 */
+        case 2:                                 
             var_s5 = 0;
             for(other = self + 1, var_s1 = 0; var_s1 < 10; var_s1++, other++) {
                 if (!other->animCurFrame) {
@@ -376,8 +376,8 @@ void func_us_801C17E8(Entity* self) {
     if ((self->flags & 0x100) && (self->step < 8)) {
         SetStep(8);
     }
-    switch (self->step) {                              /* switch 1; irregular */
-    case 0:                                         /* switch 1 */
+    switch (self->step) {                              
+    case 0:                                         
         InitializeEntity(g_EInitSpear);
         self->drawFlags = 4;
         if (self->params & 0x100) {
@@ -387,7 +387,7 @@ void func_us_801C17E8(Entity* self) {
         }
         SetStep(2);
         break;
-    case 2:                                         /* switch 1 */
+    case 2:                                         
         MoveEntity();
         var_s6 = (Pos*)&self->ext.ILLEGAL.u32[3];
         var_s4 = var_s6->x.i.hi - self->posX.i.hi;
@@ -411,9 +411,9 @@ void func_us_801C17E8(Entity* self) {
             }
         }
         break;
-    case 4:                                         /* switch 1 */
-        switch (self->step_s) {                          /* switch 2; irregular */
-        case 0:                                     /* switch 2 */
+    case 4:                                         
+        switch (self->step_s) {                          
+        case 0:                                     
             if (!(self->ext.ILLEGAL.u8[0x18] & 2)) {
                 player = &PLAYER;
                 var_s0 = GetAngleBetweenEntities(self, player);
@@ -431,7 +431,7 @@ void func_us_801C17E8(Entity* self) {
             }
             self->step_s++;
             break;
-        case 1:                                     /* switch 2 */
+        case 1:                                     
             MoveEntity();
             
             var_s4 = self->velocityX -= self->velocityX / 16;
@@ -443,7 +443,7 @@ void func_us_801C17E8(Entity* self) {
             var_s0 -= 0x400;
             StepTowards(&self->rotate, var_s0, 8);
             break;
-        case 2:                                     /* switch 2 */
+        case 2:                                     
             var_s0 = self->ext.ILLEGAL.s16[0xA];
             if (StepTowards(&self->rotate, var_s0 - 0x400, 0x20) != 0) {
                 self->velocityX = rcos(var_s0) << 7;
@@ -453,7 +453,7 @@ void func_us_801C17E8(Entity* self) {
                 self->step_s++;
             }
             break;
-        case 3:                                     /* switch 2 */
+        case 3:                                     
             MoveEntity();
             var_s2 = GetSideToPlayer();
             if (abs(self->velocityX) > abs(self->velocityY)) {
@@ -474,16 +474,16 @@ void func_us_801C17E8(Entity* self) {
             break;
         }
         break;
-    case 8:                                         /* switch 1 */
-        switch (self->step_s) {                        /* switch 3; irregular */
-        case 0:                                     /* switch 3 */
+    case 8:                                         
+        switch (self->step_s) {                        
+        case 0:                                     
             other = self - 1 - (self->params & 0xFF);
             other->ext.ILLEGAL.u8[10] -= 1;
             self->hitboxState = 0;
             PlaySfxPositional(0x683);
             self->step_s++;
             /* fallthrough */
-        case 1:                                     /* switch 3 */
+        case 1:                                     
             MoveEntity();
             self->velocityY += 0x2000;
             if (!(g_Timer & 7)) {
@@ -498,7 +498,7 @@ void func_us_801C17E8(Entity* self) {
                 self->animCurFrame = 0;
             }
             break;
-        case 2:                                     /* switch 3 */
+        case 2:                                     
             self->animCurFrame = 0;
             break;
         }
@@ -532,14 +532,14 @@ void func_us_801C1DE8(Entity* self) {
     if ((self->flags & 0x100) && ((self->step) < 8)) {
         SetStep(8);
     }
-    switch (self->step) {                              /* switch 1; irregular */
-    case 0:                                         /* switch 1 */
+    switch (self->step) {                              
+    case 0:                                         
         InitializeEntity(g_EInitShield);
         self->animCurFrame = 7;
         self->zPriority += 2;
         SetStep(3);
         break;
-    case 2:                                         /* switch 1 */
+    case 2:                                         
         self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
         var_s1 = GetDistanceToPlayerX();
         self->animCurFrame = 8;
@@ -550,10 +550,10 @@ void func_us_801C1DE8(Entity* self) {
             self->animCurFrame = 6;
         }
         break;
-    case 3:                                         /* switch 1 */
+    case 3:                                         
         MoveEntity();
         if (self->animCurFrame != 8) {
-            AnimateEntity(&D_pspeu_09254CA8, self);
+            AnimateEntity(D_pspeu_09254CA8, self);
         }
         var_s3 = (Pos*)&self->ext.ILLEGAL.u32[3];
         var_s1 = var_s3->x.i.hi - self->posX.i.hi;
@@ -574,19 +574,19 @@ void func_us_801C1DE8(Entity* self) {
             SetStep(4);
         }
         break;
-    case 4:                                         /* switch 1 */
-        switch (self->step_s) {                        /* switch 2; irregular */
-        case 0:                                     /* switch 2 */
+    case 4:                                         
+        switch (self->step_s) {                        
+        case 0:                                     
             self->velocityX = rcos(self->ext.ILLEGAL.s16[0xA] - 0x800) << 5;
             self->velocityY = rsin(self->ext.ILLEGAL.s16[0xA] - 0x800) << 5;
             self->step_s += 1;
             /* fallthrough */
-        case 1:                                     /* switch 2 */
+        case 1:                                     
             MoveEntity();
             if (self->ext.ILLEGAL.u8[0x18] & 2) {
-                var_s7 = AnimateEntity(&D_pspeu_09254CA0, self);
+                var_s7 = AnimateEntity(D_pspeu_09254CA0, self);
             } else {
-                var_s7 = AnimateEntity(&D_pspeu_09254C98, self);
+                var_s7 = AnimateEntity(D_pspeu_09254C98, self);
             }
             if (var_s7 == 0) {
                 self->ext.ILLEGAL.s16[2] = 0x20;
@@ -594,7 +594,7 @@ void func_us_801C1DE8(Entity* self) {
                 return;
             }
             break;
-        case 2:                                     /* switch 2 */
+        case 2:                                     
             if (!--self->ext.ILLEGAL.s16[2]) {
                 self->ext.ILLEGAL.u8[0x18] = 0;
                 SetStep(3);
@@ -603,9 +603,9 @@ void func_us_801C1DE8(Entity* self) {
             break;
         }
         break;
-    case 8:                                         /* switch 1 */
-        switch (self->step_s) {                        /* switch 3; irregular */
-        case 0:                                     /* switch 3 */
+    case 8:                                         
+        switch (self->step_s) {                        
+        case 0:                                     
             other = self - 7 - self->params;
             other->ext.ILLEGAL.u8[11] -= 1;
             self->hitboxState = 0;
@@ -613,11 +613,11 @@ void func_us_801C1DE8(Entity* self) {
             PlaySfxPositional(0x683);
             self->step_s += 1;
             /* fallthrough */
-        case 1:                                     /* switch 3 */
+        case 1:                                     
             MoveEntity();
             self->velocityY += 0x2000;
             if (!(g_Timer & 7)) {
-                other = AllocEntity(&g_Entities[0xE0], (Entity* ) &D_80097C98);
+                other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
                     CreateEntityFromEntity(2, self, other);
                     other->params = 1;
@@ -629,7 +629,7 @@ void func_us_801C1DE8(Entity* self) {
                 return;
             }
             break;
-        case 2:                                     /* switch 3 */
+        case 2:                                     
             self->animCurFrame = 0;
             break;
         }
