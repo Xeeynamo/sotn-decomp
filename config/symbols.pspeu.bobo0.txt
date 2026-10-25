@@ -1,43 +1,10 @@
-InitRoomEntities = 0x09238288;
-UpdateRoomPosition = 0x092384B8;
 CreateEntityFromCurrentEntity = 0x09238598;
 CreateEntityFromEntity = 0x09238620;
-EntityBloodSplatter = 0x092386A8;
-EntityBloodyZombie = 0x09238E80;
-EntityBloodDrips = 0x09239898;
-EntitySkelerang = 0x09239B28; // source=match
-EntitySkelerangBoomerang = 0x0923A620; // source=match
-EntitySkelerangUnknown = 0x0923A9D8; // source=match
-EntityLifeUpSpawn = 0x0923AA48;
-EntityStageNamePopup = 0x0923B6C8;
-EntityMarionette = 0x0923CB80;
-EntityRedDoor = 0x0923E2F8;
 Random = 0x0923F518;
-Update = 0x0923F558;
-UpdateStageEntities = 0x0923F938;
-EntitySoulStealOrb = 0x09240468;
-EntityEnemyBlood = 0x092409C8;
-EntityPrizeDrop = 0x09241E40;
 EntityExplosion = 0x09242C58;
-EntityEquipItemDrop = 0x09242F58;
-EntityRelicOrb = 0x092437B0;
-EntityPersistentItemDrop = 0x092448E8;
-EntityMessageBox = 0x09244AB0;
-EntityUnkId13 = 0x09245370;
-EntityExplosionVariants = 0x09245768;
-EntityGreyPuff = 0x092458E0;
-EntityIntenseExplosion = 0x09245A60;
 MakeExplosions = 0x09245CD8;
-EntityBigRedFireball = 0x09245DB0;
 UnkRecursivePrimFunc2 = 0x09246048;
 PlaySfxPositional = 0x09246A70;
-HitDetection = 0x09246BC8;
-EntityDamageDisplay = 0x09248398;
-EntityRoomForeground = 0x09249398;
-EntityOwl = 0x092494B0;
-EntityOwlKnight = 0x0924B118;
-EntityOwlKnightSword = 0x0924CF20;
-EntityOwlTarget = 0x0924D058;
 DestroyEntity = 0x0924D098;
 AnimateEntity = 0x0924D1B8;
 GetDistanceToPlayerX = 0x0924D328;
@@ -53,28 +20,7 @@ AdjustValueWithinThreshold = 0x0924DCA0; // source=match
 SetStep = 0x0924DFA8;
 SetSubStep = 0x0924DFF8;
 InitializeEntity = 0x0924E038;
-EntityDummy = 0x0924E1E0;
 FindFirstUnkPrim2 = 0x0924F148;
-EntitySecretWall = 0x0924FDC0;
-EntitySecretWallDebris = 0x09250568;
-EntitySecretCeiling = 0x092509C0;
-EntityBreakable = 0x092513E0;
-EntitySealedDoor = 0x09251648;
-Entity3DHouseSpawner = 0x09253380; // source=match
-Entity3DBackgroundHouse = 0x09253480; // source=match
-EntityChair = 0x09253978;
-func_us_801B4DA4 = 0x09253CB8;
-func_us_801B3D8C = 0x09254330; // source=match
-func_us_801B3F30 = 0x09254568; // source=match
-func_us_801B4148 = 0x09254868; // source=match
-func_us_801B41A4 = 0x092548D0; // source=match
-func_us_801B4210 = 0x09254958; // source=match
-EntityBackgroundBlock = 0x09254B48;
-func_us_801B0930 = 0x09255288;
-EntityLaserAttack = 0x09256A10;
-EntityFireballAttack = 0x09257F58;
-EntityRealOlroxDrool = 0x09258688;
-func_us_801BA4AC = 0x09258B10;
 func_us_801AD26C = 0x09258DE0;
 func_us_801AD2F0 = 0x09258EF0;
 func_us_801AD338 = 0x09258F58;
@@ -122,17 +68,9 @@ func_us_801B76E4 = 0x09267730;
 func_us_801B7BAC = 0x09267E48;
 func_us_801B7C44 = 0x09267EF8;
 func_us_801B7CC8 = 0x09267FC0;
-EntityPrisoner = 0x09268E80;
-EntityLockCamera = 0x09269500;
-EntityBossDoors = 0x09269760;
-func_us_801B72E8 = 0x09269E10; // source=match
-EntitySpikesDust = 0x0926A1B0;
-EntitySpikesParts = 0x0926A288; // source=match
-EntitySpikes = 0x0926A7D8;
-EntitySpikesDamage = 0x0926AA60;
 sprites_bo0_5 = 0x092723C8;
 g_EInitInteractable = 0x09275E60;
-g_EInitSlinger = 0x09275F06;
+g_EInitSlinger = 0x09275F06; // used:true
 g_EInitOlroxAfterImage = 0x09275F40;
 D_us_801806D8 = 0x09275F50;
 D_us_801806E4 = 0x09275F60;
