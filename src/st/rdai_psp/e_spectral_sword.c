@@ -514,4 +514,125 @@ void func_us_801C17E8(Entity* self) {
     self->hitboxOffY = ((sp3C * rsin(var_s0)) >> 0xC);
 }
 
-INCLUDE_ASM("st/rdai_psp/nonmatchings/rdai_psp/e_spectral_sword", func_us_801C1DE8);
+extern AnimateEntityFrame D_pspeu_09254C98[];
+extern AnimateEntityFrame D_pspeu_09254CA0[];
+extern AnimateEntityFrame D_pspeu_09254CA8[];
+extern EInit g_EInitShield;
+
+void func_us_801C1DE8(Entity* self) {
+    s32 var_s7;
+    s16 var_s6;
+    s32 var_s5;
+    s32 var_s4;
+    Pos* var_s3;
+    s32 var_s2;
+    s32 var_s1;
+    Entity* other;
+
+    if ((self->flags & 0x100) && ((self->step) < 8)) {
+        SetStep(8);
+    }
+    switch (self->step) {                              /* switch 1; irregular */
+    case 0:                                         /* switch 1 */
+        InitializeEntity(g_EInitShield);
+        self->animCurFrame = 7;
+        self->zPriority += 2;
+        SetStep(3);
+        break;
+    case 2:                                         /* switch 1 */
+        self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
+        var_s1 = GetDistanceToPlayerX();
+        self->animCurFrame = 8;
+        if (var_s1 < 0x40) {
+            self->animCurFrame = 7;
+        }
+        if (var_s1 < 0x20) {
+            self->animCurFrame = 6;
+        }
+        break;
+    case 3:                                         /* switch 1 */
+        MoveEntity();
+        if (self->animCurFrame != 8) {
+            AnimateEntity(&D_pspeu_09254CA8, self);
+        }
+        var_s3 = (Pos*)&self->ext.ILLEGAL.u32[3];
+        var_s1 = var_s3->x.i.hi - self->posX.i.hi;
+        var_s4 = var_s3->y.i.hi - self->posY.i.hi;
+        var_s5 = (var_s1 * var_s1) + (var_s4 * var_s4);
+        var_s5 = SquareRoot0(var_s5);
+        var_s2 = var_s5;
+        if (var_s2 > 0x38) {
+            var_s2 = 0x38;
+        }
+        var_s6 = ratan2(var_s4, var_s1);
+        self->velocityX = var_s2 * rcos(var_s6);
+        self->velocityY = var_s2 * rsin(var_s6);
+        if (self->animCurFrame != 6) {
+            self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
+        }
+        if (self->ext.ILLEGAL.u8[0x18]) {
+            SetStep(4);
+        }
+        break;
+    case 4:                                         /* switch 1 */
+        switch (self->step_s) {                        /* switch 2; irregular */
+        case 0:                                     /* switch 2 */
+            self->velocityX = rcos(self->ext.ILLEGAL.s16[0xA] - 0x800) << 5;
+            self->velocityY = rsin(self->ext.ILLEGAL.s16[0xA] - 0x800) << 5;
+            self->step_s += 1;
+            /* fallthrough */
+        case 1:                                     /* switch 2 */
+            MoveEntity();
+            if (self->ext.ILLEGAL.u8[0x18] & 2) {
+                var_s7 = AnimateEntity(&D_pspeu_09254CA0, self);
+            } else {
+                var_s7 = AnimateEntity(&D_pspeu_09254C98, self);
+            }
+            if (var_s7 == 0) {
+                self->ext.ILLEGAL.s16[2] = 0x20;
+                self->step_s += 1;
+                return;
+            }
+            break;
+        case 2:                                     /* switch 2 */
+            if (!--self->ext.ILLEGAL.s16[2]) {
+                self->ext.ILLEGAL.u8[0x18] = 0;
+                SetStep(3);
+                return;
+            }
+            break;
+        }
+        break;
+    case 8:                                         /* switch 1 */
+        switch (self->step_s) {                        /* switch 3; irregular */
+        case 0:                                     /* switch 3 */
+            other = self - 7 - self->params;
+            other->ext.ILLEGAL.u8[11] -= 1;
+            self->hitboxState = 0;
+            PlaySfxPositional(0x60F);
+            PlaySfxPositional(0x683);
+            self->step_s += 1;
+            /* fallthrough */
+        case 1:                                     /* switch 3 */
+            MoveEntity();
+            self->velocityY += 0x2000;
+            if (!(g_Timer & 7)) {
+                other = AllocEntity(&g_Entities[0xE0], (Entity* ) &D_80097C98);
+                if (other != NULL) {
+                    CreateEntityFromEntity(2, self, other);
+                    other->params = 1;
+                }
+            }
+            if (self->posY.i.hi > 0x140) {
+                self->step_s += 1;
+                self->animCurFrame = 0;
+                return;
+            }
+            break;
+        case 2:                                     /* switch 3 */
+            self->animCurFrame = 0;
+            break;
+        }
+        break;
+    }
+}
