@@ -4697,14 +4697,14 @@ typedef struct {
     /* 0x82 */ s16 timer2;
     /* 0x84 */ u8 playerSide;
     /* 0x85 */ u8 : 8;
-    /* 0x86 */ u8 unk86;
-    /* 0x87 */ u8 unk87;
-    /* 0x88 */ Pos unk88;
-    /* 0x90 */ s16 unk90;
+    /* 0x86 */ u8 spearsAlive;
+    /* 0x87 */ u8 shieldsAlive;
+    /* 0x88 */ Pos targetPos;
+    /* 0x90 */ s16 angleToPlayer;
     /* 0x92 */ u16 : 16;
-    /* 0x94 */ u8 unk94;
+    /* 0x94 */ u8 modeFlags;
     /* 0x95 */ u8 : 8;
-    /* 0x96 */ s16 unk96;
+    /* 0x96 */ s16 attackTimer;
 } ET_SpectralSwordRdai;
 
 typedef union { // offset=0x7C
