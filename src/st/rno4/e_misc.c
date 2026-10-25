@@ -1,19 +1,38 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno4.h"
 
-extern s32 g_ExplosionVariantVelocity[];
-extern u8 g_ExplosionVariantFrames[];
-extern u16 g_ExplosionVariantDurations[];
+extern EInit g_EInitParticle;
+
+// Unused here
+static s16 explosionVariantSizes[] = {
+    0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x00};
+
+static s16 greyPuff_rot[] = {
+    0x030, 0x050, 0x080, 0x0B0, 0x0D0, 0x100, 0x100, 0x000,
+};
+
+static s32 greyPuff_yVel[] = {
+    FIX(2.0 / 128),  FIX(18.0 / 128), FIX(30.0 / 128),
+    FIX(48.0 / 128), FIX(60.0 / 128), FIX(96.0 / 128),
+};
+
+static s32 explode_yVel[] = {
+    FIX(4.0 / 128),  FIX(20.0 / 128),  FIX(36.0 / 128),
+    FIX(56.0 / 128), FIX(112.0 / 128), FIX(144.0 / 128),
+};
+
+static u8 explode_startFrame[] = {1, 9, 21, 43};
+
+static u16 explode_lifetime[] = {16, 24, 42, 47};
 
 void EntityExplosionVariants(Entity* self) {
     if (!self->step) {
-        self->velocityY =
-            g_ExplosionVariantVelocity[self->ext.destructAnim.index];
+        self->velocityY = explode_yVel[self->ext.destructAnim.index];
         self->flags =
             FLAG_UNK_2000 | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
         self->palette = PAL_FLAG(PAL_UNK_195);
         self->animSet = ANIMSET_DRA(2);
-        self->animCurFrame = g_ExplosionVariantFrames[self->params];
+        self->animCurFrame = explode_startFrame[self->params];
         self->blendMode = BLEND_TRANSP;
         self->step++;
         return;
@@ -24,15 +43,12 @@ void EntityExplosionVariants(Entity* self) {
     if ((self->poseTimer % 2) == 0) {
         self->animCurFrame++;
     }
-    if (self->poseTimer > g_ExplosionVariantDurations[self->params]) {
+    if (self->poseTimer > explode_lifetime[self->params]) {
         DestroyEntity(self);
     }
 }
 
 void EntityGreyPuff(Entity* self) {
-    extern s16 g_GreyPuffScale[];
-    extern s32 g_GreyPuffVelocity[];
-
     if (!self->step) {
         self->flags =
             FLAG_UNK_2000 | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
@@ -41,9 +57,9 @@ void EntityGreyPuff(Entity* self) {
         self->animCurFrame = 1;
         self->blendMode = BLEND_TRANSP;
         self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
-        self->scaleX = g_GreyPuffScale[self->params];
+        self->scaleX = greyPuff_rot[self->params];
         self->scaleY = self->scaleX;
-        self->velocityY = g_GreyPuffVelocity[self->params];
+        self->velocityY = greyPuff_yVel[self->params];
         self->step++;
     } else {
         self->posY.val -= self->velocityY;
@@ -78,11 +94,11 @@ void EntityIntenseExplosion(Entity* self) {
     self->poseTimer++;
     self->posY.val -= FIX(0.25);
 
-    if (!((u16)self->poseTimer & 1)) {
+    if ((self->poseTimer % 2) == 0) {
         self->animCurFrame++;
     }
 
-    if (self->poseTimer >= 0x25) {
+    if (self->poseTimer > 36) {
         DestroyEntity(self);
     }
 }
