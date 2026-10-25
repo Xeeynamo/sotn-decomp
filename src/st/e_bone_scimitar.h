@@ -160,9 +160,11 @@ void EntityBoneScimitar(Entity* self) {
             self->hitboxOffY = 0;
         }
 
+#if !defined(STAGE_IS_TEK)
         if (self->pose == 7 && !self->poseTimer) {
             PlaySfxPositional(SFX_BONE_SWORD_SWISH_B);
         }
+#endif
 
         if (!tempByte) {
             SetStep(BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER);
