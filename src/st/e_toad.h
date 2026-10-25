@@ -34,10 +34,8 @@ void EntityToad(Entity* self) {
 #endif
     Entity* entity;
     s32 index;
-#if !defined(STAGE_IS_TEK)
     s32 posX;
     s32 posY;
-#endif
 
     if (self->flags & FLAG_DEAD) {
         if (self->ext.frogToad.tongueEntity) {
