@@ -23,7 +23,7 @@ static bool StepTowards(s16* val, s32 target, s32 step) {
 static u8 D_us_80181914[] = {0, 1, 0, 0, 1, 0};
 extern EInit g_EInitSpectralSwordRDAI;
 
-void func_us_801C0C44(Entity* self) {
+void EntitySpectralSword(Entity* self) {
     s32 primIndex;
     s32 dist;
     Entity* player;
@@ -114,8 +114,7 @@ void func_us_801C0C44(Entity* self) {
         yVar = prim->y0 - self->posY.i.hi;
         xVar = abs(xVar);
         yVar = abs(yVar);
-        if ((xVar < 8 && yVar < 8) ||
-            !--self->ext.spectralSwordRdai.timer) {
+        if ((xVar < 8 && yVar < 8) || !--self->ext.spectralSwordRdai.timer) {
             self->step_s = 0;
         }
         player = &PLAYER;
@@ -152,7 +151,8 @@ void func_us_801C0C44(Entity* self) {
                 case 1:
                     self->ext.spectralSwordRdai.attackTimer = 0x100;
                     miscTemp =
-                        (Random() % (self->ext.spectralSwordRdai.spearsAlive)) + 1;
+                        (Random() % (self->ext.spectralSwordRdai.spearsAlive)) +
+                        1;
                     other = self + 1;
                     for (i = 0; i < 6; i++, other++) {
                         if (!(other->flags & FLAG_DEAD)) {
@@ -260,7 +260,7 @@ void func_us_801C0C44(Entity* self) {
             }
             break;
         case 2:
-            miscTemp = 0;
+            miscTemp = 0; // Count of how many spears/shields are animframe 0
             for (other = self + 1, i = 0; i < 10; i++, other++) {
                 if (!other->animCurFrame) {
                     miscTemp++;
@@ -288,8 +288,8 @@ void func_us_801C0C44(Entity* self) {
         yVar = self->posY.val;
         for (i = 0; i < 6; i++, other++) {
             posPtr = &other->ext.spectralSwordRdai.targetPos;
-            posPtr->x.val = xVar + (posOffset * rcos(angle + 0x400) * 0x10);
-            posPtr->y.val = yVar + (posOffset * rsin(angle + 0x400) * 0x10);
+            posPtr->x.val = xVar + (posOffset * rcos(angle + ROT(90)) * 0x10);
+            posPtr->y.val = yVar + (posOffset * rsin(angle + ROT(90)) * 0x10);
             posOffset += 0x10;
             if (posOffset == 0) {
                 posOffset += 0x10;
@@ -310,8 +310,10 @@ void func_us_801C0C44(Entity* self) {
             if (!(other->flags & FLAG_DEAD)) {
                 other->ext.spectralSwordRdai.angleToPlayer = angle;
                 posPtr = &other->ext.spectralSwordRdai.targetPos;
-                posPtr->x.val = xVar + (posOffset * rcos(angle + 0x400) * 0x10);
-                posPtr->y.val = yVar + (posOffset * rsin(angle + 0x400) * 0x10);
+                posPtr->x.val =
+                    xVar + (posOffset * rcos(angle + ROT(90)) * 0x10);
+                posPtr->y.val =
+                    yVar + (posOffset * rsin(angle + ROT(90)) * 0x10);
                 posOffset += 24;
             }
         }
@@ -325,7 +327,7 @@ void func_us_801C0C44(Entity* self) {
         if (!(g_Timer & 0xF)) {
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
-                CreateEntityFromEntity(E_UNK_23, self, other);
+                CreateEntityFromEntity(E_SPECTRAL_SWORD_AURA, self, other);
                 other->ext.et_801CEB08.parent = self;
                 other->zPriority = ((self->zPriority) + 1);
             }
@@ -383,9 +385,9 @@ void EntityspectralSwordSpear(Entity* self) {
         InitializeEntity(g_EInitSpear);
         self->drawFlags = ENTITY_ROTATE;
         if (self->params & 0x100) {
-            self->animCurFrame = 4;
+            self->animCurFrame = 4; // Double prong spear
         } else {
-            self->animCurFrame = 5;
+            self->animCurFrame = 5; // Single prong spear
         }
         SetStep(2);
         break;
@@ -423,9 +425,9 @@ void EntityspectralSwordSpear(Entity* self) {
                 self->ext.spectralSwordRdai.angleToPlayer = angle;
             }
             self->velocityX =
-                rcos(self->ext.spectralSwordRdai.angleToPlayer - 0x800) << 5;
+                rcos(self->ext.spectralSwordRdai.angleToPlayer - ROT(180)) << 5;
             self->velocityY =
-                rsin(self->ext.spectralSwordRdai.angleToPlayer - 0x800) << 5;
+                rsin(self->ext.spectralSwordRdai.angleToPlayer - ROT(180)) << 5;
 
             // This whole little block is weird. The ifdef is probably solvable.
             // There is some possibility that otherIdx is a fake, but hard to be
@@ -453,12 +455,12 @@ void EntityspectralSwordSpear(Entity* self) {
                 self->step_s++;
             }
             angle = ratan2(yVar, xVar);
-            angle -= 0x400;
+            angle -= ROT(90);
             StepTowards(&self->rotate, angle, 8);
             break;
         case 2:
             angle = self->ext.spectralSwordRdai.angleToPlayer;
-            if (StepTowards(&self->rotate, angle - 0x400, 0x20) != 0) {
+            if (StepTowards(&self->rotate, angle - ROT(90), 0x20) != 0) {
                 self->velocityX = rcos(angle) << 7;
                 self->velocityY = rsin(angle) << 7;
                 self->ext.spectralSwordRdai.timer = 0x30;
@@ -517,11 +519,12 @@ void EntityspectralSwordSpear(Entity* self) {
         }
         break;
     }
-    angle = self->rotate + 0x400;
+    angle = self->rotate + ROT(90);
+    // Double prong spear is 2 pixels longer. Excessive attention to detail.
     if (self->params & 0x100) {
-        hitboxDist = 0x18;
+        hitboxDist = 24;
     } else {
-        hitboxDist = 0x16;
+        hitboxDist = 22;
     }
     self->hitboxOffX = ((hitboxDist * rcos(angle)) >> 0xC);
     self->hitboxOffY = ((hitboxDist * rsin(angle)) >> 0xC);
@@ -594,9 +597,9 @@ void EntitySpectralSwordShield(Entity* self) {
         switch (self->step_s) {
         case 0:
             self->velocityX =
-                rcos(self->ext.spectralSwordRdai.angleToPlayer - 0x800) << 5;
+                rcos(self->ext.spectralSwordRdai.angleToPlayer - ROT(180)) << 5;
             self->velocityY =
-                rsin(self->ext.spectralSwordRdai.angleToPlayer - 0x800) << 5;
+                rsin(self->ext.spectralSwordRdai.angleToPlayer - ROT(180)) << 5;
             self->step_s += 1;
             /* fallthrough */
         case 1:
@@ -609,14 +612,12 @@ void EntitySpectralSwordShield(Entity* self) {
             if (anim_running == 0) {
                 self->ext.spectralSwordRdai.timer = 0x20;
                 self->step_s += 1;
-                return;
             }
             break;
         case 2:
             if (!--self->ext.spectralSwordRdai.timer) {
                 self->ext.spectralSwordRdai.modeFlags = 0;
                 SetStep(3);
-                return;
             }
             break;
         }
@@ -644,7 +645,6 @@ void EntitySpectralSwordShield(Entity* self) {
             if (self->posY.i.hi > 0x140) {
                 self->step_s += 1;
                 self->animCurFrame = 0;
-                return;
             }
             break;
         case 2:
