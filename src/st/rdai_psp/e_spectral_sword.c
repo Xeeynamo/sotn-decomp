@@ -1,7 +1,24 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rdai/rdai.h"
 
-#include "../step_towards.h"
+// EntitySpectralSword primarily uses this as a method to smoothly rotate, but
+// also to retract it's outer ring after an attack by decreasing the radius.
+static bool StepTowards(s16* val, s32 target, s32 step) {
+    if (abs(*val - target) < step) {
+        *val = target;
+        return true;
+    }
+
+    if (*val > target) {
+        *val -= step;
+    }
+
+    if (*val < target) {
+        *val += step;
+    }
+
+    return false;
+}
 
 static u8 D_us_80181914[] = {0, 1, 0, 0, 1, 0};
 extern EInit g_EInitSpectralSwordRDAI;
