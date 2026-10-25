@@ -2067,6 +2067,14 @@ void func_us_801B2BE4(Entity* self) {
                 ptr = D_us_801D4364;
             }
             for (i = 0; i < LEN(D_us_801D425C); i++) {
+#ifdef FIX_UB
+                // BUG: on self->params, the sell list D_us_801814D8 is used,
+                // but the code still scrolls LEN(D_us_801D425C) times!
+                // The fix simply stop scrolling past the sell list
+                if (self->params && i >= LEN(D_us_801814D8)) {
+                    break;
+                }
+#endif
                 itemId = ptr->itemId;
                 switch (ptr->category) {
                 case INVENTORY_HAND:

@@ -186,9 +186,12 @@ void EntityMarionette(Entity* self) {
     if ((self->flags & FLAG_DEAD) && self->step < 10) {
         self->hitboxState = 0;
 #ifndef BOSS_IS_BO0
-#ifdef VERSION_PSP
+#if defined(VERSION_PSP) || defined(FIX_UB)
+        // PSP contains a fix where it gets the g_EInitSlinger palette, while
+        // US attempts reading out of the EInit bounds.
         self->palette = self->hitEffect = g_EInitSlinger[3] + 1;
 #else
+        // BUG: will load the wrong palette when Marionette dies
         self->palette = self->hitEffect = g_EInitSlinger[5] + 1;
 #endif
 #else
@@ -521,7 +524,10 @@ void EntityMarionette(Entity* self) {
     case 10:
         switch (self->step_s) {
         case 0:
-#if defined(VERSION_PSP) || !defined(BOSS_IS_BO0)
+#if defined(FIX_UB)
+            // PSX and PSP read out of bounds
+            clut = g_EInitMarionette[3];
+#elif defined(VERSION_PSP) || !defined(BOSS_IS_BO0)
             dataPtr = (s16*)g_EInitMarionette;
             clut = dataPtr[11];
 #else

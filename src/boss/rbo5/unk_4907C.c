@@ -1277,11 +1277,11 @@ s16 D_us_8018192C[36][10] = {
 };
 
 #ifdef VERSION_PSP
-extern u8** g_SpriteSheet;
-extern u8** g_PlOvlDopBatSpritesheet;
+extern u8** doppleganger_sprites;
+extern u8** bat_form_sprites;
 #else
-extern u8* g_SpriteSheet[];
-extern u8** g_PlOvlDopBatSpritesheet[];
+extern u8* doppleganger_sprites[];
+extern u8** bat_form_sprites[];
 #endif
 s32 D_us_80181BFC = 0;
 
@@ -1363,10 +1363,10 @@ void EntityDopplegangerBlinkWhite(Entity* self) {
     posY = self->posY.i.hi;
 
     if (DOPPLEGANGER.animSet == (s16)ANIMSET_OVL(1)) {
-        sp58 = g_SpriteSheet[sp72];
+        sp58 = doppleganger_sprites[sp72];
     }
     if (DOPPLEGANGER.animSet == (s16)ANIMSET_OVL(2)) {
-        sp58 = g_PlOvlDopBatSpritesheet[sp72];
+        sp58 = bat_form_sprites[sp72];
     }
 
     var_s7 = 4;
@@ -1960,7 +1960,7 @@ void EntityDopplegangerOutline(Entity* self) {
     spriteIdx &= INT16_MAX;
     selfX = self->posX.i.hi;
     selfY = self->posY.i.hi;
-    spritesheetPtr = ((u8**)g_SpriteSheet)[spriteIdx];
+    spritesheetPtr = ((u8**)doppleganger_sprites)[spriteIdx];
     four = 4;
     one = 1;
     spriteX = four + spritesheetPtr[0];
@@ -3024,7 +3024,7 @@ void EntityHitByIce(Entity* self) {
 
 mistStruct D_us_801D3378[16];
 
-void func_80121F14(s32 velocityX, s32 velocityY) UNUSED {
+UNUSED void func_80121F14(s32 velocityX, s32 velocityY) {
     mistStruct* ptr = D_us_801D3378;
     s32 i;
 
@@ -3670,7 +3670,7 @@ void EntityDopplegangerDissolves(Entity* self) {
         sp38 = (s16*)D_us_801B0B50[DOPPLEGANGER.animCurFrame & 0x7FFF];
         sp42 = *sp38++;
         sp42 &= 0x7FFF;
-        plSprite = g_SpriteSheet[sp42];
+        plSprite = doppleganger_sprites[sp42];
         xMargin = 4;
         yMargin = 1;
         wSprite = xMargin + plSprite[0];

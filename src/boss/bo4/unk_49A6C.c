@@ -3024,7 +3024,7 @@ void EntityHitByIce(Entity* self) {
 
 mistStruct D_us_801D3DA0[16];
 
-void func_80121F14(s32 velocityX, s32 velocityY) UNUSED {
+UNUSED void func_80121F14(s32 velocityX, s32 velocityY) {
     mistStruct* ptr = D_us_801D3DA0;
     s32 i;
 

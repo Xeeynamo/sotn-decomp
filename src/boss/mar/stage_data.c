@@ -1,6 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
+u8 cutscene_mar_alucard[] = {
+#include "gen/cutscene_alucard.h"
+};
+u8 cutscene_mar_maria[] = {
+#include "gen/cutscene_maria.h"
+};
+
 u8 D_801830F0[] = {
 #include "gen/D_801830F0.h"
 };

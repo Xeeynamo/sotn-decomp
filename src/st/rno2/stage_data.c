@@ -109,6 +109,11 @@ u16 D_8019396C[] = {
 u16 D_80193A6C[] = {
 #include "gen/D_80193A6C.h"
 };
+#ifdef VERSION_PC
+// palette_def bulk copies 0x80 colors, PSX reads the rest from tilemaps
+u16 D_80193AAC[0x80] = {
+#else
 u16 D_80193AAC[] = {
+#endif
 #include "gen/D_80193AAC.h"
 };
