@@ -358,6 +358,160 @@ void EntitySpectralSwordAura(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rdai_psp/nonmatchings/rdai_psp/e_spectral_sword", func_us_801C17E8);
+extern EInit g_EInitSpear;
+
+void func_us_801C17E8(Entity* self) {
+    s16 sp3C;
+    s32 sp38;
+    Entity* other;
+    s32 var_s8;
+    Entity* player;
+    Pos* var_s6;
+    s32 var_s5;
+    s32 var_s4;
+    s32 var_s3;
+    u32 var_s2;
+    s16 var_s0;
+
+    if ((self->flags & 0x100) && (self->step < 8)) {
+        SetStep(8);
+    }
+    switch (self->step) {                              /* switch 1; irregular */
+    case 0:                                         /* switch 1 */
+        InitializeEntity(g_EInitSpear);
+        self->drawFlags = 4;
+        if (self->params & 0x100) {
+            self->animCurFrame = 4;
+        } else {
+            self->animCurFrame = 5;
+        }
+        SetStep(2);
+        break;
+    case 2:                                         /* switch 1 */
+        MoveEntity();
+        var_s6 = (Pos*)&self->ext.ILLEGAL.u32[3];
+        var_s4 = var_s6->x.i.hi - self->posX.i.hi;
+        var_s3 = var_s6->y.i.hi - self->posY.i.hi;
+        var_s8 = (var_s4 * var_s4) + (var_s3 * var_s3);
+        var_s8 = SquareRoot0(var_s8);
+        var_s5 = var_s8;
+        if (var_s5 > 0x38) {
+            var_s5 = 0x38;
+        }
+        var_s0 = ratan2(var_s3, var_s4);
+        self->velocityX = var_s5 * rcos(var_s0);
+        self->velocityY = var_s5 * rsin(var_s0);
+        player = &PLAYER;
+        var_s0 = GetAngleBetweenEntities(self, player);
+        var_s0 -= 0x400;
+        StepTowards(&self->rotate, var_s0, 0x10);
+        if (self->ext.ILLEGAL.u8[0x18]){
+            if(!(self->ext.ILLEGAL.u8[0x18] & 4) || !--self->ext.ILLEGAL.s16[0xD]) {
+                SetStep(4);
+            }
+        }
+        break;
+    case 4:                                         /* switch 1 */
+        switch (self->step_s) {                          /* switch 2; irregular */
+        case 0:                                     /* switch 2 */
+            if (!(self->ext.ILLEGAL.u8[0x18] & 2)) {
+                player = &PLAYER;
+                var_s0 = GetAngleBetweenEntities(self, player);
+                self->ext.ILLEGAL.s16[0xA] = var_s0;
+            }
+            self->velocityX = rcos(self->ext.ILLEGAL.s16[0xA] - 0x800) << 5;
+            self->velocityY = rsin(self->ext.ILLEGAL.s16[0xA] - 0x800) << 5;
+            sp38 = self->params & 0xFF;
+            sp38 = (sp38 * 4) / 6;
+            other = self - (self->params & 0xFF) + sp38 + 6;
+            if (self->ext.ILLEGAL.u8[24] & 2) {
+                other->ext.ILLEGAL.u8[24] = 2;
+            } else {
+                other->ext.ILLEGAL.u8[24] = 1;
+            }
+            self->step_s++;
+            break;
+        case 1:                                     /* switch 2 */
+            MoveEntity();
+            
+            var_s4 = self->velocityX -= self->velocityX / 16;
+            var_s3 = self->velocityY -= self->velocityY / 16;
+            if ((abs(var_s4) < 0x2000) && (abs(var_s3) < 0x2000)) {
+                self->step_s++;
+            }
+            var_s0 = ratan2(var_s3, var_s4);
+            var_s0 -= 0x400;
+            StepTowards(&self->rotate, var_s0, 8);
+            break;
+        case 2:                                     /* switch 2 */
+            var_s0 = self->ext.ILLEGAL.s16[0xA];
+            if (StepTowards(&self->rotate, var_s0 - 0x400, 0x20) != 0) {
+                self->velocityX = rcos(var_s0) << 7;
+                self->velocityY = rsin(var_s0) << 7;
+                self->ext.ILLEGAL.s16[2] = 0x30;
+                PlaySfxPositional(0x60A);
+                self->step_s++;
+            }
+            break;
+        case 3:                                     /* switch 2 */
+            MoveEntity();
+            var_s2 = GetSideToPlayer();
+            if (abs(self->velocityX) > abs(self->velocityY)) {
+                var_s2 &= 1;
+                if (self->velocityX < 0) {
+                    var_s2 ^= 1;
+                }
+            } else {
+                var_s2 &= 2;
+                if (self->velocityY < 0) {
+                    var_s2 ^= 2;
+                }
+            }
+            if ((var_s2) || !--self->ext.ILLEGAL.s16[2]) {
+                self->ext.ILLEGAL.u8[0x18] = 0;
+                SetStep(2);
+            }
+            break;
+        }
+        break;
+    case 8:                                         /* switch 1 */
+        switch (self->step_s) {                        /* switch 3; irregular */
+        case 0:                                     /* switch 3 */
+            other = self - 1 - (self->params & 0xFF);
+            other->ext.ILLEGAL.u8[10] -= 1;
+            self->hitboxState = 0;
+            PlaySfxPositional(0x683);
+            self->step_s++;
+            /* fallthrough */
+        case 1:                                     /* switch 3 */
+            MoveEntity();
+            self->velocityY += 0x2000;
+            if (!(g_Timer & 7)) {
+                other = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (other != NULL) {
+                    CreateEntityFromEntity(2, self, other);
+                    other->params = 1;
+                }
+            }
+            if (self->posY.i.hi > 0x140) {
+                self->step_s++;
+                self->animCurFrame = 0;
+            }
+            break;
+        case 2:                                     /* switch 3 */
+            self->animCurFrame = 0;
+            break;
+        }
+        break;
+    }
+    var_s0 = self->rotate + 0x400;
+    if (self->params & 0x100) {
+        sp3C = 0x18;
+    } else {
+        sp3C = 0x16;
+    }
+    self->hitboxOffX = ((sp3C * rcos(var_s0)) >> 0xC);
+    self->hitboxOffY = ((sp3C * rsin(var_s0)) >> 0xC);
+}
 
 INCLUDE_ASM("st/rdai_psp/nonmatchings/rdai_psp/e_spectral_sword", func_us_801C1DE8);
