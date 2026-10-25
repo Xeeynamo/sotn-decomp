@@ -514,9 +514,9 @@ void func_us_801C17E8(Entity* self) {
     self->hitboxOffY = ((sp3C * rsin(var_s0)) >> 0xC);
 }
 
-extern AnimateEntityFrame D_pspeu_09254C98[];
-extern AnimateEntityFrame D_pspeu_09254CA0[];
-extern AnimateEntityFrame D_pspeu_09254CA8[];
+static AnimateEntityFrame D_pspeu_09254C98[] = {{4, 8}, {4, 7}, {16, 6}, POSE_END};
+static AnimateEntityFrame D_pspeu_09254CA0[] = {{12, 8}, {12, 7}, {32, 6}, POSE_END};
+static AnimateEntityFrame D_pspeu_09254CA8[] = {{32, 6}, {16, 7}, {16, 8}, POSE_END};
 extern EInit g_EInitShield;
 
 void func_us_801C1DE8(Entity* self) {
