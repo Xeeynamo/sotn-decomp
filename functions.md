@@ -8317,7 +8317,7 @@
 |            | func_092EA270                     |      325 |         39 | Yes    |       |     |
 |            | func_pspeu_092E9DF0               |      325 |         39 | Yes    |       |     |
 |            | func_pspeu_092EA270               |      325 |         39 | Yes    |       |     |
-| rdai       | EntityArcherManArms               |      325 |         47 |        |       |     |
+| rdai       | func_pspeu_0923B970               |      325 |         47 |        |       |     |
 | rno4       | func_us_801C2850_from_no4         |      326 |         16 |        |       |     |
 | rnz1       | func_pspeu_09252D50               |      326 |         34 | Yes    |       |     |
 | bo0        | func_pspeu_09254C28               |      327 |          7 |        |       |     |
@@ -8476,8 +8476,8 @@
 |            | func_092E91A8                     |      351 |         21 |        |       |     |
 | nz1        | func_pspeu_092386A8               |      351 |         27 |        |       |     |
 | rno4       | func_pspeu_092567F8               |      351 |         34 |        |       |     |
-| rdai       | EntityArcherArrow                 |      351 |         42 |        |       |     |
-| rdai       | EntityArcherDeathParts            |      351 |         47 |        |       |     |
+| rdai       | func_pspeu_0923BE30               |      351 |         42 |        |       |     |
+| rdai       | func_pspeu_0923C358               |      351 |         47 |        |       |     |
 | no3        | func_pspeu_0925E610               |      352 |         30 |        |       |     |
 | no4        | func_pspeu_09254DE8               |      352 |         30 |        |       |     |
 | np3        | EntitySideWaterSplash             |      352 |         30 |        |       |     |
@@ -8699,7 +8699,7 @@
 | rno2       | func_pspeu_09253600               |      392 |         58 |        |       |     |
 | no0        | func_pspeu_09237980               |      393 |         30 |        |       |     |
 | nz0        | func_pspeu_09242188               |      393 |         30 |        |       |     |
-| rdai       | EntityArcherVehicle               |      393 |         68 |        |       |     |
+| rdai       | func_pspeu_0923AAF0               |      393 |         68 |        |       |     |
 |            | func_pspeu_092459F8               |      394 |         42 | Yes    |       |     |
 | rcen       | func_pspeu_0924DD68               |      395 |         22 | Yes    |       |     |
 | ric        | func_pspeu_092C25A0               |      395 |         25 |        |       |     |
