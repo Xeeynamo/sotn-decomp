@@ -245,10 +245,6 @@ void func_801B2108(const char* str, s32 arg1) {
         var_s6 += 0x20;
         arg1 &= ~0x200;
     }
-#ifdef VERSION_PC
-    // not implemented on PC
-    return;
-#endif
     arg1 = func_801B1EF4(arg1);
     while (*str) {
         var_s2 = 0;
