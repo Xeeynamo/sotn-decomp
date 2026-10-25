@@ -20,7 +20,7 @@ static bool StepTowards(s16* val, s32 target, s32 step) {
     return false;
 }
 
-static u8 D_us_80181914[] = {0, 1, 0, 0, 1, 0};
+static u8 spearTips[] = {0, 1, 0, 0, 1, 0};
 extern EInit g_EInitSpectralSwordRDAI;
 
 void EntitySpectralSword(Entity* self) {
@@ -63,7 +63,7 @@ void EntitySpectralSword(Entity* self) {
         for (other = self + 1, i = 0; i < 6; i++, other++) {
             CreateEntityFromCurrentEntity(E_SPECTRAL_SPEAR, other);
             other->params = i;
-            other->params |= D_us_80181914[i] << 8;
+            other->params |= spearTips[i] << 8;
         }
         for (i = 0; i < 4; i++, other++) {
             CreateEntityFromCurrentEntity(E_SPECTRAL_SHIELD, other);
