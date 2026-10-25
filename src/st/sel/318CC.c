@@ -194,10 +194,6 @@ void func_801B1FD8(char* str, s32 y) {
     s32 x;
     u8* chPix;
 
-#ifdef VERSION_PC
-    fputs("func_801B1FD8 not implemented", stderr);
-    return;
-#endif
     y = func_801B1EF4(y);
     x = 0;
     while (*str) {
@@ -433,7 +429,7 @@ void func_801B28D4(u8* str, s32 x, s32 y, s32 tge) {
             break;
         }
         func_801B27A8(
-            x, y, w, h, (ch & 0x0F) * w, (ch & 0xF0), 0x1A1, 6, tge, 0x40);
+            x, y, w, h, (ch & 0x0F) * w, ch & 0xF0, 0x1A1, 6, tge, 0x40);
         x += w;
     }
 }
