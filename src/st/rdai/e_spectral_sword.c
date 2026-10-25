@@ -302,6 +302,7 @@ void func_us_801C0C44(Entity* self) {
         var_s3 = var_s3 + (sp38 * rcos(var_s2) * 0x10);
         var_s7 = var_s7 + (sp38 * rsin(var_s2) * 0x10);
         var_s4 = -(self->ext.ILLEGAL.u8[11] / 2) * 24;
+
         for(var_s1 = 0; var_s1 < 4; var_s1++,other++) {
             if (!(other->flags & 0x100)) {
                 other->ext.ILLEGAL.s16[0xA] = var_s2;
@@ -420,9 +421,16 @@ void func_us_801C17E8(Entity* self) {
             }
             self->velocityX = rcos(self->ext.ILLEGAL.s16[0xA] - 0x800) << 5;
             self->velocityY = rsin(self->ext.ILLEGAL.s16[0xA] - 0x800) << 5;
+
+            // This whole little block is weird. The ifdef is probably solvable.
+            // There is some possibility that sp38 is a fake, but hard to be sure.
             sp38 = self->params & 0xFF;
             sp38 = (sp38 * 4) / 6;
+            #ifdef VERSION_US
             other = self - (self->params & 0xFF) + (sp38 + 6);
+            #else
+            other = self - (self->params & 0xFF) + sp38 + 6;
+            #endif
             if (self->ext.ILLEGAL.u8[24] & 2) {
                 other->ext.ILLEGAL.u8[24] = 2;
             } else {
