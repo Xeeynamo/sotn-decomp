@@ -882,12 +882,15 @@ files:
           - [0x2AE30, cmpgfx, gfx_bat, 128, 128, 4, 0x2CCB8]
           - [0x2B8F8, cmpgfx, gfx_skeleton, 128, 128, 4, 0x2CD18]
           - [0x2C458, palette, pal_21A, 16] # 0x21A
+          - [0x2C658, palette, pal_unused_12794, 16] # unused
           - [0x2C718, palette, pal_22A, 16] # 0x22A
+          - [0x2C878, palette, pal_unused_129B4, 16] # unused
           - [0x2C8B8, palette, pal_235, 16] # 0x235
           - [0x2C8F8, palette, pal_frozen_half, 16] # 0x200
           - [0x2C9B8, palette, pal_salome, 16] # 0x206
           - [0x2CB18, palette, pal_breakable, 16] # 0x237
           - [0x2CC18, palette, pal_blood_skeleton, 16] # 0x250
+          - [0x2CC98, palette, pal_unused_12DD4, 16] # unused
           - [0x2CCB8, palette, pal_bat, 16] # 0x240
           - [0x2CD18, palette, pal_skeleton, 16] # 0x260
           - [0x2CD38, skip]
