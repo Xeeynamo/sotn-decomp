@@ -2194,7 +2194,7 @@ function(add_overlay name)
         src/pc
         src/st/${name}
         src/boss/${name}
-        tools/psyz-dev/psyz/include
+        tools/psyz/psyz/include
     )
 
     target_compile_definitions(${_target} PRIVATE
