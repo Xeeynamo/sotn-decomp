@@ -1,0 +1,34 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#include "tek.h"
+
+#include <gen/tek_tilemap_0.h>
+#include <gen/tek_tilemap_1.h>
+#include <gen/tek_tilemap_2.h>
+#include <gen/tek_tilemap_3.h>
+#include <gen/tek_tilemap_4.h>
+#include <gen/tek_tilemap_5.h>
+#include <gen/tek_tilemap_6.h>
+#include <gen/tek_tilemap_7.h>
+#include <gen/tek_tilemap_8.h>
+#include <gen/tek_tilemap_9.h>
+#include <gen/tek_tilemap_10.h>
+#include <gen/tek_tilemap_11.h>
+#include <gen/tek_tilemap_12.h>
+#include <gen/tek_tilemap_13.h>
+#include <gen/tek_tilemap_14.h>
+#include <gen/tek_tilemap_15.h>
+#include <gen/tek_tilemap_16.h>
+#include <gen/tek_tilemap_17.h>
+#include <gen/tek_tilemap_18.h>
+#include <gen/tek_tilemap_19.h>
+#include <gen/tek_tilemap_20.h>
+#include <gen/tek_tilemap_21.h>
+#include <gen/tek_tilemap_22.h>
+#include <gen/tek_tilemap_23.h>
+#include <gen/tek_tilemap_24.h>
+#include <gen/tek_tilemap_25.h>
+#include <gen/tek_tilemap_26.h>
+#include <gen/tek_tilemap_27.h>
+#include <gen/tek_tiledef_tek.h>
+#include <gen/tek_tiledef_load.h>
+#include <gen/tek_tiledef_unused_1.h>
