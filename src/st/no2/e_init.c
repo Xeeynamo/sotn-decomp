@@ -35,9 +35,9 @@ void func_us_801B4DA4(Entity* self);
 void EntitySpikes(Entity* self);
 void EntitySpikesParts(Entity* self);
 void EntitySpikesDust(Entity* self);
-void func_us_801B5FB8(Entity* self);
-void func_us_801B68EC(Entity* self);
-void func_us_801B65A4(Entity* self);
+void EntitySecretWall(Entity* self);
+void EntitySecretCeiling(Entity* self);
+void EntitySecretWallDebris(Entity* self);
 void EntityBigRedFireball(Entity* self);
 void EntityPrisoner(Entity* self);
 void EntityOwlKnight(Entity* self);
@@ -102,9 +102,9 @@ PfnEntityUpdate EntityUpdates[] = {
     EntitySpikes,
     EntitySpikesParts,
     EntitySpikesDust,
-    func_us_801B5FB8,
-    func_us_801B68EC,
-    func_us_801B65A4,
+    EntitySecretWall,
+    EntitySecretCeiling,
+    EntitySecretWallDebris,
     EntityBigRedFireball,
     EntityPrisoner,
     EntityOwlKnight,

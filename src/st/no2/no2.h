@@ -59,9 +59,9 @@ enum EntityID {
     E_SPIKES,               // EntitySpikes
     E_SPIKES_PARTS,         // EntitySpikesParts
     E_SPIKES_DUST,          // EntitySpikesDust
-    E_UNK_24,               // func_us_801B5FB8
-    E_UNK_25,               // func_us_801B68EC
-    E_UNK_26,               // func_us_801B65A4
+    E_SECRET_WALL,          // EntitySecretWall
+    E_SECRET_CEILING,       // EntitySecretCeiling
+    E_SECRET_WALL_DEBRIS,   // EntitySecretWallDebris
     E_BIG_RED_FIREBALL,     // EntityBigRedFireball
     E_PRISONER,             // EntityPrisoner
     E_OWL_KNIGHT,           // EntityOwlKnight
