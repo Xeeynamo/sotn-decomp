@@ -1,23 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../rno4/rno4.h"
+#include "rno4.h"
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", RNO4_Unused801C8768);
+INCLUDE_ASM("st/rno4/nonmatchings/first_c_file", func_us_801C12B0_from_no4);
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", RNO4_Unused801C8770);
-
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", EntityBoatElevatorChains);
-
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", RNO4_Unused801C8BD4);
-
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", RNO4_Unused801C8BDC);
-
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", LoadFerrymanGateTiles);
-
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C8C54);
-
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C12B0_from_no4);
-
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C15F8_from_no4);
+INCLUDE_ASM("st/rno4/nonmatchings/first_c_file", func_us_801C15F8_from_no4);
 
 extern u8 D_us_80181084[2];
 extern s16 D_us_80181280[50]; // unknown size?
@@ -180,12 +166,12 @@ void func_us_801C5364(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", EntityBgColumnsParallax_from_no4);
+INCLUDE_ASM("st/rno4/nonmatchings/first_c_file", EntityBgColumnsParallax_from_no4);
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C1EE4_from_no4);
+INCLUDE_ASM("st/rno4/nonmatchings/first_c_file", func_us_801C1EE4_from_no4);
 
 extern Tilemap* D_pspeu_0929B8B8; // This variable is assigned to a different
-// var that is never used
+                                  // var that is never used
 
 void func_us_801C5C78(Entity* self) {
     Primitive* prim;
@@ -436,27 +422,73 @@ void func_us_801C5EE4(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C2850_from_no4);
+INCLUDE_ASM("st/rno4/nonmatchings/first_c_file", func_us_801C2850_from_no4);
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C2B78_from_no4);
+INCLUDE_ASM("st/rno4/nonmatchings/first_c_file", func_us_801C2B78_from_no4);
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C2E60_from_no4);
+INCLUDE_ASM("st/rno4/nonmatchings/first_c_file", func_us_801C2E60_from_no4);
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C3160_from_no4);
+INCLUDE_ASM("st/rno4/nonmatchings/first_c_file", func_us_801C3160_from_no4);
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C34EC_from_no4);
+INCLUDE_ASM("st/rno4/nonmatchings/first_c_file", func_us_801C34EC_from_no4);
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C37C8_from_no4);
+INCLUDE_ASM("st/rno4/nonmatchings/first_c_file", func_us_801C37C8_from_no4);
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C3A04_from_no4);
+INCLUDE_ASM("st/rno4/nonmatchings/first_c_file", func_us_801C3A04_from_no4);
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C3CC4_from_no4);
+INCLUDE_ASM("st/rno4/nonmatchings/first_c_file", func_us_801C3CC4_from_no4);
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C3FB0_from_no4);
+INCLUDE_ASM("st/rno4/nonmatchings/first_c_file", func_us_801C3FB0_from_no4);
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C4228_from_no4);
+INCLUDE_ASM("st/rno4/nonmatchings/first_c_file", func_us_801C4228_from_no4);
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", EntityWaterBox);
+void EntityWaterBox(Entity* self) {
+    Entity* player;
+    u16 collision;
+    if (!self->step) {
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = 6;
+        if (g_CastleFlags[NO4_WATER_BLOCKED]) {
+            self->posX.i.hi = 0x720 - g_Tilemap.scrollX.i.hi;
+        } else {
+            self->posX.i.hi = 0x760 - g_Tilemap.scrollX.i.hi;
+        }
+    }
+
+    player = &PLAYER;
+    collision = GetPlayerCollisionWith(self, 0x10, 0x11, 5);
+    if ((collision & 1) && (g_Player.vram_flag & TOUCHING_GROUND)) {
+        if (self->posX.i.hi > player->posX.i.hi) {
+            if ((g_pads[0].pressed & PAD_RIGHT) && (PLAYER.step == 1)) {
+                if (self->ext.timer.t) {
+                    self->ext.timer.t--;
+                    return;
+                }
+                if (self->posX.i.hi + g_Tilemap.scrollX.i.hi < 0x7A0) {
+                    self->posX.i.hi++;
+                    player->posX.i.hi++;
+                }
+                self->ext.timer.t = 3;
+            }
+        } else {
+            if ((g_pads[0].pressed & PAD_LEFT) && (PLAYER.step == 1)) {
+                if (self->ext.timer.t) {
+                    self->ext.timer.t--;
+                    return;
+                }
+                if (self->posX.i.hi + g_Tilemap.scrollX.i.hi > 0x720) {
+                    self->posX.i.hi--;
+                    player->posX.i.hi--;
+                    if (self->posX.i.hi + g_Tilemap.scrollX.i.hi == 0x720) {
+                        g_CastleFlags[NO4_WATER_BLOCKED] = 1;
+                    }
+                }
+                self->ext.timer.t = 3;
+            }
+        }
+    }
+}
 
 #ifdef VERSION_PSP
 extern s32 E_ID(UNK_26);
@@ -567,7 +599,7 @@ void EntityFloatingIcePlatform(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C4BD8_from_no4);
+INCLUDE_ASM("st/rno4/nonmatchings/first_c_file", func_us_801C4BD8_from_no4);
 
 void func_us_801C8668(Entity* self) {
     s32 i;
@@ -595,17 +627,20 @@ void func_us_801C8668(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", RNO4_Unused801C8704);
+void RNO4_Unused801C8704(void) {}
 
 void func_us_801C870C(Entity* self) {
     s16 i;
     u16* tilePtr;
-    if (!self->params) {
+
+    if (self->params == 0) {
         tilePtr = g_Tilemap.fg + 0x143;
     } else {
         tilePtr = g_Tilemap.fg + 0x53;
     }
+
     for (i = 0; i < 0xA; ++i) {
-        *(tilePtr++) = 0;
+        tilePtr[0] = 0;
+        ++tilePtr;
     }
 }

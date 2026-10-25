@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "rno4.h"
+#include "../rno4/rno4.h"
 
-INCLUDE_ASM("st/rno4/nonmatchings/unk_55D5C", StepTowards);
+INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/e_cave_troll", StepTowards);
 
 void func_us_801D5DC8(Primitive* prim) {
     s32 yPos;
@@ -26,6 +26,8 @@ void func_us_801D5DC8(Primitive* prim) {
         return;
     }
 }
+
+extern Primitive* FindFirstUnkPrim(Primitive*);
 
 extern EInit g_EInitCaveTroll;
 extern s16 D_us_80182344[];
@@ -519,4 +521,4 @@ void func_us_801D68E0(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno4/nonmatchings/unk_55D5C", func_us_801D6B8C);
+INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/e_cave_troll", func_us_801D6B8C);

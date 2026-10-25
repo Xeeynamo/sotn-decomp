@@ -17,6 +17,7 @@ extern LayoutEntity** g_pStObjLayoutVertical;
 
 // clang-format off
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
+EInit g_EInitParticle = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NONE, ENEMY_PARTICLE};
 // clang-format on
 EInit g_EInitDamageNum;
 static SpriteParts* s_SpriteBanks[] = {NULL};
