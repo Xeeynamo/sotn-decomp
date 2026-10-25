@@ -301,8 +301,8 @@ void func_us_801C0C44(Entity* self) {
         }
         var_s3 = var_s3 + (sp38 * rcos(var_s2) * 0x10);
         var_s7 = var_s7 + (sp38 * rsin(var_s2) * 0x10);
-        var_s5 = self->ext.ILLEGAL.u8[11] / 2;
-        var_s4 = -var_s5 * 24;
+        var_s4 = -(self->ext.ILLEGAL.u8[11] / 2) * 24;
+
         for(var_s1 = 0; var_s1 < 4; var_s1++,other++) {
             if (!(other->flags & 0x100)) {
                 other->ext.ILLEGAL.s16[0xA] = var_s2;
