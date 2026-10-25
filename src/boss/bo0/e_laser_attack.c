@@ -174,7 +174,7 @@ void EntityLaserAttack(Entity* self) {
         InitializeEntity(g_EInitLaserAttack);
         self->hitboxHeight = 0x38;
         self->hitboxOffY = -0x38;
-        primIndex = g_api.func_800EDB58(4, 0x30);
+        primIndex = g_api.func_800EDB58(PRIM_GT4, 0x30);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
