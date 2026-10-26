@@ -75,7 +75,7 @@ segments:
       - [0x1CF10, c, rno4_psp/e_ferryman]
       - [0x1D770, c, rno4_psp/first_c_file]
       - [0x22680, data]
-      - [0x22890, .data, rno4/e_balloon_pod]
+      - [0x22830, .data, rno4/e_balloon_pod]
       - [0x228A0, data]
       - [0x22D18, .data, rno4_psp/e_cave_troll]
       - [0x22D38, data]

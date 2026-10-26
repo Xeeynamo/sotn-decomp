@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 extern EInit g_EInitBalloonPod;
-extern u8 g_RdaiUnk33Anim2[];
-extern u8 g_RdaiUnk33Anim3[];
-extern u8 g_RdaiUnk33Anim4[];
-extern u8 g_RdaiUnk33Anim5[];
+static AnimateEntityFrame g_RdaiUnk33Anim2[] = {{4, 19}, {4, 20}, {4, 21}, {4, 22}, {4, 23}, {4, 24}, {4, 25}, {4, 26}, POSE_LOOP(0)};
+static AnimateEntityFrame g_RdaiUnk33Anim3[] = {{4, 21}, {4, 27}, {4, 28}, {4, 29}, {4, 30}, {4, 31}, POSE_END};
+static AnimateEntityFrame g_RdaiUnk33Anim4[] = {{4, 32}, {4, 33}, {4, 34}, {4, 35}, {4, 36}, {4, 35}, {4, 34}, {4, 33}, POSE_LOOP(0)};
+static AnimateEntityFrame g_RdaiUnk33Anim5[] = {{4, 34}, {4, 37}, {4, 38}, {4, 39}, {4, 40}, {4, 41}, POSE_END};
+static AnimateEntityFrame g_ImpDeathParticleAnim[] = {{4, 42}, {4, 43}, {4, 44}, {4, 43}, POSE_LOOP(0)};
 
 void EntityBalloonPod(Entity* self) {
     Entity* entity;
@@ -90,7 +91,6 @@ void EntityBalloonPod(Entity* self) {
 }
 
 extern EInit g_EInitImpDeathParticle;
-extern u8 g_ImpDeathParticleAnim[];
 
 void EntityImpDeathParticle(Entity* self) {
     s32 speed;
