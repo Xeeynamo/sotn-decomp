@@ -114,13 +114,8 @@ void EntityBalloonPodSeed(Entity* self) {
         if (self->velocityY < FIX(0.5)) {
             self->velocityY += FIX(0.03125);
         }
-#if defined(VERSION_PSP)
         angle = self->rotate += ROT(11.25);
         self->velocityX = (rcos(angle) << 15) >> 12;
-#else
-        self->rotate += ROT(11.25);
-        self->velocityX = (rcos(self->rotate) << 15) >> 12;
-#endif
         break;
     }
 }
