@@ -1,15 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 static AnimationFrame D_us_80180F8C[] = {
-    {8, 8}, {8, 9}, {8, 10}, {8, 11}, {-1, 0}};
-#ifdef BOSS_IS_BO0
-// n.b.! this seems like an incorrect symbol, likely an object that wasn't
-//       recompiled after symbols shifted
-extern AnimationFrame PrizeDrops[];
-#define ANIMATION PrizeDrops
-#else
-#define ANIMATION D_us_80180F8C
-#endif
+    POSE(8, 8, 0), POSE(8, 9, 0), POSE(8, 10, 0), POSE(8, 11, 0), POSE_END};
 
 // check if "sit" has been triggered
 static s32 func_us_801BEDD8(Entity* self) {
@@ -134,7 +126,7 @@ void func_us_801B81E8(Entity* self) {
         self->palette = PAL_FLAG(PAL_UNK_19F);
         self->pose = 0;
         self->poseTimer = 0;
-        self->anim = ANIMATION;
+        self->anim = D_us_80180F8C;
         self->posY.i.hi -= 16;
         self->posX.val += self->velocityX << 5;
         self->facingLeft = false;
