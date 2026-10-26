@@ -45,7 +45,7 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, rno4/create_entity]
-      - [0x1028, c, rno4_psp/e_blue_venus_weed]
+      - [0x1028, c, rno4/e_blue_venus_weed]
       - [0x3B78, c, rno4_psp/e_balloon_pod]
       - [0x4180, c, rno4_psp/e_bomb_knight]
       - [0x5A10, c, rno4_psp/e_cave_troll]
@@ -74,7 +74,7 @@ segments:
       - [0x1C5C0, c, rno4_psp/e_secrets]
       - [0x1CF10, c, rno4_psp/e_ferryman]
       - [0x1D770, c, rno4_psp/first_c_file]
-      - [0x22680, .data, rno4_psp/e_blue_venus_weed]
+      - [0x22680, .data, rno4/e_blue_venus_weed]
       - [0x22830, data]
       - [0x22D18, .data, rno4_psp/e_cave_troll]
       - [0x22D38, data]
@@ -97,7 +97,7 @@ segments:
       - [0x63C10, .data, rno4/e_lock_camera]
       - [0x63C88, .data, rno4/e_killer_fish]
       - [0x63CF8, data, 63CF8]
-      - [0x64300, .rodata, rno4_psp/e_blue_venus_weed]
+      - [0x64300, .rodata, rno4/e_blue_venus_weed]
       - [0x64398, .rodata, rno4_psp/e_cave_troll]
       - [0x643C0, .rodata, rno4_psp/e_red_door]
       - [0x643D8, .rodata, rno4_psp/e_jack_o_bones]
