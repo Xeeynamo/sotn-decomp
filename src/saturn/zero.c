@@ -3034,8 +3034,8 @@ void func_0600C628(u16* src, s32 count) {
 }
 
 void func_0600C6AC(u16* arg0, u16* arg1) {
-    func_0600C880(0x13B00, arg1, 0x240);
-    func_0600C880(0x13E00, arg0, 0x2980);
+    func_0600C880(0x9D * 0x200 + 0x100, arg1, 0x240);
+    func_0600C880(0x9F * 0x200 + 0x0, arg0, 0x2980);
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C6E4, func_0600C6E4);
@@ -3044,7 +3044,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C6E4, func_0600C6E4);
 void SetGameoverToFrameBuffer(u16* arg0, u16* arg1) {
     s32 offset;
 
-    offset = 0x16800;
+    offset = 0xB4 * 0x200 + 0x0;
     offset = func_0600C880(offset, arg1, 0x20);
     func_0600C880(offset, arg0, 0x1400);
 }
@@ -3146,20 +3146,20 @@ s32 func_0600C99C(u16* dst, s32 offset, u32 len) {
 // original name: ClearFrameBuffer
 void ClearFrameBuffer(u16 clearColor) {
     u16* ptr;
-    s32 x, y;
+    s32 col, row;
 
-    for (y = 0; y < 0xF0; y++) {
-        ptr = func_0600CB04(0, y);
-        for (x = 0; x < 0x140; x++) {
+    for (row = 0; row < 0xF0; row++) {
+        ptr = func_0600CB04(0, row);
+        for (col = 0; col < 0x140; col++) {
             *ptr++ = clearColor;
         }
     }
 }
 
-u16* func_0600CB04(s32 x, s32 y) {
+u16* func_0600CB04(s32 col, s32 row) {
     u16* base = FBUF_ADDR;
 
-    return &base[0x200 * y + x];
+    return &base[0x200 * row + col];
 }
 
 u16* func_0600CB20(s32 offset) {
