@@ -212,6 +212,7 @@ extern Tilemap g_Tilemap;
 extern Pad g_pads[];
 extern MenuNavigation g_MenuNavigation;
 extern s32 g_PlayableCharacter;
+extern s32 DAT_0605CEAC;
 extern u8 g_CastleFlags[];
 extern s32 currentMusicId;
 extern s32 g_Servant;

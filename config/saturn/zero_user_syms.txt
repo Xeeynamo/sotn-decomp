@@ -221,6 +221,7 @@ _SYS_GetUintMacSave = 0x06030B88;
 _func_06030df0 = 0x06030DF0;
 ___sdivsi3 = 0x06030E6C;
 ___ashlsi3 = 0x06030F0C;
+___movstr = 0x06030FFC;
 ___udivsi3 = 0x06031048;
 ___adddf3 = 0x060315A8;
 ___subdf3 = 0x06031608;

@@ -3336,9 +3336,34 @@ void func_0600D6C0(void) {
     DAT_060485C0.unk0 = Crc32(0x1120, &DAT_060485C0.unk4);
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D6EC, LoadGameState);
+// 0x0600D6EC
+s32 LoadGameState(void) {
+    u16 i;
 
-extern char DAT_0600D8B0[];
+    if (DAT_060485C0.unk0 == Crc32(0x1120, &DAT_060485C0.unk4)) {
+        g_Status = DAT_060485C0.unk10;
+        g_MenuNavigation = DAT_060485C0.unk35C;
+        g_Settings = DAT_060485C0.unk3A8;
+        g_CurrentRoom = DAT_060485C0.unk4B8;
+        g_Tilemap = DAT_060485C0.unk4CC;
+        D_8003C708 = DAT_060485C0.unk504;
+        for (i = 0; i < 0x300; i++) {
+            g_CastleFlags[i] = DAT_060485C0.unk50C[i];
+        }
+        for (i = 0; i < 0x800; i++) {
+            g_CastleMap[i] = DAT_060485C0.unk80C[i];
+        }
+        g_GameClearFlag = DAT_060485C0.unk100C;
+        g_Servant = DAT_060485C0.unk1010;
+        g_PlayableCharacter = DAT_060485C0.unk1014;
+        DAT_0605CEAC = DAT_060485C0.unk1018;
+        g_RoomCount = DAT_060485C0.unk101C;
+        g_randomNext = DAT_060485C0.unk1020;
+        return 0;
+    } else {
+        return 8;
+    }
+}
 
 void func_0600D8BC(void) {
     switch (DAT_0605cea0.unk0) {
@@ -3350,7 +3375,7 @@ void func_0600D8BC(void) {
 
     case 1:
         MoviePRGClear();
-        ReadFileToAddr(DAT_0600D8B0, 0x06066000);
+        ReadFileToAddr("GAME.PRG", 0x06066000);
         func_0601B1CC();
         DAT_0605cea0.unk0++;
         /* fallthrough */
