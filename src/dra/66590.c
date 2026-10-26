@@ -124,7 +124,11 @@ void DrawEntitiesHitbox(s32 drawMode) {
     }
 }
 
+#ifdef VERSION_PC
+u16 g_CharBuffer[0x42]; // needs  more space on PC
+#else
 u16 g_CharBuffer[0x30];
+#endif
 
 u16 g_SjisPages[] = {
 #ifndef VERSION_US

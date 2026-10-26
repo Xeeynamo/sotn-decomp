@@ -2,14 +2,11 @@
 extern EInit g_EInitSlinger;
 extern EInit g_EInitMarionette;
 
-#ifdef STAGE_IS_NO0
-#define SPRITES sprites_no0_8
-#else // BO0
-#define SPRITES sprites_bo0_8
+#ifndef SPRITES
+#error "SPRITES must be defined before including this file"
 #endif
 
 extern s16* SPRITES[];
-
 static s16 D_us_80181FE8[] = {28, -28, 8};
 static s16 D_us_80181FF0[] = {0, 28, 0, 4, 8, -4, -16, 0};
 static s16 D_us_80182000[] = {0x60, 0x80, 0xC0, 0x80};
