@@ -9,10 +9,6 @@ extern u8 g_RdaiUnk33Anim5[];
 extern char g_RdaiUnk33DebugText[];
 #endif
 
-#ifndef BALLOON_POD_DEATH_PARTICLE
-#define BALLOON_POD_DEATH_PARTICLE E_IMP_DEATH_PARTICLE
-#define BALLOON_POD_LOCAL_DEATH_PARTICLE
-#endif
 #if defined(VERSION_PSP)
 #define BALLOON_POD_PAD_PRESSED g_pads[1].pressed
 #else
@@ -55,7 +51,7 @@ void EntityBalloonPod(Entity* self) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(
-                        BALLOON_POD_DEATH_PARTICLE, self, entity);
+                        E_IMP_DEATH_PARTICLE, self, entity);
                 }
             }
             DestroyEntity(self);
@@ -72,7 +68,7 @@ void EntityBalloonPod(Entity* self) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(
-                        BALLOON_POD_DEATH_PARTICLE, self, entity);
+                        E_IMP_DEATH_PARTICLE, self, entity);
                 }
             }
             DestroyEntity(self);
@@ -108,10 +104,6 @@ void EntityBalloonPod(Entity* self) {
 }
 
 #undef BALLOON_POD_PAD_PRESSED
-#ifdef BALLOON_POD_LOCAL_DEATH_PARTICLE
-#undef BALLOON_POD_DEATH_PARTICLE
-#undef BALLOON_POD_LOCAL_DEATH_PARTICLE
-#endif
 
 extern EInit g_EInitImpDeathParticle;
 extern u8 g_ImpDeathParticleAnim[];
