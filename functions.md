@@ -8592,7 +8592,7 @@
 | rtop       | func_pspeu_09247910               |      369 |         54 |        |       |     |
 | are        | func_pspeu_09237C48               |      369 |         55 |        |       |     |
 | rare       | func_pspeu_09237AB0               |      369 |         55 |        |       |     |
-| rdai       | func_us_801C1DE8                  |      371 |         60 |        |       |     |
+| rdai       | EntitySpectralSwordShield         |      371 |         60 |        |       |     |
 | no0        | func_pspeu_0925F880               |      372 |         50 |        |       |     |
 | no3        | func_pspeu_0923D428               |      372 |         50 |        |       |     |
 | np3        | EntityExplosionPuffOpaque         |      372 |         50 |        |       |     |
@@ -9256,7 +9256,7 @@
 | dra        | func_psp_091190E0                 |      573 |         58 |        |       |     |
 | no1        | func_pspeu_09255080               |      573 |         63 | Yes    |       |     |
 | no2        | func_pspeu_092556A0               |      574 |         63 | Yes    |       |     |
-| rdai       | func_us_801C17E8                  |      574 |         83 |        |       |     |
+| rdai       | EntitySpectralSwordSpear          |      574 |         83 |        |       |     |
 | cat        | func_pspeu_09243F28               |      580 |         75 | Yes    |       |     |
 | lib        | func_psp_09240860                 |      580 |         75 | Yes    |       |     |
 | rno2       | func_pspeu_09246110               |      580 |         75 | Yes    |       |     |
@@ -9819,7 +9819,7 @@
 | bo0        | func_us_801AE858                  |     1069 |         81 |        |       |     |
 |            | func_pspeu_092489E0               |     1071 |         91 |        |       |     |
 | rbo2       | func_us_8019DA04                  |     1072 |        154 | Yes    |       |     |
-| rdai       | func_us_801C0C44                  |     1076 |        142 | Yes    |       |     |
+| rdai       | EntitySpectralSword               |     1076 |        142 | Yes    |       |     |
 | dai        | func_pspeu_0924A8A0               |     1077 |        150 | Yes    |       |     |
 |            | func_pspeu_092499D0               |     1079 |        150 | Yes    |       |     |
 | lib        | func_psp_0926BE68                 |     1080 |        118 | Yes    |       |     |
