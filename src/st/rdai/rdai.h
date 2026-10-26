@@ -81,7 +81,7 @@ enum EntityID {
     E_BREAKABLE_DEBRIS,     // EntityBreakableDebris
     E_BLACK_PANTHER,        // EntityBlackPanther
     E_BALLOON_POD,          // EntityBalloonPod
-    E_BALLOON_POD_SEED,   // EntityBalloonPodSeed
+    E_BALLOON_POD_SEED,     // EntityBalloonPodSeed
     NUM_ENTITIES,
 };
 

@@ -98,7 +98,6 @@ g_RdaiUnk33Anim2 = 0x09259EB0;
 g_RdaiUnk33Anim3 = 0x09259EC8;
 g_RdaiUnk33Anim4 = 0x09259ED8;
 g_RdaiUnk33Anim5 = 0x09259EF0;
-g_ImpDeathParticleAnim = 0x09259F00;
 g_RdaiUnk33DebugText = 0x09259F10;
 D_us_80182344 = 0x0925A2F8;
 D_us_80182364 = 0x0925A308;

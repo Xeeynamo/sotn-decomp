@@ -4176,9 +4176,10 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ u32 : 32;
-    /* 0x80 */ u32 : 32;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ u16 : 16;
     /* 0x84 */ u8 deathStarted;
-} ET_RdaiUnk33;
+} ET_BalloonPod;
 
 typedef struct {
     /* 0x7C */ u8 throwTimer;
@@ -5067,7 +5068,7 @@ typedef union { // offset=0x7C
     ET_PlatformUnk platformUnk;
     ET_FloatingIcePlatform floatingIcePlatform;
     ET_BladeSoldierDeathParts bladeSoldierDeathParts;
-    ET_RdaiUnk33 rdaiUnk33;
+    ET_BalloonPod balloonPod;
     ET_JackOBones jackoBones;
     ET_NovaSkeleton nova;
     ET_Orobourous orob;
