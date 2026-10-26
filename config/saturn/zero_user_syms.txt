@@ -391,6 +391,7 @@ _g_Tilemap = 0x0605CE50; /* size = 0x38 */
 _DAT_0605cea0 = 0x0605CEA0;
 _g_CastleMap = 0x0605CEC0;
 _D_8003C744 = 0x0605D740;
+_g_canRevealMap = 0x0605D744;
 _g_CurrentRoom = 0x0605D750; /* size = 0x14 */
 _g_GameClearFlag = 0x0605D784;
 _g_MenuNavigation = 0x0605D790; /* size = 0x4C */

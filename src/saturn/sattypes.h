@@ -281,9 +281,6 @@ typedef struct {
 } ET_ExplosionPuffOpaque;
 
 typedef struct {
-#ifdef PLATFORM_64BIT
-    s32 _align_parent[2];
-#endif
     /* 0x7C */ s16 timer;
     /* 0x7E */ s16 crashIndex;
     /* 0x80 */ s32 : 32;

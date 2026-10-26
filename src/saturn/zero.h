@@ -333,7 +333,7 @@ typedef struct {
     s16 a;
 } Unk0605C6D8;
 extern Unk0605C6D8 DAT_0605C6D8;
-extern u16 DAT_0605D744;
+extern u16 g_canRevealMap;
 extern s32 DAT_0605D764;
 extern Unk0605D770 DAT_0605D770;
 

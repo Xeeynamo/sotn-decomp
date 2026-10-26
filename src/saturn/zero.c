@@ -1428,8 +1428,8 @@ s32 func_06007714(void) {
 extern Unk0600654C DAT_06038AAC;
 extern Unk0600654C DAT_06038AEC;
 
-char* WEAPON1_PRG;
-char* WEAPON1_CHR;
+extern char WEAPON1_PRG[];
+extern char WEAPON1_CHR[];
 
 void func_06007824(s32 arg0, s32 arg1) {
     if ((g_FileLoadEnabled == 0) || (arg1 > 0x3F)) {
@@ -1443,9 +1443,9 @@ void func_06007824(s32 arg0, s32 arg1) {
             DAT_06038AEC.unk0 = DAT_06006F90;
             DAT_06038AEC.unk4 = VRAM_ADDR + 0x1D980;
         } else {
-            DAT_06038AAC.unk0 = &WEAPON1_PRG;
+            DAT_06038AAC.unk0 = WEAPON1_PRG;
             DAT_06038AAC.unk4 = 0x060D9000;
-            DAT_06038AEC.unk0 = &WEAPON1_CHR;
+            DAT_06038AEC.unk0 = WEAPON1_CHR;
             DAT_06038AEC.unk4 = VRAM_ADDR + 0x21980;
         }
         func_06006574(&DAT_06038AAC);
@@ -3346,7 +3346,88 @@ void MoviePRGClear(void) { memset(0x06066000, 0, 0x9A000); }
 void func_0600DAB4(void) { InitPrimBuf(); }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DACC, InitPrimBuf);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DB38, func_0600DB38);
+
+// 0x0600DB38
+s32 AllocPrimitives(s32 type, s32 count) {
+    s32 freeIndex;
+    s32 var_r8;
+    Primitive* sp10;
+    Primitive* prim;
+    s32 i, j;
+    u16 var_r1;
+
+    if ((DAT_06061DD4 + count) > 0x200) {
+        return -1;
+    }
+
+    var_r1 = type & 0x8000 ? 4 : 0;
+
+    switch (type & ~0x8000) {
+    case 0:
+        var_r8 = 0x1000;
+        var_r1 |= 0x488;
+        break;
+    case 1:
+        var_r8 = 0x1001;
+        var_r1 |= 0x1488;
+        break;
+    case 2:
+        var_r8 = 0x1002;
+        var_r1 |= 0x1488;
+        break;
+    case 3:
+        var_r8 = 0x1004;
+        var_r1 |= 0x4C0;
+        break;
+    case 4:
+        var_r8 = 0x1005;
+        var_r1 |= 0x4C0;
+        break;
+    case 5:
+        var_r8 = 0x1006;
+        var_r1 |= 0x4C0;
+        break;
+    case 6:
+        var_r8 = 0xF;
+        var_r1 = 0;
+        break;
+    case 7:
+        var_r8 = 0x1008;
+        var_r1 = 0;
+        break;
+    case 8:
+        var_r8 = 0x1009;
+        var_r1 = 0;
+        break;
+    case 9:
+        var_r8 = 0x100A;
+        var_r1 = 0;
+        break;
+    }
+    prim = &g_PrimBuf[0];
+    sp10 = prim;
+    j = 0;
+    for (i = 0; i < count; i++) {
+        for (; j < 0x200; j++, prim++) {
+            if (prim->drawMode == 0xFFFF) {
+                memset(prim, 0, 0x1C);
+                prim->drawMode = 0;
+                prim->type = var_r8;
+                prim->unk4 = var_r1;
+                if (i == 0) {
+                    freeIndex = j;
+                } else {
+                    sp10->next = prim;
+                }
+                sp10 = prim;
+                break;
+            }
+        }
+    }
+    DAT_06061DD4 += count;
+    prim->next = NULL;
+    return freeIndex;
+}
 
 // original name: free_effect
 void func_0600DCA4(s32 arg0) {
@@ -4096,7 +4177,7 @@ void func_0600FC04(void) {
     s32 subMap;
     s32 idx;
 
-    if (DAT_0605D744 != 0 && g_CurrentRoom.stageID != 0x1F) {
+    if (g_canRevealMap && g_CurrentRoom.stageID != 0x1F) {
         tileX = g_Tilemap.left + (g_PlayerX / 320);
         tileY = g_Tilemap.top + (g_PlayerY / 256);
         if (g_CurrentRoom.stageID & 0x20) {
@@ -4212,7 +4293,21 @@ void RevealSecretPassageAtPlayerPositionOnMap(s32 castleFlagId) {
 
 void func_800F2120(void) {}
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FF08, SetCanRevealMap);
+void SetCanRevealMap(void) {
+    g_canRevealMap = true;
+    if ((g_CurrentRoom.stageID == 0x41) && (g_CurrentRoom.unk4 == 0x12)) {
+        g_canRevealMap = false;
+    }
+    if (g_CurrentRoom.stageID == 0x1F) {
+        g_canRevealMap = false;
+    }
+    if (g_CurrentRoom.stageID == 0x12) {
+        g_canRevealMap = false;
+    }
+    if (g_CurrentRoom.stageID == 0x38) {
+        g_canRevealMap = false;
+    }
+}
 
 void func_0600FF64(s16 arg0) {
     s32 i;
