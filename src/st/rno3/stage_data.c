@@ -85,6 +85,13 @@ u16 pal_jacko_bones[] = {
 u16 pal_nova_skeleton[] = {
 #include <gen/pal_nova_skeleton.h>
 };
+#ifdef VERSION_PC
+// palette_def bulk copies 0x50 colors, PSX reads the rest from pal_unused
+u16 pal_dragons[] = {
+#include <gen/pal_dragons.h>
+#include <gen/pal_unused.h>
+};
+#else
 u16 pal_dragons[] = {
 #include <gen/pal_dragons.h>
 };
@@ -94,6 +101,7 @@ u16 pal_dragons[] = {
 u16 pal_unused[] = {
 #include <gen/pal_unused.h>
 };
+#endif
 #endif
 u16 pal_venus_weed[] = {
 #include <gen/pal_venus_weed.h>

@@ -24,5 +24,7 @@ AbbreviatedOverlay2 g_Overlay = {
     .gfxBanks = gfxBanks,
     .UpdateStageEntities = UpdateStageEntities,
     .unk2C = NULL,
+#ifndef VERSION_PC // check stage_top.c with the reasoning for this fix
     .unk30 = richter_sprites,
+#endif
 };

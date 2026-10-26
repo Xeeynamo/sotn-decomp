@@ -295,7 +295,7 @@ void EntityRain(Entity* self) {
                     if (PrimLine(prim)->next == NULL) {
                         self->ext.et_801B7188.unk80 = prim;
                     }
-                    PrimLine(prim) = PrimLine(prim)->next;
+                    prim = (Primitive*)PrimLine(prim)->next;
                 }
             }
             if (weatherMode == WEATHER_FOG) {
@@ -390,7 +390,7 @@ void EntityRain(Entity* self) {
                         PrimLine(prim)->yLength + PrimLine(prim)->y0;
                 }
                 i++;
-                PrimLine(prim) = PrimLine(prim)->next;
+                prim = (Primitive*)PrimLine(prim)->next;
             }
             prim = self->ext.et_801B7188.unk80;
             prim->drawMode = DRAW_DEFAULT;

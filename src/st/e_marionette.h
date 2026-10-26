@@ -2,14 +2,11 @@
 extern EInit g_EInitSlinger;
 extern EInit g_EInitMarionette;
 
-#ifdef STAGE_IS_NO0
-#define SPRITES sprites_no0_8
-#else // BO0
-#define SPRITES sprites_bo0_8
+#ifndef SPRITES
+#error "SPRITES must be defined before including this file"
 #endif
 
 extern s16* SPRITES[];
-
 static s16 D_us_80181FE8[] = {28, -28, 8};
 static s16 D_us_80181FF0[] = {0, 28, 0, 4, 8, -4, -16, 0};
 static s16 D_us_80182000[] = {0x60, 0x80, 0xC0, 0x80};
@@ -186,9 +183,12 @@ void EntityMarionette(Entity* self) {
     if ((self->flags & FLAG_DEAD) && self->step < 10) {
         self->hitboxState = 0;
 #ifndef BOSS_IS_BO0
-#ifdef VERSION_PSP
+#if defined(VERSION_PSP) || defined(FIX_UB)
+        // PSP contains a fix where it gets the g_EInitSlinger palette, while
+        // US attempts reading out of the EInit bounds.
         self->palette = self->hitEffect = g_EInitSlinger[3] + 1;
 #else
+        // BUG: will load the wrong palette when Marionette dies
         self->palette = self->hitEffect = g_EInitSlinger[5] + 1;
 #endif
 #else
@@ -521,7 +521,10 @@ void EntityMarionette(Entity* self) {
     case 10:
         switch (self->step_s) {
         case 0:
-#if defined(VERSION_PSP) || !defined(BOSS_IS_BO0)
+#if defined(FIX_UB)
+            // PSX and PSP read out of bounds
+            clut = g_EInitMarionette[3];
+#elif defined(VERSION_PSP) || !defined(BOSS_IS_BO0)
             dataPtr = (s16*)g_EInitMarionette;
             clut = dataPtr[11];
 #else

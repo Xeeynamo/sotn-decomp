@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rnz0.h"
 
-static s16 sensors1[] = {0, 32, 0, 4, 8, -4, -16};
+static s16 sensors1[] = {0, 32, 0, 4, 8, -4, -16, 0};
 static s16 unused1[] = {0, 32, 8, 0};
 static Point16 sensors2[] = {{0, 10}, {255, 0}};
 static s16 poseOffsets[] = {0, 8, 10, 8, 8, 10, 8, 0};

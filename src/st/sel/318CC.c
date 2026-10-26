@@ -194,10 +194,6 @@ void func_801B1FD8(char* str, s32 y) {
     s32 x;
     u8* chPix;
 
-#ifdef VERSION_PC
-    fputs("func_801B1FD8 not implemented", stderr);
-    return;
-#endif
     y = func_801B1EF4(y);
     x = 0;
     while (*str) {
@@ -249,10 +245,6 @@ void func_801B2108(const char* str, s32 arg1) {
         var_s6 += 0x20;
         arg1 &= ~0x200;
     }
-#ifdef VERSION_PC
-    // not implemented on PC
-    return;
-#endif
     arg1 = func_801B1EF4(arg1);
     while (*str) {
         var_s2 = 0;
@@ -433,7 +425,7 @@ void func_801B28D4(u8* str, s32 x, s32 y, s32 tge) {
             break;
         }
         func_801B27A8(
-            x, y, w, h, (ch & 0x0F) * w, (ch & 0xF0), 0x1A1, 6, tge, 0x40);
+            x, y, w, h, (ch & 0x0F) * w, ch & 0xF0, 0x1A1, 6, tge, 0x40);
         x += w;
     }
 }

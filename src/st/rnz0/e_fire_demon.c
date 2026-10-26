@@ -561,7 +561,7 @@ void EntityFireDemonPopoutEffect(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitInteractable);
-        primIndex = g_api.func_800EDB58(0x11, 0x42);
+        primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, 0x42);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;

@@ -50,7 +50,7 @@ mod tests {
 
     #[test]
     fn test_assignment() {
-        // from src/st/rno4/unk_44B0C.c
+        // from src/st/rno4/e_misc.c
         assert_eq!(
             transform("            self->palette = 0x8195;"),
             "            self->palette = PAL_FLAG(0x195);"

@@ -392,7 +392,20 @@ fn do_sub(line: &str, psp: bool) -> String {
     processed
 }
 
-fn process(filename: Option<String>, psp: bool) -> io::Result<()> {
+fn to_sjis(text: &str) -> Vec<u8> {
+    let mut out = Vec::with_capacity(text.len());
+    for line in text.split_inclusive('\n') {
+        let (bytes, _, had_errors) = encoding_rs::SHIFT_JIS.encode(line);
+        if had_errors {
+            out.extend_from_slice(line.as_bytes());
+        } else {
+            out.extend_from_slice(&bytes);
+        }
+    }
+    out
+}
+
+fn process(filename: Option<String>, psp: bool, sjis: bool) -> io::Result<()> {
     let reader: Box<dyn Read> = match filename {
         Some(file) => Box::new(BufReader::new(File::open(file)?)),
         None => Box::new(io::stdin()),
@@ -407,7 +420,12 @@ fn process(filename: Option<String>, psp: bool) -> io::Result<()> {
         line.clear();
     }
     
-    print!("{}", output);
+    if sjis {
+        use std::io::Write;
+        io::stdout().write_all(&to_sjis(&output))?;
+    } else {
+        print!("{}", output);
+    }
 
     Ok(())
 }
@@ -704,7 +722,7 @@ fn cc(cc_args: &[String]) -> io::Result<i32> {
     }
     {
         let mut f = File::create(&tmp)?;
-        f.write_all(encoded.as_bytes())?;
+        f.write_all(&to_sjis(&encoded))?;
     }
 
     let mut compile_args = strip_dep_args(args);
@@ -749,10 +767,16 @@ fn main() {
                         .help("PSP")
                         .action(ArgAction::SetTrue)
                 )
+                .arg(
+                    Arg::new("sjis")
+                        .long("sjis")
+                        .help("Re-encode the output to Shift-JIS")
+                        .action(ArgAction::SetTrue)
+                )
         )
         .subcommand(
             Command::new("cc")
-                .about("use for C_COMPILER_LAUNCHER, re-encodes _S() strings on the fly")
+                .about("use for C_COMPILER_LAUNCHER, re-encodes _S() strings and Shift-JIS on the fly")
                 .trailing_var_arg(true)
                 .allow_hyphen_values(true)
                 .arg(
@@ -769,21 +793,22 @@ fn main() {
         //     // let offset = sub_m.value_of("offset").unwrap();
         // }
         Some(("process", sub_m)) => {
+            let sjis = sub_m.get_flag("sjis");
             if sub_m.contains_id("filename") && sub_m.contains_id("psp")
             {
                 let filename = sub_m
                 .get_one::<String>("filename")
                 .expect("is present");
-                let _ = process(Some(filename.to_string()), true);
+                let _ = process(Some(filename.to_string()), true, sjis);
             }
             else if sub_m.contains_id("filename") {
                 let filename = sub_m
                 .get_one::<String>("filename")
                 .expect("is present");
-                let _ = process(Some(filename.to_string()), false);
+                let _ = process(Some(filename.to_string()), false, sjis);
             }
             else {
-                let _ = process(None, false);
+                let _ = process(None, false, sjis);
             }
         }
         Some(("cc", sub_m)) => {

@@ -91,9 +91,17 @@ u16 D_80191660[] = {
 u16 D_801917C0[] = {
 #include <gen/D_801917C0.h>
 };
+#ifdef VERSION_PC
+// palette_def bulk copies 0x80 colors, PSX reads the rest from D_80191840
+u16 D_80191800[0x80] = {
+#include <gen/D_80191800.h>
+#include <gen/D_80191840.h>
+};
+#else
 u16 D_80191800[] = {
 #include <gen/D_80191800.h>
 };
+#endif
 u16 D_80191840[] = {
 #include <gen/D_80191840.h>
 };

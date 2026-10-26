@@ -5,12 +5,12 @@ void Update(void);
 void HitDetection(void);
 void UpdateRoomPosition(void);
 void InitRoomEntities(s32 layoutId);
-extern RoomHeader D_80182EA4[];
-extern SpriteParts* D_8018002C[];
-extern u_long* D_801801A8[];
+extern RoomHeader rooms[];
+extern s16** spriteBanks[];
+extern u_long* cluts[];
 extern LayoutEntity* entityLayoutHorizontal[];
-extern RoomDef D_8018037C[];
-extern GfxBank* D_80180600[];
+extern RoomDef rooms_layers[];
+extern u_long** gfxBanks[];
 void UpdateStageEntities(void);
 
 AbbreviatedOverlay g_Overlay = {
@@ -18,11 +18,11 @@ AbbreviatedOverlay g_Overlay = {
     .HitDetection = HitDetection,
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
-    .rooms = D_80182EA4,
-    .spriteBanks = D_8018002C,
-    .cluts = D_801801A8,
+    .rooms = rooms,
+    .spriteBanks = spriteBanks,
+    .cluts = cluts,
     .objLayoutHorizontal = entityLayoutHorizontal,
-    .tileLayers = D_8018037C,
-    .gfxBanks = D_80180600,
+    .tileLayers = rooms_layers,
+    .gfxBanks = gfxBanks,
     .UpdateStageEntities = UpdateStageEntities,
 };

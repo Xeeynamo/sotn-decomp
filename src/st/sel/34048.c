@@ -19,11 +19,9 @@ void InitSel() {
 #else
         func_801B9C80();
 #endif
-#ifndef VERSION_PC // skip Konami logo
         if (D_8003C728) {
             break;
         }
-#endif
         g_GameClearFlag = SAVE_FLAG_NORMAL;
         g_CurrentStream = 0;
         func_801B18F4();
