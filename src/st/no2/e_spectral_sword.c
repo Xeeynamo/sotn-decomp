@@ -17,7 +17,24 @@ static s16 D_us_801833D0[] = {
     0x200, 0x500, 0x700, 0x640, 0x400, -0x400, -0x7C0, 0x800};
 STATIC_PAD_DATA(8);
 
-#include "../step_towards.h"
+// EntitySpectralSword primarily uses this as a method to smoothly rotate, but
+// also to retract it's outer ring after an attack by decreasing the radius.
+static bool StepTowards(s16* val, s32 target, s32 step) {
+    if (abs(*val - target) < step) {
+        *val = target;
+        return true;
+    }
+
+    if (*val > target) {
+        *val -= step;
+    }
+
+    if (*val < target) {
+        *val += step;
+    }
+
+    return false;
+}
 
 void EntitySpectralSword(Entity* self) {
     s32 primIndex;
@@ -387,13 +404,34 @@ void EntitySpectralSword(Entity* self) {
             ent = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (ent != NULL) {
                 CreateEntityFromEntity(E_UNK_3F, self, ent);
-                ent->ext.et_801CEB08.unk80 = self;
+                ent->ext.et_801CEB08.parent = self;
             }
         }
     }
 }
 
-#include "../e_spectral_sword_aura.h"
+void EntitySpectralSwordAura(Entity* self) {
+    Entity* parent;
+
+    if (!self->step) {
+        InitializeEntity(g_EInitSpectralSwordAura);
+        self->animCurFrame = 1;
+        self->palette += 2;
+        self->drawFlags |= ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
+        self->scaleX = self->scaleY = 0x100;
+        self->opacity = 0x80;
+    }
+    parent = self->ext.et_801CEB08.parent;
+    self->posX.val = parent->posX.val;
+    self->posY.val = parent->posY.val;
+    self->scaleX += 6;
+    self->scaleY += 6;
+    self->opacity -= 4;
+    if (self->opacity < 0x20) {
+        DestroyEntity(self);
+    }
+}
 
 void EntityPoltergeist(Entity* self) {
     Entity* tempEntity;

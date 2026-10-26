@@ -3375,7 +3375,7 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ s32 : 32;
-    /* 0x80 */ struct Entity* unk80;
+    /* 0x80 */ struct Entity* parent;
 } ET_801CEB08;
 
 typedef struct {
@@ -4695,6 +4695,22 @@ typedef struct {
     /* 0x88 */ s32 prevYVel;
 } ET_Scarecrow;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 timer2;
+    /* 0x84 */ u8 playerSide;
+    /* 0x85 */ u8 : 8;
+    /* 0x86 */ u8 spearsAlive;
+    /* 0x87 */ u8 shieldsAlive;
+    /* 0x88 */ Pos targetPos;
+    /* 0x90 */ s16 angleToPlayer;
+    /* 0x92 */ u16 : 16;
+    /* 0x94 */ u8 modeFlags;
+    /* 0x95 */ u8 : 8;
+    /* 0x96 */ s16 attackTimer;
+} ET_SpectralSwordRdai;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -5093,6 +5109,7 @@ typedef union { // offset=0x7C
     ET_SniperOfGothArrow sniperOfGothArrow;
     ET_TinMan tinman;
     ET_Scarecrow scarecrow;
+    ET_SpectralSwordRdai spectralSwordRdai;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);
