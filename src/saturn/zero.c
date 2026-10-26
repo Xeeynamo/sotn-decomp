@@ -3033,7 +3033,7 @@ void func_0600C628(u16* src, s32 count) {
     }
 }
 
-void func_0600C6AC(s32 arg0, s32 arg1) {
+void func_0600C6AC(u16* arg0, u16* arg1) {
     func_0600C880(0x13B00, arg1, 0x240);
     func_0600C880(0x13E00, arg0, 0x2980);
 }
@@ -3041,7 +3041,7 @@ void func_0600C6AC(s32 arg0, s32 arg1) {
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C6E4, func_0600C6E4);
 
 // original name: SetGameoverToFrameBuffer
-void SetGameoverToFrameBuffer(s32 arg0, s32 arg1) {
+void SetGameoverToFrameBuffer(u16* arg0, u16* arg1) {
     s32 offset;
 
     offset = 0x16800;
@@ -3050,8 +3050,98 @@ void SetGameoverToFrameBuffer(s32 arg0, s32 arg1) {
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C818, func_0600C818);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C880, func_0600C880);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C99C, func_0600C99C);
+
+s32 func_0600C880(s32 offset, u16* src, u32 len) {
+    s32 col0, row0;
+    s32 col1, row1;
+    u16* dst;
+    s32 rows;
+    s32 cnt;
+
+    if ((offset + len) > (0xC0 * 0x200)) {
+        return -1;
+    }
+    offset >>= 1;
+    len >>= 1;
+
+    row0 = offset / 0xC0;
+    col0 = 0x140 + offset % 0xC0;
+
+    dst = func_0600CB04(col0, row0);
+
+    cnt = 0x200 - col0;
+
+    offset += len;
+
+    row1 = offset / 0xC0;
+    col1 = 0x140 + offset % 0xC0;
+
+    rows = row1 - row0;
+    while (rows > 0) {
+        if (cnt != 0) {
+            DMA_CpuMemCopy2(dst, src, cnt);
+            while (DMA_CpuResult() == 2) {
+            }
+        }
+        src += cnt;
+        dst += 0x140 + cnt;
+        cnt = 0xC0;
+        rows--;
+    }
+    cnt += col1 - 0x200;
+    if (cnt > 0) {
+        DMA_CpuMemCopy2(dst, src, cnt);
+        while (DMA_CpuResult() == 2) {
+        }
+    }
+    return offset * 2;
+}
+
+s32 func_0600C99C(u16* dst, s32 offset, u32 len) {
+    s32 col0, row0;
+    s32 col1, row1;
+    u16* src;
+    s32 rows;
+    s32 cnt;
+
+    if ((offset + len) > (0xC0 * 0x200)) {
+        return -1;
+    }
+    offset >>= 1;
+    len >>= 1;
+
+    row0 = offset / 0xC0;
+    col0 = 0x140 + offset % 0xC0;
+
+    src = func_0600CB04(col0, row0);
+
+    cnt = 0x200 - col0;
+
+    offset += len;
+
+    row1 = offset / 0xC0;
+    col1 = 0x140 + offset % 0xC0;
+
+    rows = row1 - row0;
+    while (rows > 0) {
+        if (cnt != 0) {
+            DMA_CpuMemCopy2(dst, src, cnt);
+            while (DMA_CpuResult() == 2) {
+            }
+        }
+        src += 0x140 + cnt;
+        dst += cnt;
+        cnt = 0xC0;
+        rows--;
+    }
+    cnt += col1 - 0x200;
+    if (cnt > 0) {
+        DMA_CpuMemCopy2(dst, src, cnt);
+        while (DMA_CpuResult() == 2) {
+        }
+    }
+    return offset * 2;
+}
 
 // original name: ClearFrameBuffer
 void ClearFrameBuffer(u16 clearColor) {
@@ -3076,9 +3166,9 @@ u16* func_0600CB20(s32 offset) {
     s32 row;
     s32 col;
 
-    offset = offset >> 1;
+    offset >>= 1;
     row = offset / 0xC0;
-    col = offset - (row * 0xC0) + 0x140;
+    col = 0x140 + offset % 0xC0;
     return func_0600CB04(col, row);
 }
 

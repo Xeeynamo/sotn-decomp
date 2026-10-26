@@ -12,7 +12,7 @@
 #include <saturn_sprite.h>
 
 // func_06023394
-void DMA_CpuMemCopy2(s32*, s32*, u32);
+void DMA_CpuMemCopy2(void* dst, void* src, u32 cnt);
 
 // func_06023484
 s32 DMA_CpuResult();
@@ -411,7 +411,7 @@ extern SaturnSpriteResource** DAT_060645D4;
 extern SaturnSpriteResource** DAT_06064670;
 s16 func_0600AEE4(u16*);
 extern u16* func_0600CB04(s32, s32);
-extern s32 func_0600C880(s32, s32, s32);
+s32 func_0600C880(s32, u16*, u32);
 extern u8 DAT_06057F60[];
 extern s16 DAT_06038FD6;
 extern s16 DAT_06038FD8;
