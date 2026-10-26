@@ -5,9 +5,6 @@ extern u8 g_RdaiUnk33Anim2[];
 extern u8 g_RdaiUnk33Anim3[];
 extern u8 g_RdaiUnk33Anim4[];
 extern u8 g_RdaiUnk33Anim5[];
-#if defined(VERSION_PSP)
-extern char g_RdaiUnk33DebugText[];
-#endif
 
 void EntityBalloonPod(Entity* self) {
     Entity* entity;
@@ -69,11 +66,7 @@ void EntityBalloonPod(Entity* self) {
         break;
 
     case 0xFF:
-#if defined(VERSION_PSP)
-        FntPrint(g_RdaiUnk33DebugText, self->animCurFrame);
-#else
         FntPrint("charal %x\n", self->animCurFrame);
-#endif
         if (g_pads[1].pressed & PAD_SQUARE) {
             if (self->params) {
                 break;

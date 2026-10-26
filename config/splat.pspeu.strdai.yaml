@@ -76,6 +76,7 @@ segments:
       - [0x1C900, .data, rdai/e_sniper_of_goth]
       - [0x1CA18, .data, rdai/e_archer]
       - [0x1CA90, data]
+      - [0x1CAF0, .data, rdai/unk_44668]
       - [0x1CB00, .data, rdai/e_red_door]
       - [0x1CB18, .data, rdai/st_update]
       - [0x1CB48, .data, rdai/e_particles]
