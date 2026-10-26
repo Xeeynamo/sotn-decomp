@@ -5,7 +5,7 @@ INCLUDE_ASM("boss/bo0/nonmatchings/2D26C", func_us_801AD26C);
 
 INCLUDE_ASM("boss/bo0/nonmatchings/2D26C", func_us_801AD2F0);
 
-INCLUDE_RODATA("boss/bo0/nonmatchings/2D26C", D_us_801A9344);
+const u32 D_us_801A9344[] = {0x01000000, 0x01000080};
 
 INCLUDE_ASM("boss/bo0/nonmatchings/2D26C", func_us_801AD338);
 

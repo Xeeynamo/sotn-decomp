@@ -5,7 +5,7 @@ INCLUDE_ASM("boss/bo0/nonmatchings/313A8", func_us_801B13A8);
 
 INCLUDE_ASM("boss/bo0/nonmatchings/313A8", func_us_801B1590);
 
-INCLUDE_ASM("boss/bo0/nonmatchings/313A8", func_us_801B15BC);
+#include "../../st/approach_s16.h"
 
 INCLUDE_ASM("boss/bo0/nonmatchings/313A8", func_us_801B163C);
 
