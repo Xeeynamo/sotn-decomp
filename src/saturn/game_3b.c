@@ -551,9 +551,9 @@ void ResetPlayState(u16 arg0) {
     stageID = g_CurrentRoom.stageID;
     if (arg0 == 0) {
         ResetNewGameSettings();
-        DAT_0608609c = DAT_0605c10c;
+        DAT_0608609c = DAT_0605C10C;
     } else {
-        DAT_0608609c = DAT_0605c10c;
+        DAT_0608609c = DAT_0605C10C;
     }
     func_800F2120();
     func_800FDE00();
@@ -615,8 +615,8 @@ void ResetNewGameSettings(void) {
 
 // func_0606F14C
 void UpdatePlayTimer(void) {
-    g_Status.timerFrames += DAT_0605c10c - DAT_0608609c;
-    DAT_0608609c = DAT_0605c10c;
+    g_Status.timerFrames += DAT_0605C10C - DAT_0608609c;
+    DAT_0608609c = DAT_0605C10C;
     if (g_Status.timerFrames >= 60) {
         g_Status.timerFrames -= 60;
         g_Status.timerSeconds++;

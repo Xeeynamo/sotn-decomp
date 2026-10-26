@@ -21,7 +21,6 @@ void entrypoint(void) {
     } while (true);
 }
 
-void MoviePRGClear();
 void func_06010400();
 void PlaySfx();
 void StartColorOffsetFade(s32, s32);
@@ -233,7 +232,7 @@ void func_060046E8(void) {
     DAT_06057F40 = 0;
     D_8003C730 = 0;
     g_Timer = 0;
-    DAT_0605c10c = 0;
+    DAT_0605C10C = 0;
     g_GameTimer = 0;
 
     DAT_0605cea0.unk0 = 0;
@@ -518,7 +517,7 @@ void func_06004D84(void) {
     set_imask(0);
 
     SCL_VblankStart();
-    DAT_0605c10c += 1;
+    DAT_0605C10C++;
     func_06008EE8();
     SignalSlaveSh2();
 
@@ -1202,7 +1201,7 @@ void func_0600652C(void) {
 }
 
 // func_0600654C
-s32 ReadFileToAddr(char* path, s32 addr) {
+s32 ReadFileToAddr_NoInline(char* path, s32 addr) {
     Unk0600654C unk;
     unk.unk0 = path;
     unk.unk4 = addr;
@@ -3338,7 +3337,96 @@ void func_0600D6C0(void) {
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D6EC, LoadGameState);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D8BC, func_0600D8BC);
+
+extern char DAT_0600D8B0[];
+
+void func_0600D8BC(void) {
+    switch (DAT_0605cea0.unk0) {
+    case 0:
+        func_0600460C();
+        ((s32(*)(void))func_06011CE4)();
+        DAT_0605cea0.unk0++;
+        break;
+
+    case 1:
+        MoviePRGClear();
+        ReadFileToAddr(DAT_0600D8B0, 0x06066000);
+        func_0601B1CC();
+        DAT_0605cea0.unk0++;
+        /* fallthrough */
+    case 2:
+        DAT_0605cea0.unk0++;
+        break;
+
+    case 3:
+        ((s32(*)(s32))PlaySfx)(0xB00);
+        DAT_0605cea0.unk0++;
+        break;
+
+    case 4:
+        if ((u8)func_06012D88() == 0) {
+            DAT_0605cea0.unk0++;
+        }
+        break;
+
+    case 5:
+        DAT_0605cea0.unk0++;
+        if (DAT_0605D764 != 0) {
+            ((s32(*)(s32))PlaySfx)(0xF0000006);
+        } else {
+            ((s32(*)(s32))PlaySfx)(0xF0000005);
+        }
+        break;
+
+    case 6:
+    case 7:
+        if (DAT_06057f34 == 2) {
+            func_06004F50(0x30);
+            break;
+        }
+        switch (DAT_0605d7f8) {
+        case 0:
+            func_06004F50(6);
+            break;
+
+        case 1:
+            DAT_06061dd0 = 0;
+            g_CurrentRoom.stageID = 0x1F;
+            D_8006C374 = 0x3F;
+            g_PlayableCharacter = 1;
+            func_06004F50(0x11);
+            DAT_0605C104 = g_Servant;
+            break;
+
+        case 2:
+            D_8006C374 = 0xA9;
+            g_CurrentRoom.stageID = 0xB;
+            g_CurrentRoom.unk4 = 1;
+            g_CurrentRoom.unk8 = 1;
+            D_8003C730 = 1;
+            DAT_06061dd0 = 1;
+            g_Tilemap.left = 0x20;
+            g_Tilemap.top = 8;
+            g_Tilemap.right = 0x24;
+            g_Tilemap.bottom = 8;
+            g_Tilemap.hSize = 5;
+            g_Tilemap.vSize = 1;
+            g_Tilemap.y = 0;
+            g_Tilemap.x = 0;
+            g_Tilemap.width = 0x640;
+            g_Tilemap.height = 0x100;
+            func_06004F50(0x11);
+            DAT_0605C104 = g_Servant;
+            break;
+
+        case 3:
+            func_06004F50(5);
+            break;
+        }
+        DAT_0605D7F0 = false;
+        break;
+    }
+}
 
 // original name: MOVIE_PRG_CLEAR
 void MoviePRGClear(void) { memset(0x06066000, 0, 0x9A000); }

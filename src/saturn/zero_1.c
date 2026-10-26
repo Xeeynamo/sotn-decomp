@@ -687,7 +687,7 @@ void func_06012D30(void) {
     DAT_060642DC = 0;
 }
 
-s32 func_06012D88(void) {
+u8 func_06012D88(void) {
     if (DAT_060641D8 == 0) {
         if (DAT_060642EC < 2) {
             if (DAT_06064354 < 2 && DAT_060644AC < 2) {
