@@ -1331,8 +1331,8 @@ typedef struct {
     Unk0605D750 unk4B8;
     Tilemap unk4CC;
     FgLayer unk504;
-    s8 unk50C[0x300];
-    s8 unk80C[0x800];
+    u8 unk50C[0x300];
+    u8 unk80C[0x800];
     s32 unk100C;
     s32 unk1010;
     s32 unk1014;
