@@ -341,11 +341,7 @@ void EntitySpectralSwordAura(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_EInitSpectralSwordAura);
         self->animCurFrame = 1;
-#if defined(STAGE_IS_RDAI)
         self->palette += 14;
-#else
-        self->palette += 2;
-#endif
         self->drawFlags |= ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->scaleX = self->scaleY = 0x100;
@@ -364,7 +360,7 @@ void EntitySpectralSwordAura(Entity* self) {
 
 extern EInit g_EInitSpear;
 
-void EntityspectralSwordSpear(Entity* self) {
+void EntitySpectralSwordSpear(Entity* self) {
     s16 hitboxDist;
     s32 otherIdx;
     Entity* other;

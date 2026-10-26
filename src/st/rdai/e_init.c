@@ -36,7 +36,7 @@ void EntityArcherArrow(Entity* self);
 void EntityArcherDeathParts(Entity* self);
 void EntitySpectralSword(Entity* self);
 void EntitySpectralSwordAura(Entity* self);
-void EntityspectralSwordSpear(Entity* self);
+void EntitySpectralSwordSpear(Entity* self);
 void EntitySpectralSwordShield(Entity* self);
 void EntitySniperOfGoth(Entity* self);
 void EntitySniperOfGothArrow(Entity* self);
@@ -90,7 +90,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityArcherDeathParts,
     EntitySpectralSword,
     EntitySpectralSwordAura,
-    EntityspectralSwordSpear,
+    EntitySpectralSwordSpear,
     EntitySpectralSwordShield,
     EntitySniperOfGoth,
     EntitySniperOfGothArrow,

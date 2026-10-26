@@ -416,11 +416,7 @@ void EntitySpectralSwordAura(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_EInitSpectralSwordAura);
         self->animCurFrame = 1;
-#if defined(STAGE_IS_RDAI)
-        self->palette += 14;
-#else
         self->palette += 2;
-#endif
         self->drawFlags |= ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->scaleX = self->scaleY = 0x100;
