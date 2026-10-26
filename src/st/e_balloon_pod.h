@@ -9,13 +9,6 @@ extern u8 g_RdaiUnk33Anim5[];
 extern char g_RdaiUnk33DebugText[];
 #endif
 
-#if defined(VERSION_PSP)
-#define BALLOON_POD_PAD_PRESSED g_pads[1].pressed
-#else
-extern u16 g_pads_1_pressed;
-#define BALLOON_POD_PAD_PRESSED g_pads_1_pressed
-#endif
-
 void EntityBalloonPod(Entity* self) {
     Entity* entity;
     s32 i;
@@ -81,7 +74,7 @@ void EntityBalloonPod(Entity* self) {
 #else
         FntPrint("charal %x\n", self->animCurFrame);
 #endif
-        if (BALLOON_POD_PAD_PRESSED & PAD_SQUARE) {
+        if (g_pads[1].pressed & PAD_SQUARE) {
             if (self->params) {
                 break;
             }
@@ -90,7 +83,7 @@ void EntityBalloonPod(Entity* self) {
         } else {
             self->params = 0;
         }
-        if (BALLOON_POD_PAD_PRESSED & PAD_CIRCLE) {
+        if (g_pads[1].pressed & PAD_CIRCLE) {
             if (self->step_s) {
                 break;
             }
@@ -102,8 +95,6 @@ void EntityBalloonPod(Entity* self) {
         break;
     }
 }
-
-#undef BALLOON_POD_PAD_PRESSED
 
 extern EInit g_EInitImpDeathParticle;
 extern u8 g_ImpDeathParticleAnim[];
