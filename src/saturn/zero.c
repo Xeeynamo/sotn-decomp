@@ -3345,7 +3345,22 @@ void MoviePRGClear(void) { memset(0x06066000, 0, 0x9A000); }
 
 void func_0600DAB4(void) { InitPrimBuf(); }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DACC, InitPrimBuf);
+// 0x0600DACC
+void InitPrimBuf(void) {
+    Primitive* prim;
+    s32 i;
+
+    memset(g_PrimBuf, 0, sizeof(Primitive) * 0x200);
+    prim = &g_PrimBuf[0];
+    for (i = 0; i < 0x200; i++, prim++) {
+        prim->drawMode = -1;
+        prim->unk1C = 0x100 + i;
+    }
+    DAT_06061DD4 = 0;
+    g_unkGraphicsStruct.BottomCornerTextTimer = 0;
+    g_unkGraphicsStruct.BottomCornerTextPrims = 0;
+    *(s16*)(SCL_COLRAM_ADDR + 0xFE0) = 0;
+}
 
 // 0x0600DB38
 s32 AllocPrimitives(s32 type, s32 count) {
