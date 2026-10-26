@@ -3329,7 +3329,30 @@ s8 func_0600D4C4(u32 device, s8 arg1) {
     return BUP_Delete(device, filename);
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D508, SaveGameState);
+// 0x0600D508
+void SaveGameState(void) {
+    u16 i;
+
+    DAT_060485C0.unk10 = g_Status;
+    DAT_060485C0.unk35C = g_MenuNavigation;
+    DAT_060485C0.unk3A8 = g_Settings;
+    DAT_060485C0.unk4B8 = g_CurrentRoom;
+    DAT_060485C0.unk4CC = g_Tilemap;
+    DAT_060485C0.unk504 = D_8003C708;
+    for (i = 0; i < 0x300; i++) {
+        DAT_060485C0.unk50C[i] = g_CastleFlags[i];
+    }
+    for (i = 0; i < 0x800; i++) {
+        DAT_060485C0.unk80C[i] = g_CastleMap[i];
+    }
+    DAT_060485C0.unk100C = g_GameClearFlag;
+    DAT_060485C0.unk1010 = g_Servant;
+    DAT_060485C0.unk1014 = g_PlayableCharacter;
+    DAT_060485C0.unk1018 = DAT_0605CEAC;
+    DAT_060485C0.unk101C = g_RoomCount;
+    DAT_060485C0.unk1020 = g_randomNext;
+    DAT_060485C0.unk0 = Crc32(0x1120, &DAT_060485C0.unk4);
+}
 
 // original name: ABup_ChechsumSet
 void func_0600D6C0(void) {
