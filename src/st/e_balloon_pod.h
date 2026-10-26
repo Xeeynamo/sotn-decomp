@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 extern EInit g_EInitBalloonPod;
-static AnimateEntityFrame g_RdaiUnk33Anim2[] = {{4, 19}, {4, 20}, {4, 21}, {4, 22}, {4, 23}, {4, 24}, {4, 25}, {4, 26}, POSE_LOOP(0)};
-static AnimateEntityFrame g_RdaiUnk33Anim3[] = {{4, 21}, {4, 27}, {4, 28}, {4, 29}, {4, 30}, {4, 31}, POSE_END};
-static AnimateEntityFrame g_RdaiUnk33Anim4[] = {{4, 32}, {4, 33}, {4, 34}, {4, 35}, {4, 36}, {4, 35}, {4, 34}, {4, 33}, POSE_LOOP(0)};
-static AnimateEntityFrame g_RdaiUnk33Anim5[] = {{4, 34}, {4, 37}, {4, 38}, {4, 39}, {4, 40}, {4, 41}, POSE_END};
-static AnimateEntityFrame g_ImpDeathParticleAnim[] = {{4, 42}, {4, 43}, {4, 44}, {4, 43}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_tentacles_waving[] = {{4, 19}, {4, 20}, {4, 21}, {4, 22}, {4, 23}, {4, 24}, {4, 25}, {4, 26}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_bursting_open[] = {{4, 21}, {4, 27}, {4, 28}, {4, 29}, {4, 30}, {4, 31}, POSE_END};
+static AnimateEntityFrame anim_floor_pulsating[] = {{4, 32}, {4, 33}, {4, 34}, {4, 35}, {4, 36}, {4, 35}, {4, 34}, {4, 33}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_floor_bursting[] = {{4, 34}, {4, 37}, {4, 38}, {4, 39}, {4, 40}, {4, 41}, POSE_END};
+static AnimateEntityFrame anim_seed_flapping[] = {{4, 42}, {4, 43}, {4, 44}, {4, 43}, POSE_LOOP(0)};
 
 void EntityBalloonPod(Entity* self) {
     Entity* entity;
@@ -33,16 +33,16 @@ void EntityBalloonPod(Entity* self) {
         break;
 
     case 2:
-        AnimateEntity(g_RdaiUnk33Anim2, self);
+        AnimateEntity(anim_tentacles_waving, self);
         break;
 
     case 3:
-        if (!AnimateEntity(g_RdaiUnk33Anim3, self)) {
+        if (!AnimateEntity(anim_bursting_open, self)) {
             for (i = 0; i < 16; i++) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(
-                        E_IMP_DEATH_PARTICLE, self, entity);
+                        E_BALLOON_POD_SEED, self, entity);
                 }
             }
             DestroyEntity(self);
@@ -50,16 +50,16 @@ void EntityBalloonPod(Entity* self) {
         break;
 
     case 4:
-        AnimateEntity(g_RdaiUnk33Anim4, self);
+        AnimateEntity(anim_floor_pulsating, self);
         break;
 
     case 5:
-        if (!AnimateEntity(g_RdaiUnk33Anim5, self)) {
+        if (!AnimateEntity(anim_floor_bursting, self)) {
             for (i = 0; i < 16; i++) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(
-                        E_IMP_DEATH_PARTICLE, self, entity);
+                        E_BALLOON_POD_SEED, self, entity);
                 }
             }
             DestroyEntity(self);
@@ -90,9 +90,9 @@ void EntityBalloonPod(Entity* self) {
     }
 }
 
-extern EInit g_EInitImpDeathParticle;
+extern EInit g_EInitBalloonPodSeed;
 
-void EntityImpDeathParticle(Entity* self) {
+void EntityBalloonPodSeed(Entity* self) {
     s32 speed;
     s16 angle;
 
@@ -106,7 +106,7 @@ void EntityImpDeathParticle(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitImpDeathParticle);
+        InitializeEntity(g_EInitBalloonPodSeed);
         self->facingLeft = Random() & 1;
         speed = (Random() & 0x1F) + 0x10;
         angle = Random() * 6 + 0x900;
@@ -118,7 +118,7 @@ void EntityImpDeathParticle(Entity* self) {
         self->rotate = angle;
         // fallthrough
     case 1:
-        AnimateEntity(g_ImpDeathParticleAnim, self);
+        AnimateEntity(anim_seed_flapping, self);
         MoveEntity();
         self->velocityX -= self->velocityX / 16;
         self->velocityY -= self->velocityY / 16;

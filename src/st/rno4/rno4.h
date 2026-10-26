@@ -114,7 +114,7 @@ typedef enum EntityID {
     E_IMP,                       // EntityImp
     E_IMP_SMOKE,                 // EntityImpSmoke
     E_BALLOON_POD,               // EntityBalloonPod
-    E_IMP_DEATH_PARTICLE,        // EntityImpDeathParticle
+    E_BALLOON_POD_SEED,        // EntityBalloonPodSeed
     E_KILLER_FISH,               // EntityKillerFish
     E_KILLER_FISH_DEATH_PUFF,    // EntityKillerFishDeathPuff
     NUM_ENTITIES,
