@@ -46,7 +46,7 @@ segments:
     subsegments:
       - [0x80, c, rno4/create_entity]
       - [0x1028, c, rno4_psp/e_blue_venus_weed]
-      - [0x3B78, c, rno4_psp/e_balloon_pod]
+      - [0x3B78, c, rno4/e_balloon_pod]
       - [0x4180, c, rno4_psp/e_bomb_knight]
       - [0x5A10, c, rno4_psp/e_cave_troll]
       - [0x7280, c, rno4/e_stage_name]
