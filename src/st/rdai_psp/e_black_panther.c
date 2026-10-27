@@ -40,7 +40,7 @@ void func_us_801C4B2C() {
     }
 }
 
-void func_us_801C4C4C(void) {
+static void func_us_801C4C4C(void) {
     Primitive* prim2;
     Primitive* prim;
     s32 primIndex;
@@ -396,7 +396,7 @@ void func_us_801C4C4C(void) {
     }
 }
 
-void func_us_801C5AA0(void) {
+static void func_us_801C5AA0(void) {
     u8 wasFacingLeft;
     s32 primIndex;
     Primitive* prim2;
