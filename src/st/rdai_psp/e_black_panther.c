@@ -396,6 +396,142 @@ void func_us_801C4C4C(void) {
     }
 }
 
-INCLUDE_ASM("st/rdai_psp/nonmatchings/rdai_psp/e_black_panther", func_us_801C5AA0);
+void func_us_801C5AA0(void) {
+    u8 wasFacingLeft;
+    s32 primIndex;
+    Primitive* prim2;
+    Primitive* prim;
+    s32 i;
+
+    switch (g_CurrentEntity->step_s) {
+    case 0:
+        wasFacingLeft = g_CurrentEntity->facingLeft;
+        g_CurrentEntity->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
+        if (wasFacingLeft ^ g_CurrentEntity->facingLeft) {
+            if (g_CurrentEntity->facingLeft) {
+                g_CurrentEntity->posX.i.hi += 0x18;
+            } else {
+                g_CurrentEntity->posX.i.hi -= 0x18;
+            }
+        }
+        prim = g_CurrentEntity->ext.prim;
+        for(i = 0; i < 8; i++) {
+            prim->tpage = 0x12;
+            prim->clut = 0x164;
+            if (g_CurrentEntity->facingLeft) {
+                prim->u0 = 0x40;
+                prim->u1 = 0;
+                prim->u2 = 0x40;
+                prim->u3 = 0;
+            } else {
+                prim->u0 = 0;
+                prim->u1 = 0x40;
+                prim->u2 = 0;
+                prim->u3 = 0x40;
+            }
+            prim->v0 = ((i * 2) + 0xB5);
+            prim->v1 = ((i * 2) + 0xB5);
+            prim->v2 = ((i * 2) + 0xB6);
+            prim->v3 = ((i * 2) + 0xB6);
+            prim->r0 = prim->g0 = prim->b0 = 0x80;
+            prim->r1 = prim->g1 = prim->b1 = 0x80;
+            prim->r2 = prim->g2 = prim->b2 = 0x80;    
+            prim->r3 = prim->g3 = prim->b3 = 0x80;
+            if (g_CurrentEntity->facingLeft) {
+                prim->x0 = g_CurrentEntity->posX.i.hi - 0x30;
+            } else {
+                prim->x0 = g_CurrentEntity->posX.i.hi - 0x10;
+            }
+            prim->x1 = prim->x0 + 0x40;
+            prim->x2 = prim->x0;
+            prim->x3 = prim->x1;
+            prim->y0 = g_CurrentEntity->posY.i.hi + 8;
+            prim->y1 = prim->y0;
+            prim->y2 = prim->y0;
+            prim->y3 = prim->y2;
+            prim->priority = ((g_CurrentEntity->zPriority) + 2);
+            prim->drawMode = 2;
+            prim2 = prim;
+            prim = prim->next;
+        }
+        func_us_801C4B2C();
+        PlaySfxPositional(0x672);
+        g_CurrentEntity->step_s += 1;
+        g_CurrentEntity->ext.ILLEGAL.u8[0x1D] = 8;
+        break;
+    case 1:
+        prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[8];
+        prim->y0 -= 2;
+        prim->y1 -= 2;
+        if (!--g_CurrentEntity->ext.ILLEGAL.u8[0x1D]) {
+            g_CurrentEntity->ext.ILLEGAL.u8[0x1D] = 0x10;
+            g_CurrentEntity->step_s += 1;
+        }
+        break;
+    case 2:
+        prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[8];
+        prim->y0--;
+        prim->y1--;
+        prim = (Primitive*)g_CurrentEntity->ext.prim;
+        prim->y0 -= 4;
+        prim->y1 -= 4;
+        func_us_801C4B2C();
+        if (!--g_CurrentEntity->ext.ILLEGAL.u8[0x1D]) {
+            g_CurrentEntity->ext.ILLEGAL.u8[0x1D] = 0xF;
+            g_CurrentEntity->step_s += 1;
+        }
+        break;
+    case 3:
+        prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[8];
+        prim->y0 += 2;
+        prim->y1 += 2;
+        if (prim->y0 > g_CurrentEntity->posY.i.hi) {
+            prim->drawMode |= 8;
+        }
+        prim = g_CurrentEntity->ext.prim;
+        prim->y0 -= 2;
+        prim->y1 -= 2;
+        func_us_801C4B2C();
+        if (!--g_CurrentEntity->ext.ILLEGAL.u8[0x1D]) {
+            g_CurrentEntity->ext.ILLEGAL.u8[0x1D] = 0xF;
+            g_CurrentEntity->step_s += 1;
+        }
+        break;
+    case 4:
+        prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[8];
+        prim->y0 += 2;
+        prim->y1 += 2;
+        if (prim->y0 > g_CurrentEntity->posY.i.hi) {
+            prim->drawMode |= 8;
+        }
+        prim = g_CurrentEntity->ext.prim;
+        prim->y0 += 2;
+        prim->y1 += 2;
+        func_us_801C4B2C();
+        if (prim->y0 > g_CurrentEntity->posY.i.hi - 6) {
+            g_CurrentEntity->step_s += 1;
+        }
+        break;
+    case 5:
+        g_CurrentEntity->animCurFrame = 1;
+        g_CurrentEntity->hitEffect = g_CurrentEntity->palette;
+        g_CurrentEntity->palette = 0x8164;
+        g_CurrentEntity->ext.ILLEGAL.u8[0x1C] = 0x18;
+        primIndex = g_CurrentEntity->primIndex;
+        g_api.FreePrimitives(primIndex);
+        g_CurrentEntity->flags &= 0xFF7FFFFF;
+        g_CurrentEntity->step_s += 1;
+        break;
+    case 6:
+        if (!--g_CurrentEntity->ext.ILLEGAL.u8[0x1C]) {
+            g_CurrentEntity->palette = g_CurrentEntity->hitEffect;
+            g_CurrentEntity->hitboxState = 3;
+            g_CurrentEntity->step_s += 1;
+        }
+        break;
+    case 7:
+        break;
+    }
+}
 
 INCLUDE_ASM("st/rdai_psp/nonmatchings/rdai_psp/e_black_panther", EntityBlackPanther);
