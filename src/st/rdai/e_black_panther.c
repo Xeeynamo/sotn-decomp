@@ -10,7 +10,7 @@ void func_us_801C4B2C() {
     Primitive* prim2;
     Primitive* prim;
 
-    prim = g_CurrentEntity->ext.prim;
+    prim = g_CurrentEntity->ext.blackPanther.prim7C;
     for (i = 0; i < 7; i++) {
         prim2 = prim->next;
         xVar1 = prim2->x2 + prim->x0;
@@ -54,7 +54,7 @@ static void func_us_801C4C4C(void) {
             g_CurrentEntity->flags |= FLAG_HAS_PRIMS;
             g_CurrentEntity->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            g_CurrentEntity->ext.prim = prim;
+            g_CurrentEntity->ext.blackPanther.prim7C = prim;
         } else {
             DestroyEntity(g_CurrentEntity);
             return;
@@ -127,7 +127,7 @@ static void func_us_801C4C4C(void) {
         prim->y3 = prim->y2;
         prim->priority = ((g_CurrentEntity->zPriority) + 3);
         prim->drawMode = DRAW_HIDE | DRAW_UNK02;
-        g_CurrentEntity->ext.ILLEGAL.u32[3] = (u32)prim;
+        g_CurrentEntity->ext.blackPanther.prim88 = prim;
         prim = prim->next;
         prim->tpage = 0x12;
         prim->clut = 0x164;
@@ -157,7 +157,7 @@ static void func_us_801C4C4C(void) {
         prim->y3 = prim->y2;
         prim->priority = ((g_CurrentEntity->zPriority) + 2);
         prim->drawMode = DRAW_HIDE | DRAW_UNK02;
-        g_CurrentEntity->ext.ILLEGAL.u32[4] = (u32)prim;
+        g_CurrentEntity->ext.blackPanther.prim8C = prim;
         prim = prim->next;
         UnkPolyFunc2(prim);
         prim->tpage = 0x12;
@@ -183,7 +183,7 @@ static void func_us_801C4C4C(void) {
         prim->next->b3 = 0x80;
         prim->priority = ((g_CurrentEntity->zPriority) + 2);
         prim->drawMode = DRAW_HIDE | DRAW_UNK02;
-        g_CurrentEntity->ext.ILLEGAL.u32[5] = (u32)prim;
+        g_CurrentEntity->ext.blackPanther.prim90 = prim;
         prim = prim->next;
         prim = prim->next;
         UnkPolyFunc2(prim);
@@ -217,40 +217,40 @@ static void func_us_801C4C4C(void) {
         prim->next->b3 = 0x80;
         prim->priority = ((g_CurrentEntity->zPriority) + 2);
         prim->drawMode = DRAW_HIDE | DRAW_UNK02;
-        g_CurrentEntity->ext.ILLEGAL.u32[8] = (u32)prim;
+        g_CurrentEntity->ext.blackPanther.prim9C = prim;
         PlaySfxPositional(SFX_NOISE_SWEEP_DOWN_A);
         g_CurrentEntity->step_s++;
-        g_CurrentEntity->ext.ILLEGAL.s16[4] = 0x10;
+        g_CurrentEntity->ext.blackPanther.unk84 = 0x10;
         g_CurrentEntity->animCurFrame = 0;
         break;
     case 1:
-        if (!--g_CurrentEntity->ext.ILLEGAL.s16[4]) {
-            g_CurrentEntity->ext.ILLEGAL.u8[0x18] = 0;
-            g_CurrentEntity->ext.ILLEGAL.u8[0x19] = 0;
-            g_CurrentEntity->ext.ILLEGAL.u8[0x1A] = 0;
-            g_CurrentEntity->ext.ILLEGAL.u8[0x1B] = 0;
-            g_CurrentEntity->ext.ILLEGAL.u8[0x1C] = 0;
-            g_CurrentEntity->ext.ILLEGAL.u8[0x1D] = 0x24;
-            g_CurrentEntity->ext.ILLEGAL.u8[0x1E] = 0x30;
-            g_CurrentEntity->ext.ILLEGAL.u8[0x1F] = 0;
+        if (!--g_CurrentEntity->ext.blackPanther.unk84) {
+            g_CurrentEntity->ext.blackPanther.unk94 = 0;
+            g_CurrentEntity->ext.blackPanther.unk95 = 0;
+            g_CurrentEntity->ext.blackPanther.unk96 = 0;
+            g_CurrentEntity->ext.blackPanther.unk97 = 0;
+            g_CurrentEntity->ext.blackPanther.unk98 = 0;
+            g_CurrentEntity->ext.blackPanther.unk99 = 0x24;
+            g_CurrentEntity->ext.blackPanther.unk9A = 0x30;
+            g_CurrentEntity->ext.blackPanther.unk9B = 0;
             g_CurrentEntity->step_s++;
         }
         break;
     case 2:
-        g_CurrentEntity->ext.ILLEGAL.s16[4]++;
-        switch (g_CurrentEntity->ext.ILLEGAL.u8[0x18]) {
+        g_CurrentEntity->ext.blackPanther.unk84++;
+        switch (g_CurrentEntity->ext.blackPanther.unk94) {
         case 0:
             func_us_801C4B2C();
-            prim = g_CurrentEntity->ext.prim;
+            prim = g_CurrentEntity->ext.blackPanther.prim7C;
             prim->y0 -= 3;
             prim->y1 -= 3;
-            if ((g_CurrentEntity->ext.ILLEGAL.s16[4] % 2) != 0) {
+            if ((g_CurrentEntity->ext.blackPanther.unk84 % 2) != 0) {
                 prim->x0++;
                 prim->x1--;
             }
             if ((prim->x1 - prim->x0) < 0x20) {
-                g_CurrentEntity->ext.ILLEGAL.s16[4] = 0xC;
-                g_CurrentEntity->ext.ILLEGAL.u8[0x18]++;
+                g_CurrentEntity->ext.blackPanther.unk84 = 0xC;
+                g_CurrentEntity->ext.blackPanther.unk94++;
             }
             prim = prim->next;
             for (i = 0; i < 6; i++) {
@@ -261,7 +261,7 @@ static void func_us_801C4C4C(void) {
             break;
         case 1:
             func_us_801C4B2C();
-            prim = g_CurrentEntity->ext.prim;
+            prim = g_CurrentEntity->ext.blackPanther.prim7C;
             prim->y0 += 6;
             prim->y1 += 6;
             prim = prim->next;
@@ -270,12 +270,12 @@ static void func_us_801C4C4C(void) {
                 prim->x3 -= 1;
                 prim = prim->next;
             }
-            if (g_CurrentEntity->ext.ILLEGAL.s16[4] % 2) {
+            if (g_CurrentEntity->ext.blackPanther.unk84 % 2) {
                 prim = g_CurrentEntity->ext.blackPanther.prim80;
                 prim->x2++;
                 prim->x3 -= 2;
             }
-            prim = g_CurrentEntity->ext.prim;
+            prim = g_CurrentEntity->ext.blackPanther.prim7C;
             if (prim->y0 > (g_CurrentEntity->posY.i.hi + 8)) {
                 for (i = 0; i < 8; i++) {
                     prim->drawMode |= DRAW_HIDE;
@@ -284,32 +284,32 @@ static void func_us_801C4C4C(void) {
             }
             break;
         }
-        switch (g_CurrentEntity->ext.ILLEGAL.u8[0x19]) {
+        switch (g_CurrentEntity->ext.blackPanther.unk95) {
         case 0:
-            if (!--g_CurrentEntity->ext.ILLEGAL.u8[0x1D]) {
-                prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[3];
+            if (!--g_CurrentEntity->ext.blackPanther.unk99) {
+                prim = g_CurrentEntity->ext.blackPanther.prim88;
                 prim->drawMode &= ~DRAW_HIDE;
-                g_CurrentEntity->ext.ILLEGAL.u8[0x1D] = 0xF;
-                g_CurrentEntity->ext.ILLEGAL.u8[0x19]++;
+                g_CurrentEntity->ext.blackPanther.unk99 = 0xF;
+                g_CurrentEntity->ext.blackPanther.unk95++;
             }
             break;
         case 1:
-            prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[3];
+            prim = g_CurrentEntity->ext.blackPanther.prim88;
             prim->v2++;
             prim->v3 = prim->v2;
             prim->y0 -= 2;
             prim->y1 = prim->y0;
-            if (g_CurrentEntity->ext.ILLEGAL.s16[4] % 4 == 0) {
+            if (g_CurrentEntity->ext.blackPanther.unk84 % 4 == 0) {
                 prim->x0--;
                 prim->x1++;
             }
-            if (!--g_CurrentEntity->ext.ILLEGAL.u8[0x1D]) {
-                g_CurrentEntity->ext.ILLEGAL.u8[0x19]++;
+            if (!--g_CurrentEntity->ext.blackPanther.unk99) {
+                g_CurrentEntity->ext.blackPanther.unk95++;
             }
             break;
         case 2:
-            prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[3];
-            if ((g_CurrentEntity->ext.ILLEGAL.s16[4] % 3) == 0) {
+            prim = g_CurrentEntity->ext.blackPanther.prim88;
+            if ((g_CurrentEntity->ext.blackPanther.unk84 % 3) == 0) {
                 prim->v2--;
                 prim->v3 = prim->v2;
             }
@@ -317,49 +317,49 @@ static void func_us_801C4C4C(void) {
             prim->y1 = prim->y0;
             if (prim->y0 > prim->y2) {
                 prim->drawMode |= DRAW_HIDE;
-                g_CurrentEntity->ext.ILLEGAL.u8[0x19] = 8;
+                g_CurrentEntity->ext.blackPanther.unk95 = 8;
             }
             break;
         }
-        switch (g_CurrentEntity->ext.ILLEGAL.u8[0x1A]) {
+        switch (g_CurrentEntity->ext.blackPanther.unk96) {
         case 0:
-            if (!--g_CurrentEntity->ext.ILLEGAL.u8[0x1E]) {
-                prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[4];
+            if (!--g_CurrentEntity->ext.blackPanther.unk9A) {
+                prim = g_CurrentEntity->ext.blackPanther.prim8C;
                 prim->drawMode &= ~DRAW_HIDE;
-                g_CurrentEntity->ext.ILLEGAL.u8[0x1A]++;
+                g_CurrentEntity->ext.blackPanther.unk96++;
                 return;
             }
             break;
         case 1:
-            prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[4];
+            prim = g_CurrentEntity->ext.blackPanther.prim8C;
             prim->v2 += 4;
             prim->v3 = prim->v2;
             prim->y0 -= 4;
             prim->y1 = prim->y0;
             if (prim->v2 > 0xF8) {
-                prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[5];
+                prim = g_CurrentEntity->ext.blackPanther.prim90;
                 prim->drawMode &= ~DRAW_HIDE;
                 LOW(prim->next->r1) = 0xFFFF0000;
-                prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[8];
+                prim = g_CurrentEntity->ext.blackPanther.prim9C;
                 prim->drawMode &= ~DRAW_HIDE;
-                g_CurrentEntity->ext.ILLEGAL.u8[0x1A]++;
+                g_CurrentEntity->ext.blackPanther.unk96++;
                 return;
             }
             break;
         case 2:
-            prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[4];
+            prim = g_CurrentEntity->ext.blackPanther.prim8C;
             prim->y0++;
             prim->y1 = prim->y0;
             if (prim->y0 == prim->y3) {
-                g_CurrentEntity->ext.ILLEGAL.s16[4] = 1;
-                g_CurrentEntity->ext.ILLEGAL.u8[0x1F] = 0;
+                g_CurrentEntity->ext.blackPanther.unk84 = 1;
+                g_CurrentEntity->ext.blackPanther.unk9B = 0;
                 prim->drawMode |= DRAW_HIDE;
                 g_CurrentEntity->step_s++;
             }
-            prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[5];
+            prim = g_CurrentEntity->ext.blackPanther.prim90;
             UnkPrimHelper(prim);
             LOW(prim->next->r1) += 0x1000;
-            prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[8];
+            prim = g_CurrentEntity->ext.blackPanther.prim9C;
             UnkPrimHelper(prim);
             if (LOH((prim->next)->b2) < 0xD) {
                 LOH((prim->next)->b2)++;
@@ -371,11 +371,11 @@ static void func_us_801C4C4C(void) {
         }
         break;
     case 3:
-        g_CurrentEntity->ext.ILLEGAL.s16[4]++;
-        prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[8];
+        g_CurrentEntity->ext.blackPanther.unk84++;
+        prim = g_CurrentEntity->ext.blackPanther.prim9C;
         UnkPrimHelper(prim);
-        if (g_CurrentEntity->ext.ILLEGAL.s16[4] % 4 == 0) {
-            g_CurrentEntity->ext.ILLEGAL.u8[0x1F] ^= 1;
+        if (g_CurrentEntity->ext.blackPanther.unk84 % 4 == 0) {
+            g_CurrentEntity->ext.blackPanther.unk9B ^= 1;
         }
         if (LOH((prim->next)->b2) < 0xD) {
             LOH((prim->next)->b2)++;
@@ -383,7 +383,7 @@ static void func_us_801C4C4C(void) {
         if (LOH((prim->next)->r2) < 0x3C) {
             LOH((prim->next)->r2)++;
         }
-        prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[5];
+        prim = g_CurrentEntity->ext.blackPanther.prim90;
         UnkPrimHelper(prim);
         LOW(prim->next->r1) += 0x1000;
         if (prim->next->y0 > (g_CurrentEntity->posY.i.hi + 6)) {
@@ -414,7 +414,7 @@ static void func_us_801C5AA0(void) {
                 g_CurrentEntity->posX.i.hi -= 0x18;
             }
         }
-        prim = g_CurrentEntity->ext.prim;
+        prim = g_CurrentEntity->ext.blackPanther.prim7C;
         for (i = 0; i < 8; i++) {
             prim->tpage = 0x12;
             prim->clut = 0x164;
@@ -457,54 +457,54 @@ static void func_us_801C5AA0(void) {
         func_us_801C4B2C();
         PlaySfxPositional(SFX_NOISE_SWEEP_DOWN_A);
         g_CurrentEntity->step_s++;
-        g_CurrentEntity->ext.ILLEGAL.u8[0x1D] = 8;
+        g_CurrentEntity->ext.blackPanther.unk99 = 8;
         break;
     case 1:
-        prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[8];
+        prim = g_CurrentEntity->ext.blackPanther.prim9C;
         prim->y0 -= 2;
         prim->y1 -= 2;
-        if (!--g_CurrentEntity->ext.ILLEGAL.u8[0x1D]) {
-            g_CurrentEntity->ext.ILLEGAL.u8[0x1D] = 0x10;
+        if (!--g_CurrentEntity->ext.blackPanther.unk99) {
+            g_CurrentEntity->ext.blackPanther.unk99 = 0x10;
             g_CurrentEntity->step_s++;
         }
         break;
     case 2:
-        prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[8];
+        prim = g_CurrentEntity->ext.blackPanther.prim9C;
         prim->y0--;
         prim->y1--;
-        prim = (Primitive*)g_CurrentEntity->ext.prim;
+        prim = g_CurrentEntity->ext.blackPanther.prim7C;
         prim->y0 -= 4;
         prim->y1 -= 4;
         func_us_801C4B2C();
-        if (!--g_CurrentEntity->ext.ILLEGAL.u8[0x1D]) {
-            g_CurrentEntity->ext.ILLEGAL.u8[0x1D] = 0xF;
+        if (!--g_CurrentEntity->ext.blackPanther.unk99) {
+            g_CurrentEntity->ext.blackPanther.unk99 = 0xF;
             g_CurrentEntity->step_s++;
         }
         break;
     case 3:
-        prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[8];
+        prim = g_CurrentEntity->ext.blackPanther.prim9C;
         prim->y0 += 2;
         prim->y1 += 2;
         if (prim->y0 > g_CurrentEntity->posY.i.hi) {
             prim->drawMode |= DRAW_HIDE;
         }
-        prim = g_CurrentEntity->ext.prim;
+        prim = g_CurrentEntity->ext.blackPanther.prim7C;
         prim->y0 -= 2;
         prim->y1 -= 2;
         func_us_801C4B2C();
-        if (!--g_CurrentEntity->ext.ILLEGAL.u8[0x1D]) {
-            g_CurrentEntity->ext.ILLEGAL.u8[0x1D] = 0xF;
+        if (!--g_CurrentEntity->ext.blackPanther.unk99) {
+            g_CurrentEntity->ext.blackPanther.unk99 = 0xF;
             g_CurrentEntity->step_s++;
         }
         break;
     case 4:
-        prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[8];
+        prim = g_CurrentEntity->ext.blackPanther.prim9C;
         prim->y0 += 2;
         prim->y1 += 2;
         if (prim->y0 > g_CurrentEntity->posY.i.hi) {
             prim->drawMode |= DRAW_HIDE;
         }
-        prim = g_CurrentEntity->ext.prim;
+        prim = g_CurrentEntity->ext.blackPanther.prim7C;
         prim->y0 += 2;
         prim->y1 += 2;
         func_us_801C4B2C();
@@ -516,14 +516,14 @@ static void func_us_801C5AA0(void) {
         g_CurrentEntity->animCurFrame = 1;
         g_CurrentEntity->hitEffect = g_CurrentEntity->palette;
         g_CurrentEntity->palette = PAL_FLAG(PAL_CC_DARK_EFFECT);
-        g_CurrentEntity->ext.ILLEGAL.u8[0x1C] = 0x18;
+        g_CurrentEntity->ext.blackPanther.unk98 = 0x18;
         primIndex = g_CurrentEntity->primIndex;
         g_api.FreePrimitives(primIndex);
         g_CurrentEntity->flags &= ~FLAG_HAS_PRIMS;
         g_CurrentEntity->step_s++;
         break;
     case 6:
-        if (!--g_CurrentEntity->ext.ILLEGAL.u8[0x1C]) {
+        if (!--g_CurrentEntity->ext.blackPanther.unk98) {
             g_CurrentEntity->palette = g_CurrentEntity->hitEffect;
             g_CurrentEntity->hitboxState = 3;
             g_CurrentEntity->step_s++;
@@ -697,11 +697,11 @@ void EntityBlackPanther(Entity* self) {
             } else {
                 self->velocityX = FIX(-4.0);
             }
-            self->ext.ILLEGAL.s16[4] = 0x30;
+            self->ext.blackPanther.unk84 = 0x30;
             self->step_s++;
         } else {
             UnkCollisionFunc2(&D_pspeu_09254CD0);
-            temp_s1 = (Primitive*)self->ext.ILLEGAL.u32[8];
+            temp_s1 = self->ext.blackPanther.prim9C;
             if (self->facingLeft) {
                 temp_s1->next->x1 = (self->posX.i.hi - 0x12);
             } else {
@@ -709,7 +709,7 @@ void EntityBlackPanther(Entity* self) {
             }
             temp_s1->next->y0 = (self->posY.i.hi + 2);
             UnkPrimHelper(temp_s1);
-            if (!--self->ext.ILLEGAL.s16[4]) {
+            if (!--self->ext.blackPanther.unk84) {
                 SetStep(9);
             }
         }

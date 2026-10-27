@@ -4713,8 +4713,22 @@ typedef struct {
 } ET_SpectralSwordRdai;
 
 typedef struct {
-    /* 0x7C */ u32 : 32;
+    /* 0x7C */ struct Primitive* prim7C;
     /* 0x80 */ struct Primitive* prim80;
+    /* 0x84 */ s16 unk84;
+    /* 0x88 */ struct Primitive* prim88;
+    /* 0x8C */ struct Primitive* prim8C;
+    /* 0x90 */ struct Primitive* prim90;
+    /* 0x94 */ u8 unk94;
+    /* 0x95 */ u8 unk95;
+    /* 0x96 */ u8 unk96;
+    /* 0x97 */ u8 unk97;
+    /* 0x98 */ u8 unk98;
+    /* 0x99 */ u8 unk99;
+    /* 0x9A */ u8 unk9A;
+    /* 0x9B */ u8 unk9B;
+    /* 0x9C */ struct Primitive* prim9C;
+
 } ET_BlackPanther;
 
 typedef union { // offset=0x7C
