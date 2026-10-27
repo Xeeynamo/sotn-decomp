@@ -98,7 +98,7 @@ static void func_us_801C4C4C(void) {
             prim2 = prim;
             prim = prim->next;
         }
-        g_CurrentEntity->ext.ILLEGAL.u32[1] = (u32)prim2;
+        g_CurrentEntity->ext.blackPanther.prim80 = prim2;
         prim->tpage = 0x12;
         prim->clut = 0x164;
         prim->u0 = 0;
@@ -271,7 +271,7 @@ static void func_us_801C4C4C(void) {
                 prim = prim->next;
             }
             if (g_CurrentEntity->ext.ILLEGAL.s16[4] % 2) {
-                prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[1];
+                prim = g_CurrentEntity->ext.blackPanther.prim80;
                 prim->x2++;
                 prim->x3 -= 2;
             }

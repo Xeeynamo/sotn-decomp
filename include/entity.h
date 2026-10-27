@@ -4712,6 +4712,11 @@ typedef struct {
     /* 0x96 */ s16 attackTimer;
 } ET_SpectralSwordRdai;
 
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ struct Primitive* prim80;
+} ET_BlackPanther;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -5111,6 +5116,7 @@ typedef union { // offset=0x7C
     ET_TinMan tinman;
     ET_Scarecrow scarecrow;
     ET_SpectralSwordRdai spectralSwordRdai;
+    ET_BlackPanther blackPanther;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);
