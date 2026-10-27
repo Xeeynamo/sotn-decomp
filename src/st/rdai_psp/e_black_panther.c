@@ -534,11 +534,12 @@ static void func_us_801C5AA0(void) {
     }
 }
 
-extern s16 D_pspeu_09254CB0[];
-extern s16 D_pspeu_09254CC0[];
-extern s16 D_pspeu_09254CD0[];
-extern AnimateEntityFrame D_pspeu_09254CD8[];
-extern AnimateEntityFrame D_pspeu_09254CF0[];
+static s16 D_pspeu_09254CB0[] = {-64, 0, -64, 16, 255, 0};
+static s16 D_pspeu_09254CC0[] = {0, 8, 0, 4, 8, -4, -16, 0};
+static s16 D_pspeu_09254CD0[] = {0, 8, 16, 0};
+static AnimateEntityFrame D_pspeu_09254CD8[] = {{6, 2}, {3, 3}, {5, 4}, {3, 3}, {3, 6}, {3, 7}, {2, 8}, {2, 9}, {2, 10}, POSE_LOOP(0)};
+static AnimateEntityFrame D_pspeu_09254CF0[] = {{3, 2}, {2, 3}, {3, 4}, {4, 5}, {2, 3}, POSE_END};
+
 extern EInit g_EInitBlackPanther;
 
 void EntityBlackPanther(Entity* self) {
