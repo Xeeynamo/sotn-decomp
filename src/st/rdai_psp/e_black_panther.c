@@ -44,7 +44,7 @@ static void func_us_801C4C4C(void) {
     Primitive* prim2;
     Primitive* prim;
     s32 primIndex;
-    s32 var_s1;
+    s32 i;
 
     switch (g_CurrentEntity->step_s) {                              /* switch 1; irregular */
     case 0:                                         /* switch 1 */
@@ -59,7 +59,7 @@ static void func_us_801C4C4C(void) {
             DestroyEntity(g_CurrentEntity);
             return;
         }
-        for(var_s1 = 0; var_s1 < 8; var_s1++) {
+        for(i = 0; i < 8; i++) {
             prim->tpage = 0x12;
             prim->clut = 0x164;
             if (g_CurrentEntity->facingLeft) {
@@ -73,10 +73,10 @@ static void func_us_801C4C4C(void) {
                 prim->u2 = 0;
                 prim->u3 = 0x40;
             }
-            prim->v0 = ((var_s1 * 2) + 0xB5);
-            prim->v1 = ((var_s1 * 2) + 0xB5);
-            prim->v2 = ((var_s1 * 2) + 0xB8);
-            prim->v3 = ((var_s1 * 2) + 0xB8);            
+            prim->v0 = ((i * 2) + 0xB5);
+            prim->v1 = ((i * 2) + 0xB5);
+            prim->v2 = ((i * 2) + 0xB8);
+            prim->v3 = ((i * 2) + 0xB8);            
             prim->r0 = prim->g0 = prim->b0 = 0x80;
             prim->r1 = prim->g1 = prim->b1 = 0x80;
             prim->r2 = prim->g2 = prim->b2 = 0x80;
@@ -89,11 +89,11 @@ static void func_us_801C4C4C(void) {
             prim->x1 = prim->x0 + 0x40;
             prim->x2 = prim->x0;
             prim->x3 = prim->x1;
-            prim->y0 = g_CurrentEntity->posY.i.hi - 0xA + (var_s1 * 2);
+            prim->y0 = g_CurrentEntity->posY.i.hi - 7 + (i * 2) - 3;
             prim->y1 = prim->y0;
             prim->y2 = prim->y0 + 4;
             prim->y3 = prim->y2;
-            prim->priority = ((g_CurrentEntity->zPriority) + 2);
+            prim->priority = (g_CurrentEntity->zPriority + 2);
             prim->drawMode = 2;
             prim2 = prim;
             prim = prim->next;
@@ -253,7 +253,7 @@ static void func_us_801C4C4C(void) {
                 g_CurrentEntity->ext.ILLEGAL.u8[0x18]++;
             }
             prim = prim->next;
-            for(var_s1 = 0; var_s1 < 6; var_s1++) {
+            for(i = 0; i < 6; i++) {
                 prim->x2 += 2;
                 prim->x3 -= 2;
                 prim = prim->next;
@@ -265,7 +265,7 @@ static void func_us_801C4C4C(void) {
             prim->y0 += 6;
             prim->y1 += 6;
             prim = prim->next;
-            for(var_s1 = 0; var_s1 < 6; var_s1++) {
+            for(i = 0; i < 6; i++) {
                 prim->x2++;
                 prim->x3 -= 1;
                 prim = prim->next;
@@ -277,7 +277,7 @@ static void func_us_801C4C4C(void) {
             }
             prim = g_CurrentEntity->ext.prim;
             if (prim->y0 > (g_CurrentEntity->posY.i.hi + 8)) {
-                for(var_s1 = 0; var_s1 < 8; var_s1++) {
+                for(i = 0; i < 8; i++) {
                     prim->drawMode |= 8;
                     prim = prim->next;
                 }
@@ -435,7 +435,7 @@ static void func_us_801C5AA0(void) {
             prim->v3 = ((i * 2) + 0xB6);
             prim->r0 = prim->g0 = prim->b0 = 0x80;
             prim->r1 = prim->g1 = prim->b1 = 0x80;
-            prim->r2 = prim->g2 = prim->b2 = 0x80;    
+            prim->r2 = prim->g2 = prim->b2 = 0x80;
             prim->r3 = prim->g3 = prim->b3 = 0x80;
             if (g_CurrentEntity->facingLeft) {
                 prim->x0 = g_CurrentEntity->posX.i.hi - 0x30;
@@ -456,7 +456,7 @@ static void func_us_801C5AA0(void) {
         }
         func_us_801C4B2C();
         PlaySfxPositional(0x672);
-        g_CurrentEntity->step_s += 1;
+        g_CurrentEntity->step_s++;
         g_CurrentEntity->ext.ILLEGAL.u8[0x1D] = 8;
         break;
     case 1:
@@ -465,7 +465,7 @@ static void func_us_801C5AA0(void) {
         prim->y1 -= 2;
         if (!--g_CurrentEntity->ext.ILLEGAL.u8[0x1D]) {
             g_CurrentEntity->ext.ILLEGAL.u8[0x1D] = 0x10;
-            g_CurrentEntity->step_s += 1;
+            g_CurrentEntity->step_s++;
         }
         break;
     case 2:
@@ -478,7 +478,7 @@ static void func_us_801C5AA0(void) {
         func_us_801C4B2C();
         if (!--g_CurrentEntity->ext.ILLEGAL.u8[0x1D]) {
             g_CurrentEntity->ext.ILLEGAL.u8[0x1D] = 0xF;
-            g_CurrentEntity->step_s += 1;
+            g_CurrentEntity->step_s++;
         }
         break;
     case 3:
@@ -494,7 +494,7 @@ static void func_us_801C5AA0(void) {
         func_us_801C4B2C();
         if (!--g_CurrentEntity->ext.ILLEGAL.u8[0x1D]) {
             g_CurrentEntity->ext.ILLEGAL.u8[0x1D] = 0xF;
-            g_CurrentEntity->step_s += 1;
+            g_CurrentEntity->step_s++;
         }
         break;
     case 4:
@@ -509,7 +509,7 @@ static void func_us_801C5AA0(void) {
         prim->y1 += 2;
         func_us_801C4B2C();
         if (prim->y0 > g_CurrentEntity->posY.i.hi - 6) {
-            g_CurrentEntity->step_s += 1;
+            g_CurrentEntity->step_s++;
         }
         break;
     case 5:
@@ -520,13 +520,13 @@ static void func_us_801C5AA0(void) {
         primIndex = g_CurrentEntity->primIndex;
         g_api.FreePrimitives(primIndex);
         g_CurrentEntity->flags &= 0xFF7FFFFF;
-        g_CurrentEntity->step_s += 1;
+        g_CurrentEntity->step_s++;
         break;
     case 6:
         if (!--g_CurrentEntity->ext.ILLEGAL.u8[0x1C]) {
             g_CurrentEntity->palette = g_CurrentEntity->hitEffect;
             g_CurrentEntity->hitboxState = 3;
-            g_CurrentEntity->step_s += 1;
+            g_CurrentEntity->step_s++;
         }
         break;
     case 7:
@@ -564,14 +564,14 @@ void EntityBlackPanther(Entity* self) {
         /* fallthrough */
     case 1:                                         /* switch 1 */
         if (UnkCollisionFunc3(&D_pspeu_09254CC0) & 1) {
-            self->step += 1;
+            self->step++;
         }
         break;
     case 2:                                         /* switch 1 */
         self->animCurFrame = 1;
         self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
         if (GetDistanceToPlayerX() < 0x70) {
-            self->step += 1;
+            self->step++;
         }
         break;
     case 3:                                         /* switch 1 */
@@ -583,7 +583,7 @@ void EntityBlackPanther(Entity* self) {
         }
         if (AnimateEntity(&D_pspeu_09254CD8, self) == 0) {
             PlaySfxPositional(0x649);
-            if ((CheckColliderOffsets(&D_pspeu_09254CB0, (self->facingLeft) ^ 1) ^ 1) != 0) {
+            if ((CheckColliderOffsets(&D_pspeu_09254CB0, self->facingLeft ^ 1) ^ 1)) {
                 SetStep(4);
             }
         }
@@ -613,12 +613,12 @@ void EntityBlackPanther(Entity* self) {
                 self->velocityX = -0x20000;
             }
             self->velocityY = -0x38000;
-            self->step_s += 1;
+            self->step_s++;
             break;
         case 1:                                     /* switch 2 */
             AnimateEntity(&D_pspeu_09254CF0, self);
             if (UnkCollisionFunc3(&D_pspeu_09254CC0) & 1) {
-                self->step_s += 1;
+                self->step_s++;
             }
             xVar = self->posX.i.hi;
             if (self->facingLeft) {
@@ -644,7 +644,7 @@ void EntityBlackPanther(Entity* self) {
             self->animCurFrame = 9;
             self->velocityX = 0;
             self->velocityY = -0x40000;
-            self->step_s += 1;
+            self->step_s++;
             break;
         case 1:                                     /* switch 3 */
             if (UnkCollisionFunc3(&D_pspeu_09254CC0) & 1) {
@@ -665,7 +665,7 @@ void EntityBlackPanther(Entity* self) {
             self->velocityY = -0x30000;
             self->drawFlags |= 4;
             self->rotate = 0;
-            self->step_s += 1;
+            self->step_s++;
         }
         self->rotate += 0x100;
         if (UnkCollisionFunc3(&D_pspeu_09254CC0) & 1) {
@@ -689,7 +689,7 @@ void EntityBlackPanther(Entity* self) {
                 self->velocityX = -0x40000;
             }
             self->ext.ILLEGAL.s16[4] = 0x30;
-            self->step_s += 1;
+            self->step_s++;
         } else {
             UnkCollisionFunc2(&D_pspeu_09254CD0);
             temp_s1 = (Primitive*)self->ext.ILLEGAL.u32[8];
@@ -723,12 +723,12 @@ void EntityBlackPanther(Entity* self) {
                 self->velocityX = -0x20000;
             }
             self->velocityY = -0x38000;
-            self->step_s += 1;
+            self->step_s++;
             break;
         case 1:                                     /* switch 4 */
             self->rotate -= 0x80;
             if (UnkCollisionFunc3(&D_pspeu_09254CC0) & 1) {
-                self->step_s += 1;
+                self->step_s++;
             }
             break;
         case 2:                                     /* switch 4 */
