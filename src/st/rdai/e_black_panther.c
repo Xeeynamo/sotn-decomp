@@ -11,7 +11,7 @@ void func_us_801C4B2C() {
     Primitive* prim;
 
     prim = g_CurrentEntity->ext.prim;
-    for(i = 0; i < 7; i++) {
+    for (i = 0; i < 7; i++) {
         prim2 = prim->next;
         xVar1 = prim2->x2 + prim->x0;
         xVar1 /= 2;
@@ -19,19 +19,19 @@ void func_us_801C4B2C() {
         yVar1 /= 2;
         xVar2 = prim->x2 - xVar1;
         yVar2 = prim->y2 - yVar1;
-        
+
         xVar2 = xVar2 / 8 + xVar1;
         yVar2 = yVar2 / 8 + yVar1;
         prim2->x0 = prim->x2 = xVar2;
         prim2->y0 = prim->y2 = yVar2;
-        
+
         xVar1 = prim2->x3 + prim->x1;
         xVar1 /= 2;
         yVar1 = prim2->y3 + prim->y1;
         yVar1 /= 2;
         xVar2 = prim->x3 - xVar1;
         yVar2 = prim->y3 - yVar1;
-        
+
         xVar2 = xVar2 / 8 + xVar1;
         yVar2 = yVar2 / 8 + yVar1;
         prim2->x1 = prim->x3 = xVar2;
@@ -46,12 +46,12 @@ static void func_us_801C4C4C(void) {
     s32 primIndex;
     s32 i;
 
-    switch (g_CurrentEntity->step_s) {                              /* switch 1; irregular */
-    case 0:                                         /* switch 1 */
+    switch (g_CurrentEntity->step_s) {
+    case 0:
         g_CurrentEntity->hitboxState = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x14);
         if (primIndex != -1) {
-            g_CurrentEntity->flags |= 0x800000;
+            g_CurrentEntity->flags |= FLAG_HAS_PRIMS;
             g_CurrentEntity->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
             g_CurrentEntity->ext.prim = prim;
@@ -59,7 +59,7 @@ static void func_us_801C4C4C(void) {
             DestroyEntity(g_CurrentEntity);
             return;
         }
-        for(i = 0; i < 8; i++) {
+        for (i = 0; i < 8; i++) {
             prim->tpage = 0x12;
             prim->clut = 0x164;
             if (g_CurrentEntity->facingLeft) {
@@ -76,7 +76,7 @@ static void func_us_801C4C4C(void) {
             prim->v0 = ((i * 2) + 0xB5);
             prim->v1 = ((i * 2) + 0xB5);
             prim->v2 = ((i * 2) + 0xB8);
-            prim->v3 = ((i * 2) + 0xB8);            
+            prim->v3 = ((i * 2) + 0xB8);
             prim->r0 = prim->g0 = prim->b0 = 0x80;
             prim->r1 = prim->g1 = prim->b1 = 0x80;
             prim->r2 = prim->g2 = prim->b2 = 0x80;
@@ -94,11 +94,11 @@ static void func_us_801C4C4C(void) {
             prim->y2 = prim->y0 + 4;
             prim->y3 = prim->y2;
             prim->priority = (g_CurrentEntity->zPriority + 2);
-            prim->drawMode = 2;
+            prim->drawMode = DRAW_UNK02;
             prim2 = prim;
             prim = prim->next;
         }
-        g_CurrentEntity->ext.ILLEGAL.u32[1] = (u32) prim2;
+        g_CurrentEntity->ext.ILLEGAL.u32[1] = (u32)prim2;
         prim->tpage = 0x12;
         prim->clut = 0x164;
         prim->u0 = 0;
@@ -108,7 +108,7 @@ static void func_us_801C4C4C(void) {
         prim->v0 = 0xEE;
         prim->v1 = 0xEE;
         prim->v2 = 0xEF;
-        prim->v3 = 0xEF;            
+        prim->v3 = 0xEF;
         prim->r0 = prim->g0 = prim->b0 = 0x80;
         prim->r1 = prim->g1 = prim->b1 = 0x80;
         prim->r2 = prim->g2 = prim->b2 = 0x80;
@@ -126,8 +126,8 @@ static void func_us_801C4C4C(void) {
         prim->y2 = prim->y0;
         prim->y3 = prim->y2;
         prim->priority = ((g_CurrentEntity->zPriority) + 3);
-        prim->drawMode = 0xA;
-        g_CurrentEntity->ext.ILLEGAL.u32[3] = (u32) prim;
+        prim->drawMode = DRAW_HIDE | DRAW_UNK02;
+        g_CurrentEntity->ext.ILLEGAL.u32[3] = (u32)prim;
         prim = prim->next;
         prim->tpage = 0x12;
         prim->clut = 0x164;
@@ -156,8 +156,8 @@ static void func_us_801C4C4C(void) {
         prim->y2 = prim->y0;
         prim->y3 = prim->y2;
         prim->priority = ((g_CurrentEntity->zPriority) + 2);
-        prim->drawMode = 0xA;
-        g_CurrentEntity->ext.ILLEGAL.u32[4] = (u32) prim;
+        prim->drawMode = DRAW_HIDE | DRAW_UNK02;
+        g_CurrentEntity->ext.ILLEGAL.u32[4] = (u32)prim;
         prim = prim->next;
         UnkPolyFunc2(prim);
         prim->tpage = 0x12;
@@ -182,8 +182,8 @@ static void func_us_801C4C4C(void) {
         LOH(prim->next->b2) = 8;
         prim->next->b3 = 0x80;
         prim->priority = ((g_CurrentEntity->zPriority) + 2);
-        prim->drawMode = 0xA;
-        g_CurrentEntity->ext.ILLEGAL.u32[5] = (u32) prim;
+        prim->drawMode = DRAW_HIDE | DRAW_UNK02;
+        g_CurrentEntity->ext.ILLEGAL.u32[5] = (u32)prim;
         prim = prim->next;
         prim = prim->next;
         UnkPolyFunc2(prim);
@@ -216,14 +216,14 @@ static void func_us_801C4C4C(void) {
         LOH(prim->next->b2) = 1;
         prim->next->b3 = 0x80;
         prim->priority = ((g_CurrentEntity->zPriority) + 2);
-        prim->drawMode = 0xA;
-        g_CurrentEntity->ext.ILLEGAL.u32[8] = (u32) prim;
-        PlaySfxPositional(0x672);
+        prim->drawMode = DRAW_HIDE | DRAW_UNK02;
+        g_CurrentEntity->ext.ILLEGAL.u32[8] = (u32)prim;
+        PlaySfxPositional(SFX_NOISE_SWEEP_DOWN_A);
         g_CurrentEntity->step_s++;
         g_CurrentEntity->ext.ILLEGAL.s16[4] = 0x10;
         g_CurrentEntity->animCurFrame = 0;
         break;
-    case 1:                                         /* switch 1 */
+    case 1:
         if (!--g_CurrentEntity->ext.ILLEGAL.s16[4]) {
             g_CurrentEntity->ext.ILLEGAL.u8[0x18] = 0;
             g_CurrentEntity->ext.ILLEGAL.u8[0x19] = 0;
@@ -236,36 +236,36 @@ static void func_us_801C4C4C(void) {
             g_CurrentEntity->step_s++;
         }
         break;
-    case 2:                                         /* switch 1 */
+    case 2:
         g_CurrentEntity->ext.ILLEGAL.s16[4]++;
-        switch (g_CurrentEntity->ext.ILLEGAL.u8[0x18]) {                        /* switch 2; irregular */
-        case 0:                                     /* switch 2 */
+        switch (g_CurrentEntity->ext.ILLEGAL.u8[0x18]) {
+        case 0:
             func_us_801C4B2C();
             prim = g_CurrentEntity->ext.prim;
             prim->y0 -= 3;
             prim->y1 -= 3;
             if ((g_CurrentEntity->ext.ILLEGAL.s16[4] % 2) != 0) {
-                prim->x0 ++;
-                prim->x1 --;
+                prim->x0++;
+                prim->x1--;
             }
             if ((prim->x1 - prim->x0) < 0x20) {
                 g_CurrentEntity->ext.ILLEGAL.s16[4] = 0xC;
                 g_CurrentEntity->ext.ILLEGAL.u8[0x18]++;
             }
             prim = prim->next;
-            for(i = 0; i < 6; i++) {
+            for (i = 0; i < 6; i++) {
                 prim->x2 += 2;
                 prim->x3 -= 2;
                 prim = prim->next;
             }
             break;
-        case 1:                                     /* switch 2 */
+        case 1:
             func_us_801C4B2C();
             prim = g_CurrentEntity->ext.prim;
             prim->y0 += 6;
             prim->y1 += 6;
             prim = prim->next;
-            for(i = 0; i < 6; i++) {
+            for (i = 0; i < 6; i++) {
                 prim->x2++;
                 prim->x3 -= 1;
                 prim = prim->next;
@@ -273,27 +273,27 @@ static void func_us_801C4C4C(void) {
             if (g_CurrentEntity->ext.ILLEGAL.s16[4] % 2) {
                 prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[1];
                 prim->x2++;
-                prim->x3-= 2;
+                prim->x3 -= 2;
             }
             prim = g_CurrentEntity->ext.prim;
             if (prim->y0 > (g_CurrentEntity->posY.i.hi + 8)) {
-                for(i = 0; i < 8; i++) {
-                    prim->drawMode |= 8;
+                for (i = 0; i < 8; i++) {
+                    prim->drawMode |= DRAW_HIDE;
                     prim = prim->next;
                 }
             }
             break;
         }
-        switch (g_CurrentEntity->ext.ILLEGAL.u8[0x19]) {                        /* switch 3; irregular */
-        case 0:                                     /* switch 3 */
+        switch (g_CurrentEntity->ext.ILLEGAL.u8[0x19]) {
+        case 0:
             if (!--g_CurrentEntity->ext.ILLEGAL.u8[0x1D]) {
                 prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[3];
-                prim->drawMode &= 0xFFF7;
+                prim->drawMode &= ~DRAW_HIDE;
                 g_CurrentEntity->ext.ILLEGAL.u8[0x1D] = 0xF;
                 g_CurrentEntity->ext.ILLEGAL.u8[0x19]++;
             }
             break;
-        case 1:                                     /* switch 3 */
+        case 1:
             prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[3];
             prim->v2++;
             prim->v3 = prim->v2;
@@ -307,7 +307,7 @@ static void func_us_801C4C4C(void) {
                 g_CurrentEntity->ext.ILLEGAL.u8[0x19]++;
             }
             break;
-        case 2:                                     /* switch 3 */
+        case 2:
             prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[3];
             if ((g_CurrentEntity->ext.ILLEGAL.s16[4] % 3) == 0) {
                 prim->v2--;
@@ -316,21 +316,21 @@ static void func_us_801C4C4C(void) {
             prim->y0++;
             prim->y1 = prim->y0;
             if (prim->y0 > prim->y2) {
-                prim->drawMode |= 8;
+                prim->drawMode |= DRAW_HIDE;
                 g_CurrentEntity->ext.ILLEGAL.u8[0x19] = 8;
             }
             break;
         }
-        switch (g_CurrentEntity->ext.ILLEGAL.u8[0x1A]) {                        /* switch 4; irregular */
-        case 0:                                     /* switch 4 */
+        switch (g_CurrentEntity->ext.ILLEGAL.u8[0x1A]) {
+        case 0:
             if (!--g_CurrentEntity->ext.ILLEGAL.u8[0x1E]) {
                 prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[4];
-                prim->drawMode &= 0xFFF7;
+                prim->drawMode &= ~DRAW_HIDE;
                 g_CurrentEntity->ext.ILLEGAL.u8[0x1A]++;
                 return;
             }
             break;
-        case 1:                                     /* switch 4 */
+        case 1:
             prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[4];
             prim->v2 += 4;
             prim->v3 = prim->v2;
@@ -338,22 +338,22 @@ static void func_us_801C4C4C(void) {
             prim->y1 = prim->y0;
             if (prim->v2 > 0xF8) {
                 prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[5];
-                prim->drawMode &= 0xFFF7;
+                prim->drawMode &= ~DRAW_HIDE;
                 LOW(prim->next->r1) = 0xFFFF0000;
                 prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[8];
-                prim->drawMode &= 0xFFF7;
+                prim->drawMode &= ~DRAW_HIDE;
                 g_CurrentEntity->ext.ILLEGAL.u8[0x1A]++;
                 return;
             }
             break;
-        case 2:                                     /* switch 4 */
+        case 2:
             prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[4];
             prim->y0++;
             prim->y1 = prim->y0;
             if (prim->y0 == prim->y3) {
                 g_CurrentEntity->ext.ILLEGAL.s16[4] = 1;
                 g_CurrentEntity->ext.ILLEGAL.u8[0x1F] = 0;
-                prim->drawMode |= 8;
+                prim->drawMode |= DRAW_HIDE;
                 g_CurrentEntity->step_s++;
             }
             prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[5];
@@ -370,7 +370,7 @@ static void func_us_801C4C4C(void) {
             break;
         }
         break;
-    case 3:                                         /* switch 1 */
+    case 3:
         g_CurrentEntity->ext.ILLEGAL.s16[4]++;
         prim = (Primitive*)g_CurrentEntity->ext.ILLEGAL.u32[8];
         UnkPrimHelper(prim);
@@ -378,7 +378,7 @@ static void func_us_801C4C4C(void) {
             g_CurrentEntity->ext.ILLEGAL.u8[0x1F] ^= 1;
         }
         if (LOH((prim->next)->b2) < 0xD) {
-                LOH((prim->next)->b2)++;
+            LOH((prim->next)->b2)++;
         }
         if (LOH((prim->next)->r2) < 0x3C) {
             LOH((prim->next)->r2)++;
@@ -387,7 +387,7 @@ static void func_us_801C4C4C(void) {
         UnkPrimHelper(prim);
         LOW(prim->next->r1) += 0x1000;
         if (prim->next->y0 > (g_CurrentEntity->posY.i.hi + 6)) {
-            prim->drawMode |= 8;
+            prim->drawMode |= DRAW_HIDE;
             g_CurrentEntity->step_s++;
         }
         break;
@@ -415,7 +415,7 @@ static void func_us_801C5AA0(void) {
             }
         }
         prim = g_CurrentEntity->ext.prim;
-        for(i = 0; i < 8; i++) {
+        for (i = 0; i < 8; i++) {
             prim->tpage = 0x12;
             prim->clut = 0x164;
             if (g_CurrentEntity->facingLeft) {
@@ -450,12 +450,12 @@ static void func_us_801C5AA0(void) {
             prim->y2 = prim->y0;
             prim->y3 = prim->y2;
             prim->priority = ((g_CurrentEntity->zPriority) + 2);
-            prim->drawMode = 2;
+            prim->drawMode = DRAW_UNK02;
             prim2 = prim;
             prim = prim->next;
         }
         func_us_801C4B2C();
-        PlaySfxPositional(0x672);
+        PlaySfxPositional(SFX_NOISE_SWEEP_DOWN_A);
         g_CurrentEntity->step_s++;
         g_CurrentEntity->ext.ILLEGAL.u8[0x1D] = 8;
         break;
@@ -486,7 +486,7 @@ static void func_us_801C5AA0(void) {
         prim->y0 += 2;
         prim->y1 += 2;
         if (prim->y0 > g_CurrentEntity->posY.i.hi) {
-            prim->drawMode |= 8;
+            prim->drawMode |= DRAW_HIDE;
         }
         prim = g_CurrentEntity->ext.prim;
         prim->y0 -= 2;
@@ -502,7 +502,7 @@ static void func_us_801C5AA0(void) {
         prim->y0 += 2;
         prim->y1 += 2;
         if (prim->y0 > g_CurrentEntity->posY.i.hi) {
-            prim->drawMode |= 8;
+            prim->drawMode |= DRAW_HIDE;
         }
         prim = g_CurrentEntity->ext.prim;
         prim->y0 += 2;
@@ -515,11 +515,11 @@ static void func_us_801C5AA0(void) {
     case 5:
         g_CurrentEntity->animCurFrame = 1;
         g_CurrentEntity->hitEffect = g_CurrentEntity->palette;
-        g_CurrentEntity->palette = 0x8164;
+        g_CurrentEntity->palette = PAL_FLAG(PAL_CC_DARK_EFFECT);
         g_CurrentEntity->ext.ILLEGAL.u8[0x1C] = 0x18;
         primIndex = g_CurrentEntity->primIndex;
         g_api.FreePrimitives(primIndex);
-        g_CurrentEntity->flags &= 0xFF7FFFFF;
+        g_CurrentEntity->flags &= ~FLAG_HAS_PRIMS;
         g_CurrentEntity->step_s++;
         break;
     case 6:
@@ -537,8 +537,11 @@ static void func_us_801C5AA0(void) {
 static s16 D_pspeu_09254CB0[] = {-64, 0, -64, 16, 255, 0};
 static s16 D_pspeu_09254CC0[] = {0, 8, 0, 4, 8, -4, -16, 0};
 static s16 D_pspeu_09254CD0[] = {0, 8, 16, 0};
-static AnimateEntityFrame D_pspeu_09254CD8[] = {{6, 2}, {3, 3}, {5, 4}, {3, 3}, {3, 6}, {3, 7}, {2, 8}, {2, 9}, {2, 10}, POSE_LOOP(0)};
-static AnimateEntityFrame D_pspeu_09254CF0[] = {{3, 2}, {2, 3}, {3, 4}, {4, 5}, {2, 3}, POSE_END};
+static AnimateEntityFrame D_pspeu_09254CD8[] = {
+    {6, 2}, {3, 3}, {5, 4}, {3, 3},  {3, 6},
+    {3, 7}, {2, 8}, {2, 9}, {2, 10}, POSE_LOOP(0)};
+static AnimateEntityFrame D_pspeu_09254CF0[] = {
+    {3, 2}, {2, 3}, {3, 4}, {4, 5}, {2, 3}, POSE_END};
 
 extern EInit g_EInitBlackPanther;
 
@@ -551,45 +554,49 @@ void EntityBlackPanther(Entity* self) {
     s16 xVar;
     Primitive* temp_s1;
 
-    if ((self->flags & 0x100) && ((self->step) < 0x10)) {
+    if ((self->flags & FLAG_DEAD) && ((self->step) < 0x10)) {
         self->hitboxState = 0;
         SetStep(0x10);
     }
-    switch (self->step) {                              /* switch 1; irregular */
-    case 0:                                         /* switch 1 */
+    switch (self->step) {
+    case 0:
         InitializeEntity(g_EInitBlackPanther);
         self->hitboxOffX = 2;
         self->hitboxOffY = -4;
         self->animCurFrame = 1;
         /* fallthrough */
-    case 1:                                         /* switch 1 */
+    case 1:
         if (UnkCollisionFunc3(&D_pspeu_09254CC0) & 1) {
             self->step++;
         }
         break;
-    case 2:                                         /* switch 1 */
+    case 2:
         self->animCurFrame = 1;
         self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
         if (GetDistanceToPlayerX() < 0x70) {
             self->step++;
         }
         break;
-    case 3:                                         /* switch 1 */
+    case 3:
         UnkCollisionFunc2(&D_pspeu_09254CD0);
         if (self->facingLeft) {
-            self->velocityX = 0x28000;
+            self->velocityX = FIX(2.5);
         } else {
-            self->velocityX = -0x28000;
+            self->velocityX = FIX(-2.5);
         }
         if (AnimateEntity(&D_pspeu_09254CD8, self) == 0) {
-            PlaySfxPositional(0x649);
-            if ((CheckColliderOffsets(&D_pspeu_09254CB0, self->facingLeft ^ 1) ^ 1)) {
+            PlaySfxPositional(SFX_STOMP_HARD_D);
+            if (CheckColliderOffsets(&D_pspeu_09254CB0, self->facingLeft ^ 1) ^
+                1) {
                 SetStep(4);
             }
         }
         player = &PLAYER;
         playerSide = GetSideToPlayer() & 1;
-        if (((player->facingLeft) != playerSide) && (GetDistanceToPlayerX() < 0x50) && (g_Player.status & 0x1C00)) {
+        if (((player->facingLeft) != playerSide) &&
+            (GetDistanceToPlayerX() < 0x50) &&
+            (g_Player.status & (PLAYER_STATUS_SPELLCAST | PLAYER_STATUS_SUBWPN |
+                                PLAYER_STATUS_UNK400))) {
             SetStep(7);
         }
         xVar = self->posX.i.hi;
@@ -600,22 +607,22 @@ void EntityBlackPanther(Entity* self) {
         }
         yVar = self->posY.i.hi;
         g_api.CheckCollision(xVar, yVar, &sp2C, 0);
-        if (sp2C.effects != 0) {
+        if (sp2C.effects != EFFECT_NONE) {
             SetStep(6);
         }
         break;
-    case 4:                                         /* switch 1 */
-        switch (self->step_s) {                          /* switch 2; irregular */
-        case 0:                                     /* switch 2 */
+    case 4:
+        switch (self->step_s) {
+        case 0:
             if (self->facingLeft) {
-                self->velocityX = 0x20000;
+                self->velocityX = FIX(2.0);
             } else {
-                self->velocityX = -0x20000;
+                self->velocityX = FIX(-2.0);
             }
-            self->velocityY = -0x38000;
+            self->velocityY = FIX(-3.5);
             self->step_s++;
             break;
-        case 1:                                     /* switch 2 */
+        case 1:
             AnimateEntity(&D_pspeu_09254CF0, self);
             if (UnkCollisionFunc3(&D_pspeu_09254CC0) & 1) {
                 self->step_s++;
@@ -628,25 +635,25 @@ void EntityBlackPanther(Entity* self) {
             }
             yVar = self->posY.i.hi;
             g_api.CheckCollision(xVar, yVar, &sp2C, 0);
-            if (sp2C.effects != 0) {
+            if (sp2C.effects != EFFECT_NONE) {
                 SetStep(6);
             }
             break;
-        case 2:                                     /* switch 2 */
+        case 2:
             self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
             SetStep(3);
             break;
         }
         break;
-    case 5:                                         /* switch 1 */
-        switch (self->step_s) {                        /* switch 3; irregular */
-        case 0:                                     /* switch 3 */
+    case 5:
+        switch (self->step_s) {
+        case 0:
             self->animCurFrame = 9;
             self->velocityX = 0;
-            self->velocityY = -0x40000;
+            self->velocityY = FIX(-4.0);
             self->step_s++;
             break;
-        case 1:                                     /* switch 3 */
+        case 1:
             if (UnkCollisionFunc3(&D_pspeu_09254CC0) & 1) {
                 self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
                 SetStep(3);
@@ -654,39 +661,41 @@ void EntityBlackPanther(Entity* self) {
             break;
         }
         break;
-    case 6:                                         /* switch 1 */
+    case 6:
         if (!self->step_s) {
             self->animCurFrame = 0xB;
             if (self->facingLeft) {
-                self->velocityX = -0x28000;
+                self->velocityX = FIX(-2.5);
             } else {
-                self->velocityX = 0x28000;
+                self->velocityX = FIX(2.5);
             }
-            self->velocityY = -0x30000;
-            self->drawFlags |= 4;
+            self->velocityY = FIX(-3.0);
+            self->drawFlags |= ENTITY_ROTATE;
             self->rotate = 0;
             self->step_s++;
         }
-        self->rotate += 0x100;
+        self->rotate += ROT(22.5);
         if (UnkCollisionFunc3(&D_pspeu_09254CC0) & 1) {
-            self->drawFlags &= 0xFB;
+            self->drawFlags &=
+                ENTITY_BLINK | ENTITY_MASK_B | ENTITY_MASK_G | ENTITY_MASK_R |
+                ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX;
             SetStep(3);
         } else {
-            self->velocityY -= 0x1000;
+            self->velocityY -= FIX(0.0625);
         }
         break;
-    case 7:                                         /* switch 1 */
+    case 7:
         func_us_801C4C4C();
         if (self->step_s == 4) {
             SetStep(8);
         }
         break;
-    case 8:                                         /* switch 1 */
+    case 8:
         if (!self->step_s) {
             if (self->facingLeft) {
-                self->velocityX = 0x40000;
+                self->velocityX = FIX(4.0);
             } else {
-                self->velocityX = -0x40000;
+                self->velocityX = FIX(-4.0);
             }
             self->ext.ILLEGAL.s16[4] = 0x30;
             self->step_s++;
@@ -705,45 +714,45 @@ void EntityBlackPanther(Entity* self) {
             }
         }
         break;
-    case 9:                                         /* switch 1 */
+    case 9:
         func_us_801C5AA0();
         if ((self->step_s) == 7) {
             SetStep(3);
         }
         break;
-    case 16:                                        /* switch 1 */
-        switch (self->step_s) {                        /* switch 4; irregular */
-        case 0:                                     /* switch 4 */
-            self->drawFlags |= 4;
+    case 16:
+        switch (self->step_s) {
+        case 0:
+            self->drawFlags |= ENTITY_ROTATE;
             self->rotate = 0;
             self->animCurFrame = 0xB;
             if (self->facingLeft) {
-                self->velocityX = 0x20000;
+                self->velocityX = FIX(2.0);
             } else {
-                self->velocityX = -0x20000;
+                self->velocityX = FIX(-2.0);
             }
-            self->velocityY = -0x38000;
+            self->velocityY = FIX(-3.5);
             self->step_s++;
             break;
-        case 1:                                     /* switch 4 */
-            self->rotate -= 0x80;
+        case 1:
+            self->rotate -= ROT(11.25);
             if (UnkCollisionFunc3(&D_pspeu_09254CC0) & 1) {
                 self->step_s++;
             }
             break;
-        case 2:                                     /* switch 4 */
+        case 2:
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
-                CreateEntityFromEntity(2, self, other);
+                CreateEntityFromEntity(E_EXPLOSION, self, other);
                 other->params = 2;
             }
-            PlaySfxPositional(0x65E);
+            PlaySfxPositional(SFX_EXPLODE_SMALL);
             DestroyEntity(self);
             return;
         }
         break;
-    case 32:                                        /* switch 1 */
-    #include "../pad2_anim_debug.h"
+    case 32:
+#include "../pad2_anim_debug.h"
     }
 
     if (self->animCurFrame == 1) {
