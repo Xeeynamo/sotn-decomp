@@ -221,6 +221,7 @@ _SYS_GetUintMacSave = 0x06030B88;
 _func_06030df0 = 0x06030DF0;
 ___sdivsi3 = 0x06030E6C;
 ___ashlsi3 = 0x06030F0C;
+___movstr = 0x06030FFC;
 ___udivsi3 = 0x06031048;
 ___adddf3 = 0x060315A8;
 ___subdf3 = 0x06031608;
@@ -391,6 +392,7 @@ _g_Tilemap = 0x0605CE50; /* size = 0x38 */
 _DAT_0605cea0 = 0x0605CEA0;
 _g_CastleMap = 0x0605CEC0;
 _D_8003C744 = 0x0605D740;
+_g_canRevealMap = 0x0605D744;
 _g_CurrentRoom = 0x0605D750; /* size = 0x14 */
 _g_GameClearFlag = 0x0605D784;
 _g_MenuNavigation = 0x0605D790; /* size = 0x4C */
@@ -565,8 +567,6 @@ _DAT_06057f62 = 0x06057F62;
 _DAT_06057f68 = 0x06057F68;
 _DAT_0605aec0 = 0x0605AEC0;
 _DAT_0605becc = 0x0605BECC;
-_DAT_0605c108 = 0x0605C108;
-_DAT_0605c10c = 0x0605C10C;
 _DAT_0605c110 = 0x0605C110;
 _DAT_0605c11a = 0x0605C11A;
 _DAT_0605cd54 = 0x0605CD54;
