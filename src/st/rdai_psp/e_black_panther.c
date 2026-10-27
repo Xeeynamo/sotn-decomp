@@ -534,4 +534,239 @@ void func_us_801C5AA0(void) {
     }
 }
 
-INCLUDE_ASM("st/rdai_psp/nonmatchings/rdai_psp/e_black_panther", EntityBlackPanther);
+extern s16 D_pspeu_09254CB0[];
+extern s16 D_pspeu_09254CC0[];
+extern s16 D_pspeu_09254CD0[];
+extern AnimateEntityFrame D_pspeu_09254CD8[];
+extern AnimateEntityFrame D_pspeu_09254CF0[];
+extern EInit g_EInitBlackPanther;
+
+void EntityBlackPanther(Entity* self) {
+    Collider sp2C;
+    s32 playerSide;
+    Entity* player;
+    s16 yVar;
+    Entity* other;
+    s16 xVar;
+    Primitive* temp_s1;
+
+    if ((self->flags & 0x100) && ((self->step) < 0x10)) {
+        self->hitboxState = 0;
+        SetStep(0x10);
+    }
+    switch (self->step) {                              /* switch 1; irregular */
+    case 0:                                         /* switch 1 */
+        InitializeEntity(g_EInitBlackPanther);
+        self->hitboxOffX = 2;
+        self->hitboxOffY = -4;
+        self->animCurFrame = 1;
+        /* fallthrough */
+    case 1:                                         /* switch 1 */
+        if (UnkCollisionFunc3(&D_pspeu_09254CC0) & 1) {
+            self->step += 1;
+        }
+        break;
+    case 2:                                         /* switch 1 */
+        self->animCurFrame = 1;
+        self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
+        if (GetDistanceToPlayerX() < 0x70) {
+            self->step += 1;
+        }
+        break;
+    case 3:                                         /* switch 1 */
+        UnkCollisionFunc2(&D_pspeu_09254CD0);
+        if (self->facingLeft) {
+            self->velocityX = 0x28000;
+        } else {
+            self->velocityX = -0x28000;
+        }
+        if (AnimateEntity(&D_pspeu_09254CD8, self) == 0) {
+            PlaySfxPositional(0x649);
+            if ((CheckColliderOffsets(&D_pspeu_09254CB0, (self->facingLeft) ^ 1) ^ 1) != 0) {
+                SetStep(4);
+            }
+        }
+        player = &PLAYER;
+        playerSide = GetSideToPlayer() & 1;
+        if (((player->facingLeft) != playerSide) && (GetDistanceToPlayerX() < 0x50) && (g_Player.status & 0x1C00)) {
+            SetStep(7);
+        }
+        xVar = self->posX.i.hi;
+        if (self->facingLeft) {
+            xVar += 0x18;
+        } else {
+            xVar -= 0x18;
+        }
+        yVar = self->posY.i.hi;
+        g_api.CheckCollision(xVar, yVar, &sp2C, 0);
+        if (sp2C.effects != 0) {
+            SetStep(6);
+        }
+        break;
+    case 4:                                         /* switch 1 */
+        switch (self->step_s) {                          /* switch 2; irregular */
+        case 0:                                     /* switch 2 */
+            if (self->facingLeft) {
+                self->velocityX = 0x20000;
+            } else {
+                self->velocityX = -0x20000;
+            }
+            self->velocityY = -0x38000;
+            self->step_s += 1;
+            break;
+        case 1:                                     /* switch 2 */
+            AnimateEntity(&D_pspeu_09254CF0, self);
+            if (UnkCollisionFunc3(&D_pspeu_09254CC0) & 1) {
+                self->step_s += 1;
+            }
+            xVar = self->posX.i.hi;
+            if (self->facingLeft) {
+                xVar += 0x18;
+            } else {
+                xVar -= 0x18;
+            }
+            yVar = self->posY.i.hi;
+            g_api.CheckCollision(xVar, yVar, &sp2C, 0);
+            if (sp2C.effects != 0) {
+                SetStep(6);
+            }
+            break;
+        case 2:                                     /* switch 2 */
+            self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
+            SetStep(3);
+            break;
+        }
+        break;
+    case 5:                                         /* switch 1 */
+        switch (self->step_s) {                        /* switch 3; irregular */
+        case 0:                                     /* switch 3 */
+            self->animCurFrame = 9;
+            self->velocityX = 0;
+            self->velocityY = -0x40000;
+            self->step_s += 1;
+            break;
+        case 1:                                     /* switch 3 */
+            if (UnkCollisionFunc3(&D_pspeu_09254CC0) & 1) {
+                self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
+                SetStep(3);
+            }
+            break;
+        }
+        break;
+    case 6:                                         /* switch 1 */
+        if (!self->step_s) {
+            self->animCurFrame = 0xB;
+            if (self->facingLeft) {
+                self->velocityX = -0x28000;
+            } else {
+                self->velocityX = 0x28000;
+            }
+            self->velocityY = -0x30000;
+            self->drawFlags |= 4;
+            self->rotate = 0;
+            self->step_s += 1;
+        }
+        self->rotate += 0x100;
+        if (UnkCollisionFunc3(&D_pspeu_09254CC0) & 1) {
+            self->drawFlags &= 0xFB;
+            SetStep(3);
+        } else {
+            self->velocityY -= 0x1000;
+        }
+        break;
+    case 7:                                         /* switch 1 */
+        func_us_801C4C4C();
+        if (self->step_s == 4) {
+            SetStep(8);
+        }
+        break;
+    case 8:                                         /* switch 1 */
+        if (!self->step_s) {
+            if (self->facingLeft) {
+                self->velocityX = 0x40000;
+            } else {
+                self->velocityX = -0x40000;
+            }
+            self->ext.ILLEGAL.s16[4] = 0x30;
+            self->step_s += 1;
+        } else {
+            UnkCollisionFunc2(&D_pspeu_09254CD0);
+            temp_s1 = (Primitive*)self->ext.ILLEGAL.u32[8];
+            if (self->facingLeft) {
+                temp_s1->next->x1 = (self->posX.i.hi - 0x12);
+            } else {
+                temp_s1->next->x1 = (self->posX.i.hi + 0x12);
+            }
+            temp_s1->next->y0 = (self->posY.i.hi + 2);
+            UnkPrimHelper(temp_s1);
+            if (!--self->ext.ILLEGAL.s16[4]) {
+                SetStep(9);
+            }
+        }
+        break;
+    case 9:                                         /* switch 1 */
+        func_us_801C5AA0();
+        if ((self->step_s) == 7) {
+            SetStep(3);
+        }
+        break;
+    case 16:                                        /* switch 1 */
+        switch (self->step_s) {                        /* switch 4; irregular */
+        case 0:                                     /* switch 4 */
+            self->drawFlags |= 4;
+            self->rotate = 0;
+            self->animCurFrame = 0xB;
+            if (self->facingLeft) {
+                self->velocityX = 0x20000;
+            } else {
+                self->velocityX = -0x20000;
+            }
+            self->velocityY = -0x38000;
+            self->step_s += 1;
+            break;
+        case 1:                                     /* switch 4 */
+            self->rotate -= 0x80;
+            if (UnkCollisionFunc3(&D_pspeu_09254CC0) & 1) {
+                self->step_s += 1;
+            }
+            break;
+        case 2:                                     /* switch 4 */
+            other = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (other != NULL) {
+                CreateEntityFromEntity(2, self, other);
+                other->params = 2;
+            }
+            PlaySfxPositional(0x65E);
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    case 32:                                        /* switch 1 */
+    #include "../pad2_anim_debug.h"
+    }
+
+    if (self->animCurFrame == 1) {
+        self->hitboxOffX = 9;
+        self->hitboxOffY = 2;
+        self->hitboxWidth = 0x11;
+        self->hitboxHeight = 4;
+    }
+    if (self->animCurFrame == 2) {
+        self->hitboxOffX = 5;
+        self->hitboxOffY = -5;
+        self->hitboxWidth = 0x10;
+        self->hitboxHeight = 0xA;
+    }
+    if (self->animCurFrame > 2) {
+        self->hitboxOffX = 4;
+        self->hitboxOffY = -0xC;
+        self->hitboxWidth = 0x17;
+        self->hitboxHeight = 6;
+    }
+    if (self->animCurFrame > 5) {
+        self->hitboxOffX = -2;
+        self->hitboxOffY = -4;
+        self->hitboxWidth = 0xB;
+        self->hitboxHeight = 0xB;
+    }
+}
