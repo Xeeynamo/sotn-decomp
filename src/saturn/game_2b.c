@@ -1969,7 +1969,7 @@ void CheckCollision(s32 x, s32 y, Collider* res, u16 unk) {
 void InitScreenWaveEffect(void) {
     func_0600C818();
     DAT_06086128 = 0x50000;
-    DAT_0608612c = 0xF0000;
+    DAT_0608612C = 0xF0000;
     DAT_06086130 = 0x0;
     ResetLayerColorCalc();
     SCL_SET_CCMD(0);
@@ -1993,7 +1993,7 @@ void DrawScreenWaveEffect(void) {
     spCmd->charSize = 0x2801;
     angle = DAT_06086130;
     for (i = 0; i < 0x20; i++, angle += 0x80) {
-        spCmd->ax = CalcWaveOffset(DAT_0608612c, DAT_06086128, angle);
+        spCmd->ax = CalcWaveOffset(DAT_0608612C, DAT_06086128, angle);
         spCmd->ay = i + 0x68;
         if (SpMstCmdPos < 0x278) {
             SPR_2Cmd(0x1C0, spCmd);
@@ -2002,9 +2002,9 @@ void DrawScreenWaveEffect(void) {
         spCmd->charAddr += 20;
     }
     DAT_06086130 += 0x80;
-    DAT_0608612c -= 0x2000;
-    if (DAT_0608612c < 0) {
-        DAT_0608612c = 0;
+    DAT_0608612C -= 0x2000;
+    if (DAT_0608612C < 0) {
+        DAT_0608612C = 0;
     }
     DAT_06086128 -= 0x800;
     if (DAT_06086128 < 0) {
