@@ -1213,7 +1213,26 @@ INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepSlide);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepSlideKick);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepBladeDash);
+void RicStepBladeDash(void) {
+    DecelerateX(FIX(0.109375));
+    if (RIC.poseTimer < 0) {
+        g_Ric.unk46 = 0;
+        RicSetStand(0);
+    } else if (RIC.pose >= 0x12 && !(g_Ric.vram_flag & TOUCHING_GROUND)) {
+        g_Ric.unk46 = 0;
+        RicSetFall();
+    } else {
+        if (!(g_GameTimer & 3) && (RIC.pose < 0x12) &&
+            (g_Ric.vram_flag & TOUCHING_GROUND)) {
+            RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_SLIDE, 2), 0);
+        }
+        if (RIC.pose == 18 && RIC.poseTimer == 1 &&
+            (g_Ric.vram_flag & TOUCHING_GROUND)) {
+            RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_SKID_SMOKE, 0);
+        }
+    }
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", func_us_801B8E80);
 
