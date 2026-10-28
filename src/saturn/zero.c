@@ -1579,8 +1579,8 @@ void ResetSpriteVram() {
     DAT_06038DBC = 0;
 }
 
-extern XyInt DAT_0605AEA0[2];
 extern SprSpCmd DAT_06050684[];
+extern XyInt DAT_0605AEA0[2];
 extern SprSpCmd* d_0605AEAC;
 extern XyInt DAT_0600E23C;
 
@@ -1615,7 +1615,6 @@ void func_06007D54(void) {
 }
 
 extern s32 DAT_06038C5C;
-extern s32 d_0605BEBE;
 
 // func_06007E14
 void CloseSpriteList(void) {
@@ -1627,7 +1626,7 @@ void CloseSpriteList(void) {
         cmd.drawMode = ECDSPD_DISABLE;
         cmd.color = RGB16_COLOR(0, 0, 0);
         cmd.ax = cmd.dx = 0;
-        cmd.bx = cmd.cx = d_0605BEBE;
+        cmd.bx = cmd.cx = DAT_0605BEC0.x;
         cmd.ay = cmd.by = 0;
         cmd.cy = cmd.dy = DAT_0605AEA0[0].y - 1;
         SPR_2Cmd(0x1FF, &cmd);

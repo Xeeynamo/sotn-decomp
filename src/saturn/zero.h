@@ -8,17 +8,9 @@
 #include "lib/bup.h"
 #include "lib/cdc.h"
 #include "lib/snd.h"
+#include "lib/dma/dma.h"
 #include "inc_asm.h"
 #include <saturn_sprite.h>
-
-// func_06023394
-void DMA_CpuMemCopy2(void* dst, void* src, u32 cnt);
-
-// func_06023484
-s32 DMA_CpuResult();
-
-// func_060234F4
-void DMA_ScuInit();
 
 void InitPrimBuf(void);
 void func_06004D84(void);
@@ -82,8 +74,6 @@ typedef struct {
 void func_0600871C(Unk0605CD90*, UNK_0605c680*, s32);
 
 void BuildSubDispTilemap(Unk0605CD90* arg0);
-s32 DAT_060086e4;
-s32 DecompressLZSS(u8*, u8*, u32);
 void DmaScroll(u16* src, u16* dest, u32 cnt);
 
 typedef struct {
@@ -371,7 +361,7 @@ void func_06009D60(u32);
 void func_06009F84(Unk0605CD90*);
 void SPR_2OpenCommand(Uint16);
 extern MthMatrix DAT_060579A8;
-extern Point16 DAT_0605BEC0;
+extern XyInt DAT_0605BEC0;
 extern s32 DAT_060576B0[];
 extern s32 DAT_06057770;
 extern s16 DAT_06057774[];

@@ -111,6 +111,8 @@ DmaCpuStatus DMA_CpuGetStatus(Uint32);
 #define DMA_CPU_FAIL 1
 #define DMA_CPU_BUSY 2
 
+void DMA_CpuMemCopy2(void*, void*, Uint32);
+
 #define DMA_SCU_CH0 0x0
 #define DMA_SCU_CH1 0x1
 #define DMA_SCU_CH2 0x2
@@ -183,5 +185,7 @@ void DMA_ScuGetStatus(DmaScuStatus*, Uint32);
 #define DMA_SCU_END 0
 #define DMA_SCU_FAIL 1
 #define DMA_SCU_BUSY 2
+
+void DMA_ScuInit(void);
 
 #endif
