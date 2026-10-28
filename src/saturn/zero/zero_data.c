@@ -572,10 +572,7 @@ s16 DAT_06038FD8 = 0;
 
 u16 DAT_06038FDA = 0;
 
-u16 DAT_06038FDC[] = {
-    /* 0x06038FDC */ 0x0000,
-    /* 0x06038FDE */ 0x0000,
-};
+s32 DAT_06038FDC = 0;
 
 extern char DAT_0600CB68[];
 
