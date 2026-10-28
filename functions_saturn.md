@@ -39,7 +39,6 @@
 | stage_15/f_nonmat/f60EBA00.s | func_060EBA00   |       81 |          5 |       |     |
 | zero/f_nonmat/f6019560.s     | func_06019560   |       81 |          8 |       |     |
 | rstage15/f_nonmat/f60DE4CC.s | func_060DE4CC   |       82 |          4 |       |     |
-| zero/f_nonmat/f600C3A8.s     | func_0600C3A8   |       84 |         10 |       |     |
 | stage_02/f_nonmat/f60E1CA8.s | func_060E1CA8   |       85 |          3 |       |     |
 | zero/f_nonmat/f600AD98.s     | func_0600AD98   |       86 |          6 |       |     |
 | alucard/f_nonmat/f60BD214.s  | func_060BD214   |       87 |          5 |       |     |
@@ -57,7 +56,6 @@
 | maria/f_nonmat/f60B44E8.s    | func_060B44E8   |       98 |          7 |       |     |
 | rstage15/f_nonmat/f60DCCA4.s | func_060DCCA4   |       98 |          7 |       |     |
 | zero/f_nonmat/f6018034.s     | func_06018034   |       98 |          7 |       |     |
-| zero/f_nonmat/f600BD68.s     | func_0600BD68   |       99 |         11 |       |     |
 | maria/f_nonmat/f60A955C.s    | func_060A955C   |      100 |          7 |       |     |
 | alucard/f_nonmat/f60ADACC.s  | func_060ADACC   |      102 |          5 |       |     |
 | maria/f_nonmat/f60ACF8C.s    | func_060ACF8C   |      102 |          6 |       |     |
@@ -92,7 +90,6 @@
 | stage_15/f_nonmat/f60E36B4.s | func_060E36B4   |      118 |          6 |       |     |
 | warp/f_nonmat/f60E080C.s     | func_060E080C   |      118 |          6 |       |     |
 | stage_16/f_nonmat/f60E067C.s | func_060E067C   |      119 |          6 |       |     |
-| zero/f_nonmat/f600C43C.s     | func_0600C43C   |      119 |          7 |       |     |
 | game/f_nonmat/f6079958.s     | func_06079958   |      120 |          7 |       |     |
 | maria/f_nonmat/f60AC90C.s    | func_060AC90C   |      120 |          8 |       |     |
 | zero/f_nonmat/f600AB60.s     | func_0600AB60   |      123 |          2 |       |     |
@@ -129,7 +126,6 @@
 | maria/f_nonmat/f60BFD24.s    | func_060BFD24   |      147 |          7 |       |     |
 | richter/f_nonmat/f60BD3D8.s  | func_060BD3D8   |      147 |          7 |       |     |
 | maria/f_nonmat/f60BCBD8.s    | func_060BCBD8   |      147 |         10 |       |     |
-| zero/f_nonmat/f6008EE8.s     | func_06008EE8   |      148 |         13 |       |     |
 | rstage16/f_nonmat/f60E08C8.s | func_060E08C8   |      149 |         12 |       |     |
 | maria/f_nonmat/f60A5AD4.s    | func_060A5AD4   |      150 |         11 |       |     |
 | stage_16/f_nonmat/f60DCCB0.s | func_060DCCB0   |      150 |         18 |       |     |
@@ -393,7 +389,6 @@
 | richter/f_nonmat/f60AB7B4.s  | func_060AB7B4   |      257 |         28 |       |     |
 | maria/f_nonmat/f60A8860.s    | func_060A8860   |      257 |         32 |       |     |
 | alucard/f_nonmat/f60AC8F4.s  | func_060AC8F4   |      260 |         16 |       |     |
-| zero/f_nonmat/f6008D04.s     | func_06008D04   |      261 |         15 |       |     |
 | stage_02/f_nonmat/f60DD20C.s | func_060DD20C   |      261 |         20 |       |     |
 | alucard/f_nonmat/f60B5920.s  | func_060B5920   |      262 |         27 |       |     |
 | maria/f_nonmat/f60BF180.s    | func_060BF180   |      263 |         18 |       |     |
