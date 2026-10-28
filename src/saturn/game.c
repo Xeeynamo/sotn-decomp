@@ -663,7 +663,7 @@ void RunMainEngine(void) {
                     DAT_06086258 = 0;
                 }
             } else {
-                if (((g_pads[0].tapped & PAD_L1) && (DAT_0605D744 != 0)) &&
+                if ((g_pads[0].tapped & PAD_L1) && g_canRevealMap &&
                     (func_06076718() != 0)) {
                     DAT_060860AC = 4;
                     StartColorOffsetFade(0, 8);

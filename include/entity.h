@@ -4176,9 +4176,10 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ u32 : 32;
-    /* 0x80 */ u32 : 32;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ u16 : 16;
     /* 0x84 */ u8 deathStarted;
-} ET_RdaiUnk33;
+} ET_BalloonPod;
 
 typedef struct {
     /* 0x7C */ u8 throwTimer;
@@ -4711,6 +4712,25 @@ typedef struct {
     /* 0x96 */ s16 attackTimer;
 } ET_SpectralSwordRdai;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim7C;
+    /* 0x80 */ struct Primitive* prim80;
+    /* 0x84 */ s16 unk84;
+    /* 0x88 */ struct Primitive* prim88;
+    /* 0x8C */ struct Primitive* prim8C;
+    /* 0x90 */ struct Primitive* prim90;
+    /* 0x94 */ u8 unk94;
+    /* 0x95 */ u8 unk95;
+    /* 0x96 */ u8 unk96;
+    /* 0x97 */ u8 unk97;
+    /* 0x98 */ u8 unk98;
+    /* 0x99 */ u8 unk99;
+    /* 0x9A */ u8 unk9A;
+    /* 0x9B */ u8 unk9B;
+    /* 0x9C */ struct Primitive* prim9C;
+
+} ET_BlackPanther;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -5067,7 +5087,7 @@ typedef union { // offset=0x7C
     ET_PlatformUnk platformUnk;
     ET_FloatingIcePlatform floatingIcePlatform;
     ET_BladeSoldierDeathParts bladeSoldierDeathParts;
-    ET_RdaiUnk33 rdaiUnk33;
+    ET_BalloonPod balloonPod;
     ET_JackOBones jackoBones;
     ET_NovaSkeleton nova;
     ET_Orobourous orob;
@@ -5110,6 +5130,7 @@ typedef union { // offset=0x7C
     ET_TinMan tinman;
     ET_Scarecrow scarecrow;
     ET_SpectralSwordRdai spectralSwordRdai;
+    ET_BlackPanther blackPanther;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);

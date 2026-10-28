@@ -93,7 +93,7 @@ void EntityBladeSoldierDeathParts(Entity* self);
 void EntityImp(Entity* self);
 void EntityImpSmoke(Entity* self);
 void EntityBalloonPod(Entity* self);
-void EntityImpDeathParticle(Entity* self);
+void EntityBalloonPodSeed(Entity* self);
 void EntityKillerFish(Entity* self);
 void EntityKillerFishDeathPuff(Entity* self);
 
@@ -190,7 +190,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityImp,
     EntityImpSmoke,
     EntityBalloonPod,
-    EntityImpDeathParticle,
+    EntityBalloonPodSeed,
     EntityKillerFish,
     EntityKillerFishDeathPuff,
 };
@@ -228,6 +228,6 @@ EInit D_us_80180C20 = {ANIMSET_OVL(11), 0x00, 0x48, PAL_NOVA_SKELETON, ENEMY_NOV
 EInit g_EInitImp = {ANIMSET_OVL(12), 0x01, 0x4F, PAL_IMP_BALLOON_POD, ENEMY_IMP};
 EInit g_EInitImpSmoke = {ANIMSET_OVL(12), 0x01, 0x4F, PAL_IMP_BALLOON_POD, ENEMY_PARTICLE};
 EInit g_EInitBalloonPod = {ANIMSET_OVL(12), 0x13, 0x4F, PAL_IMP_BALLOON_POD, ENEMY_BALLOON_POD};
-EInit g_EInitImpDeathParticle = {ANIMSET_OVL(12), 0x2A, 0x4F, PAL_IMP_BALLOON_POD, ENEMY_IMP_DEATH_PARTICLE};
+EInit g_EInitBalloonPodSeed = {ANIMSET_OVL(12), 0x2A, 0x4F, PAL_IMP_BALLOON_POD, ENEMY_BALLOON_POD_SEED};
 EInit g_EInitKillerFish = {ANIMSET_OVL(13), 0x01, 0x53, PAL_KILLER_FISH, ENEMY_KILLER_FISH};
 // clang-format on

@@ -21,7 +21,6 @@ void entrypoint(void) {
     } while (true);
 }
 
-void MoviePRGClear();
 void func_06010400();
 void PlaySfx();
 void StartColorOffsetFade(s32, s32);
@@ -233,7 +232,7 @@ void func_060046E8(void) {
     DAT_06057F40 = 0;
     D_8003C730 = 0;
     g_Timer = 0;
-    DAT_0605c10c = 0;
+    DAT_0605C10C = 0;
     g_GameTimer = 0;
 
     DAT_0605cea0.unk0 = 0;
@@ -518,7 +517,7 @@ void func_06004D84(void) {
     set_imask(0);
 
     SCL_VblankStart();
-    DAT_0605c10c += 1;
+    DAT_0605C10C++;
     func_06008EE8();
     SignalSlaveSh2();
 
@@ -1202,7 +1201,7 @@ void func_0600652C(void) {
 }
 
 // func_0600654C
-s32 ReadFileToAddr(char* path, s32 addr) {
+s32 ReadFileToAddr_NoInline(char* path, s32 addr) {
     Unk0600654C unk;
     unk.unk0 = path;
     unk.unk4 = addr;
@@ -1428,8 +1427,8 @@ s32 func_06007714(void) {
 extern Unk0600654C DAT_06038AAC;
 extern Unk0600654C DAT_06038AEC;
 
-char* WEAPON1_PRG;
-char* WEAPON1_CHR;
+extern char WEAPON1_PRG[];
+extern char WEAPON1_CHR[];
 
 void func_06007824(s32 arg0, s32 arg1) {
     if ((g_FileLoadEnabled == 0) || (arg1 > 0x3F)) {
@@ -1443,9 +1442,9 @@ void func_06007824(s32 arg0, s32 arg1) {
             DAT_06038AEC.unk0 = DAT_06006F90;
             DAT_06038AEC.unk4 = VRAM_ADDR + 0x1D980;
         } else {
-            DAT_06038AAC.unk0 = &WEAPON1_PRG;
+            DAT_06038AAC.unk0 = WEAPON1_PRG;
             DAT_06038AAC.unk4 = 0x060D9000;
-            DAT_06038AEC.unk0 = &WEAPON1_CHR;
+            DAT_06038AEC.unk0 = WEAPON1_CHR;
             DAT_06038AEC.unk4 = VRAM_ADDR + 0x21980;
         }
         func_06006574(&DAT_06038AAC);
@@ -3034,52 +3033,142 @@ void func_0600C628(u16* src, s32 count) {
     }
 }
 
-void func_0600C6AC(s32 arg0, s32 arg1) {
-    func_0600C880(0x13B00, arg1, 0x240);
-    func_0600C880(0x13E00, arg0, 0x2980);
+void func_0600C6AC(u16* arg0, u16* arg1) {
+    func_0600C880(0x9D * 0x200 + 0x100, arg1, 0x240);
+    func_0600C880(0x9F * 0x200 + 0x0, arg0, 0x2980);
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C6E4, func_0600C6E4);
 
 // original name: SetGameoverToFrameBuffer
-void SetGameoverToFrameBuffer(s32 arg0, s32 arg1) {
+void SetGameoverToFrameBuffer(u16* arg0, u16* arg1) {
     s32 offset;
 
-    offset = 0x16800;
+    offset = 0xB4 * 0x200 + 0x0;
     offset = func_0600C880(offset, arg1, 0x20);
     func_0600C880(offset, arg0, 0x1400);
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C818, func_0600C818);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C880, func_0600C880);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C99C, func_0600C99C);
+
+s32 func_0600C880(s32 offset, u16* src, u32 len) {
+    s32 col0, row0;
+    s32 col1, row1;
+    u16* dst;
+    s32 rows;
+    s32 cnt;
+
+    if ((offset + len) > (0xC0 * 0x200)) {
+        return -1;
+    }
+    offset >>= 1;
+    len >>= 1;
+
+    row0 = offset / 0xC0;
+    col0 = 0x140 + offset % 0xC0;
+
+    dst = func_0600CB04(col0, row0);
+
+    cnt = 0x200 - col0;
+
+    offset += len;
+
+    row1 = offset / 0xC0;
+    col1 = 0x140 + offset % 0xC0;
+
+    rows = row1 - row0;
+    while (rows > 0) {
+        if (cnt != 0) {
+            DMA_CpuMemCopy2(dst, src, cnt);
+            while (DMA_CpuResult() == 2) {
+            }
+        }
+        src += cnt;
+        dst += 0x140 + cnt;
+        cnt = 0xC0;
+        rows--;
+    }
+    cnt += col1 - 0x200;
+    if (cnt > 0) {
+        DMA_CpuMemCopy2(dst, src, cnt);
+        while (DMA_CpuResult() == 2) {
+        }
+    }
+    return offset * 2;
+}
+
+s32 func_0600C99C(u16* dst, s32 offset, u32 len) {
+    s32 col0, row0;
+    s32 col1, row1;
+    u16* src;
+    s32 rows;
+    s32 cnt;
+
+    if ((offset + len) > (0xC0 * 0x200)) {
+        return -1;
+    }
+    offset >>= 1;
+    len >>= 1;
+
+    row0 = offset / 0xC0;
+    col0 = 0x140 + offset % 0xC0;
+
+    src = func_0600CB04(col0, row0);
+
+    cnt = 0x200 - col0;
+
+    offset += len;
+
+    row1 = offset / 0xC0;
+    col1 = 0x140 + offset % 0xC0;
+
+    rows = row1 - row0;
+    while (rows > 0) {
+        if (cnt != 0) {
+            DMA_CpuMemCopy2(dst, src, cnt);
+            while (DMA_CpuResult() == 2) {
+            }
+        }
+        src += 0x140 + cnt;
+        dst += cnt;
+        cnt = 0xC0;
+        rows--;
+    }
+    cnt += col1 - 0x200;
+    if (cnt > 0) {
+        DMA_CpuMemCopy2(dst, src, cnt);
+        while (DMA_CpuResult() == 2) {
+        }
+    }
+    return offset * 2;
+}
 
 // original name: ClearFrameBuffer
 void ClearFrameBuffer(u16 clearColor) {
     u16* ptr;
-    s32 x, y;
+    s32 col, row;
 
-    for (y = 0; y < 0xF0; y++) {
-        ptr = func_0600CB04(0, y);
-        for (x = 0; x < 0x140; x++) {
+    for (row = 0; row < 0xF0; row++) {
+        ptr = func_0600CB04(0, row);
+        for (col = 0; col < 0x140; col++) {
             *ptr++ = clearColor;
         }
     }
 }
 
-u16* func_0600CB04(s32 x, s32 y) {
+u16* func_0600CB04(s32 col, s32 row) {
     u16* base = FBUF_ADDR;
 
-    return &base[0x200 * y + x];
+    return &base[0x200 * row + col];
 }
 
 u16* func_0600CB20(s32 offset) {
     s32 row;
     s32 col;
 
-    offset = offset >> 1;
+    offset >>= 1;
     row = offset / 0xC0;
-    col = offset - (row * 0xC0) + 0x140;
+    col = 0x140 + offset % 0xC0;
     return func_0600CB04(col, row);
 }
 
@@ -3330,23 +3419,256 @@ s8 func_0600D4C4(u32 device, s8 arg1) {
     return BUP_Delete(device, filename);
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D508, SaveGameState);
+// 0x0600D508
+void SaveGameState(void) {
+    u16 i;
+
+    DAT_060485C0.unk10 = g_Status;
+    DAT_060485C0.unk35C = g_MenuNavigation;
+    DAT_060485C0.unk3A8 = g_Settings;
+    DAT_060485C0.unk4B8 = g_CurrentRoom;
+    DAT_060485C0.unk4CC = g_Tilemap;
+    DAT_060485C0.unk504 = D_8003C708;
+    for (i = 0; i < 0x300; i++) {
+        DAT_060485C0.unk50C[i] = g_CastleFlags[i];
+    }
+    for (i = 0; i < 0x800; i++) {
+        DAT_060485C0.unk80C[i] = g_CastleMap[i];
+    }
+    DAT_060485C0.unk100C = g_GameClearFlag;
+    DAT_060485C0.unk1010 = g_Servant;
+    DAT_060485C0.unk1014 = g_PlayableCharacter;
+    DAT_060485C0.unk1018 = DAT_0605CEAC;
+    DAT_060485C0.unk101C = g_RoomCount;
+    DAT_060485C0.unk1020 = g_randomNext;
+    DAT_060485C0.unk0 = Crc32(0x1120, &DAT_060485C0.unk4);
+}
 
 // original name: ABup_ChechsumSet
 void func_0600D6C0(void) {
     DAT_060485C0.unk0 = Crc32(0x1120, &DAT_060485C0.unk4);
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D6EC, LoadGameState);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D8BC, func_0600D8BC);
+// 0x0600D6EC
+s32 LoadGameState(void) {
+    u16 i;
+
+    if (DAT_060485C0.unk0 == Crc32(0x1120, &DAT_060485C0.unk4)) {
+        g_Status = DAT_060485C0.unk10;
+        g_MenuNavigation = DAT_060485C0.unk35C;
+        g_Settings = DAT_060485C0.unk3A8;
+        g_CurrentRoom = DAT_060485C0.unk4B8;
+        g_Tilemap = DAT_060485C0.unk4CC;
+        D_8003C708 = DAT_060485C0.unk504;
+        for (i = 0; i < 0x300; i++) {
+            g_CastleFlags[i] = DAT_060485C0.unk50C[i];
+        }
+        for (i = 0; i < 0x800; i++) {
+            g_CastleMap[i] = DAT_060485C0.unk80C[i];
+        }
+        g_GameClearFlag = DAT_060485C0.unk100C;
+        g_Servant = DAT_060485C0.unk1010;
+        g_PlayableCharacter = DAT_060485C0.unk1014;
+        DAT_0605CEAC = DAT_060485C0.unk1018;
+        g_RoomCount = DAT_060485C0.unk101C;
+        g_randomNext = DAT_060485C0.unk1020;
+        return 0;
+    } else {
+        return 8;
+    }
+}
+
+void func_0600D8BC(void) {
+    switch (DAT_0605cea0.unk0) {
+    case 0:
+        func_0600460C();
+        ((s32(*)(void))func_06011CE4)();
+        DAT_0605cea0.unk0++;
+        break;
+
+    case 1:
+        MoviePRGClear();
+        ReadFileToAddr("GAME.PRG", 0x06066000);
+        func_0601B1CC();
+        DAT_0605cea0.unk0++;
+        /* fallthrough */
+    case 2:
+        DAT_0605cea0.unk0++;
+        break;
+
+    case 3:
+        ((s32(*)(s32))PlaySfx)(0xB00);
+        DAT_0605cea0.unk0++;
+        break;
+
+    case 4:
+        if ((u8)func_06012D88() == 0) {
+            DAT_0605cea0.unk0++;
+        }
+        break;
+
+    case 5:
+        DAT_0605cea0.unk0++;
+        if (DAT_0605D764 != 0) {
+            ((s32(*)(s32))PlaySfx)(0xF0000006);
+        } else {
+            ((s32(*)(s32))PlaySfx)(0xF0000005);
+        }
+        break;
+
+    case 6:
+    case 7:
+        if (DAT_06057f34 == 2) {
+            func_06004F50(0x30);
+            break;
+        }
+        switch (DAT_0605d7f8) {
+        case 0:
+            func_06004F50(6);
+            break;
+
+        case 1:
+            DAT_06061dd0 = 0;
+            g_CurrentRoom.stageID = 0x1F;
+            D_8006C374 = 0x3F;
+            g_PlayableCharacter = 1;
+            func_06004F50(0x11);
+            DAT_0605C104 = g_Servant;
+            break;
+
+        case 2:
+            D_8006C374 = 0xA9;
+            g_CurrentRoom.stageID = 0xB;
+            g_CurrentRoom.unk4 = 1;
+            g_CurrentRoom.unk8 = 1;
+            D_8003C730 = 1;
+            DAT_06061dd0 = 1;
+            g_Tilemap.left = 0x20;
+            g_Tilemap.top = 8;
+            g_Tilemap.right = 0x24;
+            g_Tilemap.bottom = 8;
+            g_Tilemap.hSize = 5;
+            g_Tilemap.vSize = 1;
+            g_Tilemap.y = 0;
+            g_Tilemap.x = 0;
+            g_Tilemap.width = 0x640;
+            g_Tilemap.height = 0x100;
+            func_06004F50(0x11);
+            DAT_0605C104 = g_Servant;
+            break;
+
+        case 3:
+            func_06004F50(5);
+            break;
+        }
+        DAT_0605D7F0 = false;
+        break;
+    }
+}
 
 // original name: MOVIE_PRG_CLEAR
 void MoviePRGClear(void) { memset(0x06066000, 0, 0x9A000); }
 
 void func_0600DAB4(void) { InitPrimBuf(); }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DACC, InitPrimBuf);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DB38, func_0600DB38);
+// 0x0600DACC
+void InitPrimBuf(void) {
+    Primitive* prim;
+    s32 i;
+
+    memset(g_PrimBuf, 0, sizeof(Primitive) * 0x200);
+    prim = &g_PrimBuf[0];
+    for (i = 0; i < 0x200; i++, prim++) {
+        prim->drawMode = -1;
+        prim->unk1C = 0x100 + i;
+    }
+    DAT_06061DD4 = 0;
+    g_unkGraphicsStruct.BottomCornerTextTimer = 0;
+    g_unkGraphicsStruct.BottomCornerTextPrims = 0;
+    *(s16*)(SCL_COLRAM_ADDR + 0xFE0) = 0;
+}
+
+// 0x0600DB38
+s32 AllocPrimitives(s32 type, s32 count) {
+    s32 freeIndex;
+    s32 var_r8;
+    Primitive* sp10;
+    Primitive* prim;
+    s32 i, j;
+    u16 var_r1;
+
+    if ((DAT_06061DD4 + count) > 0x200) {
+        return -1;
+    }
+
+    var_r1 = type & 0x8000 ? 4 : 0;
+
+    switch (type & ~0x8000) {
+    case 0:
+        var_r8 = 0x1000;
+        var_r1 |= 0x488;
+        break;
+    case 1:
+        var_r8 = 0x1001;
+        var_r1 |= 0x1488;
+        break;
+    case 2:
+        var_r8 = 0x1002;
+        var_r1 |= 0x1488;
+        break;
+    case 3:
+        var_r8 = 0x1004;
+        var_r1 |= 0x4C0;
+        break;
+    case 4:
+        var_r8 = 0x1005;
+        var_r1 |= 0x4C0;
+        break;
+    case 5:
+        var_r8 = 0x1006;
+        var_r1 |= 0x4C0;
+        break;
+    case 6:
+        var_r8 = 0xF;
+        var_r1 = 0;
+        break;
+    case 7:
+        var_r8 = 0x1008;
+        var_r1 = 0;
+        break;
+    case 8:
+        var_r8 = 0x1009;
+        var_r1 = 0;
+        break;
+    case 9:
+        var_r8 = 0x100A;
+        var_r1 = 0;
+        break;
+    }
+    prim = &g_PrimBuf[0];
+    sp10 = prim;
+    j = 0;
+    for (i = 0; i < count; i++) {
+        for (; j < 0x200; j++, prim++) {
+            if (prim->drawMode == 0xFFFF) {
+                memset(prim, 0, 0x1C);
+                prim->drawMode = 0;
+                prim->type = var_r8;
+                prim->unk4 = var_r1;
+                if (i == 0) {
+                    freeIndex = j;
+                } else {
+                    sp10->next = prim;
+                }
+                sp10 = prim;
+                break;
+            }
+        }
+    }
+    DAT_06061DD4 += count;
+    prim->next = NULL;
+    return freeIndex;
+}
 
 // original name: free_effect
 void func_0600DCA4(s32 arg0) {
@@ -4096,7 +4418,7 @@ void func_0600FC04(void) {
     s32 subMap;
     s32 idx;
 
-    if (DAT_0605D744 != 0 && g_CurrentRoom.stageID != 0x1F) {
+    if (g_canRevealMap && g_CurrentRoom.stageID != 0x1F) {
         tileX = g_Tilemap.left + (g_PlayerX / 320);
         tileY = g_Tilemap.top + (g_PlayerY / 256);
         if (g_CurrentRoom.stageID & 0x20) {
@@ -4212,7 +4534,21 @@ void RevealSecretPassageAtPlayerPositionOnMap(s32 castleFlagId) {
 
 void func_800F2120(void) {}
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FF08, SetCanRevealMap);
+void SetCanRevealMap(void) {
+    g_canRevealMap = true;
+    if ((g_CurrentRoom.stageID == 0x41) && (g_CurrentRoom.unk4 == 0x12)) {
+        g_canRevealMap = false;
+    }
+    if (g_CurrentRoom.stageID == 0x1F) {
+        g_canRevealMap = false;
+    }
+    if (g_CurrentRoom.stageID == 0x12) {
+        g_canRevealMap = false;
+    }
+    if (g_CurrentRoom.stageID == 0x38) {
+        g_canRevealMap = false;
+    }
+}
 
 void func_0600FF64(s16 arg0) {
     s32 i;

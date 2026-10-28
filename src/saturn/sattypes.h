@@ -281,9 +281,6 @@ typedef struct {
 } ET_ExplosionPuffOpaque;
 
 typedef struct {
-#ifdef PLATFORM_64BIT
-    s32 _align_parent[2];
-#endif
     /* 0x7C */ s16 timer;
     /* 0x7E */ s16 crashIndex;
     /* 0x80 */ s32 : 32;
@@ -1327,9 +1324,22 @@ typedef struct {
     s8 : 8;
     s8 : 8;
     s32 unk8;
-    s8 pad1008[0x1000];
+    s32 unkC;
+    PlayerStatus unk10;
+    MenuNavigation unk35C;
+    GameSettings unk3A8;
+    Unk0605D750 unk4B8;
+    Tilemap unk4CC;
+    FgLayer unk504;
+    u8 unk50C[0x300];
+    u8 unk80C[0x800];
     s32 unk100C;
-    s8 pad1010[0x114];
+    s32 unk1010;
+    s32 unk1014;
+    s32 unk1018;
+    s32 unk101C;
+    s32 unk1020;
+    s8 unk1024[0x100];
 } UNK_060485C0; // size: 0x1124
 
 typedef enum {

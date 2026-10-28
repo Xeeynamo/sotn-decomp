@@ -52,7 +52,7 @@ void EntitySpikesDamage(Entity* self);
 void EntityBreakableDebris(Entity* self);
 void EntityBlackPanther(Entity* self);
 void EntityBalloonPod(Entity* self);
-void EntityImpDeathParticle(Entity* self);
+void EntityBalloonPodSeed(Entity* self);
 
 PfnEntityUpdate EntityUpdates[] = {
     EntityBreakable,
@@ -106,7 +106,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityBreakableDebris,
     EntityBlackPanther,
     EntityBalloonPod,
-    EntityImpDeathParticle,
+    EntityBalloonPodSeed,
 };
 
 // clang-format off
@@ -136,6 +136,6 @@ EInit g_EInitSniperOfGothArrowFlurry = {ANIMSET_OVL(5), 0x3A, 0x4C, PAL_SNIPER_O
 EInit g_EInitImp = {ANIMSET_OVL(6), 0x01, 0x4F, PAL_IMP, ENEMY_IMP};
 EInit g_EInitImpSmoke = {ANIMSET_OVL(6), 0x01, 0x4F, PAL_IMP, ENEMY_PARTICLE};
 EInit g_EInitBalloonPod = {ANIMSET_OVL(6), 0x13, 0x4F, PAL_IMP, ENEMY_BALLOON_POD};
-EInit g_EInitImpDeathParticle = {ANIMSET_OVL(6), 0x2A, 0x4F, PAL_IMP, ENEMY_IMP_DEATH_PARTICLE};
+EInit g_EInitBalloonPodSeed = {ANIMSET_OVL(6), 0x2A, 0x4F, PAL_IMP, ENEMY_BALLOON_POD_SEED};
 EInit g_EInitBlackPanther = {ANIMSET_OVL(9), 0x00, 0x4A, PAL_BLACK_PANTHER, ENEMY_BLACK_PANTHER};
 // clang-format on

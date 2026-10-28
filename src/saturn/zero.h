@@ -12,7 +12,7 @@
 #include <saturn_sprite.h>
 
 // func_06023394
-void DMA_CpuMemCopy2(s32*, s32*, u32);
+void DMA_CpuMemCopy2(void* dst, void* src, u32 cnt);
 
 // func_06023484
 s32 DMA_CpuResult();
@@ -171,20 +171,20 @@ extern SaturnSpriteResource g_SaturnSharedSpriteBank12Resource;
 extern SaturnSpriteResource g_SaturnSharedSpriteBank4Resource;
 extern SaturnSpriteResource g_SaturnSharedSpriteBank0Resource;
 extern s32 g_GameClearFlag;
-extern u8 g_CastleMap[];
+extern u8 g_CastleMap[0x800];
 extern u16 D_8003C730;
 extern s32 D_8013AEE4;
 extern u8 DAT_06057f62;
 extern s32 DAT_0606459c;
-extern s32 DAT_0605c108;
+extern s32 DAT_0605C104;
 extern s32 D_8006C374;
+extern s32 DAT_0605C10C;
 void func_060195F0(void);
 void func_0600FACC(void);
 void func_0600FB34(void);
 extern s32 g_CutsceneHasControl;
 extern s32 DAT_0605BEC4;
 extern s32 DAT_06061dd0;
-extern s32 DAT_0605c10c;
 extern SaturnStageFileRecord g_StageFileRecords[];
 extern s32 DAT_0605c11a;
 extern Unk0605cd70 DAT_0605cea0;
@@ -212,7 +212,8 @@ extern Tilemap g_Tilemap;
 extern Pad g_pads[];
 extern MenuNavigation g_MenuNavigation;
 extern s32 g_PlayableCharacter;
-extern u8 g_CastleFlags[];
+extern s32 DAT_0605CEAC;
+extern u8 g_CastleFlags[0x300];
 extern s32 currentMusicId;
 extern s32 g_Servant;
 extern s32 D_8006BB00;
@@ -333,7 +334,7 @@ typedef struct {
     s16 a;
 } Unk0605C6D8;
 extern Unk0605C6D8 DAT_0605C6D8;
-extern u16 DAT_0605D744;
+extern u16 g_canRevealMap;
 extern s32 DAT_0605D764;
 extern Unk0605D770 DAT_0605D770;
 
@@ -348,6 +349,8 @@ extern PerData* DAT_060505F8;
 extern PerMulInfo* DAT_060505FC;
 extern u8* DAT_06050600;
 
+void func_0601B1CC(void);
+void MoviePRGClear(void);
 void func_06004A10(void);
 void func_0600456C(void);
 void func_0600460C(void);
@@ -408,7 +411,7 @@ extern SaturnSpriteResource** DAT_060645D4;
 extern SaturnSpriteResource** DAT_06064670;
 s16 func_0600AEE4(u16*);
 extern u16* func_0600CB04(s32, s32);
-extern s32 func_0600C880(s32, s32, s32);
+s32 func_0600C880(s32, u16*, u32);
 extern u8 DAT_06057F60[];
 extern s16 DAT_06038FD6;
 extern s16 DAT_06038FD8;

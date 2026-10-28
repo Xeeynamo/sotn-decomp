@@ -66,6 +66,8 @@ segments:
       - [0x2210, data]
       - [0x23EC, .data, e_blue_venus_weed]
       - [0x256C, data]
+      - [0x2BAC, .data, e_balloon_pod]
+      - [0x2C00, data]
       - [0x2D54, .data, gen/e_layout] # layout entries data
       - [0x4BF4, data]
       - [0x54DC, .data, stage_data]

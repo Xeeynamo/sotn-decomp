@@ -1,37 +1,31 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 extern EInit g_EInitBalloonPod;
-extern u8 g_RdaiUnk33Anim2[];
-extern u8 g_RdaiUnk33Anim3[];
-extern u8 g_RdaiUnk33Anim4[];
-extern u8 g_RdaiUnk33Anim5[];
-#if defined(VERSION_PSP)
-extern char g_RdaiUnk33DebugText[];
-#endif
-
-#ifndef BALLOON_POD_DEATH_PARTICLE
-#define BALLOON_POD_DEATH_PARTICLE E_IMP_DEATH_PARTICLE
-#define BALLOON_POD_LOCAL_DEATH_PARTICLE
-#endif
-#if defined(VERSION_PSP)
-#define BALLOON_POD_PAD_PRESSED g_pads[1].pressed
-#else
-extern u16 g_pads_1_pressed;
-#define BALLOON_POD_PAD_PRESSED g_pads_1_pressed
-#endif
+static AnimateEntityFrame anim_tentacles_waving[] = {
+    {4, 19}, {4, 20}, {4, 21}, {4, 22},     {4, 23},
+    {4, 24}, {4, 25}, {4, 26}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_bursting_open[] = {
+    {4, 21}, {4, 27}, {4, 28}, {4, 29}, {4, 30}, {4, 31}, POSE_END};
+static AnimateEntityFrame anim_floor_pulsating[] = {
+    {4, 32}, {4, 33}, {4, 34}, {4, 35},     {4, 36},
+    {4, 35}, {4, 34}, {4, 33}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_floor_bursting[] = {
+    {4, 34}, {4, 37}, {4, 38}, {4, 39}, {4, 40}, {4, 41}, POSE_END};
+static AnimateEntityFrame anim_seed_flapping[] = {
+    {4, 42}, {4, 43}, {4, 44}, {4, 43}, POSE_LOOP(0)};
 
 void EntityBalloonPod(Entity* self) {
     Entity* entity;
     s32 i;
 
-    if ((self->flags & FLAG_DEAD) && !self->ext.rdaiUnk33.deathStarted) {
+    if ((self->flags & FLAG_DEAD) && !self->ext.balloonPod.deathStarted) {
         PlaySfxPositional(SFX_EXPLODE_B);
         if (self->params) {
             SetStep(5);
         } else {
             SetStep(3);
         }
-        self->ext.rdaiUnk33.deathStarted = 1;
+        self->ext.balloonPod.deathStarted = 1;
     }
 
     switch (self->step) {
@@ -46,16 +40,15 @@ void EntityBalloonPod(Entity* self) {
         break;
 
     case 2:
-        AnimateEntity(g_RdaiUnk33Anim2, self);
+        AnimateEntity(anim_tentacles_waving, self);
         break;
 
     case 3:
-        if (!AnimateEntity(g_RdaiUnk33Anim3, self)) {
+        if (!AnimateEntity(anim_bursting_open, self)) {
             for (i = 0; i < 16; i++) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(
-                        BALLOON_POD_DEATH_PARTICLE, self, entity);
+                    CreateEntityFromEntity(E_BALLOON_POD_SEED, self, entity);
                 }
             }
             DestroyEntity(self);
@@ -63,16 +56,15 @@ void EntityBalloonPod(Entity* self) {
         break;
 
     case 4:
-        AnimateEntity(g_RdaiUnk33Anim4, self);
+        AnimateEntity(anim_floor_pulsating, self);
         break;
 
     case 5:
-        if (!AnimateEntity(g_RdaiUnk33Anim5, self)) {
+        if (!AnimateEntity(anim_floor_bursting, self)) {
             for (i = 0; i < 16; i++) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(
-                        BALLOON_POD_DEATH_PARTICLE, self, entity);
+                    CreateEntityFromEntity(E_BALLOON_POD_SEED, self, entity);
                 }
             }
             DestroyEntity(self);
@@ -80,35 +72,55 @@ void EntityBalloonPod(Entity* self) {
         break;
 
     case 0xFF:
-#if defined(VERSION_PSP)
-        FntPrint(g_RdaiUnk33DebugText, self->animCurFrame);
-#else
-        FntPrint("charal %x\n", self->animCurFrame);
-#endif
-        if (BALLOON_POD_PAD_PRESSED & PAD_SQUARE) {
-            if (self->params) {
-                break;
-            }
-            self->animCurFrame++;
-            self->params |= 1;
-        } else {
-            self->params = 0;
-        }
-        if (BALLOON_POD_PAD_PRESSED & PAD_CIRCLE) {
-            if (self->step_s) {
-                break;
-            }
-            self->animCurFrame--;
-            self->step_s |= 1;
-        } else {
-            self->step_s = 0;
-        }
-        break;
+#include "pad2_anim_debug.h"
     }
 }
 
-#undef BALLOON_POD_PAD_PRESSED
-#ifdef BALLOON_POD_LOCAL_DEATH_PARTICLE
-#undef BALLOON_POD_DEATH_PARTICLE
-#undef BALLOON_POD_LOCAL_DEATH_PARTICLE
-#endif
+extern EInit g_EInitBalloonPodSeed;
+
+void EntityBalloonPodSeed(Entity* self) {
+    s32 speed;
+    s16 angle;
+
+    if (self->flags & FLAG_DEAD) {
+        PlaySfxPositional(SFX_SMALL_FLAME_IGNITE);
+        self->pfnUpdate = EntityExplosion;
+        self->step = 0;
+        self->params = 0;
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitBalloonPodSeed);
+        self->facingLeft = Random() & 1;
+        speed = (Random() & 0x1F) + 0x10;
+        angle = Random() * 6 + ROT(202.5);
+        self->velocityX = speed * rcos(angle);
+        self->velocityY = speed * rsin(angle);
+        self->posX.val += self->velocityX * 4;
+        self->posY.val += self->velocityY * 4;
+        self->ext.balloonPod.timer = (Random() & 0x1F) + 0x10;
+        self->rotate = angle;
+        // fallthrough
+    case 1:
+        AnimateEntity(anim_seed_flapping, self);
+        MoveEntity();
+        self->velocityX -= self->velocityX / 16;
+        self->velocityY -= self->velocityY / 16;
+        if (!--self->ext.balloonPod.timer) {
+            self->velocityX = 0;
+            self->step++;
+        }
+        break;
+
+    case 2:
+        MoveEntity();
+        if (self->velocityY < FIX(0.5)) {
+            self->velocityY += FIX(0.03125);
+        }
+        angle = self->rotate += ROT(11.25);
+        self->velocityX = (rcos(angle) << 15) >> 12;
+        break;
+    }
+}
