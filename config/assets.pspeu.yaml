@@ -986,7 +986,8 @@ files:
         assets:
           - [0x80, skip]
           - [0x21248, sprite_banks, psp/sprite_banks]
-          - [0x212A8, skip]
+          - [0x212A8, layers, layers]
+          - [0x21588, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rlib.bin
     asset_path: assets/st/rlib
     src_path: src/st/rlib

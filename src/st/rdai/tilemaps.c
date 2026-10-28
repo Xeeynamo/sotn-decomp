@@ -34,5 +34,10 @@
 #include <gen/rdai_tilemap_30.h>
 #include <gen/rdai_tilemap_31.h>
 #include <gen/rdai_tiledef_rload.h>
+#ifdef VERSION_US
 #include <gen/rdai_tiledef_rdai.h>
 #include <gen/rdai_tiledef_rsave.h>
+#else
+#include <gen/rdai_tiledef_rsave.h>
+#include <gen/rdai_tiledef_rdai.h>
+#endif
