@@ -107,7 +107,6 @@ segments:
       - [0x4BE48, .data, e_lock_camera]
       - [0x4BEC0, .data, e_stained_glass]
       - [0x4C0D8, .data, e_spikes]
-      - [0x4C0F8, data]
       - [0x4C100, .rodata, e_sniper_of_goth]
       - [0x4C118, .rodata, e_red_door]
       - [0x4C130, .rodata, e_imp]
