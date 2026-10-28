@@ -68,7 +68,8 @@ segments:
       - [0x1934, .data, e_sniper_of_goth]
       - [0x1A38, .data, e_imp]
       - [0x1A6C, .data, e_balloon_pod]
-      - [0x1AC0, data]
+      - [0x1AC0, .data, e_black_panther]
+      - [0x1B04, data]
       - [0x1BD8, .data, e_clouds]
       - [0x1D10, .data, gen/e_layout] # layout entries data
       - [0x2FC0, .data, stage_data]
