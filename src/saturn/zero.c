@@ -1515,8 +1515,6 @@ s32 func_06007B8C(s16* colors) {
     return charNo | 0x4000;
 }
 
-u16 LocalLookupTblNoToVram(u16 arg0);
-
 u16 func_06007BE0(s16* colors, s32 arg1) {
     u16 tblNo;
     u16 i;
@@ -1980,7 +1978,7 @@ void func_0600871C(Unk0605CD90* arg0, UNK_0605c680* arg1, s32 arg2) {
     tileBase = arg0->unk24 * 0x1000;
 
     src += (x % arg0->width) + (y % arg0->height) * arg0->width;
-    dst += ((y & 0x3F) << 6) + (x & 0x3F);
+    dst += ((y & 0x3F) * 0x40) + (x & 0x3F);
 
     for (i = 0; i < rows; i++) {
         for (j = 0; j < cols; j++) {
@@ -2000,7 +1998,7 @@ void func_0600871C(Unk0605CD90* arg0, UNK_0605c680* arg1, s32 arg2) {
             }
         }
         dst = arg0->unk8 + (x & 0x3F);
-        dst += ((y + i + 1) & 0x3F) << 6;
+        dst += ((y + i + 1) & 0x3F) * 0x40;
 
         src = DAT_0605C120[arg2] + 2;
         src += (x % arg0->width) + ((y + i + 1) % arg0->height) * arg0->width;
@@ -2120,7 +2118,69 @@ void func_06008C2C(void) {
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008D04, StartColorOffsetFade);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008EE8, func_06008EE8);
+
+void func_06008EE8(void) {
+    if (DAT_0605becc == 0) {
+        return;
+    }
+    DAT_06057788 += DAT_06057780[0];
+    DAT_0605778A += DAT_06057780[1];
+    DAT_0605778C += DAT_06057780[2];
+    switch (DAT_06057786) {
+    case 0:
+        if (DAT_06057788 < -0xFF) {
+            DAT_06057788 = DAT_0605778A = DAT_0605778C = -0xFF;
+        } else {
+            goto skip;
+        }
+        break;
+
+    case 1:
+        if (DAT_06057788 > 0) {
+            DAT_06057788 = DAT_0605778A = DAT_0605778C = 0;
+        } else {
+            goto skip;
+        }
+        break;
+
+    case 2:
+        if (DAT_06057788 > 0xFF) {
+            DAT_06057788 = DAT_0605778A = DAT_0605778C = 0xFF;
+        } else {
+            goto skip;
+        }
+        break;
+
+    case 3:
+        if (DAT_06057788 < 0) {
+            DAT_06057788 = DAT_0605778A = DAT_0605778C = 0;
+        } else {
+            goto skip;
+        }
+        break;
+
+    case 6:
+        if (DAT_06057788 > 0xFF) {
+            DAT_06057788 = 0xFF;
+            DAT_0605778A = DAT_0605778C = 0;
+        } else {
+            goto skip;
+        }
+        break;
+
+    case 7:
+        if (DAT_06057788 < 0) {
+            DAT_06057788 = DAT_0605778A = DAT_0605778C = 0;
+        } else {
+            goto skip;
+        }
+        break;
+    }
+    DAT_0605becc = 0;
+skip:
+    SCL_SetColOffset(
+        SCL_OFFSET_A, 0x6F, DAT_06057788, DAT_0605778A, DAT_0605778C);
+}
 
 void func_800EA5AC(u16 a, u8 r, u8 g, u8 b) {
     DAT_0605C6D8.a = a;
@@ -2290,7 +2350,6 @@ void func_06009058(u16 arg0) {
 // original name: GAME_SCROLL_SET
 void func_06009510(u16 scrollId) {
     s32 i;
-    s32 bound;
     Unk0605CD90* ptr;
 
     i = 0;
@@ -2300,25 +2359,19 @@ void func_06009510(u16 scrollId) {
         ptr->unk18 = 0;
     }
 
-    if (scrollId == 0x50) {
-        DAT_06064624(0);
-    } else {
-        bound = 0x50;
-        if (scrollId >= bound) {
-            bound = 0x63;
-            if (scrollId <= bound) {
-                bound = 0x60;
-                if (scrollId >= bound) {
-                    DAT_06064624(1);
-                } else {
-                    DAT_0606461C(scrollId);
-                }
-            } else {
-                DAT_0606461C(scrollId);
-            }
-        } else {
-            DAT_0606461C(scrollId);
-        }
+    switch (scrollId) {
+    case 0x50:
+        func_06064624(0);
+        break;
+    case 0x60:
+    case 0x61:
+    case 0x62:
+    case 0x63:
+        func_06064624(1);
+        break;
+    default:
+        func_0606461C(scrollId);
+        break;
     }
 }
 
