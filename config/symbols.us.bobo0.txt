@@ -1,28 +1,15 @@
-g_EInitInteractable = 0x80180624;
 g_EInitSlinger = 0x801806A6; // used:true
-g_EInitOlroxAfterImage = 0x801806CC;
 sprites_bo0_5 = 0x801A5ED4;
-EntityOlroxAfterImage = 0x801AFF78;
 func_801CDC80 = 0x801B15BC;
+EntityTrueFormTail = 0x801B619C;
+EntityTrueFormHands = 0x801B76E4;
 Random = 0x801BC0DC; // source=match
 CreateEntityFromCurrentEntity = 0x801BE754; // source=match
 CreateEntityFromEntity = 0x801BE7C8; // source=match
 DestroyEntity = 0x801BF4F4; // source=match
 AnimateEntity = 0x801BF624; // source=match
-GetDistanceToPlayerX = 0x801BF7F4; // source=match
-GetSideToPlayer = 0x801BF864; // source=match
-MoveEntity = 0x801BF8A8; // source=match
-UnkCollisionFunc3 = 0x801BF904; // source=match
-UnkCollisionFunc2 = 0x801BFB7C; // source=match
 AllocEntity = 0x801BFD64; // source=match
-SetEntityVelocityFromAngle = 0x801BFE0C; // source=match
-Ratan2Shifted = 0x801BFE78; // source=match
-GetAngleBetweenEntitiesShifted = 0x801BFEB0; // source=match
-AdjustValueWithinThreshold = 0x801BFF40; // source=match
-SetStep = 0x801C0134; // source=match
-SetSubStep = 0x801C0154; // source=match
 InitializeEntity = 0x801C0204; // source=match
-EntityExplosion = 0x801C1788; // source=match
 MakeExplosions = 0x801C4444; // source=match
 UnkRecursivePrimFunc2 = 0x801C4CB4; // source=match
 PlaySfxPositional = 0x801C55AC; // source=match

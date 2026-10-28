@@ -129,7 +129,7 @@ s32 func_0606BB4C(void) {
     return 0;
 }
 
-void func_0600C2EC();
+void func_0600C2EC(void);
 void func_0600C1A0();
 
 void func_0606BEE4(void) {
@@ -885,7 +885,7 @@ void UpdateEquipStatBonuses(void) {
     }
 
     // different
-    hourOfDay = (DAT_06057f62 / 16) * 10 + DAT_06057f62 % 16;
+    hourOfDay = (DAT_06057F60[2] / 16) * 10 + DAT_06057F60[2] % 16;
 
     // Hours of sunstone effectiveness
     if (6 <= hourOfDay && hourOfDay < 18) {

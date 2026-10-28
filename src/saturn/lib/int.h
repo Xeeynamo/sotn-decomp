@@ -60,4 +60,7 @@
 #define INT_ChgMsk(ena_msk_bit, dis_msk_bit)                                   \
     SYS_CHGSCUIM(~(ena_msk_bit), dis_msk_bit)
 
+void INT_SetScuFunc(int n, interrupt_t handler);
+interrupt_t INT_GetScuFunc(int n);
+
 #endif

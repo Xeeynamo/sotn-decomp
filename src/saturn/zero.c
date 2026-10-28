@@ -23,7 +23,7 @@ void entrypoint(void) {
 
 void func_06010400();
 void PlaySfx();
-void StartColorOffsetFade(s32, s32);
+void StartColorOffsetFade(s32, u16);
 
 void func_060040d8(void) {
     g_Timer++;
@@ -31,7 +31,7 @@ void func_060040d8(void) {
     switch (DAT_0605cea0.unk2) {
     case 0:
         func_0600456c();
-        DAT_0605d7f8 = 0;
+        DAT_0605D7F8 = 0;
         func_06004F50(0x20);
         DAT_0605cea0.unk0++;
         break;
@@ -105,11 +105,11 @@ void func_060040d8(void) {
         SCL_DisplayFrame();
         ClearFrameBuffer(0x8000);
         SetVblank(1);
-        DAT_06057f34 = 0;
+        DAT_06057F34 = 0;
         MoviePRGClear();
         func_06005328();
-        DAT_06057f34 = func_06064690();
-        if ((DAT_06057f34 == 2) && (DAT_0605d7f8 == 0)) {
+        DAT_06057F34 = func_06064690();
+        if ((DAT_06057F34 == 2) && (DAT_0605D7F8 == 0)) {
             SYS_EXECDMP();
         }
         Scl_s_reg.tvmode &= ~0x8100;
@@ -1482,40 +1482,38 @@ u16 func_06007B34(SprLookupTbl* tbl) {
     s32 i;
     u16 tblNo;
 
-    tblNo = d_0605AEA8;
+    tblNo = DAT_0605AEA8;
     if (tblNo < 0x200) {
         if (tbl != NULL) {
             entry = tbl->entry;
             for (i = 0; i < 0x10; i++) {
-                *entry++ |= ~0x7FFF;
+                *entry++ |= 0x8000;
             }
             SPR_2SetLookupTbl(tblNo, tbl);
         }
-        d_0605AEA8 += 1;
+        DAT_0605AEA8 += 1;
     }
     return tblNo;
 }
 
 s32 func_06007B8C(s16* colors) {
     u32 charNo;
-    s16* dest;
+    s16* dst;
     s32 i;
 
-    charNo = d_0605AEB0;
+    charNo = DAT_0605AEB0;
     if (charNo <= 0x3E) {
         if (colors != NULL) {
-            dest = (s16*)(SCL_COLRAM_ADDR + 0x800 + charNo * 0x20);
+            dst = (s16*)(SCL_COLRAM_ADDR + 0x800 + charNo * 0x20);
 
             for (i = 0; i < 0x10; i++) {
-                *dest++ = *colors++ & 0x7FFF;
+                *dst++ = *colors++ & 0x7FFF;
             }
         }
-        d_0605AEB0++;
+        DAT_0605AEB0++;
     }
     return charNo | 0x4000;
 }
-
-u16 LocalLookupTblNoToVram(u16 arg0);
 
 u16 func_06007BE0(s16* colors, s32 arg1) {
     u16 tblNo;
@@ -1524,35 +1522,33 @@ u16 func_06007BE0(s16* colors, s32 arg1) {
     s16* dst;
     SprLookupTbl lookupTbl;
 
-    tblNo = d_0605AEA8;
+    tblNo = DAT_0605AEA8;
     if (tblNo > 0x1FFU) {
         return tblNo;
     }
-    if (d_0605AEB0 > 0x3E) {
-        return d_0605AEB0 | 0x4000;
+    if (DAT_0605AEB0 > 0x3E) {
+        return DAT_0605AEB0 | 0x4000;
     }
     if (colors != NULL) {
-        dst = (s16*)(SCL_COLRAM_ADDR + 0x800 + (d_0605AEB0 << 5));
+        dst = (s16*)(SCL_COLRAM_ADDR + 0x800 + DAT_0605AEB0 * 0x20);
         for (i = 0; i < 0x10; i++) {
             *dst++ = *colors++ & 0x7FFF;
         }
 
-        vram = LocalLookupTblNoToVram(d_0605AEB0);
+        vram = LocalLookupTblNoToVram(DAT_0605AEB0);
         for (i = 0; i < 0x10; i++) {
             lookupTbl.entry[i] = vram + i;
         }
 
-        SPR_2SetLookupTbl(d_0605AEA8, &lookupTbl);
+        SPR_2SetLookupTbl(DAT_0605AEA8, &lookupTbl);
     }
-    d_0605AEA8 += 1;
-    d_0605AEB0 += 1;
+    DAT_0605AEA8 += 1;
+    DAT_0605AEB0++;
     return tblNo;
 }
 
-extern u16 DAT_0605BEC8;
-extern s16 DAT_0605BECA;
 extern s32 DAT_06038DBC;
-extern s32 d_060576AC;
+extern s32 DAT_060576AC;
 
 // original name: SprSetGourTbl
 u16 SprSetGourTbl(SprGourTbl* gourTbl) {
@@ -1573,16 +1569,16 @@ u16 LocalLookupTblNoToVram(u16 arg0) { return arg0 * 0x10 + 0x400; }
 void ResetSpriteVram() {
     SPR_2ClrAllChar();
     DAT_0605BECA = 0;
-    d_0605AEA8 = 0;
-    d_0605AEB0 = 0;
+    DAT_0605AEA8 = 0;
+    DAT_0605AEB0 = 0;
     DAT_0605BEC8 = 0x304;
-    d_060576AC = 0;
+    DAT_060576AC = 0;
     DAT_0605BEC4 = 0x11180;
     DAT_06038DBC = 0;
 }
 
-extern XyInt DAT_0605AEA0[2];
 extern SprSpCmd DAT_06050684[];
+extern XyInt DAT_0605AEA0[2];
 extern SprSpCmd* d_0605AEAC;
 extern XyInt DAT_0600E23C;
 
@@ -1617,7 +1613,6 @@ void func_06007D54(void) {
 }
 
 extern s32 DAT_06038C5C;
-extern s32 d_0605BEBE;
 
 // func_06007E14
 void CloseSpriteList(void) {
@@ -1629,7 +1624,7 @@ void CloseSpriteList(void) {
         cmd.drawMode = ECDSPD_DISABLE;
         cmd.color = RGB16_COLOR(0, 0, 0);
         cmd.ax = cmd.dx = 0;
-        cmd.bx = cmd.cx = d_0605BEBE;
+        cmd.bx = cmd.cx = DAT_0605BEC0.x;
         cmd.ay = cmd.by = 0;
         cmd.cy = cmd.dy = DAT_0605AEA0[0].y - 1;
         SPR_2Cmd(0x1FF, &cmd);
@@ -1980,7 +1975,7 @@ void func_0600871C(Unk0605CD90* arg0, UNK_0605c680* arg1, s32 arg2) {
     tileBase = arg0->unk24 * 0x1000;
 
     src += (x % arg0->width) + (y % arg0->height) * arg0->width;
-    dst += ((y & 0x3F) << 6) + (x & 0x3F);
+    dst += ((y & 0x3F) * 0x40) + (x & 0x3F);
 
     for (i = 0; i < rows; i++) {
         for (j = 0; j < cols; j++) {
@@ -2000,7 +1995,7 @@ void func_0600871C(Unk0605CD90* arg0, UNK_0605c680* arg1, s32 arg2) {
             }
         }
         dst = arg0->unk8 + (x & 0x3F);
-        dst += ((y + i + 1) & 0x3F) << 6;
+        dst += ((y + i + 1) & 0x3F) * 0x40;
 
         src = DAT_0605C120[arg2] + 2;
         src += (x % arg0->width) + ((y + i + 1) % arg0->height) * arg0->width;
@@ -2119,8 +2114,123 @@ void func_06008C2C(void) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008D04, StartColorOffsetFade);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008EE8, func_06008EE8);
+void StartColorOffsetFade(s32 arg0, u16 arg1) {
+    DAT_06057786 = arg0;
+    DAT_0605BECC = 1;
+    switch (arg0) {
+    case 0:
+        DAT_06057774[0] = DAT_06057774[1] = DAT_06057774[2] = 0;
+        DAT_06057774[3] = DAT_06057774[4] = DAT_06057774[5] = -0xFF;
+        break;
+
+    case 1:
+        DAT_06057774[0] = DAT_06057774[1] = DAT_06057774[2] = -0xFF;
+        DAT_06057774[3] = DAT_06057774[4] = DAT_06057774[5] = 0;
+        break;
+
+    case 2:
+        DAT_06057774[0] = DAT_06057774[1] = DAT_06057774[2] = 0;
+        DAT_06057774[3] = DAT_06057774[4] = DAT_06057774[5] = 0xFF;
+        break;
+
+    case 3:
+        DAT_06057774[0] = DAT_06057774[1] = DAT_06057774[2] = 0xFF;
+        DAT_06057774[3] = DAT_06057774[4] = DAT_06057774[5] = 0;
+        break;
+
+    case 6:
+        DAT_06057774[0] = DAT_06057774[1] = DAT_06057774[2] = 0;
+        DAT_06057774[3] = 0xFF;
+        DAT_06057774[4] = DAT_06057774[5] = 0;
+        break;
+
+    case 7:
+        DAT_06057774[0] = 0xFF;
+        DAT_06057774[1] = DAT_06057774[2] = 0;
+        DAT_06057774[3] = DAT_06057774[4] = DAT_06057774[5] = 0;
+        break;
+
+    case 4:
+        DAT_06057788 = DAT_0605778C = DAT_0605778A = 0;
+        goto skip;
+
+    case 5:
+        DAT_06057788 = DAT_0605778C = DAT_0605778A = -0xFF;
+    skip:
+        SCL_SetColOffset(0, 0x6F, DAT_06057788, DAT_0605778A, DAT_0605778C);
+        DAT_0605BECC = 0;
+        return;
+    }
+    DAT_06057780[0] = (DAT_06057774[3] - DAT_06057774[0]) / arg1;
+    DAT_06057780[1] = (DAT_06057774[4] - DAT_06057774[1]) / arg1;
+    DAT_06057780[2] = (DAT_06057774[5] - DAT_06057774[2]) / arg1;
+    DAT_06057788 = DAT_06057774[0];
+    DAT_0605778A = DAT_06057774[1];
+    DAT_0605778C = DAT_06057774[2];
+}
+
+void func_06008EE8(void) {
+    if (DAT_0605BECC == 0) {
+        return;
+    }
+    DAT_06057788 += DAT_06057780[0];
+    DAT_0605778A += DAT_06057780[1];
+    DAT_0605778C += DAT_06057780[2];
+    switch (DAT_06057786) {
+    case 0:
+        if (DAT_06057788 < -0xFF) {
+            DAT_06057788 = DAT_0605778A = DAT_0605778C = -0xFF;
+        } else {
+            goto skip;
+        }
+        break;
+
+    case 1:
+        if (DAT_06057788 > 0) {
+            DAT_06057788 = DAT_0605778A = DAT_0605778C = 0;
+        } else {
+            goto skip;
+        }
+        break;
+
+    case 2:
+        if (DAT_06057788 > 0xFF) {
+            DAT_06057788 = DAT_0605778A = DAT_0605778C = 0xFF;
+        } else {
+            goto skip;
+        }
+        break;
+
+    case 3:
+        if (DAT_06057788 < 0) {
+            DAT_06057788 = DAT_0605778A = DAT_0605778C = 0;
+        } else {
+            goto skip;
+        }
+        break;
+
+    case 6:
+        if (DAT_06057788 > 0xFF) {
+            DAT_06057788 = 0xFF;
+            DAT_0605778A = DAT_0605778C = 0;
+        } else {
+            goto skip;
+        }
+        break;
+
+    case 7:
+        if (DAT_06057788 < 0) {
+            DAT_06057788 = DAT_0605778A = DAT_0605778C = 0;
+        } else {
+            goto skip;
+        }
+        break;
+    }
+    DAT_0605BECC = 0;
+skip:
+    SCL_SetColOffset(
+        SCL_OFFSET_A, 0x6F, DAT_06057788, DAT_0605778A, DAT_0605778C);
+}
 
 void func_800EA5AC(u16 a, u8 r, u8 g, u8 b) {
     DAT_0605C6D8.a = a;
@@ -2290,7 +2400,6 @@ void func_06009058(u16 arg0) {
 // original name: GAME_SCROLL_SET
 void func_06009510(u16 scrollId) {
     s32 i;
-    s32 bound;
     Unk0605CD90* ptr;
 
     i = 0;
@@ -2300,25 +2409,19 @@ void func_06009510(u16 scrollId) {
         ptr->unk18 = 0;
     }
 
-    if (scrollId == 0x50) {
-        DAT_06064624(0);
-    } else {
-        bound = 0x50;
-        if (scrollId >= bound) {
-            bound = 0x63;
-            if (scrollId <= bound) {
-                bound = 0x60;
-                if (scrollId >= bound) {
-                    DAT_06064624(1);
-                } else {
-                    DAT_0606461C(scrollId);
-                }
-            } else {
-                DAT_0606461C(scrollId);
-            }
-        } else {
-            DAT_0606461C(scrollId);
-        }
+    switch (scrollId) {
+    case 0x50:
+        func_06064624(0);
+        break;
+    case 0x60:
+    case 0x61:
+    case 0x62:
+    case 0x63:
+        func_06064624(1);
+        break;
+    default:
+        func_0606461C(scrollId);
+        break;
     }
 }
 
@@ -2756,8 +2859,36 @@ SprGourTbl* GetSpriteObjectGourTbl(SpriteObject* obj) {
     return &SpGourTbl[obj->slotAndStreamId >> 8];
 }
 
-// _Odma
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600BD68, func_0600BD68);
+// original name: Odma
+void func_0600BD68(void) {
+    s32* var_r9;
+    u8 var_r11;
+    s32 i;
+    SpriteObject* node;
+
+    node = g_SpriteListHead;
+    func_0600A088();
+    func_0600A77C(0, 0, NULL);
+    var_r9 = DAT_0605D910;
+    var_r11 = 4;
+    for (i = 0; i < 2; i++) {
+        if (var_r9[4] != 0) {
+            var_r9[4] = 0;
+            func_0600A77C(0, var_r11, DAT_06064650[0]->images);
+        }
+        if (DAT_060579A4 == 0) {
+            break;
+        }
+        var_r9 += 0x49;
+        var_r11 |= 0x10;
+    }
+    while (node != NULL) {
+        if (!(node->flags & 8) && (node->flags & 0x3F00)) {
+            func_0600B4C4(node);
+        }
+        node = node->next;
+    }
+}
 
 // original name: AllocGameSprite
 void AllocGameSprite(s32 arg0) {
@@ -2841,40 +2972,32 @@ void func_0600BFD8(void) {
 }
 
 void func_0600C00C(void) {
-    SaturnSpriteResource** banks;
-    s32 i;
-    SaturnSpriteImage* images;
-    s32 palette;
     SaturnSpriteResource* bank;
+    s32 i;
 
-    banks = DAT_06064650;
-    banks[0]->allocationIndex = 3;
+    DAT_06064650[0]->allocationIndex = 3;
     if (g_PlayableCharacter == 0) {
-        banks[3]->allocationIndex = 3;
-        banks[2]->allocationIndex = 3;
-        banks[4]->allocationIndex = 3;
+        DAT_06064650[3]->allocationIndex = 3;
+        DAT_06064650[2]->allocationIndex = 3;
+        DAT_06064650[4]->allocationIndex = 3;
     }
     if (g_PlayableCharacter == 1 || g_PlayableCharacter == 2) {
         DAT_0605BECA = 10;
     } else {
         DAT_0605BECA = 13;
     }
-    bank = DAT_06064650[5];
-    i = 5;
-    while (bank != NULL) {
+    for (i = 5; (bank = DAT_06064650[i]) != NULL; i++) {
         if (bank->palettes != NULL) {
             if (bank->images != NULL) {
                 if (bank->flags & 0x4000) {
-                    palette = 0;
+                    bank->allocationIndex =
+                        func_0600AE30(NULL, bank->images, 0);
                 } else {
-                    palette = 8;
+                    bank->allocationIndex =
+                        func_0600AE30(NULL, bank->images, 8);
                 }
-                bank->allocationIndex =
-                    func_0600AE30(NULL, bank->images, palette);
             }
         }
-        i++;
-        bank = DAT_06064650[i];
     }
     DAT_06038FD4 = DAT_0605BECA;
 }
@@ -2918,18 +3041,18 @@ void func_0600C114(void) {
     }
 }
 
-void func_0600C18C(void) { d_0605AEA8 = 0x10; }
+void func_0600C18C(void) { DAT_0605AEA8 = 0x10; }
 
 void func_0600C1A0(void) {
     SaturnSpriteResource* entry;
     s32 i, j;
 
     if (g_PlayableCharacter == 1 || g_PlayableCharacter == 2) {
-        d_0605AEA8 = 0x30;
+        DAT_0605AEA8 = 0x30;
     } else {
-        d_0605AEA8 = 0xA0;
+        DAT_0605AEA8 = 0xA0;
     }
-    d_0605AEB0 = 0;
+    DAT_0605AEB0 = 0;
 
     for (i = 0; i < 5; i++) {
         entry = DAT_06064650[i];
@@ -2944,43 +3067,90 @@ void func_0600C1A0(void) {
         }
     }
 
-    DAT_06038FD6 = d_0605AEA8;
-    DAT_06038FD8 = d_0605AEB0;
+    DAT_06038FD6 = DAT_0605AEA8;
+    DAT_06038FD8 = DAT_0605AEB0;
 }
 
 void func_0600C254(void) {
     u16 prev;
     SaturnSpriteResource* bank;
 
-    prev = d_0605AEA8;
-    d_0605AEA8 = 0x90;
+    prev = DAT_0605AEA8;
+    DAT_0605AEA8 = 0x90;
     bank = DAT_060645D0[0];
     bank->flags = func_0600AEE4(bank->palettes);
-    d_0605AEA8 = prev;
+    DAT_0605AEA8 = prev;
 }
 
 void func_0600C298(s32 arg0) {
     u16 prev;
     SaturnSpriteResource* bank;
 
-    prev = d_0605AEA8;
+    prev = DAT_0605AEA8;
     if (arg0 == 0) {
-        d_0605AEA8 = 0x30;
+        DAT_0605AEA8 = 0x30;
         bank = DAT_060645D4[0];
     } else {
-        d_0605AEA8 = 0x60;
+        DAT_0605AEA8 = 0x60;
         bank = DAT_06064670[0];
     }
     bank->flags = func_0600AEE4(bank->palettes);
-    d_0605AEA8 = prev;
+    DAT_0605AEA8 = prev;
 }
 
 // _SetLocalPalData
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C2EC, func_0600C2EC);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C3A8, func_0600C3A8);
 
-// _RequestItemTrans
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C43C, func_0600C43C);
+s32 func_0600C3A8(u16* arg0, u16* arg1, u16* arg2, u32 arg3) {
+    s32 ret;
+
+    ret = 1;
+    switch (DAT_06038FDC) {
+    case 0:
+        func_0600C518(arg0, arg1, 0x140, 0x140);
+        func_0600C628(arg2, 0x12C);
+        func_0600C880(0xF000, arg3, 0x4600);
+        DAT_06038FDC++;
+        break;
+
+    case 1:
+        func_0600C518(arg0, arg1, 0x140, 0x140);
+        func_0600C628(arg2, 0x12C);
+        func_0600C880(0xF000, arg3, 0x4600);
+        DAT_06038FDC++;
+        ret = 0;
+        break;
+    }
+    return ret;
+}
+
+// original name: RequestItemTrans
+s32 func_0600C43C(s32 arg0, s32 arg1, s32 arg2) {
+    s32 col, row;
+    Unk0605DB60* entry;
+
+    if (arg0 >= 0x20U) {
+        return 0;
+    }
+    entry = &d_0605DB60[arg0];
+    if (entry->unkC != arg1) {
+        col = ((arg1 % 3) * 0x40) + 0x140;
+        row = arg1 / 3;
+        entry->unk0 = func_0600CB04(col, row);
+    }
+    if (entry->unkE != arg2) {
+        col = ((arg2 % 12) * 0x10) + 0x140;
+        row = (arg2 / 12) + 0x6C;
+        entry->unk4 = func_0600CB04(col, row);
+    }
+    if (DAT_0605C6E4 == 0) {
+        entry->unk8 = arg1;
+        entry->unkA = arg2;
+    }
+    entry->unkC = arg1;
+    entry->unkE = arg2;
+    return 1;
+}
 
 void func_0600C518(u16* charSrc, u16* palSrc, s32 charRows, s32 palRows) {
     u16* dst;
@@ -3518,11 +3688,11 @@ void func_0600D8BC(void) {
 
     case 6:
     case 7:
-        if (DAT_06057f34 == 2) {
+        if (DAT_06057F34 == 2) {
             func_06004F50(0x30);
             break;
         }
-        switch (DAT_0605d7f8) {
+        switch (DAT_0605D7F8) {
         case 0:
             func_06004F50(6);
             break;

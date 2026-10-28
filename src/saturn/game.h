@@ -219,7 +219,7 @@ extern Equipment g_EquipDefs[];
 extern void func_06079BB4(Entity* self);
 extern s32 DAT_06086134;
 extern s32 DAT_06086130;
-extern s32 DAT_0608612c;
+extern s32 DAT_0608612C;
 extern s32 DAT_06086128;
 extern u8 DAT_0608FFF8[];
 extern s16 g_SineTable[];

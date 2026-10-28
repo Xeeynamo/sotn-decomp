@@ -220,7 +220,7 @@ void RunMainEngine(void) {
             DAT_0605ceb0 = 1;
         }
     case 4:
-        if (DAT_0605becc == 0) {
+        if (DAT_0605BECC == 0) {
             DAT_0605cd70.unk0 = 5;
             DAT_0605D7F0 = false;
             D_80097C98 = 0;
@@ -417,7 +417,7 @@ void RunMainEngine(void) {
             if ((DAT_0605cd70.unk0 & 0x80) != 0) {
                 return;
             }
-            if (DAT_0605becc != 0) {
+            if (DAT_0605BECC != 0) {
                 return;
             }
             if (D_801375C8 != 0) {
@@ -474,7 +474,7 @@ void RunMainEngine(void) {
         StartColorOffsetFade(2, 8);
         break;
     case 0x83:
-        if (DAT_0605becc != 0) {
+        if (DAT_0605BECC != 0) {
             return;
         }
         if (DAT_060860AC == 2) {
@@ -556,7 +556,7 @@ void RunMainEngine(void) {
         }
         break;
     case 0x90:
-        if (DAT_0605becc != 0) {
+        if (DAT_0605BECC != 0) {
             break;
         }
         DAT_0605cd70.unk0++;
@@ -941,7 +941,7 @@ void SubDisp(void) {
         DAT_06057f68++;
         break;
     case 2:
-        if (DAT_0605becc == 0) {
+        if (DAT_0605BECC == 0) {
             DAT_06057f68++;
         }
         break;
@@ -954,12 +954,12 @@ void SubDisp(void) {
         DAT_06057f68++;
         break;
     case 5:
-        if (DAT_0605becc == 0) {
+        if (DAT_0605BECC == 0) {
             DAT_06057f68++;
         }
         break;
     }
-    if ((g_PlayableCharacter == 0) && (DAT_0605becc == 0) &&
+    if ((g_PlayableCharacter == 0) && (DAT_0605BECC == 0) &&
         (DAT_0605cd70.unk0 > 3) && !DAT_0605D7F0) {
         if ((g_pads[0].tapped & PAD_START) && (DAT_06086270 == 0) &&
             (DAT_0605cd70.unk0 < 0x14)) {
