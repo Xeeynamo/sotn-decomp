@@ -3,7 +3,7 @@ static u16 D_us_80180B7C[] = {
     PAL_FLAG(0x44), PAL_FLAG(0x48), PAL_FLAG(0x49), PAL_FLAG(0x4A),
     PAL_FLAG(0x4B), PAL_FLAG(0x4C), PAL_FLAG(0x4D)};
 static u32 D_us_80180B8C[] = {4, 8, 9, 10, 11, 12, 13};
-static u8 g_EInitVenusWeedDart[] = {10, 4, 10, 5, 10, 6, 10, 7, 10, 8, 0, 0};
+static u8 D_us_80180BA8[] = {10, 4, 10, 5, 10, 6, 10, 7, 10, 8, 0, 0};
 static u8 D_us_80180BB4[] = {10, 10, 0, 0};
 
 // background by sword bros, similar to library
@@ -164,7 +164,7 @@ void func_us_801B4210(Entity* self) {
         break;
     }
     if (!flag) {
-        AnimateEntity(g_EInitVenusWeedDart, self);
+        AnimateEntity(D_us_80180BA8, self);
     } else {
         AnimateEntity(D_us_80180BB4, self);
     }
