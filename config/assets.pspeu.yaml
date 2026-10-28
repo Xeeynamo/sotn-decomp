@@ -980,6 +980,13 @@ files:
     asset_path: assets/st/rdai
     src_path: src/st/rdai
     splat_config_path: config/splat.pspeu.strdai.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          - [0x21248, sprite_banks, psp/sprite_banks]
+          - [0x212A8, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rlib.bin
     asset_path: assets/st/rlib
     src_path: src/st/rlib
