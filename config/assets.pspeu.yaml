@@ -987,7 +987,17 @@ files:
           - [0x80, skip]
           - [0x21248, sprite_banks, psp/sprite_banks]
           - [0x212A8, layers, layers]
-          - [0x21588, skip]
+          - [0x21588, palette, pal_8C, 16] # 0x200
+          - [0x215A8, paldef, palette_def]
+          - [0x21618, skip]
+          - [0x28438, palette, pal_9F20, 16]
+          - [0x286F8, palette, pal_A1E0, 16]
+          - [0x28738, palette, pal_A220, 16]
+          - [0x28938, palette, pal_A420, 16]
+          - [0x289F8, palette, pal_A4E0, 16]
+          - [0x28A58, palette, pal_A540, 16]
+          - [0x28B58, palette, pal_A640, 16]
+          - [0x28B98, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rlib.bin
     asset_path: assets/st/rlib
     src_path: src/st/rlib
