@@ -1,12 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rdai.h"
 
+#ifndef VERSION_PSP
 u8 gfx_2FC0[] = {
 #include "gen/gfx_2FC0.h"
 };
 u8 gfx_3304[] = {
 #include "gen/gfx_3304.h"
 };
+#endif
+
 u8 gfx_38A8[] = {
 #include "gen/gfx_38A8.h"
 };
@@ -38,10 +41,6 @@ u8 gfx_95A8[] = {
 u16 pal_9F20[] = {
 #include "gen/pal_9F20.h"
 };
-u16 pal_unused[] = {
-#include "gen/pal_unused.h"
-};
-
 u16 pal_A1E0[] = {
 #include "gen/pal_A1E0.h"
 };
@@ -59,7 +58,4 @@ u16 pal_A540[] = {
 };
 u16 pal_A640[] = {
 #include "gen/pal_A640.h"
-};
-u16 pal_unused_2[] = {
-#include "gen/pal_unused_2.h"
 };

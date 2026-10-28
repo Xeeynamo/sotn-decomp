@@ -51,7 +51,7 @@ enum EntityID {
     E_UNK_ID13,             // EntityUnkId13
     E_EXPLOSION_VARIANTS,   // EntityExplosionVariants
     E_GREY_PUFF,            // EntityGreyPuff
-    E_UNK_16,               // func_us_801B1C34
+    E_TOWER_EXIT,           // EntityTowerExit
     E_CASTLE_WALL1,         // EntityCastleWall1
     E_CASTLE_WALL2,         // EntityCastleWall2
     E_STAIRCASE,            // EntityStaircase
