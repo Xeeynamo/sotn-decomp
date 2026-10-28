@@ -23,7 +23,7 @@ void entrypoint(void) {
 
 void func_06010400();
 void PlaySfx();
-void StartColorOffsetFade(s32, s32);
+void StartColorOffsetFade(s32, u16);
 
 void func_060040d8(void) {
     g_Timer++;
@@ -2117,10 +2117,63 @@ void func_06008C2C(void) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008D04, StartColorOffsetFade);
+void StartColorOffsetFade(s32 arg0, u16 arg1) {
+    DAT_06057786 = arg0;
+    DAT_0605BECC = 1;
+    switch (arg0) {
+    case 0:
+        DAT_06057774[0] = DAT_06057774[1] = DAT_06057774[2] = 0;
+        DAT_06057774[3] = DAT_06057774[4] = DAT_06057774[5] = -0xFF;
+        break;
+
+    case 1:
+        DAT_06057774[0] = DAT_06057774[1] = DAT_06057774[2] = -0xFF;
+        DAT_06057774[3] = DAT_06057774[4] = DAT_06057774[5] = 0;
+        break;
+
+    case 2:
+        DAT_06057774[0] = DAT_06057774[1] = DAT_06057774[2] = 0;
+        DAT_06057774[3] = DAT_06057774[4] = DAT_06057774[5] = 0xFF;
+        break;
+
+    case 3:
+        DAT_06057774[0] = DAT_06057774[1] = DAT_06057774[2] = 0xFF;
+        DAT_06057774[3] = DAT_06057774[4] = DAT_06057774[5] = 0;
+        break;
+
+    case 6:
+        DAT_06057774[0] = DAT_06057774[1] = DAT_06057774[2] = 0;
+        DAT_06057774[3] = 0xFF;
+        DAT_06057774[4] = DAT_06057774[5] = 0;
+        break;
+
+    case 7:
+        DAT_06057774[0] = 0xFF;
+        DAT_06057774[1] = DAT_06057774[2] = 0;
+        DAT_06057774[3] = DAT_06057774[4] = DAT_06057774[5] = 0;
+        break;
+
+    case 4:
+        DAT_06057788 = DAT_0605778C = DAT_0605778A = 0;
+        goto skip;
+
+    case 5:
+        DAT_06057788 = DAT_0605778C = DAT_0605778A = -0xFF;
+    skip:
+        SCL_SetColOffset(0, 0x6F, DAT_06057788, DAT_0605778A, DAT_0605778C);
+        DAT_0605BECC = 0;
+        return;
+    }
+    DAT_06057780[0] = (DAT_06057774[3] - DAT_06057774[0]) / arg1;
+    DAT_06057780[1] = (DAT_06057774[4] - DAT_06057774[1]) / arg1;
+    DAT_06057780[2] = (DAT_06057774[5] - DAT_06057774[2]) / arg1;
+    DAT_06057788 = DAT_06057774[0];
+    DAT_0605778A = DAT_06057774[1];
+    DAT_0605778C = DAT_06057774[2];
+}
 
 void func_06008EE8(void) {
-    if (DAT_0605becc == 0) {
+    if (DAT_0605BECC == 0) {
         return;
     }
     DAT_06057788 += DAT_06057780[0];
@@ -2176,7 +2229,7 @@ void func_06008EE8(void) {
         }
         break;
     }
-    DAT_0605becc = 0;
+    DAT_0605BECC = 0;
 skip:
     SCL_SetColOffset(
         SCL_OFFSET_A, 0x6F, DAT_06057788, DAT_0605778A, DAT_0605778C);
