@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rdai.h"
 
+// The panther's "liquid" animations are complicated and use many primitives.
+// The panther holds 6 different prims in its ext!
+// Comprehending this is going to be difficult - good luck!
+
 void func_us_801C4B2C() {
     s32 i;
     s32 xVar2;
@@ -49,7 +53,7 @@ static void func_us_801C4C4C(void) {
     switch (g_CurrentEntity->step_s) {
     case 0:
         g_CurrentEntity->hitboxState = 0;
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x14);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 20);
         if (primIndex != -1) {
             g_CurrentEntity->flags |= FLAG_HAS_PRIMS;
             g_CurrentEntity->primIndex = primIndex;
@@ -63,30 +67,30 @@ static void func_us_801C4C4C(void) {
             prim->tpage = 0x12;
             prim->clut = 0x164;
             if (g_CurrentEntity->facingLeft) {
-                prim->u0 = 0x40;
+                prim->u0 = 64;
                 prim->u1 = 0;
-                prim->u2 = 0x40;
+                prim->u2 = 64;
                 prim->u3 = 0;
             } else {
                 prim->u0 = 0;
-                prim->u1 = 0x40;
+                prim->u1 = 64;
                 prim->u2 = 0;
-                prim->u3 = 0x40;
+                prim->u3 = 64;
             }
-            prim->v0 = ((i * 2) + 0xB5);
-            prim->v1 = ((i * 2) + 0xB5);
-            prim->v2 = ((i * 2) + 0xB8);
-            prim->v3 = ((i * 2) + 0xB8);
-            prim->r0 = prim->g0 = prim->b0 = 0x80;
-            prim->r1 = prim->g1 = prim->b1 = 0x80;
-            prim->r2 = prim->g2 = prim->b2 = 0x80;
-            prim->r3 = prim->g3 = prim->b3 = 0x80;
+            prim->v0 = ((i * 2) + 181);
+            prim->v1 = ((i * 2) + 181);
+            prim->v2 = ((i * 2) + 184);
+            prim->v3 = ((i * 2) + 184);
+            PGREY(prim,0) = 0x80;
+            PGREY(prim,1) = 0x80;
+            PGREY(prim,2) = 0x80;
+            PGREY(prim,3) = 0x80;
             if (g_CurrentEntity->facingLeft) {
                 prim->x0 = g_CurrentEntity->posX.i.hi - 0x30;
             } else {
                 prim->x0 = g_CurrentEntity->posX.i.hi - 0x10;
             }
-            prim->x1 = prim->x0 + 0x40;
+            prim->x1 = prim->x0 + 64;
             prim->x2 = prim->x0;
             prim->x3 = prim->x1;
             prim->y0 = g_CurrentEntity->posY.i.hi - 7 + (i * 2) - 3;
@@ -102,23 +106,23 @@ static void func_us_801C4C4C(void) {
         prim->tpage = 0x12;
         prim->clut = 0x164;
         prim->u0 = 0;
-        prim->u1 = 0x40;
+        prim->u1 = 64;
         prim->u2 = 0;
-        prim->u3 = 0x40;
+        prim->u3 = 64;
         prim->v0 = 0xEE;
         prim->v1 = 0xEE;
         prim->v2 = 0xEF;
         prim->v3 = 0xEF;
-        prim->r0 = prim->g0 = prim->b0 = 0x80;
-        prim->r1 = prim->g1 = prim->b1 = 0x80;
-        prim->r2 = prim->g2 = prim->b2 = 0x80;
-        prim->r3 = prim->g3 = prim->b3 = 0x80;
+        PGREY(prim,0) = 0x80;
+        PGREY(prim,1) = 0x80;
+        PGREY(prim,2) = 0x80;
+        PGREY(prim,3) = 0x80;
         if (g_CurrentEntity->facingLeft) {
             prim->x0 = g_CurrentEntity->posX.i.hi - 0x30;
         } else {
             prim->x0 = g_CurrentEntity->posX.i.hi - 0x10;
         }
-        prim->x1 = prim->x0 + 0x40;
+        prim->x1 = prim->x0 + 64;
         prim->x2 = prim->x0;
         prim->x3 = prim->x1;
         prim->y0 = g_CurrentEntity->posY.i.hi + 8;
@@ -131,24 +135,24 @@ static void func_us_801C4C4C(void) {
         prim = prim->next;
         prim->tpage = 0x12;
         prim->clut = 0x164;
-        prim->u0 = 0x40;
+        prim->u0 = 64;
         prim->u1 = 0x7F;
-        prim->u2 = 0x40;
+        prim->u2 = 64;
         prim->u3 = 0x7F;
         prim->v0 = 0xC8;
         prim->v1 = 0xC8;
         prim->v2 = 0xC9;
         prim->v3 = 0xC9;
-        prim->r0 = prim->g0 = prim->b0 = 0x80;
-        prim->r1 = prim->g1 = prim->b1 = 0x80;
-        prim->r2 = prim->g2 = prim->b2 = 0x80;
-        prim->r3 = prim->g3 = prim->b3 = 0x80;
+        PGREY(prim,0) = 0x80;
+        PGREY(prim,1) = 0x80;
+        PGREY(prim,2) = 0x80;
+        PGREY(prim,3) = 0x80;
         if (g_CurrentEntity->facingLeft) {
             prim->x0 = g_CurrentEntity->posX.i.hi - 0x30;
         } else {
             prim->x0 = g_CurrentEntity->posX.i.hi - 0x10;
         }
-        prim->x1 = prim->x0 + 0x40;
+        prim->x1 = prim->x0 + 64;
         prim->x2 = prim->x0;
         prim->x3 = prim->x1;
         prim->y0 = g_CurrentEntity->posY.i.hi + 8;
@@ -419,30 +423,30 @@ static void func_us_801C5AA0(void) {
             prim->tpage = 0x12;
             prim->clut = 0x164;
             if (g_CurrentEntity->facingLeft) {
-                prim->u0 = 0x40;
+                prim->u0 = 64;
                 prim->u1 = 0;
-                prim->u2 = 0x40;
+                prim->u2 = 64;
                 prim->u3 = 0;
             } else {
                 prim->u0 = 0;
-                prim->u1 = 0x40;
+                prim->u1 = 64;
                 prim->u2 = 0;
-                prim->u3 = 0x40;
+                prim->u3 = 64;
             }
-            prim->v0 = ((i * 2) + 0xB5);
-            prim->v1 = ((i * 2) + 0xB5);
-            prim->v2 = ((i * 2) + 0xB6);
-            prim->v3 = ((i * 2) + 0xB6);
-            prim->r0 = prim->g0 = prim->b0 = 0x80;
-            prim->r1 = prim->g1 = prim->b1 = 0x80;
-            prim->r2 = prim->g2 = prim->b2 = 0x80;
-            prim->r3 = prim->g3 = prim->b3 = 0x80;
+            prim->v0 = ((i * 2) + 181);
+            prim->v1 = ((i * 2) + 181);
+            prim->v2 = ((i * 2) + 182);
+            prim->v3 = ((i * 2) + 182);
+            PGREY(prim,0) = 0x80;
+            PGREY(prim,1) = 0x80;
+            PGREY(prim,2) = 0x80;
+            PGREY(prim,3) = 0x80;
             if (g_CurrentEntity->facingLeft) {
                 prim->x0 = g_CurrentEntity->posX.i.hi - 0x30;
             } else {
                 prim->x0 = g_CurrentEntity->posX.i.hi - 0x10;
             }
-            prim->x1 = prim->x0 + 0x40;
+            prim->x1 = prim->x0 + 64;
             prim->x2 = prim->x0;
             prim->x3 = prim->x1;
             prim->y0 = g_CurrentEntity->posY.i.hi + 8;
@@ -534,13 +538,13 @@ static void func_us_801C5AA0(void) {
     }
 }
 
-static s16 D_pspeu_09254CB0[] = {-64, 0, -64, 16, 255, 0};
-static s16 D_pspeu_09254CC0[] = {0, 8, 0, 4, 8, -4, -16, 0};
-static s16 D_pspeu_09254CD0[] = {0, 8, 16, 0};
-static AnimateEntityFrame D_pspeu_09254CD8[] = {
+static s16 sensors1[] = {-64, 0, -64, 16, 255, 0};
+static s16 sensors2[] = {0, 8, 0, 4, 8, -4, -16, 0};
+static s16 sensors3[] = {0, 8, 16, 0};
+static AnimateEntityFrame anim_running[] = {
     {6, 2}, {3, 3}, {5, 4}, {3, 3},  {3, 6},
     {3, 7}, {2, 8}, {2, 9}, {2, 10}, POSE_LOOP(0)};
-static AnimateEntityFrame D_pspeu_09254CF0[] = {
+static AnimateEntityFrame anim_twitchy_run[] = {
     {3, 2}, {2, 3}, {3, 4}, {4, 5}, {2, 3}, POSE_END};
 
 extern EInit g_EInitBlackPanther;
@@ -552,11 +556,11 @@ void EntityBlackPanther(Entity* self) {
     s16 yVar;
     Entity* other;
     s16 xVar;
-    Primitive* temp_s1;
+    Primitive* prim;
 
-    if ((self->flags & FLAG_DEAD) && ((self->step) < 0x10)) {
+    if ((self->flags & FLAG_DEAD) && (self->step < 16)) {
         self->hitboxState = 0;
-        SetStep(0x10);
+        SetStep(16);
     }
     switch (self->step) {
     case 0:
@@ -566,7 +570,7 @@ void EntityBlackPanther(Entity* self) {
         self->animCurFrame = 1;
         /* fallthrough */
     case 1:
-        if (UnkCollisionFunc3(&D_pspeu_09254CC0) & 1) {
+        if (UnkCollisionFunc3(sensors2) & 1) {
             self->step++;
         }
         break;
@@ -578,22 +582,22 @@ void EntityBlackPanther(Entity* self) {
         }
         break;
     case 3:
-        UnkCollisionFunc2(&D_pspeu_09254CD0);
+        UnkCollisionFunc2(sensors3);
         if (self->facingLeft) {
             self->velocityX = FIX(2.5);
         } else {
             self->velocityX = FIX(-2.5);
         }
-        if (AnimateEntity(&D_pspeu_09254CD8, self) == 0) {
+        if (AnimateEntity(anim_running, self) == 0) {
             PlaySfxPositional(SFX_STOMP_HARD_D);
-            if (CheckColliderOffsets(&D_pspeu_09254CB0, self->facingLeft ^ 1) ^
+            if (CheckColliderOffsets(sensors1, self->facingLeft ^ 1) ^
                 1) {
                 SetStep(4);
             }
         }
         player = &PLAYER;
         playerSide = GetSideToPlayer() & 1;
-        if (((player->facingLeft) != playerSide) &&
+        if ((player->facingLeft != playerSide) &&
             (GetDistanceToPlayerX() < 0x50) &&
             (g_Player.status & (PLAYER_STATUS_SPELLCAST | PLAYER_STATUS_SUBWPN |
                                 PLAYER_STATUS_UNK400))) {
@@ -623,8 +627,8 @@ void EntityBlackPanther(Entity* self) {
             self->step_s++;
             break;
         case 1:
-            AnimateEntity(&D_pspeu_09254CF0, self);
-            if (UnkCollisionFunc3(&D_pspeu_09254CC0) & 1) {
+            AnimateEntity(anim_twitchy_run, self);
+            if (UnkCollisionFunc3(sensors2) & 1) {
                 self->step_s++;
             }
             xVar = self->posX.i.hi;
@@ -654,7 +658,7 @@ void EntityBlackPanther(Entity* self) {
             self->step_s++;
             break;
         case 1:
-            if (UnkCollisionFunc3(&D_pspeu_09254CC0) & 1) {
+            if (UnkCollisionFunc3(sensors2) & 1) {
                 self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
                 SetStep(3);
             }
@@ -675,7 +679,7 @@ void EntityBlackPanther(Entity* self) {
             self->step_s++;
         }
         self->rotate += ROT(22.5);
-        if (UnkCollisionFunc3(&D_pspeu_09254CC0) & 1) {
+        if (UnkCollisionFunc3(sensors2) & 1) {
             self->drawFlags &=
                 ENTITY_BLINK | ENTITY_MASK_B | ENTITY_MASK_G | ENTITY_MASK_R |
                 ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX;
@@ -700,15 +704,15 @@ void EntityBlackPanther(Entity* self) {
             self->ext.blackPanther.unk84 = 0x30;
             self->step_s++;
         } else {
-            UnkCollisionFunc2(&D_pspeu_09254CD0);
-            temp_s1 = self->ext.blackPanther.prim9C;
+            UnkCollisionFunc2(sensors3);
+            prim = self->ext.blackPanther.prim9C;
             if (self->facingLeft) {
-                temp_s1->next->x1 = (self->posX.i.hi - 0x12);
+                prim->next->x1 = self->posX.i.hi - 0x12;
             } else {
-                temp_s1->next->x1 = (self->posX.i.hi + 0x12);
+                prim->next->x1 = self->posX.i.hi + 0x12;
             }
-            temp_s1->next->y0 = (self->posY.i.hi + 2);
-            UnkPrimHelper(temp_s1);
+            prim->next->y0 = self->posY.i.hi + 2;
+            UnkPrimHelper(prim);
             if (!--self->ext.blackPanther.unk84) {
                 SetStep(9);
             }
@@ -736,7 +740,7 @@ void EntityBlackPanther(Entity* self) {
             break;
         case 1:
             self->rotate -= ROT(11.25);
-            if (UnkCollisionFunc3(&D_pspeu_09254CC0) & 1) {
+            if (UnkCollisionFunc3(sensors2) & 1) {
                 self->step_s++;
             }
             break;
