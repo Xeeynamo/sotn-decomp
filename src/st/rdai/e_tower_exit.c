@@ -3,7 +3,7 @@
 
 extern EInit g_EInitCommon;
 
-void func_us_801B1C34(Entity* self) {
+void EntityTowerExit(Entity* self) {
     s16 yRaw;
     s16 yAbs;
     s16 xVar;

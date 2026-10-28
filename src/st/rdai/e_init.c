@@ -22,7 +22,7 @@ void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
-void func_us_801B1C34(Entity* self);
+void EntityTowerExit(Entity* self);
 void EntityCastleWall1(Entity* self);
 void EntityCastleWall2(Entity* self);
 void EntityStaircase(Entity* self);
@@ -76,7 +76,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
-    func_us_801B1C34,
+    EntityTowerExit,
     EntityCastleWall1,
     EntityCastleWall2,
     EntityStaircase,
