@@ -8,6 +8,8 @@ u8 gfx_2FC0[] = {
 u8 gfx_3304[] = {
 #include "gen/gfx_3304.h"
 };
+#endif
+
 u8 gfx_38A8[] = {
 #include "gen/gfx_38A8.h"
 };
@@ -35,13 +37,10 @@ u8 gfx_8BF4[] = {
 u8 gfx_95A8[] = {
 #include "gen/gfx_95A8.h"
 };
-#endif
-
 
 u16 pal_9F20[] = {
 #include "gen/pal_9F20.h"
 };
-
 u16 pal_A1E0[] = {
 #include "gen/pal_A1E0.h"
 };
