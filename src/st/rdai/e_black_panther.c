@@ -81,10 +81,10 @@ static void func_us_801C4C4C(void) {
             prim->v1 = ((i * 2) + 181);
             prim->v2 = ((i * 2) + 184);
             prim->v3 = ((i * 2) + 184);
-            PGREY(prim,0) = 0x80;
-            PGREY(prim,1) = 0x80;
-            PGREY(prim,2) = 0x80;
-            PGREY(prim,3) = 0x80;
+            PGREY(prim, 0) = 0x80;
+            PGREY(prim, 1) = 0x80;
+            PGREY(prim, 2) = 0x80;
+            PGREY(prim, 3) = 0x80;
             if (g_CurrentEntity->facingLeft) {
                 prim->x0 = g_CurrentEntity->posX.i.hi - 0x30;
             } else {
@@ -113,10 +113,10 @@ static void func_us_801C4C4C(void) {
         prim->v1 = 0xEE;
         prim->v2 = 0xEF;
         prim->v3 = 0xEF;
-        PGREY(prim,0) = 0x80;
-        PGREY(prim,1) = 0x80;
-        PGREY(prim,2) = 0x80;
-        PGREY(prim,3) = 0x80;
+        PGREY(prim, 0) = 0x80;
+        PGREY(prim, 1) = 0x80;
+        PGREY(prim, 2) = 0x80;
+        PGREY(prim, 3) = 0x80;
         if (g_CurrentEntity->facingLeft) {
             prim->x0 = g_CurrentEntity->posX.i.hi - 0x30;
         } else {
@@ -143,10 +143,10 @@ static void func_us_801C4C4C(void) {
         prim->v1 = 0xC8;
         prim->v2 = 0xC9;
         prim->v3 = 0xC9;
-        PGREY(prim,0) = 0x80;
-        PGREY(prim,1) = 0x80;
-        PGREY(prim,2) = 0x80;
-        PGREY(prim,3) = 0x80;
+        PGREY(prim, 0) = 0x80;
+        PGREY(prim, 1) = 0x80;
+        PGREY(prim, 2) = 0x80;
+        PGREY(prim, 3) = 0x80;
         if (g_CurrentEntity->facingLeft) {
             prim->x0 = g_CurrentEntity->posX.i.hi - 0x30;
         } else {
@@ -437,10 +437,10 @@ static void func_us_801C5AA0(void) {
             prim->v1 = ((i * 2) + 181);
             prim->v2 = ((i * 2) + 182);
             prim->v3 = ((i * 2) + 182);
-            PGREY(prim,0) = 0x80;
-            PGREY(prim,1) = 0x80;
-            PGREY(prim,2) = 0x80;
-            PGREY(prim,3) = 0x80;
+            PGREY(prim, 0) = 0x80;
+            PGREY(prim, 1) = 0x80;
+            PGREY(prim, 2) = 0x80;
+            PGREY(prim, 3) = 0x80;
             if (g_CurrentEntity->facingLeft) {
                 prim->x0 = g_CurrentEntity->posX.i.hi - 0x30;
             } else {
@@ -590,8 +590,7 @@ void EntityBlackPanther(Entity* self) {
         }
         if (AnimateEntity(anim_running, self) == 0) {
             PlaySfxPositional(SFX_STOMP_HARD_D);
-            if (CheckColliderOffsets(sensors1, self->facingLeft ^ 1) ^
-                1) {
+            if (CheckColliderOffsets(sensors1, self->facingLeft ^ 1) ^ 1) {
                 SetStep(4);
             }
         }
