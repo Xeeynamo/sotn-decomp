@@ -1333,7 +1333,7 @@ files:
           - [0x8C, palette, pal_8C, 16] # 0x200
           - [0xAC, paldef, palette_def]
           - [0x118, layers, layers]
-          - [0x408, gfx_banks, graphics_banks]
+          - [0x408, gfx_banks, us/graphics_banks]
           - [0x570, layout, entity_layouts]
           - [0x718, skip] # 0x13EC unreferenced bytes, unrecognized
           - [0x1B04, rooms, rooms]

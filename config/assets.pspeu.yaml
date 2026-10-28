@@ -989,8 +989,10 @@ files:
           - [0x212A8, layers, layers]
           - [0x21588, palette, pal_8C, 16] # 0x200
           - [0x215A8, paldef, palette_def]
-          - [0x21618, gfx_banks, graphics_banks]
+          - [0x21618, gfx_banks, psp/graphics_banks]
           - [0x21770, skip]
+          - [0x21A20, rooms, rooms]
+          - [0x21AF8, skip]
           - [0x21DB0, cmpgfx, gfx_38A8, 128, 128, 4]
           - [0x22A40, cmpgfx, gfx_4538, 128, 128, 4]
           - [0x23638, cmpgfx, gfx_5130, 128, 128, 4]
