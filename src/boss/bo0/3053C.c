@@ -181,7 +181,7 @@ static void func_us_801B088C(void) {
 }
 
 extern EInit g_EInitOlroxAfterImage;
-extern s32 D_us_801CE5B0;
+s32 D_us_801CE5B0;
 
 static s16 D_us_8018117C[] = {
     4, 16, 8, 16, 4, 64, 12, 6, 128, 0,
