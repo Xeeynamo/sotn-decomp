@@ -41,21 +41,21 @@ void EntitySecretWallDebris(Entity* self);
 void EntityMarionette(Entity* self);
 void EntityBigRedFireball(Entity* self);
 void EntityPrisoner(Entity* self);
-void func_us_801B001C(Entity* self);
+void EntityFurniture(Entity* self);
 void func_us_801AD338(Entity* self);
 void EntityOlroxAfterImage(Entity* self);
 void func_us_801AFAF4(Entity* self);
-void func_us_801AF8C0(Entity* self);
-void func_us_801AF604(Entity* self);
-void func_us_801AF31C(Entity* self);
-void func_us_801AE858(Entity* self);
+void EntityPortal(Entity* self);
+void EntityPortalSkulls(Entity* self);
+void EntityBlastAttack(Entity* self);
+void EntityGroundBlast(Entity* self);
 void func_us_801B0930(Entity* self);
 void func_us_801B365C(Entity* self);
 void func_us_801B5470(Entity* self);
 void func_us_801B551C(Entity* self);
-void func_us_801B619C(Entity* self);
+void EntityTrueFormTail(Entity* self);
 void func_us_801B6CA4(Entity* self);
-void func_us_801B76E4(Entity* self);
+void EntityTrueFormHands(Entity* self);
 void EntityLaserAttack(Entity* self);
 void EntityFireballAttack(Entity* self);
 void func_us_801B7BAC(Entity* self);
@@ -118,21 +118,21 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityMarionette,
     EntityBigRedFireball,
     EntityPrisoner,
-    func_us_801B001C,
+    EntityFurniture,
     func_us_801AD338,
     EntityOlroxAfterImage,
     func_us_801AFAF4,
-    func_us_801AF8C0,
-    func_us_801AF604,
-    func_us_801AF31C,
-    func_us_801AE858,
+    EntityPortal,
+    EntityPortalSkulls,
+    EntityBlastAttack,
+    EntityGroundBlast,
     func_us_801B0930,
     func_us_801B365C,
     func_us_801B5470,
     func_us_801B551C,
-    func_us_801B619C,
+    EntityTrueFormTail,
     func_us_801B6CA4,
-    func_us_801B76E4,
+    EntityTrueFormHands,
     EntityLaserAttack,
     EntityFireballAttack,
     func_us_801B7BAC,
@@ -176,9 +176,9 @@ EInit g_EInitOwl = {ANIMSET_OVL(8), 0x01, 0x49, PAL_OWL_KNIGHT, ENEMY_OWL};
 EInit g_EInitBloodyZombie = {ANIMSET_OVL(9), 0x01, 0x48, PAL_BLOODY_ZOMBIE, ENEMY_BLOODY_ZOMBIE};
 EInit g_EInitOlroxAfterImage = {ANIMSET_OVL(6), 0x01, 0x48, PAL_UNK_209, ENEMY_OLROX};
 EInit D_us_801806D8 = {ANIMSET_OVL(6), 0x3A, 0x48, PAL_UNK_209, ENEMY_OLROX_UNK_33};
-EInit D_us_801806E4 = {ANIMSET_OVL(6), 0x50, 0x48, PAL_UNK_209, ENEMY_OLROX_UNK_34};
-EInit D_us_801806F0 = {ANIMSET_OVL(6), 0x3F, 0x48, PAL_UNK_209, ENEMY_OLROX_UNK_35};
-EInit D_us_801806FC = {ANIMSET_OVL(0), 0x00, 0x00, PAL_NONE, ENEMY_OLROX_UNK_36};
+EInit g_EInitPortalSkulls = {ANIMSET_OVL(6), 0x50, 0x48, PAL_UNK_209, ENEMY_OLROX_UNK_34};
+EInit g_EInitGroundBlast = {ANIMSET_OVL(6), 0x3F, 0x48, PAL_UNK_209, ENEMY_OLROX_UNK_35};
+EInit g_EInitBlastAttack = {ANIMSET_OVL(0), 0x00, 0x00, PAL_NONE, ENEMY_OLROX_UNK_36};
 EInit D_us_80180708 = {ANIMSET_OVL(7), 0x01, 0x50, PAL_UNK_20B, ENEMY_OLROX_2};
 EInit D_us_80180714 = {ANIMSET_OVL(7), 0x01, 0x50, PAL_UNK_20B, ENEMY_OLROX_UNK_38};
 EInit g_EInitLaserAttack = {ANIMSET_OVL(0), 0x00, 0x00, PAL_NONE, ENEMY_OLROX_UNK_3C};

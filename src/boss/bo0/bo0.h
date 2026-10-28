@@ -47,21 +47,21 @@ typedef enum EntityID {
     E_UNK_27,               // EntityMarionette
     E_BIG_RED_FIREBALL,     // EntityBigRedFireball
     E_PRISONER,             // EntityPrisoner
-    E_UNK_2A,               // func_us_801B001C
+    E_FURNITURE,            // EntityFurniture
     E_UNK_2B,               // func_us_801AD338
     E_OLROX_AFTER_IMAGE,    // EntityOlroxAfterImage
     E_UNK_2D,               // func_us_801AFAF4
-    E_UNK_2E,               // func_us_801AF8C0 (EntityPortal)
-    E_UNK_2F,               // func_us_801AF604
-    E_UNK_30,               // func_us_801AF31C
-    E_UNK_31,               // func_us_801AE858
+    E_PORTAL,               // EntityPortal
+    E_PORTAL_SKULLS,        // EntityPortalSkulls
+    E_BLAST_ATTACK,         // EntityBlastAttack
+    E_GROUND_BLAST,         // EntityGroundBlast
     E_UNK_32,               // func_us_801B0930
     E_UNK_33,               // func_us_801B365C
     E_UNK_34,               // func_us_801B5470
     E_UNK_35,               // func_us_801B551C
-    E_UNK_36,               // func_us_801B619C
+    E_UNK_36,               // EntityTrueFormTail
     E_UNK_37,               // func_us_801B6CA4
-    E_UNK_38,               // func_us_801B76E4
+    E_UNK_38,               // EntityTrueFormHands
     E_LASER_ATTACK,         // EntityLaserAttack
     E_FIREBALL_ATTACK,      // EntityFireballAttack
     E_UNK_3B,               // func_us_801B7BAC
@@ -113,5 +113,18 @@ extern s32 E_ID(PRISONER);
 extern s32 E_ID(3D_BACKGROUND_HOUSE);
 extern s32 E_ID(BOSS_DOORS);
 extern s32 E_ID(LASER_EXPLOSION);
+extern s32 E_ID(FURNITURE);
+extern s32 E_ID(OLROX_AFTER_IMAGE);
+extern s32 E_ID(UNK_2D);
+extern s32 E_ID(PORTAL);
+extern s32 E_ID(BLAST_ATTACK);
+extern s32 E_ID(GROUND_BLAST);
+extern s32 E_ID(UNK_32);
+extern s32 E_ID(PORTAL_SKULLS);
 extern s32 E_ID(UNK_33);
+extern s32 E_ID(FIREBALL_ATTACK);
+extern s32 E_ID(LASER_ATTACK);
+extern s32 E_ID(OLROX_DROOL);
+extern s32 E_ID(UNK_3E);
+extern s32 E_ID(LIFE_UP_SPAWN);
 #endif
