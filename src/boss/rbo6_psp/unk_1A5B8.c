@@ -104,5 +104,3 @@ void func_us_8019D330_from_rcen(Entity* self) {
         return;
     }
 }
-
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_1A5B8", EntityBackgroundVortex);
