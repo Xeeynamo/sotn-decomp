@@ -228,7 +228,7 @@ void EntityCutscene(Entity* self) {
     RECT rect;
 #endif
     u8 scriptLoaded;
-    s32 ptr;
+    u_long ptr;
 
 #ifdef VERSION_PSP
     DisableAutoPowerOff();
