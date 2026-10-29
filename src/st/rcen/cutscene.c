@@ -254,7 +254,7 @@ void EntityCutscene(Entity* self) {
 #ifdef VERSION_PSP
             i = SetCutsceneScript(cutscene_script);
             D_pspeu_09269918 = (u8*)pre_fight_script_ptr1;
-            *pre_fight_script_ptr2 = g_CastleFlags[SHAFT_FIGHT_CS_UNK2];
+            *pre_fight_script_ptr2 = g_CastleFlags[TOP_FIGHT_CS_UNK2];
 #else
             i = SetCutsceneScript(cutscene_script + 0x129);
 #endif
