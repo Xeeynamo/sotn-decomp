@@ -12,8 +12,7 @@
 #include "shared_sprite_banks.h"
 
 extern SubweaponDef DAT_060C1B02[];
-extern s8* DAT_06085DE8[];
-extern s8* DAT_06085E14[];
+extern const char* g_StatusMenuLabelPointers[];
 void func_0600B0B8(SpritePart* part, void* arg1, s32 arg2);
 
 enum MariaBlueprints {
@@ -309,7 +308,7 @@ extern Point32 g_RicSensorsFloor[NUM_HORIZONTAL_SENSORS];
 extern Point32 g_RicSensorsCeiling[NUM_HORIZONTAL_SENSORS];
 extern AnimationFrame* g_MariaAnimationGroups[];
 extern FrameProperty g_MariaFrameProperties[];
-s32 func_060aa608(FrameProperty*, AnimationFrame**);
+s32 func_060AA608(FrameProperty*, AnimationFrame**);
 extern u8 g_MariaInitialAfterimageTimers[];
 extern AnimationFrame D_8015591C[];
 extern AnimationFrame D_80155950[];
@@ -341,7 +340,7 @@ extern s32 DAT_060D2918;
 extern s32 DAT_060D2A94[]; // fastest clear time per stage
 extern s32 DAT_060D2B04[]; // stage id, sorted alongside DAT_060D2A94
 extern SaturnSpriteResource g_EntitySpriteBank09;
-extern s16 DAT_06046C02;
+extern SaturnSpriteResource g_SaturnSharedSpriteBank7Resource;
 extern u8 g_Stage02OpaquePuffFrameData1;
 extern MariaAttackDef g_MariaEntity87CombatConfig;
 extern AnimationFrame g_MariaEntity87Anim0;

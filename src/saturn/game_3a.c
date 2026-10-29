@@ -14,7 +14,7 @@ void LoadSubDisplayFiles(void) {
     if (g_FileLoadEnabled != 0) {
         func_0601AF5C();
     }
-    ReadFileToAddr("KANJI.FON", 0x00252000);
+    ReadFileToAddr("KANJI.FON", (s32)&DAT_00252000);
     ReadFileToAddr("SUB_DISP.MAP", 0x002B2000);
 }
 
@@ -74,7 +74,7 @@ s32 func_0606BB4C(void) {
         (g_CurrentRoom.stageID == 0x39)) {
         iVar3 = GetEnemyPlayerCharaAddr();
     }
-    DAT_0605D7DC = iVar3 + 0x252000;
+    DAT_0605D7DC = iVar3 + (s32)&DAT_00252000;
     switch (g_CurrentRoom.stageID) {
     case 0x6:
         ptr = g_StageAlternateMapNames[g_CurrentRoom.unk8 + 0];
@@ -144,7 +144,7 @@ void func_0606BEE4(void) {
     func_0600C2EC();
     func_0600C114();
     func_060645A4();
-    DAT_0605D7DC = 0x252000;
+    DAT_0605D7DC = (s32)&DAT_00252000;
     switch (g_CurrentRoom.stageID) {
     case 0x6:
         ptr = g_StageAlternateMapNames[idx + 0];
@@ -174,14 +174,14 @@ void func_0606BEE4(void) {
         ptr = NULL;
         break;
     }
-    DAT_0605D7DC += ReadFileToAddr(ptr, 0x252000);
+    DAT_0605D7DC += ReadFileToAddr(ptr, (s32)&DAT_00252000);
     if (DAT_0605D7DC & 1) {
         DAT_0605D7DC++;
     }
     func_0601AC48();
 }
 
-void func_0606C064(void) { ReadFileToAddr("GAMEOVER.MAP", 0x00252000); }
+void func_0606C064(void) { ReadFileToAddr("GAMEOVER.MAP", (s32)&DAT_00252000); }
 
 s32 func_0606C088(u16 arg0) {
     switch (DAT_0605D770.unk8) {

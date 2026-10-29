@@ -759,7 +759,7 @@ void func_060E7508(Entity* self) {
         func_060e8330();
         DAT_060F5088[1] += self->ext.save.unk34;
         func_060E8780(self->ext.save.unk8, 0, self->ext.save.unk24, 0);
-        if (DAT_0605DD94 != 0) {
+        if (DAT_0605DD90[1].unit_id != 0) {
             iVar6 = func_06066B30(self, 1);
             if (iVar6 == 0) {
                 break;

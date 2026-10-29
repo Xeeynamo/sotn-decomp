@@ -846,7 +846,7 @@ void func_060AA974(void) { func_060AA8AC(1, 1); }
 void func_060AA9EC(void) {
     g_CurrentEntity = &PLAYER;
     if (g_unkGraphicsStruct.unk28 == 4) {
-        func_060aa608(g_MariaFrameProperties, g_MariaAnimationGroups);
+        func_060AA608(g_MariaFrameProperties, g_MariaAnimationGroups);
     }
 }
 
@@ -1213,7 +1213,8 @@ void func_060B18C8(Entity* entity) {
 
     if (entity->step == 0) {
         sprite = CreateSpriteObject(
-            g_EntitySpriteBank09.allocationIndex, (u16)(DAT_06046C02 + 0x1C),
+            g_EntitySpriteBank09.allocationIndex,
+            (u16)(g_SaturnSharedSpriteBank7Resource.flags + 0x1C),
             g_EntitySpriteBank09.images, 1);
         entity->unk0 = sprite;
         if (sprite != NULL) {
@@ -1675,7 +1676,7 @@ void func_060BE258(void) {
     d_060cd748 = DAT_060476a0;
     d_060cd74c = DAT_060476a4;
     if (g_PlayableCharacter == 0) {
-        DAT_060476a0 = 0x252000;
+        DAT_060476a0 = (s32)&DAT_00252000;
         DAT_060476a4 = 1;
     }
     colors0 = SpGourTbl->colors0;
@@ -1756,14 +1757,14 @@ void func_060BE440(void) {
 
     i = 0;
     do {
-        func_06078700(dst, DAT_06085DE8[i], 4);
+        func_06078700(dst, (s8*)g_StatusMenuLabelPointers[7 + i], 4);
         dst += 0x180;
         i++;
     } while (i <= 10);
 
     i = 0;
     do {
-        func_06078700(dst, DAT_06085E14[i], 4);
+        func_06078700(dst, (s8*)g_StatusMenuLabelPointers[18 + i], 4);
         dst += 0x180;
         i++;
     } while (i <= 7);
