@@ -49,3 +49,7 @@ u8 D_8018FA44[] = {
 u8 D_8019032C[] = {
 #include "gen/D_8019032C.h"
 };
+
+u8 gfx_portrait_alucard[] = {
+#include <gen/gfx_portrait_alucard.h>
+};
