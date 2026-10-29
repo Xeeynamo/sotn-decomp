@@ -5,6 +5,7 @@
 #include "sattypes.h"
 
 #include "lib/gfs/gfs.h"
+#include "lib/snd.h"
 
 #define SH2_REG_M_FRT_IC 0x21000000
 
@@ -40,7 +41,29 @@ extern u16 g_SoundDriver68k[]; // 0x0603AA7C
 
 extern s32 DAT_06041280;
 extern s32 DAT_06041284;
-extern u8 DAT_06041655[][5];
+typedef struct {
+    char filename[16];
+    u8 bank;
+} SaturnSoundFile;
+
+typedef struct {
+    u8 unk0;
+    u8 unk1;
+    u8 unk2;
+    u8 unk3;
+    u8 unk4;
+} SaturnSoundConfig;
+
+typedef struct {
+    u8 unk0;
+    u8 unk1;
+    u16 command;
+    u16 value;
+} SaturnSoundCommandConfig;
+
+extern SaturnSoundFile g_SaturnSoundFiles[57];
+extern SaturnSoundConfig g_SaturnSoundConfigs[791];
+extern SaturnSoundCommandConfig g_SaturnSoundCommands[93];
 extern s32 DAT_06044108;
 extern s32 DAT_0604410C;
 extern s32 DAT_06057C24;

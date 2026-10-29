@@ -7,10 +7,11 @@
 #define _SPR2_
 #include "lib/spr/spr.h"
 #include "game.h"
+#include "zero/overlay.h"
 
 // func_06004080
 void entrypoint(void) {
-    func_06030df0();
+    func_06030DF0();
     Scl_s_reg.tvmode &= ~0x8100;
     SclProcess = 1;
     InitSystem();
@@ -27,10 +28,10 @@ void StartColorOffsetFade(s32, u16);
 
 void func_060040d8(void) {
     g_Timer++;
-    func_06007d54();
+    func_06007D54();
     switch (DAT_0605cea0.unk2) {
     case 0:
-        func_0600456c();
+        func_0600456C();
         DAT_0605D7F8 = 0;
         func_06004F50(0x20);
         DAT_0605cea0.unk0++;
@@ -119,14 +120,14 @@ void func_060040d8(void) {
         func_06011CE4();
         ReturnToGame();
         func_06004F50(0x31);
-        func_06007d54();
+        func_06007D54();
         break;
     case 0x31:
         DAT_0605D7F0 = true;
         func_0600D8BC();
         break;
     }
-    if (func_0600fb4c() != 0) {
+    if (func_0600FB4C() != 0) {
         if (DAT_0605cea0.unk2 == 6) {
             SYS_EXECDMP();
         } else {
@@ -137,7 +138,7 @@ void func_060040d8(void) {
             }
             func_06012FB4();
             func_0600652C();
-            func_0601333c();
+            func_0601333C();
             if (DAT_0605cea0.unk2 == 2) {
                 SYS_EXECDMP();
             }
@@ -713,7 +714,7 @@ void func_06005470(void) {
     if (g_FileLoadEnabled != 0) {
         func_0601B184();
     }
-    DAT_0605D7DC = 0x00252000;
+    DAT_0605D7DC = (s32)&DAT_00252000;
     DAT_0605D7DC += ReadFileToAddr("KCEN.MAP", DAT_0605D7DC);
     if (DAT_0605D7DC & 1) {
         DAT_0605D7DC++;
@@ -728,7 +729,7 @@ void func_06005508(void) {
         func_0601AEF4();
     }
     ReadFileToAddr("TITLE.CHR", VRAM_ADDR + 0x13980);
-    ReadFileToAddr("ASCII.FON", 0x00252000);
+    ReadFileToAddr("ASCII.FON", (s32)&DAT_00252000);
     func_060100DC();
 
     DAT_0605D7DC = 0x00256000;
@@ -754,11 +755,11 @@ s32 func_060055C8(void) {
         func_06019FE4(0);
     }
 
-    if (DAT_06038a44) {
+    if (DAT_06038A44) {
         return 1;
     }
 
-    DAT_06038a44 = 1;
+    DAT_06038A44 = 1;
     switch (DAT_0605D770.unk0) {
     case 0:
         ResetSpriteVram();
@@ -841,12 +842,12 @@ s32 func_060055C8(void) {
             g_CurrentRoom.stageID == 0x39) {
             iVar4 = GetEnemyPlayerCharaAddr();
         }
-        DAT_0605D7DC = iVar4 + 0x00252000;
+        DAT_0605D7DC = iVar4 + (s32)&DAT_00252000;
         DAT_0605D770.unk8 = 10;
         break;
 
     case 14:
-        DAT_06038a44 = 0;
+        DAT_06038A44 = 0;
         return 0;
     }
     DAT_0605D770.unk0++;
@@ -1166,7 +1167,7 @@ s32 func_06006470(void) {
     do {
         switch (index) {
         case 0:
-            DAT_06038a44 = 0;
+            DAT_06038A44 = 0;
             DAT_06050668 = 0;
             index++;
         case 1:
@@ -1197,14 +1198,14 @@ s32 func_06006470(void) {
 
 void func_0600652C(void) {
     GFS_Reset();
-    DAT_06038a44 = 0;
+    DAT_06038A44 = 0;
 }
 
 // func_0600654C
 s32 ReadFileToAddr_NoInline(char* path, s32 addr) {
     Unk0600654C unk;
     unk.unk0 = path;
-    unk.unk4 = addr;
+    unk.unk4 = (void*)addr;
     unk.unk8 = -1;
     unk.unkA = 0;
     return func_06006574(&unk);
@@ -1217,7 +1218,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006574, func_06006574);
 void ReadFileToAddrAsync(char* arg0, u32 arg1, u32 arg2, u32 arg3) {
     Unk0600654C unk;
     unk.unk0 = arg0;
-    unk.unk4 = arg1;
+    unk.unk4 = (void*)arg1;
     unk.unk8 = -1;
     unk.unkA = 0;
     unk.unkC = arg2;
@@ -1267,9 +1268,7 @@ void func_06006E4C(char* path, char* dst) {
     dst[lastSlash] = 0;
 }
 
-void GFS_GetFileSize(s32, s32*, s32*, s32*);
-
-s32 func_06006E9C(s32* nsct, s32 gfs) {
+s32 func_06006E9C(s32* nsct, GfsHn gfs) {
     s32 sctsz;
     s32 lstsz;
 
@@ -1371,7 +1370,10 @@ s32 func_06007714(void) {
         break;
 
     case 2:
-        ret = func_0600C3A8(0x252000, 0x25C000, 0x25E800, 0x260D80);
+        ret = func_0600C3A8(
+            (u16*)&DAT_00252000, (u16*)((u8*)&DAT_00252000 + 0xA000),
+            (u16*)((u8*)&DAT_00252000 + 0xC800),
+            (u16*)((u8*)&DAT_00252000 + 0xED80));
         break;
 
     case 3:
@@ -1424,8 +1426,8 @@ s32 func_06007714(void) {
     return ret;
 }
 
-extern Unk0600654C DAT_06038AAC;
-extern Unk0600654C DAT_06038AEC;
+extern FileLoadEntry DAT_06038AAC;
+extern FileLoadEntry DAT_06038AEC;
 
 extern char WEAPON1_PRG[];
 extern char WEAPON1_CHR[];
@@ -1434,40 +1436,40 @@ void func_06007824(s32 arg0, s32 arg1) {
     if ((g_FileLoadEnabled == 0) || (arg1 > 0x3F)) {
         func_0601AE5C(arg0, arg1);
     } else {
-        DAT_06038AAC.unkA = arg1 * 6;
-        DAT_06038AEC.unkA = arg1 * 8;
+        DAT_06038AAC.req.unkA = arg1 * 6;
+        DAT_06038AEC.req.unkA = arg1 * 8;
         if (arg0 == 0) {
-            DAT_06038AAC.unk0 = DAT_06006F84;
-            DAT_06038AAC.unk4 = 0x060D6000;
-            DAT_06038AEC.unk0 = DAT_06006F90;
-            DAT_06038AEC.unk4 = VRAM_ADDR + 0x1D980;
+            DAT_06038AAC.req.unk0 = DAT_06006F84;
+            DAT_06038AAC.req.unk4 = g_Weapon0OvlArea;
+            DAT_06038AEC.req.unk0 = DAT_06006F90;
+            DAT_06038AEC.req.unk4 = (void*)(VRAM_ADDR + 0x1D980);
         } else {
-            DAT_06038AAC.unk0 = WEAPON1_PRG;
-            DAT_06038AAC.unk4 = 0x060D9000;
-            DAT_06038AEC.unk0 = WEAPON1_CHR;
-            DAT_06038AEC.unk4 = VRAM_ADDR + 0x21980;
+            DAT_06038AAC.req.unk0 = WEAPON1_PRG;
+            DAT_06038AAC.req.unk4 = g_Weapon1OvlArea;
+            DAT_06038AEC.req.unk0 = WEAPON1_CHR;
+            DAT_06038AEC.req.unk4 = (void*)(VRAM_ADDR + 0x21980);
         }
-        func_06006574(&DAT_06038AAC);
+        func_06006574(&DAT_06038AAC.req);
         func_0601AE2C(arg0);
-        func_06006574(&DAT_06038AEC);
+        func_06006574(&DAT_06038AEC.req);
         func_0600C298(arg0);
         func_0600C0C4(arg0);
     }
 }
 
-extern Unk0600654C DAT_06038B6C;
-extern Unk0600654C DAT_06038BAC;
+extern FileLoadEntry DAT_06038B6C;
+extern FileLoadEntry DAT_06038BAC;
 
 extern char* DAT_06038C24[][2];
 
 void func_060078EC(s32 arg0) {
     if (g_FileLoadEnabled != 0) {
-        DAT_06038B6C.unk0 = DAT_06038C24[arg0][0];
-        func_06006574(&DAT_06038B6C);
+        DAT_06038B6C.req.unk0 = DAT_06038C24[arg0][0];
+        func_06006574(&DAT_06038B6C.req);
         SetServantResourceList();
-        DAT_06038BAC.unk0 = DAT_06038C24[arg0][1];
-        DAT_06038BAC.unk4 = VRAM_ADDR + 0x25980;
-        func_06006574(&DAT_06038BAC);
+        DAT_06038BAC.req.unk0 = DAT_06038C24[arg0][1];
+        DAT_06038BAC.req.unk4 = (void*)(VRAM_ADDR + 0x25980);
+        func_06006574(&DAT_06038BAC.req);
         func_0600C254();
         func_0600C0FC();
     }
@@ -1577,8 +1579,8 @@ void ResetSpriteVram() {
     DAT_06038DBC = 0;
 }
 
-extern SprSpCmd DAT_06050684[];
 extern XyInt DAT_0605AEA0[2];
+extern SprSpCmd g_SpriteMstCmd[];
 extern SprSpCmd* d_0605AEAC;
 extern XyInt DAT_0600E23C;
 
@@ -1609,7 +1611,7 @@ void func_06007D54(void) {
         d_0605AEAC++;
     }
 
-    d_0605AEAC = &DAT_06050684[SpMstCmdPos];
+    d_0605AEAC = &g_SpriteMstCmd[SpMstCmdPos];
 }
 
 extern s32 DAT_06038C5C;
@@ -1757,14 +1759,14 @@ void func_060082C8(void) {
 }
 
 void func_060082E8(void) {
-    s32* ptr;
+    VramTransfer* ptr;
     s32 i;
 
     ptr = DAT_060576B0;
-    for (i = 0; i < 0x10; i++, ptr += 3) {
-        ptr[2] = 0;
-        ptr[0] = 0;
-        ptr[1] = 0;
+    for (i = 0; i < 0x10; i++, ptr++) {
+        ptr->size = 0;
+        ptr->src = 0;
+        ptr->dst = 0;
     }
     DAT_06057770 = 0;
 }
@@ -1868,12 +1870,12 @@ void TransferBgLayer(s32 arg0) {
         return;
     }
     if (transfer->tileFlags & 1) {
-        cnt = DecompressLZSS(ptr->unkC, (s32)DAT_060485E0, ptr->unk18);
-        DmaScroll((u16*)DAT_060485E0, ptr->dst0, cnt);
+        cnt = DecompressLZSS(ptr->unkC, (s32)g_FileLoadBuffer, ptr->unk18);
+        DmaScroll((u16*)g_FileLoadBuffer, ptr->dst0, cnt);
     }
     if (transfer->tileFlags & 2) {
-        cnt = DecompressLZSS(ptr->unk10, (s32)DAT_060485E0, ptr->unk1C);
-        DmaScroll((u16*)DAT_060485E0, ptr->dst4, cnt);
+        cnt = DecompressLZSS(ptr->unk10, (s32)g_FileLoadBuffer, ptr->unk1C);
+        DmaScroll((u16*)g_FileLoadBuffer, ptr->dst4, cnt);
     }
     if (transfer->tileFlags & 4) {
         if (DAT_0605cd70.unk2 == 4) {
@@ -2451,11 +2453,11 @@ void func_06009570(s32 arg0) {
     ptr->dst0 = SCL_VDP2_VRAM_A1;
     ptr->dst4 = SCL_COLRAM_ADDR + 0x600;
     ptr->unk24 = 0x30;
-    ptr->unkC = *temp_r1++ + 0x00252000;
+    ptr->unkC = *temp_r1++ + (s32)&DAT_00252000;
     ptr->unk18 = *temp_r1++;
-    ptr->unk10 = *temp_r1++ + 0x00252000;
+    ptr->unk10 = *temp_r1++ + (s32)&DAT_00252000;
     ptr->unk1C = *temp_r1++;
-    ptr->unk14 = *temp_r1++ + 0x00252000;
+    ptr->unk14 = *temp_r1++ + (s32)&DAT_00252000;
     ptr->unk20 = *temp_r1++;
     ptr->divisorX = ptr->divisorY = 1;
     ptr->flags = 0;
@@ -3386,7 +3388,7 @@ void InitBackupRam(void) {
 
     func_0600CC14();
 
-    BUP_Init(DAT_0605DDD0, DAT_06002000, &DAT_0605DD90);
+    BUP_Init(DAT_0605DDD0, DAT_06002000, DAT_0605DD90);
 
     func_0600CBCC();
 
@@ -3412,7 +3414,7 @@ s32 func_0600CD70(void) {
     InitBackupRam();
     func_0600CC14();
 
-    if (DAT_0605DD90.unit_id == 1) {
+    if (DAT_0605DD90[0].unit_id == 1) {
         status = BUP_Stat(0, 0, &sttb);
         result = 0;
         if (status == BUP_UNFORMAT) {
@@ -3434,7 +3436,7 @@ s32 func_0600CE1C(void) {
     InitBackupRam();
     func_0600CC14();
 
-    if (DAT_0605DD94 == 2) {
+    if (DAT_0605DD90[1].unit_id == 2) {
         status = BUP_Stat(1, 0, &sttb);
         result = 0;
         if (status == BUP_UNFORMAT) {
@@ -3658,7 +3660,7 @@ void func_0600D8BC(void) {
 
     case 1:
         MoviePRGClear();
-        ReadFileToAddr("GAME.PRG", 0x06066000);
+        ReadFileToAddr("GAME.PRG", (s32)&g_GameOvl);
         func_0601B1CC();
         DAT_0605cea0.unk0++;
         /* fallthrough */
@@ -4526,14 +4528,14 @@ void func_0600FA4C(void) {
         break;
     case 2:
         func_0600FACC();
-        DAT_0605C100 = DAT_06057A18;
+        DAT_0605C100 = DAT_06057A10.offset;
         break;
     case 1:
     case 3:
     case 4:
     case 6:
         func_0600FACC();
-        DAT_0605CD80 = DAT_06057A18;
+        DAT_0605CD80 = DAT_06057A10.offset;
         break;
     }
 }
@@ -4763,7 +4765,7 @@ void InitDebugPrint(void) {
     scfg.plate_addr[3] = SCL_VDP2_VRAM_B0 + 0x18000;
     SCL_SetConfig(SCL_NBG0, &scfg);
     DAT_0605D6C0[3].tileFlags = 0x10;
-    DAT_0605D6C0[3].src = &DAT_06039214;
+    DAT_0605D6C0[3].src = (u32)&DAT_06039210[2];
     DAT_0605D6C0[3].dest = SCL_COLRAM_ADDR + 0x600;
     DAT_0605D6C0[3].cnt = 0x80;
 }

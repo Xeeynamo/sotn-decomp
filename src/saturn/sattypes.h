@@ -562,7 +562,7 @@ typedef struct {
 } ET_060DDFB0;
 
 typedef struct {
-    /* 0x78 */ s32 : 32;
+    /* 0x78 */ Primitive* prim;
     /* 0x7C */ u8* path;
     /* 0x80 */ u32 spanX;
     /* 0x84 */ u32 spanY;
@@ -1070,7 +1070,10 @@ typedef struct {
     char pad440[0x2];
     /* 0x442 */ u16 healKind;   // 0 = none, 1 = potion, 2 = high potion
     /* 0x444 */ u16 healAmount; // hit points restored by func_060B0638
-    char pad446[0xC];
+    char pad446[6];
+    /* 0x44C */ s16 unk44C;
+    /* 0x44E */ s16 unk44E;
+    /* 0x450 */ s16 unk450;
     /* 0x452 */ s16 unk452;
     u16 unk454;
     char pad456[6];

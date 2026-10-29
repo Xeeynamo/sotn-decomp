@@ -28,7 +28,7 @@ void SpawnDestructAnim(
                 entity->drawFlags = 3;
                 entity->scaleY = entity->scaleX =
                     g_ExplosionVariantSizes[variant + i];
-                clut = &DAT_06045FA8;
+                clut = (s16*)&g_SaturnSharedSpriteBank1Resource.allocationIndex;
                 sprite = CreateSpriteObject(
                     (u16)*clut, (u16)(s16)resource->flags, resource->images, 5);
                 entity->unk0 = sprite;

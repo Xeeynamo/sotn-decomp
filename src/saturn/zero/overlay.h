@@ -3,6 +3,8 @@
 #define SATURN_ZERO_OVERLAY_H
 
 #include "sattypes.h"
+#include <saturn_player.h>
+#include "stage_data.h"
 
 typedef struct {
     void (*Init)(void);
@@ -10,22 +12,40 @@ typedef struct {
 
 extern BatServantHeader g_BatServantDesc;
 
+typedef struct {
+    void* equipDefs;
+    void* unk04;
+    void* destroyStageEntities;
+    void* unk0C;
+    void* unk10;
+    void* unk14;
+    void* unk18;
+    void* unk1C;
+    void* unk20;
+    void* unk24;
+    void* unk28;
+    void* unk2C;
+} SaturnGameApi;
+
+extern SaturnGameApi g_GameOvl;
+extern SaturnPlayerOvl g_PlayerOvl;
+
 extern s32 DAT_06064584;
-extern s32 DAT_06064588;
-extern s32 DAT_06064598;
-extern s32 DAT_060645CC;
-extern s32 DAT_060645DC;
-extern s32 DAT_060645E4[];
-extern s32 DAT_060645EC[];
-extern s32 DAT_060645F0;
-extern s32 DAT_060645F8[];
+extern SaturnPlayerDisableAfterImageCallback DAT_06064588;
+extern s32 (*DAT_06064598)();
+extern s32 (*DAT_060645CC)();
+extern s32 (*DAT_060645DC)();
+extern LayoutEntity** DAT_060645E4;
+extern SaturnSpriteResource** DAT_060645EC;
+extern SaturnPlayerEntityCallback DAT_060645F0;
+extern LayoutEntity** DAT_060645F8;
 extern s32 DAT_0606460C;
 extern s32* DAT_06064610;
-extern s32 DAT_0606462C;
-extern s32 DAT_06064668;
+extern s32 (*DAT_0606462C)();
+extern SaturnPlayerGraphicsRecord* DAT_06064668;
 extern s32 DAT_06064678;
 extern s32 DAT_0606467C;
-extern s32 DAT_06064680;
+extern s32 (*DAT_06064680)();
 
 extern s32 (*DAT_06066000)();
 extern void (*DAT_06066004)();

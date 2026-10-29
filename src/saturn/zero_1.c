@@ -31,49 +31,49 @@ static inline void set_imask(register Uint32 imask) {
 void func_060110C0(s32 arg0) {
     switch (arg0) {
     case 0xFE00000E:
-        if (DAT_06041655[DAT_060643E0[0]][2] == 9) {
+        if (g_SaturnSoundConfigs[DAT_060643E0[0]].unk2 == 9) {
             SND_PauseSeq(0);
         }
-        if (DAT_06041655[DAT_060643E0[1]][2] == 9) {
+        if (g_SaturnSoundConfigs[DAT_060643E0[1]].unk2 == 9) {
             SND_PauseSeq(1);
         }
-        if (DAT_06041655[DAT_060643E0[2]][2] == 9) {
+        if (g_SaturnSoundConfigs[DAT_060643E0[2]].unk2 == 9) {
             SND_PauseSeq(2);
         }
         break;
 
     case 0xFE000010:
-        if (DAT_06041655[DAT_060643E0[3]][2] == 9) {
+        if (g_SaturnSoundConfigs[DAT_060643E0[3]].unk2 == 9) {
             SND_PauseSeq(3);
         }
-        if (DAT_06041655[DAT_060643E0[4]][2] == 9) {
+        if (g_SaturnSoundConfigs[DAT_060643E0[4]].unk2 == 9) {
             SND_PauseSeq(4);
         }
-        if (DAT_06041655[DAT_060643E0[5]][2] == 9) {
+        if (g_SaturnSoundConfigs[DAT_060643E0[5]].unk2 == 9) {
             SND_PauseSeq(5);
         }
         break;
 
     case 0xFE00000F:
-        if (DAT_06041655[DAT_060643E0[0]][2] == 9) {
+        if (g_SaturnSoundConfigs[DAT_060643E0[0]].unk2 == 9) {
             SND_ContSeq(0);
         }
-        if (DAT_06041655[DAT_060643E0[1]][2] == 9) {
+        if (g_SaturnSoundConfigs[DAT_060643E0[1]].unk2 == 9) {
             SND_ContSeq(1);
         }
-        if (DAT_06041655[DAT_060643E0[2]][2] == 9) {
+        if (g_SaturnSoundConfigs[DAT_060643E0[2]].unk2 == 9) {
             SND_ContSeq(2);
         }
         break;
 
     case 0xFE000011:
-        if (DAT_06041655[DAT_060643E0[3]][2] == 9) {
+        if (g_SaturnSoundConfigs[DAT_060643E0[3]].unk2 == 9) {
             SND_ContSeq(3);
         }
-        if (DAT_06041655[DAT_060643E0[4]][2] == 9) {
+        if (g_SaturnSoundConfigs[DAT_060643E0[4]].unk2 == 9) {
             SND_ContSeq(4);
         }
-        if (DAT_06041655[DAT_060643E0[5]][2] == 9) {
+        if (g_SaturnSoundConfigs[DAT_060643E0[5]].unk2 == 9) {
             SND_ContSeq(5);
         }
         break;
@@ -321,7 +321,7 @@ s32 func_06012108(void) {
     s32 base;
 
     DAT_060641D0 = 0x11800;
-    base = 0x200000;
+    base = (s32)DAT_00200000;
     DAT_06062244 = base;
     DAT_06062378 = DAT_06062244 + 0x4000;
     DAT_06062270.unk0 = DAT_06062378 + 0x800;
@@ -563,7 +563,7 @@ s32 func_060126D4(s32 arg0) {
         GFS_GetFileSize(DAT_06064390, &sctsz, &nsct, &lstlen);
         DAT_06057C28 = sctsz * (nsct - 1) + lstlen;
         PcmLseek(DAT_06064390, 0);
-        result = func_06016B9C(DAT_06064390, 0x211800, DAT_06057C28);
+        result = func_06016B9C(DAT_06064390, (s32)DAT_00211800, DAT_06057C28);
         if (result == -1) {
             DAT_06064390 = NULL;
             DAT_060644AC = 0;
@@ -609,7 +609,7 @@ s32 func_060127F0(s32 arg0) {
         GFS_GetFileSize(DAT_060643D0, &sctsz, &nsct, &lstlen);
         DAT_06057C30 = sctsz * (nsct - 1) + lstlen;
         PcmLseek(DAT_060643D0, 0);
-        result = func_06016B9C(DAT_060643D0, 0x22A000, DAT_06057C30);
+        result = func_06016B9C(DAT_060643D0, (s32)DAT_0022A000, DAT_06057C30);
         if (result == -1) {
             DAT_060643D0 = NULL;
             DAT_060644AC = 0;
