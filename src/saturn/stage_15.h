@@ -9,14 +9,14 @@
 #include <saturn_sprite.h>
 #include "stage_data.h"
 
-extern s16 DAT_060F2F04;
-extern u32 g_Stage15SpriteBank24Frames[];
+extern s32 g_Stage15RedGargoyleAttackEntityParams[2];
+extern SaturnSpriteFrameHeader* g_Stage15SpriteBank24Frames[];
 void SyncSpriteObjectPosUnchecked(Entity* self, s16* offset);
 void CheckCollision(s32 x, s32 y, Collider* result, u16 flags);
 void MoveEntity(Entity* self);
 void func_06079BE4(Entity* self);
 void func_06079BB4(Entity* self);
-void func_0600B004(SpriteObject* sprite, u32 imageIndex);
+void func_0600B004(SpriteObject* sprite, SaturnSpriteFrameHeader* frame);
 #include "../shared_sprite_banks.h"
 #include "inc_asm.h"
 
@@ -247,24 +247,24 @@ extern LayoutEntity g_Stage15LayoutVertical51[];
 extern LayoutEntity g_Stage15LayoutVertical50[];
 extern LayoutEntity g_Stage15LayoutVertical48[];
 extern LayoutEntity g_Stage15LayoutVertical49[];
-extern u32 DAT_060FA59C[];
+extern SaturnSpriteFrameHeader* DAT_060FA59C[];
 s32 AllocPrimitives(s32 type, s32 count);
 void DestroyEntity(Entity* self);
 void func_060DDD94(Entity* self);
 void func_060DDE44(Entity* self);
 void func_060DE500(Entity* self);
 void func_060DE58C(Entity* self);
-extern u8 DAT_060F2044[];
+extern s16 g_Stage15WaterRegions[][8];
 void func_060DFA98(MthMatrixTbl* unused, s32 angle);
 void func_060DFB74(MthMatrixTbl* unused, s32 angle);
 void func_060DFC08(MthMatrixTbl* unused, s32 angle);
 extern s32 DAT_060FB0D0;
 extern s32 DAT_060FB0E0;
 extern s32 g_Stage15Entity08ModelVertices14[14][3];
-extern s16 g_Stage15SpriteBank25PackedSpriteParts[];
+extern s16 g_Stage15HumanFaceTreeSensors[];
 extern s16 g_Stage15WaterLeaperInitOffset[];
-extern s16 DAT_060F87AC[];
-extern s16 DAT_060F96D4[];
+extern s16 g_Stage15VenusManTrapSyncOffset[];
+extern s16 g_Stage15GardenerSyncOffset[];
 extern s8 DAT_060FB0EC[];
 s16 Random(void);
 extern s16 DAT_060F6E1A[];
