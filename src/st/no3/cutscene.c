@@ -204,9 +204,7 @@ void EntityCutscene(Entity* self) {
     s16 vCoord;
     s32 primIndex;
     Entity* entity;
-#ifdef VERSION_PSP
     s32 sp40;
-#endif
 #ifndef VERSION_HD
     RECT rect;
 #endif
@@ -214,16 +212,12 @@ void EntityCutscene(Entity* self) {
     s32 j;
     u16 nextChar;
     u_long ptr;
-#ifdef VERSION_HD
     u16* var_v0;
-#endif
     Primitive* prim;
     s32 var_s7;
-#ifdef VERSION_PSP
     u8* var_s6;
     u32 var_s3;
     u8* var_s1;
-#endif
 
 #ifdef VERSION_PSP
     DisableAutoPowerOff();
@@ -653,18 +647,14 @@ void EntityCutscene(Entity* self) {
                         continue;
                     }
                     g_Dialogue.nextCharTimer = g_Dialogue.unk17;
-#ifdef VERSION_PSP
                     sp40 = 1;
-#endif
 #endif
                 } // Close the switch
 
-#ifdef VERSION_PSP
                 if (sp40 != 0) {
                     break; // This breaks the big while-loop!
                 }
                 continue;
-#endif
             }
 #ifndef VERSION_US
             else {

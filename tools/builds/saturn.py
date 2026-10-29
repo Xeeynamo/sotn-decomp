@@ -754,6 +754,7 @@ snd_srcs = [
     'src/saturn/rstage15/s28gfx.c',
     'src/saturn/stage_15.c',
     'src/saturn/stage_15/header.c',
+    'src/saturn/stage_15/s16res.c',
     'src/saturn/stage_15/sprbank.c',
     'src/saturn/stage_15/entupd.c',
     'src/saturn/stage_15/hlay.c',
@@ -1368,6 +1369,7 @@ multi_objs = {
     ],
     'build/saturn/stage_15.o' : [
         'build/saturn/stage_15/header.o',
+        'build/saturn/stage_15/s16res.o',
         'build/saturn/stage_15/sprbank.o',
         'build/saturn/stage_15/entupd.o',
         'build/saturn/stage_15/hlay.o',
