@@ -2231,6 +2231,12 @@ files:
     asset_path: assets/boss/rbo6
     src_path: src/boss/rbo6
     splat_config_path: config/splat.us.borbo6.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x40, sprite_banks, us/sprite_banks]
+          - [0xA0, skip]
   - target: disks/us/BOSS/RBO7/RBO7.BIN
     asset_path: assets/boss/rbo7
     src_path: src/boss/rbo7
