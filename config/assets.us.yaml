@@ -2236,7 +2236,13 @@ files:
         vram: 0x80180000
         assets:
           - [0x40, sprite_banks, us/sprite_banks]
-          - [0xA0, skip]
+          - [0xA0, paldef, palette_def]
+          - [0xDC, skip]
+          - [0x14E60, palette, D_80194E60, 16]
+          - [0x15120, palette, D_80195120, 16]
+          - [0x152E0, palette, D_801952E0, 16]
+          - [0x154E0, palette, D_801954E0, 16]
+          - [0x156E0, skip]
   - target: disks/us/BOSS/RBO7/RBO7.BIN
     asset_path: assets/boss/rbo7
     src_path: src/boss/rbo7

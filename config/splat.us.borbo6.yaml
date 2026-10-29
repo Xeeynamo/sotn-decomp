@@ -41,7 +41,8 @@ segments:
     subsegments:
       - [0x0, .data, header]
       - [0x40, .data, sprite_banks]
-      - [0xA0, data]
+      - [0xA0, .data, palette_def]
+      - [0xDC, data]
       - [0x400, .data, e_init]
       - [0x57C, data]
       - [0x5B4, .data, e_red_door_tiles]
@@ -59,6 +60,8 @@ segments:
       - [0x1354, .data, e_particles]
       - [0x13D4, .data, e_room_fg]
       - [0x1460, data]
+      - [0x14E60, .data, stage_data]
+      - [0x156E0, data]
       - [0x1BA10, .data, gen/us/sprites]
       - [0x1CD34, .rodata, unk_1D690]
       - [0x1CE94, .rodata, e_cutscene_dialogue]
