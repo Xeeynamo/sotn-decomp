@@ -454,4 +454,8 @@ extern Point16 DAT_06057A0C;
 bool CdSoundCommandQueueEmpty(void);
 /* End moved declarations */
 
+#ifdef SATZ
+#include "satz/prototypes.h"
+#endif
+
 #endif
