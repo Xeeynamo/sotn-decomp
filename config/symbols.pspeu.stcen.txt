@@ -6,4 +6,3 @@ g_RedDoorTiles = 0x092876D8;
 rooms = 0x09287828;
 D_pspeu_09293958 = 0x09293958;
 BackgroundBlockInit = 0x09293DC0;
-PrizeDrops = 0x09296328;
