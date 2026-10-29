@@ -49,3 +49,28 @@ u8 D_8018FA44[] = {
 u8 D_8019032C[] = {
 #include "gen/D_8019032C.h"
 };
+
+u8 gfx_portrait_alucard[] = {
+#include <gen/gfx_portrait_alucard.h>
+};
+
+u8 gfx_portrait_dracula[] = {
+#include <gen/gfx_portrait_dracula.h>
+};
+
+u8 unk_weird_gfx[] = {
+#include "gen/unk_weird_gfx.h"
+};
+
+u16 D_80194E60[] = {
+#include "gen/D_80194E60.h"
+};
+u16 D_80195120[] = {
+#include "gen/D_80195120.h"
+};
+u16 D_801952E0[] = {
+#include "gen/D_801952E0.h"
+};
+u16 D_801954E0[] = {
+#include "gen/D_801954E0.h"
+};
