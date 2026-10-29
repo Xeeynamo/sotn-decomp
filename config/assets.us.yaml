@@ -2237,12 +2237,17 @@ files:
         assets:
           - [0x40, sprite_banks, us/sprite_banks]
           - [0xA0, paldef, palette_def]
-          - [0xDC, skip]
+          - [0xDC, layers, layers]
+          - [0x134, skip]
           - [0x14E60, palette, D_80194E60, 16]
           - [0x15120, palette, D_80195120, 16]
           - [0x152E0, palette, D_801952E0, 16]
           - [0x154E0, palette, D_801954E0, 16]
           - [0x156E0, skip]
+          - [0x16EE0, tiledef, rload]
+          - [0x172F0, skip]
+
+          - [0x1B300, skip]
   - target: disks/us/BOSS/RBO7/RBO7.BIN
     asset_path: assets/boss/rbo7
     src_path: src/boss/rbo7
