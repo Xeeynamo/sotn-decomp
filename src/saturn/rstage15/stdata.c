@@ -147,12 +147,9 @@ Entity17Variant g_RStage15Entity17Variants[6] = {
 };
 
 EntityEntry g_RStage15EntityEntry16 = {NULL, func_060DC434};
-u8 g_RStage15Entity16Animation[8] = {
-    7, 0x77, 7, 0x78, 6, 0x48, 2, 0x14,
-};
-u16 g_RStage15Entity16Parameters[6] = {0, 0x1B9, 0x200, 7, 7, 0};
-s16 g_RStage15Entity16DirectionOffsets[7] = {0, 1, 2, 4, -1, -2, -4};
-u16 g_RStage15Entity16Padding = 0;
+s16 g_RStage15WaterSplashSfx[2] = {0x777, 0x778};
+s16 g_RStage15WaterRegions[1][8] = {{0x648, 0x214, 0, 0x1B9, 0x200, 7, 7, 0}};
+s16 g_RStage15WaterSlopes[8] = {0, 1, 2, 4, -1, -2, -4, 0};
 
 EntityEntry g_RStage15EntityEntry22 = {NULL, func_060DC580};
 EntityEntry g_RStage15EntityEntry23 = {&g_RStage15SpriteBank18, func_060DCD58};
@@ -181,12 +178,8 @@ s32 g_RStage15Entity23PartVelocities[8] = {
 
 EntityEntry g_RStage15EntityEntry20 = {NULL, func_060DE268};
 EntityEntry g_RStage15EntityEntry21 = {&g_RStage15SpriteBank21, func_060DE40C};
-s16 g_RStage15Entity21SpawnConfigs[3][6] = {
-    {0, 0, 0, 128, 0, 1},
-    {0, 128, 0, 2, 0, 128},
-    {0, 0, 0, 128, 0, 3},
-};
-s16 g_RStage15Entity21InitOffset[2] = {0, 20};
+s32 g_RStage15Entity21Spans[5][2] = {
+    {0, 128}, {1, 128}, {2, 128}, {0, 128}, {3, 20}};
 u8 g_RStage15Entity21Animation[10] = {
     0xA, 0, 0xA, 4, 0xA, 8, 0xA, 4, 0, 0,
 };

@@ -176,13 +176,11 @@ void EntityCutscene(Entity* self) {
     s32 i, j;
     s16 uCoord, vCoord;
     u16 nextByte;
-#ifdef VERSION_PSP
     s32 charWidth;
     u8* buffer1;
     u8* buffer2;
     u32 buffer3;
     bool endLoopFlag;
-#endif
     RECT rect;
     s32 ptr;
 

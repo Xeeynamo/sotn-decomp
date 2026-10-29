@@ -194,13 +194,11 @@ void EntityCutscene(Entity* self) {
     s32 i, j;
     s16 uCoord, vCoord;
     u16 nextChar;
-#ifdef VERSION_PSP
     s32 charWidth;
     u8* charBuffer1;
     u8* charBuffer2;
     u32 tempChar;
     bool endLoop;
-#endif
     RECT rect;
     u_long ptr;
 
@@ -345,14 +343,9 @@ void EntityCutscene(Entity* self) {
                     i = *g_Dialogue.scriptCur++;
                     prim = g_Dialogue.prim[LEN(g_Dialogue.prim) - 1];
                     j = *g_Dialogue.scriptCur++;
-#ifdef VERSION_PSP
                     charWidth = j & 1;
                     uCoord = u_coords[charWidth];
                     vCoord = v_coords[charWidth];
-#else
-                uCoord = u_coords[j & 1];
-                vCoord = v_coords[j & 1];
-#endif
                     prim->clut = cluts[i];
                     prim->tpage = 144;
 #ifdef VERSION_PSP
@@ -429,13 +422,7 @@ void EntityCutscene(Entity* self) {
                     return;
                 case CSOP_PLAY_SOUND:
                     if (g_SkipCutscene) {
-// psp and psx refuse to agree on this particular increment
-#ifdef VERSION_PSP
                         g_Dialogue.scriptCur += 2;
-#else
-                    g_Dialogue.scriptCur++;
-                    g_Dialogue.scriptCur++;
-#endif
                         continue;
                     }
                     nextChar = *g_Dialogue.scriptCur++;

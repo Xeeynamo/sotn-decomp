@@ -87,6 +87,7 @@ typedef enum {
 #define PLAYER g_Entities[PLAYER_CHARACTER]
 
 #define LOW(x) (*(s32*)&(x))
+
 #define ABS(x) ((x) < 0 ? -(x) : (x))
 
 typedef union {
