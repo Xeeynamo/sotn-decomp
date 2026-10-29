@@ -69,7 +69,7 @@
 |            | func_092EDA98                     |        7 |          1 |        |       |     |
 |            | func_pspeu_092EBA30               |        7 |          1 |        |       |     |
 |            | func_pspeu_092EBA38               |        7 |          1 |        |       |     |
-| cen        | func_pspeu_09251270               |        7 |          1 |        |       |     |
+|            | func_pspeu_09251270               |        7 |          1 |        |       |     |
 |            | func_pspeu_092F3420               |        7 |          1 |        |       |     |
 |            | func_pspeu_092F3428               |        7 |          1 |        |       |     |
 |            | func_pspeu_092F3430               |        7 |          1 |        |       |     |
@@ -190,11 +190,11 @@
 |            | func_092E7C10                     |        9 |          1 |        |       |     |
 |            | func_pspeu_092E76F0               |        9 |          1 |        |       |     |
 |            | func_pspeu_092E7C10               |        9 |          1 |        |       |     |
-| cen        | func_pspeu_09253230               |        9 |          1 |        |       |     |
-| cen        | func_pspeu_09253260               |        9 |          1 |        |       |     |
-| cen        | func_pspeu_09247108               |        9 |          1 |        |       |     |
-| cen        | func_pspeu_0924A138               |        9 |          1 |        |       |     |
-| cen        | func_pspeu_0923DB48               |        9 |          1 |        |       |     |
+|            | func_pspeu_09247108               |        9 |          1 |        |       |     |
+|            | func_pspeu_0924A138               |        9 |          1 |        |       |     |
+|            | func_pspeu_0923DB48               |        9 |          1 |        |       |     |
+| e_maria    | func_pspeu_09253230               |        9 |          1 |        |       |     |
+| e_maria    | func_pspeu_09253260               |        9 |          1 |        |       |     |
 | no0        | func_pspeu_0923BD98               |        9 |          1 |        |       |     |
 | no1        | func_pspeu_0923E4D0               |        9 |          1 |        |       |     |
 | no1        | func_pspeu_09262BC8               |        9 |          1 |        |       |     |
@@ -255,8 +255,8 @@
 | main       | sceVfpuVector4Set                 |       11 |          1 |        |       |     |
 | main       | sceVfpuVector4SignFloat           |       11 |          1 |        |       |     |
 | main       | sceVfpuVector4Trunc               |       11 |          1 |        |       |     |
-| cen        | func_pspeu_09251750               |       11 |          1 |        |       |     |
-| cen        | func_pspeu_09251768               |       11 |          1 |        |       |     |
+| e_maria    | func_pspeu_09251750               |       11 |          1 |        |       |     |
+| e_maria    | func_pspeu_09251768               |       11 |          1 |        |       |     |
 | lib        | func_psp_09264E08                 |       11 |          1 |        |       |     |
 | sel        | func_psp_0923FBF0                 |       11 |          1 |        |       |     |
 | sel        | func_psp_09241C38                 |       11 |          1 |        |       |     |
@@ -265,7 +265,7 @@
 | np3_psp    | jtbl_pspeu_09291B58               |       12 |          0 | Yes    |       |     |
 | rno2_psp   | jtbl_pspeu_092874B0               |       12 |          0 | Yes    |       |     |
 | rnz0_psp   | jtbl_pspeu_09281B60               |       12 |          0 | Yes    |       |     |
-| top        | jtbl_pspeu_092769C8               |       12 |          0 | Yes    |       |     |
+| top_psp    | jtbl_pspeu_092769C8               |       12 |          0 | Yes    |       |     |
 | main       | func_psp_08910498                 |       12 |          1 |        |       |     |
 | main       | func_psp_08910D28                 |       12 |          1 |        |       |     |
 | main       | SetGeomOffset                     |       12 |          1 |        |       |     |
@@ -318,8 +318,8 @@
 | main       | sceVfpuVector4ScaleXYZ            |       13 |          1 |        |       |     |
 | maria      | func_pspeu_092BDFC8               |       13 |          1 |        |       |     |
 | ric        | func_pspeu_092C77B8               |       13 |          1 |        |       |     |
-| cen        | func_pspeu_09253240               |       13 |          1 |        |       |     |
-| cen        | func_pspeu_0924EFC8               |       13 |          1 |        |       |     |
+|            | func_pspeu_0924EFC8               |       13 |          1 |        |       |     |
+| e_maria    | func_pspeu_09253240               |       13 |          1 |        |       |     |
 | main       | PadRead_PSP                       |       13 |          2 |        |       |     |
 | main       | GsInitVcount                      |       13 |          2 |        |       |     |
 | main       | InitCARD                          |       13 |          2 |        |       |     |
@@ -334,7 +334,7 @@
 | no2        | jtbl_pspeu_0928D418               |       14 |          0 | Yes    |       |     |
 | np3_psp    | jtbl_pspeu_09291AF0               |       14 |          0 | Yes    |       |     |
 | rnz0_psp   | jtbl_pspeu_09281B40               |       14 |          0 | Yes    |       |     |
-| top        | jtbl_pspeu_092769E0               |       14 |          0 | Yes    |       |     |
+| top_psp    | jtbl_pspeu_092769E0               |       14 |          0 | Yes    |       |     |
 | main       | _getpid                           |       14 |          1 |        |       |     |
 | main       | _kill                             |       14 |          1 |        |       |     |
 | main       | _times                            |       14 |          1 |        |       |     |
@@ -426,7 +426,7 @@
 | main       | sceVfpuVector4IsZero              |       15 |          1 |        |       |     |
 | maria      | func_pspeu_092B3430               |       15 |          1 |        |       |     |
 | ric        | func_pspeu_092B0E38               |       15 |          1 |        |       |     |
-| cen        | func_pspeu_09242D00               |       15 |          1 |        |       |     |
+|            | func_pspeu_09242D00               |       15 |          1 |        |       |     |
 | sel        | func_psp_092426B0                 |       15 |          1 |        |       |     |
 | sel        | func_psp_09243000                 |       15 |          1 |        |       |     |
 |            | func_pspeu_09241E18               |       15 |          2 |        |       |     |
@@ -477,7 +477,7 @@
 |            | func_pspeu_092ECD18               |       15 |          2 |        |       |     |
 | are        | func_pspeu_09250108               |       15 |          2 |        |       |     |
 | cat        | func_pspeu_09245588               |       15 |          2 |        |       |     |
-| cen        | func_pspeu_09258CA0               |       15 |          2 |        |       |     |
+|            | func_pspeu_09258CA0               |       15 |          2 |        |       |     |
 | chi        | func_psp_09240EB0                 |       15 |          2 |        |       |     |
 | dai        | func_pspeu_0923F488               |       15 |          2 |        |       |     |
 | dre        | func_pspeu_0923D1B0               |       15 |          2 |        |       |     |
@@ -534,7 +534,7 @@
 | ric        | pl_subweapon_holywater.rodata     |       16 |          0 | Yes    |       |     |
 | are        | e_red_door.rodata                 |       16 |          0 | Yes    |       |     |
 | cat        | e_red_door.rodata                 |       16 |          0 | Yes    |       |     |
-| cen        | e_red_door.rodata                 |       16 |          0 | Yes    |       |     |
+|            | e_red_door.rodata                 |       16 |          0 | Yes    |       |     |
 | cen        | jtbl_pspeu_09293FC8               |       16 |          0 | Yes    |       |     |
 | cen        | jtbl_pspeu_09293FF0               |       16 |          0 | Yes    |       |     |
 | cen        | jtbl_pspeu_09294018               |       16 |          0 | Yes    |       |     |
@@ -685,7 +685,7 @@
 | main       | func_psp_0892A1EC                 |       17 |          2 |        |       |     |
 | main       | func_psp_08914E44                 |       17 |          2 |        |       |     |
 | main       | func_psp_08916310                 |       17 |          2 |        |       |     |
-| cen        | func_pspeu_09251378               |       17 |          2 |        |       |     |
+|            | func_pspeu_09251378               |       17 |          2 |        |       |     |
 | sel        | func_psp_0923F9B8                 |       17 |          2 |        |       |     |
 | dra        | func_psp_0913D5A8                 |       17 |          3 |        |       |     |
 | main       | func_psp_0892EC7C                 |       17 |          3 |        |       |     |
@@ -815,9 +815,9 @@
 | main       | sceVfpuVector4TruncatePrecision24 |       19 |          1 |        |       |     |
 | maria      | func_pspeu_092B3810               |       19 |          1 |        |       |     |
 | ric        | func_pspeu_092B1238               |       19 |          1 |        |       |     |
-| cen        | func_pspeu_09261DB8               |       19 |          1 |        |       |     |
-| cen        | SetCutsceneEvents                 |       19 |          1 |        |       |     |
-| cen        | func_pspeu_092430E0               |       19 |          1 |        |       |     |
+|            | func_pspeu_092640E0               |       19 |          1 |        |       |     |
+|            | func_pspeu_09261DB8               |       19 |          1 |        |       |     |
+|            | func_pspeu_092430E0               |       19 |          1 |        |       |     |
 | dai        | func_pspeu_092541E8               |       19 |          1 |        |       |     |
 | dre        | func_pspeu_092458A8               |       19 |          1 |        |       |     |
 | lib        | func_psp_0925AFB0                 |       19 |          1 |        |       |     |
@@ -832,7 +832,7 @@
 | st0        | func_pspeu_092392D0               |       19 |          1 |        |       |     |
 | st0        | func_pspeu_09237868               |       19 |          1 |        |       |     |
 | st0        | func_pspeu_09237A40               |       19 |          1 |        |       |     |
-| top        | SetCutsceneEvents                 |       19 |          1 |        |       |     |
+| top        | func_pspeu_0924C728               |       19 |          1 |        |       |     |
 | dra        | func_psp_09137498                 |       19 |          2 |        |       |     |
 | main       | func_psp_089172E4                 |       19 |          2 |        |       |     |
 | main       | _gettimeofday                     |       19 |          2 |        |       |     |
@@ -966,8 +966,8 @@
 | are        | func_pspeu_092623C8               |       20 |          2 |        |       |     |
 | cat        | func_pspeu_09252470               |       20 |          2 |        |       |     |
 | cat        | func_pspeu_092530A0               |       20 |          2 |        |       |     |
-| cen        | func_pspeu_0925F480               |       20 |          2 |        |       |     |
-| cen        | func_pspeu_0925F940               |       20 |          2 |        |       |     |
+|            | func_pspeu_0925F480               |       20 |          2 |        |       |     |
+|            | func_pspeu_0925F940               |       20 |          2 |        |       |     |
 | chi        | func_psp_092476E8                 |       20 |          2 |        |       |     |
 | chi        | func_psp_09248180                 |       20 |          2 |        |       |     |
 | dai        | func_pspeu_0924D538               |       20 |          2 |        |       |     |
@@ -1101,10 +1101,10 @@
 | cat        | func_pspeu_092447E8               |       21 |          1 |        |       |     |
 | cat        | func_pspeu_09252EB8               |       21 |          1 |        |       |     |
 | cat        | func_pspeu_0923D1A8               |       21 |          1 |        |       |     |
-| cen        | func_pspeu_09257F00               |       21 |          1 |        |       |     |
-| cen        | func_pspeu_092563A0               |       21 |          1 |        |       |     |
-| cen        | func_pspeu_09251658               |       21 |          1 |        |       |     |
-| cen        | func_pspeu_09242D28               |       21 |          1 |        |       |     |
+|            | func_pspeu_09257F00               |       21 |          1 |        |       |     |
+| e_maria    | func_pspeu_09251658               |       21 |          1 |        |       |     |
+|            | func_pspeu_09242D28               |       21 |          1 |        |       |     |
+|            | func_pspeu_092563A0               |       21 |          1 |        |       |     |
 | chi        | func_psp_09240110                 |       21 |          1 |        |       |     |
 | chi        | func_psp_0923E5B0                 |       21 |          1 |        |       |     |
 | chi        | func_psp_09247F98                 |       21 |          1 |        |       |     |
@@ -1208,15 +1208,15 @@
 | main       | __end_catch                       |       21 |          3 |        |       |     |
 | main       | localeconv                        |       21 |          3 |        |       |     |
 | main       | _init_signal                      |       21 |          3 |        |       |     |
-| cen        | func_pspeu_09251548               |       21 |          3 |        |       |     |
-| cen        | func_pspeu_09251580               |       21 |          3 |        |       |     |
-| cen        | func_pspeu_092513A8               |       21 |          3 |        |       |     |
-| cen        | func_pspeu_092513E8               |       21 |          3 |        |       |     |
-| cen        | func_pspeu_09251478               |       21 |          3 |        |       |     |
-| cen        | func_pspeu_09251508               |       21 |          3 |        |       |     |
+|            | func_pspeu_092513A8               |       21 |          3 |        |       |     |
+|            | func_pspeu_092513E8               |       21 |          3 |        |       |     |
+|            | func_pspeu_09251478               |       21 |          3 |        |       |     |
+|            | func_pspeu_09251508               |       21 |          3 |        |       |     |
+| e_maria    | func_pspeu_09251548               |       21 |          3 |        |       |     |
+| e_maria    | func_pspeu_09251580               |       21 |          3 |        |       |     |
 | sel        | func_psp_09237C38                 |       21 |          3 |        |       |     |
 | sel        | func_psp_09237C78                 |       21 |          3 |        |       |     |
-| cen        | func_pspeu_09263930               |       21 |          4 |        |       |     |
+|            | func_pspeu_09263930               |       21 |          4 |        |       |     |
 |            | e_marionette.rodata               |       22 |          0 | Yes    |       |     |
 | rbo0       | unk_19B94.rodata                  |       22 |          0 | Yes    |       |     |
 | rbo8       | unk_EF80.rodata                   |       22 |          0 | Yes    |       |     |
@@ -1255,8 +1255,8 @@
 | maria      | func_pspeu_092BFF78               |       22 |          3 |        |       |     |
 | maria      | func_pspeu_092B0E10               |       22 |          3 |        |       |     |
 | are        | func_pspeu_0925D668               |       22 |          3 |        |       |     |
-| cen        | func_pspeu_09250FA0               |       22 |          3 |        |       |     |
-| cen        | func_pspeu_092406D0               |       22 |          3 |        |       |     |
+|            | func_pspeu_09250FA0               |       22 |          3 |        |       |     |
+|            | func_pspeu_092406D0               |       22 |          3 |        |       |     |
 | no2        | func_pspeu_0924AA78               |       22 |          3 |        |       |     |
 | np3        | EntityOwlTarget                   |       22 |          3 |        |       |     |
 | dra        | func_psp_090F54E0                 |       22 |          4 |        |       |     |
@@ -1264,7 +1264,7 @@
 | main       | DecodeSpecification               |       22 |          4 |        |       |     |
 | main       | func_psp_0892A3D4                 |       22 |          4 |        |       |     |
 | maria      | func_pspeu_092A9250               |       22 |          4 |        |       |     |
-| cen        | func_pspeu_09245230               |       22 |          4 |        |       |     |
+|            | func_pspeu_09245230               |       22 |          4 |        |       |     |
 | no0        | D_pspeu_092A1B10                  |       23 |          0 |        |       |     |
 | bo6        | MarResetPose                      |       23 |          1 |        |       |     |
 | dra        | func_psp_091088F0                 |       23 |          1 |        |       |     |
@@ -1278,8 +1278,8 @@
 | maria      | func_pspeu_092AF210               |       23 |          1 |        |       |     |
 | ric        | func_pspeu_092A6290               |       23 |          1 |        |       |     |
 | ric        | func_pspeu_092A79F0               |       23 |          1 |        |       |     |
-| cen        | func_pspeu_0923DB58               |       23 |          1 |        |       |     |
-| cen        | func_pspeu_0923F040               |       23 |          1 |        |       |     |
+|            | func_pspeu_0923DB58               |       23 |          1 |        |       |     |
+|            | func_pspeu_0923F040               |       23 |          1 |        |       |     |
 | no2        | func_pspeu_09251370               |       23 |          1 |        |       |     |
 | np3        | func_pspeu_0925DD30               |       23 |          1 |        |       |     |
 | rno0       | func_pspeu_092579D8               |       23 |          1 |        |       |     |
@@ -1304,8 +1304,8 @@
 | main       | func_psp_0891A0BC                 |       23 |          5 |        |       |     |
 | main       | func_psp_0891A104                 |       23 |          5 |        |       |     |
 | main       | NormalColorCol                    |       23 |          5 |        |       |     |
-| cen        | func_pspeu_092519E8               |       23 |          5 |        |       |     |
-| cen        | func_pspeu_092521A8               |       23 |          5 |        |       |     |
+| e_maria    | func_pspeu_092519E8               |       23 |          5 |        |       |     |
+| e_maria    | func_pspeu_092521A8               |       23 |          5 |        |       |     |
 | dra        | 63C08.rodata                      |       24 |          0 | Yes    |       |     |
 | ric        | pl_subweapon_cross.rodata         |       24 |          0 | Yes    |       |     |
 | are        | e_grave_keeper.rodata             |       24 |          0 | Yes    |       |     |
@@ -1338,7 +1338,7 @@
 | ric        | func_pspeu_092B1088               |       24 |          2 |        |       |     |
 |            | func_092E7680                     |       24 |          2 |        |       |     |
 |            | func_092E7680                     |       24 |          2 |        |       |     |
-| cen        | func_pspeu_09242F50               |       24 |          2 |        |       |     |
+|            | func_pspeu_09242F50               |       24 |          2 |        |       |     |
 |            | func_pspeu_092F3000               |       24 |          2 |        |       |     |
 |            | func_pspeu_092F6E00               |       24 |          2 |        |       |     |
 | w1_012_psp | func_pspeu_092F6E00               |       24 |          2 |        |       |     |
@@ -1411,9 +1411,9 @@
 | cat        | func_pspeu_09252420               |       25 |          1 |        |       |     |
 | cat        | func_pspeu_09252AB0               |       25 |          1 |        |       |     |
 | cat        | func_pspeu_09252E68               |       25 |          1 |        |       |     |
-| cen        | func_pspeu_0925F430               |       25 |          1 |        |       |     |
-| cen        | func_pspeu_0925F748               |       25 |          1 |        |       |     |
-| cen        | func_pspeu_0923DBA0               |       25 |          1 |        |       |     |
+|            | func_pspeu_0923DBA0               |       25 |          1 |        |       |     |
+|            | func_pspeu_0925F430               |       25 |          1 |        |       |     |
+|            | func_pspeu_0925F748               |       25 |          1 |        |       |     |
 | chi        | func_psp_09247698                 |       25 |          1 |        |       |     |
 | chi        | func_psp_09247F48                 |       25 |          1 |        |       |     |
 | dai        | func_pspeu_0924D4E8               |       25 |          1 |        |       |     |
@@ -1483,9 +1483,9 @@
 | rwrp       | func_pspeu_09243BD8               |       25 |          1 |        |       |     |
 | st0        | func_pspeu_092500A8               |       25 |          1 |        |       |     |
 | st0        | func_pspeu_09250670               |       25 |          1 |        |       |     |
-| top        | SetStep                           |       25 |          1 |        |       |     |
 | top        | func_pspeu_09246540               |       25 |          1 |        |       |     |
 | top        | func_pspeu_09246BD0               |       25 |          1 |        |       |     |
+| top        | func_pspeu_09247070               |       25 |          1 |        |       |     |
 | wrp        | func_psp_09243850                 |       25 |          1 |        |       |     |
 | wrp        | func_psp_09243B68                 |       25 |          1 |        |       |     |
 |            | func_pspeu_09259770               |       25 |          2 |        |       |     |
@@ -1503,7 +1503,7 @@
 | main       | __i2b                             |       25 |          2 |        |       |     |
 | are        | func_pspeu_09240230               |       25 |          2 |        |       |     |
 | cat        | func_pspeu_092386A8               |       25 |          2 |        |       |     |
-| cen        | func_pspeu_09251700               |       25 |          2 |        |       |     |
+| e_maria    | func_pspeu_09251700               |       25 |          2 |        |       |     |
 | chi        | func_psp_0924C5D0                 |       25 |          2 |        |       |     |
 | dai        | func_pspeu_0923A228               |       25 |          2 |        |       |     |
 | dre        | func_pspeu_092386A8               |       25 |          2 |        |       |     |
@@ -1525,15 +1525,15 @@
 | main       | func_psp_0891B570                 |       25 |          3 |        |       |     |
 | main       | func_psp_0892CF34                 |       25 |          3 |        |       |     |
 | main       | func_psp_0892D1D8                 |       25 |          3 |        |       |     |
-| cen        | func_pspeu_092515B8               |       25 |          3 |        |       |     |
-| cen        | func_pspeu_0923F088               |       25 |          3 |        |       |     |
+| e_maria    | func_pspeu_092515B8               |       25 |          3 |        |       |     |
+|            | func_pspeu_0923F088               |       25 |          3 |        |       |     |
 | sel        | func_psp_0923FB40                 |       25 |          3 |        |       |     |
 | dra        | func_psp_09102B78                 |       25 |          4 |        |       |     |
 | dra        | func_psp_091160D0                 |       25 |          4 |        |       |     |
 | main       | func_psp_0891E944                 |       25 |          4 |        |       |     |
 | main       | func_psp_089327E4                 |       25 |          4 |        |       |     |
-| cen        | func_pspeu_09251428               |       25 |          4 |        |       |     |
-| cen        | func_pspeu_092514B8               |       25 |          4 |        |       |     |
+|            | func_pspeu_09251428               |       25 |          4 |        |       |     |
+|            | func_pspeu_092514B8               |       25 |          4 |        |       |     |
 | dra        | func_psp_09140E00                 |       25 |          6 |        |       |     |
 |            | e_camera_bounds.rodata            |       26 |          0 | Yes    |       |     |
 | mar        | unk_EFF8.rodata                   |       26 |          0 | Yes    |       |     |
@@ -1561,7 +1561,7 @@
 | main       | srand                             |       26 |          2 |        |       |     |
 | maria      | func_pspeu_092B3630               |       26 |          2 |        |       |     |
 | ric        | func_pspeu_092B1038               |       26 |          2 |        |       |     |
-| cen        | func_pspeu_09242F00               |       26 |          2 |        |       |     |
+|            | func_pspeu_09242F00               |       26 |          2 |        |       |     |
 | w1_012_psp | func_pspeu_092F6EE8               |       26 |          2 |        |       |     |
 | dra        | func_psp_090E7E90                 |       26 |          3 |        |       |     |
 | dra        | func_psp_0910F0D8                 |       26 |          3 |        |       |     |
@@ -1572,10 +1572,10 @@
 | maria      | func_pspeu_092B0D70               |       26 |          3 |        |       |     |
 | maria      | func_pspeu_092B0DC0               |       26 |          3 |        |       |     |
 | ric        | func_pspeu_092B5EF8               |       26 |          3 |        |       |     |
-| cen        | func_pspeu_09240590               |       26 |          3 |        |       |     |
-| cen        | func_pspeu_092405E0               |       26 |          3 |        |       |     |
-| cen        | func_pspeu_09240630               |       26 |          3 |        |       |     |
-| cen        | func_pspeu_09240680               |       26 |          3 |        |       |     |
+|            | func_pspeu_09240590               |       26 |          3 |        |       |     |
+|            | func_pspeu_092405E0               |       26 |          3 |        |       |     |
+|            | func_pspeu_09240630               |       26 |          3 |        |       |     |
+|            | func_pspeu_09240680               |       26 |          3 |        |       |     |
 | no4        | func_pspeu_09258910               |       26 |          3 |        |       |     |
 | dra        | func_psp_09140D68                 |       26 |          4 |        |       |     |
 | main       | _sceGuCallbackFinish              |       26 |          4 |        |       |     |
@@ -1599,7 +1599,7 @@
 | are        | func_pspeu_0923E918               |       27 |          1 |        |       |     |
 | are        | func_pspeu_09263428               |       27 |          1 |        |       |     |
 | cat        | func_pspeu_092542A8               |       27 |          1 |        |       |     |
-| cen        | func_pspeu_09251600               |       27 |          1 |        |       |     |
+| e_maria    | func_pspeu_09251600               |       27 |          1 |        |       |     |
 | dai        | func_pspeu_0924F1A8               |       27 |          1 |        |       |     |
 | lib        | func_psp_09251040                 |       27 |          1 |        |       |     |
 | no0        | func_pspeu_092589C8               |       27 |          1 |        |       |     |
@@ -1643,8 +1643,8 @@
 | main       | SetShadeTex                       |       27 |          3 |        |       |     |
 | main       | RotTrans                          |       27 |          3 |        |       |     |
 | ric        | func_pspeu_092AF5A8               |       27 |          3 |        |       |     |
-| cen        | func_pspeu_09251780               |       27 |          3 |        |       |     |
-| cen        | func_pspeu_09239F50               |       27 |          3 |        |       |     |
+|            | func_pspeu_09239F50               |       27 |          3 |        |       |     |
+| e_maria    | func_pspeu_09251780               |       27 |          3 |        |       |     |
 | sel        | func_psp_092395E8                 |       27 |          3 |        |       |     |
 |            | func_pspeu_09241DC0               |       27 |          4 |        |       |     |
 |            | func_pspeu_0923DD58               |       27 |          4 |        |       |     |
@@ -1669,7 +1669,7 @@
 | main       | func_psp_08914B08                 |       27 |          4 |        |       |     |
 | are        | func_pspeu_092500B0               |       27 |          4 |        |       |     |
 | cat        | func_pspeu_09245530               |       27 |          4 |        |       |     |
-| cen        | func_pspeu_09258C48               |       27 |          4 |        |       |     |
+|            | func_pspeu_09258C48               |       27 |          4 |        |       |     |
 | chi        | func_psp_09240E58                 |       27 |          4 |        |       |     |
 | dai        | func_pspeu_0923F430               |       27 |          4 |        |       |     |
 | dre        | func_pspeu_0923D158               |       27 |          4 |        |       |     |
@@ -1781,7 +1781,7 @@
 | main       | sceGupTexMode                     |       29 |          1 |        |       |     |
 | main       | func_psp_08910A20                 |       29 |          1 |        |       |     |
 | main       | sceVfpuVector4Hermite             |       29 |          1 |        |       |     |
-| cen        | CutsceneUnk1                      |       29 |          1 |        |       |     |
+|            | func_pspeu_09263E70               |       29 |          1 |        |       |     |
 | dai        | func_pspeu_09253F78               |       29 |          1 |        |       |     |
 | dre        | func_pspeu_09245638               |       29 |          1 |        |       |     |
 | lib        | func_psp_0925AD40                 |       29 |          1 |        |       |     |
@@ -1792,7 +1792,7 @@
 | sel        | func_psp_09242B40                 |       29 |          1 |        |       |     |
 | sel        | func_psp_09245760                 |       29 |          1 |        |       |     |
 | st0        | func_pspeu_09239060               |       29 |          1 |        |       |     |
-| top        | CutsceneUnk1                      |       29 |          1 |        |       |     |
+| top        | func_pspeu_0924C4B8               |       29 |          1 |        |       |     |
 | wrp        | func_psp_09244760                 |       29 |          1 |        |       |     |
 | dra        | func_psp_09104178                 |       29 |          2 |        |       |     |
 | main       | __errno                           |       29 |          2 |        |       |     |
@@ -1817,9 +1817,9 @@
 | maria      | func_pspeu_092A9920               |       29 |          4 |        |       |     |
 |            | func_092EB7F8                     |       29 |          4 |        |       |     |
 |            | func_092E9D90                     |       29 |          4 |        |       |     |
-| cen        | func_pspeu_0924A240               |       29 |          4 |        |       |     |
-| cen        | func_pspeu_09245978               |       29 |          4 |        |       |     |
-| cen        | func_pspeu_0923C818               |       29 |          4 |        |       |     |
+|            | func_pspeu_0924A240               |       29 |          4 |        |       |     |
+|            | func_pspeu_09245978               |       29 |          4 |        |       |     |
+|            | func_pspeu_0923C818               |       29 |          4 |        |       |     |
 |            | func_pspeu_0924F0F8               |       29 |          5 |        |       |     |
 | bo7        | FindFirstUnkPrim                  |       29 |          5 |        |       |     |
 | rbo2       | FindFirstUnkPrim                  |       29 |          5 |        |       |     |
@@ -1922,7 +1922,7 @@
 | main       | func_psp_0892E914                 |       31 |          2 |        |       |     |
 | are        | func_pspeu_092633C0               |       31 |          2 |        |       |     |
 | cat        | func_pspeu_09254240               |       31 |          2 |        |       |     |
-| cen        | func_pspeu_092606E0               |       31 |          2 |        |       |     |
+|            | func_pspeu_092606E0               |       31 |          2 |        |       |     |
 | chi        | func_psp_09248A98                 |       31 |          2 |        |       |     |
 | dai        | func_pspeu_0924F140               |       31 |          2 |        |       |     |
 | dre        | func_pspeu_09244758               |       31 |          2 |        |       |     |
@@ -1965,7 +1965,7 @@
 | are        | func_pspeu_0923E550               |       31 |          3 |        |       |     |
 | are        | func_pspeu_09261C70               |       31 |          3 |        |       |     |
 | cat        | func_pspeu_09252B00               |       31 |          3 |        |       |     |
-| cen        | func_pspeu_09251698               |       31 |          3 |        |       |     |
+| e_maria    | func_pspeu_09251698               |       31 |          3 |        |       |     |
 | dai        | func_pspeu_0924DBC8               |       31 |          3 |        |       |     |
 | lib        | func_psp_0924F608                 |       31 |          3 |        |       |     |
 | no0        | func_pspeu_09238AD0               |       31 |          3 |        |       |     |
@@ -1999,12 +1999,12 @@
 | main       | func_psp_08935640                 |       31 |          4 |        |       |     |
 | main       | func_psp_0892D154                 |       31 |          4 |        |       |     |
 | main       | func_psp_0892DBE4                 |       31 |          4 |        |       |     |
-| cen        | func_pspeu_09251B40               |       31 |          4 |        |       |     |
+| e_maria    | func_pspeu_09251B40               |       31 |          4 |        |       |     |
 | sel        | func_psp_09240A28                 |       31 |          4 |        |       |     |
 | dra        | func_psp_0913F860                 |       31 |          5 |        |       |     |
 | maria      | func_pspeu_092B0C70               |       31 |          5 |        |       |     |
 | ric        | func_pspeu_092A96D8               |       31 |          5 |        |       |     |
-| cen        | func_pspeu_09240530               |       31 |          5 |        |       |     |
+|            | func_pspeu_09240530               |       31 |          5 |        |       |     |
 | dra        | func_psp_090EBEF8                 |       31 |          6 |        |       |     |
 | main       | RotMatrix                         |       31 |          6 |        |       |     |
 | main       | RotMatrixYXZ                      |       31 |          6 |        |       |     |
@@ -2109,7 +2109,7 @@
 |            | func_pspeu_092E7680               |       34 |          2 |        |       |     |
 | are        | func_pspeu_09261440               |       34 |          2 |        |       |     |
 | cat        | func_pspeu_092522D0               |       34 |          2 |        |       |     |
-| cen        | func_pspeu_0925F338               |       34 |          2 |        |       |     |
+|            | func_pspeu_0925F338               |       34 |          2 |        |       |     |
 | chi        | func_psp_09247548                 |       34 |          2 |        |       |     |
 | dai        | func_pspeu_0924D398               |       34 |          2 |        |       |     |
 | dre        | func_pspeu_09243848               |       34 |          2 |        |       |     |
@@ -2147,7 +2147,7 @@
 | main       | gte_minsz4                        |       34 |          4 |        |       |     |
 | main       | func_psp_08919FF8                 |       34 |          5 |        |       |     |
 | maria      | func_pspeu_092B2170               |       34 |          5 |        |       |     |
-| cen        | func_pspeu_092419E0               |       34 |          5 |        |       |     |
+|            | func_pspeu_092419E0               |       34 |          5 |        |       |     |
 | dra        | MemcardEraseFile                  |       34 |          6 |        |       |     |
 | main       | func_psp_0892B31C                 |       34 |          6 |        |       |     |
 | main       | func_psp_0890F300                 |       34 |          7 |        |       |     |
@@ -2261,8 +2261,8 @@
 | maria      | func_pspeu_092B2040               |       36 |          4 |        |       |     |
 | are        | func_pspeu_0923BA10               |       36 |          4 |        |       |     |
 | cat        | func_pspeu_09237B50               |       36 |          4 |        |       |     |
-| cen        | func_pspeu_092536C0               |       36 |          4 |        |       |     |
-| cen        | func_pspeu_092418B0               |       36 |          4 |        |       |     |
+|            | func_pspeu_092536C0               |       36 |          4 |        |       |     |
+|            | func_pspeu_092418B0               |       36 |          4 |        |       |     |
 | chi        | func_psp_09237B50                 |       36 |          4 |        |       |     |
 | dai        | func_pspeu_09237B50               |       36 |          4 |        |       |     |
 | dre        | func_pspeu_09237B50               |       36 |          4 |        |       |     |
@@ -2331,7 +2331,7 @@
 |            | func_092EF780                     |       37 |          2 |        |       |     |
 | are        | func_pspeu_09261F48               |       37 |          2 |        |       |     |
 | cat        | func_pspeu_09252CF0               |       37 |          2 |        |       |     |
-| cen        | func_pspeu_0925F5D0               |       37 |          2 |        |       |     |
+|            | func_pspeu_0925F5D0               |       37 |          2 |        |       |     |
 | chi        | func_psp_09247DD0                 |       37 |          2 |        |       |     |
 | dai        | func_pspeu_0924DEA0               |       37 |          2 |        |       |     |
 | dre        | func_pspeu_09243AE0               |       37 |          2 |        |       |     |
@@ -2376,8 +2376,8 @@
 | main       | func_psp_08917F28                 |       37 |          3 |        |       |     |
 | main       | ClearOTag                         |       37 |          3 |        |       |     |
 | maria      | func_pspeu_092BEA38               |       37 |          3 |        |       |     |
-| cen        | func_pspeu_09263D20               |       37 |          3 |        |       |     |
-| cen        | func_pspeu_0924FA38               |       37 |          3 |        |       |     |
+|            | func_pspeu_09263D20               |       37 |          3 |        |       |     |
+|            | func_pspeu_0924FA38               |       37 |          3 |        |       |     |
 | dai        | func_pspeu_09253E28               |       37 |          3 |        |       |     |
 | dre        | func_pspeu_092454E8               |       37 |          3 |        |       |     |
 | no4        | func_pspeu_0925E178               |       37 |          3 |        |       |     |
@@ -2390,7 +2390,7 @@
 | main       | sceWaveGetVolume                  |       37 |          4 |        |       |     |
 | main       | func_psp_08919278                 |       37 |          4 |        |       |     |
 | main       | func_psp_0891B878                 |       37 |          4 |        |       |     |
-| cen        | func_pspeu_09251BA0               |       37 |          4 |        |       |     |
+| e_maria    | func_pspeu_09251BA0               |       37 |          4 |        |       |     |
 | bo6        | func_pspeu_09259B30               |       37 |          5 |        |       |     |
 | dra        | func_psp_091163A8                 |       37 |          5 |        |       |     |
 | dra        | func_psp_0913E658                 |       37 |          5 |        |       |     |
@@ -2424,7 +2424,7 @@
 | main       | func_psp_089195C0                 |       37 |          6 |        |       |     |
 | are        | func_pspeu_09261BB0               |       37 |          6 |        |       |     |
 | cat        | func_pspeu_09252A40               |       37 |          6 |        |       |     |
-| cen        | func_pspeu_0925F4B8               |       37 |          6 |        |       |     |
+|            | func_pspeu_0925F4B8               |       37 |          6 |        |       |     |
 | chi        | func_psp_09247CB8                 |       37 |          6 |        |       |     |
 | dai        | func_pspeu_0924DB08               |       37 |          6 |        |       |     |
 | dre        | func_pspeu_092439C8               |       37 |          6 |        |       |     |
@@ -2457,7 +2457,7 @@
 | wrp        | func_psp_092438D8                 |       37 |          6 |        |       |     |
 |            | e_owl_knight.rodata               |       38 |          0 | Yes    |       |     |
 | are        | e_owl_knight.rodata               |       38 |          0 | Yes    |       |     |
-| cen        | e_maria_subweapons.rodata         |       38 |          0 | Yes    |       |     |
+|            | e_maria_subweapons.rodata         |       38 |          0 | Yes    |       |     |
 | dre        | e_succubus.rodata                 |       38 |          0 | Yes    |       |     |
 | no2        | e_owl_knight.rodata               |       38 |          0 | Yes    |       |     |
 | no4        | e_ferryman.rodata                 |       38 |          0 | Yes    |       |     |
@@ -2498,7 +2498,7 @@
 | main       | _sbrk_r                           |       38 |          4 |        |       |     |
 | are        | func_pspeu_0923BDA0               |       38 |          4 |        |       |     |
 | cat        | func_pspeu_09237EE0               |       38 |          4 |        |       |     |
-| cen        | func_pspeu_09253A50               |       38 |          4 |        |       |     |
+|            | func_pspeu_09253A50               |       38 |          4 |        |       |     |
 | chi        | func_psp_09237EE0                 |       38 |          4 |        |       |     |
 | dai        | func_pspeu_09237EE0               |       38 |          4 |        |       |     |
 | dre        | func_pspeu_09237EE0               |       38 |          4 |        |       |     |
@@ -2588,8 +2588,8 @@
 | cat        | func_pspeu_09238598               |       39 |          2 |        |       |     |
 | cat        | func_pspeu_09238620               |       39 |          2 |        |       |     |
 | cat        | func_pspeu_09252BC0               |       39 |          2 |        |       |     |
-| cen        | func_pspeu_09254108               |       39 |          2 |        |       |     |
-| cen        | func_pspeu_09254190               |       39 |          2 |        |       |     |
+|            | func_pspeu_09254108               |       39 |          2 |        |       |     |
+|            | func_pspeu_09254190               |       39 |          2 |        |       |     |
 | chi        | func_psp_09238598                 |       39 |          2 |        |       |     |
 | chi        | func_psp_09238620                 |       39 |          2 |        |       |     |
 | dai        | func_pspeu_09238598               |       39 |          2 |        |       |     |
@@ -2672,7 +2672,7 @@
 | main       | func_psp_0892D5F0                 |       39 |          3 |        |       |     |
 | maria      | func_pspeu_092B1B90               |       39 |          3 |        |       |     |
 | ric        | func_pspeu_092AF450               |       39 |          3 |        |       |     |
-| cen        | func_pspeu_09241400               |       39 |          3 |        |       |     |
+|            | func_pspeu_09241400               |       39 |          3 |        |       |     |
 | lib        | func_psp_0925ABE8                 |       39 |          3 |        |       |     |
 | no1        | func_pspeu_0924A2B8               |       39 |          3 |        |       |     |
 | no3        | func_pspeu_09242FB8               |       39 |          3 |        |       |     |
@@ -2689,14 +2689,14 @@
 | main       | sceWaveAudioWrite                 |       39 |          5 |        |       |     |
 | main       | sceWaveAudioWriteBlocking         |       39 |          5 |        |       |     |
 | ric        | func_pspeu_092B5F48               |       39 |          5 |        |       |     |
-| cen        | func_pspeu_09251AC0               |       39 |          5 |        |       |     |
+| e_maria    | func_pspeu_09251AC0               |       39 |          5 |        |       |     |
 | rcen       | func_pspeu_0924E5C0               |       39 |          5 |        |       |     |
 | sel        | func_psp_092404A8                 |       39 |          5 |        |       |     |
 | main       | _init_signal_r                    |       39 |          6 |        |       |     |
 | main       | func_psp_0892B3C8                 |       39 |          7 |        |       |     |
 | main       | func_psp_0892D520                 |       39 |          7 |        |       |     |
 | maria      | func_pspeu_092B1D98               |       39 |          7 |        |       |     |
-| cen        | func_pspeu_09241608               |       39 |          7 |        |       |     |
+|            | func_pspeu_09241608               |       39 |          7 |        |       |     |
 | main       | func_psp_0890F754                 |       39 |          9 |        |       |     |
 | bo2        | unk_E818.rodata                   |       40 |          0 | Yes    |       |     |
 | rbo2       | unk_12AE8.rodata                  |       40 |          0 | Yes    |       |     |
@@ -2743,7 +2743,7 @@
 | ric        | func_pspeu_092B34F0               |       40 |          2 |        |       |     |
 | are        | func_pspeu_09261248               |       40 |          2 |        |       |     |
 | cat        | func_pspeu_092520D8               |       40 |          2 |        |       |     |
-| cen        | func_pspeu_0925F140               |       40 |          2 |        |       |     |
+|            | func_pspeu_0925F140               |       40 |          2 |        |       |     |
 | chi        | func_psp_09247350                 |       40 |          2 |        |       |     |
 | dai        | func_pspeu_0924D1A0               |       40 |          2 |        |       |     |
 | dre        | func_pspeu_09243650               |       40 |          2 |        |       |     |
@@ -2837,7 +2837,7 @@
 | main       | func_psp_08914F18                 |       41 |          3 |        |       |     |
 | are        | func_pspeu_09261508               |       41 |          3 |        |       |     |
 | cat        | func_pspeu_09252398               |       41 |          3 |        |       |     |
-| cen        | func_pspeu_0925F3A8               |       41 |          3 |        |       |     |
+|            | func_pspeu_0925F3A8               |       41 |          3 |        |       |     |
 | chi        | func_psp_09247610                 |       41 |          3 |        |       |     |
 | dai        | func_pspeu_0924D460               |       41 |          3 |        |       |     |
 | dre        | func_pspeu_092438B8               |       41 |          3 |        |       |     |
@@ -2877,7 +2877,7 @@
 | main       | __subdf3                          |       41 |          5 |        |       |     |
 | main       | sceWaveAudioSetSample             |       41 |          5 |        |       |     |
 | maria      | func_pspeu_092B36C8               |       41 |          5 |        |       |     |
-| cen        | func_pspeu_09242F98               |       41 |          5 |        |       |     |
+|            | func_pspeu_09242F98               |       41 |          5 |        |       |     |
 | dra        | func_psp_09128A78                 |       41 |          6 |        |       |     |
 | dra        | func_psp_090F5318                 |       41 |          6 |        |       |     |
 | main       | func_psp_08919188                 |       41 |          6 |        |       |     |
@@ -2904,7 +2904,7 @@
 |            | bat.rodata                        |       42 |          0 | Yes    |       |     |
 | are        | e_collect.rodata                  |       42 |          0 | Yes    |       |     |
 | cat        | e_collect.rodata                  |       42 |          0 | Yes    |       |     |
-| cen        | e_collect.rodata                  |       42 |          0 | Yes    |       |     |
+|            | e_collect.rodata                  |       42 |          0 | Yes    |       |     |
 | chi        | en_collect.rodata                 |       42 |          0 | Yes    |       |     |
 | dai        | e_collect.rodata                  |       42 |          0 | Yes    |       |     |
 | dai        | e_confessional.rodata             |       42 |          0 | Yes    |       |     |
@@ -2989,9 +2989,9 @@
 | are        | func_pspeu_0923BE18               |       42 |          5 |        |       |     |
 | cat        | func_pspeu_09237BC0               |       42 |          5 |        |       |     |
 | cat        | func_pspeu_09237F58               |       42 |          5 |        |       |     |
-| cen        | func_pspeu_09253730               |       42 |          5 |        |       |     |
-| cen        | func_pspeu_09253AC8               |       42 |          5 |        |       |     |
-| cen        | func_pspeu_09250FE0               |       42 |          5 |        |       |     |
+|            | func_pspeu_09253730               |       42 |          5 |        |       |     |
+|            | func_pspeu_09253AC8               |       42 |          5 |        |       |     |
+|            | func_pspeu_09250FE0               |       42 |          5 |        |       |     |
 | chi        | func_psp_09237BC0                 |       42 |          5 |        |       |     |
 | chi        | func_psp_09237F58                 |       42 |          5 |        |       |     |
 | dai        | func_pspeu_09237BC0               |       42 |          5 |        |       |     |
@@ -3090,7 +3090,7 @@
 | dra        | func_psp_09124FB8                 |       43 |          5 |        |       |     |
 | main       | func_psp_08933BA0                 |       43 |          5 |        |       |     |
 | maria      | func_pspeu_092BEAB0               |       43 |          5 |        |       |     |
-| cen        | func_pspeu_0924FAB0               |       43 |          5 |        |       |     |
+|            | func_pspeu_0924FAB0               |       43 |          5 |        |       |     |
 | dra        | func_psp_09114500                 |       43 |          6 |        |       |     |
 | dra        | func_psp_090F53A8                 |       43 |          6 |        |       |     |
 | main       | _wcrtomb_r                        |       43 |          6 |        |       |     |
@@ -3103,7 +3103,7 @@
 | main       | func_psp_0891490C                 |       43 |          8 |        |       |     |
 | maria      | func_pspeu_092B2C68               |       43 |          8 |        |       |     |
 | ric        | func_pspeu_092B05A8               |       43 |          8 |        |       |     |
-| cen        | func_pspeu_09242538               |       43 |          8 |        |       |     |
+|            | func_pspeu_09242538               |       43 |          8 |        |       |     |
 | dra        | func_psp_090F50F8                 |       43 |          9 |        |       |     |
 | dra        | func_psp_0910A9D0                 |       43 |         11 |        |       |     |
 |            | e_scylla.rodata                   |       44 |          0 | Yes    |       |     |
@@ -3136,8 +3136,8 @@
 | dra        | func_psp_091434A8                 |       45 |          1 |        |       |     |
 | maria      | func_pspeu_092A9D48               |       45 |          1 |        |       |     |
 | maria      | func_pspeu_092A9DE8               |       45 |          1 |        |       |     |
-| cen        | func_pspeu_09245D98               |       45 |          1 |        |       |     |
-| cen        | func_pspeu_09245E38               |       45 |          1 |        |       |     |
+|            | func_pspeu_09245D98               |       45 |          1 |        |       |     |
+|            | func_pspeu_09245E38               |       45 |          1 |        |       |     |
 | main       | sceGupScissor                     |       45 |          2 |        |       |     |
 |            | func_092EB8E8                     |       45 |          2 |        |       |     |
 |            | func_092E9E80                     |       45 |          2 |        |       |     |
@@ -3158,7 +3158,7 @@
 | main       | func_psp_08935C28                 |       45 |          5 |        |       |     |
 | maria      | func_pspeu_092BF8B8               |       45 |          5 |        |       |     |
 | cat        | func_pspeu_09262AC0               |       45 |          5 |        |       |     |
-| cen        | func_pspeu_092508B8               |       45 |          5 |        |       |     |
+|            | func_pspeu_092508B8               |       45 |          5 |        |       |     |
 | rcat       | func_pspeu_0924ECB0               |       45 |          5 |        |       |     |
 | rcen       | func_pspeu_0924E640               |       45 |          5 |        |       |     |
 | rno2       | func_pspeu_092584E8               |       45 |          5 |        |       |     |
@@ -3174,7 +3174,7 @@
 | no3        | func_pspeu_09252E60               |       45 |          6 |        |       |     |
 | rno3       | func_pspeu_0923EFC8               |       45 |          6 |        |       |     |
 | maria      | func_pspeu_092B2D00               |       45 |          7 |        |       |     |
-| cen        | func_pspeu_092425D0               |       45 |          7 |        |       |     |
+|            | func_pspeu_092425D0               |       45 |          7 |        |       |     |
 | st0        | func_pspeu_09242F68               |       45 |          7 |        |       |     |
 | main       | func_psp_0890CC3C                 |       45 |          8 |        |       |     |
 | maria      | pl_main.rodata                    |       46 |          0 | Yes    |       |     |
@@ -3209,8 +3209,8 @@
 | main       | soundbuf_setBuf                   |       46 |          4 |        |       |     |
 | are        | func_pspeu_0924FBB8               |       46 |          4 |        |       |     |
 | cat        | func_pspeu_09245038               |       46 |          4 |        |       |     |
-| cen        | func_pspeu_09258750               |       46 |          4 |        |       |     |
-| cen        | func_pspeu_09251A28               |       46 |          4 |        |       |     |
+|            | func_pspeu_09258750               |       46 |          4 |        |       |     |
+| e_maria    | func_pspeu_09251A28               |       46 |          4 |        |       |     |
 | chi        | func_psp_09240960                 |       46 |          4 |        |       |     |
 | dai        | func_pspeu_0923EF38               |       46 |          4 |        |       |     |
 | dre        | func_pspeu_0923CC60               |       46 |          4 |        |       |     |
@@ -3274,7 +3274,7 @@
 |            | func_pspeu_092EEAB0               |       46 |          5 |        |       |     |
 | are        | func_pspeu_092611B0               |       46 |          5 |        |       |     |
 | cat        | func_pspeu_09252040               |       46 |          5 |        |       |     |
-| cen        | DestroyEntity                     |       46 |          5 |        |       |     |
+|            | func_pspeu_0925F0A8               |       46 |          5 |        |       |     |
 | chi        | func_psp_092472B8                 |       46 |          5 |        |       |     |
 | dai        | func_pspeu_0924D108               |       46 |          5 |        |       |     |
 | dre        | func_pspeu_092435B8               |       46 |          5 |        |       |     |
@@ -3304,7 +3304,7 @@
 | rwrp       | func_pspeu_09243538               |       46 |          5 |        |       |     |
 | sel        | func_psp_092431D0                 |       46 |          5 |        |       |     |
 | st0        | func_pspeu_0924FD90               |       46 |          5 |        |       |     |
-| top        | DestroyEntity                     |       46 |          5 |        |       |     |
+| top        | func_pspeu_09246160               |       46 |          5 |        |       |     |
 | wrp        | func_psp_09243538                 |       46 |          5 |        |       |     |
 |            | func_pspeu_092F2E80               |       46 |          5 |        |       |     |
 |            | func_pspeu_092F6C80               |       46 |          5 |        |       |     |
@@ -3333,7 +3333,7 @@
 | rbo8       | func_pspeu_0923CF78               |       46 |          7 |        |       |     |
 | are        | func_pspeu_0924F2D0               |       46 |          7 |        |       |     |
 | cat        | func_pspeu_09244750               |       46 |          7 |        |       |     |
-| cen        | func_pspeu_09257E68               |       46 |          7 |        |       |     |
+|            | func_pspeu_09257E68               |       46 |          7 |        |       |     |
 | chi        | func_psp_09240078                 |       46 |          7 |        |       |     |
 | dai        | func_pspeu_0923E650               |       46 |          7 |        |       |     |
 | dre        | func_pspeu_0923C378               |       46 |          7 |        |       |     |
@@ -3369,7 +3369,7 @@
 | st_init    | func_pspeu_09247840               |       47 |          1 |        |       |     |
 | dra        | func_psp_090EDBA0                 |       47 |          1 |        |       |     |
 | main       | sceGuViewport                     |       47 |          1 |        |       |     |
-| cen        | func_pspeu_092608E0               |       47 |          1 |        |       |     |
+|            | func_pspeu_092608E0               |       47 |          1 |        |       |     |
 | main       | func_psp_0891036C                 |       47 |          2 |        |       |     |
 | dra        | func_psp_090DCBC8                 |       47 |          3 |        |       |     |
 | dra        | func_psp_09127210                 |       47 |          3 |        |       |     |
@@ -3390,7 +3390,7 @@
 | main       | func_psp_0892DC40                 |       47 |          5 |        |       |     |
 | maria      | func_pspeu_092B3498               |       47 |          5 |        |       |     |
 | ric        | func_pspeu_092B0EA0               |       47 |          5 |        |       |     |
-| cen        | func_pspeu_09242D68               |       47 |          5 |        |       |     |
+|            | func_pspeu_09242D68               |       47 |          5 |        |       |     |
 | no0        | func_pspeu_09237F38               |       47 |          5 |        |       |     |
 | nz0        | func_pspeu_09242740               |       47 |          5 |        |       |     |
 | w1_012_psp | func_pspeu_092F6E48               |       47 |          5 |        |       |     |
@@ -3455,7 +3455,7 @@
 | main       | sceGuSetStatus                    |       49 |          5 |        |       |     |
 | are        | func_pspeu_09261EA0               |       49 |          5 |        |       |     |
 | cat        | func_pspeu_09252C48               |       49 |          5 |        |       |     |
-| cen        | func_pspeu_0925F528               |       49 |          5 |        |       |     |
+|            | func_pspeu_0925F528               |       49 |          5 |        |       |     |
 | chi        | func_psp_09247D28                 |       49 |          5 |        |       |     |
 | dai        | func_pspeu_0924DDF8               |       49 |          5 |        |       |     |
 | dre        | func_pspeu_09243A38               |       49 |          5 |        |       |     |
@@ -3524,7 +3524,7 @@
 | dra        | func_psp_09114208                 |       50 |          6 |        |       |     |
 | dra        | func_psp_0910E2D0                 |       50 |          7 |        |       |     |
 | main       | _signal_r                         |       50 |          7 |        |       |     |
-| cen        | func_pspeu_09241B28               |       50 |          7 |        |       |     |
+|            | func_pspeu_09241B28               |       50 |          7 |        |       |     |
 | bo6        | func_pspeu_09259BB0               |       50 |          8 |        |       |     |
 | dra        | MemcardWriteFile                  |       50 |          8 |        |       |     |
 | main       | sceGuSync                         |       50 |          8 | Yes    |       |     |
@@ -3535,7 +3535,7 @@
 | bo6        | MarStepFall                       |       50 |         13 |        |       |     |
 | maria      | func_pspeu_092AEBD8               |       50 |         13 |        |       |     |
 | ric        | func_pspeu_092A7340               |       50 |         13 |        |       |     |
-| cen        | func_pspeu_0923EA08               |       50 |         13 |        |       |     |
+|            | func_pspeu_0923EA08               |       50 |         13 |        |       |     |
 | rbo8       | func_us_801955A0                  |       51 |          3 |        |       |     |
 | main       | func_psp_0890F250                 |       51 |          3 |        |       |     |
 | bo0        | func_us_801B2178                  |       51 |          4 |        |       |     |
@@ -3551,7 +3551,7 @@
 | main       | func_psp_08914854                 |       51 |          5 |        |       |     |
 | maria      | func_pspeu_092B59D0               |       51 |          5 |        |       |     |
 | ric        | func_pspeu_092BE4C8               |       51 |          5 |        |       |     |
-| cen        | func_pspeu_09246A88               |       51 |          5 |        |       |     |
+|            | func_pspeu_09246A88               |       51 |          5 |        |       |     |
 | sel        | func_psp_0923FEC0                 |       51 |          5 |        |       |     |
 | main       | func_psp_08935E30                 |       51 |          6 |        |       |     |
 | main       | func_psp_0893633C                 |       51 |          6 |        |       |     |
@@ -3583,7 +3583,7 @@
 | maria      | func_pspeu_092AB6B0               |       51 |         10 |        |       |     |
 | ric        | func_pspeu_092ACE78               |       51 |         10 |        |       |     |
 | are        | func_pspeu_092562C0               |       51 |         10 |        |       |     |
-| cen        | func_pspeu_09263968               |       51 |         10 |        |       |     |
+|            | func_pspeu_09263968               |       51 |         10 |        |       |     |
 | dai        | func_pspeu_09253A70               |       51 |         10 |        |       |     |
 | dai        | func_pspeu_09246968               |       51 |         10 |        |       |     |
 | dai        | func_pspeu_09245408               |       51 |         10 |        |       |     |
@@ -3619,13 +3619,13 @@
 | main       | sceSasSetEffect                   |       52 |          7 |        |       |     |
 | main       | sceSasSetEffectParam              |       52 |          7 |        |       |     |
 | main       | sceSasSetEffectVolume             |       52 |          7 |        |       |     |
-| cen        | func_pspeu_09241BD0               |       52 |          8 |        |       |     |
+|            | func_pspeu_09241BD0               |       52 |          8 |        |       |     |
 | bo0        | func_us_801B20F4                  |       52 |          9 |        |       |     |
 |            | func_092EE600                     |       52 |          9 |        |       |     |
 | st0        | func_pspeu_0923F568               |       52 |         10 |        |       |     |
 | maria      | func_pspeu_092AE4A8               |       52 |         13 |        |       |     |
-| cen        | func_pspeu_0923E2D8               |       52 |         13 |        |       |     |
-| cen        | func_pspeu_0923C2F8               |       53 |          1 |        |       |     |
+|            | func_pspeu_0923E2D8               |       52 |         13 |        |       |     |
+|            | func_pspeu_0923C2F8               |       53 |          1 |        |       |     |
 | dra        | func_psp_090F18B0                 |       53 |          3 |        |       |     |
 | no4        | func_pspeu_0923D0C8               |       53 |          3 |        |       |     |
 | rno4       | LoadFerrymanGateTiles             |       53 |          3 |        |       |     |
@@ -3643,11 +3643,11 @@
 | main       | _setlocale_r                      |       53 |          7 |        |       |     |
 | maria      | func_pspeu_092A6958               |       53 |          7 |        |       |     |
 | are        | func_pspeu_0925F568               |       53 |          7 |        |       |     |
-| cen        | func_pspeu_09237700               |       53 |          7 |        |       |     |
+|            | func_pspeu_09237700               |       53 |          7 |        |       |     |
 | sel        | func_psp_09239530                 |       53 |          7 |        |       |     |
 | dra        | func_psp_09105200                 |       53 |          8 |        |       |     |
 | maria      | func_pspeu_092B1CE8               |       53 |         10 |        |       |     |
-| cen        | func_pspeu_09241558               |       53 |         10 |        |       |     |
+|            | func_pspeu_09241558               |       53 |         10 |        |       |     |
 | main       | func_psp_0890FF84                 |       53 |         15 |        |       |     |
 |            | demon.rodata                      |       54 |          0 | Yes    |       |     |
 |            | nosedevil.rodata                  |       54 |          0 | Yes    |       |     |
@@ -3657,7 +3657,7 @@
 | bo6        | func_pspeu_09261530               |       54 |          5 |        |       |     |
 | main       | func_psp_08937228                 |       54 |          5 |        |       |     |
 | ric        | func_pspeu_092BA540               |       54 |          5 |        |       |     |
-| cen        | func_pspeu_09261D00               |       54 |          5 |        |       |     |
+|            | func_pspeu_09261D00               |       54 |          5 |        |       |     |
 | main       | func_psp_0892FAA8                 |       54 |          6 |        |       |     |
 | main       | __ratio                           |       54 |          6 |        |       |     |
 | main       | func_psp_0892DADC                 |       54 |          6 |        |       |     |
@@ -3687,7 +3687,7 @@
 | maria      | func_pspeu_092B5A78               |       55 |          5 |        |       |     |
 | ric        | func_pspeu_092BE570               |       55 |          5 |        |       |     |
 | are        | func_pspeu_0924B3A8               |       55 |          5 |        |       |     |
-| cen        | func_pspeu_09246B30               |       55 |          5 |        |       |     |
+|            | func_pspeu_09246B30               |       55 |          5 |        |       |     |
 | no0        | func_pspeu_092444F8               |       55 |          5 |        |       |     |
 | rno4       | func_pspeu_09259C48               |       55 |          5 |        |       |     |
 | sel        | func_psp_0923FC08                 |       55 |          5 |        |       |     |
@@ -3700,7 +3700,7 @@
 | dra        | func_psp_091295F0                 |       55 |          7 |        |       |     |
 | maria      | func_pspeu_092B9AB0               |       55 |          7 |        |       |     |
 | ric        | func_pspeu_092C2E98               |       55 |          7 |        |       |     |
-| cen        | func_pspeu_0924AAB0               |       55 |          7 |        |       |     |
+|            | func_pspeu_0924AAB0               |       55 |          7 |        |       |     |
 |            | func_pspeu_09241D00               |       55 |          8 |        |       |     |
 |            | func_pspeu_0923DC98               |       55 |          8 |        |       |     |
 | bo2        | func_pspeu_0923DC98               |       55 |          8 |        |       |     |
@@ -3723,7 +3723,7 @@
 | main       | func_psp_08933954                 |       55 |          8 |        |       |     |
 | are        | func_pspeu_0924FFF0               |       55 |          8 |        |       |     |
 | cat        | func_pspeu_09245470               |       55 |          8 |        |       |     |
-| cen        | func_pspeu_09258B88               |       55 |          8 |        |       |     |
+|            | func_pspeu_09258B88               |       55 |          8 |        |       |     |
 | chi        | func_psp_09240D98                 |       55 |          8 |        |       |     |
 | dai        | func_pspeu_0923F370               |       55 |          8 |        |       |     |
 | dre        | func_pspeu_0923D098               |       55 |          8 |        |       |     |
@@ -3756,9 +3756,9 @@
 | bo6        | func_pspeu_09253F48               |       55 |          9 |        |       |     |
 | no0        | func_pspeu_092576E0               |       55 |          9 |        |       |     |
 | maria      | func_pspeu_092B20B8               |       55 |         10 |        |       |     |
-| cen        | func_pspeu_09241928               |       55 |         10 |        |       |     |
+|            | func_pspeu_09241928               |       55 |         10 |        |       |     |
 | main       | 31178.rodata                      |       56 |          0 | Yes    |       |     |
-| cen        | e_maria.rodata                    |       56 |          0 | Yes    |       |     |
+|            | e_maria_psp.rodata                |       56 |          0 | Yes    |       |     |
 | nz1        | e_karasuman.rodata                |       56 |          0 | Yes    |       |     |
 | dra        | func_psp_09141488                 |       56 |          2 |        |       |     |
 | main       | sceGupDepthOffset                 |       56 |          2 |        |       |     |
@@ -3810,7 +3810,7 @@
 | mar        | CutsceneUnk4                      |       57 |          2 |        |       |     |
 | rbo2       | CutsceneUnk4                      |       57 |          2 |        |       |     |
 | rbo6       | CutsceneUnk4                      |       57 |          2 |        |       |     |
-| cen        | CutsceneUnk4                      |       57 |          2 |        |       |     |
+|            | func_pspeu_09263DA0               |       57 |          2 |        |       |     |
 | dai        | func_pspeu_09253EA8               |       57 |          2 |        |       |     |
 | dre        | func_pspeu_09245568               |       57 |          2 |        |       |     |
 | lib        | func_psp_0925AC70                 |       57 |          2 |        |       |     |
@@ -3819,7 +3819,7 @@
 | rcen       | func_pspeu_09245FD8               |       57 |          2 |        |       |     |
 | sel        | func_psp_09245690                 |       57 |          2 |        |       |     |
 | st0        | func_pspeu_09238F90               |       57 |          2 |        |       |     |
-| top        | CutsceneUnk4                      |       57 |          2 |        |       |     |
+| top        | func_pspeu_0924C3E8               |       57 |          2 |        |       |     |
 |            | func_pspeu_092481F0               |       57 |          3 |        |       |     |
 | rbo5       | func_pspeu_0925EE68               |       57 |          3 |        |       |     |
 | sel        | func_psp_09239228                 |       57 |          3 |        |       |     |
@@ -3831,7 +3831,7 @@
 | rbo5       | CreateEntFactoryFromEntity        |       57 |          5 |        |       |     |
 | maria      | func_pspeu_092B3750               |       57 |          5 |        |       |     |
 | ric        | func_pspeu_092B1178               |       57 |          5 |        |       |     |
-| cen        | func_pspeu_09243020               |       57 |          5 |        |       |     |
+|            | func_pspeu_09243020               |       57 |          5 |        |       |     |
 | main       | StoreImage                        |       57 |          6 |        |       |     |
 | bo6        | func_pspeu_092588E8               |       57 |          8 |        |       |     |
 | main       | func_psp_08936274                 |       57 |          8 |        |       |     |
@@ -3873,7 +3873,7 @@
 | main       | func_psp_0891B1F8                 |       59 |          6 |        |       |     |
 |            | func_pspeu_09249910               |       59 |          7 |        |       |     |
 | maria      | func_pspeu_092BFEB0               |       59 |          8 |        |       |     |
-| cen        | func_pspeu_09250ED8               |       59 |          8 |        |       |     |
+|            | func_pspeu_09250ED8               |       59 |          8 |        |       |     |
 | dra        | func_psp_09114438                 |       59 |         10 |        |       |     |
 | dra        | func_psp_09140C28                 |       59 |         10 |        |       |     |
 | dra        | func_psp_090FF480                 |       59 |         10 |        |       |     |
@@ -3896,7 +3896,7 @@
 | dra        | func_psp_090F9F20                 |       59 |         14 |        |       |     |
 | main       | func_psp_08930A1C                 |       59 |         15 |        |       |     |
 | dra        | 692E8.rodata                      |       60 |          0 | Yes    |       |     |
-| cen        | e_maria_main.rodata               |       60 |          0 | Yes    |       |     |
+|            | e_maria_main.rodata               |       60 |          0 | Yes    |       |     |
 | rno3       | e_blue_venus_weed.rodata          |       60 |          0 | Yes    |       |     |
 | rno4       | e_blue_venus_weed.rodata          |       60 |          0 | Yes    |       |     |
 | st0        | cutscene.rodata                   |       60 |          0 | Yes    |       |     |
@@ -3942,7 +3942,7 @@
 | dra        | func_psp_0910F298                 |       61 |          5 |        |       |     |
 | main       | func_psp_08930934                 |       61 |          5 |        |       |     |
 | are        | func_pspeu_09246F88               |       61 |          5 |        |       |     |
-| cen        | func_pspeu_09261DF0               |       61 |          5 |        |       |     |
+|            | func_pspeu_09261DF0               |       61 |          5 |        |       |     |
 | lib        | func_psp_092410A8                 |       61 |          5 |        |       |     |
 | no1        | func_pspeu_092408A8               |       61 |          5 |        |       |     |
 | rcen       | func_pspeu_0924D6E0               |       61 |          5 |        |       |     |
@@ -3955,7 +3955,7 @@
 | dra        | func_psp_09103FD8                 |       61 |          7 |        |       |     |
 | maria      | func_pspeu_092B5B30               |       61 |          8 |        |       |     |
 | ric        | func_pspeu_092BE628               |       61 |          8 |        |       |     |
-| cen        | func_pspeu_09246BE8               |       61 |          8 |        |       |     |
+|            | func_pspeu_09246BE8               |       61 |          8 |        |       |     |
 | no3        | func_pspeu_0923CFC0               |       61 |          8 |        |       |     |
 | np3        | EntityLightningThunder            |       61 |          8 |        |       |     |
 | rno3       | func_pspeu_09258968               |       61 |          8 |        |       |     |
@@ -3968,7 +3968,7 @@
 | rbo2       | GetLangAt                         |       61 |         10 |        |       |     |
 | rbo6       | GetLangAt                         |       61 |         10 |        |       |     |
 | cat        | func_pspeu_09262070               |       61 |         10 |        |       |     |
-| cen        | func_pspeu_09260818               |       61 |         10 |        |       |     |
+|            | func_pspeu_09260818               |       61 |         10 |        |       |     |
 | dai        | func_pspeu_092580D8               |       61 |         10 |        |       |     |
 | dai        | func_pspeu_092510C0               |       61 |         10 |        |       |     |
 | dre        | func_pspeu_09244890               |       61 |         10 |        |       |     |
@@ -4035,7 +4035,7 @@
 | cat        | func_pspeu_09244DE0               |       62 |          5 |        |       |     |
 | cat        | func_pspeu_0925C960               |       62 |          5 |        |       |     |
 | cat        | func_pspeu_0925FF50               |       62 |          5 |        |       |     |
-| cen        | func_pspeu_092584F8               |       62 |          5 |        |       |     |
+|            | func_pspeu_092584F8               |       62 |          5 |        |       |     |
 | chi        | func_psp_09240708                 |       62 |          5 |        |       |     |
 | dai        | func_pspeu_0923ECE0               |       62 |          5 |        |       |     |
 | dai        | func_pspeu_092565B0               |       62 |          5 |        |       |     |
@@ -4087,7 +4087,7 @@
 | maria      | func_pspeu_092B1C10               |       62 |          6 |        |       |     |
 | ric        | func_pspeu_092AF4D0               |       62 |          6 |        |       |     |
 |            | func_092E7798                     |       62 |          6 |        |       |     |
-| cen        | func_pspeu_09241480               |       62 |          6 |        |       |     |
+|            | func_pspeu_09241480               |       62 |          6 |        |       |     |
 | nz1        | func_pspeu_09239A78               |       62 |          6 |        |       |     |
 | main       | func_psp_0891B7A0                 |       62 |          7 |        |       |     |
 | rno4       | func_pspeu_09259B68               |       62 |          7 |        |       |     |
@@ -4130,7 +4130,7 @@
 | cat        | func_pspeu_09261A18               |       63 |          7 |        |       |     |
 | cat        | func_pspeu_09261AE8               |       63 |          7 |        |       |     |
 | cat        | func_pspeu_09254300               |       63 |          7 |        |       |     |
-| cen        | func_pspeu_09260748               |       63 |          7 |        |       |     |
+|            | func_pspeu_09260748               |       63 |          7 |        |       |     |
 | chi        | func_psp_09248B00                 |       63 |          7 |        |       |     |
 | dai        | func_pspeu_0924F200               |       63 |          7 |        |       |     |
 | dre        | func_pspeu_092447C0               |       63 |          7 |        |       |     |
@@ -4200,7 +4200,7 @@
 | main       | _exit                             |       64 |         15 |        |       |     |
 | main       | func_psp_08919928                 |       64 |         15 |        |       |     |
 | rbo8       | InitEntityIds                     |       65 |          1 |        |       |     |
-| cen        | func_pspeu_09246CB0               |       65 |          3 |        |       |     |
+|            | func_pspeu_09246CB0               |       65 |          3 |        |       |     |
 |            | func_092EE440                     |       65 |          5 |        |       |     |
 |            | func_092EEB48                     |       65 |          5 |        |       |     |
 |            | func_092EE9D0                     |       65 |          5 |        |       |     |
@@ -4249,7 +4249,7 @@
 | rbo8       | func_pspeu_092384B8               |       65 |         11 |        |       |     |
 | are        | func_pspeu_0923C378               |       65 |         11 |        |       |     |
 | cat        | func_pspeu_092384B8               |       65 |         11 |        |       |     |
-| cen        | func_pspeu_09254028               |       65 |         11 |        |       |     |
+|            | func_pspeu_09254028               |       65 |         11 |        |       |     |
 | chi        | UpdateRoomPosition                |       65 |         11 |        |       |     |
 | dai        | func_pspeu_092384B8               |       65 |         11 |        |       |     |
 | dre        | func_pspeu_092384B8               |       65 |         11 |        |       |     |
@@ -4309,7 +4309,7 @@
 | rbo8       | func_pspeu_0923A1A8               |       66 |          7 |        |       |     |
 | are        | func_pspeu_09241130               |       66 |          7 |        |       |     |
 | cat        | func_pspeu_0923BEA0               |       66 |          7 |        |       |     |
-| cen        | func_pspeu_09255098               |       66 |          7 |        |       |     |
+|            | func_pspeu_09255098               |       66 |          7 |        |       |     |
 | chi        | func_psp_0923D2A8                 |       66 |          7 |        |       |     |
 | dai        | func_pspeu_0923B128               |       66 |          7 |        |       |     |
 | dai        | func_pspeu_092454A8               |       66 |          7 |        |       |     |
@@ -4354,7 +4354,7 @@
 | main       | func_psp_08937658                 |       66 |         10 |        |       |     |
 | maria      | func_pspeu_092B21E0               |       66 |         10 |        |       |     |
 | ric        | func_pspeu_092AFA90               |       66 |         10 |        |       |     |
-| cen        | func_pspeu_09241A50               |       66 |         10 |        |       |     |
+|            | func_pspeu_09241A50               |       66 |         10 |        |       |     |
 | main       | DrawSync                          |       66 |         13 |        |       |     |
 | main       | func_psp_08935318                 |       66 |         13 |        |       |     |
 | cat        | func_pspeu_0925AEB8               |       66 |         13 |        |       |     |
@@ -4363,7 +4363,7 @@
 | dra        | func_psp_09137668                 |       66 |         15 |        |       |     |
 | rbo2       | InitEntityIds                     |       67 |          1 |        |       |     |
 | dre        | func_pspeu_09244958               |       67 |          1 |        |       |     |
-| cen        | func_pspeu_0924A148               |       67 |          3 |        |       |     |
+|            | func_pspeu_0924A148               |       67 |          3 |        |       |     |
 | are        | func_pspeu_0924B5E8               |       67 |          5 |        |       |     |
 | no0        | func_pspeu_09244738               |       67 |          5 |        |       |     |
 | no0        | func_pspeu_09245F18               |       67 |          5 |        |       |     |
@@ -4373,7 +4373,7 @@
 | dra        | func_psp_090F2038                 |       67 |          6 |        |       |     |
 | maria      | func_pspeu_092B6F20               |       67 |          6 |        |       |     |
 | ric        | func_pspeu_092C01C8               |       67 |          6 |        |       |     |
-| cen        | func_pspeu_09247EB0               |       67 |          6 |        |       |     |
+|            | func_pspeu_09247EB0               |       67 |          6 |        |       |     |
 | lib        | func_psp_09239568                 |       67 |          6 |        |       |     |
 | no2        | func_pspeu_0924EFD0               |       67 |          6 |        |       |     |
 | no4        | func_pspeu_092482B0               |       67 |          6 |        |       |     |
@@ -4410,7 +4410,7 @@
 |            | func_092EF5C8                     |       67 |         12 |        |       |     |
 |            | func_pspeu_092EF0D8               |       67 |         12 |        |       |     |
 |            | func_pspeu_092EF750               |       67 |         12 |        |       |     |
-| cen        | func_pspeu_09251068               |       67 |         12 |        |       |     |
+|            | func_pspeu_09251068               |       67 |         12 |        |       |     |
 | main       | func_psp_089192EC                 |       67 |         13 |        |       |     |
 | no4        | cutscene.rodata                   |       68 |          0 | Yes    |       |     |
 | dra        | func_psp_09103CF8                 |       68 |          2 |        |       |     |
@@ -4423,7 +4423,7 @@
 | dra        | func_psp_09102800                 |       68 |          6 | Yes    |       |     |
 | maria      | func_pspeu_092B6528               |       68 |          6 |        |       |     |
 | ric        | func_pspeu_092BF628               |       68 |          6 |        |       |     |
-| cen        | func_pspeu_092474A8               |       68 |          6 |        |       |     |
+|            | func_pspeu_092474A8               |       68 |          6 |        |       |     |
 |            | func_us_801C5354                  |       68 |          7 |        |       |     |
 | rbo5       | func_us_801C4954                  |       68 |          7 |        |       |     |
 | main       | func_psp_0891A6A8                 |       68 |          7 |        |       |     |
@@ -4435,7 +4435,7 @@
 | lib        | func_psp_0925B380                 |       68 |          8 |        |       |     |
 | no3        | func_pspeu_09243748               |       68 |          8 |        |       |     |
 | rcen       | func_pspeu_09246710               |       68 |          8 |        |       |     |
-| top        | CutsceneSkip                      |       68 |          8 |        |       |     |
+| top        | func_pspeu_0924CB20               |       68 |          8 |        |       |     |
 | main       | func_psp_0891AAF8                 |       68 |          9 |        |       |     |
 | dre        | func_pspeu_0924B808               |       68 |          9 |        |       |     |
 | lib        | func_psp_09254B18                 |       68 |         10 |        |       |     |
@@ -4514,7 +4514,7 @@
 | dra        | func_psp_091407E0                 |       71 |          1 |        |       |     |
 | are        | func_pspeu_092632B8               |       71 |          1 |        |       |     |
 | cat        | func_pspeu_09254138               |       71 |          1 |        |       |     |
-| cen        | func_pspeu_092605D8               |       71 |          1 |        |       |     |
+|            | func_pspeu_092605D8               |       71 |          1 |        |       |     |
 | chi        | func_psp_09248990                 |       71 |          1 |        |       |     |
 | dai        | func_pspeu_0924F038               |       71 |          1 |        |       |     |
 | dre        | func_pspeu_09244650               |       71 |          1 |        |       |     |
@@ -4594,8 +4594,8 @@
 | are        | func_pspeu_09262BB8               |       71 |          7 |        |       |     |
 | cat        | func_pspeu_092450D8               |       71 |          7 |        |       |     |
 | cat        | func_pspeu_09253890               |       71 |          7 |        |       |     |
-| cen        | func_pspeu_092587F0               |       71 |          7 |        |       |     |
-| cen        | func_pspeu_0925FFE0               |       71 |          7 |        |       |     |
+|            | func_pspeu_092587F0               |       71 |          7 |        |       |     |
+|            | func_pspeu_0925FFE0               |       71 |          7 |        |       |     |
 | chi        | func_psp_09240A00                 |       71 |          7 |        |       |     |
 | chi        | func_psp_09248348                 |       71 |          7 |        |       |     |
 | dai        | func_pspeu_0923EFD8               |       71 |          7 |        |       |     |
@@ -4667,11 +4667,11 @@
 | dra        | func_psp_090E3030                 |       71 |         10 |        |       |     |
 | dra        | func_psp_0910F1A0                 |       71 |         11 |        |       |     |
 | main       | __fixdfsi                         |       71 |         11 |        |       |     |
-| cen        | func_pspeu_092517D0               |       71 |         11 |        |       |     |
+| e_maria    | func_pspeu_092517D0               |       71 |         11 |        |       |     |
 | rbo0       | e_collect.rodata                  |       72 |          0 | Yes    |       |     |
 | rbo2       | e_cutscene_dialogue.rodata        |       72 |          0 | Yes    |       |     |
 | dra        | game_handlers.rodata              |       72 |          0 | Yes    |       |     |
-| cen        | e_cutscene_dialogue.rodata        |       72 |          0 | Yes    |       |     |
+|            | cutscene.rodata                   |       72 |          0 | Yes    |       |     |
 | rbo1       | func_pspeu_09246448_from_rbo2     |       72 |          4 |        |       |     |
 | rbo2       | func_pspeu_09246448               |       72 |          4 |        |       |     |
 | dra        | func_psp_090F1F40                 |       72 |          5 |        |       |     |
@@ -4693,7 +4693,7 @@
 | main       | exponent                          |       72 |          8 |        |       |     |
 | main       | sceGuDispBuffer2                  |       72 |          9 |        |       |     |
 | main       | func_psp_0892A2D8                 |       72 |         10 |        |       |     |
-| cen        | func_pspeu_09251278               |       72 |         10 |        |       |     |
+|            | func_pspeu_09251278               |       72 |         10 |        |       |     |
 | dra        | func_psp_09136D18                 |       72 |         14 |        |       |     |
 | main       | func_psp_0892A0F0                 |       72 |         14 |        |       |     |
 | are        | func_pspeu_09260520               |       72 |         14 |        |       |     |
@@ -4734,7 +4734,7 @@
 | main       | func_psp_08931228                 |       73 |          7 |        |       |     |
 | are        | func_pspeu_09261FC8               |       73 |          7 |        |       |     |
 | cat        | func_pspeu_09252D70               |       73 |          7 |        |       |     |
-| cen        | func_pspeu_0925F650               |       73 |          7 |        |       |     |
+|            | func_pspeu_0925F650               |       73 |          7 |        |       |     |
 | chi        | func_psp_09247E50                 |       73 |          7 |        |       |     |
 | dai        | func_pspeu_0924DF20               |       73 |          7 |        |       |     |
 | dre        | func_pspeu_0924D598               |       73 |          7 |        |       |     |
@@ -4785,7 +4785,7 @@
 | maria      | func_pspeu_092B3538               |       73 |         12 |        |       |     |
 | ric        | func_pspeu_092B0F40               |       73 |         12 |        |       |     |
 | are        | func_pspeu_0923FDF8               |       73 |         12 |        |       |     |
-| cen        | func_pspeu_09242E08               |       73 |         12 |        |       |     |
+|            | func_pspeu_09242E08               |       73 |         12 |        |       |     |
 | rno1       | func_pspeu_09239B88               |       73 |         12 |        |       |     |
 | no3        | func_pspeu_0924F600               |       73 |         13 |        |       |     |
 | np3        | EntityMediumWaterSplash           |       73 |         13 |        |       |     |
@@ -4803,13 +4803,13 @@
 | main       | func_psp_08913E60                 |       74 |         15 |        |       |     |
 | bo6        | func_pspeu_09256C28               |       74 |         16 |        |       |     |
 | ric        | func_pspeu_092A6B80               |       74 |         16 |        |       |     |
-| cen        | func_pspeu_09260F18               |       75 |          1 |        |       |     |
+|            | func_pspeu_09260F18               |       75 |          1 |        |       |     |
 | lib        | func_psp_092636F8                 |       75 |          1 |        |       |     |
-| cen        | func_pspeu_09246DA0               |       75 |          5 |        |       |     |
+|            | func_pspeu_09246DA0               |       75 |          5 |        |       |     |
 | bo7        | EntityBackgroundBlock             |       75 |          6 |        |       |     |
 | rbo1       | EntityBackgroundBlock             |       75 |          6 |        |       |     |
 | rbo6       | EntityBackgroundBlock             |       75 |          6 |        |       |     |
-| cen        | func_pspeu_092666B8               |       75 |          6 |        |       |     |
+|            | func_pspeu_092666B8               |       75 |          6 |        |       |     |
 | chi        | func_psp_0924D488                 |       75 |          6 |        |       |     |
 | dre        | func_pspeu_09247DA0               |       75 |          6 |        |       |     |
 | no0        | func_pspeu_0925EBB8               |       75 |          6 |        |       |     |
@@ -4837,7 +4837,7 @@
 | dra        | func_psp_0911B820                 |       76 |          8 |        |       |     |
 | maria      | func_pspeu_092B6E10               |       76 |          8 |        |       |     |
 | ric        | func_pspeu_092C00B8               |       76 |          8 |        |       |     |
-| cen        | func_pspeu_09247DA0               |       76 |          8 |        |       |     |
+|            | func_pspeu_09247DA0               |       76 |          8 |        |       |     |
 | no2        | func_pspeu_09254C70               |       76 |          8 |        |       |     |
 | np3        | func_pspeu_09261630               |       76 |          8 |        |       |     |
 | rno0       | func_pspeu_0925B300               |       76 |          8 |        |       |     |
@@ -4868,7 +4868,7 @@
 | rbo8       | func_pspeu_09237700               |       77 |          2 |        |       |     |
 | are        | func_pspeu_0923B5C0               |       77 |          2 |        |       |     |
 | cat        | func_pspeu_09237700               |       77 |          2 |        |       |     |
-| cen        | func_pspeu_09253270               |       77 |          2 |        |       |     |
+|            | func_pspeu_09253270               |       77 |          2 |        |       |     |
 | chi        | func_psp_09237700                 |       77 |          2 |        |       |     |
 | dai        | func_pspeu_09237700               |       77 |          2 |        |       |     |
 | dre        | func_pspeu_09237700               |       77 |          2 |        |       |     |
@@ -4924,7 +4924,7 @@
 | rbo8       | func_pspeu_09243F40               |       77 |          6 |        |       |     |
 | are        | func_pspeu_092599A8               |       77 |          6 |        |       |     |
 | cat        | func_pspeu_0924C918               |       77 |          6 |        |       |     |
-| cen        | func_pspeu_0925EF90               |       77 |          6 |        |       |     |
+|            | func_pspeu_0925EF90               |       77 |          6 |        |       |     |
 | chi        | func_psp_092471A0                 |       77 |          6 |        |       |     |
 | dai        | func_pspeu_0924B958               |       77 |          6 |        |       |     |
 | dre        | func_pspeu_092434A0               |       77 |          6 |        |       |     |
@@ -4977,7 +4977,7 @@
 | main       | memchr                            |       78 |          7 |        |       |     |
 | maria      | func_pspeu_092AE0A8               |       78 |          7 |        |       |     |
 | ric        | func_pspeu_092A6610               |       78 |          7 |        |       |     |
-| cen        | func_pspeu_0923DED8               |       78 |          7 |        |       |     |
+|            | func_pspeu_0923DED8               |       78 |          7 |        |       |     |
 | main       | sceWavePlayEx                     |       78 |          8 |        |       |     |
 | ric        | func_pspeu_092C9B88               |       78 |          8 |        |       |     |
 | lib        | func_psp_0926A128                 |       78 |          8 |        |       |     |
@@ -4998,7 +4998,7 @@
 | dra        | func_psp_09141D28                 |       78 |         13 |        |       |     |
 | dra        | func_psp_09141E30                 |       78 |         13 |        |       |     |
 | maria      | func_pspeu_092C0138               |       78 |         14 |        |       |     |
-| cen        | func_pspeu_09251160               |       78 |         14 |        |       |     |
+|            | func_pspeu_09251160               |       78 |         14 |        |       |     |
 | rcen       | func_pspeu_09244E08               |       79 |          1 |        |       |     |
 | dra        | func_psp_09100D70                 |       79 |          5 |        |       |     |
 | dai        | func_pspeu_0924CB48               |       79 |          5 |        |       |     |
@@ -5011,7 +5011,7 @@
 | rnz0       | func_pspeu_09250678               |       79 |          7 |        |       |     |
 | main       | func_psp_08937110                 |       79 |          8 |        |       |     |
 | maria      | func_pspeu_092B1E18               |       79 |          8 |        |       |     |
-| cen        | func_pspeu_09241688               |       79 |          8 |        |       |     |
+|            | func_pspeu_09241688               |       79 |          8 |        |       |     |
 | chi        | func_psp_092399B0                 |       79 |          8 |        |       |     |
 | no4        | func_pspeu_092427C8               |       79 |          8 |        |       |     |
 | rnz0       | func_pspeu_0923C0A0               |       79 |          8 |        |       |     |
@@ -5036,7 +5036,7 @@
 | are        | func_pspeu_0924BB18               |       79 |          9 |        |       |     |
 | are        | func_pspeu_09242858               |       79 |          9 |        |       |     |
 | cat        | func_pspeu_0923D5C8               |       79 |          9 |        |       |     |
-| cen        | func_pspeu_092567C0               |       79 |          9 |        |       |     |
+|            | func_pspeu_092567C0               |       79 |          9 |        |       |     |
 | chi        | UpdateStageEntities               |       79 |          9 |        |       |     |
 | dai        | func_pspeu_0923C850               |       79 |          9 |        |       |     |
 | dre        | func_pspeu_0923ACD0               |       79 |          9 |        |       |     |
@@ -5072,7 +5072,7 @@
 | dra        | func_psp_09100A58                 |       79 |         11 |        |       |     |
 | main       | sceWaveGetVolumeEx                |       79 |         11 |        |       |     |
 | maria      | func_pspeu_092B1F30               |       79 |         14 |        |       |     |
-| cen        | func_pspeu_092417A0               |       79 |         14 |        |       |     |
+|            | func_pspeu_092417A0               |       79 |         14 |        |       |     |
 |            | func_092E7A78                     |       79 |         15 |        |       |     |
 |            | func_092E7E68                     |       79 |         15 |        |       |     |
 |            | func_092E7B08                     |       79 |         15 |        |       |     |
@@ -5131,7 +5131,7 @@
 | main       | func_psp_0893676C                 |       82 |         11 | Yes    |       |     |
 | no0        | func_pspeu_09257F68               |       82 |         13 |        |       |     |
 | dra        | func_psp_09141C10                 |       82 |         15 |        |       |     |
-| cen        | func_pspeu_092518C8               |       82 |         15 |        |       |     |
+| e_maria    | func_pspeu_092518C8               |       82 |         15 |        |       |     |
 | bo2        | InitEntityIds                     |       83 |          1 |        |       |     |
 | rlib       | func_pspeu_092496F0               |       83 |          1 |        |       |     |
 | rtop       | func_pspeu_09247760               |       83 |          1 |        |       |     |
@@ -5218,8 +5218,8 @@
 | rchi       | func_pspeu_0923DBD8               |       86 |         12 |        |       |     |
 | maria      | func_pspeu_092A81C0               |       86 |         17 |        |       |     |
 | maria      | func_pspeu_092A9C28               |       86 |         17 |        |       |     |
-| cen        | func_pspeu_09245C78               |       86 |         17 |        |       |     |
-| cen        | func_pspeu_0923CAB8               |       86 |         17 |        |       |     |
+|            | func_pspeu_09245C78               |       86 |         17 |        |       |     |
+|            | func_pspeu_0923CAB8               |       86 |         17 |        |       |     |
 | main       | sceGuSetDither                    |       87 |          1 |        |       |     |
 | dra        | func_psp_090ED818                 |       87 |          7 |        |       |     |
 | main       | func_psp_0891A868                 |       87 |          7 |        |       |     |
@@ -5284,7 +5284,7 @@
 | ric        | func_pspeu_092AA248               |       89 |         11 |        |       |     |
 | are        | func_pspeu_0923BB08               |       89 |         11 |        |       |     |
 | cat        | func_pspeu_09237C48               |       89 |         11 |        |       |     |
-| cen        | func_pspeu_092537B8               |       89 |         11 |        |       |     |
+|            | func_pspeu_092537B8               |       89 |         11 |        |       |     |
 | chi        | func_psp_09237C48                 |       89 |         11 |        |       |     |
 | dai        | func_pspeu_09237C48               |       89 |         11 |        |       |     |
 | dre        | func_pspeu_09237C48               |       89 |         11 |        |       |     |
@@ -5376,8 +5376,8 @@
 | maria      | func_pspeu_092B1358               |       91 |         11 |        |       |     |
 | are        | func_pspeu_0923BEA0               |       91 |         11 |        |       |     |
 | cat        | func_pspeu_09237FE0               |       91 |         11 |        |       |     |
-| cen        | func_pspeu_09253B50               |       91 |         11 |        |       |     |
-| cen        | func_pspeu_09240C18               |       91 |         11 |        |       |     |
+|            | func_pspeu_09253B50               |       91 |         11 |        |       |     |
+|            | func_pspeu_09240C18               |       91 |         11 |        |       |     |
 | chi        | func_psp_09237FE0                 |       91 |         11 |        |       |     |
 | dai        | func_pspeu_09237FE0               |       91 |         11 |        |       |     |
 | dre        | func_pspeu_09237FE0               |       91 |         11 |        |       |     |
@@ -5444,7 +5444,7 @@
 | dra        | func_psp_091446D0                 |       92 |         11 |        |       |     |
 | are        | func_pspeu_09253520               |       92 |         11 |        |       |     |
 | cat        | func_pspeu_09248AE8               |       92 |         11 |        |       |     |
-| cen        | func_pspeu_0925C0B8               |       92 |         11 |        |       |     |
+|            | func_pspeu_0925C0B8               |       92 |         11 |        |       |     |
 | chi        | func_psp_092442C8                 |       92 |         11 |        |       |     |
 | dai        | func_pspeu_092428A0               |       92 |         11 |        |       |     |
 | dre        | func_pspeu_092405C8               |       92 |         11 |        |       |     |
@@ -5505,7 +5505,7 @@
 | sel        | func_psp_09243DA0                 |       93 |         14 |        |       |     |
 | bo6        | MarStepBladeDash                  |       93 |         17 |        |       |     |
 | ric        | func_pspeu_092AA9F8               |       93 |         17 |        |       |     |
-| cen        | func_pspeu_09241050               |       93 |         17 |        |       |     |
+|            | func_pspeu_09241050               |       93 |         17 |        |       |     |
 | no3        | func_pspeu_09249738               |       93 |         19 |        |       |     |
 | rno3       | func_pspeu_0923EE88               |       93 |         19 |        |       |     |
 | mar        | e_cutscene_dialogue.rodata        |       94 |          0 | Yes    |       |     |
@@ -5532,7 +5532,7 @@
 | rare       | func_pspeu_09249028               |       95 |          8 |        |       |     |
 | maria      | func_pspeu_092B6CB8               |       95 |          9 |        |       |     |
 | ric        | func_pspeu_092BFDF0               |       95 |          9 |        |       |     |
-| cen        | func_pspeu_09247C48               |       95 |          9 |        |       |     |
+|            | func_pspeu_09247C48               |       95 |          9 |        |       |     |
 | lib        | func_psp_09263410                 |       95 |          9 |        |       |     |
 | dra        | func_psp_091392D8                 |       95 |         11 |        |       |     |
 | rbo6       | func_us_801A4028                  |       95 |         12 |        |       |     |
@@ -5584,7 +5584,7 @@
 | rbo8       | func_pspeu_09237D88               |       96 |         12 |        |       |     |
 | are        | func_pspeu_0923BC48               |       96 |         12 |        |       |     |
 | cat        | func_pspeu_09237D88               |       96 |         12 |        |       |     |
-| cen        | func_pspeu_092538F8               |       96 |         12 |        |       |     |
+|            | func_pspeu_092538F8               |       96 |         12 |        |       |     |
 | chi        | func_psp_09237D88                 |       96 |         12 |        |       |     |
 | dai        | func_pspeu_09237D88               |       96 |         12 |        |       |     |
 | dre        | func_pspeu_09237D88               |       96 |         12 |        |       |     |
@@ -5622,7 +5622,7 @@
 | dra        | func_psp_091060E0                 |       96 |         16 |        |       |     |
 | maria      | func_pspeu_092AB7E8               |       96 |         16 |        |       |     |
 | ric        | func_pspeu_092ACFB0               |       96 |         16 |        |       |     |
-| cen        | func_pspeu_09239C68               |       96 |         16 |        |       |     |
+|            | func_pspeu_09239C68               |       96 |         16 |        |       |     |
 | no4        | func_pspeu_09243320               |       96 |         19 |        |       |     |
 | np3        | EntitySlograSpearProjectile       |       96 |         20 |        |       |     |
 | nz0        | func_pspeu_0925A668               |       96 |         20 |        |       |     |
@@ -5657,7 +5657,7 @@
 |            | func_pspeu_09241770               |       97 |         12 |        |       |     |
 | are        | func_pspeu_09253F90               |       97 |         12 |        |       |     |
 | cat        | func_pspeu_09249FF0               |       97 |         12 |        |       |     |
-| cen        | func_pspeu_0925C668               |       97 |         12 |        |       |     |
+|            | func_pspeu_0925C668               |       97 |         12 |        |       |     |
 | chi        | func_psp_09244878                 |       97 |         12 |        |       |     |
 | dai        | func_pspeu_092430D8               |       97 |         12 |        |       |     |
 | dre        | func_pspeu_09240B78               |       97 |         12 |        |       |     |
@@ -5719,7 +5719,7 @@
 | main       | __lshift                          |       98 |         12 |        |       |     |
 | are        | func_pspeu_0923BFE8               |       98 |         12 |        |       |     |
 | cat        | func_pspeu_09238128               |       98 |         12 |        |       |     |
-| cen        | func_pspeu_09253C98               |       98 |         12 |        |       |     |
+|            | func_pspeu_09253C98               |       98 |         12 |        |       |     |
 | chi        | func_psp_09238128                 |       98 |         12 |        |       |     |
 | dai        | func_pspeu_09238128               |       98 |         12 |        |       |     |
 | dre        | func_pspeu_09238128               |       98 |         12 |        |       |     |
@@ -5773,7 +5773,7 @@
 | rbo8       | func_pspeu_0923EBF0               |       99 |          9 |        |       |     |
 | are        | func_pspeu_09250F48               |       99 |          9 |        |       |     |
 | cat        | func_pspeu_092463C8               |       99 |          9 |        |       |     |
-| cen        | func_pspeu_09259AE0               |       99 |          9 |        |       |     |
+|            | func_pspeu_09259AE0               |       99 |          9 |        |       |     |
 | chi        | func_psp_09241CF0                 |       99 |          9 |        |       |     |
 | dai        | func_pspeu_092402C8               |       99 |          9 |        |       |     |
 | dre        | func_pspeu_0923DFF0               |       99 |          9 |        |       |     |
@@ -5844,7 +5844,7 @@
 | rbo8       | func_pspeu_09244178               |      101 |          7 |        |       |     |
 | are        | func_pspeu_092612D0               |      101 |          7 |        |       |     |
 | cat        | func_pspeu_09252160               |      101 |          7 |        |       |     |
-| cen        | func_pspeu_0925F1C8               |      101 |          7 |        |       |     |
+|            | func_pspeu_0925F1C8               |      101 |          7 |        |       |     |
 | chi        | func_psp_092473D8                 |      101 |          7 |        |       |     |
 | dai        | func_pspeu_0924D228               |      101 |          7 |        |       |     |
 | dre        | func_pspeu_092436D8               |      101 |          7 |        |       |     |
@@ -5926,7 +5926,7 @@
 | rbo8       | func_pspeu_09241308               |      103 |          8 |        |       |     |
 | are        | func_pspeu_09253918               |      103 |          8 |        |       |     |
 | cat        | func_pspeu_09248D60               |      103 |          8 |        |       |     |
-| cen        | func_pspeu_0925C200               |      103 |          8 |        |       |     |
+|            | func_pspeu_0925C200               |      103 |          8 |        |       |     |
 | chi        | func_psp_09244410                 |      103 |          8 |        |       |     |
 | dai        | func_pspeu_09242B68               |      103 |          8 |        |       |     |
 | dre        | func_pspeu_09240710               |      103 |          8 |        |       |     |
@@ -5979,7 +5979,7 @@
 | rbo8       | func_pspeu_09241600               |      103 |         11 |        |       |     |
 | are        | func_pspeu_09253C10               |      103 |         11 |        |       |     |
 | cat        | func_pspeu_09249A08               |      103 |         11 |        |       |     |
-| cen        | func_pspeu_0925C4F8               |      103 |         11 |        |       |     |
+|            | func_pspeu_0925C4F8               |      103 |         11 |        |       |     |
 | chi        | func_psp_09244708                 |      103 |         11 |        |       |     |
 | dai        | func_pspeu_09242E60               |      103 |         11 |        |       |     |
 | dre        | func_pspeu_09240A08               |      103 |         11 |        |       |     |
@@ -6080,7 +6080,7 @@
 | rbo8       | func_pspeu_09241480               |      105 |          8 |        |       |     |
 | are        | func_pspeu_09253A90               |      105 |          8 |        |       |     |
 | cat        | func_pspeu_09248ED8               |      105 |          8 |        |       |     |
-| cen        | func_pspeu_0925C378               |      105 |          8 |        |       |     |
+|            | func_pspeu_0925C378               |      105 |          8 |        |       |     |
 | chi        | func_psp_09244588                 |      105 |          8 |        |       |     |
 | dai        | func_pspeu_09242CE0               |      105 |          8 |        |       |     |
 | dre        | func_pspeu_09240888               |      105 |          8 |        |       |     |
@@ -6159,7 +6159,7 @@
 | rbo8       | func_pspeu_0923D6E0               |      106 |         16 |        |       |     |
 | are        | func_pspeu_0924FA38               |      106 |         16 |        |       |     |
 | cat        | func_pspeu_09244EB8               |      106 |         16 |        |       |     |
-| cen        | func_pspeu_092585D0               |      106 |         16 |        |       |     |
+|            | func_pspeu_092585D0               |      106 |         16 |        |       |     |
 | chi        | func_psp_092407E0                 |      106 |         16 |        |       |     |
 | dai        | func_pspeu_0923EDB8               |      106 |         16 |        |       |     |
 | dre        | func_pspeu_0923CAE0               |      106 |         16 |        |       |     |
@@ -6236,7 +6236,7 @@
 | rbo8       | func_pspeu_0923ED58               |      109 |          3 |        |       |     |
 | are        | func_pspeu_092510B0               |      109 |          3 |        |       |     |
 | cat        | func_pspeu_09246530               |      109 |          3 |        |       |     |
-| cen        | func_pspeu_09259C48               |      109 |          3 |        |       |     |
+|            | func_pspeu_09259C48               |      109 |          3 |        |       |     |
 | chi        | func_psp_09241E58                 |      109 |          3 |        |       |     |
 | dai        | func_pspeu_09240430               |      109 |          3 |        |       |     |
 | dre        | func_pspeu_0923E158               |      109 |          3 |        |       |     |
@@ -6320,7 +6320,7 @@
 | rbo8       | InitializeEntity                  |      112 |          2 |        |       |     |
 | are        | func_pspeu_09262220               |      112 |          2 |        |       |     |
 | cat        | func_pspeu_09252EF8               |      112 |          2 |        |       |     |
-| cen        | func_pspeu_0925F798               |      112 |          2 |        |       |     |
+|            | func_pspeu_0925F798               |      112 |          2 |        |       |     |
 | chi        | func_psp_09247FD8                 |      112 |          2 |        |       |     |
 | dai        | func_pspeu_0924E0A8               |      112 |          2 |        |       |     |
 | dre        | func_pspeu_09243CE8               |      112 |          2 |        |       |     |
@@ -6360,7 +6360,7 @@
 |            | func_pspeu_092458E8               |      112 |         11 |        |       |     |
 | maria      | func_pspeu_092AB940               |      112 |         11 |        |       |     |
 | ric        | func_pspeu_092AD108               |      112 |         11 |        |       |     |
-| cen        | func_pspeu_09239DC0               |      112 |         11 |        |       |     |
+|            | func_pspeu_09239DC0               |      112 |         11 |        |       |     |
 | nz1        | func_pspeu_09249348               |      112 |         11 |        |       |     |
 | rnz1       | func_pspeu_09247138               |      112 |         11 |        |       |     |
 | sel        | func_psp_0923BC20                 |      112 |         16 |        |       |     |
@@ -6370,7 +6370,7 @@
 |            | func_092EBA40                     |      113 |         11 |        |       |     |
 |            | func_pspeu_092EBA40               |      113 |         11 |        |       |     |
 | rno3       | func_pspeu_092530B8               |      113 |         11 |        |       |     |
-| cen        | func_pspeu_09261768               |      113 |         12 |        |       |     |
+|            | func_pspeu_09261768               |      113 |         12 |        |       |     |
 |            | func_pspeu_09237820               |      113 |         13 |        |       |     |
 |            | func_pspeu_092379B8               |      113 |         13 |        |       |     |
 |            | func_pspeu_0924E218               |      113 |         13 |        |       |     |
@@ -6432,9 +6432,9 @@
 | cat        | func_pspeu_09237820               |      113 |         13 |        |       |     |
 | cat        | func_pspeu_092379B8               |      113 |         13 |        |       |     |
 | cat        | func_pspeu_09253228               |      113 |         13 |        |       |     |
-| cen        | func_pspeu_09253390               |      113 |         13 |        |       |     |
-| cen        | func_pspeu_09253528               |      113 |         13 |        |       |     |
-| cen        | func_pspeu_0925F978               |      113 |         13 |        |       |     |
+|            | func_pspeu_09253390               |      113 |         13 |        |       |     |
+|            | func_pspeu_09253528               |      113 |         13 |        |       |     |
+|            | func_pspeu_0925F978               |      113 |         13 |        |       |     |
 | chi        | func_psp_092481B8                 |      113 |         13 |        |       |     |
 | chi        | func_psp_09237820                 |      113 |         13 |        |       |     |
 | chi        | func_psp_092379B8                 |      113 |         13 |        |       |     |
@@ -6529,7 +6529,7 @@
 | rbo5       | EntityUnkId16                     |      113 |         18 |        |       |     |
 | dra        | func_psp_090F0E48                 |      113 |         18 |        |       |     |
 | dra        | func_psp_09113C00                 |      113 |         32 |        |       |     |
-| cen        | func_pspeu_09250D30               |      114 |          8 |        |       |     |
+|            | func_pspeu_09250D30               |      114 |          8 |        |       |     |
 | dra        | func_psp_09140E50                 |      114 |         10 |        |       |     |
 | rno3       | func_pspeu_09256028               |      114 |         11 |        |       |     |
 | dra        | func_psp_09127C30                 |      114 |         12 |        |       |     |
@@ -6657,7 +6657,7 @@
 |            | func_pspeu_09240880               |      127 |         11 |        |       |     |
 | are        | func_pspeu_09252BD8               |      127 |         11 |        |       |     |
 | cat        | func_pspeu_09248058               |      127 |         11 |        |       |     |
-| cen        | func_pspeu_0925B770               |      127 |         11 |        |       |     |
+|            | func_pspeu_0925B770               |      127 |         11 |        |       |     |
 | chi        | func_psp_09243980                 |      127 |         11 |        |       |     |
 | dai        | func_pspeu_09241F58               |      127 |         11 |        |       |     |
 | dre        | func_pspeu_0923FC80               |      127 |         11 |        |       |     |
@@ -6792,7 +6792,7 @@
 | mar        | SetCutsceneScript                 |      139 |          5 |        |       |     |
 | rbo2       | SetCutsceneScript                 |      139 |          5 |        |       |     |
 | rbo6       | SetCutsceneScript                 |      139 |          5 |        |       |     |
-| cen        | SetCutsceneScript                 |      139 |          5 |        |       |     |
+|            | func_pspeu_09263ED0               |      139 |          5 |        |       |     |
 | dai        | func_pspeu_09253FD8               |      139 |          5 |        |       |     |
 | dre        | func_pspeu_09245698               |      139 |          5 |        |       |     |
 | lib        | func_psp_0925ADA0                 |      139 |          5 |        |       |     |
@@ -6801,7 +6801,7 @@
 | nz0        | func_pspeu_0923E230               |      139 |          5 |        |       |     |
 | rcen       | func_pspeu_09246108               |      139 |          5 |        |       |     |
 | st0        | func_pspeu_092390C0               |      139 |          5 |        |       |     |
-| top        | SetCutsceneScript                 |      139 |          5 |        |       |     |
+| top        | func_pspeu_0924C518               |      139 |          5 |        |       |     |
 | rno0       | func_pspeu_0923DF88               |      139 |         10 |        |       |     |
 | main       | func_psp_0891E420                 |      139 |         12 |        |       |     |
 | ric        | func_pspeu_092C9988               |      139 |         12 |        |       |     |
@@ -6838,7 +6838,7 @@
 | np3        | EntityJewelSwordDoor              |      143 |         21 |        |       |     |
 | main       | func_psp_08914C40                 |      143 |         30 |        |       |     |
 | maria      | func_pspeu_092A6740               |      144 |         13 |        |       |     |
-| cen        | func_pspeu_09238DC0               |      144 |         13 |        |       |     |
+|            | func_pspeu_09238DC0               |      144 |         13 |        |       |     |
 | dra        | func_psp_09100B68                 |      144 |         15 |        |       |     |
 |            | func_092E7700                     |      144 |         16 | Yes    |       |     |
 |            | func_pspeu_092E7700               |      144 |         16 | Yes    |       |     |
@@ -6859,7 +6859,7 @@
 |            | func_pspeu_0924DAA8               |      145 |         22 |        |       |     |
 | main       | func_psp_08916340                 |      145 |         29 |        |       |     |
 |            | doppleganger.rodata               |      146 |          0 | Yes    |       |     |
-| cen        | e_maria_step.rodata               |      146 |          0 | Yes    |       |     |
+|            | e_maria_step.rodata               |      146 |          0 | Yes    |       |     |
 | cat        | func_pspeu_092628A8               |      146 |         16 |        |       |     |
 | rcat       | func_pspeu_0924EA98               |      146 |         16 |        |       |     |
 | main       | func_psp_0892A414                 |      146 |         17 |        |       |     |
@@ -6889,7 +6889,7 @@
 | rnz0       | func_pspeu_0924DBD0               |      148 |         17 |        |       |     |
 | rno0       | func_pspeu_0923EE78               |      148 |         22 |        |       |     |
 | ric        | func_pspeu_092AE150               |      148 |         25 |        |       |     |
-| cen        | func_pspeu_0923AF78               |      148 |         25 |        |       |     |
+|            | func_pspeu_0923AF78               |      148 |         25 |        |       |     |
 | rno2       | func_pspeu_09253348               |      149 |          1 |        |       |     |
 | sel        | func_psp_09242920                 |      149 |         10 |        |       |     |
 | rdai       | func_pspeu_0924B080               |      149 |         11 |        |       |     |
@@ -6925,7 +6925,7 @@
 | rbo8       | func_pspeu_09238288               |      150 |         10 |        |       |     |
 | are        | func_pspeu_0923C148               |      150 |         10 |        |       |     |
 | cat        | func_pspeu_09238288               |      150 |         10 |        |       |     |
-| cen        | func_pspeu_09253DF8               |      150 |         10 |        |       |     |
+|            | func_pspeu_09253DF8               |      150 |         10 |        |       |     |
 | chi        | InitRoomEntities                  |      150 |         10 |        |       |     |
 | dai        | func_pspeu_09238288               |      150 |         10 |        |       |     |
 | dre        | func_pspeu_09238288               |      150 |         10 |        |       |     |
@@ -6984,10 +6984,10 @@
 | dra        | func_psp_091121C0                 |      152 |         23 |        |       |     |
 | dra        | func_psp_09111D30                 |      152 |         28 |        |       |     |
 | main       | floor                             |      152 |         29 |        |       |     |
-| cen        | func_pspeu_09260988               |      153 |         11 |        |       |     |
+|            | func_pspeu_09260988               |      153 |         11 |        |       |     |
 | no3        | func_pspeu_0923FDB0               |      153 |         14 |        |       |     |
 | maria      | func_pspeu_092A7950               |      153 |         16 |        |       |     |
-| cen        | func_pspeu_09238708               |      153 |         16 |        |       |     |
+|            | func_pspeu_09238708               |      153 |         16 |        |       |     |
 |            | func_pspeu_0924C898               |      153 |         19 |        |       |     |
 | main       | func_psp_0891B8F0                 |      153 |         19 |        |       |     |
 | cat        | func_pspeu_0925CA38               |      153 |         22 |        |       |     |
@@ -7057,30 +7057,30 @@
 | bo6        | func_8015FDB0                     |      161 |          5 |        |       |     |
 | maria      | func_pspeu_092B5F18               |      161 |          5 |        |       |     |
 | ric        | func_pspeu_092BEA38               |      161 |          5 |        |       |     |
-| cen        | func_pspeu_09246EA8               |      161 |          5 |        |       |     |
+|            | func_pspeu_09246EA8               |      161 |          5 |        |       |     |
 | cat        | func_pspeu_0923A658               |      161 |          9 |        |       |     |
-| cen        | func_pspeu_09238FD8               |      161 |         10 |        |       |     |
+|            | func_pspeu_09238FD8               |      161 |         10 |        |       |     |
 |            | func_pspeu_0924CFF8               |      161 |         12 |        |       |     |
 | dra        | func_psp_0911DF30                 |      161 |         14 |        |       |     |
 | dra        | func_psp_0911E188                 |      161 |         19 |        |       |     |
 | no0        | func_pspeu_09254F08               |      161 |         19 |        |       |     |
 | maria      | func_pspeu_092B02A8               |      161 |         21 |        |       |     |
 | ric        | func_pspeu_092A8AD8               |      161 |         21 |        |       |     |
-| cen        | func_pspeu_0923FFA8               |      161 |         21 |        |       |     |
+|            | func_pspeu_0923FFA8               |      161 |         21 |        |       |     |
 |            | func_pspeu_0924A1A0               |      161 |         24 |        |       |     |
 | main       | 3D580.rodata                      |      162 |          0 |        |       |     |
 | rno0       | func_pspeu_0923E6D0               |      162 |         16 |        |       |     |
 | dra        | func_psp_09128580                 |      162 |         17 |        |       |     |
 | rno3       | func_pspeu_09258148               |      162 |         18 |        |       |     |
 | maria      | func_pspeu_092B2348               |      162 |         33 |        |       |     |
-| cen        | func_pspeu_09241C80               |      162 |         33 |        |       |     |
+|            | func_pspeu_09241C80               |      162 |         33 |        |       |     |
 | no1        | func_pspeu_0925B058               |      163 |         11 |        |       |     |
 | ric        | func_pspeu_092B5790               |      163 |         18 |        |       |     |
 | no3        | func_pspeu_0924B8B0               |      163 |         22 |        |       |     |
 | rno3       | func_pspeu_09241000               |      163 |         22 |        |       |     |
 | rbo8       | func_pspeu_0924A2B0               |      163 |         23 |        |       |     |
 | maria      | func_pspeu_092A7F78               |      163 |         26 |        |       |     |
-| cen        | func_pspeu_0923C870               |      163 |         26 |        |       |     |
+|            | func_pspeu_0923C870               |      163 |         26 |        |       |     |
 | sel        | func_psp_09247718                 |      163 |         27 |        |       |     |
 | main       | func_psp_08925600                 |      164 |         11 |        |       |     |
 | rare       | func_pspeu_09238430               |      164 |         12 |        |       |     |
@@ -7096,7 +7096,7 @@
 | no1        | func_pspeu_0923E288               |      164 |         26 |        |       |     |
 | rno0       | func_pspeu_092435B8               |      164 |         26 |        |       |     |
 | maria      | func_pspeu_092B1110               |      164 |         28 |        |       |     |
-| cen        | func_pspeu_092409D0               |      164 |         28 |        |       |     |
+|            | func_pspeu_092409D0               |      164 |         28 |        |       |     |
 |            | func_pspeu_09269500               |      165 |         18 |        |       |     |
 |            | func_pspeu_0924ABF0               |      165 |         18 |        |       |     |
 | bo2        | func_pspeu_0924CD20               |      165 |         18 |        |       |     |
@@ -7159,7 +7159,7 @@
 | bo6        | InitMariaAfterImage               |      168 |         15 |        |       |     |
 | maria      | func_pspeu_092B2DA0               |      168 |         15 |        |       |     |
 | ric        | func_pspeu_092B07A8               |      168 |         15 |        |       |     |
-| cen        | func_pspeu_09242670               |      168 |         15 |        |       |     |
+|            | func_pspeu_09242670               |      168 |         15 |        |       |     |
 |            | func_pspeu_0924B238               |      168 |         20 |        |       |     |
 | rno0       | func_pspeu_0925D7D8               |      169 |          3 |        |       |     |
 |            | func_pspeu_0924EE78               |      169 |          7 |        |       |     |
@@ -7178,7 +7178,7 @@
 |            | func_pspeu_092582A8               |      169 |         22 |        |       |     |
 | rbo5       | DopplegangerStepUnmorphBat        |      169 |         22 |        |       |     |
 | maria      | func_pspeu_092B1930               |      169 |         26 |        |       |     |
-| cen        | func_pspeu_092411A0               |      169 |         26 |        |       |     |
+|            | func_pspeu_092411A0               |      169 |         26 |        |       |     |
 | dra        | func_psp_0911E800                 |      170 |         17 |        |       |     |
 |            | func_pspeu_092504B0               |      170 |         18 |        |       |     |
 | dai        | func_pspeu_09256B28               |      170 |         18 |        |       |     |
@@ -7198,7 +7198,7 @@
 | no2        | func_pspeu_09252DB0               |      171 |         28 |        |       |     |
 | np3        | func_pspeu_0925F770               |      171 |         28 |        |       |     |
 | rno0       | func_pspeu_09259448               |      171 |         28 |        |       |     |
-| cen        | func_pspeu_09252FC0               |      171 |         31 |        |       |     |
+| e_maria    | func_pspeu_09252FC0               |      171 |         31 |        |       |     |
 | no0        | func_pspeu_09237700               |      172 |         16 |        |       |     |
 | nz0        | func_pspeu_09241F08               |      172 |         16 |        |       |     |
 | rbo0       | func_pspeu_0923BC80               |      172 |         22 |        |       |     |
@@ -7313,7 +7313,7 @@
 | rbo8       | func_pspeu_0923DA00               |      184 |         20 |        |       |     |
 | are        | func_pspeu_0924FD58               |      184 |         20 |        |       |     |
 | cat        | func_pspeu_092451D8               |      184 |         20 |        |       |     |
-| cen        | func_pspeu_092588F0               |      184 |         20 |        |       |     |
+|            | func_pspeu_092588F0               |      184 |         20 |        |       |     |
 | chi        | func_psp_09240B00                 |      184 |         20 |        |       |     |
 | dai        | func_pspeu_0923F0D8               |      184 |         20 |        |       |     |
 | dre        | func_pspeu_0923CE00               |      184 |         20 |        |       |     |
@@ -7395,10 +7395,10 @@
 | top        | func_pspeu_092465C8               |      186 |         20 |        |       |     |
 | main       | _main                             |      186 |         21 |        |       |     |
 | lib        | func_psp_09254DC0                 |      186 |         25 |        |       |     |
-| cen        | func_pspeu_09251C18               |      186 |         33 |        |       |     |
+| e_maria    | func_pspeu_09251C18               |      186 |         33 |        |       |     |
 | dra        | func_psp_090F6800                 |      186 |         35 | Yes    |       |     |
 | cat        | func_pspeu_0924E558               |      187 |         17 |        |       |     |
-| cen        | func_pspeu_092667C8               |      187 |         18 |        |       |     |
+|            | func_pspeu_092667C8               |      187 |         18 |        |       |     |
 | no4        | func_pspeu_09241870               |      187 |         21 |        |       |     |
 | rno4       | EntityWaterBox                    |      187 |         21 |        |       |     |
 | rdai       | func_pspeu_0923CBD0               |      187 |         24 |        |       |     |
@@ -7418,8 +7418,8 @@
 | rchi       | func_pspeu_0923DE70               |      189 |         23 |        |       |     |
 | maria      | func_pspeu_092AC7C8               |      189 |         29 |        |       |     |
 | ric        | func_pspeu_092ADEA0               |      189 |         29 |        |       |     |
-| cen        | func_pspeu_0923ACC8               |      189 |         29 |        |       |     |
-| cen        | func_pspeu_092459D0               |      189 |         30 |        |       |     |
+|            | func_pspeu_0923ACC8               |      189 |         29 |        |       |     |
+|            | func_pspeu_092459D0               |      189 |         30 |        |       |     |
 | main       | func_psp_089201E8                 |      190 |         17 |        |       |     |
 | rnz1       | func_pspeu_09257938               |      190 |         20 |        |       |     |
 | main       | func_psp_0893858C                 |      190 |         21 |        |       |     |
@@ -7457,7 +7457,7 @@
 | no1        | func_pspeu_09259670               |      195 |         12 |        |       |     |
 | main       | __kernel_sin                      |      195 |         28 |        |       |     |
 | maria      | func_pspeu_092B0E50               |      195 |         32 |        |       |     |
-| cen        | func_pspeu_09240710               |      195 |         32 |        |       |     |
+|            | func_pspeu_09240710               |      195 |         32 |        |       |     |
 |            | func_092EEC50                     |      195 |         37 | Yes    |       |     |
 | main       | func_psp_08936534                 |      195 |         39 | Yes    |       |     |
 | nz0        | func_pspeu_0923B1F0               |      196 |         18 |        |       |     |
@@ -7536,7 +7536,7 @@
 | ric        | func_pspeu_092C2BA0               |      203 |         27 |        |       |     |
 | rnz0       | func_pspeu_09257F10               |      203 |         27 |        |       |     |
 | maria      | func_pspeu_092AE1C0               |      203 |         44 |        |       |     |
-| cen        | func_pspeu_0923DFF0               |      203 |         44 |        |       |     |
+|            | func_pspeu_0923DFF0               |      203 |         44 |        |       |     |
 | nz1        | func_pspeu_0925BD80               |      204 |         20 |        |       |     |
 | dra        | func_psp_09108E48                 |      204 |         31 |        |       |     |
 | nz0        | func_pspeu_09238F48               |      205 |         16 |        |       |     |
@@ -7560,10 +7560,10 @@
 |            | func_pspeu_09249A28               |      208 |         28 |        |       |     |
 | maria      | func_pspeu_092ADDC0               |      208 |         28 |        |       |     |
 | ric        | func_pspeu_092A6328               |      208 |         28 |        |       |     |
-| cen        | func_pspeu_0923DBF0               |      208 |         28 |        |       |     |
+|            | func_pspeu_0923DBF0               |      208 |         28 |        |       |     |
 | lib        | func_psp_092531A8                 |      208 |         29 |        |       |     |
 | rlib       | func_pspeu_09248B48               |      208 |         29 |        |       |     |
-| cen        | func_pspeu_09242240               |      208 |         41 |        |       |     |
+|            | func_pspeu_09242240               |      208 |         41 |        |       |     |
 | dra        | func_psp_090EC9C8                 |      209 |         15 |        |       |     |
 | nz1        | func_pspeu_09252E00               |      209 |         20 |        |       |     |
 | rnz1       | func_pspeu_0924E4F0               |      209 |         20 |        |       |     |
@@ -7588,18 +7588,18 @@
 | rare       | func_pspeu_0924D830               |      211 |         26 |        |       |     |
 | rno4       | func_us_801A07CC_from_bo3         |      211 |         27 | Yes    |       |     |
 | top        | func_pspeu_0924B1E8               |      211 |         27 |        |       |     |
-| cen        | func_pspeu_09251EB0               |      211 |         35 |        |       |     |
+| e_maria    | func_pspeu_09251EB0               |      211 |         35 |        |       |     |
 | lib        | e_shop.rodata                     |      212 |          0 | Yes    |       |     |
 | maria      | func_pspeu_092B8AF8               |      212 |         12 |        |       |     |
 | ric        | func_pspeu_092C1EF0               |      212 |         12 |        |       |     |
-| cen        | func_pspeu_09249A88               |      212 |         12 |        |       |     |
+|            | func_pspeu_09249A88               |      212 |         12 |        |       |     |
 | bo2        | DrawCutsceneActorName             |      212 |         14 |        |       |     |
 |            | func_pspeu_0924D218               |      212 |         14 |        |       |     |
 | bo6        | DrawCutsceneActorName             |      212 |         14 |        |       |     |
 | mar        | DrawCutsceneActorName             |      212 |         14 |        |       |     |
 | rbo2       | DrawCutsceneActorName             |      212 |         14 |        |       |     |
 | rbo6       | DrawCutsceneActorName             |      212 |         14 |        |       |     |
-| cen        | DrawCutsceneActorName             |      212 |         14 |        |       |     |
+|            | func_pspeu_09263A08               |      212 |         14 |        |       |     |
 | dai        | func_pspeu_09253B10               |      212 |         14 |        |       |     |
 | dre        | func_pspeu_092451D0               |      212 |         14 |        |       |     |
 | lib        | func_psp_0925A8D0                 |      212 |         14 |        |       |     |
@@ -7609,7 +7609,7 @@
 | rcen       | func_pspeu_09245C40               |      212 |         14 |        |       |     |
 | sel        | func_psp_092452F8                 |      212 |         14 |        |       |     |
 | st0        | func_pspeu_09238BF8               |      212 |         14 |        |       |     |
-| top        | DrawCutsceneActorName             |      212 |         14 |        |       |     |
+| top        | func_pspeu_0924C050               |      212 |         14 |        |       |     |
 |            | func_pspeu_0924C588               |      212 |         32 |        |       |     |
 |            | func_pspeu_0924B670               |      213 |         14 | Yes    |       |     |
 |            | func_pspeu_0923C548               |      213 |         15 |        |       |     |
@@ -7665,13 +7665,13 @@
 | rbo5       | func_pspeu_09250590               |      220 |         27 |        |       |     |
 | main       | func_psp_08918D8C                 |      221 |         13 |        |       |     |
 | no4        | func_pspeu_0923E368               |      221 |         22 |        |       |     |
-| cen        | func_pspeu_092401F8               |      221 |         31 |        |       |     |
+|            | func_pspeu_092401F8               |      221 |         31 |        |       |     |
 | rare       | func_pspeu_092392E0               |      221 |         31 |        |       |     |
 |            | func_pspeu_0924B340               |      221 |         35 |        |       |     |
 | dra        | func_psp_091127A0                 |      221 |         35 |        |       |     |
 | maria      | func_pspeu_092B14A0               |      221 |         40 | Yes    |       |     |
 | ric        | func_pspeu_092AA388               |      221 |         40 | Yes    |       |     |
-| cen        | func_pspeu_09240D60               |      221 |         40 | Yes    |       |     |
+|            | func_pspeu_09240D60               |      221 |         40 | Yes    |       |     |
 | main       | func_psp_08925194                 |      222 |         16 |        |       |     |
 | chi        | func_psp_0923A4A8                 |      222 |         24 |        |       |     |
 | no4        | func_pspeu_0923F860               |      222 |         24 |        |       |     |
@@ -7693,7 +7693,7 @@
 | rchi       | func_pspeu_0924A500               |      224 |         26 |        |       |     |
 | maria      | func_pspeu_092B5340               |      224 |         28 |        |       |     |
 | ric        | func_pspeu_092B2DD8               |      224 |         28 |        |       |     |
-| cen        | func_pspeu_09244BA0               |      224 |         28 |        |       |     |
+|            | func_pspeu_09244BA0               |      224 |         28 |        |       |     |
 | cat        | func_pspeu_0923EBC0               |      224 |         39 |        |       |     |
 | rtop       | func_pspeu_0923C1E0               |      224 |         39 |        |       |     |
 | dra        | func_psp_090E08D8                 |      225 |          7 |        |       |     |
@@ -7706,7 +7706,7 @@
 | np3        | EntityBat                         |      225 |         41 |        |       |     |
 |            | unk_49A6C.rodata                  |      226 |          0 | Yes    |       |     |
 | rbo5       | unk_4907C.rodata                  |      226 |          0 | Yes    |       |     |
-| cen        | func_pspeu_09260BD8               |      226 |         27 |        |       |     |
+|            | func_pspeu_09260BD8               |      226 |         27 |        |       |     |
 | chi        | func_psp_0924BD20                 |      226 |         27 |        |       |     |
 |            | func_pspeu_0924AE50               |      227 |         18 |        |       |     |
 | lib        | func_psp_09252E70                 |      227 |         29 |        |       |     |
@@ -7720,7 +7720,7 @@
 | maria      | func_pspeu_092B5680               |      228 |         29 |        |       |     |
 | ric        | func_pspeu_092B3118               |      228 |         29 |        |       |     |
 | cat        | func_pspeu_092513C8               |      228 |         29 |        |       |     |
-| cen        | func_pspeu_09244EE0               |      228 |         29 |        |       |     |
+|            | func_pspeu_09244EE0               |      228 |         29 |        |       |     |
 | bo6        | func_pspeu_09253AA8               |      229 |         17 |        |       |     |
 | no3        | func_pspeu_09239298               |      229 |         25 |        |       |     |
 | no1        | func_pspeu_092635F0               |      229 |         26 |        |       |     |
@@ -7783,7 +7783,7 @@
 | main       | func_psp_0892B760                 |      238 |          8 |        |       |     |
 | maria      | func_pspeu_092B8E20               |      238 |         17 |        |       |     |
 | ric        | func_pspeu_092C2218               |      238 |         17 |        |       |     |
-| cen        | func_pspeu_09249DB0               |      238 |         17 |        |       |     |
+|            | func_pspeu_09249DB0               |      238 |         17 |        |       |     |
 | no4        | func_pspeu_0923D9E0               |      238 |         26 |        |       |     |
 |            | func_pspeu_09246210               |      238 |         35 |        |       |     |
 | no4        | func_pspeu_09238118               |      238 |         35 |        |       |     |
@@ -7793,7 +7793,7 @@
 | dre        | func_pspeu_09244DB0               |      239 |         19 |        |       |     |
 | cat        | func_pspeu_0925D8C8               |      239 |         28 |        |       |     |
 | rcat       | func_pspeu_0924B608               |      239 |         28 |        |       |     |
-| cen        | func_pspeu_09245600               |      239 |         30 | Yes    |       |     |
+|            | func_pspeu_09245600               |      239 |         30 | Yes    |       |     |
 | bo6        | func_pspeu_09257418               |      239 |         49 |        |       |     |
 |            | func_092EDFA8                     |      240 |         13 |        |       |     |
 |            | func_092EE720                     |      240 |         13 |        |       |     |
@@ -7832,10 +7832,10 @@
 | rbo8       | func_us_8019953C                  |      243 |         26 | Yes    |       |     |
 | nz0        | func_pspeu_0923B860               |      243 |         30 |        |       |     |
 | main       | func_psp_08938908                 |      243 |         31 |        |       |     |
-| cen        | func_pspeu_09241EC8               |      243 |         46 |        |       |     |
+|            | func_pspeu_09241EC8               |      243 |         46 |        |       |     |
 |            | func_pspeu_0924CE38               |      244 |         22 |        |       |     |
 | rbo5       | func_pspeu_09256D30               |      244 |         22 |        |       |     |
-| cen        | func_pspeu_09245268               |      244 |         23 |        |       |     |
+|            | func_pspeu_09245268               |      244 |         23 |        |       |     |
 | no1        | func_pspeu_0923B890               |      244 |         31 |        |       |     |
 | no4        | func_pspeu_092457E8               |      244 |         31 |        |       |     |
 | rnz0       | func_pspeu_092581F8               |      244 |         35 |        |       |     |
@@ -7882,7 +7882,7 @@
 | nz0        | func_pspeu_0923A048               |      251 |         20 |        |       |     |
 | maria      | func_pspeu_092A7B80               |      251 |         26 |        |       |     |
 | rdai       | func_pspeu_0923B098               |      251 |         29 |        |       |     |
-| cen        | func_pspeu_09247118               |      251 |         34 |        |       |     |
+|            | func_pspeu_09247118               |      251 |         34 |        |       |     |
 |            | func_pspeu_09246CE0               |      251 |         37 |        |       |     |
 | cat        | func_pspeu_0925F410               |      252 |         20 |        |       |     |
 | no3        | func_pspeu_09242510               |      252 |         32 |        |       |     |
@@ -7892,10 +7892,10 @@
 | bo6        | RunCutsceneEvents                 |      253 |         18 |        |       |     |
 | rbo2       | RunCutsceneEvents                 |      253 |         18 |        |       |     |
 | rbo6       | RunCutsceneEvents                 |      253 |         18 |        |       |     |
-| cen        | RunCutsceneEvents                 |      253 |         18 |        |       |     |
+|            | func_pspeu_09264118               |      253 |         18 |        |       |     |
 | dai        | func_pspeu_09254220               |      253 |         18 |        |       |     |
 | rcen       | func_pspeu_09246350               |      253 |         18 |        |       |     |
-| top        | RunCutsceneEvents                 |      253 |         18 |        |       |     |
+| top        | func_pspeu_0924C760               |      253 |         18 |        |       |     |
 | no3        | func_pspeu_0923D998               |      253 |         24 | Yes    |       |     |
 |            | func_pspeu_09255938               |      253 |         50 |        |       |     |
 | rbo5       | DopplegangerStepCrouch            |      253 |         50 |        |       |     |
@@ -7996,7 +7996,7 @@
 | nz1        | func_pspeu_0925A578               |      267 |         27 |        |       |     |
 | cat        | func_pspeu_09242C88               |      268 |         27 |        |       |     |
 | maria      | func_pspeu_092BF950               |      269 |         26 |        |       |     |
-| cen        | func_pspeu_09250950               |      269 |         26 |        |       |     |
+|            | func_pspeu_09250950               |      269 |         26 |        |       |     |
 |            | func_pspeu_0923F558               |      269 |         44 |        |       |     |
 |            | func_pspeu_0923B4F0               |      269 |         44 |        |       |     |
 | bo2        | func_pspeu_0923B4F0               |      269 |         44 |        |       |     |
@@ -8017,7 +8017,7 @@
 | rbo8       | func_pspeu_0923B4F0               |      269 |         44 |        |       |     |
 | are        | func_pspeu_09242478               |      269 |         44 |        |       |     |
 | cat        | func_pspeu_0923D1E8               |      269 |         44 |        |       |     |
-| cen        | func_pspeu_092563E0               |      269 |         44 |        |       |     |
+|            | func_pspeu_092563E0               |      269 |         44 |        |       |     |
 | chi        | Update                            |      269 |         44 |        |       |     |
 | dai        | func_pspeu_0923C470               |      269 |         44 |        |       |     |
 | dre        | func_pspeu_0923A8F0               |      269 |         44 |        |       |     |
@@ -8055,7 +8055,7 @@
 | dra        | func_psp_0912DDA8                 |      270 |         27 |        |       |     |
 | maria      | func_pspeu_092B81D0               |      270 |         27 |        |       |     |
 | ric        | func_pspeu_092C1478               |      270 |         27 |        |       |     |
-| cen        | func_pspeu_09249160               |      270 |         27 |        |       |     |
+|            | func_pspeu_09249160               |      270 |         27 |        |       |     |
 | rbo5       | func_pspeu_0924D108               |      270 |         42 |        |       |     |
 |            | func_pspeu_09246D50               |      271 |         30 |        |       |     |
 | rtop       | func_pspeu_0924BAB0               |      271 |         37 |        |       |     |
@@ -8070,7 +8070,7 @@
 | no0        | func_pspeu_0923AE60               |      275 |         18 | Yes    |       |     |
 | rno0       | func_pspeu_09239688               |      275 |         18 | Yes    |       |     |
 | st0        | func_pspeu_09242A98               |      275 |         24 |        |       |     |
-| cen        | func_pspeu_09261900               |      275 |         28 |        |       |     |
+|            | func_pspeu_09261900               |      275 |         28 |        |       |     |
 | no2        | func_pspeu_092529B0               |      275 |         37 |        |       |     |
 | np3        | EntityGurkhaWeapon                |      275 |         37 |        |       |     |
 | rno0       | func_pspeu_09259048               |      275 |         37 |        |       |     |
@@ -8090,7 +8090,7 @@
 | dra        | func_psp_091357E0                 |      279 |         17 |        |       |     |
 | maria      | func_pspeu_092BDBC0               |      279 |         17 |        |       |     |
 | ric        | func_pspeu_092C73B0               |      279 |         17 |        |       |     |
-| cen        | func_pspeu_0924EBC0               |      279 |         17 |        |       |     |
+|            | func_pspeu_0924EBC0               |      279 |         17 |        |       |     |
 | rno4       | func_us_801C3160_from_no4         |      279 |         31 |        |       |     |
 | dra        | func_psp_091123D8                 |      279 |         37 | Yes    |       |     |
 | dra        | func_psp_0910F370                 |      279 |         38 | Yes    |       |     |
@@ -8127,7 +8127,7 @@
 | are        | func_pspeu_0923AA20               |      287 |         30 |        |       |     |
 | lib        | func_psp_0923B010                 |      287 |         30 |        |       |     |
 | maria      | func_pspeu_092A7560               |      287 |         32 | Yes    |       |     |
-| cen        | func_pspeu_09238318               |      287 |         32 | Yes    |       |     |
+|            | func_pspeu_09238318               |      287 |         32 | Yes    |       |     |
 | main       | func_psp_0891C668                 |      287 |         35 |        |       |     |
 | rlib       | func_pspeu_092498A0               |      287 |         44 |        |       |     |
 | dra        | func_psp_091170F0                 |      288 |         15 |        |       |     |
@@ -8137,7 +8137,7 @@
 | dra        | func_psp_09116720                 |      288 |         19 |        |       |     |
 | maria      | func_pspeu_092B3008               |      288 |         19 |        |       |     |
 | ric        | func_pspeu_092B0A10               |      288 |         19 |        |       |     |
-| cen        | func_pspeu_092428D8               |      288 |         19 |        |       |     |
+|            | func_pspeu_092428D8               |      288 |         19 |        |       |     |
 |            | func_092E76C8                     |      288 |         26 |        |       |     |
 | no3        | func_pspeu_0923BCE0               |      288 |         30 |        |       |     |
 | np3        | EntityMermanRockRightSide         |      288 |         30 |        |       |     |
@@ -8175,7 +8175,7 @@
 | no4        | func_pspeu_0923EA80               |      300 |         26 |        |       |     |
 |            | func_pspeu_0924BE50               |      300 |         43 | Yes    |       |     |
 | main       | 3D8B8.rodata                      |      302 |          0 |        |       |     |
-| cen        | func_pspeu_0923C3B8               |      302 |         32 |        |       |     |
+|            | func_pspeu_0923C3B8               |      302 |         32 |        |       |     |
 | rbo1       | EntityBossFightManager            |      303 |         32 | Yes    |       |     |
 | no3        | func_pspeu_0923B878               |      303 |         33 |        |       |     |
 | np3        | EntityMermanRockLeftSide          |      303 |         33 |        |       |     |
@@ -8192,7 +8192,7 @@
 | rbo5       | DopplegangerStepStone             |      305 |         44 |        |       |     |
 |            | func_pspeu_09249D30               |      305 |         45 |        |       |     |
 | maria      | func_pspeu_092A6A08               |      306 |         41 |        |       |     |
-| cen        | func_pspeu_092377B0               |      306 |         41 |        |       |     |
+|            | func_pspeu_092377B0               |      306 |         41 |        |       |     |
 |            | func_pspeu_0923FFD8               |      307 |         26 |        |       |     |
 |            | func_pspeu_0923BF70               |      307 |         26 |        |       |     |
 | bo2        | func_pspeu_0923BF70               |      307 |         26 |        |       |     |
@@ -8213,7 +8213,7 @@
 | rbo8       | func_pspeu_0923BF70               |      307 |         26 |        |       |     |
 | are        | func_pspeu_0924E2C8               |      307 |         26 |        |       |     |
 | cat        | func_pspeu_0923F478               |      307 |         26 |        |       |     |
-| cen        | func_pspeu_09256E60               |      307 |         26 |        |       |     |
+|            | func_pspeu_09256E60               |      307 |         26 |        |       |     |
 | chi        | func_psp_0923F070                 |      307 |         26 |        |       |     |
 | dai        | func_pspeu_0923D648               |      307 |         26 |        |       |     |
 | dre        | func_pspeu_0923B370               |      307 |         26 |        |       |     |
@@ -8280,13 +8280,13 @@
 | bo6        | func_pspeu_09262838               |      314 |         24 |        |       |     |
 | ric        | func_pspeu_092BB860               |      314 |         24 |        |       |     |
 | rcat       | func_pspeu_09247730               |      314 |         43 |        |       |     |
-| cen        | func_pspeu_09263478               |      315 |         24 |        |       |     |
+|            | func_pspeu_09263478               |      315 |         24 |        |       |     |
 | lib        | func_psp_09256018                 |      315 |         26 |        |       |     |
 |            | func_092E97B8                     |      315 |         34 |        |       |     |
 | no2        | func_pspeu_09254098               |      315 |         48 |        |       |     |
 | np3        | EntityGurkhaBodyParts             |      315 |         48 |        |       |     |
 | rno0       | func_pspeu_0925A728               |      315 |         48 |        |       |     |
-| cen        | func_pspeu_09238938               |      316 |         38 |        |       |     |
+|            | func_pspeu_09238938               |      316 |         38 |        |       |     |
 | main       | func_psp_089215A4                 |      316 |         39 |        |       |     |
 | no4        | func_pspeu_09258960               |      317 |         18 |        |       |     |
 | maria      | func_pspeu_092ABAD0               |      317 |         34 |        |       |     |
@@ -8322,7 +8322,7 @@
 |            | func_pspeu_09254C28               |      327 |          7 |        |       |     |
 | cat        | func_pspeu_09261BB8               |      327 |         36 |        |       |     |
 | rtop       | func_pspeu_092453C0               |      327 |         43 |        |       |     |
-| cen        | func_pspeu_09239FA0               |      328 |         37 |        |       |     |
+|            | func_pspeu_09239FA0               |      328 |         37 |        |       |     |
 |            | func_pspeu_0924B4A0               |      328 |         45 |        |       |     |
 | rnz1       | func_pspeu_09255D68               |      328 |         47 |        |       |     |
 | no0        | func_pspeu_0925B1E0               |      328 |         50 |        |       |     |
@@ -8346,7 +8346,7 @@
 |            | func_pspeu_09244F30               |      332 |         41 |        |       |     |
 | are        | func_pspeu_092626E0               |      332 |         41 |        |       |     |
 | cat        | func_pspeu_092533B8               |      332 |         41 |        |       |     |
-| cen        | func_pspeu_0925FB08               |      332 |         41 |        |       |     |
+|            | func_pspeu_0925FB08               |      332 |         41 |        |       |     |
 | dai        | func_pspeu_0924E568               |      332 |         41 |        |       |     |
 | lib        | func_psp_0924FF90                 |      332 |         41 |        |       |     |
 | no0        | func_pspeu_09257110               |      332 |         41 |        |       |     |
@@ -8399,7 +8399,7 @@
 | rbo8       | func_pspeu_09244DF8               |      338 |         36 |        |       |     |
 | are        | func_pspeu_09262CB0               |      338 |         36 |        |       |     |
 | cat        | func_pspeu_09253B30               |      338 |         36 |        |       |     |
-| cen        | func_pspeu_092600D8               |      338 |         36 |        |       |     |
+|            | func_pspeu_092600D8               |      338 |         36 |        |       |     |
 | chi        | func_psp_09248440                 |      338 |         36 |        |       |     |
 | dai        | func_pspeu_0924EB38               |      338 |         36 |        |       |     |
 | dre        | func_pspeu_09244150               |      338 |         36 |        |       |     |
@@ -8448,7 +8448,7 @@
 | no1        | func_pspeu_0925ED28               |      343 |         32 | Yes    |       |     |
 | rdai       | func_pspeu_092515A8               |      343 |         34 | Yes    |       |     |
 | maria      | func_pspeu_092AB1C0               |      344 |         32 |        |       |     |
-| cen        | func_pspeu_09239778               |      344 |         32 |        |       |     |
+|            | func_pspeu_09239778               |      344 |         32 |        |       |     |
 | no1        | func_pspeu_0925E118               |      344 |         37 |        |       |     |
 | nz1        | func_pspeu_09257108               |      344 |         50 |        |       |     |
 | rno2       | func_pspeu_0923FFB0               |      344 |         50 |        |       |     |
@@ -8456,7 +8456,7 @@
 | rdai       | func_pspeu_092393D8               |      345 |         38 |        |       |     |
 | maria      | func_pspeu_092B85C0               |      346 |         27 |        |       |     |
 | ric        | func_pspeu_092C19B8               |      346 |         27 |        |       |     |
-| cen        | func_pspeu_09249550               |      346 |         27 |        |       |     |
+|            | func_pspeu_09249550               |      346 |         27 |        |       |     |
 | ric        | func_pspeu_092C9480               |      346 |         37 |        |       |     |
 | nz0        | func_pspeu_0924F7D0               |      347 |         37 |        |       |     |
 |            | func_pspeu_0924CAD0               |      347 |         47 |        |       |     |
@@ -8538,7 +8538,7 @@
 | rbo8       | func_pspeu_0923C400               |      364 |         33 |        |       |     |
 | are        | func_pspeu_0924E758               |      364 |         33 |        |       |     |
 | cat        | func_pspeu_0923F908               |      364 |         33 |        |       |     |
-| cen        | func_pspeu_092572F0               |      364 |         33 |        |       |     |
+|            | func_pspeu_092572F0               |      364 |         33 |        |       |     |
 | chi        | func_psp_0924C060                 |      364 |         33 |        |       |     |
 | chi        | func_psp_0923F500                 |      364 |         33 |        |       |     |
 | dai        | func_pspeu_0923DAD8               |      364 |         33 |        |       |     |
@@ -8624,7 +8624,7 @@
 | rbo8       | func_pspeu_0923B9E8               |      374 |         35 |        |       |     |
 | are        | func_pspeu_0924DD40               |      374 |         35 |        |       |     |
 | cat        | func_pspeu_0923EEF0               |      374 |         35 |        |       |     |
-| cen        | func_pspeu_092568D8               |      374 |         35 |        |       |     |
+|            | func_pspeu_092568D8               |      374 |         35 |        |       |     |
 | chi        | func_psp_0923EAE8                 |      374 |         35 |        |       |     |
 | dai        | func_pspeu_0923D0C0               |      374 |         35 |        |       |     |
 | dre        | func_pspeu_0923ADE8               |      374 |         35 |        |       |     |
@@ -8663,7 +8663,7 @@
 | rtop       | func_pspeu_0924B518               |      377 |         37 |        |       |     |
 | rno0       | func_pspeu_09241F20               |      377 |         38 |        |       |     |
 | maria      | func_pspeu_092AAC80               |      377 |         41 | Yes    |       |     |
-| cen        | func_pspeu_09239238               |      377 |         41 | Yes    |       |     |
+|            | func_pspeu_09239238               |      377 |         41 | Yes    |       |     |
 | rcen       | func_pspeu_0924E6D8               |      380 |         50 |        |       |     |
 |            | func_80121F58                     |      381 |         27 |        |       |     |
 | rbo5       | func_80121F58                     |      381 |         27 |        |       |     |
@@ -8676,7 +8676,7 @@
 | rno2       | func_pspeu_0923AD58               |      382 |         41 |        |       |     |
 | are        | func_pspeu_0923A268               |      383 |         51 |        |       |     |
 | maria      | func_pspeu_092AEC80               |      384 |         75 |        |       |     |
-| cen        | func_pspeu_0923EAB0               |      384 |         75 |        |       |     |
+|            | func_pspeu_0923EAB0               |      384 |         75 |        |       |     |
 | main       | _malloc_r                         |      385 |         46 |        |       |     |
 | dre        | func_pspeu_0924ACA0               |      385 |         47 | Yes    |       |     |
 | main       | _realloc_r                        |      385 |         51 |        |       |     |
@@ -8741,7 +8741,7 @@
 | rbo8       | func_pspeu_09243948               |      406 |         25 |        |       |     |
 | are        | func_pspeu_09257180               |      406 |         25 |        |       |     |
 | cat        | func_pspeu_0924C320               |      406 |         25 |        |       |     |
-| cen        | func_pspeu_0925E998               |      406 |         25 |        |       |     |
+|            | func_pspeu_0925E998               |      406 |         25 |        |       |     |
 | chi        | func_psp_09246BA8                 |      406 |         25 |        |       |     |
 | dai        | func_pspeu_09246BF0               |      406 |         25 |        |       |     |
 | dre        | func_pspeu_09242EA8               |      406 |         25 |        |       |     |
@@ -8796,7 +8796,7 @@
 | rbo8       | func_pspeu_0923D050               |      409 |         53 |        |       |     |
 | are        | func_pspeu_0924F3A8               |      409 |         53 |        |       |     |
 | cat        | func_pspeu_09244828               |      409 |         53 |        |       |     |
-| cen        | func_pspeu_09257F40               |      409 |         53 |        |       |     |
+|            | func_pspeu_09257F40               |      409 |         53 |        |       |     |
 | chi        | func_psp_09240150                 |      409 |         53 |        |       |     |
 | dai        | func_pspeu_0923E728               |      409 |         53 |        |       |     |
 | dre        | func_pspeu_0923C450               |      409 |         53 |        |       |     |
@@ -8865,7 +8865,7 @@
 | rbo8       | func_pspeu_0923C960               |      418 |         45 |        |       |     |
 | are        | func_pspeu_0924ECB8               |      418 |         45 |        |       |     |
 | cat        | func_pspeu_0923FE68               |      418 |         45 |        |       |     |
-| cen        | func_pspeu_09257850               |      418 |         45 |        |       |     |
+|            | func_pspeu_09257850               |      418 |         45 |        |       |     |
 | chi        | func_psp_0923FA60                 |      418 |         45 |        |       |     |
 | dai        | func_pspeu_0923E038               |      418 |         45 |        |       |     |
 | dre        | func_pspeu_0923BD60               |      418 |         45 |        |       |     |
@@ -8958,7 +8958,7 @@
 | dra        | func_psp_0913C160                 |      450 |         49 | Yes    |       |     |
 | cat        | func_pspeu_0925DC38               |      450 |         50 |        |       |     |
 | maria      | func_pspeu_092AE558               |      451 |         78 |        |       |     |
-| cen        | func_pspeu_0923E388               |      451 |         78 |        |       |     |
+|            | func_pspeu_0923E388               |      451 |         78 |        |       |     |
 | mar        | func_pspeu_092469B0               |      451 |         79 | Yes    |       |     |
 | rbo6       | func_us_8019FCB4                  |      453 |         45 |        |       |     |
 | no0        | func_pspeu_092510A8               |      453 |         61 |        |       |     |
@@ -8976,7 +8976,7 @@
 | rbo5       | EntityUnkId1B                     |      457 |         40 | Yes    |       |     |
 | no0        | func_pspeu_0925E528               |      459 |         49 |        |       |     |
 | bo2        | func_us_801A460C                  |      459 |         58 |        |       |     |
-| cen        | func_pspeu_09247598               |      460 |         37 | Yes    |       |     |
+|            | func_pspeu_09247598               |      460 |         37 | Yes    |       |     |
 | bo6        | func_pspeu_09266E40               |      461 |         29 |        |       |     |
 | ric        | func_pspeu_092C8DA0               |      461 |         29 |        |       |     |
 | cat        | func_pspeu_0925B7B8               |      461 |         40 |        |       |     |
@@ -9051,10 +9051,10 @@
 | rno2       | func_pspeu_09252C58               |      486 |         67 |        |       |     |
 | maria      | func_pspeu_092B7010               |      487 |         42 |        |       |     |
 | ric        | func_pspeu_092C02B8               |      487 |         42 |        |       |     |
-| cen        | func_pspeu_09247FA0               |      487 |         42 |        |       |     |
+|            | func_pspeu_09247FA0               |      487 |         42 |        |       |     |
 | maria      | func_pspeu_092B6618               |      489 |         37 | Yes    |       |     |
 | rcat       | func_pspeu_0924B978               |      489 |         53 |        |       |     |
-| cen        | func_pspeu_09261030               |      489 |         62 |        |       |     |
+|            | func_pspeu_09261030               |      489 |         62 |        |       |     |
 | ric        | func_pspeu_092BDD88               |      490 |         41 |        |       |     |
 | rbo1       | func_us_801936FC                  |      491 |         53 | Yes    |       |     |
 | mar        | func_pspeu_092386A8               |      491 |         58 |        |       |     |
@@ -9082,7 +9082,7 @@
 | rbo5       | func_us_801C5650                  |      499 |         99 |        |       |     |
 | dra        | func_psp_09117C00                 |      499 |        105 |        |       |     |
 | maria      | func_pspeu_092A8AE8               |      500 |         44 |        |       |     |
-| cen        | func_pspeu_0923D3E0               |      500 |         44 |        |       |     |
+|            | func_pspeu_0923D3E0               |      500 |         44 |        |       |     |
 | top        | func_pspeu_0924EF98               |      500 |         56 |        |       |     |
 | bo6        | func_pspeu_09267D20               |      501 |         48 | Yes    |       |     |
 | maria      | func_pspeu_092A6E50               |      501 |         49 | Yes    |       |     |
@@ -9091,7 +9091,7 @@
 | main       | func_psp_08929860                 |      502 |         34 |        |       |     |
 | bo6        | func_pspeu_0925F8A8               |      503 |         50 |        |       |     |
 | ric        | func_pspeu_092BF718               |      504 |         41 | Yes    |       |     |
-| cen        | func_pspeu_09237BF8               |      505 |         49 | Yes    |       |     |
+|            | func_pspeu_09237BF8               |      505 |         49 | Yes    |       |     |
 | bo6        | func_pspeu_0925EAD8               |      506 |         67 |        |       |     |
 |            | func_092E9C38                     |      507 |         52 |        |       |     |
 | rlib       | func_pspeu_09244048               |      507 |         73 |        |       |     |
@@ -9124,7 +9124,7 @@
 | rbo8       | func_pspeu_09240A48               |      511 |         41 |        |       |     |
 | are        | func_pspeu_09252DA8               |      511 |         41 |        |       |     |
 | cat        | func_pspeu_09248228               |      511 |         41 |        |       |     |
-| cen        | func_pspeu_0925B940               |      511 |         41 |        |       |     |
+|            | func_pspeu_0925B940               |      511 |         41 |        |       |     |
 | chi        | func_psp_09243B50                 |      511 |         41 |        |       |     |
 | dai        | func_pspeu_09242128               |      511 |         41 |        |       |     |
 | dre        | func_pspeu_0923FE50               |      511 |         41 |        |       |     |
@@ -9209,7 +9209,7 @@
 | nz1        | func_pspeu_0924E2C8               |      542 |         38 | Yes    |       |     |
 |            | func_092E8260                     |      542 |         56 |        |       |     |
 | maria      | func_pspeu_092A82E0               |      543 |         60 |        |       |     |
-| cen        | func_pspeu_0923CBD8               |      543 |         60 |        |       |     |
+|            | func_pspeu_0923CBD8               |      543 |         60 |        |       |     |
 | ric        | func_pspeu_092C9C98               |      544 |         53 | Yes    |       |     |
 |            | func_pspeu_0925C320               |      545 |         53 |        |       |     |
 | rbo5       | func_pspeu_0924FA58               |      545 |         53 |        |       |     |
@@ -9226,7 +9226,7 @@
 | lib        | func_psp_092697D0                 |      556 |         54 |        |       |     |
 |            | func_pspeu_09247448               |      557 |         41 |        |       |     |
 | dra        | func_psp_09127DC0                 |      557 |         48 | Yes    |       |     |
-| cen        | func_pspeu_0924A298               |      557 |         59 | Yes    |       |     |
+|            | func_pspeu_0924A298               |      557 |         59 | Yes    |       |     |
 | st0        | func_pspeu_09247550               |      557 |         84 | Yes    |       |     |
 | rcen       | func_pspeu_0924C810               |      558 |         64 |        |       |     |
 | st0        | func_pspeu_0923C728               |      559 |         43 | Yes    |       |     |
@@ -9237,12 +9237,12 @@
 |            | func_pspeu_09247018               |      560 |         62 |        |       |     |
 | maria      | func_pspeu_092B4AF8               |      562 |         55 |        |       |     |
 | ric        | func_pspeu_092B2590               |      562 |         55 |        |       |     |
-| cen        | func_pspeu_09244358               |      562 |         55 |        |       |     |
+|            | func_pspeu_09244358               |      562 |         55 |        |       |     |
 | rdai       | func_pspeu_092522F8               |      563 |         46 |        |       |     |
 | dra        | func_psp_09139B50                 |      564 |         35 |        |       |     |
 | no4        | func_pspeu_09258E30               |      564 |         51 | Yes    |       |     |
 | maria      | func_pspeu_092ABF80               |      565 |         55 |        |       |     |
-| cen        | func_pspeu_0923A480               |      565 |         55 |        |       |     |
+|            | func_pspeu_0923A480               |      565 |         55 |        |       |     |
 | bo6        | func_pspeu_09260AE8               |      565 |         61 |        |       |     |
 | dra        | func_psp_0910A198                 |      565 |        106 |        |       |     |
 | rtop       | func_pspeu_09248B88               |      567 |         36 |        |       |     |
@@ -9284,7 +9284,7 @@
 | rbo8       | func_pspeu_0923EEF0               |      583 |         67 | Yes    |       |     |
 | are        | func_pspeu_09251248               |      583 |         67 | Yes    |       |     |
 | cat        | func_pspeu_092466C8               |      583 |         67 | Yes    |       |     |
-| cen        | func_pspeu_09259DE0               |      583 |         67 | Yes    |       |     |
+|            | func_pspeu_09259DE0               |      583 |         67 | Yes    |       |     |
 | chi        | func_psp_09241FF0                 |      583 |         67 | Yes    |       |     |
 | dai        | func_pspeu_092405C8               |      583 |         67 | Yes    |       |     |
 | dre        | func_pspeu_0923E2F0               |      583 |         67 | Yes    |       |     |
@@ -9324,7 +9324,7 @@
 | are        | func_pspeu_0924A4D0               |      598 |         55 |        |       |     |
 | no0        | func_pspeu_09243620               |      598 |         55 |        |       |     |
 | maria      | func_pspeu_092B4218               |      599 |         58 |        |       |     |
-| cen        | func_pspeu_09243A78               |      599 |         58 |        |       |     |
+|            | func_pspeu_09243A78               |      599 |         58 |        |       |     |
 | main       | func_psp_08931488                 |      599 |         99 | Yes    |       |     |
 | are        | func_pspeu_09260700               |      599 |        101 | Yes    |       |     |
 | bo7        | func_us_80195C50                  |      602 |         59 | Yes    |       |     |
@@ -9378,7 +9378,7 @@
 | nz1        | func_pspeu_0924EA88               |      646 |         97 |        |       |     |
 | dra        | func_psp_09137900                 |      646 |        129 |        |       |     |
 | maria      | func_pspeu_092B3848               |      648 |        123 |        |       |     |
-| cen        | func_pspeu_09243118               |      648 |        123 |        |       |     |
+|            | func_pspeu_09243118               |      648 |        123 |        |       |     |
 | bo6        | func_pspeu_09261ED8               |      649 |         49 | Yes    |       |     |
 | lib        | func_psp_09258100                 |      650 |         63 | Yes    |       |     |
 | rcat       | func_pspeu_0924CB18               |      652 |         41 |        |       |     |
@@ -9404,7 +9404,7 @@
 | ric        | func_pspeu_092B4DE0               |      663 |         70 |        |       |     |
 | maria      | func_pspeu_092BD1B8               |      670 |         62 |        |       |     |
 | ric        | func_pspeu_092C69A8               |      670 |         62 |        |       |     |
-| cen        | func_pspeu_0924E1B8               |      670 |         62 |        |       |     |
+|            | func_pspeu_0924E1B8               |      670 |         62 |        |       |     |
 | dra        | func_psp_0910D8F8                 |      672 |         81 |        |       |     |
 | no0        | func_pspeu_0925A6C8               |      674 |         61 |        |       |     |
 | rno2       | func_pspeu_09239298               |      674 |         61 |        |       |     |
@@ -9436,7 +9436,7 @@
 | rbo8       | func_pspeu_09242F40               |      682 |         51 |        |       |     |
 | are        | func_pspeu_092558B8               |      682 |         51 |        |       |     |
 | cat        | func_pspeu_0924B918               |      682 |         51 |        |       |     |
-| cen        | func_pspeu_0925DF90               |      682 |         51 |        |       |     |
+|            | func_pspeu_0925DF90               |      682 |         51 |        |       |     |
 | chi        | func_psp_092461A0                 |      682 |         51 |        |       |     |
 | dai        | func_pspeu_09244A00               |      682 |         51 |        |       |     |
 | dre        | func_pspeu_092424A0               |      682 |         51 |        |       |     |
@@ -9488,7 +9488,7 @@
 | dra        | func_psp_0912ED98                 |      700 |         67 |        |       |     |
 | maria      | func_pspeu_092BDFE8               |      700 |         78 |        |       |     |
 | ric        | func_pspeu_092C77D8               |      700 |         78 |        |       |     |
-| cen        | func_pspeu_0924EFE8               |      700 |         78 |        |       |     |
+|            | func_pspeu_0924EFE8               |      700 |         78 |        |       |     |
 | chi        | func_psp_0923BB48                 |      702 |        106 | Yes    |       |     |
 | np3        | EntityBloodyZombie                |      703 |        118 | Yes    |       |     |
 | st0        | func_pspeu_09242FF8               |      705 |         69 |        |       |     |
@@ -9502,7 +9502,7 @@
 | are        | func_pspeu_092461A8               |      723 |        126 | Yes    |       |     |
 | dra        | func_psp_090F78C8                 |      723 |        139 |        |       |     |
 | bo6        | func_pspeu_09269428               |      724 |         69 | Yes    |       |     |
-| cen        | func_pspeu_092486C0               |      724 |         84 | Yes    |       |     |
+|            | func_pspeu_092486C0               |      724 |         84 | Yes    |       |     |
 | rtop       | func_pspeu_09249400               |      728 |         73 |        |       |     |
 | top        | func_pspeu_0924A3B0               |      728 |         73 |        |       |     |
 | rno3       | func_pspeu_09239A08               |      728 |        111 | Yes    |       |     |
@@ -9588,14 +9588,14 @@
 | rbo5       | EntityUnkId19                     |      797 |         74 | Yes    |       |     |
 | st0        | func_pspeu_0924BD80               |      797 |         92 | Yes    |       |     |
 | maria      | func_pspeu_092A9E88               |      800 |         95 |        |       |     |
-| cen        | func_pspeu_09245ED8               |      800 |         95 |        |       |     |
+|            | func_pspeu_09245ED8               |      800 |         95 |        |       |     |
 | are        | func_pspeu_0924CDC8               |      800 |        116 | Yes    |       |     |
 | rlib       | func_pspeu_09249E88               |      801 |         74 |        |       |     |
 |            | func_pspeu_09246488               |      801 |         75 | Yes    |       |     |
 | bo6        | MarEntityHitByIce                 |      802 |         82 |        |       |     |
 | maria      | func_pspeu_092BC5E8               |      802 |         82 |        |       |     |
 | ric        | func_pspeu_092C5DD8               |      802 |         82 |        |       |     |
-| cen        | func_pspeu_0924D5E8               |      802 |         82 |        |       |     |
+|            | func_pspeu_0924D5E8               |      802 |         82 |        |       |     |
 | lib        | func_psp_0926A238                 |      803 |         77 | Yes    |       |     |
 | rdai       | func_pspeu_0924CBB0               |      803 |        128 |        |       |     |
 | dra        | func_psp_09120D88                 |      809 |         78 |        |       |     |
@@ -9661,14 +9661,14 @@
 | main       | __kernel_rem_pio2                 |      896 |        132 |        |       |     |
 | dra        | func_psp_0912D170                 |      904 |         88 | Yes    |       |     |
 | bo0        | func_us_801B551C                  |      906 |         99 | Yes    |       |     |
-| cen        | func_pspeu_0924FB40               |      911 |         70 | Yes    |       |     |
+|            | func_pspeu_0924FB40               |      911 |         70 | Yes    |       |     |
 | st0        | func_pspeu_0923CF38               |      927 |        100 | Yes    |       |     |
 | dra        | func_psp_09125048                 |      930 |         70 | Yes    |       |     |
 | main       | func_psp_089231F8                 |      930 |        122 |        |       |     |
 | bo6        | MarEntityShrinkingPowerUpRing     |      931 |         62 |        |       |     |
 | maria      | func_pspeu_092BB808               |      931 |         62 |        |       |     |
 | ric        | func_pspeu_092C4FF8               |      931 |         62 |        |       |     |
-| cen        | func_pspeu_0924C808               |      931 |         62 |        |       |     |
+|            | func_pspeu_0924C808               |      931 |         62 |        |       |     |
 | dra        | func_psp_090E62B8                 |      934 |         73 |        |       |     |
 |            | func_092E84B8                     |      936 |        125 |        |       |     |
 | rbo6       | EntityBackgroundVortex            |      943 |        113 |        |       |     |
@@ -9701,7 +9701,7 @@
 | rbo8       | func_pspeu_0923DDD8               |      972 |        120 | Yes    |       |     |
 | are        | func_pspeu_09250130               |      972 |        120 | Yes    |       |     |
 | cat        | func_pspeu_092455B0               |      972 |        120 | Yes    |       |     |
-| cen        | func_pspeu_09258CC8               |      972 |        120 | Yes    |       |     |
+|            | func_pspeu_09258CC8               |      972 |        120 | Yes    |       |     |
 | chi        | func_psp_09240ED8                 |      972 |        120 | Yes    |       |     |
 | dai        | func_pspeu_0923F4B0               |      972 |        120 | Yes    |       |     |
 | dre        | func_pspeu_0923D1D8               |      972 |        120 | Yes    |       |     |
@@ -9758,7 +9758,7 @@
 | rbo6       | func_pspeu_092386A8               |      989 |         83 |        |       |     |
 |            | func_pspeu_09239328               |      989 |         83 |        |       |     |
 | rbo8       | func_pspeu_09239328               |      989 |         83 |        |       |     |
-| cen        | func_pspeu_09254218               |      989 |         83 |        |       |     |
+|            | func_pspeu_09254218               |      989 |         83 |        |       |     |
 | no3        | func_pspeu_09246D38               |      989 |         83 |        |       |     |
 | np3        | EntityStageNamePopup              |      989 |         83 |        |       |     |
 | rare       | func_pspeu_0923D818               |      989 |         83 |        |       |     |
@@ -9800,8 +9800,8 @@
 | no4        | func_pspeu_09245BB8               |     1004 |         86 |        |       |     |
 |            | func_pspeu_09255288               |     1014 |         60 | Yes    |       |     |
 | lib        | func_psp_0926AED0                 |     1018 |        104 | Yes    |       |     |
-| cen        | func_pspeu_0923F0D0               |     1021 |        156 | Yes    |       |     |
-| cen        | func_pspeu_092521E8               |     1021 |        157 | Yes    |       |     |
+|            | func_pspeu_0923F0D0               |     1021 |        156 | Yes    |       |     |
+| e_maria    | func_pspeu_092521E8               |     1021 |        157 | Yes    |       |     |
 | dra        | func_psp_0912F7F8                 |     1022 |         72 |        |       |     |
 | maria      | func_pspeu_092AF3B8               |     1028 |        157 | Yes    |       |     |
 | bo0        | func_us_801B7CC8                  |     1031 |        105 | Yes    |       |     |
@@ -9879,7 +9879,7 @@
 | rbo8       | func_pspeu_0923F748               |     1185 |         87 | Yes    |       |     |
 | are        | func_pspeu_09251AA0               |     1185 |         87 | Yes    |       |     |
 | cat        | func_pspeu_09246F20               |     1185 |         87 | Yes    |       |     |
-| cen        | func_pspeu_0925A638               |     1185 |         87 | Yes    |       |     |
+|            | func_pspeu_0925A638               |     1185 |         87 | Yes    |       |     |
 | chi        | func_psp_09242848                 |     1185 |         87 | Yes    |       |     |
 | dai        | func_pspeu_09240E20               |     1185 |         87 | Yes    |       |     |
 | dre        | func_pspeu_0923EB48               |     1185 |         87 | Yes    |       |     |
@@ -9952,7 +9952,7 @@
 | rbo8       | func_pspeu_0923A290               |     1247 |        112 | Yes    |       |     |
 | are        | func_pspeu_09241218               |     1247 |        112 | Yes    |       |     |
 | cat        | func_pspeu_0923BF88               |     1247 |        112 | Yes    |       |     |
-| cen        | func_pspeu_09255180               |     1247 |        112 | Yes    |       |     |
+|            | func_pspeu_09255180               |     1247 |        112 | Yes    |       |     |
 | chi        | func_psp_0923D390                 |     1247 |        112 | Yes    |       |     |
 | dai        | func_pspeu_0923B210               |     1247 |        112 | Yes    |       |     |
 | dre        | func_pspeu_09239690               |     1247 |        112 | Yes    |       |     |
@@ -9991,7 +9991,7 @@
 | chi        | func_psp_09249BE0                 |     1267 |        134 | Yes    |       |     |
 | lib        | func_psp_092515F8                 |     1267 |        134 | Yes    |       |     |
 | rno0       | func_pspeu_0925B898               |     1269 |        134 | Yes    |       |     |
-| cen        | func_pspeu_0923B190               |     1269 |        203 | Yes    |       |     |
+|            | func_pspeu_0923B190               |     1269 |        203 | Yes    |       |     |
 |            | func_pspeu_09251648               |     1278 |        113 | Yes    |       |     |
 | no2        | func_pspeu_0924AB98               |     1280 |        160 |        |       |     |
 | no1        | func_pspeu_0924EF10               |     1298 |        180 |        |       |     |
@@ -10026,7 +10026,7 @@
 |            | func_pspeu_09256A10               |     1463 |        135 | Yes    |       |     |
 |            | func_pspeu_09245C50               |     1464 |        164 | Yes    |       |     |
 | rbo6       | func_us_801B1738                  |     1468 |        137 | Yes    |       |     |
-| cen        | func_pspeu_09261EC0               |     1476 |        197 |        |       |     |
+|            | func_pspeu_09261EC0               |     1476 |        197 |        |       |     |
 | rbo6       | func_us_8019DB9C                  |     1490 |        206 |        |       |     |
 | rbo5       | func_us_801C1DC8                  |     1491 |        252 | Yes    |       |     |
 | rno2       | func_pspeu_09243770               |     1513 |        213 | Yes    |       |     |
@@ -10066,7 +10066,7 @@
 | rbo8       | func_pspeu_09241770               |     1627 |        196 |        |       |     |
 | are        | func_pspeu_092540E8               |     1627 |        196 |        |       |     |
 | cat        | func_pspeu_0924A148               |     1627 |        196 |        |       |     |
-| cen        | func_pspeu_0925C7C0               |     1627 |        196 |        |       |     |
+|            | func_pspeu_0925C7C0               |     1627 |        196 |        |       |     |
 | chi        | HitDetection                      |     1627 |        196 |        |       |     |
 | dai        | func_pspeu_09243230               |     1627 |        196 |        |       |     |
 | dre        | func_pspeu_09240CD0               |     1627 |        196 |        |       |     |
@@ -10125,7 +10125,7 @@
 | main       | _svfprintf_r                      |     1905 |        329 | Yes    |       |     |
 | rare       | func_pspeu_0923B8F0               |     1910 |        249 | Yes    |       |     |
 | lib        | func_psp_09258B50                 |     1920 |        313 |        |       |     |
-| cen        | func_pspeu_0924AB68               |     1952 |        164 | Yes    |       |     |
+|            | func_pspeu_0924AB68               |     1952 |        164 | Yes    |       |     |
 | maria      | func_pspeu_092B9B68               |     1981 |        164 | Yes    |       |     |
 | ric        | func_pspeu_092C2F50               |     1985 |        164 | Yes    |       |     |
 | np3        | EntityGaibon                      |     2010 |        291 |        |       |     |
@@ -10160,8 +10160,8 @@
 | rbo5       | EntityDopplegangerBlinkWhite      |     2282 |        193 | Yes    |       |     |
 |            | func_pspeu_09258F58               |     2364 |        367 | Yes    |       |     |
 | bo6        | EntityCutsceneDialogue            |     2377 |        231 | Yes    |       |     |
-| top        | EntityCutscene                    |     2381 |        224 | Yes    |       |     |
-| cen        | EntityCutscene                    |     2388 |        232 | Yes    |       |     |
+| top        | func_pspeu_0924CC10               |     2381 |        224 | Yes    |       |     |
+|            | func_pspeu_092644D8               |     2388 |        232 | Yes    |       |     |
 | bo2        | func_us_801B385C                  |     2412 |        334 | Yes    |       |     |
 | no4        | func_pspeu_09256330               |     2580 |        253 | Yes    |       |     |
 | dra        | func_psp_09106238                 |     2716 |        467 | Yes    |       |     |
