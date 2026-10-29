@@ -379,7 +379,6 @@ typedef struct {
 extern SprGourTbl* SpGourTbl;
 extern u32 D_8003C744;
 extern s16 g_StatusHudPrimitiveLayout[];
-extern u16 DAT_0605AED8[][2];
 extern s16 g_StatusHudSpriteOffsets[][2];
 
 void func_06075838(void) {
@@ -512,7 +511,7 @@ void func_06075838(void) {
         s16* y3p;
 
         texOffset = i * 0xC0;
-        ptr2 = DAT_0605AED8[DAT_06086388->allocationIndex];
+        ptr2 = DAT_0605aec0[6 + DAT_06086388->allocationIndex];
         prim->unk8 = ptr2[0];
         prim->unkA = ptr2[1];
         prim->unk8 += (texOffset >> 4) & 0xFFFC;
