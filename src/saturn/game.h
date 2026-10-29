@@ -225,7 +225,7 @@ extern u8 DAT_0608FFF8[];
 extern s16 g_SineTable[];
 void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
 extern s32 DAT_06086390;
-extern SpritePart g_SpritePartPool[SPRITE_PART_MAX];       /* 0x0608D7F8 */
+extern SpritePart g_SpritePartPool[SPRITE_PART_MAX]; /* 0x0608D7F8 */
 extern SpriteObject g_SpriteObjectPool[SPRITE_OBJECT_MAX + 1];
 s32 func_0606F378(s32 arg0);
 
