@@ -2258,7 +2258,7 @@ files:
           - [0xFA44, cmpgfx, D_8018FA44, 128, 128, 4]
           - [0x1032C, cmpgfx, D_8019032C, 128, 128, 4]
           - [0x1113C, rawgfx, gfx_portrait_alucard, 48, 72, 8]
-          - [0x11EBC, skip]
+          - [0x11EBC, rawgfx, gfx_portrait_dracula, 48, 72, 8]
           - [0x12C3C, cmpgfx, unk_weird_gfx, 128, 128, 4]
           - [0x14E60, palette, D_80194E60, 16]
           - [0x15120, palette, D_80195120, 16]

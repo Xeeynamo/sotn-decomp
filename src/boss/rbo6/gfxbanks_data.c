@@ -53,3 +53,7 @@ u8 D_8019032C[] = {
 u8 gfx_portrait_alucard[] = {
 #include <gen/gfx_portrait_alucard.h>
 };
+
+u8 gfx_portrait_dracula[] = {
+#include <gen/gfx_portrait_dracula.h>
+};
