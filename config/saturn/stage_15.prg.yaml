@@ -25,12 +25,16 @@ segments:
       - start: 0x40
         type: c
         file: stage_15
-        end: 0x14B74
+        end: 0x1418C
         function_ranges:
           - [0x3204, 0x3314]
           - [0x3354, 0x360A]
           - [0xB8B8, 0xCA24]
           - [0x126C4, 0x12DFA]
+      - start: 0x1418C
+        type: .data
+        file: stage_15/s16res
+        end: 0x14B74
       - start: 0x14B74
         type: .data
         file: stage_15/sprbank
