@@ -2259,7 +2259,7 @@ files:
           - [0x1032C, cmpgfx, D_8019032C, 128, 128, 4]
           
           - [0x1113C, skip]
-
+          - [0x12C3C, cmpgfx, unk_weird_gfx, 128, 128, 4]
           - [0x14E60, palette, D_80194E60, 16]
           - [0x15120, palette, D_80195120, 16]
           - [0x152E0, palette, D_801952E0, 16]

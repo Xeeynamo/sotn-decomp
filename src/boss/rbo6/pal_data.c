@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo6.h"
 
+u8 unk_weird_gfx[] = {
+#include "gen/unk_weird_gfx.h"
+};
+
 u16 D_80194E60[] = {
 #include "gen/D_80194E60.h"
 };

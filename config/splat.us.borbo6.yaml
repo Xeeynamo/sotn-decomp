@@ -66,7 +66,7 @@ segments:
       - [0x171C, data]
       - [0x45B0, .data, gfxbanks_data]
       - [0x1113C, data]
-      - [0x14E60, .data, pal_data]
+      - [0x12C3C, .data, pal_data]
       - [0x156E0, .data, tilemaps]
       - [0x1B300, data]
       - [0x1BA10, .data, gen/us/sprites]
