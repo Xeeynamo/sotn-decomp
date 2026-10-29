@@ -245,13 +245,11 @@ void EntityCutsceneDialogue(Entity* self) {
     s32 i, j;
     s16 uCoord, vCoord;
     u16 nextChar;
-#ifdef VERSION_PSP
     s32 charWidth;
     u8* charBuffer1;
     u8* charBuffer2;
     u32 tempChar;
     bool endLoop;
-#endif
     RECT rect;
     s32 ptr;
 
@@ -395,14 +393,9 @@ void EntityCutsceneDialogue(Entity* self) {
                     i = *g_Dialogue.scriptCur++;
                     prim = g_Dialogue.prim[LEN(g_Dialogue.prim) - 1];
                     j = *g_Dialogue.scriptCur++;
-#ifdef VERSION_PSP
                     charWidth = j & 1;
                     uCoord = u_coords[charWidth];
                     vCoord = v_coords[charWidth];
-#else
-                uCoord = u_coords[j & 1];
-                vCoord = v_coords[j & 1];
-#endif
                     prim->clut = cluts[i];
                     prim->tpage = 144;
 #ifdef VERSION_PSP

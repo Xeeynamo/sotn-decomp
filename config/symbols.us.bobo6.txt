@@ -47,7 +47,6 @@ RicStepEnableFlameWhip = 0x801B85DC;
 RicStepThrowDaggers = 0x801B86EC;
 RicStepSlide = 0x801B87B4;
 RicStepSlideKick = 0x801B8A88;
-RicStepBladeDash = 0x801B8D50;
 RicStepHighJump = 0x801B8F78;
 RicSetStep = 0x801B9928;
 RicSetAnimation = 0x801B9940;

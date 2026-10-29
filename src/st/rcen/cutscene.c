@@ -212,13 +212,11 @@ void EntityCutscene(Entity* self) {
     s16 uCoord, vCoord;
     Primitive* prim;
     s32 i, j;
-#ifdef VERSION_PSP
     bool endLoop;
     s32 charWidth;
     u8* charBuffer1;
     u8* charBuffer2;
     u32 tempChar;
-#endif
     RECT rect;
     u_long ptr;
 
@@ -254,7 +252,7 @@ void EntityCutscene(Entity* self) {
 #ifdef VERSION_PSP
             i = SetCutsceneScript(cutscene_script);
             D_pspeu_09269918 = (u8*)pre_fight_script_ptr1;
-            *pre_fight_script_ptr2 = g_CastleFlags[SHAFT_FIGHT_CS_UNK2];
+            *pre_fight_script_ptr2 = g_CastleFlags[TOP_FIGHT_CS_UNK2];
 #else
             i = SetCutsceneScript(cutscene_script + 0x129);
 #endif
@@ -373,14 +371,9 @@ void EntityCutscene(Entity* self) {
                     i = *g_Dialogue.scriptCur++;
                     prim = g_Dialogue.prim[LEN(g_Dialogue.prim) - 1];
                     j = *g_Dialogue.scriptCur++;
-#ifdef VERSION_PSP
                     charWidth = j & 1;
                     uCoord = u_coords[charWidth];
                     vCoord = v_coords[charWidth];
-#else
-                uCoord = u_coords[j & 1];
-                vCoord = v_coords[j & 1];
-#endif
                     prim->clut = cluts[i];
                     prim->tpage = 144;
 #ifdef VERSION_PSP
