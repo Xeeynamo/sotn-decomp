@@ -10,4 +10,3 @@ static u16 entityLockCameraTilemapProps[] = {
 };
 
 #include "../../st/e_lock_camera.h"
-
