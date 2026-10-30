@@ -55,6 +55,10 @@ void RenderTilemap(void) {
     TilemapRenderer _r;
     SPRT_16* sp16 = &_sp16;
     TilemapRenderer* r = &_r;
+
+    if (g_PcStageLayerRenderer != NULL && g_PcStageLayerRenderer()) {
+        return;
+    }
 #else
     SPRT_16* sp16 = ((SPRT_16*)SP(0x00));
     TilemapRenderer* r = ((TilemapRenderer*)SP(sizeof(SPRT_16)));

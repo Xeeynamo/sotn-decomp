@@ -11,6 +11,9 @@ use std::path::Path;
 const PSX_TEXTURE_SIZE: usize = 0x40000;
 const MAX_TILEDEFS: usize = 0x1000;
 const MAX_PALETTES: usize = 256;
+const NATIVE_ATLAS_COLUMNS: usize = 31;
+const NATIVE_PAGE_CHARACTERS: usize = NATIVE_ATLAS_COLUMNS * NATIVE_ATLAS_COLUMNS;
+const NATIVE_PAGE_BYTES: usize = 256 * 256 / 2;
 const GAME_LOAD_ADDRESS: u32 = 0x0606_6000;
 const COMMON_LOAD_TABLE: u32 = 0x0608_46D4;
 const COMMON_SAVE_TABLE: u32 = 0x0608_4734;
@@ -866,79 +869,72 @@ fn write_native_decoded_layer(
     let characters = &decoded.characters;
     let palettes = &decoded.palette;
     let tilemap = &decoded.tilemap;
-    if characters.len() > 1024 * 32 {
-        return Err(Error::Format(format!(
-            "room {room} layer {layer} has more than 1024 Saturn characters"
-        )));
-    }
-
-    let mut atlas = vec![0u8; 256 * 256 / 2];
-    for character in 0..characters.len() / 32 {
-        let atlas_x = (character % 32) * 8;
-        let atlas_y = (character / 32) * 8;
-        for y in 0..8 {
-            for pair in 0..4 {
-                let source = characters[character * 32 + y * 4 + pair];
-                let destination =
-                    (atlas_y + y) * 128 + atlas_x / 2 + pair;
-                atlas[destination] = (source >> 4) | (source << 4);
-            }
-        }
-    }
-
     let psx_palettes = native_psx_palettes(palettes);
 
     let width = be_u16(&tilemap, 0, "native tilemap width")?;
     let height = be_u16(&tilemap, 2, "native tilemap height")?;
+
+    let mut slots: HashMap<[u8; 32], usize> = HashMap::new();
+    let mut atlas = Vec::new();
     let mut psx_tilemap = Vec::with_capacity(tilemap.len());
     psx_tilemap.extend_from_slice(&width.to_le_bytes());
     psx_tilemap.extend_from_slice(&height.to_le_bytes());
     for entry in tilemap[4..].chunks_exact(2) {
         let entry = u16::from_be_bytes([entry[0], entry[1]]);
-        psx_tilemap.extend_from_slice(&entry.to_le_bytes());
+        let at = (entry & 0x03FF) as usize * 32;
+        let source = characters.get(at..at + 32).unwrap_or(&[0; 32]);
+        let mut baked = [0u8; 32];
+        for y in 0..8 {
+            for x in 0..8 {
+                let source_x = if entry & 0x0400 != 0 { 7 - x } else { x };
+                let source_y = if entry & 0x0800 != 0 { 7 - y } else { y };
+                let byte = source[source_y * 4 + source_x / 2];
+                let pixel = if source_x & 1 == 0 { byte >> 4 } else { byte & 0xF };
+                baked[y * 4 + x / 2] |= if x & 1 == 0 { pixel } else { pixel << 4 };
+            }
+        }
+        let next_slot = slots.len();
+        let slot = *slots.entry(baked).or_insert(next_slot);
+        if slot > 0x0FFF {
+            return Err(Error::Format(format!(
+                "room {room} layer {layer} uses more than 4096 unique characters"
+            )));
+        }
+        if slot == next_slot {
+            let page = slot / NATIVE_PAGE_CHARACTERS;
+            let index = slot % NATIVE_PAGE_CHARACTERS;
+            atlas.resize((page + 1) * NATIVE_PAGE_BYTES, 0);
+            for y in 0..8 {
+                let row = (index / NATIVE_ATLAS_COLUMNS) * 8 + y;
+                let destination = page * NATIVE_PAGE_BYTES
+                    + row * 128
+                    + (index % NATIVE_ATLAS_COLUMNS) * 4;
+                atlas[destination..destination + 4].copy_from_slice(&baked[y * 4..y * 4 + 4]);
+            }
+        }
+        let renumbered = (entry & 0xF000) | slot as u16;
+        psx_tilemap.extend_from_slice(&renumbered.to_le_bytes());
     }
 
     let stem = format!("native_room{room}_layer{layer}");
     std::fs::write(output.join(format!("{stem}.chars.bin")), &atlas)?;
-    std::fs::write(
-        output.join(format!("{stem}.pal.bin")),
-        &psx_palettes,
-    )?;
-    std::fs::write(
-        output.join(format!("{stem}.map.bin")),
-        &psx_tilemap,
-    )?;
+    std::fs::write(output.join(format!("{stem}.pal.bin")), &psx_palettes)?;
+    std::fs::write(output.join(format!("{stem}.map.bin")), &psx_tilemap)?;
 
-    let mut preview = Rgba::new(
-        (width as u32 * 32) / 5,
-        height as u32 * 8,
-        [0, 0, 0, 0],
-    );
+    let mut preview = Rgba::new(width as u32 * 8, height as u32 * 8, [0, 0, 0, 0]);
     for cell_y in 0..height as usize {
         for cell_x in 0..width as usize {
             let at = 4 + (cell_y * width as usize + cell_x) * 2;
-            let pnd = u16::from_le_bytes([
-                psx_tilemap[at],
-                psx_tilemap[at + 1],
-            ]);
-            let character = (pnd & 0x03FF) as usize;
+            let pnd = u16::from_le_bytes([psx_tilemap[at], psx_tilemap[at + 1]]);
+            let slot = (pnd & 0x0FFF) as usize;
             let bank = (pnd >> 12) as usize;
-            let hflip = pnd & 0x0400 != 0;
-            let vflip = pnd & 0x0800 != 0;
-            let x0 = cell_x * 32 / 5;
-            let x1 = (cell_x + 1) * 32 / 5;
-            for destination_y in 0..8 {
-                let source_y =
-                    if vflip { 7 - destination_y } else { destination_y };
-                for destination_x in x0..x1 {
-                    let mut source_x =
-                        (destination_x - x0) * 8 / (x1 - x0);
-                    if hflip {
-                        source_x = 7 - source_x;
-                    }
-                    let atlas_x = (character % 32) * 8 + source_x;
-                    let atlas_y = (character / 32) * 8 + source_y;
-                    let packed = atlas[atlas_y * 128 + atlas_x / 2];
+            let page = slot / NATIVE_PAGE_CHARACTERS;
+            let index = slot % NATIVE_PAGE_CHARACTERS;
+            for y in 0..8 {
+                for x in 0..8 {
+                    let atlas_x = (index % NATIVE_ATLAS_COLUMNS) * 8 + x;
+                    let atlas_y = (index / NATIVE_ATLAS_COLUMNS) * 8 + y;
+                    let packed = atlas[page * NATIVE_PAGE_BYTES + atlas_y * 128 + atlas_x / 2];
                     let pixel = if atlas_x & 1 == 0 {
                         packed & 0xF
                     } else {
@@ -957,18 +953,15 @@ fn write_native_decoded_layer(
                     ]);
                     let [r, g, b] = rgb(colour);
                     preview.set(
-                        destination_x as u32,
-                        (cell_y * 8 + destination_y) as u32,
+                        (cell_x * 8 + x) as u32,
+                        (cell_y * 8 + y) as u32,
                         [r, g, b, 255],
                     );
                 }
             }
         }
     }
-    image::write_rgba(
-        &output.join(format!("{stem}.preview.png")),
-        &preview,
-    )?;
+    image::write_rgba(&output.join(format!("{stem}.preview.png")), &preview)?;
     Ok(())
 }
 
