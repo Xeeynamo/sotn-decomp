@@ -1,27 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo6.h"
 
-#ifdef VERSION_PSP
-u16 PrizeDrops[ZERO_LEN] = {};
-#else
-u16 PrizeDrops[] = {
-    ITEMDROP_STAR_FLAIL,
-    0x0203,
-    0x0303,
-    0x0403,
-    0x0503,
-    0x0603,
-    0x0703,
-    0x0803,
-    0x0903,
-    0x0A03,
-    0x0B03,
-    0x0C03,
-    0x0D03,
-    ITEMDROP_GREAT_SWORD,
-};
-#endif
-
 typedef struct {
     u16 animSet;
     u16 unk2;
@@ -29,7 +8,17 @@ typedef struct {
     u16 blendMode;
     AnimateEntityFrame* animation;
 } Borbo6ParticleData;
-extern Borbo6ParticleData D_us_801806B4[];
+
+static AnimateEntityFrame anim1[] = {{3, 1}, {3, 2}, {3, 3}, {3, 4}, {3, 5}, {3, 6}, {3, 7}, {3, 8}, {3, 9}, {3, 10}, {3, 11}, {3, 12}, {3, 13}, POSE_END};
+static AnimateEntityFrame anim2[] = {{2, 1}, {2, 2}, {2, 3}, {2, 4}, {2, 5}, {2, 6}, {2, 7}, {2, 8}, {2, 9}, {2, 10}, {2, 11}, {2, 12}, {2, 13}, {2, 14}, POSE_END};
+static AnimateEntityFrame anim3[] = {{3, 1}, {3, 2}, {3, 3}, {3, 4}, {3, 5}, {3, 6}, {3, 7}, {3, 8}, {3, 9}, {3, 10}, {3, 11}, {3, 12}, {3, 13}, POSE_END};
+static Borbo6ParticleData InitData[] = {
+    {ANIMSET_OVL(2), 87, 2, 0, anim2},
+    {ANIMSET_DRA(14), 121, 0, 48, anim1},
+    {ANIMSET_DRA(14), 121, 10, 48, anim1},
+    {ANIMSET_OVL(4), 88, 14, 48, anim3}
+};
+
 extern u16 g_EInitParticle;
 
 void func_us_8019D330_from_rcen(Entity* self) {
@@ -41,7 +30,7 @@ void func_us_8019D330_from_rcen(Entity* self) {
     case 0:
         InitializeEntity(&g_EInitParticle);
         index = self->params & 0xF;
-        particle = &D_us_801806B4[index];
+        particle = &InitData[index];
         self->palette = particle->palette + 0x2E0;
         self->blendMode = particle->blendMode;
         self->animSet = particle->animSet;
