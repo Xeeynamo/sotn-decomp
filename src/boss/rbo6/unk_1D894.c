@@ -1,31 +1,48 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../rbo6/rbo6.h"
+#include "rbo6.h"
+
+typedef struct {
+    u16 animSet;
+    u16 unk5A;
+    u16 palette;
+    u16 blendMode;
+    AnimateEntityFrame* animation;
+} Borbo6ParticleData;
+
+static AnimateEntityFrame anim1[] = {
+    {3, 1}, {3, 2}, {3, 3},  {3, 4},  {3, 5},  {3, 6},  {3, 7},
+    {3, 8}, {3, 9}, {3, 10}, {3, 11}, {3, 12}, {3, 13}, POSE_END};
+static AnimateEntityFrame anim2[] = {
+    {2, 1}, {2, 2},  {2, 3},  {2, 4},  {2, 5},  {2, 6},  {2, 7},  {2, 8},
+    {2, 9}, {2, 10}, {2, 11}, {2, 12}, {2, 13}, {2, 14}, POSE_END};
+static AnimateEntityFrame anim3[] = {
+    {3, 1}, {3, 2}, {3, 3},  {3, 4},  {3, 5},  {3, 6},  {3, 7},
+    {3, 8}, {3, 9}, {3, 10}, {3, 11}, {3, 12}, {3, 13}, POSE_END};
+static Borbo6ParticleData InitData[] = {
+    {ANIMSET_OVL(2), 87, 2, 0,
+     anim2}, // Small explosion, almost looks like popcorn
+    {ANIMSET_DRA(14), 121, 0, 48, anim1}, // More of a flamey explosion
+    {ANIMSET_DRA(14), 121, 10, 48,
+     anim1}, // Palette 0x2EA instead of 2E0. Green!
+    {ANIMSET_OVL(4), 88, 14, 48, anim3}}; // Messed up in viewer. Wrong context?
+
+extern EInit g_EInitParticle;
 
 void func_us_8019D330_from_rcen(Entity* self) {
-    typedef struct {
-        u16 animSet;
-        u16 unk2;
-        u16 palette;
-        u16 blendMode;
-        u32 animation;
-    } Borbo6ParticleData;
-    extern Borbo6ParticleData D_pspeu_0926BC10[];
-    extern u16 g_EInitParticle;
-
     u32 index;
     Borbo6ParticleData* particle;
     s16 angle;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&g_EInitParticle);
+        InitializeEntity(g_EInitParticle);
         index = self->params & 0xF;
-        particle = &D_pspeu_0926BC10[index];
+        particle = &InitData[index];
         self->palette = particle->palette + 0x2E0;
-        self->blendMode = (u8)particle->blendMode;
+        self->blendMode = particle->blendMode;
         self->animSet = particle->animSet;
-        self->unk5A = particle->unk2;
-        self->ext.et_801A518C.anim = (u8*)particle->animation;
+        self->unk5A = particle->unk5A;
+        self->ext.et_801A518C.anim = particle->animation;
         self->step = index + 1;
         if (self->params & 0xFF00) {
             self->zPriority = (self->params & 0xFF00) >> 8;
@@ -63,21 +80,21 @@ void func_us_8019D330_from_rcen(Entity* self) {
             if (self->facingLeft) {
                 angle = -angle;
             }
-            self->velocityX = rsin(angle) * 0x28;
-            self->velocityY = rcos(angle) * -0x28;
+            self->velocityX = rsin(angle) * 40;
+            self->velocityY = rcos(angle) * -40;
             self->ext.et_801A518C.acceleration = (Random() << 4) + 0x1000;
             self->step_s++;
         }
         MoveEntity();
-        self->opacity--;
+        self->opacity -= 1;
         angle = self->rotate;
         if (self->facingLeft) {
             angle = -angle;
         }
         self->velocityX +=
-            (rsin(angle) * (s32)self->ext.et_801A518C.acceleration) >> 12;
+            (rsin(angle) * self->ext.et_801A518C.acceleration) >> 12;
         self->velocityY +=
-            (-(s32)self->ext.et_801A518C.acceleration * rcos(angle)) >> 12;
+            (-self->ext.et_801A518C.acceleration * rcos(angle)) >> 12;
         if (AnimateEntity(self->ext.et_801A518C.anim, self) == 0) {
             DestroyEntity(self);
         }
@@ -88,21 +105,18 @@ void func_us_8019D330_from_rcen(Entity* self) {
             self->drawFlags = ENTITY_OPACITY;
             self->opacity = 0x80;
             self->facingLeft = Random() & 1;
-            self->velocityX = ((Random() << 9) - 0x8000) - 0x8000;
+            self->velocityX =
+                ((Random() * FIX(1.0 / 128)) - FIX(0.5)) - FIX(0.5);
             self->velocityY = FIX(-2.5);
             self->ext.et_801A518C.accelerationY = -(Random() << 4) - 0x1000;
             self->step_s++;
         }
         MoveEntity();
         self->velocityY += (s32)self->ext.et_801A518C.accelerationY;
-        self->opacity--;
+        self->opacity -= 1;
         if (AnimateEntity(self->ext.et_801A518C.anim, self) == 0) {
             DestroyEntity(self);
         }
-
-    default:
-        return;
+        break;
     }
 }
-
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_1A5B8", EntityBackgroundVortex);
