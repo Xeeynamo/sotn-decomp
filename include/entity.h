@@ -3734,7 +3734,7 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ s32 unk7C;
-    /* 0x80 */ u8* anim;
+    /* 0x80 */ struct AnimateEntityFrame* anim;
     /* 0x84 */ u16 unk84;
     /* 0x84 */ u16 : 16;
     /* 0x88 */ u8 unk88;
