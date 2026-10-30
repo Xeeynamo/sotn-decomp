@@ -1254,7 +1254,9 @@ void ExecSoundCommands(void) {
             continue;
         }
 
-#ifdef VERSION_HD
+#if defined(VERSION_PC)
+        if (id > 0x300 && id < 0x535) {
+#elif defined(VERSION_HD)
         if (id > 0x300 && id < 0x531) {
 #elif defined(VERSION_PSP)
         if (id > 0x300 && id < 0x532) {
