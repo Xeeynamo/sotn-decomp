@@ -3109,7 +3109,7 @@
 |            | e_scylla.rodata                   |       44 |          0 | Yes    |       |     |
 |            | doors.rodata                      |       44 |          0 | Yes    |       |     |
 |            | 12D64.rodata                      |       44 |          0 | Yes    |       |     |
-| rbo6       | unk_D4E8.rodata                   |       44 |          0 | Yes    |       |     |
+| rbo6       | unk_D668.rodata                   |       44 |          0 | Yes    |       |     |
 | dra        | 624DC.rodata                      |       44 |          0 | Yes    |       |     |
 | chi        | en_venus_weed.rodata              |       44 |          0 | Yes    |       |     |
 | rlib       | e_collect.rodata                  |       44 |          0 | Yes    |       |     |
