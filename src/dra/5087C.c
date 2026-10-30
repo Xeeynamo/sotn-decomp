@@ -173,6 +173,14 @@ RoomTeleport D_800A245C[] = {
     {240, 132, 0x0000, 0x000D, STAGE_NZ1},
     {1264, 392, 0x0000, 0x0002, STAGE_LIB},
     {16, 132, 0x0000, 0x002D, STAGE_NZ1},
+#if defined(VERSION_PC) && defined(ENABLE_SATURN_STAGES)
+    {0, 0, 0x0000, STAGE_NP3, STAGE_NP3},
+    {0, 0, 0x0000, STAGE_NP3, STAGE_NP3},
+    {0, 0, 0x0000, STAGE_NO0, STAGE_NO0},
+    {0, 0, 0x0000, STAGE_NO4, STAGE_NO4},
+    {0, 0, 0x0000, STAGE_NO0, STAGE_NO0},
+    {0, 0, 0x0000, STAGE_NO4, STAGE_NO4},
+#endif
 };
 
 RoomBossTeleport g_RoomBossTeleports[] = {

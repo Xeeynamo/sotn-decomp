@@ -221,11 +221,11 @@ impl Np3Art {
 }
 
 impl TileDefs {
-    pub fn load(dir: &Path, tiledef: usize) -> Result<Self> {
+    pub fn load(dir: &Path, tiledef: &str) -> Result<Self> {
         Self::load_named(dir, "np3", tiledef)
     }
 
-    fn load_named(dir: &Path, stage: &str, tiledef: usize) -> Result<Self> {
+    fn load_named(dir: &Path, stage: &str, tiledef: &str) -> Result<Self> {
         let read = |what: &str| -> Result<Vec<u8>> {
             Ok(std::fs::read(
                 dir.join(format!("{stage}_tiledef_{tiledef}_{what}.bin")),
@@ -1836,8 +1836,8 @@ fn load_stitch_assets(
     tileset: &Path,
     stage: &str,
     tilemaps: (usize, usize),
-    tiledef: usize,
-    reserved_tiledefs: &[usize],
+    tiledef: &str,
+    reserved_tiledefs: &[&str],
 ) -> Result<StitchAssets> {
     let fg = read_tilemap(&assets.join(format!("{stage}_tilemap_{}.bin", tilemaps.0)))?;
     let bg = read_tilemap(&assets.join(format!("{stage}_tilemap_{}.bin", tilemaps.1)))?;
@@ -1859,7 +1859,7 @@ fn load_stitch_assets(
 
 #[derive(Clone, Copy)]
 struct RoomStitchConfig {
-    reserved_tiledefs: &'static [usize],
+    reserved_tiledefs: &'static [&'static str],
     saturn: SaturnRoomSource,
     art: ArtPolicy,
     visual_name: &'static str,
@@ -1876,7 +1876,7 @@ struct RoomStitchConfig {
 
 #[derive(Clone, Copy)]
 struct ShaftStitchConfig {
-    reserved_tiledefs: &'static [usize],
+    reserved_tiledefs: &'static [&'static str],
     saturn: SaturnRoomSource,
     art: ArtPolicy,
     visual_name: &'static str,
@@ -1965,12 +1965,13 @@ struct AssetGraft {
     layers: &'static str,
     room: usize,
     tilemaps: (usize, usize),
-    tiledef: usize,
+    tiledef: &'static str,
     psx_width: usize,
     psx_height: usize,
     region: TileRegion,
     shaft_top: Option<i16>,
     shaft_bottom: Option<i16>,
+    room_right_overrides: &'static [(usize, i16)],
     cd: Option<(i16, i16)>,
     trigger: (i16, i16, i16),
 }
@@ -2168,7 +2169,7 @@ fn patch_tilemap(source: &[u16], stitch: &[u16], width: usize, region: TileRegio
 fn write_stitched_tiledef(
     assets: &Path,
     stage: &str,
-    tiledef: usize,
+    tiledef: &str,
     source: &TileDefs,
     minted: &[MintedTile],
 ) -> Result<()> {
@@ -2264,6 +2265,21 @@ fn write_stitched_rooms_and_layers(assets: &Path, config: AssetGraft) -> Result<
     let layers_path = json_path(assets, config.layers);
     let mut rooms: Vec<PsxRoom> = serde_json::from_slice(&std::fs::read(&rooms_path)?)?;
     let mut layers: Vec<PsxLayers> = serde_json::from_slice(&std::fs::read(&layers_path)?)?;
+    for &(room_index, right) in config.room_right_overrides {
+        let room = rooms.get_mut(room_index).ok_or_else(|| {
+            Error::Format(format!(
+                "{} room {} does not exist",
+                config.stage, room_index
+            ))
+        })?;
+        if right < room.left || right > room.right {
+            return Err(Error::Format(format!(
+                "{} room {} cannot change its right edge from {} to {}",
+                config.stage, room_index, room.right, right
+            )));
+        }
+        room.right = right;
+    }
     let room = rooms.get_mut(config.room).ok_or_else(|| {
         Error::Format(format!(
             "{} room {} does not exist",
@@ -2307,6 +2323,11 @@ fn write_stitched_rooms_and_layers(assets: &Path, config: AssetGraft) -> Result<
             layer.top = top;
             layer.bottom = top;
         }
+        cd_layer
+            .fg
+            .as_mut()
+            .expect("loading layer has a foreground")
+            .z_priority = config.trigger.2 as u16;
         let layer_id = layers.len() as i16;
         layers.push(cd_layer);
         let mut cd_room = rooms[loading_room].clone();
@@ -2485,7 +2506,7 @@ fn stitch_room(
 }
 
 const NO4_CONFIG: RoomStitchConfig = RoomStitchConfig {
-    reserved_tiledefs: &[0, 1],
+    reserved_tiledefs: &["load", "save"],
     saturn: NO4_SOURCE,
     art: ArtPolicy::Exact,
     visual_name: "no4-stitch",
@@ -2504,14 +2525,15 @@ const NO4_CONFIG: RoomStitchConfig = RoomStitchConfig {
         layers: "layers",
         room: 5,
         tilemaps: (9, 10),
-        tiledef: 2,
+        tiledef: "no4",
         psx_width: 16,
         psx_height: 32,
         region: NO4_SOURCE.region,
         shaft_top: None,
         shaft_bottom: None,
-        cd: None,
-        trigger: (36, 34, 134),
+        room_right_overrides: &[],
+        cd: Some((36, 34)),
+        trigger: (35, 34, 134),
     },
 };
 
@@ -2550,7 +2572,7 @@ const RNO4_SOURCE: SaturnRoomSource = SaturnRoomSource {
 };
 
 const RNO4_CONFIG: RoomStitchConfig = RoomStitchConfig {
-    reserved_tiledefs: &[0, 1],
+    reserved_tiledefs: &["rload", "rsave"],
     saturn: RNO4_SOURCE,
     art: ArtPolicy::MirroredPalette,
     visual_name: "rno4-stitch",
@@ -2569,14 +2591,15 @@ const RNO4_CONFIG: RoomStitchConfig = RoomStitchConfig {
         layers: "layers",
         room: 5,
         tilemaps: (9, 10),
-        tiledef: 2,
+        tiledef: "rno4",
         psx_width: 16,
         psx_height: 32,
         region: RNO4_SOURCE.region,
         shaft_top: None,
         shaft_bottom: None,
-        cd: None,
-        trigger: (27, 29, 136),
+        room_right_overrides: &[],
+        cd: Some((27, 29)),
+        trigger: (28, 29, 136),
     },
 };
 
@@ -2635,7 +2658,7 @@ const RNO0_SOURCE: SaturnRoomSource = SaturnRoomSource {
 };
 
 const NO0_CONFIG: RoomStitchConfig = RoomStitchConfig {
-    reserved_tiledefs: &[1, 2],
+    reserved_tiledefs: &["load", "save"],
     saturn: NO0_SOURCE,
     art: ArtPolicy::FixedPalette,
     visual_name: "no0-stitch",
@@ -2654,14 +2677,15 @@ const NO0_CONFIG: RoomStitchConfig = RoomStitchConfig {
         layers: "layers",
         room: 0,
         tilemaps: (0, 1),
-        tiledef: 0,
+        tiledef: "no0",
         psx_width: 96,
         psx_height: 48,
         region: NO0_SOURCE.region,
         shaft_top: None,
         shaft_bottom: None,
-        cd: None,
-        trigger: (27, 36, 133),
+        room_right_overrides: &[],
+        cd: Some((27, 36)),
+        trigger: (28, 36, 133),
     },
 };
 
@@ -2683,7 +2707,7 @@ pub fn stitch_no0(
 }
 
 const RNO0_CONFIG: RoomStitchConfig = RoomStitchConfig {
-    reserved_tiledefs: &[0, 2],
+    reserved_tiledefs: &["rload", "rsave"],
     saturn: RNO0_SOURCE,
     art: ArtPolicy::ReuseNearest,
     visual_name: "rno0-stitch",
@@ -2702,14 +2726,15 @@ const RNO0_CONFIG: RoomStitchConfig = RoomStitchConfig {
         layers: "layers",
         room: 0,
         tilemaps: (0, 1),
-        tiledef: 1,
+        tiledef: "rno0",
         psx_width: 96,
         psx_height: 48,
         region: RNO0_SOURCE.region,
         shaft_top: None,
         shaft_bottom: None,
-        cd: None,
-        trigger: (36, 27, 135),
+        room_right_overrides: &[],
+        cd: Some((36, 27)),
+        trigger: (35, 27, 135),
     },
 };
 
@@ -2880,7 +2905,7 @@ fn dump_psx_rooms_named(assets: &Path, tileset: &Path, output: &Path, name: &str
         .as_array()
         .ok_or_else(|| Error::Format(format!("{name} layers.json is not an array")))?;
     std::fs::create_dir_all(output)?;
-    let mut art_by_def: HashMap<usize, Np3Art> = HashMap::new();
+    let mut art_by_def: HashMap<String, Np3Art> = HashMap::new();
     let mut index = Vec::new();
     for (room_id, room) in rooms.iter().enumerate() {
         let layer_id = room["layerId"]
@@ -2916,11 +2941,11 @@ fn dump_psx_rooms_named(assets: &Path, tileset: &Path, output: &Path, name: &str
             let tiledef = definition
                 .strip_prefix(&format!("{name}_tiledef_"))
                 .and_then(|value| value.strip_suffix(".json"))
-                .and_then(|value| value.parse::<usize>().ok())
+                .map(str::to_string)
                 .ok_or_else(|| Error::Format(format!("unknown {name} tiledef {definition}")))?;
             if !art_by_def.contains_key(&tiledef) {
-                let defs = TileDefs::load_named(assets, name, tiledef)?;
-                art_by_def.insert(tiledef, Np3Art::load(tileset, &defs)?);
+                let defs = TileDefs::load_named(assets, name, &tiledef)?;
+                art_by_def.insert(tiledef.clone(), Np3Art::load(tileset, &defs)?);
             }
             let data = layer[role]["data"].as_str().ok_or_else(|| {
                 Error::Format(format!("{name} layer {layer_id} {role} has no data"))
@@ -2995,7 +3020,7 @@ const NP3_CONFIG: ShaftStitchConfig = ShaftStitchConfig {
         layers: "layers",
         room: 1,
         tilemaps: (2, 3),
-        tiledef: 2,
+        tiledef: "np3",
         psx_width: 16,
         psx_height: 32,
         region: TileRegion {
@@ -3006,13 +3031,14 @@ const NP3_CONFIG: ShaftStitchConfig = ShaftStitchConfig {
         },
         shaft_top: None,
         shaft_bottom: Some(44),
+        room_right_overrides: &[],
         cd: Some((3, 44)),
         trigger: (4, 44, 131),
     },
 };
 
 const RNO3_CONFIG: ShaftStitchConfig = ShaftStitchConfig {
-    reserved_tiledefs: &[0, 1],
+    reserved_tiledefs: &["rload", "rsave"],
     saturn: SATURN_REVERSE_SHAFT_SOURCE,
     art: ArtPolicy::MirroredPalette,
     visual_name: "rno3-stitch",
@@ -3030,7 +3056,7 @@ const RNO3_CONFIG: ShaftStitchConfig = ShaftStitchConfig {
         layers: "us/layers",
         room: 1,
         tilemaps: (2, 3),
-        tiledef: 2,
+        tiledef: "rno3",
         psx_width: 16,
         psx_height: 32,
         region: TileRegion {
@@ -3041,6 +3067,7 @@ const RNO3_CONFIG: ShaftStitchConfig = ShaftStitchConfig {
         },
         shaft_top: Some(19),
         shaft_bottom: None,
+        room_right_overrides: &[(18, 58)],
         cd: Some((60, 19)),
         trigger: (59, 19, 132),
     },
@@ -3340,7 +3367,7 @@ mod tests {
                 layers: "layers",
                 room: 1,
                 tilemaps: (2, 3),
-                tiledef: 2,
+                tiledef: "np3",
                 psx_width: 16,
                 psx_height: 32,
                 region: TileRegion {
@@ -3351,6 +3378,7 @@ mod tests {
                 },
                 shaft_top: None,
                 shaft_bottom: Some(44),
+                room_right_overrides: &[],
                 cd: Some((3, 44)),
                 trigger: (4, 44, 131),
             },
