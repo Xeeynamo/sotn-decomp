@@ -646,8 +646,8 @@
 | 1.00 | true     | func_us_8019DDF8                    | asm/us/boss/rbo3/matchings/e_room_fg/func_us_8019DDF8.s 
 | 1.00 | true     | func_us_801A3A6C                    | asm/us/boss/rbo4/matchings/e_room_fg/func_us_801A3A6C.s 
 | 1.00 | true     | func_us_801C0550                    | asm/us/boss/rbo5/matchings/e_room_fg/func_us_801C0550.s 
+| 0.92 | true     | func_us_8019D0E4                    | asm/us/boss/rbo6/matchings/e_room_bg/func_us_8019D0E4.s 
 | 1.00 | true     | func_us_801B011C                    | asm/us/boss/rbo6/matchings/e_room_fg/func_us_801B011C.s 
-| 0.92 | true     | func_us_8019D0E4                    | asm/us/boss/rbo6/matchings/unk_1D0E4/func_us_8019D0E4.s 
 | 1.00 | true     | func_us_801A0B34                    | asm/us/boss/rbo7/matchings/e_room_fg/func_us_801A0B34.s 
 | 1.00 | true     | func_us_801A49F8                    | asm/us/boss/rbo8/matchings/e_room_fg/func_us_801A49F8.s 
 | 1.00 | true     | func_us_801C3340                    | asm/us/st/are/matchings/e_room_fg/func_us_801C3340.s 
@@ -2871,7 +2871,7 @@
 | 1.00 | true     | func_us_80196920                    | asm/us/boss/rbo3/matchings/st_common/func_us_80196920.s 
 | 1.00 | true     | func_us_8019C594                    | asm/us/boss/rbo4/matchings/st_common/func_us_8019C594.s 
 | 1.00 | true     | func_us_801B9078                    | asm/us/boss/rbo5/matchings/st_common/func_us_801B9078.s 
-| 1.00 | true     | GetSideToPlayer                     | asm/us/boss/rbo6/matchings/st_common/GetSideToPlayer.s 
+| 1.00 | true     | func_us_801A8C44                    | asm/us/boss/rbo6/matchings/st_common/func_us_801A8C44.s 
 | 1.00 | true     | func_us_8019965C                    | asm/us/boss/rbo7/matchings/st_common/func_us_8019965C.s 
 | 1.00 | true     | GetSideToPlayer                     | asm/us/boss/rbo8/matchings/st_common/GetSideToPlayer.s 
 | 1.00 | true     | func_us_801BBE5C                    | asm/us/st/are/matchings/st_common/func_us_801BBE5C.s 
@@ -5725,7 +5725,7 @@
 | 1.00 | true     | func_8018726C                       | asm/us/st/wrp/matchings/e_breakable/func_8018726C.s 
 | 1.00 | false    | EntityBreakable                     | asm/us/boss/rbo1/nonmatchings/unk_12274/EntityBreakable.s 
 | 1.00 | false    | EntityBreakable                     | asm/us/boss/rbo2/nonmatchings/unk_1B284/EntityBreakable.s 
-| 1.00 | false    | EntityBreakable                     | asm/us/boss/rbo6/nonmatchings/unk_1D690/EntityBreakable.s 
+| 1.00 | false    | EntityBreakable                     | asm/us/boss/rbo6/nonmatchings/e_breakable/EntityBreakable.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801CB9A0                    | asm/us/boss/bo0/matchings/e_life_up/func_us_801CB9A0.s 
 | 1.00 | true     | func_us_801B0E4C                    | asm/us/boss/bo1/matchings/e_life_up/func_us_801B0E4C.s 
@@ -6033,6 +6033,16 @@
 | 1.00 | true     | func_801B3F7C                       | asm/us/st/sel/matchings/32D6C/func_801B3F7C.s 
 | 1.00 | true     | func_801B8500                       | asm/us/st/sel/matchings/save_mgr/func_801B8500.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_us_8019D1C4                    | asm/us/boss/rbo6/matchings/e_lock_camera/func_us_8019D1C4.s 
+| 1.00 | true     | func_us_801ADF98                    | asm/us/st/lib/matchings/e_lock_camera/func_us_801ADF98.s 
+| 1.00 | true     | func_us_801C1968                    | asm/us/st/no0/matchings/e_room_bg/func_us_801C1968.s 
+| 1.00 | true     | func_801B0A20                       | asm/us/st/nz0/matchings/e_lock_camera/func_801B0A20.s 
+| 1.00 | true     | func_us_801A5E18                    | asm/us/st/nz1/matchings/e_lock_camera/func_us_801A5E18.s 
+| 1.00 | true     | func_us_8019A38C                    | asm/us/st/rcen/matchings/e_lock_camera/func_us_8019A38C.s 
+| 1.00 | true     | func_us_8019FEDC                    | asm/us/st/rtop/matchings/e_lock_camera/func_us_8019FEDC.s 
+| 1.00 | true     | func_801A7E2C                       | asm/us/st/st0/matchings/e_lock_camera/func_801A7E2C.s 
+| 1.00 | true     | func_us_801A8D00                    | asm/us/st/top/matchings/e_lock_camera/func_us_801A8D00.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_801745E4                       | asm/us/servant/tt_000/matchings/bat/func_801745E4.s 
 | 1.00 | true     | func_us_801732BC                    | asm/us/servant/tt_001/matchings/ghost/func_us_801732BC.s 
 | 1.00 | true     | func_us_80173B14                    | asm/us/servant/tt_002/matchings/faerie/func_us_80173B14.s 
@@ -6052,16 +6062,6 @@
 | 1.00 | true     | func_us_801CF5E0                    | asm/us/st/rno0/matchings/e_gorgon/func_us_801CF5E0.s 
 | 1.00 | true     | func_us_801BA174                    | asm/us/st/rnz1/matchings/e_cloaked_knight/func_us_801BA174.s 
 | 1.00 | false    | StepTowards                         | asm/us/st/rno4/nonmatchings/e_cave_troll/StepTowards.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_us_801ADF98                    | asm/us/st/lib/matchings/e_lock_camera/func_us_801ADF98.s 
-| 1.00 | true     | func_us_801C1968                    | asm/us/st/no0/matchings/e_room_bg/func_us_801C1968.s 
-| 1.00 | true     | func_801B0A20                       | asm/us/st/nz0/matchings/e_lock_camera/func_801B0A20.s 
-| 1.00 | true     | func_us_801A5E18                    | asm/us/st/nz1/matchings/e_lock_camera/func_us_801A5E18.s 
-| 1.00 | true     | func_us_8019A38C                    | asm/us/st/rcen/matchings/e_lock_camera/func_us_8019A38C.s 
-| 1.00 | true     | func_us_8019FEDC                    | asm/us/st/rtop/matchings/e_lock_camera/func_us_8019FEDC.s 
-| 1.00 | true     | func_801A7E2C                       | asm/us/st/st0/matchings/e_lock_camera/func_801A7E2C.s 
-| 1.00 | true     | func_us_801A8D00                    | asm/us/st/top/matchings/e_lock_camera/func_us_801A8D00.s 
-| 1.00 | false    | PlayerIsWithinHitbox                | asm/us/boss/rbo6/nonmatchings/e_lock_camera/PlayerIsWithinHitbox.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CutsceneSkip                        | asm/us/boss/bo2/matchings/e_cutscene_dialogue/CutsceneSkip.s 
 | 1.00 | true     | CutsceneSkip                        | asm/us/boss/bo6/matchings/cutscene/CutsceneSkip.s 
@@ -6107,6 +6107,14 @@
 | 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
 | 0.90 | true     | func_801BA6A8                       | asm/us/st/sel/matchings/libpress/func_801BA6A8.s 
 | 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_us_8019D248                    | asm/us/boss/rbo6/matchings/e_lock_camera/func_us_8019D248.s 
+| 0.92 | true     | func_us_801AE01C                    | asm/us/st/lib/matchings/e_lock_camera/func_us_801AE01C.s 
+| 0.98 | true     | func_us_801C19EC                    | asm/us/st/no0/matchings/e_lock_camera/func_us_801C19EC.s 
+| 1.00 | true     | func_801B0AA4                       | asm/us/st/nz0/matchings/e_lock_camera/func_801B0AA4.s 
+| 1.00 | true     | func_us_801A5E9C                    | asm/us/st/nz1/matchings/e_lock_camera/func_us_801A5E9C.s 
+| 1.00 | true     | func_us_8019A410                    | asm/us/st/rcen/matchings/e_lock_camera/func_us_8019A410.s 
+| 1.00 | true     | func_us_8019FF60                    | asm/us/st/rtop/matchings/e_lock_camera/func_us_8019FF60.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801D0A00                       | asm/us/boss/rbo8/matchings/e_blade/func_801D0A00.s 
 | 1.00 | true     | func_us_801CC020                    | asm/us/st/no2/matchings/blade/func_us_801CC020.s 
@@ -6244,14 +6252,6 @@
 | 1.00 | true     | func_us_80179268                    | asm/us/servant/tt_005/matchings/sprite/func_us_80179268.s 
 | 1.00 | true     | func_us_80178124                    | asm/us/servant/tt_006/matchings/nosedevil/func_us_80178124.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_us_801AE01C                    | asm/us/st/lib/matchings/e_lock_camera/func_us_801AE01C.s 
-| 0.91 | true     | func_us_801C19EC                    | asm/us/st/no0/matchings/e_lock_camera/func_us_801C19EC.s 
-| 0.92 | true     | func_801B0AA4                       | asm/us/st/nz0/matchings/e_lock_camera/func_801B0AA4.s 
-| 0.92 | true     | func_us_801A5E9C                    | asm/us/st/nz1/matchings/e_lock_camera/func_us_801A5E9C.s 
-| 0.92 | true     | func_us_8019A410                    | asm/us/st/rcen/matchings/e_lock_camera/func_us_8019A410.s 
-| 0.92 | true     | func_us_8019FF60                    | asm/us/st/rtop/matchings/e_lock_camera/func_us_8019FF60.s 
-| 0.92 | false    | EntityLockCamera                    | asm/us/boss/rbo6/nonmatchings/e_lock_camera/EntityLockCamera.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | func_801D1FC0                       | asm/us/st/no3/matchings/water_effects/func_801D1FC0.s 
 | 1.00 | true     | func_us_801D6C0C                    | asm/us/st/no4/matchings/water_effects/func_us_801D6C0C.s 
 | 1.00 | true     | func_801C56D8                       | asm/us/st/np3/matchings/water_effects/func_801C56D8.s 
@@ -6377,7 +6377,7 @@
 | 1.00 | true     | func_us_8019D260                    | asm/us/st/rcen/matchings/e_shaft_death_flames/func_us_8019D260.s 
 | 1.00 | false    | func_us_8019D260_from_rcen          | asm/us/boss/rbo1/nonmatchings/unk_12274/func_us_8019D260_from_rcen.s 
 | 1.00 | false    | func_us_8019D260_from_rcen          | asm/us/boss/rbo2/nonmatchings/unk_1B284/func_us_8019D260_from_rcen.s 
-| 1.00 | false    | func_us_8019D260_from_rcen          | asm/us/boss/rbo6/nonmatchings/unk_1D690/func_us_8019D260_from_rcen.s 
+| 1.00 | false    | func_us_8019D260_from_rcen          | asm/us/boss/rbo6/nonmatchings/unk_1D7C4/func_us_8019D260_from_rcen.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C4958                    | asm/us/boss/bo4/matchings/dop_anim/func_us_801C4958.s 
 | 1.00 | true     | RicSetStep                          | asm/us/boss/bo6/matchings/us_39144/RicSetStep.s 
