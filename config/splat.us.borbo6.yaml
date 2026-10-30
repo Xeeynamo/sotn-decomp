@@ -48,7 +48,6 @@ segments:
       - [0x400, .data, e_init]
       - [0x57C, .data, e_room_bg]
       - [0x5B4, .data, e_red_door_tiles]
-      - [0x5D4, data]
       - [0x5E4, .data, e_lock_camera]
       - [0x5FC, data]
       - [0x65C, .data, d_prize_drops] # empty array, but needs a splat entry

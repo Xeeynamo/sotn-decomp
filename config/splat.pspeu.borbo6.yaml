@@ -74,6 +74,7 @@ segments:
       - [0x1BEE0, .data, rbo6/collision]
       - [0x1C2B8, .data, rbo6/e_room_fg]
       - [0x1C358, data, 1C358]
+      - [0x1D7C8, .data, rbo6/e_red_door_tiles]
       - [0x1D7F8, .data, rbo6/e_init]
       - [0x1D9A0, data]
       - [0x33D30, .data, rbo6/header]
