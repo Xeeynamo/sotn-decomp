@@ -19,9 +19,11 @@ static AnimateEntityFrame anim3[] = {
     {3, 1}, {3, 2}, {3, 3},  {3, 4},  {3, 5},  {3, 6},  {3, 7},
     {3, 8}, {3, 9}, {3, 10}, {3, 11}, {3, 12}, {3, 13}, POSE_END};
 static Borbo6ParticleData InitData[] = {
-    {ANIMSET_OVL(2), 87, 2, 0, anim2}, // Small explosion, almost looks like popcorn
+    {ANIMSET_OVL(2), 87, 2, 0,
+     anim2}, // Small explosion, almost looks like popcorn
     {ANIMSET_DRA(14), 121, 0, 48, anim1}, // More of a flamey explosion
-    {ANIMSET_DRA(14), 121, 10, 48, anim1}, // Palette 0x2EA instead of 2E0. Green!
+    {ANIMSET_DRA(14), 121, 10, 48,
+     anim1}, // Palette 0x2EA instead of 2E0. Green!
     {ANIMSET_OVL(4), 88, 14, 48, anim3}}; // Messed up in viewer. Wrong context?
 
 extern EInit g_EInitParticle;
