@@ -43,7 +43,7 @@ fn inputs() -> Option<Inputs> {
         return None;
     }
     let scratch = std::env::temp_dir().join("np3-stitch-test");
-    let defs = TileDefs::load(&np3, 2).ok()?;
+    let defs = TileDefs::load(&np3, "np3").ok()?;
     let np3_art = Np3Art::load(&root.join("disks/us/ST/NP3/F_NP3.BIN"), &defs).ok()?;
     Some(Inputs {
         fg: u16le(&np3.join("np3_tilemap_2.bin"))?,
