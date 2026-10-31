@@ -6,15 +6,3 @@ INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D668", DecreaseBrightness);
 INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D668", func_us_801A4594);
 
 INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D668", func_us_801A4F14);
-
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D668", func_us_801A367C);
-
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D668", func_us_801A37B4);
-
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D668", func_us_801A399C);
-
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D668", func_us_801A3BE0);
-
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D668", func_us_801A4028);
-
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D668", func_us_801A9208_from_bo6);
