@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rbo6/rbo6.h"
 
-
 INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_18718", func_us_801B1738);
 
 void func_us_801B2864(Entity* self) {
