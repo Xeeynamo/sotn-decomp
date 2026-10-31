@@ -73,7 +73,6 @@ cutscene_data_1_sp = 0x09255318;
 cutscene_data_1_fr = 0x09255578;
 cutscene_data_1_ge = 0x09255818;
 cutscene_data_1_en = 0x09255AE0;
-
 cutscene_data_2_it = 0x09255D28;
 cutscene_data_2_sp = 0x09256028;
 cutscene_data_2_fr = 0x09256308;

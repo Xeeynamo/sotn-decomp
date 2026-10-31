@@ -100,33 +100,21 @@ extern char cutscene_data_2_ge[];
 extern char cutscene_data_2_en[];
 
 void RBO6_Load(void) {
-    cutscene_1 = GetLangAt(
-        NULL, (u8*)cutscene_data_1_en,
-        (u8*)cutscene_data_1_fr,
-        (u8*)cutscene_data_1_sp,
-        (u8*)cutscene_data_1_ge,
-        (u8*)cutscene_data_1_it);
+    cutscene_1 = GetLangAt(NULL, (u8*)cutscene_data_1_en,
+                           (u8*)cutscene_data_1_fr, (u8*)cutscene_data_1_sp,
+                           (u8*)cutscene_data_1_ge, (u8*)cutscene_data_1_it);
 
-    cutscene_2 = GetLangAt(
-        NULL, (u8*)cutscene_data_1_en,
-        (u8*)cutscene_data_1_fr,
-        (u8*)cutscene_data_1_sp,
-        (u8*)cutscene_data_1_ge,
-        (u8*)cutscene_data_1_it);
+    cutscene_2 = GetLangAt(NULL, (u8*)cutscene_data_1_en,
+                           (u8*)cutscene_data_1_fr, (u8*)cutscene_data_1_sp,
+                           (u8*)cutscene_data_1_ge, (u8*)cutscene_data_1_it);
 
-    cutscene_3 = GetLangAt(
-        NULL, (u8*)cutscene_data_2_en,
-        (u8*)cutscene_data_2_fr,
-        (u8*)cutscene_data_2_sp,
-        (u8*)cutscene_data_2_ge,
-        (u8*)cutscene_data_2_it);
+    cutscene_3 = GetLangAt(NULL, (u8*)cutscene_data_2_en,
+                           (u8*)cutscene_data_2_fr, (u8*)cutscene_data_2_sp,
+                           (u8*)cutscene_data_2_ge, (u8*)cutscene_data_2_it);
 
-    cutscene_4 = GetLangAt(
-        NULL, (u8*)cutscene_data_2_en,
-        (u8*)cutscene_data_2_fr,
-        (u8*)cutscene_data_2_sp,
-        (u8*)cutscene_data_2_ge,
-        (u8*)cutscene_data_2_it);
+    cutscene_4 = GetLangAt(NULL, (u8*)cutscene_data_2_en,
+                           (u8*)cutscene_data_2_fr, (u8*)cutscene_data_2_sp,
+                           (u8*)cutscene_data_2_ge, (u8*)cutscene_data_2_it);
 
     InitEntityIds();
     PfnEntityUpdates = EntityUpdates;
