@@ -67,7 +67,7 @@ segments:
       - [0x23EC, .data, e_blue_venus_weed]
       - [0x256C, data]
       - [0x2904, .data, e_jack_o_bones]
-      - [0x29F0, data]
+      - [0x29F0, .data, e_nova_skeleton]
       - [0x2B78, .data, e_imp]
       - [0x2BAA, data]
       - [0x2BAC, .data, e_balloon_pod]

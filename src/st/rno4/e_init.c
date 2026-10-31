@@ -89,7 +89,7 @@ void EntityJackOBonesJack(Entity* self);
 void EntityNovaSkeleton(Entity* self);
 void EntityNovaLaser(Entity* self);
 void EntityNovaLaserPulse(Entity* self);
-void EntityBladeSoldierDeathParts(Entity* self);
+void EntityNovaSkeletonDeathParts(Entity* self);
 void EntityImp(Entity* self);
 void EntityImpSmoke(Entity* self);
 void EntityBalloonPod(Entity* self);
@@ -186,7 +186,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityNovaSkeleton,
     EntityNovaLaser,
     EntityNovaLaserPulse,
-    EntityBladeSoldierDeathParts,
+    EntityNovaSkeletonDeathParts,
     EntityImp,
     EntityImpSmoke,
     EntityBalloonPod,
@@ -224,7 +224,7 @@ EInit g_EInitJackOBones = {ANIMSET_OVL(10), 0x01, 0x52, PAL_JACK_O_BONES, ENEMY_
 EInit g_EInitJackOBones2 = {ANIMSET_OVL(10), 0x00, 0x52, PAL_JACK_O_BONES, ENEMY_PARTICLE};
 EInit g_EInitJackOBones3 = {ANIMSET_OVL(10), 0x15, 0x52, PAL_JACK_O_BONES, ENEMY_JACK_O_BONES_3};
 EInit g_EInitNovaSkeleton = {ANIMSET_OVL(11), 0x01, 0x48, PAL_NOVA_SKELETON, ENEMY_NOVA_SKELETON};
-EInit D_us_80180C20 = {ANIMSET_OVL(11), 0x00, 0x48, PAL_NOVA_SKELETON, ENEMY_NOVA_SKELETON_LASER};
+EInit g_EInitNovaSkeleton2 = {ANIMSET_OVL(11), 0x00, 0x48, PAL_NOVA_SKELETON, ENEMY_NOVA_SKELETON_LASER};
 EInit g_EInitImp = {ANIMSET_OVL(12), 0x01, 0x4F, PAL_IMP_BALLOON_POD, ENEMY_IMP};
 EInit g_EInitImpSmoke = {ANIMSET_OVL(12), 0x01, 0x4F, PAL_IMP_BALLOON_POD, ENEMY_PARTICLE};
 EInit g_EInitBalloonPod = {ANIMSET_OVL(12), 0x13, 0x4F, PAL_IMP_BALLOON_POD, ENEMY_BALLOON_POD};
