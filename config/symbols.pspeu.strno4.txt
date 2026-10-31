@@ -71,7 +71,6 @@ D_us_80182384 = 0x0925A328;
 D_us_8018238C = 0x0925A330;
 D_us_801823C0 = 0x0925A368;
 D_us_801823D4 = 0x0925A380;
-anim_imp_smoke = 0x0925A598;
 g_NovaSkeletonSensors = 0x0925B058;
 g_NovaSkeletonAnimWalkLeft = 0x0925B070;
 g_NovaSkeletonAnimWalkRight = 0x0925B080;

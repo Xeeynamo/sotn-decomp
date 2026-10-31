@@ -23,7 +23,6 @@ g_NovaSkeletonDeathPartOffsetX = 0x80182B18;
 g_NovaSkeletonDeathPartOffsetY = 0x80182B28;
 g_NovaSkeletonCooldowns = 0x80182B38;
 g_NovaLaserPrimData = 0x80182B6C;
-anim_imp_smoke = 0x80182B90;
 rooms = 0x80182C00;
 EntityBreakable = 0x801C4B0C;
 func_us_801C123C_from_no4 = 0x801C4D5C;
