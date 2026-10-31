@@ -9,7 +9,6 @@ g_EInitJackOBones = 0x80180BF0;
 g_EInitImp = 0x80180C2C;
 g_FloatingIcePlatformHitbox = 0x801814DC;
 g_BreakableCrystalFloorTiles = 0x801816BC;
-g_JackOBonesDeathPartsRotSpeeds = 0x80182954;
 g_NovaSkeletonSensors = 0x801829F0;
 g_NovaSkeletonAnimWalkLeft = 0x80182A08;
 g_NovaSkeletonAnimWalkRight = 0x80182A18;
