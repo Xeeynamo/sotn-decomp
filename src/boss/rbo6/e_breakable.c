@@ -5,12 +5,15 @@ extern EInit g_EInitBreakable;
 static AnimateEntityFrame anim1[] = {{4, 1}, {4, 2}, POSE_LOOP(0)};
 static AnimateEntityFrame anim2[] = {{4, 0}, {4, 0}, POSE_LOOP(0)};
 
-
-static AnimateEntityFrame* anims[] = {anim1, anim2, NULL, NULL, NULL, NULL, NULL, NULL};
-extern u8 D_us_8018062C[]; 
-extern u8 D_us_80180634[];
-extern u16 D_us_8018063C[];
-extern u8 D_us_8018064C[];
+static AnimateEntityFrame* anims[8] = {anim1, anim2};
+static u8 hitboxHeights[8] = {8, 8};
+static u8 params_allzero[8] = {0, 0};
+static u16 animsets[8] = {3, 3};
+static u8 blends[8] = {
+    BLEND_TRANSP | BLEND_QUARTER,
+    BLEND_TRANSP | BLEND_ADD,
+};
+static u8 unused[8] = {0};
 
 void EntityBreakable(Entity* self) {
     Entity* entity;
@@ -24,15 +27,15 @@ void EntityBreakable(Entity* self) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 CreateEntityFromCurrentEntity(E_EXPLOSION, entity);
-                entity->params = D_us_80180634[breakableType];
+                entity->params = params_allzero[breakableType];
             }
             ReplaceBreakableWithItemDrop(self);
         }
     } else {
         InitializeEntity(g_EInitBreakable);
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 20;
-        self->blendMode = D_us_8018064C[breakableType];
-        self->hitboxHeight = D_us_8018062C[breakableType];
-        self->animSet = D_us_8018063C[breakableType];
+        self->blendMode = blends[breakableType];
+        self->hitboxHeight = hitboxHeights[breakableType];
+        self->animSet = animsets[breakableType];
     }
 }
