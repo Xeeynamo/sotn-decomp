@@ -93,8 +93,13 @@ typedef enum {
 typedef union {
     s32 val;
     struct {
+#ifdef SATZ
+        s16 lo;
+        s16 hi;
+#else
         s16 hi;
         s16 lo;
+#endif
     } i;
 } SotnFixed32;
 
