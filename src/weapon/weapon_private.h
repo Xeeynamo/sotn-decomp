@@ -53,6 +53,7 @@ extern s32 g_HandId;
 // PSP builds one overlay per weapon per hand, so each w*_*.c declares its own
 // entry points and overlay table rather than sharing the ones below.
 #ifndef VERSION_PSP
+#ifndef NO_HEADER
 // exported
 void EntityWeaponAttack(Entity* self);
 void LoadWeaponPalette(s32 clutIndex);
@@ -83,7 +84,7 @@ void WeaponUnused34(void);
 void WeaponUnused38(void);
 void WeaponUnused3C(void);
 
-static Weapon header = {
+static Weapon WeaponOverlay = {
     EntityWeaponAttack, func_ptr_80170004, func_ptr_80170008,
     func_ptr_8017000C,  func_ptr_80170010, func_ptr_80170014,
     GetWeaponId,        LoadWeaponPalette, EntityWeaponShieldSpell,
@@ -91,7 +92,7 @@ static Weapon header = {
     WeaponUnused30,     WeaponUnused34,    WeaponUnused38,
     WeaponUnused3C,
 };
-
+#endif // !NO_HEADER
 #endif // !VERSION_PSP
 
 #ifdef VERSION_PC
@@ -100,7 +101,7 @@ static Weapon header = {
 
 void Psyz_ModuleStart(void* param) {
     Weapon* o = param;
-    memcpy(o, &header, sizeof(Weapon));
+    memcpy(o, &WeaponOverlay, sizeof(Weapon));
 }
 
 void Psyz_ModuleStop(void) {}

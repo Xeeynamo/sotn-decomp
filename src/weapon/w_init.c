@@ -19,7 +19,8 @@ void WeaponUnused34(void);
 void WeaponUnused38(void);
 void WeaponUnused3C(void);
 
-static Weapon WeaponOverlay = {
+
+Weapon WeaponOverlay = {
     EntityWeaponAttack,
     (void (*)(Entity*))func_ptr_80170004,
     (void (*)(Entity*))func_ptr_80170008,

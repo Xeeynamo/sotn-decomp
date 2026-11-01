@@ -5,6 +5,7 @@
 // Hador, Luminus, Harper, Gram, Mormegil, Terminus Est, Dark Blade,
 // Mourneblade, Badelaire, Unknown#169
 
+#define NO_HEADER
 #include "weapon_private.h"
 
 #ifdef VERSION_PSP
@@ -189,6 +190,10 @@ static u16* g_WeaponCluts[] = {
 };
 
 #include "shared.h"
+
+// #ifndef VERSION_PSP
+// static g_HandId = HAND_ID;
+// #endif
 
 void EntityWeaponAttack(Entity* self) {
     WeaponAnimation* anim;

@@ -495,7 +495,10 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config, han
                 obj = add_c(nw, ver, f"{src_path}/{name}.c", ld_path, cpp_flags)
                 objs.insert(0, obj)  # the C file needs to always be linked first
             elif kind == ".data":
-                if name == 'left_hand' or name == 'right_hand' or name.startswith('w_init'):
+                if name == 'left_hand' or name == 'right_hand':
+                    # w_init needs to come first because it's the
+                    # the header
+                    # or name.startswith('w_init'):
                     obj = add_c(nw, ver, f"{src_path}/{name}.c", ld_path, cpp_flags)
                     objs.append(obj)  # the C file needs to always be linked first
                 continue
@@ -515,6 +518,12 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config, han
             f"-T {undefined_funcs_auto_path}",
             f"-T {undefined_syms_auto_path}",
         ]
+
+        if weapon_id == '000':
+            print("found weapon 000")
+            obj = add_c(nw, ver, f"{src_path}/w_init.c", ld_path, cpp_flags)
+            objs.insert(0, obj)
+            print(f"objs: {objs}")
         nw.build(
             rule="psx-ld",
             outputs=step_elf,

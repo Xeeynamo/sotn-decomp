@@ -41,7 +41,8 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x04000, .data, w_000]
+      - [0x04000, .data, w_init]
+      - [0x04040, .data, w_000]
       - [0x050D0, .data, right_hand]
       - [0x050D4, c, w_000]
   - name: f_001
