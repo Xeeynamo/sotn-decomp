@@ -11,6 +11,7 @@ extern s32 D_psp_E_UNK_1E;
 extern s32 D_psp_E_UNK_1F;
 extern s32 D_psp_E_UNK_20;
 extern s32 D_psp_E_UNK_21;
+extern s32 D_psp_E_UNK_22;
 extern s32 D_psp_E_UNK_23;
 extern s32 D_psp_E_UNK_24;
 extern s32 D_psp_E_UNK_25;
@@ -1295,7 +1296,76 @@ void func_us_801A0710(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_FE08", func_us_801A0860);
+void func_us_801A0860(Entity* self) {
+    Entity* other;
+    s32 scaleY;
+    s32 i;
+
+    if (D_pspeu_0926C060 & 1) {
+        DestroyEntity(self);
+        return;
+    }
+    other = &g_Entities[0x50];
+    self->posX.i.hi = other->posX.i.hi;
+    self->posY.i.hi = other->posY.i.hi + 0x10;
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180540);
+        self->animCurFrame = D_pspeu_0926C078 + 0x2D;
+        self->drawFlags = 3;
+        self->scaleX = self->scaleY = 0;
+        self->drawFlags |= 8;
+        self->opacity = 0;
+        /* fallthrough */
+    case 1:
+        self->scaleX = self->scaleY += 8;
+        if (self->scaleX >= 0x100) {
+            self->scaleX = self->scaleY = 0x100;
+            self->step += 1;
+        }
+        /* fallthrough */
+    case 2:
+        self->opacity += 2;
+        if (self->opacity >= 0x80) {
+            D_pspeu_0926C070 = 2;
+            self->step = 3;
+        }
+        break;
+    case 3:
+        if (D_pspeu_0926C070 == 4) {
+            g_api.PlaySfx(0x868);
+            self->step += 1;
+        }
+        break;
+    case 4:
+        self->scaleX += 8;
+        scaleY = self->scaleY;
+        scaleY -= 0x18;
+        if (scaleY < 0) {
+            scaleY = 0;
+        }
+        self->scaleY = scaleY;
+        for(i = 0; i < 0x10; i++) {
+            other = AllocEntity(&g_Entities[0xC0], &g_Entities[256]);
+            if (other != NULL) {
+                CreateEntityFromEntity(D_psp_E_UNK_22, self, other);
+                other->zPriority = self->zPriority + 1;
+            }
+        }
+        if (scaleY == 0) {
+            self->animCurFrame = 0;
+            self->ext.ILLEGAL.s16[2] = 0x50;
+            self->step += 1;
+        }
+        break;
+    case 5:
+        if (!--self->ext.ILLEGAL.s16[2]) {
+            g_api.PlaySfx(0x672);
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_FE08", func_us_801A0AB4);
 
