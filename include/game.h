@@ -1665,7 +1665,8 @@ typedef struct {
         s32 handId, Equipment* res, s32 equipId);
     /* 8003C7D4 */ s32 (*func_800EA5E4)(u32);
     /* 8003C7D8 */ void (*LoadGfxAsync)(s32 gfxId);
-    /* 8003C7DC */ void (*PlaySfx)(s32 sfxId);
+    // Should be (s32 sfxId) but bad call in RBO6 necessitates generic args
+    /* 8003C7DC */ void (*PlaySfx)();
     /* 8003C7E0 */ s16 (*func_800EDB58)(u8, s32);
     /* 8003C7E4 */ void (*func_800EA538)(s32 arg0);
     /* 8003C7E8 */ void (*func_800EA5AC)(u32 a, u32 r, u32 g, u32 b);

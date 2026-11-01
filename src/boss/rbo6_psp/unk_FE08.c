@@ -1082,7 +1082,171 @@ void func_us_8019FCB4(Entity* self) {
     
 }
 
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_FE08", func_us_801A01A4);
+void func_us_801A01A4(Entity* self){
+    Entity* other;
+    s16 arctan;
+    s32 primIndex;
+    s32 length;
+    Primitive* prim2;
+    Primitive* prim;
+    u8 var_s7;
+    s32 i;
+    s16 angle1;
+    s32 xVar;
+    s32 yVar;
+    s16 angle2;
+    
+    if (D_pspeu_0926C060 & 1) {
+        DestroyEntity(self);
+        return;
+    }
+    if (D_pspeu_0926C070 == 2) {
+        DestroyEntity(self);
+        return;
+    }
+    if (!self->params) {
+        self->ext.ILLEGAL.u32[8] = (u32) &g_Entities[0x56];
+        self->ext.ILLEGAL.u32[9] = (u32) &g_Entities[0x58];
+    } else {
+        self->ext.ILLEGAL.u32[9] = (u32) &g_Entities[0x56];
+        self->ext.ILLEGAL.u32[8] = (u32) &g_Entities[0x58];
+    }
+    other = (Entity*)self->ext.ILLEGAL.u32[8];
+    self->posX.i.hi = other->posX.i.hi;
+    self->posY.i.hi = other->posY.i.hi;
+    if (!(g_Timer & 0xF)) {
+        // This is bad. Not proper arguments. Necessitates empty
+        // prototype in gameapi.
+        g_api.PlaySfx(0x869, 0x70, 0);
+    }
+    switch (self->step) {                               /* irregular */
+    case 0:
+        InitializeEntity(g_EInitInteractable);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x14);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= 0x800000;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.prim = prim;
+        self->ext.ILLEGAL.u32[1] = (u32) prim;
+        i = 0; 
+        while(prim != NULL) {
+            prim->tpage = 0x1A;
+            prim->clut = 0x194;
+            prim->u0 = prim->u1 = (i * 0x10) + 0x90;
+            prim->u2 = prim->u3 = prim->u0 + 0x10;
+            prim->v0 = prim->v2 = 0xD0;
+            prim->v1 = prim->v3 = 0xC0;
+            prim->r0 = prim->g0 = prim->b0 = 0x50;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
+            prim->priority = self->zPriority + 1;
+            prim->drawMode = 8;
+            prim = prim->next;
+            i += 1;
+            if (i > 5) {
+                i = 0;
+            }
+        }
+    case 1:
+        prim = self->ext.prim;
+        prim->x0 = self->posX.i.hi;
+        prim->y0 = self->posY.i.hi;
+        prim->x1 = prim->x0;
+        prim->y1 = prim->y1 - 0x10;
+        prim->x2 = self->posX.i.hi;
+        prim->y2 = self->posY.i.hi;
+        prim->x3 = prim->x2;
+        prim->y3 = prim->y2 - 0x10;
+        self->ext.ILLEGAL.u32[1] = (u32) prim;
+        self->ext.ILLEGAL.s16[4] = (Random() * 0x10);
+        while (prim != NULL) {
+            prim->r0 = prim->g0 = prim->b0 = 0x50;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
+            prim->drawMode = 8;
+            prim = prim->next;
+        }
+        self->ext.ILLEGAL.s16[8] = 0;
+        self->step += 1;
+    case 2:
+        for(i = 0; true; i++){
+            prim = (Primitive*)self->ext.ILLEGAL.u32[1];
+            angle1 = self->ext.ILLEGAL.s16[4];
+            other = (Entity*)self->ext.ILLEGAL.u32[9];
+            xVar = other->posX.i.hi;
+            yVar = other->posY.i.hi;
+            xVar -= prim->x2;
+            yVar -= prim->y2;
+            if ((abs(xVar) < 0x10) && (abs(yVar) < 0x10)) {
+                self->step = 1;
+                return;
+            }
+            if ((abs(xVar) < 0x20) && (abs(yVar) < 0x20)) {
+                var_s7 = 1;
+            } else {
+                var_s7 = 0;
+            }
+            if (!self->ext.ILLEGAL.s16[8]) {
+                self->ext.ILLEGAL.s16[8] = 4;
+                if (var_s7) {
+                    self->ext.ILLEGAL.s16[8] = 2;
+                }
+                arctan = ratan2(-yVar, xVar);
+                angle2 = arctan - angle1;
+                if (angle2 > 0x800) {
+                    angle2 = angle2 - 0x1000;
+                }
+                if (angle2 < -0x800) {
+                    angle2 = angle2 + 0x1000;
+                }
+                if (!var_s7) {
+                    angle2 /= 4;
+                } else {
+                    angle2 /= 2;
+                }
+                self->ext.ILLEGAL.s16[5] = angle2;
+            }
+            angle1 += self->ext.ILLEGAL.s16[5];
+            if (!var_s7) {
+                angle1 += (0x60 - ((Random() & 3) << 6));
+            }
+            angle1 &= 0xFFF;
+            prim2 = prim->next;
+            if (prim2 == NULL) {
+                self->step = 1;
+                return;
+            }
+            LOW(prim2->x0) = LOW(prim->x2);
+            LOW(prim2->x1) = LOW(prim->x3);
+            self->ext.ILLEGAL.s16[4] = angle1;
+            self->ext.ILLEGAL.u32[1] = (u32) prim2;
+            xVar = (rcos(angle1) * 0xC) >> 0xC;
+            yVar = -((rsin(angle1) * 0xC) >> 0xC);
+            prim2->x2 = (prim2->x0 + xVar);
+            prim2->y2 = (prim2->y0 + yVar);
+            angle2 = angle1 - 0x400;
+            length = 0x10;
+            xVar = (length * rcos(angle2)) >> 0xC;
+            yVar = -((length * rsin(angle2)) >> 0xC);
+            xVar = prim2->x3 = (prim2->x2 + xVar);
+            yVar = prim2->y3 = (prim2->y2 + yVar);
+            prim2->drawMode = 0x77;
+            self->ext.ILLEGAL.s16[8]--;
+        }
+    case 3:
+        for(prim = self->ext.prim; prim != NULL; prim = prim->next) {
+            prim->drawMode = 8;
+        }
+        self->step = 1;
+        return;
+    }
+}
 
 INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_FE08", func_us_801A0710);
 
