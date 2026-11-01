@@ -14,6 +14,10 @@ SeqData g_SeqInfo[] = {
 
 XaMusicConfig g_XaMusicConfigs[] = {
 #include GEN_VERSION(xa_music_config.h)
+#if defined(VERSION_PC)
+    {0},
+    {0},
+#endif
 };
 
 Unkstruct_800BF554 g_SfxData[] = {
