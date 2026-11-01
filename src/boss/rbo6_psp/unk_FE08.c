@@ -6,11 +6,13 @@ extern s32 D_psp_E_UNK_19;
 extern s32 D_psp_E_UNK_1A;
 extern s32 D_psp_E_UNK_1B;
 extern s32 D_psp_E_UNK_1C;
+extern s32 D_psp_E_UNK_1D;
 extern s32 D_psp_E_UNK_1E;
 extern s32 D_psp_E_UNK_1F;
 extern s32 D_psp_E_UNK_20;
 extern s32 D_psp_E_UNK_23;
 extern s32 D_psp_E_UNK_24;
+extern s32 D_psp_E_UNK_25;
 extern s32 D_psp_E_UNK_27;
 extern AnimateEntityFrame D_pspeu_0926B3F0[];
 extern AnimateEntityFrame D_pspeu_0926B3F8[];
@@ -22,10 +24,15 @@ extern AnimateEntityFrame D_pspeu_0926B438[];
 extern AnimateEntityFrame D_pspeu_0926B448[];
 extern AnimateEntityFrame D_pspeu_0926B458[];
 extern AnimateEntityFrame D_pspeu_0926B468[];
+extern AnimateEntityFrame D_pspeu_0926B478[];
+extern AnimateEntityFrame D_pspeu_0926B480[];
+extern AnimateEntityFrame D_pspeu_0926B490[];
 extern AnimateEntityFrame D_pspeu_0926B4A0[];
 extern AnimateEntityFrame D_pspeu_0926B4F8[];
 extern AnimateEntityFrame* D_pspeu_0926B500[];
 extern Point16 D_pspeu_0926B518[];
+extern Point16 D_pspeu_0926B530[];
+extern s16 D_pspeu_0926B540[];
 extern u16 D_pspeu_0926B548[];
 extern s8 D_pspeu_0926B550;
 extern u8 D_pspeu_0926B570[];
@@ -683,7 +690,199 @@ void func_us_8019EE30(Entity* self) {
     self->hitboxState = 3;
 }
 
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_FE08", func_us_8019F1CC);
+extern EInit D_us_8018054C;
+
+void func_us_8019F1CC(Entity* self) {
+    Entity* previous;
+    Entity* other;
+    s32 sqMag;
+    s16 angle;
+    s32 i;
+    s32 xVar2;
+    s32 yVar2;
+    s32 xVar;
+    s32 yVar;
+
+    self->palette = D_pspeu_0926C0A0;
+    if ((D_pspeu_0926C060 & 1) && ((self->step) != 0x10)) {
+        SetStep(0x10);
+    }
+    switch (self->step) {                              /* switch 1; irregular */
+    case 0:                                         /* switch 1 */
+        InitializeEntity(D_us_8018054C);
+        other = self + 1;
+        for(i = 0; i < 5; i++, other++) {
+            CreateEntityFromCurrentEntity(D_psp_E_UNK_1D, other);
+            other->zPriority = self->zPriority - i;
+        }
+        /* fallthrough */
+    case 1:                                         /* switch 1 */
+        AnimateEntity(&D_pspeu_0926B478, self);
+        other = &g_Entities[0x50];
+        xVar = other->posX.i.hi + D_pspeu_0926B530[self->params].x;
+        yVar = other->posY.i.hi + D_pspeu_0926B530[self->params].y;
+        self->posX.i.hi = xVar;
+        self->posY.i.hi = yVar;
+        self->zPriority = ((other->zPriority) + 2);
+        self->hitboxState = 0;
+        if (D_pspeu_0926C090 == ((self->params) + 1)) {
+            self->zPriority = ((other->zPriority) + 6);
+            SetStep(2);
+        }
+        if (D_pspeu_0926C098 == 1) {
+            self->zPriority = ((other->zPriority) + 6);
+            SetStep(3);
+        }
+        break;
+    case 2:                                         /* switch 1 */
+        self->hitboxState = 3;
+        switch (self->step_s) {                          /* switch 2; irregular */
+        case 0:                                     /* switch 2 */
+            other = &PLAYER;
+            xVar = other->posX.i.hi - self->posX.i.hi;
+            yVar = other->posY.i.hi - self->posY.i.hi;
+            angle = ratan2(yVar, xVar);
+            self->velocityX = (rcos(angle) << 0x12) >> 0xC;
+            self->velocityY = (rsin(angle) << 0x12) >> 0xC;
+            PlaySfxPositional(0x866);
+            self->step_s += 1;
+            /* fallthrough */
+        case 1:                                     /* switch 2 */
+            MoveEntity();
+            if (AnimateEntity(&D_pspeu_0926B480, self) == 0) {
+                SetSubStep(2);
+            }
+            break;
+        case 2:                                     /* switch 2 */
+            AnimateEntity(&D_pspeu_0926B490, self);
+            MoveEntity();
+            other = &g_Entities[0x50];
+            xVar = other->posX.i.hi + D_pspeu_0926B530[self->params].x;
+            yVar = other->posY.i.hi + D_pspeu_0926B530[self->params].y;
+            xVar -= self->posX.i.hi;
+            yVar -= self->posY.i.hi;
+            angle = ratan2(yVar, xVar);
+            self->velocityX = rcos(angle) << 5;
+            self->velocityY = rsin(angle) << 5;
+            if ((abs(xVar) < 3) && (abs(yVar) < 3)) {
+                D_pspeu_0926C090 += 1;
+                SetStep(1);
+            }
+            break;
+        }
+        break;
+    case 3:                                         /* switch 1 */
+        switch (self->step_s) {                           /* switch 3; irregular */
+        case 0:                                     /* switch 3 */
+            angle = D_pspeu_0926B540[self->params];
+            self->velocityX = (rcos(angle) << 0x12) >> 0xC;
+            self->velocityY = (rsin(angle) << 0x12) >> 0xC;
+            self->step_s++;
+            /* fallthrough */
+        case 1:                                     /* switch 3 */
+            MoveEntity();
+            if (AnimateEntity(&D_pspeu_0926B480, self) == 0) {
+                g_api.PlaySfx(0x62F);
+                other = AllocEntity(&g_Entities[0xC0], &g_Entities[256]);
+                if (other != NULL) {
+                    CreateEntityFromCurrentEntity(D_psp_E_UNK_25, other);
+                    other->ext.ILLEGAL.u32[8] = (u32) self;
+                    other->zPriority = (self->zPriority + 1);
+                }
+                D_pspeu_0926C098 += 1;
+                self->step_s += 1;
+            }
+            break;
+        case 2:                                     /* switch 3 */
+            if (D_pspeu_0926C098 == 5) {
+                self->step_s += 1;
+            }
+            break;
+        case 3:                                     /* switch 3 */
+            AnimateEntity(&D_pspeu_0926B490, self);
+            MoveEntity();
+            other = &g_Entities[0x50];
+            xVar = other->posX.i.hi + D_pspeu_0926B530[self->params].x;
+            yVar = other->posY.i.hi + D_pspeu_0926B530[self->params].y;
+            xVar -= self->posX.i.hi;
+            yVar -= self->posY.i.hi;
+            angle = ratan2(yVar, xVar);
+            self->velocityX = rcos(angle) * 0x28;
+            self->velocityY = rsin(angle) * 0x28;
+            if ((abs(xVar) < 3) && (abs(yVar) < 3)) {
+                SetStep(1);
+            }
+            break;
+        }
+        break;
+    case 16:                                        /* switch 1 */
+        switch (self->step_s) {                        /* switch 4; irregular */
+        case 0:                                     /* switch 4 */
+            self->hitboxState = 0;
+            self->animCurFrame = 0x12;
+            MoveEntity();
+            other = &g_Entities[0x50];
+            xVar = other->posX.i.hi + D_pspeu_0926B530[self->params].x;
+            yVar = other->posY.i.hi + D_pspeu_0926B530[self->params].y;
+            xVar -= self->posX.i.hi;
+            yVar -= self->posY.i.hi;
+            angle = ratan2(yVar, xVar);
+            self->velocityX = rcos(angle) * 0x28;
+            self->velocityY = rsin(angle) * 0x28;
+            if ((abs(xVar) < 3) && (abs(yVar) < 3)) {
+                self->zPriority = ((other->zPriority) + 2);
+                self->step_s += 1;
+            }
+            break;
+        case 1:                                     /* switch 4 */
+            other = &g_Entities[0x50];
+            xVar = other->posX.i.hi + D_pspeu_0926B530[self->params].x;
+            yVar = other->posY.i.hi + D_pspeu_0926B530[self->params].y;
+            self->posX.i.hi = xVar;
+            self->posY.i.hi = yVar;
+            break;
+        }
+        break;
+    }
+    other = &g_Entities[0x50];
+    xVar2 = other->posX.val + (D_pspeu_0926B530[self->params].x << 0x10);
+    yVar2 = other->posY.val + (D_pspeu_0926B530[self->params].y << 0x10);
+    
+    other = self + 5;
+    for(i = 0; i < 5; i++) {
+        previous = other - 1;
+        xVar2 = (xVar2 + previous->posX.val) >> 1;
+        yVar2 = (yVar2 + previous->posY.val) >> 1;
+        xVar = xVar2 - other->posX.val;
+        yVar = yVar2 - other->posY.val;
+        xVar2 = (xVar >> 2) + xVar2;
+        yVar2 = (yVar >> 2) + yVar2;
+        other->posX.val = xVar2;
+        other->posY.val = yVar2;
+        other->zPriority = (self->zPriority - 5 + i);
+        other = previous;
+    }
+    other = &g_Entities[0x50];
+    xVar2 = other->posX.i.hi + D_pspeu_0926B530[self->params].x;
+    yVar2 = other->posY.i.hi + D_pspeu_0926B530[self->params].y;
+    other = self + 5;
+    for(i = 0; i < 6; i++, other--) {
+        xVar = other->posX.i.hi - xVar2;
+        yVar = other->posY.i.hi - yVar2;
+        angle = ratan2(yVar, xVar);
+        sqMag = (xVar * xVar) + (yVar * yVar);
+        if (sqMag > 0x90) {
+            other->posX.i.hi = xVar2 + ((rcos(angle) * 0xC) >> 0xC);
+            other->posY.i.hi = yVar2 + ((rsin(angle) * 0xC) >> 0xC);
+        }
+        xVar2 = other->posX.i.hi;
+        yVar2 = other->posY.i.hi;
+    }
+    if (D_pspeu_0926C068 != 0) {
+        self->animCurFrame = 0;
+        self->hitboxState = 0;
+    }
+}
 
 void func_us_8019FA78(Entity* self) {
     self->palette = D_pspeu_0926C0A0;
