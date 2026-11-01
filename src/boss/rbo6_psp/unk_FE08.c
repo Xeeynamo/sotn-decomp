@@ -1542,7 +1542,228 @@ void func_us_801A1150(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_FE08", func_us_801A11DC);
+extern EInit D_us_80180570;
+
+void func_us_801A11DC(Entity* self) {
+    s16 angle;
+    s16 redAngle;
+    s32 primIndex;
+    s32 brightness;
+    s32 xVar;
+    s32 yVar;
+    s32 sine;
+    s32 cosine;
+    Entity* other;
+    Primitive* prim;
+    s16 greenAngle;
+    s16 blueAngle;
+    Pos* SP_PosArr;
+    s16* primXY;
+    s32 tmp;
+    s32 i;
+    s16* extXY;
+    u8* rgb;
+    
+    if (D_pspeu_0926C060 & 1) {
+        DestroyEntity(self);
+        return;
+    }
+    SP_PosArr = (Pos*)0x10000;
+    switch (self->step) {                               /* irregular */
+    case 0:
+        InitializeEntity(D_us_80180570);
+        self->hitboxState = 0;
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0xA);
+        if (primIndex == -1) {
+            self->step = 0;
+            return;
+        }
+        self->flags |= 0x800000;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.prim = prim;
+        for(i = 0; i < 3; i++) {
+            prim->type = 2;
+            prim->r0 = prim->g0 = prim->b0 = 0xC0;
+            prim->r1 = prim->g1 = prim->b1 = 0xC0;
+            prim->priority = self->zPriority;
+            prim->drawMode = 0x33;
+            prim = prim->next;
+        }
+        prim->type = 5;
+        prim->tpage = 0x1A;
+        prim->clut = 0x15F;
+        prim->u0 = prim->v0 = 0x10;
+        prim->u1 = 0x14;
+        prim->v1 = 0x10;
+        prim->u2 = prim->v2 = 0x14;
+        prim->r0 = prim->g0 = prim->b0 = 0x10;
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        prim->priority = self->zPriority;
+        prim->drawMode = 0x37;
+        self->opacity = 0;
+    case 1:
+        other = &g_Entities[0x5B];
+        for(i = 0; i < 3; i++, other += 6) {
+            SP_PosArr[i].x.i.hi = other->posX.i.hi;
+            SP_PosArr[i].y.i.hi = (other->posY.i.hi + 0xC);
+        }
+        other = &g_Entities[0x5B];
+        SP_PosArr[3].x.i.hi = other->posX.i.hi;
+        SP_PosArr[3].y.i.hi = other->posY.i.hi + 0xC;
+        prim = self->ext.prim;
+        for(i = 0; i < 3; i++) {
+            prim->x0 = SP_PosArr[i].x.i.hi;
+            prim->y0 = SP_PosArr[i].y.i.hi;
+            prim = prim->next;
+        }
+        prim = self->ext.prim;
+        for(i = 1; i < 4; i++) {
+            prim->x1 = SP_PosArr[i].x.i.hi;
+            prim->y1 = SP_PosArr[i].y.i.hi;
+            prim = prim->next;
+        }
+        prim->x0 = SP_PosArr[0].x.i.hi;
+        prim->y0 = SP_PosArr[0].y.i.hi;
+        prim->x1 = SP_PosArr[1].x.i.hi;
+        prim->y1 = SP_PosArr[1].y.i.hi;
+        prim->x2 = SP_PosArr[2].x.i.hi;
+        prim->y2 = SP_PosArr[2].y.i.hi;
+        self->opacity += 3;
+        redAngle = self->ext.ILLEGAL.s16[0x18] += 0x100;
+        greenAngle = self->ext.ILLEGAL.s16[0x19] += 0x40;
+        blueAngle = self->ext.ILLEGAL.s16[0x1A] += 0x80;
+        rgb = &prim->r0;
+        tmp = self->opacity;
+        for(i = 0; i < 3; i++, rgb += 12) {
+            rgb[0] = (tmp + ((tmp * rcos(redAngle)) >> 0xC)) / 2;
+            rgb[1] = (tmp + ((tmp * rsin(greenAngle)) >> 0xC)) / 2;
+            rgb[2]= (tmp + ((tmp * rcos(blueAngle)) >> 0xC)) / 2;
+            redAngle += 0x40;
+            greenAngle += 0x280;
+            blueAngle += 0x100;
+        }
+        if (self->opacity > 0x40) {
+            xVar = 0;
+            yVar = 0;
+            // Warning here: extXY uninitialized, but unused so it's ok
+            for(i = 0; i < 3; i++, extXY += 2) {
+                xVar += SP_PosArr[i].x.i.hi;
+                yVar += SP_PosArr[i].y.i.hi;
+            }
+            self->posX.i.hi = xVar / 3;
+            self->posY.i.hi = yVar / 3;
+            extXY = &self->ext.ILLEGAL.s16[10];
+            for(i = 0; i < 3; i++, extXY+=2) {
+                extXY[0] = SP_PosArr[i].x.i.hi - self->posX.i.hi;
+                extXY[1] = SP_PosArr[i].y.i.hi - self->posY.i.hi;
+            }
+            self->scaleX = 0x100;
+            self->step += 1;
+        }
+        break;
+    case 2:
+        prim = self->ext.prim;
+        for(i = 0; i < 3; i++) {
+            brightness = PrimDecreaseBrightness(prim, 8);
+            if (brightness == 0) {
+                prim->drawMode = 8;
+            }
+            prim = prim->next;
+        }
+        self->scaleX -= 8;
+        primXY = &prim->x0;
+        tmp = self->scaleX;
+        xVar = self->posX.i.hi;
+        yVar = self->posY.i.hi;
+        extXY = &self->ext.ILLEGAL.s16[10];
+        for(i = 0; i < 3; i++, extXY += 2, primXY += 6) {
+            primXY[0] = xVar + ((extXY[0] * tmp) >> 8);
+            primXY[1] = yVar + ((extXY[1] * tmp) >> 8);
+        }
+        if (self->opacity < 0xC0) {
+            self->opacity += 4;
+        }
+        redAngle = self->ext.ILLEGAL.s16[0x18] += 0x100;
+        greenAngle = self->ext.ILLEGAL.s16[0x19] += 0x40;
+        blueAngle = self->ext.ILLEGAL.s16[0x1A] += 0x80;
+        rgb = &prim->r0;
+        tmp = self->opacity;
+        for(i = 0; i < 3; i++, rgb += 12) {
+            rgb[0] = (tmp + ((tmp * rcos(redAngle)) >> 0xC)) / 2;
+            rgb[1] = (tmp + ((tmp * rsin(greenAngle)) >> 0xC)) / 2;
+            rgb[2]=  (tmp + ((tmp * rcos(blueAngle)) >> 0xC)) / 2;
+            redAngle += 0x40;
+            greenAngle += 0x280;
+            blueAngle += 0x100;
+        }
+        if (self->scaleX < 0x60) {
+            prim = self->ext.prim;
+            for(i = 0; i < 3; i++) {
+                prim->drawMode = 8;
+                prim = prim->next;
+            }
+            extXY = &self->ext.ILLEGAL.s16[10];
+            tmp = self->scaleX;
+            for(i = 0; i < 3; i++, extXY += 2) {
+                extXY[0] = ((extXY[0] * tmp) >> 8);
+                extXY[1] = ((extXY[1] * tmp) >> 8);
+            }
+            self->step += 1;
+            return;
+        }
+        break;
+    case 3:
+        other = &PLAYER;
+        xVar = other->posX.i.hi - self->posX.i.hi;
+        yVar = other->posY.i.hi - self->posY.i.hi;
+        angle = ratan2(yVar, xVar);
+        self->velocityX = (rcos(angle) << 0x12) >> 0xC;
+        self->velocityY = (rsin(angle) << 0x12) >> 0xC;
+        self->hitboxState = 1;
+        g_api.PlaySfx(0x8BF);
+        self->step++;
+        /* fallthrough */
+    case 4:
+        MoveEntity();
+        self->flags |= 0x80000000;
+        if (self->velocityX > 0) {
+            self->rotate += 0x40;
+        } else {
+            self->rotate -= 0x40;
+        }
+        prim = self->ext.prim;
+        for(i = 0; i < 3; i++) {
+            prim = prim->next;
+        }
+        redAngle = self->ext.ILLEGAL.s16[0x18] += 0x100;
+        greenAngle = self->ext.ILLEGAL.s16[0x19] += 0x40;
+        blueAngle = self->ext.ILLEGAL.s16[0x1A] += 0x80;
+        rgb = &prim->r0;
+        tmp = self->opacity;
+        for(i = 0; i < 3; i++, rgb += 12) {
+            rgb[0] = (tmp + ((tmp * rcos(redAngle)) >> 0xC)) / 2;
+            rgb[1] = (tmp + ((tmp * rsin(greenAngle)) >> 0xC)) / 2;
+            rgb[2] = (tmp + ((tmp * rcos(blueAngle)) >> 0xC)) / 2;
+            redAngle += 0x40;
+            greenAngle += 0x280;
+            blueAngle += 0x100;
+        }
+        primXY = &prim->x0;
+        xVar = self->posX.i.hi;
+        yVar = self->posY.i.hi;
+        extXY = &self->ext.ILLEGAL.s16[10];
+        angle = self->rotate;
+        sine = rsin(angle);
+        cosine = rcos(angle);
+        for(i = 0; i < 3; i ++, extXY += 2, primXY += 6) {
+            primXY[0] = xVar + (((extXY[0] * cosine) - (extXY[1] * sine)) >> 0xC);
+            primXY[1] = yVar + (((extXY[0] * sine) + (extXY[1] * cosine)) >> 0xC);
+        }
+        break;
+    }
+}
 
 void func_us_801A1B38(Entity* self) {
     Entity* real;
