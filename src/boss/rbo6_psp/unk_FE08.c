@@ -14,6 +14,7 @@ extern AnimateEntityFrame D_pspeu_0926B3F0[];
 extern AnimateEntityFrame D_pspeu_0926B3F8[];
 extern AnimateEntityFrame D_pspeu_0926B410[];
 extern AnimateEntityFrame D_pspeu_0926B4A0[];
+extern AnimateEntityFrame D_pspeu_0926B4F8[];
 extern AnimateEntityFrame* D_pspeu_0926B500[];
 extern u16 D_pspeu_0926B548[];
 extern s8 D_pspeu_0926B580;
@@ -555,11 +556,11 @@ void func_us_801A1B38(Entity* self) {
     }
 
     if (!self->step) {
-        InitializeEntity((u16*)((u8*)(void*)func_us_801A1B38 + 0x80F8));
+        InitializeEntity(D_us_80180540);
         self->blendMode = BLEND_ADD | BLEND_TRANSP;
     }
 
-    AnimateEntity((u8*)((u8*)(void*)func_us_801A1B38 + 0x1E620), self);
+    AnimateEntity(D_pspeu_0926B4F8, self);
 
     real = self->ext.succubus.real;
     self->posX.i.hi = real->posX.i.hi;
