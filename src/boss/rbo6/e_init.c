@@ -23,23 +23,23 @@ void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
 void func_us_8019D330_from_rcen(Entity* self);
-void func_us_8019DB9C(Entity* self);
-void func_us_8019FBC0(Entity* self);
-void func_us_8019FB04(Entity* self);
-void func_us_8019EADC(Entity* self);
-void func_us_8019EE30(Entity* self);
-void func_us_8019F1CC(Entity* self);
-void func_us_8019FA78(Entity* self);
-void func_us_8019FCB4(Entity* self);
-void func_us_801A01A4(Entity* self);
-void func_us_801A0710(Entity* self);
-void func_us_801A0860(Entity* self);
-void func_us_801A0AB4(Entity* self);
-void func_us_801A0DC0(Entity* self);
-void func_us_801A11DC(Entity* self);
-void func_us_801A1B38(Entity* self);
-void func_us_801A1150(Entity* self);
-void func_us_801A362C(Entity* self);
+void EntityBossDracula(Entity* self);
+void EntityUnk18(Entity* self);
+void EntityUnk19(Entity* self);
+void EntityUnk1A(Entity* self);
+void EntityUnk1B(Entity* self);
+void EntityUnk1C(Entity* self);
+void EntityUnk1D(Entity* self);
+void EntityUnk1E(Entity* self);
+void EntityUnk1F(Entity* self);
+void EntityUnk20(Entity* self);
+void EntityUnk21(Entity* self);
+void EntityUnk22(Entity* self);
+void EntityUnk23(Entity* self);
+void EntityUnk24(Entity* self);
+void EntityUnk25(Entity* self);
+void EntityUnk26(Entity* self);
+void EntityUnk27(Entity* self);
 void func_us_801A367C(Entity* self);
 void func_us_801A9208_from_bo6(Entity* self);
 void func_us_801A37B4(Entity* self);
@@ -75,23 +75,23 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityExplosionVariants,
     EntityGreyPuff,
     func_us_8019D330_from_rcen,
-    func_us_8019DB9C,
-    func_us_8019FBC0,
-    func_us_8019FB04,
-    func_us_8019EADC,
-    func_us_8019EE30,
-    func_us_8019F1CC,
-    func_us_8019FA78,
-    func_us_8019FCB4,
-    func_us_801A01A4,
-    func_us_801A0710,
-    func_us_801A0860,
-    func_us_801A0AB4,
-    func_us_801A0DC0,
-    func_us_801A11DC,
-    func_us_801A1B38,
-    func_us_801A1150,
-    func_us_801A362C,
+    EntityBossDracula,
+    EntityUnk18,
+    EntityUnk19,
+    EntityUnk1A,
+    EntityUnk1B,
+    EntityUnk1C,
+    EntityUnk1D,
+    EntityUnk1E,
+    EntityUnk1F,
+    EntityUnk20,
+    EntityUnk21,
+    EntityUnk22,
+    EntityUnk23,
+    EntityUnk24,
+    EntityUnk25,
+    EntityUnk26,
+    EntityUnk27,
     func_us_801A367C,
     func_us_801A9208_from_bo6,
     func_us_801A37B4,

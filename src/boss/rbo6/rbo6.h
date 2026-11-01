@@ -35,23 +35,23 @@ typedef enum EntityID {
     E_EXPLOSION_VARIANTS,   // EntityExplosionVariants
     E_GREY_PUFF,            // EntityGreyPuff
     E_UNK_16,               // func_us_8019D330_from_rcen
-    E_UNK_17,               // func_us_8019DB9C
-    E_UNK_18,               // func_us_8019FBC0
-    E_UNK_19,               // func_us_8019FB04
-    E_UNK_1A,               // func_us_8019EADC
-    E_UNK_1B,               // func_us_8019EE30
-    E_UNK_1C,               // func_us_8019F1CC
-    E_UNK_1D,               // func_us_8019FA78
-    E_UNK_1E,               // func_us_8019FCB4
-    E_UNK_1F,               // func_us_801A01A4
-    E_UNK_20,               // func_us_801A0710
-    E_UNK_21,               // func_us_801A0860
-    E_UNK_22,               // func_us_801A0AB4
-    E_UNK_23,               // func_us_801A0DC0
-    E_UNK_24,               // func_us_801A11DC
-    E_UNK_25,               // func_us_801A1B38
-    E_UNK_26,               // func_us_801A1150
-    E_UNK_27,               // func_us_801A362C
+    E_BOSS_DRACULA,               // EntityBossDracula
+    E_UNK_18,               // EntityUnk18
+    E_UNK_19,               // EntityUnk19
+    E_UNK_1A,               // EntityUnk1A
+    E_UNK_1B,               // EntityUnk1B
+    E_UNK_1C,               // EntityUnk1C
+    E_UNK_1D,               // EntityUnk1D
+    E_UNK_1E,               // EntityUnk1E
+    E_UNK_1F,               // EntityUnk1F
+    E_UNK_20,               // EntityUnk20
+    E_UNK_21,               // EntityUnk21
+    E_UNK_22,               // EntityUnk22
+    E_UNK_23,               // EntityUnk23
+    E_UNK_24,               // EntityUnk24
+    E_UNK_25,               // EntityUnk25
+    E_UNK_26,               // EntityUnk26
+    E_UNK_27,               // EntityUnk27
     E_UNK_28,               // func_us_801A367C
     E_UNK_29,               // func_us_801A9208_from_bo6
     E_UNK_2A,               // func_us_801A37B4

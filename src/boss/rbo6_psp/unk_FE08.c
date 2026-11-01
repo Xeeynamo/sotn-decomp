@@ -59,7 +59,23 @@ static Point16 D_pspeu_0926B530[] = {
 static s16 D_pspeu_0926B540[] = {
     -0x600, 0x02C0, -0x1C0, 
 };
-static u16 D_pspeu_0926B548[] = {9, 5, 10, 11};
+typedef enum{
+    DRAC_INIT,
+    DRAC_1,
+    DRAC_2,
+    DRAC_3,
+    DRAC_4,
+    DRAC_5,
+    DRAC_6,
+    DRAC_7,
+    DRAC_8,
+    DRAC_9,
+    DRAC_10,
+    DRAC_11,
+    DRAC_DEAD,
+    DRAC_DEBUG = 255
+} BossDraculaSteps;
+static u16 D_pspeu_0926B548[] = {DRAC_9, DRAC_5, DRAC_10, DRAC_11};
 static s8 D_pspeu_0926B550[][4] = {
     {0, 0, 0, 0}, {-64, -84, 0, 0}, {0, 0, 16, 16}, {-18, 0, 12, 24}, {-10, 0, 12, 24}, {-72, 112, 0, 0}, {-12, -17, 0, 0}, {0, 0, 0, 0}, 
 };
@@ -77,11 +93,11 @@ s32 D_pspeu_0926C068;
 s32 D_pspeu_0926C060;
 
 // Extern BSS var
-extern s32 D_pspeu_0926C6B8;
+extern s32 g_CutsceneFlags;
 
 extern EInit g_EInitDraculaLvl98;
 
-void func_us_8019DB9C(Entity* self) {
+void EntityBossDracula(Entity* self) {
     s32 distFromCenter;
     Entity* other;
     s16 angle;
@@ -98,11 +114,11 @@ void func_us_8019DB9C(Entity* self) {
             }
         }
     }
-    if ((self->flags & FLAG_DEAD) && (self->step != 12)) {
-        SetStep(12);
+    if ((self->flags & FLAG_DEAD) && (self->step != DRAC_DEAD)) {
+        SetStep(DRAC_DEAD);
     }
     switch (self->step) { /* switch 1; irregular */
-    case 0x0:             /* switch 1 */
+    case DRAC_INIT:             /* switch 1 */
         InitializeEntity(g_EInitDraculaLvl98);
         self->zPriority = 0x80;
         self->hitboxOffY = -4;
@@ -135,9 +151,9 @@ void func_us_8019DB9C(Entity* self) {
         other = &g_Entities[109];
         CreateEntityFromCurrentEntity(E_ID(UNK_1E), other);
         other->zPriority = self->zPriority;
-        SetStep(1);
+        SetStep(DRAC_1);
         /* fallthrough */
-    case 0x1: /* switch 1 */
+    case DRAC_1: /* switch 1 */
         self->hitboxState = 0;
         D_pspeu_0926C068 = 1;
         switch (self->step_s) { /* switch 2; irregular */
@@ -145,19 +161,19 @@ void func_us_8019DB9C(Entity* self) {
             self->animCurFrame = 1;
             self->drawFlags = ENTITY_OPACITY;
             self->opacity = 0;
-            if (D_pspeu_0926C6B8 & 0x20) {
+            if (g_CutsceneFlags & 0x20) {
                 self->ext.ILLEGAL.s16[2] = 0x80;
                 self->step_s++;
             }
             break;
         case 1: /* switch 2 */
-            AnimateEntity(&D_pspeu_0926B3F0, self);
+            AnimateEntity(D_pspeu_0926B3F0, self);
             if (!--self->ext.ILLEGAL.s16[2]) {
                 self->step_s++;
             }
             break;
         case 2: /* switch 2 */
-            AnimateEntity(&D_pspeu_0926B3F0, self);
+            AnimateEntity(D_pspeu_0926B3F0, self);
             self->opacity++;
             if ((self->opacity) >= 0x80) {
                 self->drawFlags = ENTITY_DEFAULT;
@@ -165,8 +181,8 @@ void func_us_8019DB9C(Entity* self) {
             }
             break;
         case 3: /* switch 2 */
-            AnimateEntity(&D_pspeu_0926B3F0, self);
-            if (D_pspeu_0926C6B8 & 2) {
+            AnimateEntity(D_pspeu_0926B3F0, self);
+            if (g_CutsceneFlags & 2) {
                 g_api.TimeAttackController(
                     TIMEATTACK_EVENT_UNUSED_28, TIMEATTACK_SET_VISITED);
                 g_api.PlaySfx(SFX_DRACULA_BEHOLD_MY_TRUE_FORM);
@@ -175,7 +191,7 @@ void func_us_8019DB9C(Entity* self) {
             break;
         }
         break;
-    case 0xC:                   /* switch 1 */
+    case DRAC_DEAD:                   /* switch 1 */
         switch (self->step_s) { /* switch 3; irregular */
         case 0:                 /* switch 3 */
             g_api.TimeAttackController(
@@ -225,8 +241,8 @@ void func_us_8019DB9C(Entity* self) {
             break;
         }
         break;
-    case 0x2: /* switch 1 */
-        AnimateEntity(&D_pspeu_0926B3F0, self);
+    case DRAC_2: /* switch 1 */
+        AnimateEntity(D_pspeu_0926B3F0, self);
         D_pspeu_0926C068 = 1;
         self->hitboxState = 0;
         switch (self->step_s) { /* switch 4; irregular */
@@ -238,13 +254,13 @@ void func_us_8019DB9C(Entity* self) {
             MoveEntity();
             self->velocityY -= FIX(0.25);
             if (self->posY.i.hi < -0x60) {
-                SetStep(3);
+                SetStep(DRAC_3);
             }
             break;
         }
         break;
-    case 0x3: /* switch 1 */
-        AnimateEntity(&D_pspeu_0926B4A0, self);
+    case DRAC_3: /* switch 1 */
+        AnimateEntity(D_pspeu_0926B4A0, self);
         D_pspeu_0926C068 = 0;
         self->hitboxState = 2;
         switch (self->step_s) { /* switch 5; irregular */
@@ -264,17 +280,17 @@ void func_us_8019DB9C(Entity* self) {
             self->ext.ILLEGAL.s16[2]++;
             MoveEntity();
             if (self->posY.i.hi > 0x90) {
-                SetStep(4);
+                SetStep(DRAC_4);
             }
             break;
         }
         break;
-    case 0x4: /* switch 1 */
+    case DRAC_4: /* switch 1 */
         if (!self->step_s) {
             self->ext.ILLEGAL.s16[2] = 0x40;
             self->step_s++;
         }
-        AnimateEntity(&D_pspeu_0926B4A0, self);
+        AnimateEntity(D_pspeu_0926B4A0, self);
         D_pspeu_0926C068 = 0;
         self->hitboxState = 2;
         MoveEntity();
@@ -286,8 +302,8 @@ void func_us_8019DB9C(Entity* self) {
             self->ext.ILLEGAL.u8[8] &= 3;
         }
         break;
-    case 0x5: /* switch 1 */
-        AnimateEntity(&D_pspeu_0926B4A0, self);
+    case DRAC_5: /* switch 1 */
+        AnimateEntity(D_pspeu_0926B4A0, self);
         D_pspeu_0926C068 = 0;
         self->hitboxState = 2;
         MoveEntity();
@@ -324,28 +340,28 @@ void func_us_8019DB9C(Entity* self) {
                     D_pspeu_0926C078 = 0;
                 }
                 D_pspeu_0926C070 = 0;
-                SetStep(6);
+                SetStep(DRAC_6);
             }
             break;
         }
         break;
-    case 0x6: /* switch 1 */
+    case DRAC_6: /* switch 1 */
         if (!self->step_s) {
             self->velocityX = 0;
             self->velocityY = FIX(1.0);
             g_api.PlaySfx(SFX_DRACULA_LAUGH_A);
             self->step_s++;
         }
-        AnimateEntity(&D_pspeu_0926B4A0, self);
+        AnimateEntity(D_pspeu_0926B4A0, self);
         D_pspeu_0926C068 = 0;
         self->hitboxState = 2;
         MoveEntity();
         self->velocityY -= FIX(0.0625);
         if (self->posY.i.hi < -0x40) {
-            SetStep(7);
+            SetStep(DRAC_7);
         }
         break;
-    case 0x7: /* switch 1 */
+    case DRAC_7: /* switch 1 */
         if (!self->step_s) {
             self->posX.i.hi = 0x80;
             self->posY.i.hi = -0x40;
@@ -354,16 +370,16 @@ void func_us_8019DB9C(Entity* self) {
             self->zPriority = 0x80;
             self->step_s++;
         }
-        AnimateEntity(&D_pspeu_0926B3F0, self);
+        AnimateEntity(D_pspeu_0926B3F0, self);
         D_pspeu_0926C068 = 1;
         self->hitboxState = 0;
         MoveEntity();
         self->velocityY -= self->velocityY >> 6;
         if (self->posY.i.hi > 0x70) {
-            SetStep(8);
+            SetStep(DRAC_8);
         }
         break;
-    case 0x8: /* switch 1 */
+    case DRAC_8: /* switch 1 */
         if (!self->step_s) {
             D_pspeu_0926C080 = 0;
             self->step_s++;
@@ -371,7 +387,7 @@ void func_us_8019DB9C(Entity* self) {
         D_pspeu_0926C068 = 1;
         self->hitboxState = 0;
         if (!AnimateEntity(D_pspeu_0926B3F8, self)) {
-            SetStep(2);
+            SetStep(DRAC_2);
         }
         if ((!self->poseTimer) && (self->pose == 2)) {
             other = &g_Entities[132];
@@ -383,7 +399,7 @@ void func_us_8019DB9C(Entity* self) {
             D_pspeu_0926C080 = 1;
         }
         break;
-    case 0x9: /* switch 1 */
+    case DRAC_9: /* switch 1 */
         AnimateEntity(D_pspeu_0926B4A0, self);
         D_pspeu_0926C068 = 0;
         self->hitboxState = 2;
@@ -436,7 +452,7 @@ void func_us_8019DB9C(Entity* self) {
                 self->velocityX = 0;
                 if (!--self->ext.ILLEGAL.u8[9]) {
                     D_pspeu_0926C088 = 0;
-                    SetStep(4);
+                    SetStep(DRAC_4);
                 } else {
                     self->step_s = 1;
                 }
@@ -444,8 +460,8 @@ void func_us_8019DB9C(Entity* self) {
             break;
         }
         break;
-    case 0xA: /* switch 1 */
-        AnimateEntity(&D_pspeu_0926B4A0, self);
+    case DRAC_10: /* switch 1 */
+        AnimateEntity(D_pspeu_0926B4A0, self);
         D_pspeu_0926C068 = 0;
         self->hitboxState = 2;
         MoveEntity();
@@ -459,13 +475,13 @@ void func_us_8019DB9C(Entity* self) {
         case 1: /* switch 8 */
             if (D_pspeu_0926C090 == 4) {
                 D_pspeu_0926C090 = 0;
-                SetStep(4);
+                SetStep(DRAC_4);
             }
             break;
         }
         break;
-    case 0xB: /* switch 1 */
-        AnimateEntity(&D_pspeu_0926B4A0, self);
+    case DRAC_11: /* switch 1 */
+        AnimateEntity(D_pspeu_0926B4A0, self);
         D_pspeu_0926C068 = 0;
         self->hitboxState = 2;
         switch (self->step_s) { /* switch 9; irregular */
@@ -500,11 +516,11 @@ void func_us_8019DB9C(Entity* self) {
             break;
         case 4: /* switch 9 */
             D_pspeu_0926C098 = 0;
-            SetStep(4);
+            SetStep(DRAC_4);
             break;
         }
         break;
-    case 0xFF: /* switch 1 */
+    case DRAC_DEBUG: /* switch 1 */
 #include "../../st/pad2_anim_debug.h"
     }
     D_pspeu_0926C0A0 = self->palette;
@@ -512,7 +528,7 @@ void func_us_8019DB9C(Entity* self) {
 
 extern EInit D_us_80180540;
 
-void func_us_8019EADC(Entity* self) {
+void EntityUnk1A(Entity* self) {
     Entity* other;
     other = &g_Entities[80];
     self->posX.i.hi = other->posX.i.hi;
@@ -558,13 +574,13 @@ void func_us_8019EADC(Entity* self) {
             if ((!self->poseTimer) && (self->pose == 3)) {
                 D_pspeu_0926C070 = 4;
             }
-            if (AnimateEntity(&D_pspeu_0926B438, self) == 0) {
+            if (AnimateEntity(D_pspeu_0926B438, self) == 0) {
                 D_pspeu_0926C070 = 5;
                 SetSubStep(2);
             }
             break;
         case 2: /* switch 2 */
-            if (AnimateEntity(&D_pspeu_0926B468, self) == 0) {
+            if (AnimateEntity(D_pspeu_0926B468, self) == 0) {
                 SetStep(1);
             }
             break;
@@ -573,7 +589,7 @@ void func_us_8019EADC(Entity* self) {
     case 3:                     /* switch 1 */
         switch (self->step_s) { /* switch 3; irregular */
         case 0:                 /* switch 3 */
-            if (AnimateEntity(&D_pspeu_0926B448, self) == 0) {
+            if (AnimateEntity(D_pspeu_0926B448, self) == 0) {
                 SetSubStep(1);
             }
             if ((!self->poseTimer) && (self->pose == 2)) {
@@ -581,7 +597,7 @@ void func_us_8019EADC(Entity* self) {
             }
             break;
         case 1: /* switch 3 */
-            if (AnimateEntity(&D_pspeu_0926B468, self) == 0) {
+            if (AnimateEntity(D_pspeu_0926B468, self) == 0) {
                 D_pspeu_0926C088 = 3;
                 SetStep(1);
             }
@@ -589,7 +605,7 @@ void func_us_8019EADC(Entity* self) {
         }
         break;
     case 8: /* switch 1 */
-        if (AnimateEntity(&D_pspeu_0926B458, self) == 0) {
+        if (AnimateEntity(D_pspeu_0926B458, self) == 0) {
             self->pose = 0;
             self->poseTimer = 0;
         }
@@ -601,7 +617,7 @@ void func_us_8019EADC(Entity* self) {
             self->step_s += 1;
             /* fallthrough */
         case 1: /* switch 4 */
-            if (AnimateEntity(&D_pspeu_0926B468, self) == 0) {
+            if (AnimateEntity(D_pspeu_0926B468, self) == 0) {
                 self->pose = 0;
                 self->poseTimer = 0;
                 self->step_s += 1;
@@ -618,7 +634,7 @@ void func_us_8019EADC(Entity* self) {
 
 extern EInit D_us_80180558;
 
-void func_us_8019EE30(Entity* self) {
+void EntityUnk1B(Entity* self) {
     Entity* other;
     s32 i;
     s32 offsetIndex;
@@ -640,7 +656,7 @@ void func_us_8019EE30(Entity* self) {
         }
         /* fallthrough */
     case 1: /* switch 1 */
-        AnimateEntity(&D_pspeu_0926B418, self);
+        AnimateEntity(D_pspeu_0926B418, self);
         if (D_pspeu_0926C070 == 1) {
             SetStep(2);
         }
@@ -668,13 +684,13 @@ void func_us_8019EE30(Entity* self) {
             }
             break;
         case 2: /* switch 2 */
-            AnimateEntity(&D_pspeu_0926B420, self);
+            AnimateEntity(D_pspeu_0926B420, self);
             if (D_pspeu_0926C070 == 5) {
                 SetSubStep(3);
             }
             break;
         case 3: /* switch 2 */
-            if (AnimateEntity(&D_pspeu_0926B430, self) == 0) {
+            if (AnimateEntity(D_pspeu_0926B430, self) == 0) {
                 SetStep(1);
             }
             break;
@@ -724,7 +740,7 @@ void func_us_8019EE30(Entity* self) {
 
 extern EInit D_us_8018054C;
 
-void func_us_8019F1CC(Entity* self) {
+void EntityUnk1C(Entity* self) {
     Entity* previous;
     Entity* other;
     s32 sqMag;
@@ -749,7 +765,7 @@ void func_us_8019F1CC(Entity* self) {
         }
         /* fallthrough */
     case 1: /* switch 1 */
-        AnimateEntity(&D_pspeu_0926B478, self);
+        AnimateEntity(D_pspeu_0926B478, self);
         other = &g_Entities[0x50];
         xVar = other->posX.i.hi + D_pspeu_0926B530[self->params].x;
         yVar = other->posY.i.hi + D_pspeu_0926B530[self->params].y;
@@ -781,12 +797,12 @@ void func_us_8019F1CC(Entity* self) {
             /* fallthrough */
         case 1: /* switch 2 */
             MoveEntity();
-            if (AnimateEntity(&D_pspeu_0926B480, self) == 0) {
+            if (AnimateEntity(D_pspeu_0926B480, self) == 0) {
                 SetSubStep(2);
             }
             break;
         case 2: /* switch 2 */
-            AnimateEntity(&D_pspeu_0926B490, self);
+            AnimateEntity(D_pspeu_0926B490, self);
             MoveEntity();
             other = &g_Entities[0x50];
             xVar = other->posX.i.hi + D_pspeu_0926B530[self->params].x;
@@ -813,7 +829,7 @@ void func_us_8019F1CC(Entity* self) {
             /* fallthrough */
         case 1: /* switch 3 */
             MoveEntity();
-            if (AnimateEntity(&D_pspeu_0926B480, self) == 0) {
+            if (AnimateEntity(D_pspeu_0926B480, self) == 0) {
                 g_api.PlaySfx(SFX_WEAPON_APPEAR);
                 other = AllocEntity(&g_Entities[0xC0], &g_Entities[256]);
                 if (other != NULL) {
@@ -831,7 +847,7 @@ void func_us_8019F1CC(Entity* self) {
             }
             break;
         case 3: /* switch 3 */
-            AnimateEntity(&D_pspeu_0926B490, self);
+            AnimateEntity(D_pspeu_0926B490, self);
             MoveEntity();
             other = &g_Entities[0x50];
             xVar = other->posX.i.hi + D_pspeu_0926B530[self->params].x;
@@ -916,7 +932,7 @@ void func_us_8019F1CC(Entity* self) {
     }
 }
 
-void func_us_8019FA78(Entity* self) {
+void EntityUnk1D(Entity* self) {
     self->palette = D_pspeu_0926C0A0;
 
     switch (self->step) {
@@ -935,7 +951,7 @@ void func_us_8019FA78(Entity* self) {
     }
 }
 
-void func_us_8019FB04(Entity* self) {
+void EntityUnk19(Entity* self) {
     AnimateEntityFrame* anim;
     Entity* source;
 
@@ -959,7 +975,7 @@ void func_us_8019FB04(Entity* self) {
     }
 }
 
-void func_us_8019FBC0(Entity* self) {
+void EntityUnk18(Entity* self) {
     Entity* other;
     other = &g_Entities[0x50];
     self->posX.i.hi = other->posX.i.hi;
@@ -987,7 +1003,7 @@ void func_us_8019FBC0(Entity* self) {
 
 extern EInit g_EInitInteractable;
 
-void func_us_8019FCB4(Entity* self) {
+void EntityUnk1E(Entity* self) {
     Primitive* prim;
     s32 primIndex;
     Entity* other;
@@ -1112,7 +1128,7 @@ void func_us_8019FCB4(Entity* self) {
     FntPrint("color %x\n", D_pspeu_0926C0A0);
 }
 
-void func_us_801A01A4(Entity* self) {
+void EntityUnk1F(Entity* self) {
     Entity* other;
     s16 arctan;
     s32 primIndex;
@@ -1280,7 +1296,7 @@ void func_us_801A01A4(Entity* self) {
     }
 }
 
-void func_us_801A0710(Entity* self) {
+void EntityUnk20(Entity* self) {
     Entity* other;
     s32 temp_s1;
 
@@ -1326,7 +1342,7 @@ void func_us_801A0710(Entity* self) {
     }
 }
 
-void func_us_801A0860(Entity* self) {
+void EntityUnk21(Entity* self) {
     Entity* other;
     s32 scaleY;
     s32 i;
@@ -1397,7 +1413,7 @@ void func_us_801A0860(Entity* self) {
     }
 }
 
-void func_us_801A0AB4(Entity* self) {
+void EntityUnk22(Entity* self) {
     s32 xVar;
     s32 yVar;
     Entity* other;
@@ -1424,7 +1440,7 @@ void func_us_801A0AB4(Entity* self) {
         /* fallthrough */
     case 1:
         MoveEntity();
-        AnimateEntity(&D_pspeu_0926B4E8, self);
+        AnimateEntity(D_pspeu_0926B4E8, self);
         self->velocityX -= self->velocityX >> 5;
         self->velocityY -= self->velocityY >> 5;
         if (D_pspeu_0926C070 == 5) {
@@ -1434,7 +1450,7 @@ void func_us_801A0AB4(Entity* self) {
         }
         break;
     case 2:
-        AnimateEntity(&D_pspeu_0926B4E8, self);
+        AnimateEntity(D_pspeu_0926B4E8, self);
         if (!--self->ext.ILLEGAL.s16[2]) {
             self->step += 1;
         }
@@ -1467,7 +1483,7 @@ void func_us_801A0AB4(Entity* self) {
 
 extern EInit D_us_80180564;
 
-void func_us_801A0DC0(Entity* self) {
+void EntityUnk23(Entity* self) {
     Entity* other;
     s32 scale;
     s32 xVar;
@@ -1488,7 +1504,7 @@ void func_us_801A0DC0(Entity* self) {
         self->hitboxState = 0;
         /* fallthrough */
     case 1:
-        AnimateEntity(&D_pspeu_0926B408, self);
+        AnimateEntity(D_pspeu_0926B408, self);
         scale = self->scaleX;
         scale += 0x10;
         if (scale > 0xCC) {
@@ -1509,7 +1525,7 @@ void func_us_801A0DC0(Entity* self) {
         }
         break;
     case 2:
-        AnimateEntity(&D_pspeu_0926B408, self);
+        AnimateEntity(D_pspeu_0926B408, self);
         MoveEntity();
         scale = 0x6000 / (self->ext.ILLEGAL.s16[2] + 0x18);
         self->scaleX = self->scaleY = scale;
@@ -1548,7 +1564,7 @@ void func_us_801A0DC0(Entity* self) {
     }
 }
 
-void func_us_801A1150(Entity* self) {
+void EntityUnk26(Entity* self) {
     s32 opacity;
 
     if (!self->step) {
@@ -1571,7 +1587,7 @@ void func_us_801A1150(Entity* self) {
 
 extern EInit D_us_80180570;
 
-void func_us_801A11DC(Entity* self) {
+void EntityUnk24(Entity* self) {
     s16 angle;
     s16 redAngle;
     s32 primIndex;
@@ -1796,7 +1812,7 @@ void func_us_801A11DC(Entity* self) {
     }
 }
 
-void func_us_801A1B38(Entity* self) {
+void EntityUnk25(Entity* self) {
     Entity* real;
 
     if (D_pspeu_0926C060 & 1) {
