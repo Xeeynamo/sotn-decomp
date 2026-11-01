@@ -173,15 +173,11 @@ RoomTeleport D_800A245C[] = {
     {240, 132, 0x0000, 0x000D, STAGE_NZ1},
     {1264, 392, 0x0000, 0x0002, STAGE_LIB},
     {16, 132, 0x0000, 0x002D, STAGE_NZ1},
-#if defined(VERSION_PC) && defined(ENABLE_SATURN_STAGES)
-    {0, 0, 0x0000, STAGE_NP3, STAGE_NP3},
-    {0, 0, 0x0000, STAGE_NP3, STAGE_NP3},
-    {0, 0, 0x0000, STAGE_NO0, STAGE_NO0},
-    {0, 0, 0x0000, STAGE_NO4, STAGE_NO4},
-    {0, 0, 0x0000, STAGE_NO0, STAGE_NO0},
-    {0, 0, 0x0000, STAGE_NO4, STAGE_NO4},
-#endif
 };
+#if defined(VERSION_PC) && defined(ENABLE_SATURN_STAGES)
+_Static_assert(LEN(D_800A245C) == RETAIL_ROOM_TELEPORT_COUNT,
+               "stitched door triggers assume the retail teleport count");
+#endif
 
 RoomBossTeleport g_RoomBossTeleports[] = {
     {0x20, 0x1A, STAGE_NO0, TIMEATTACK_EVENT_FIRST_MARIA_MEET, 0x64},
@@ -328,7 +324,7 @@ s32 SetNextRoomToLoad(u32 x, u32 y) {
         // Don't know what this is testing for.
         loader[0] = &room->load;
         if (loader[0]->tilesetId == 0xFF) {
-            tele = &D_800A245C[loader[0]->tileLayoutId];
+            tele = ROOM_TELEPORT(loader[0]->tileLayoutId);
             if (tele->stageId == STAGE_ST0) {
                 return 0;
             }
@@ -562,7 +558,7 @@ void func_800F14CC(void) {
         SetNextRoomToLoad(g_Tilemap.left, g_Tilemap.top);
         return;
     }
-    temp_a2 = &D_800A245C[D_8006C374];
+    temp_a2 = ROOM_TELEPORT(D_8006C374);
 
     // TODO: !FAKE Ugly casts, need to work this out.
     D_801375BC.def =
@@ -616,7 +612,7 @@ s32 func_800F16D0(void) {
     else if (D_80097C98 == 6)
         return STAGE_LIB;
     else {
-        tele = &D_800A245C[D_8006C374];
+        tele = ROOM_TELEPORT(D_8006C374);
         stageId = tele->stageId;
         if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
             stageId ^= STAGE_INVERTEDCASTLE_FLAG;

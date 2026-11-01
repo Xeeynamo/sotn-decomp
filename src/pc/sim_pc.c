@@ -426,6 +426,9 @@ static s32 FindStageIdByName(const char* name) {
 }
 
 static bool StageOwnsAssets(void) {
+    if (g_StageId == STAGE_ID_SATURN_15) {
+        return true;
+    }
     if (g_GameParams.stageName == NULL) {
         return false;
     }
@@ -581,6 +584,9 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
                 SetGameState(Game_NowLoading);
                 g_GameStep = 1;
             }
+        }
+        if (g_StageId == STAGE_ID_SATURN_15) {
+            return LoadStagePrg("stage15") ? 0 : -1;
         }
         if (g_GameParams.stageName != NULL && g_StageId == g_GameParams.stage) {
             return LoadStagePrg(g_GameParams.stageName) ? 0 : -1;

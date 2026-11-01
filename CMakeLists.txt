@@ -6,8 +6,7 @@ set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-option(ENABLE_STAGE15 "Build the Saturn Stage 15 PC port" OFF)
-option(ENABLE_SATURN_STAGES "Build the six Saturn-area connectors" OFF)
+option(ENABLE_SATURN_STAGES "Build the Saturn stage PC ports and connectors" OFF)
 
 if(MSVC)
     cmake_policy(SET CMP0091 NEW)
@@ -2373,7 +2372,8 @@ if(ENABLE_SATURN_STAGES)
         target_sources(${stage} PRIVATE ${packed_sources})
         target_include_directories(${stage} BEFORE PRIVATE
             "${source_dir}" "${CMAKE_SOURCE_DIR}/src/st/${stage}")
-        target_compile_definitions(${stage} PRIVATE ENABLE_SATURN_STAGES)
+        target_compile_definitions(${stage} PRIVATE
+            ENABLE_SATURN_STAGES GEN_VERSION_ANGLE)
     endfunction()
 
     add_saturn_stitch(
@@ -2419,9 +2419,10 @@ if(ENABLE_SATURN_STAGES)
         "${CMAKE_SOURCE_DIR}/disks/us/ST/RNO4/F_RNO4.BIN"
         rooms layers entity_layouts)
 
+    target_sources(${PROJECT_NAME} PRIVATE src/pc/room_teleport.c)
     target_compile_definitions(${PROJECT_NAME} PRIVATE ENABLE_SATURN_STAGES)
     target_compile_definitions(${PROJECT_NAME} PRIVATE
-        PC_ASSET_OVERRIDE_DIR="${SATURN_STITCH_DIR}")
+        PC_ASSET_OVERRIDE_DIR="${SATURN_STITCH_DIR}/disks/us")
 endif()
 
 foreach(id 000 002 007 008 010 012 034 035 037 040 041 043 045 046 050 051 052)
@@ -2435,6 +2436,6 @@ add_overlay(tt_000 ${SOURCE_FILES_TT_000})
 add_overlay(tt_001 ${SOURCE_FILES_TT_001})
 add_overlay(tt_002 ${SOURCE_FILES_TT_002})
 
-if(ENABLE_STAGE15)
+if(ENABLE_SATURN_STAGES)
     include(cmake/stage15.cmake)
 endif()

@@ -26,6 +26,7 @@ enum SpawnPointStep {
     SpawnPoint_Off,
     SpawnPoint_PickRoom,
     SpawnPoint_PlacePlayer,
+    SpawnPoint_ClearLoadState,
 };
 
 static enum SpawnPointStep s_Step = SpawnPoint_Off;
@@ -62,6 +63,13 @@ void SpawnPoint_Init(const struct InitGameParams* params) {
 void SpawnPoint_OnFrame(void) {
     const RoomHeader* room;
 
+    if (s_Step == SpawnPoint_ClearLoadState) {
+        if (g_GameEngineStep == Engine_Normal) {
+            D_8003C730 = 0;
+            s_Step = SpawnPoint_Off;
+        }
+        return;
+    }
     if (s_Step != SpawnPoint_PickRoom) {
         return;
     }
@@ -89,7 +97,7 @@ static void SpawnPoint_PlacePlayerNow(void) {
     if (s_Step != SpawnPoint_PlacePlayer) {
         return;
     }
-    s_Step = SpawnPoint_Off;
+    s_Step = SpawnPoint_ClearLoadState;
 
     x = s_Spawn->x;
     y = s_Spawn->y;

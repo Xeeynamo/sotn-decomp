@@ -1,14 +1,19 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "pc.h"
 
 static FILE* OpenFileRead(const char* filename, char* resolved, size_t size) {
 #ifdef PC_ASSET_OVERRIDE_DIR
-    snprintf(resolved, size, "%s/%s", PC_ASSET_OVERRIDE_DIR, filename);
-    FILE* file = fopen(resolved, "rb");
-    if (file != NULL) {
-        return file;
+    const size_t dataDirLen = sizeof(SOTN_DATA_DIR) - 1;
+    if (!strncmp(filename, SOTN_DATA_DIR "/", dataDirLen + 1)) {
+        snprintf(resolved, size, "%s/%s", PC_ASSET_OVERRIDE_DIR,
+                 filename + dataDirLen + 1);
+        FILE* file = fopen(resolved, "rb");
+        if (file != NULL) {
+            return file;
+        }
     }
 #endif
     snprintf(resolved, size, "%s", filename);

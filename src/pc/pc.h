@@ -4,6 +4,14 @@
 
 #define LEN(x) ((s32)(sizeof(x) / sizeof(*(x))))
 
+enum CustomStageId {
+    STAGE_ID_SATURN_15 = 0x4C,
+    STAGE_ID_SATURN_16 = 0x4D,
+    STAGE_ID_REVERSE_SATURN_15 = 0x6C,
+    STAGE_ID_REVERSE_SATURN_16 = 0x6D,
+    STAGE_ID_USER_MOD_FIRST = 0x51,
+};
+
 #ifndef VERSION_PC
 #define VERSION_PC
 #endif
