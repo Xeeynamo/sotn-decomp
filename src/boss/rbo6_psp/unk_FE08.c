@@ -31,6 +31,7 @@ extern AnimateEntityFrame D_pspeu_0926B480[];
 extern AnimateEntityFrame D_pspeu_0926B490[];
 extern AnimateEntityFrame D_pspeu_0926B4A0[];
 extern AnimateEntityFrame D_pspeu_0926B4A8[];
+extern AnimateEntityFrame D_pspeu_0926B4E8[];
 extern AnimateEntityFrame D_pspeu_0926B4F8[];
 extern AnimateEntityFrame* D_pspeu_0926B500[];
 extern Point16 D_pspeu_0926B518[];
@@ -1367,7 +1368,74 @@ void func_us_801A0860(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_FE08", func_us_801A0AB4);
+void func_us_801A0AB4(Entity* self) {
+    s32 xVar;
+    s32 yVar;
+    Entity* other;
+    s16 angle;
+    s32 speed;
+
+    if (D_pspeu_0926C060 & 1) {
+        DestroyEntity(self);
+        return;
+    }
+    switch (self->step) {                              /* irregular */
+    case 0:
+        InitializeEntity(D_us_80180540);
+        self->drawFlags = 3;
+        self->scaleX = self->scaleY = (Random() & 0x7F) + 0x80;
+        self->blendMode = 0x10;
+        angle = rand() & 0xFFF;
+        speed = (Random() & 0x1F) + 0x10;
+        self->velocityX = speed * rcos(angle);
+        self->velocityY = speed * rsin(angle);
+        self->posX.val = self->posX.val + (self->velocityX * 4);
+        self->posY.val += self->velocityY * 4;
+        self->ext.ILLEGAL.s16[2] = ((Random() & 0x1F) + 0x10);
+        /* fallthrough */
+    case 1:
+        MoveEntity();
+        AnimateEntity(&D_pspeu_0926B4E8, self);
+        self->velocityX -= self->velocityX >> 5;
+        self->velocityY -= self->velocityY >> 5;
+        if (D_pspeu_0926C070 == 5) {
+            self->velocityX = 0;
+            self->velocityY = 0;
+            self->step += 1;
+        }
+        break;
+    case 2:
+        AnimateEntity(&D_pspeu_0926B4E8, self);
+        if (!--self->ext.ILLEGAL.s16[2]) {
+            self->step += 1;
+        }
+        if (!(g_Timer & 7)) {
+            g_api.PlaySfx(0x673);
+        }
+        break;
+    case 3:
+        MoveEntity();
+        if (self->scaleX > 0x20) {
+            self->scaleX = self->scaleY -= 2;
+        }
+        other = &g_Entities[0x50];
+        xVar = other->posX.i.hi - self->posX.i.hi;
+        yVar = other->posY.i.hi - 0x18 - self->posY.i.hi;
+        angle = ratan2(yVar, xVar);
+        if (self->ext.ILLEGAL.s32[4] < FIX(3)) {
+            self->ext.ILLEGAL.s32[4] += 0x1000;
+        }
+        speed = self->ext.ILLEGAL.s32[4];
+        self->velocityX = (speed * rcos(angle)) >> 0xC;
+        self->velocityY = (speed * rsin(angle)) >> 0xC;
+        speed = (xVar * xVar) + (yVar * yVar);
+        if (speed < 0x40) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
+
 
 INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_FE08", func_us_801A0DC0);
 
