@@ -1,22 +1,25 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rbo6/rbo6.h"
 
-extern s32 D_psp_E_UNK_18;
-extern s32 D_psp_E_UNK_19;
-extern s32 D_psp_E_UNK_1A;
-extern s32 D_psp_E_UNK_1B;
-extern s32 D_psp_E_UNK_1C;
-extern s32 D_psp_E_UNK_1D;
-extern s32 D_psp_E_UNK_1E;
-extern s32 D_psp_E_UNK_1F;
-extern s32 D_psp_E_UNK_20;
-extern s32 D_psp_E_UNK_21;
-extern s32 D_psp_E_UNK_22;
-extern s32 D_psp_E_UNK_23;
-extern s32 D_psp_E_UNK_24;
-extern s32 D_psp_E_UNK_25;
-extern s32 D_psp_E_UNK_26;
-extern s32 D_psp_E_UNK_27;
+#ifdef VERSION_PSP
+extern s32 E_ID(UNK_18);
+extern s32 E_ID(UNK_19);
+extern s32 E_ID(UNK_1A);
+extern s32 E_ID(UNK_1B);
+extern s32 E_ID(UNK_1C);
+extern s32 E_ID(UNK_1D);
+extern s32 E_ID(UNK_1E);
+extern s32 E_ID(UNK_1F);
+extern s32 E_ID(UNK_20);
+extern s32 E_ID(UNK_21);
+extern s32 E_ID(UNK_22);
+extern s32 E_ID(UNK_23);
+extern s32 E_ID(UNK_24);
+extern s32 E_ID(UNK_25);
+extern s32 E_ID(UNK_26);
+extern s32 E_ID(UNK_27);
+#endif
+
 extern AnimateEntityFrame D_pspeu_0926B3F0[];
 extern AnimateEntityFrame D_pspeu_0926B3F8[];
 extern AnimateEntityFrame D_pspeu_0926B408[];
@@ -42,17 +45,21 @@ extern s16 D_pspeu_0926B540[];
 extern u16 D_pspeu_0926B548[];
 extern s8 D_pspeu_0926B550;
 extern u8 D_pspeu_0926B570[];
-extern s8 D_pspeu_0926B580;
-extern s32 D_pspeu_0926C060;
-extern s32 D_pspeu_0926C068;
-extern s32 D_pspeu_0926C070;
-extern s32 D_pspeu_0926C078;
-extern s32 D_pspeu_0926C080;
-extern s32 D_pspeu_0926C088;
-extern s32 D_pspeu_0926C090;
-extern s32 D_pspeu_0926C098;
-extern s32 D_pspeu_0926C0A0;
+
+// BSS vars
+s32 D_pspeu_0926C0A0;
+s32 D_pspeu_0926C098;
+s32 D_pspeu_0926C090;
+s32 D_pspeu_0926C088;
+s32 D_pspeu_0926C080;
+s32 D_pspeu_0926C078;
+s32 D_pspeu_0926C070;
+s32 D_pspeu_0926C068;
+s32 D_pspeu_0926C060;
+
+// Extern BSS var
 extern s32 D_pspeu_0926C6B8;
+
 extern EInit g_EInitDraculaLvl98;
 
 void func_us_8019DB9C(Entity* self) {
@@ -82,32 +89,32 @@ void func_us_8019DB9C(Entity* self) {
         self->hitboxOffY = -4;
         other = &g_Entities[81];
         for (i = 0; i < 5; i++, other++) {
-            CreateEntityFromCurrentEntity(D_psp_E_UNK_19, other);
+            CreateEntityFromCurrentEntity(E_ID(UNK_19), other);
             other->zPriority = self->zPriority + 1;
             other->params = i;
         }
         other = &g_Entities[86];
-        CreateEntityFromCurrentEntity(D_psp_E_UNK_1A, other);
+        CreateEntityFromCurrentEntity(E_ID(UNK_1A), other);
         other->params = 0;
         other->zPriority = self->zPriority + 3;
         other += 2;
-        CreateEntityFromCurrentEntity(D_psp_E_UNK_1A, other);
+        CreateEntityFromCurrentEntity(E_ID(UNK_1A), other);
         other->params = 1;
         other->zPriority = self->zPriority + 3;
         other = &g_Entities[86];
         self->nextPart = other + 1;
         self->parent = NULL;
         other = &g_Entities[90];
-        CreateEntityFromCurrentEntity(D_psp_E_UNK_18, other);
+        CreateEntityFromCurrentEntity(E_ID(UNK_18), other);
         other->zPriority = self->zPriority + 1;
         other = &g_Entities[91];
         for (i = 0; i < 3; i++, other += 6) {
-            CreateEntityFromCurrentEntity(D_psp_E_UNK_1C, other);
+            CreateEntityFromCurrentEntity(E_ID(UNK_1C), other);
             other->params = i;
             other->zPriority = self->zPriority + 6;
         }
         other = &g_Entities[109];
-        CreateEntityFromCurrentEntity(D_psp_E_UNK_1E, other);
+        CreateEntityFromCurrentEntity(E_ID(UNK_1E), other);
         other->zPriority = self->zPriority;
         SetStep(1);
         /* fallthrough */
@@ -162,7 +169,7 @@ void func_us_8019DB9C(Entity* self) {
             break;
         case 1: /* switch 3 */
             other = &g_Entities[200];
-            CreateEntityFromCurrentEntity(D_psp_E_UNK_27, other);
+            CreateEntityFromCurrentEntity(E_ID(UNK_27), other);
             other->flags |= FLAG_UNK_10000;
             other->params = 1;
             g_unkGraphicsStruct.unk28 = 0xFF;
@@ -271,7 +278,7 @@ void func_us_8019DB9C(Entity* self) {
         case 0:                 /* switch 6 */
             D_pspeu_0926C070 = 1;
             other = &g_Entities[129];
-            CreateEntityFromCurrentEntity(D_psp_E_UNK_20, other);
+            CreateEntityFromCurrentEntity(E_ID(UNK_20), other);
             other->zPriority = self->zPriority + 3;
             self->step_s++;
             /* fallthrough */
@@ -349,7 +356,7 @@ void func_us_8019DB9C(Entity* self) {
         }
         if ((!self->poseTimer) && (self->pose == 2)) {
             other = &g_Entities[132];
-            CreateEntityFromEntity(D_psp_E_UNK_23, self, other);
+            CreateEntityFromEntity(E_ID(UNK_23), self, other);
             other->zPriority = self->zPriority + 1;
         }
         if ((!self->poseTimer) && (self->pose == 3)) {
@@ -457,7 +464,7 @@ void func_us_8019DB9C(Entity* self) {
             if (!(self->ext.ILLEGAL.s16[2] & 0xF)) {
                 other = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
                 if (other != NULL) {
-                    CreateEntityFromCurrentEntity(D_psp_E_UNK_24, other);
+                    CreateEntityFromCurrentEntity(E_ID(UNK_24), other);
                     other->zPriority = self->zPriority + 8;
                 }
             }
@@ -507,7 +514,7 @@ void func_us_8019EADC(Entity* self) {
         InitializeEntity(D_us_80180540);
         self->facingLeft = self->params;
         other = self + 1;
-        CreateEntityFromCurrentEntity(D_psp_E_UNK_1B, other);
+        CreateEntityFromCurrentEntity(E_ID(UNK_1B), other);
         other->params = self->params;
         other->zPriority = ((self->zPriority) + 1);
         /* fallthrough */
@@ -628,7 +635,7 @@ void func_us_8019EE30(Entity* self) {
             for (i = 0; i < 2; i++) {
                 other = AllocEntity(&g_Entities[0x90], &g_Entities[0x98]);
                 if (other != NULL) {
-                    CreateEntityFromCurrentEntity(D_psp_E_UNK_1F, other);
+                    CreateEntityFromCurrentEntity(E_ID(UNK_1F), other);
                     other->params = self->params;
                     other->zPriority = ((self->zPriority) + 4);
                 }
@@ -718,7 +725,7 @@ void func_us_8019F1CC(Entity* self) {
         InitializeEntity(D_us_8018054C);
         other = self + 1;
         for (i = 0; i < 5; i++, other++) {
-            CreateEntityFromCurrentEntity(D_psp_E_UNK_1D, other);
+            CreateEntityFromCurrentEntity(E_ID(UNK_1D), other);
             other->zPriority = self->zPriority - i;
         }
         /* fallthrough */
@@ -791,7 +798,7 @@ void func_us_8019F1CC(Entity* self) {
                 g_api.PlaySfx(SFX_WEAPON_APPEAR);
                 other = AllocEntity(&g_Entities[0xC0], &g_Entities[256]);
                 if (other != NULL) {
-                    CreateEntityFromCurrentEntity(D_psp_E_UNK_25, other);
+                    CreateEntityFromCurrentEntity(E_ID(UNK_25), other);
                     other->ext.ILLEGAL.u32[8] = (u32)self;
                     other->zPriority = (self->zPriority + 1);
                 }
@@ -1280,7 +1287,7 @@ void func_us_801A0710(Entity* self) {
         break;
     case 2:
         other = &g_Entities[0x82];
-        CreateEntityFromCurrentEntity(D_psp_E_UNK_21, other);
+        CreateEntityFromCurrentEntity(E_ID(UNK_21), other);
         other->zPriority = self->zPriority + 1;
         self->step += 1;
         break;
@@ -1352,7 +1359,7 @@ void func_us_801A0860(Entity* self) {
         for (i = 0; i < 0x10; i++) {
             other = AllocEntity(&g_Entities[0xC0], &g_Entities[256]);
             if (other != NULL) {
-                CreateEntityFromEntity(D_psp_E_UNK_22, self, other);
+                CreateEntityFromEntity(E_ID(UNK_22), self, other);
                 other->zPriority = self->zPriority + 1;
             }
         }
@@ -1490,7 +1497,7 @@ void func_us_801A0DC0(Entity* self) {
         if (!(self->ext.ILLEGAL.s16[2] & 3)) {
             other = AllocEntity(&g_Entities[0xC0], &g_Entities[256]);
             if (other != NULL) {
-                CreateEntityFromEntity(D_psp_E_UNK_26, self, other);
+                CreateEntityFromEntity(E_ID(UNK_26), self, other);
                 other->scaleX = other->scaleY = self->scaleX;
                 other->zPriority = self->zPriority;
                 other->opacity = self->opacity;

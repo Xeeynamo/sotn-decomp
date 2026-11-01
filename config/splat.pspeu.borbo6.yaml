@@ -105,6 +105,7 @@ segments:
       - [0x34890, .bss, rbo6_psp/st_init]
       - [0x349C0, .bss, rbo6/e_breakable]
       - [0x349C8, bss, '349C8']
+      - [0x349E0, .bss, rbo6_psp/unk_FE08]
       - [0x34A28, .bss, rbo6/d_prize_drops]
       - [0x34A30, bss, 34A30]
   - [0x35980]
