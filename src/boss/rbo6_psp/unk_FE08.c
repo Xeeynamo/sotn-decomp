@@ -4,6 +4,7 @@
 extern s32 D_psp_E_UNK_18;
 extern s32 D_psp_E_UNK_19;
 extern s32 D_psp_E_UNK_1A;
+extern s32 D_psp_E_UNK_1B;
 extern s32 D_psp_E_UNK_1C;
 extern s32 D_psp_E_UNK_1E;
 extern s32 D_psp_E_UNK_20;
@@ -13,6 +14,10 @@ extern s32 D_psp_E_UNK_27;
 extern AnimateEntityFrame D_pspeu_0926B3F0[];
 extern AnimateEntityFrame D_pspeu_0926B3F8[];
 extern AnimateEntityFrame D_pspeu_0926B410[];
+extern AnimateEntityFrame D_pspeu_0926B438[];
+extern AnimateEntityFrame D_pspeu_0926B448[];
+extern AnimateEntityFrame D_pspeu_0926B458[];
+extern AnimateEntityFrame D_pspeu_0926B468[];
 extern AnimateEntityFrame D_pspeu_0926B4A0[];
 extern AnimateEntityFrame D_pspeu_0926B4F8[];
 extern AnimateEntityFrame* D_pspeu_0926B500[];
@@ -459,13 +464,116 @@ void func_us_8019DB9C(Entity* self) {
     D_pspeu_0926C0A0 = self->palette;
 }
 
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_FE08", func_us_8019EADC);
+extern EInit D_us_80180540;
+
+void func_us_8019EADC(Entity* self) {
+    Entity* other;
+    other = &g_Entities[80];
+    self->posX.i.hi = other->posX.i.hi;
+    self->posY.i.hi = other->posY.i.hi;
+    if (!self->params) {
+        self->posX.i.hi -= 0x34;
+        self->posY.i.hi += 0x10;
+    } else {
+        self->posX.i.hi += 0x3B;
+        self->posY.i.hi += 0x18;
+    }
+    self->palette = D_pspeu_0926C0A0;
+    if ((D_pspeu_0926C060 & 1) && (self->step != 16)) {
+        SetStep(16);
+    }
+    switch (self->step) {                              /* switch 1; irregular */
+    case 0:                                         /* switch 1 */
+        InitializeEntity(D_us_80180540);
+        self->facingLeft = self->params;
+        other = self + 1;
+        CreateEntityFromCurrentEntity(D_psp_E_UNK_1B, other);
+        other->params = self->params;
+        other->zPriority = ((self->zPriority) + 1);
+        /* fallthrough */
+    case 1:                                         /* switch 1 */
+        self->animCurFrame = 0xC;
+        if (D_pspeu_0926C070 == 1) {
+            SetStep(2);
+        }
+        if (D_pspeu_0926C088 == ((self->params) + 1)) {
+            SetStep(3);
+        }
+        break;
+    case 2:                                         /* switch 1 */
+        switch (self->step_s) {                        /* switch 2; irregular */
+        case 0:                                     /* switch 2 */
+            self->animCurFrame = 0xC;
+            if (D_pspeu_0926C070 == 3) {
+                self->step_s += 1;
+            }
+            break;
+        case 1:                                     /* switch 2 */
+            if ((!self->poseTimer) && (self->pose == 3)) {
+                D_pspeu_0926C070 = 4;
+            }
+            if (AnimateEntity(&D_pspeu_0926B438, self) == 0) {
+                D_pspeu_0926C070 = 5;
+                SetSubStep(2);
+            }
+            break;
+        case 2:                                     /* switch 2 */
+            if (AnimateEntity(&D_pspeu_0926B468, self) == 0) {
+                SetStep(1);
+            }
+            break;
+        }
+        break;
+    case 3:                                         /* switch 1 */
+        switch (self->step_s) {                        /* switch 3; irregular */
+        case 0:                                     /* switch 3 */
+            if (AnimateEntity(&D_pspeu_0926B448, self) == 0) {
+                SetSubStep(1);
+            }
+            if ((!self->poseTimer) && (self->pose == 2)) {
+                PlaySfxPositional(0x662);
+            }
+            break;
+        case 1:                                     /* switch 3 */
+            if (AnimateEntity(&D_pspeu_0926B468, self) == 0) {
+                D_pspeu_0926C088 = 3;
+                SetStep(1);
+            }
+            break;
+        }
+        break;
+    case 8:                                         /* switch 1 */
+        if (AnimateEntity(&D_pspeu_0926B458, self) == 0) {
+            self->pose = 0;
+            self->poseTimer = 0;
+        }
+        break;
+    case 16:                                        /* switch 1 */
+        switch (self->step_s) {                        /* switch 4; irregular */
+        case 0:                                     /* switch 4 */
+            self->pose = (0x10 - (s16) self->animCurFrame);
+            self->step_s += 1;
+            /* fallthrough */
+        case 1:                                     /* switch 4 */
+            if (AnimateEntity(&D_pspeu_0926B468, self) == 0) {
+                self->pose = 0;
+                self->poseTimer = 0;
+                self->step_s += 1;
+            }
+            break;
+        }
+        break;
+    }
+    if (D_pspeu_0926C068 != 0) {
+        self->animCurFrame = 0;
+        self->hitboxState = 0;
+    }
+}
+
 
 INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_FE08", func_us_8019EE30);
 
 INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_FE08", func_us_8019F1CC);
-
-extern EInit D_us_80180540;
 
 void func_us_8019FA78(Entity* self) {
     self->palette = D_pspeu_0926C0A0;
