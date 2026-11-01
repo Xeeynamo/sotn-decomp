@@ -529,6 +529,8 @@
 |            | e_red_door.rodata                 |       16 |          0 | Yes    |       |     |
 | rbo5       | e_red_door.rodata                 |       16 |          0 | Yes    |       |     |
 | rbo6       | e_red_door.rodata                 |       16 |          0 | Yes    |       |     |
+| rbo6       | unk_EB40.rodata                   |       16 |          0 | Yes    |       |     |
+| rbo6       | unk_FE08.rodata                   |       16 |          0 | Yes    |       |     |
 |            | e_red_door.rodata                 |       16 |          0 | Yes    |       |     |
 | rbo8       | e_red_door.rodata                 |       16 |          0 | Yes    |       |     |
 | ric        | pl_subweapon_holywater.rodata     |       16 |          0 | Yes    |       |     |
@@ -1076,9 +1078,9 @@
 | rbo5       | SetDopplegangerAnim               |       21 |          1 |        |       |     |
 | rbo5       | func_pspeu_0923D010               |       21 |          1 |        |       |     |
 | rbo5       | func_pspeu_0923B4B0               |       21 |          1 |        |       |     |
+| rbo6       | func_pspeu_0923C390               |       21 |          1 |        |       |     |
 | rbo6       | SetSubStep                        |       21 |          1 |        |       |     |
 | rbo6       | Random                            |       21 |          1 |        |       |     |
-| rbo6       | func_pspeu_0923C390               |       21 |          1 |        |       |     |
 |            | func_pspeu_0923D010               |       21 |          1 |        |       |     |
 |            | func_pspeu_09244B80               |       21 |          1 |        |       |     |
 |            | func_pspeu_0923B4B0               |       21 |          1 |        |       |     |
@@ -1306,6 +1308,7 @@
 | main       | NormalColorCol                    |       23 |          5 |        |       |     |
 | e_maria    | func_pspeu_092519E8               |       23 |          5 |        |       |     |
 | e_maria    | func_pspeu_092521A8               |       23 |          5 |        |       |     |
+| rbo6       | unk_D668.rodata                   |       24 |          0 | Yes    |       |     |
 | dra        | 63C08.rodata                      |       24 |          0 | Yes    |       |     |
 | ric        | pl_subweapon_cross.rodata         |       24 |          0 | Yes    |       |     |
 | are        | e_grave_keeper.rodata             |       24 |          0 | Yes    |       |     |
@@ -2223,7 +2226,7 @@
 | dra        | func_psp_09116240                 |       35 |          6 |        |       |     |
 | w1_012_psp | func_pspeu_092F6F38               |       35 |          6 |        |       |     |
 | dra        | func_psp_09140CF0                 |       35 |          7 |        |       |     |
-| rbo6       | unk_185B0.rodata                  |       36 |          0 | Yes    |       |     |
+| rbo6       | unk_18718.rodata                  |       36 |          0 | Yes    |       |     |
 | tt_004     | jtbl_092F1C08                     |       36 |          0 | Yes    |       |     |
 | are        | e_plate_lord.rodata               |       36 |          0 | Yes    |       |     |
 | no0        | e_diplocephalus.rodata            |       36 |          0 | Yes    |       |     |
@@ -3109,7 +3112,6 @@
 |            | e_scylla.rodata                   |       44 |          0 | Yes    |       |     |
 |            | doors.rodata                      |       44 |          0 | Yes    |       |     |
 |            | 12D64.rodata                      |       44 |          0 | Yes    |       |     |
-| rbo6       | unk_D668.rodata                   |       44 |          0 | Yes    |       |     |
 | dra        | 624DC.rodata                      |       44 |          0 | Yes    |       |     |
 | chi        | en_venus_weed.rodata              |       44 |          0 | Yes    |       |     |
 | rlib       | e_collect.rodata                  |       44 |          0 | Yes    |       |     |
