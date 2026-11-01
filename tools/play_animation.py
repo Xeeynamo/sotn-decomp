@@ -171,13 +171,17 @@ class AnimationShower:
         # Need to load the animation's frames now.
         # Depends on if we're an ANIMSET_DRA or ANIMSET_OVL.
         if anim_num & 0x8000:
+            if overlay.startswith("rbo") or overlay.startswith("bo"):
+                baseDir = "src/boss/"
+            else:
+                baseDir = "src/st/"
             print("Overlay animation")
             assert overlay != "dra"
-            main_array_file = f"src/st/{overlay}/gen/sprite_banks.h"
+            main_array_file = f"{baseDir}/{overlay}/gen/sprite_banks.h"
             if not os.path.exists(main_array_file):
                 main_array_file = main_array_file.replace("gen", "gen/us")
             main_array = "spriteBanks"
-            animset_file = f"src/st/{overlay}/gen/sprites.c"
+            animset_file = f"{baseDir}/{overlay}/gen/sprites.c"
         else:
             main_array_file = "src/dra/d_37d8.c"
             main_array = "D_800A3B70"

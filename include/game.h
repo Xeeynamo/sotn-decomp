@@ -134,7 +134,11 @@ typedef enum {
 #define OTSIZE 0x200
 #define MAX_ENV_COUNT 0x10
 #define MAX_DRAW_MODES 0x400
+#ifdef VERSION_PC
+#define MAX_POLY_GT4_COUNT 0x1400
+#else
 #define MAX_POLY_GT4_COUNT 0x300
+#endif
 #define MAX_POLY_G4_COUNT 0x100
 #define MAX_POLY_GT3_COUNT 0x30
 #define MAX_LINE_G2_COUNT 0x100
@@ -2127,6 +2131,9 @@ extern s32 g_GameClearFlag;
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C100;
 extern u16 g_ClutIds[]; // array of palette VRAM offsets
+#ifdef VERSION_PC
+extern bool (*g_PcStageLayerRenderer)(void);
+#endif
 extern s32 g_CutsceneHasControl;
 extern FgLayer D_8003C708;
 extern s16 D_8003C710;

@@ -82,7 +82,7 @@ void EntityExplosionFlame(Entity* self) {
         self->blendMode = initEntry->blendMode;
         self->animSet = initEntry->animSet;
         self->unk5A = initEntry->unk5A;
-        self->ext.et_801A518C.anim = (u8*)initEntry->anim;
+        self->ext.et_801A518C.anim = initEntry->anim;
         self->step = var_s3 + 1;
         if (self->params & 0xFF00) {
             self->zPriority = (self->params & 0xFF00) >> 8;
