@@ -20,31 +20,50 @@ extern s32 E_ID(UNK_26);
 extern s32 E_ID(UNK_27);
 #endif
 
-extern AnimateEntityFrame D_pspeu_0926B3F0[];
-extern AnimateEntityFrame D_pspeu_0926B3F8[];
-extern AnimateEntityFrame D_pspeu_0926B408[];
-extern AnimateEntityFrame D_pspeu_0926B410[];
-extern AnimateEntityFrame D_pspeu_0926B418[];
-extern AnimateEntityFrame D_pspeu_0926B420[];
-extern AnimateEntityFrame D_pspeu_0926B430[];
-extern AnimateEntityFrame D_pspeu_0926B438[];
-extern AnimateEntityFrame D_pspeu_0926B448[];
-extern AnimateEntityFrame D_pspeu_0926B458[];
-extern AnimateEntityFrame D_pspeu_0926B468[];
-extern AnimateEntityFrame D_pspeu_0926B478[];
-extern AnimateEntityFrame D_pspeu_0926B480[];
-extern AnimateEntityFrame D_pspeu_0926B490[];
-extern AnimateEntityFrame D_pspeu_0926B4A0[];
-extern AnimateEntityFrame D_pspeu_0926B4A8[];
-extern AnimateEntityFrame D_pspeu_0926B4E8[];
-extern AnimateEntityFrame D_pspeu_0926B4F8[];
-extern AnimateEntityFrame* D_pspeu_0926B500[];
-extern Point16 D_pspeu_0926B518[];
-extern Point16 D_pspeu_0926B530[];
-extern s16 D_pspeu_0926B540[];
-extern u16 D_pspeu_0926B548[];
-extern s8 D_pspeu_0926B550;
-extern u8 D_pspeu_0926B570[];
+static AnimateEntityFrame D_pspeu_0926B3F0[] = {{32, 1}, {32, 2}, POSE_LOOP(0)};
+static AnimateEntityFrame D_pspeu_0926B3F8[] = {{64, 1}, {8, 4}, {72, 3}, {2, 1}, {48, 4}, POSE_END};
+static AnimateEntityFrame D_pspeu_0926B408[] = {{1, 5}, {1, 6}, {1, 7}, POSE_LOOP(0)};
+static AnimateEntityFrame D_pspeu_0926B410[] = {{1, 6}, {1, 7}, POSE_LOOP(0)};
+static AnimateEntityFrame D_pspeu_0926B418[] = {{30, 8}, {30, 9}, POSE_LOOP(0)};
+static AnimateEntityFrame D_pspeu_0926B420[] = {{4, 8}, {4, 9}, {4, 8}, {4, 10}, {32, 11}, {12, 10}, POSE_END};
+static AnimateEntityFrame D_pspeu_0926B430[] = {{8, 10}, {8, 8}, {8, 9}, POSE_END};
+static AnimateEntityFrame D_pspeu_0926B438[] = {{4, 12}, {4, 13}, {4, 14}, {4, 15}, {48, 16}, POSE_END};
+static AnimateEntityFrame D_pspeu_0926B448[] = {{32, 12}, {2, 13}, {2, 14}, {2, 15}, {64, 16}, POSE_END};
+static AnimateEntityFrame D_pspeu_0926B458[] = {{32, 12}, {8, 13}, {8, 14}, {8, 15}, {32, 16}, POSE_END};
+static AnimateEntityFrame D_pspeu_0926B468[] = {{4, 16}, {8, 15}, {8, 14}, {8, 13}, {15, 12}, {1, 12}, POSE_END};
+static AnimateEntityFrame D_pspeu_0926B478[] = {{1, 18}, {1, 19}, POSE_LOOP(0)};
+static AnimateEntityFrame D_pspeu_0926B480[] = {{2, 19}, {2, 20}, {2, 21}, {64, 22}, POSE_END};
+static AnimateEntityFrame D_pspeu_0926B490[] = {{2, 22}, {4, 21}, {4, 20}, {2, 19}, POSE_END};
+static AnimateEntityFrame D_pspeu_0926B4A0[] = {{30, 23}, {30, 24}, POSE_LOOP(0)};
+static AnimateEntityFrame D_pspeu_0926B4A8[] = {{128, 25}, {8, 26}, {128, 27}, {8, 26}, POSE_LOOP(0)};
+static AnimateEntityFrame D_pspeu_0926B4B8[] = {{48, 28}, {30, 29}, POSE_LOOP(0)};
+static AnimateEntityFrame D_pspeu_0926B4C0[] = {{32, 30}, {32, 31}, POSE_LOOP(0)};
+static AnimateEntityFrame D_pspeu_0926B4C8[] = {{32, 32}, {32, 33}, POSE_LOOP(0)};
+static AnimateEntityFrame D_pspeu_0926B4D0[] = {{48, 34}, {16, 35}, POSE_LOOP(0)};
+static AnimateEntityFrame D_pspeu_0926B4D8[] = {{48, 36}, {8, 37}, {24, 38}, {8, 37}, POSE_LOOP(0)};
+static AnimateEntityFrame D_pspeu_0926B4E8[] = {{6, 39}, {6, 40}, {6, 39}, {6, 41}, POSE_LOOP(0)};
+static AnimateEntityFrame D_pspeu_0926B4F8[] = {{1, 43}, {1, 44}, POSE_LOOP(0)};
+static AnimateEntityFrame* D_pspeu_0926B500[] = {D_pspeu_0926B4B8, D_pspeu_0926B4C0, D_pspeu_0926B4C8, D_pspeu_0926B4D0, D_pspeu_0926B4D8};
+static Point16 D_pspeu_0926B518[] = {
+    {-32, -16},
+    {-16, 16},
+    {0, 16},
+    {32, 8},
+    {48, -16},
+};
+static Point16 D_pspeu_0926B530[] = {
+    {-24, -16},
+    {-16, 16},
+    {24, -16},
+};
+static s16 D_pspeu_0926B540[] = {
+    -0x600, 0x02C0, -0x1C0, 
+};
+static u16 D_pspeu_0926B548[] = {9, 5, 10, 11};
+static s8 D_pspeu_0926B550[][4] = {
+    {0, 0, 0, 0}, {-64, -84, 0, 0}, {0, 0, 16, 16}, {-18, 0, 12, 24}, {-10, 0, 12, 24}, {-72, 112, 0, 0}, {-12, -17, 0, 0}, {0, 0, 0, 0}, 
+};
+static u8 D_pspeu_0926B570[] = {0, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 5, 5};
 
 // BSS vars
 s32 D_pspeu_0926C0A0;
@@ -689,7 +708,7 @@ void func_us_8019EE30(Entity* self) {
         self->posX.i.hi -= D_pspeu_0926B518[offsetIndex].x;
     }
     self->posY.i.hi += D_pspeu_0926B518[offsetIndex].y;
-    hitbox = &D_pspeu_0926B550;
+    hitbox = (s8*)&D_pspeu_0926B550;
     hitbox += D_pspeu_0926B570[self->animCurFrame] * 4;
     self->hitboxOffX = *hitbox++;
     self->hitboxOffY = *hitbox++;
