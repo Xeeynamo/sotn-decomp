@@ -10,6 +10,8 @@ use std::path::Path;
 
 const PSX_TEXTURE_SIZE: usize = 0x40000;
 const MAX_TILEDEFS: usize = 0x1000;
+const LOADING_ROOM_LEFT: u8 = 0x40;
+const NP3_RETURN_TELEPORT: u16 = 137;
 const MAX_PALETTES: usize = 256;
 const NATIVE_ATLAS_COLUMNS: usize = 31;
 const NATIVE_PAGE_CHARACTERS: usize = NATIVE_ATLAS_COLUMNS * NATIVE_ATLAS_COLUMNS;
@@ -1540,12 +1542,14 @@ pub fn convert(
         }));
     }
 
-    for (id, left, top, params, source, saturn_collision) in [
+    for (id, left, top, fg_params, bg_params, fg_priority, source, saturn_collision) in [
         (
             4usize,
             3u8,
             44u8,
+            LOADING_ROOM_LEFT,
             0x10u8,
+            NP3_RETURN_TELEPORT,
             &loading_room,
             &loading_collision,
         ),
@@ -1554,6 +1558,8 @@ pub fn convert(
             3u8,
             45u8,
             0x10u8,
+            0x10u8,
+            0xA0u16,
             &loading_room,
             &loading_collision,
         ),
@@ -1562,6 +1568,8 @@ pub fn convert(
             13u8,
             45u8,
             0x22u8,
+            0x22u8,
+            0xA0u16,
             &save_room,
             &save_collision,
         ),
@@ -1626,8 +1634,8 @@ pub fn convert(
                 "top": top,
                 "right": left,
                 "bottom": top,
-                "params": params,
-                "zPriority": if plane == 0 { 0xA0 } else { 0x40 },
+                "params": if plane == 0 { fg_params } else { bg_params },
+                "zPriority": if plane == 0 { fg_priority } else { 0x40 },
                 "flags": 0x203
             }));
         }
@@ -1736,6 +1744,11 @@ pub fn convert(
             "left": 13, "top": 45, "right": 13, "bottom": 45,
             "tileLayoutId": 6, "tilesetId": 0,
             "objGfxId": 0, "objLayoutId": 50
+        }),
+        json!({
+            "left": 2, "top": 44, "right": 2, "bottom": 44,
+            "tileLayoutId": NP3_RETURN_TELEPORT, "tilesetId": 0xFF,
+            "objGfxId": 0, "objLayoutId": 0
         }),
     ]);
     while room_json.len() < 20 {

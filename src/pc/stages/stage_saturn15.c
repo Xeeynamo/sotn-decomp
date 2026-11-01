@@ -203,6 +203,8 @@ static s32 Stage15CurrentRoom(void) {
     return -1;
 }
 
+enum Palettes { PAL_NONE };
+
 // clang-format off
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
 // clang-format on
@@ -847,5 +849,8 @@ void Psyz_ModuleStart(void* param) {
 void Psyz_ModuleStop(void) {
 #ifdef STAGE15_NATIVE_8X8
     Psyz_GpuRegisterCommandHandler(STAGE15_GRID_OPCODE, NULL, NULL);
+#endif
+#ifndef STAGE15_ROOM_TEST
+    Psyz_CdSetDiskPath(g_GameParams.diskPath);
 #endif
 }

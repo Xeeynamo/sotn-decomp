@@ -41,7 +41,7 @@ void func_800E414C(void) {
     switch (D_8003C708.unk2) {
     case 0:
         func_800EA538(1);
-        tele = &D_800A245C[D_8003C708.zPriority];
+        tele = ROOM_TELEPORT(D_8003C708.zPriority);
         D_8003C710 = tele->stageId;
         if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
             D_8003C710 ^= STAGE_INVERTEDCASTLE_FLAG;
