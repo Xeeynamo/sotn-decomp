@@ -6919,12 +6919,12 @@
 | 1.00 | true     | func_us_801C8100                    | asm/us/st/rno0/matchings/e_jack_o_bones/func_us_801C8100.s 
 | 1.00 | true     | func_us_801B5378                    | asm/us/st/rno1/matchings/e_jack_o_bones/func_us_801B5378.s 
 | 1.00 | true     | func_us_801C1DCC                    | asm/us/st/rno3/matchings/e_jack_o_bones/func_us_801C1DCC.s 
-| 1.00 | false    | TryThrow                            | asm/us/st/rno4/nonmatchings/e_jack_o_bones/TryThrow.s 
+| 1.00 | true     | TryThrow                            | asm/us/st/rno4/matchings/e_jack_o_bones/TryThrow.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C81A4                    | asm/us/st/rno0/matchings/e_jack_o_bones/func_us_801C81A4.s 
 | 1.00 | true     | func_us_801B541C                    | asm/us/st/rno1/matchings/e_jack_o_bones/func_us_801B541C.s 
 | 1.00 | true     | func_us_801C1E70                    | asm/us/st/rno3/matchings/e_jack_o_bones/func_us_801C1E70.s 
-| 1.00 | false    | EntityJackOBones                    | asm/us/st/rno4/nonmatchings/e_jack_o_bones/EntityJackOBones.s 
+| 1.00 | true     | EntityJackOBones                    | asm/us/st/rno4/matchings/e_jack_o_bones/EntityJackOBones.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C86B4                    | asm/us/st/rno0/matchings/e_jack_o_bones/func_us_801C86B4.s 
 | 1.00 | true     | func_us_801B592C                    | asm/us/st/rno1/matchings/e_jack_o_bones/func_us_801B592C.s 
@@ -6934,17 +6934,17 @@
 | 1.00 | true     | func_us_801C87B0                    | asm/us/st/rno0/matchings/e_jack_o_bones/func_us_801C87B0.s 
 | 1.00 | true     | func_us_801B5A28                    | asm/us/st/rno1/matchings/e_jack_o_bones/func_us_801B5A28.s 
 | 1.00 | true     | func_us_801C247C                    | asm/us/st/rno3/matchings/e_jack_o_bones/func_us_801C247C.s 
-| 1.00 | false    | EntityJackOBonesJack                | asm/us/st/rno4/nonmatchings/e_jack_o_bones/EntityJackOBonesJack.s 
+| 1.00 | true     | EntityJackOBonesJack                | asm/us/st/rno4/matchings/e_jack_o_bones/EntityJackOBonesJack.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C8A74                    | asm/us/st/rno0/matchings/e_nova_skeleton/func_us_801C8A74.s 
 | 1.00 | true     | func_us_801B5CEC                    | asm/us/st/rno1/matchings/e_nova_skeleton/func_us_801B5CEC.s 
 | 1.00 | true     | func_us_801C2740                    | asm/us/st/rno3/matchings/e_nova_skeleton/func_us_801C2740.s 
-| 1.00 | false    | TryShoot                            | asm/us/st/rno4/nonmatchings/e_nova_skeleton/TryShoot.s 
+| 1.00 | true     | func_us_801DA638                    | asm/us/st/rno4/matchings/e_nova_skeleton/func_us_801DA638.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C8B14                    | asm/us/st/rno0/matchings/e_nova_skeleton/func_us_801C8B14.s 
 | 1.00 | true     | func_us_801B5D8C                    | asm/us/st/rno1/matchings/e_nova_skeleton/func_us_801B5D8C.s 
 | 1.00 | true     | func_us_801C27E0                    | asm/us/st/rno3/matchings/e_nova_skeleton/func_us_801C27E0.s 
-| 1.00 | false    | DrawLaserRing                       | asm/us/st/rno4/nonmatchings/e_nova_skeleton/DrawLaserRing.s 
+| 1.00 | true     | func_us_801DA6D8                    | asm/us/st/rno4/matchings/e_nova_skeleton/func_us_801DA6D8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C8D44                    | asm/us/st/rno0/matchings/e_nova_skeleton/func_us_801C8D44.s 
 | 1.00 | true     | func_us_801B5FBC                    | asm/us/st/rno1/matchings/e_nova_skeleton/func_us_801B5FBC.s 
@@ -6959,7 +6959,7 @@
 | 1.00 | true     | func_us_801C97D4                    | asm/us/st/rno0/matchings/e_nova_skeleton/func_us_801C97D4.s 
 | 1.00 | true     | func_us_801B6A4C                    | asm/us/st/rno1/matchings/e_nova_skeleton/func_us_801B6A4C.s 
 | 1.00 | true     | func_us_801C34A0                    | asm/us/st/rno3/matchings/e_nova_skeleton/func_us_801C34A0.s 
-| 1.00 | false    | EntityNovaLaserPulse                | asm/us/st/rno4/nonmatchings/e_nova_skeleton/EntityNovaLaserPulse.s 
+| 1.00 | true     | EntityNovaLaserPulse                | asm/us/st/rno4/matchings/e_nova_skeleton/EntityNovaLaserPulse.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801AADCC                    | asm/us/boss/bo0/matchings/34DA4/func_us_801AADCC.s 
 | 1.00 | true     | func_us_801B4DA4                    | asm/us/st/no2/matchings/34DA4/func_us_801B4DA4.s 
@@ -7626,8 +7626,8 @@
 | 1.00 | true     | func_us_801C88C4                    | asm/us/st/rno2/matchings/e_azaghal/func_us_801C88C4.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C38F8                    | asm/us/st/rdai/matchings/e_imp/func_us_801C38F8.s 
+| 1.00 | true     | EntityImp                           | asm/us/st/rno4/matchings/e_imp/EntityImp.s 
 | 1.00 | true     | func_us_801C09E8                    | asm/us/st/rnz0/matchings/e_imp/func_us_801C09E8.s 
-| 1.00 | false    | EntityImp                           | asm/us/st/rno4/nonmatchings/e_imp/EntityImp.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C4578                    | asm/us/st/rdai/matchings/e_imp/func_us_801C4578.s 
 | 1.00 | true     | func_us_801DC170                    | asm/us/st/rno4/matchings/e_imp/func_us_801DC170.s 
