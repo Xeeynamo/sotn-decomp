@@ -1,8 +1,125 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rbo6/rbo6.h"
 
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/st_init", GetLangAt);
+#include "../../st/pfn_entity_update.h"
 
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/st_init", InitEntityIds);
+extern LayoutEntity* D_8D2DE98;
+extern LayoutEntity* D_8D2DF6C;
 
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/st_init", RBO6_Load);
+extern Overlay g_BossOverlay;
+
+#include "../../st/get_lang_at.h"
+
+s32 E_ID(BACKGROUND_BLOCK);
+s32 E_ID(LOCK_CAMERA);
+s32 E_ID(UNK_ID13);
+s32 E_ID(EXPLOSION_VARIANTS);
+s32 E_ID(GREY_PUFF);
+s32 E_ID(UNK_16);
+s32 E_ID(UNK_17);
+s32 E_ID(UNK_18);
+s32 E_ID(UNK_19);
+s32 E_ID(UNK_1A);
+s32 E_ID(UNK_1B);
+s32 E_ID(UNK_1C);
+s32 E_ID(UNK_1D);
+s32 E_ID(UNK_1E);
+s32 E_ID(UNK_1F);
+s32 E_ID(UNK_20);
+s32 E_ID(UNK_21);
+s32 E_ID(UNK_22);
+s32 E_ID(UNK_23);
+s32 E_ID(UNK_24);
+s32 E_ID(UNK_25);
+s32 E_ID(UNK_26);
+s32 E_ID(UNK_27);
+s32 E_ID(UNK_28);
+s32 E_ID(UNK_29);
+s32 E_ID(UNK_2A);
+s32 E_ID(UNK_2B);
+s32 E_ID(UNK_2C);
+s32 E_ID(UNK_2D);
+s32 E_ID(BACKGROUND_VORTEX);
+s32 E_ID(UNK_2F);
+s32 E_ID(UNK_30);
+s32 E_ID(UNK_31);
+s32 E_ID(UNK_32);
+
+void InitEntityIds(void) {
+    SET_E_ID(BACKGROUND_BLOCK);
+    SET_E_ID(LOCK_CAMERA);
+    SET_E_ID(UNK_ID13);
+    SET_E_ID(EXPLOSION_VARIANTS);
+    SET_E_ID(GREY_PUFF);
+    SET_E_ID(UNK_16);
+    SET_E_ID(UNK_17);
+    SET_E_ID(UNK_18);
+    SET_E_ID(UNK_19);
+    SET_E_ID(UNK_1A);
+    SET_E_ID(UNK_1B);
+    SET_E_ID(UNK_1C);
+    SET_E_ID(UNK_1D);
+    SET_E_ID(UNK_1E);
+    SET_E_ID(UNK_1F);
+    SET_E_ID(UNK_20);
+    SET_E_ID(UNK_21);
+    SET_E_ID(UNK_22);
+    SET_E_ID(UNK_23);
+    SET_E_ID(UNK_24);
+    SET_E_ID(UNK_25);
+    SET_E_ID(UNK_26);
+    SET_E_ID(UNK_27);
+    SET_E_ID(UNK_28);
+    SET_E_ID(UNK_29);
+    SET_E_ID(UNK_2A);
+    SET_E_ID(UNK_2B);
+    SET_E_ID(UNK_2C);
+    SET_E_ID(UNK_2D);
+    SET_E_ID(BACKGROUND_VORTEX);
+    SET_E_ID(UNK_2F);
+    SET_E_ID(UNK_30);
+    SET_E_ID(UNK_31);
+    SET_E_ID(UNK_32);
+}
+
+u8* cutscene_1;
+u8* cutscene_2;
+u8* cutscene_3;
+u8* cutscene_4;
+
+// Imported in cutscene_data.c
+extern char cutscene_data_1_it[];
+extern char cutscene_data_1_sp[];
+extern char cutscene_data_1_fr[];
+extern char cutscene_data_1_ge[];
+extern char cutscene_data_1_en[];
+extern char cutscene_data_2_it[];
+extern char cutscene_data_2_sp[];
+extern char cutscene_data_2_fr[];
+extern char cutscene_data_2_ge[];
+extern char cutscene_data_2_en[];
+
+void RBO6_Load(void) {
+    cutscene_1 = GetLangAt(NULL, (u8*)cutscene_data_1_en,
+                           (u8*)cutscene_data_1_fr, (u8*)cutscene_data_1_sp,
+                           (u8*)cutscene_data_1_ge, (u8*)cutscene_data_1_it);
+
+    cutscene_2 = GetLangAt(NULL, (u8*)cutscene_data_1_en,
+                           (u8*)cutscene_data_1_fr, (u8*)cutscene_data_1_sp,
+                           (u8*)cutscene_data_1_ge, (u8*)cutscene_data_1_it);
+
+    cutscene_3 = GetLangAt(NULL, (u8*)cutscene_data_2_en,
+                           (u8*)cutscene_data_2_fr, (u8*)cutscene_data_2_sp,
+                           (u8*)cutscene_data_2_ge, (u8*)cutscene_data_2_it);
+
+    cutscene_4 = GetLangAt(NULL, (u8*)cutscene_data_2_en,
+                           (u8*)cutscene_data_2_fr, (u8*)cutscene_data_2_sp,
+                           (u8*)cutscene_data_2_ge, (u8*)cutscene_data_2_it);
+
+    InitEntityIds();
+    PfnEntityUpdates = EntityUpdates;
+    g_pStObjLayoutHorizontal = &D_8D2DE98;
+    g_pStObjLayoutVertical = &D_8D2DF6C;
+    func_psp_0892A018();
+    memcpy(&g_api.o, &g_BossOverlay, sizeof(Overlay));
+}
