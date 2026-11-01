@@ -28,6 +28,7 @@ static bool LoadOverlay(PsyzModule* current, const char* name, void* o) {
 
 static PsyzModule CurrentStageOverlay;
 bool LoadStageOverlay(const char* name, Overlay* o) {
+    g_PcStageLayerRenderer = NULL;
     if (!LoadOverlay(&CurrentStageOverlay, name, o)) {
         return false;
     }
