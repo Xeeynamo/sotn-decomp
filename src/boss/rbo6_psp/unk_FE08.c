@@ -954,7 +954,133 @@ void func_us_8019FBC0(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_FE08", func_us_8019FCB4);
+extern EInit g_EInitInteractable;
+
+void func_us_8019FCB4(Entity* self) {
+    Primitive* prim;
+    s32 primIndex;
+    Entity* other;
+    s16 angle;
+    s16 yVar;
+    s16 xVar;
+    s32 i;
+    s32 color;
+
+    switch (self->step) {                              /* irregular */
+    case 0:
+        InitializeEntity(g_EInitInteractable);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= 0x800000;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        for(self->ext.prim = prim; prim != NULL; prim = prim->next) {
+            prim->tpage = 0x14;
+            prim->clut = 0x201;
+            prim->priority = ((self->zPriority) - 1);
+            prim->drawMode = 8;
+        }
+        prim = self->ext.prim;
+        for(i = 0; i < 2; prim = prim->next, i++) {
+            prim->u0 = 0xC1;
+            prim->u1 = 0xFF;
+            prim->u2 = 0xC1;
+            prim->u3 = 0xFF;
+            prim->v0 = 1;
+            prim->v1 = 1;
+            prim->v2 = 0x47;
+            prim->v3 = 0x47;
+            prim->priority = ((self->zPriority) - 2);
+            prim = prim->next;
+            prim->u0 = 1;
+            prim->u1 = 0xBF;
+            prim->u2 = 1;
+            prim->u3 = 0xBF;
+            prim->v0 = 1;
+            prim->v1 = 1;
+            prim->v2 = 0xB4;
+            prim->v3 = 0xB4;
+        }
+    case 1:
+        other = &g_Entities[0x50];
+        self->posX.i.hi = other->posX.i.hi;
+        self->posY.i.hi = other->posY.i.hi;
+        self->ext.ILLEGAL.s16[3] += 0x10;
+        angle = self->rotate = (rsin(self->ext.ILLEGAL.s16[3]) << 7) >> 0xC;
+        prim = self->ext.prim;
+        for(i = 0; i < 2; i++) {
+            if (i == 0) {
+                xVar = self->posX.i.hi - 8;
+            } else {
+                xVar = self->posX.i.hi + 8;
+            }
+            yVar = self->posY.i.hi - 0x34;
+            prim->x1 = xVar;
+            prim->y1 = yVar;
+            prim->x3 = xVar;
+            prim->y3 = yVar + 0x46;
+            if (i == 0) {
+                xVar = xVar - ((rcos(angle) * 0x3E) >> 0xC);
+            } else {
+                xVar = xVar + ((rcos(angle) * 0x3E) >> 0xC);
+            }
+            yVar = yVar + ((rsin(angle) * 0x3E) >> 0xC);
+            prim->x0 = xVar;
+            prim->y0 = yVar;
+            if (i == 0) {
+                prim->x2 = xVar + ((rsin(angle) * 0x46) >> 0xC);
+            } else {
+                prim->x2 = xVar - ((rsin(angle) * 0x46) >> 0xC);
+            }
+            prim->y2 = yVar + ((rcos(angle) * 0x46) >> 0xC);
+            prim->drawMode = 2;
+            prim = prim->next;
+            if (i == 0) {
+                xVar = xVar + 0x18;
+            } else {
+                xVar = xVar - 0x18;
+            }
+            yVar = yVar - 0x78;
+            prim->x1 = xVar;
+            prim->y1 = yVar;
+            prim->x3 = xVar;
+            prim->y3 = yVar + 0xB3;
+            if (i == 0) {
+                xVar = xVar - ((rcos(angle) * 0xBE) >> 0xC);
+            } else {
+                xVar = xVar + ((rcos(angle) * 0xBE) >> 0xC);
+            }
+            yVar = yVar + ((rsin(angle) * 0xBE) >> 0xC);
+            prim->x0 = xVar;
+            prim->y0 = yVar;
+            if (i == 0) {
+                prim->x2 = xVar + ((rsin(angle) * 0xB3) >> 0xC);
+            } else {
+                prim->x2 = xVar - ((rsin(angle) * 0xB3) >> 0xC);
+            }
+            prim->y2 = yVar + ((rcos(angle) * 0xB3) >> 0xC);
+            prim->drawMode = 2;
+            prim = prim->next;
+        }
+    }
+    prim = self->ext.prim;
+    color = D_pspeu_0926C0A0 & 0xFFF;
+    if (color == 0x200) {
+        color = 0x201;
+    }
+    while (prim != NULL) {
+        prim->clut = color;
+        if (D_pspeu_0926C068 != 0) {
+            prim->drawMode |= 8;
+        }
+        prim = prim->next;
+    }
+    FntPrint("color %x\n", D_pspeu_0926C0A0);
+    
+}
 
 INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_FE08", func_us_801A01A4);
 
