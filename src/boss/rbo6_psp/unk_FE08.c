@@ -15,9 +15,11 @@ extern s32 D_psp_E_UNK_22;
 extern s32 D_psp_E_UNK_23;
 extern s32 D_psp_E_UNK_24;
 extern s32 D_psp_E_UNK_25;
+extern s32 D_psp_E_UNK_26;
 extern s32 D_psp_E_UNK_27;
 extern AnimateEntityFrame D_pspeu_0926B3F0[];
 extern AnimateEntityFrame D_pspeu_0926B3F8[];
+extern AnimateEntityFrame D_pspeu_0926B408[];
 extern AnimateEntityFrame D_pspeu_0926B410[];
 extern AnimateEntityFrame D_pspeu_0926B418[];
 extern AnimateEntityFrame D_pspeu_0926B420[];
@@ -1120,6 +1122,7 @@ void func_us_801A01A4(Entity* self){
     if (!(g_Timer & 0xF)) {
         // This is bad. Not proper arguments. Necessitates empty
         // prototype in gameapi.
+        // Probably supposed to be PlaySfxVolPan
         g_api.PlaySfx(0x869, 0x70, 0);
     }
     switch (self->step) {                               /* irregular */
@@ -1436,8 +1439,87 @@ void func_us_801A0AB4(Entity* self) {
     }
 }
 
+extern EInit D_us_80180564;
 
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_FE08", func_us_801A0DC0);
+void func_us_801A0DC0(Entity* self) {
+    Entity* other;
+    s32 scale;
+    s32 xVar;
+    s32 yVar;
+
+    if (D_pspeu_0926C060 & 1) {
+        DestroyEntity(self);
+        return;
+    }
+    switch (self->step) {                              /* irregular */
+    case 0:
+        InitializeEntity(D_us_80180564);
+        self->drawFlags = 3;
+        self->scaleX = self->scaleY = 0;
+        self->blendMode |= 0x30;
+        self->drawFlags |= 8;
+        self->opacity = 0x60;
+        self->hitboxState = 0;
+        /* fallthrough */
+    case 1:
+        AnimateEntity(&D_pspeu_0926B408, self);
+        scale = self->scaleX;
+        scale += 0x10;
+        if (scale > 0xCC) {
+            scale = 0xCC;
+        }
+        self->scaleX = self->scaleY = scale;
+        if (D_pspeu_0926C080 != 0) {
+            self->ext.ILLEGAL.s16[2] = 0x60;
+            other = &PLAYER;
+            xVar = other->posX.val - self->posX.val;
+            yVar = other->posY.val - self->posY.val;
+            self->velocityX = xVar / 96;
+            self->velocityY = yVar / 96;
+            self->step += 1;
+        }
+        if (!(g_Timer & 0x1F)) {
+            g_api.PlaySfxVolPan(0x6DE, 0x50, 0);
+        }
+        break;
+    case 2:
+        AnimateEntity(&D_pspeu_0926B408, self);
+        MoveEntity();
+        scale = 0x6000 / (self->ext.ILLEGAL.s16[2] + 0x18);
+        self->scaleX = self->scaleY = scale;
+        if (!(self->ext.ILLEGAL.s16[2] & 3)) {
+            other = AllocEntity(&g_Entities[0xC0], &g_Entities[256]);
+            if (other != NULL) {
+                CreateEntityFromEntity(D_psp_E_UNK_26, self, other);
+                other->scaleX = other->scaleY = self->scaleX;
+                other->zPriority = self->zPriority;
+                other->opacity = self->opacity;
+            }
+        }
+        if (!(self->ext.ILLEGAL.s16[2] & 0xF)) {
+            g_api.PlaySfxVolPan(0x6E2, 0x80 - self->ext.ILLEGAL.s16[2] / 2, 0);
+        }
+        if (!--self->ext.ILLEGAL.s16[2]) {
+            g_api.PlaySfx(0x661);
+            self->zPriority = g_unkGraphicsStruct.g_zEntityCenter + 8;
+            other = &PLAYER;
+            xVar = other->posX.i.hi - self->posX.i.hi;
+            yVar = other->posY.i.hi - self->posY.i.hi;
+            scale = self->scaleX * 20 / 256;
+            if (((xVar * xVar) + (yVar * yVar)) < (scale * scale)) {
+                self->hitboxOffX = xVar;
+                self->hitboxOffY = yVar;
+                self->hitboxState = 1;
+            }
+            self->step += 1;
+            return;
+        }
+        break;
+    case 3:
+        DestroyEntity(self);
+        break;
+    }
+}
 
 void func_us_801A1150(Entity* self) {
     s32 opacity;
