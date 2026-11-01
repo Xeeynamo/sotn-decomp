@@ -7,6 +7,7 @@
 #define _SPR2_
 #include "lib/spr/spr.h"
 #include "game.h"
+#include "saturn_hw.h"
 
 // func_06004080
 void entrypoint(void) {
@@ -465,6 +466,7 @@ void InitializePads(void) {
         g_pads[0].repeat = PAD_NONE;
 }
 
+#ifndef SATZ
 static inline void set_sr(u32 sr) { asm volatile("ldc\t%0,sr" : : "r"(sr)); }
 
 static inline u32 get_sr(void) {
@@ -487,6 +489,7 @@ static inline void set_imask(u32 imask) {
     sr |= (imask << 4);
     set_sr(sr);
 }
+#endif
 
 // original name: SET_VBLANK
 void SetVblank(s32 useAlternateHandlers) {
@@ -1507,7 +1510,7 @@ s32 func_06007B8C(s16* colors) {
             dst = (s16*)(SCL_COLRAM_ADDR + 0x800 + charNo * 0x20);
 
             for (i = 0; i < 0x10; i++) {
-                *dst++ = *colors++ & 0x7FFF;
+                HW_STORE(dst++, *colors++ & 0x7FFF);
             }
         }
         DAT_0605AEB0++;
@@ -1532,7 +1535,7 @@ u16 func_06007BE0(s16* colors, s32 arg1) {
     if (colors != NULL) {
         dst = (s16*)(SCL_COLRAM_ADDR + 0x800 + DAT_0605AEB0 * 0x20);
         for (i = 0; i < 0x10; i++) {
-            *dst++ = *colors++ & 0x7FFF;
+            HW_STORE(dst++, *colors++ & 0x7FFF);
         }
 
         vram = LocalLookupTblNoToVram(DAT_0605AEB0);
@@ -1580,7 +1583,7 @@ void ResetSpriteVram() {
 extern SprSpCmd DAT_06050684[];
 extern XyInt DAT_0605AEA0[2];
 extern SprSpCmd* d_0605AEAC;
-extern XyInt DAT_0600E23C;
+extern const XyInt DAT_0600E23C;
 
 void func_06007D54(void) {
     SprSpCmd cmd;
@@ -1863,7 +1866,11 @@ void TransferBgLayer(s32 arg0) {
     Unk0605CD90* ptr;
 
     transfer = &DAT_0605D6C0[arg0];
+#ifdef SATZ
+    ptr = arg0 < 4 ? &DAT_0605CD90[arg0] : NULL;
+#else
     ptr = &DAT_0605CD90[arg0];
+#endif
     if (transfer->tileFlags == 0) {
         return;
     }
@@ -1979,7 +1986,7 @@ void func_0600871C(Unk0605CD90* arg0, UNK_0605c680* arg1, s32 arg2) {
 
     for (i = 0; i < rows; i++) {
         for (j = 0; j < cols; j++) {
-            *dst = *src + tileBase;
+            HW_STORE(dst, *src + tileBase);
 
             if (((x + j) & 0x3F) == 0x3F) {
                 dst -= 0x3F;
@@ -2562,12 +2569,12 @@ void func_06009D60(u32 bank) {
     if (bank < 2) {
         dst = &(((u32*)SCL_VDP2_VRAM_A0)[bank * 0x8000]);
         for (i = 0; i < 0x8000; i++) {
-            *dst++ = 0;
+            HW_STORE(dst++, 0);
         }
     } else {
         dst = &(((u32*)SCL_VDP2_VRAM_B0)[(bank - 2) * 0x8000]);
         for (i = 0; i < 0x8000; i++) {
-            *dst++ = 0;
+            HW_STORE(dst++, 0);
         }
     }
 }
@@ -3321,7 +3328,7 @@ void ClearFrameBuffer(u16 clearColor) {
     for (row = 0; row < 0xF0; row++) {
         ptr = func_0600CB04(0, row);
         for (col = 0; col < 0x140; col++) {
-            *ptr++ = clearColor;
+            HW_STORE(ptr++, clearColor);
         }
     }
 }
@@ -3702,6 +3709,9 @@ void func_0600D8BC(void) {
             g_CurrentRoom.stageID = 0x1F;
             D_8006C374 = 0x3F;
             g_PlayableCharacter = 1;
+#ifdef SATZ
+            sotn_satz_boot_override();
+#endif
             func_06004F50(0x11);
             DAT_0605C104 = g_Servant;
             break;
@@ -3737,7 +3747,11 @@ void func_0600D8BC(void) {
 }
 
 // original name: MOVIE_PRG_CLEAR
+#ifdef SATZ
+void MoviePRGClear(void) { sotn_satz_clear_range(0x06066000, 0x9A000); }
+#else
 void MoviePRGClear(void) { memset(0x06066000, 0, 0x9A000); }
+#endif
 
 void func_0600DAB4(void) { InitPrimBuf(); }
 
@@ -3755,7 +3769,7 @@ void InitPrimBuf(void) {
     DAT_06061DD4 = 0;
     g_unkGraphicsStruct.BottomCornerTextTimer = 0;
     g_unkGraphicsStruct.BottomCornerTextPrims = 0;
-    *(s16*)(SCL_COLRAM_ADDR + 0xFE0) = 0;
+    HW_WRITE16(SCL_COLRAM_ADDR + 0xFE0, 0);
 }
 
 // 0x0600DB38
@@ -4777,7 +4791,7 @@ void ClearDebugPrintTilemap(void) {
 
     ptr = SCL_VDP2_VRAM_B0 + 0x18000;
     for (i = 0; i < 0x1000; i++) {
-        *ptr++ = 0;
+        HW_STORE(ptr++, 0);
     }
 }
 
