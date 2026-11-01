@@ -12,7 +12,9 @@ extern s32 D_psp_E_UNK_24;
 extern s32 D_psp_E_UNK_27;
 extern AnimateEntityFrame D_pspeu_0926B3F0[];
 extern AnimateEntityFrame D_pspeu_0926B3F8[];
+extern AnimateEntityFrame D_pspeu_0926B410[];
 extern AnimateEntityFrame D_pspeu_0926B4A0[];
+extern AnimateEntityFrame* D_pspeu_0926B500[];
 extern u16 D_pspeu_0926B548[];
 extern s8 D_pspeu_0926B580;
 extern s32 D_pspeu_0926C060;
@@ -462,15 +464,14 @@ INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_FE08", func_us_8019EE30);
 
 INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_FE08", func_us_8019F1CC);
 
-void func_us_8019FA78(Entity* self) {
-    extern u16 D_us_80180540;
-    extern s32 D_pspeu_0926C068;
+extern EInit D_us_80180540;
 
-    self->palette = (u16)D_pspeu_0926C0A0;
+void func_us_8019FA78(Entity* self) {
+    self->palette = D_pspeu_0926C0A0;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_us_80180540);
+        InitializeEntity(D_us_80180540);
         self->animCurFrame = 0x11;
         /* fall through */
     case 1:
@@ -485,19 +486,13 @@ void func_us_8019FA78(Entity* self) {
 }
 
 void func_us_8019FB04(Entity* self) {
-    extern u8* D_pspeu_0926B500[];
-    extern s32 D_pspeu_0926C068;
-    extern Entity g_Entities[256];
-    extern u16 D_us_80180540;
-    extern void InitializeEntity(u16*);
-
-    u8* anim;
+    AnimateEntityFrame* anim;
     Entity* source;
 
     self->palette = D_pspeu_0926C0A0;
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_us_80180540);
+        InitializeEntity(D_us_80180540);
         /* fall through */
     case 1:
         anim = D_pspeu_0926B500[self->params];
@@ -529,25 +524,22 @@ INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_FE08", func_us_801A0AB4);
 INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_FE08", func_us_801A0DC0);
 
 void func_us_801A1150(Entity* self) {
-    extern u16 D_us_80180540;
-    extern u8 D_us_80180724;
-    extern u8 D_pspeu_0926B410;
-    s32 var_v0;
+    s32 opacity;
 
     if (!self->step) {
-        InitializeEntity(&D_us_80180540);
+        InitializeEntity(D_us_80180540);
         self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
         self->drawFlags |= ENTITY_OPACITY;
         self->blendMode = BLEND_ADD | BLEND_TRANSP;
     }
-    AnimateEntity(&D_pspeu_0926B410, self);
-    var_v0 = self->opacity;
-    var_v0 -= 2;
-    if (var_v0 < 0) {
-        var_v0 = 0;
+    AnimateEntity(D_pspeu_0926B410, self);
+    opacity = self->opacity;
+    opacity -= 2;
+    if (opacity < 0) {
+        opacity = 0;
     }
-    self->opacity = (u8)var_v0;
-    if (var_v0 == 0) {
+    self->opacity = (u8)opacity;
+    if (opacity == 0) {
         DestroyEntity(self);
     }
 }
@@ -557,7 +549,7 @@ INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_FE08", func_us_801A11DC);
 void func_us_801A1B38(Entity* self) {
     Entity* real;
 
-    if (*(s32*)0x0926C060 & 1) {
+    if (D_pspeu_0926C060 & 1) {
         DestroyEntity(self);
         return;
     }
@@ -573,7 +565,7 @@ void func_us_801A1B38(Entity* self) {
     self->posX.i.hi = real->posX.i.hi;
     self->posY.i.hi = real->posY.i.hi + 0xC;
 
-    if (*(s32*)0x0926C098 == 5) {
+    if (D_pspeu_0926C098 == 5) {
         DestroyEntity(self);
     }
 }
