@@ -93,8 +93,6 @@ static s8 D_pspeu_0926B550[][4] = {
 };
 static u8 D_pspeu_0926B570[] = {0, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 5, 5};
 
-
-
 // Extern BSS var
 extern s32 g_CutsceneFlags;
 
