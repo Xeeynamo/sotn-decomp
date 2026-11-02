@@ -1710,10 +1710,10 @@ void EntityRainbowTriangleAttack(Entity* self) {
     s16 greenAngle;
     s16 blueAngle;
     Pos* SP_PosArr;
-    s16* primXY;
+    Point16* primXY;
     s32 tmp;
     s32 i;
-    s16* extXY;
+    Point16* extXY;
     u8* rgb;
 
     if (g_BossFlag & 1) {
@@ -1814,16 +1814,16 @@ void EntityRainbowTriangleAttack(Entity* self) {
             xVar = 0;
             yVar = 0;
             // Warning here: extXY uninitialized, but unused so it's ok
-            for (i = 0; i < 3; i++, extXY += 2) {
+            for (i = 0; i < 3; i++, extXY++) {
                 xVar += SP_PosArr[i].x.i.hi;
                 yVar += SP_PosArr[i].y.i.hi;
             }
             self->posX.i.hi = xVar / 3;
             self->posY.i.hi = yVar / 3;
             extXY = &self->ext.finalDrac.triangleXY[0];
-            for (i = 0; i < 3; i++, extXY += 2) {
-                extXY[0] = SP_PosArr[i].x.i.hi - self->posX.i.hi;
-                extXY[1] = SP_PosArr[i].y.i.hi - self->posY.i.hi;
+            for (i = 0; i < 3; i++, extXY++) {
+                extXY->x = SP_PosArr[i].x.i.hi - self->posX.i.hi;
+                extXY->y = SP_PosArr[i].y.i.hi - self->posY.i.hi;
             }
             self->scaleX = 0x100;
             self->step++;
@@ -1839,14 +1839,14 @@ void EntityRainbowTriangleAttack(Entity* self) {
             prim = prim->next;
         }
         self->scaleX -= 8;
-        primXY = &prim->x0;
+        primXY = (Point16*)&prim->x0;
         tmp = self->scaleX;
         xVar = self->posX.i.hi;
         yVar = self->posY.i.hi;
         extXY = &self->ext.finalDrac.triangleXY[0];
-        for (i = 0; i < 3; i++, extXY += 2, primXY += 6) {
-            primXY[0] = xVar + ((extXY[0] * tmp) >> 8);
-            primXY[1] = yVar + ((extXY[1] * tmp) >> 8);
+        for (i = 0; i < 3; i++, extXY ++, primXY += 3) {
+            primXY->x = xVar + ((extXY->x * tmp) >> 8);
+            primXY->y = yVar + ((extXY->y * tmp) >> 8);
         }
         if (self->opacity < 0xC0) {
             self->opacity += 4;
@@ -1872,9 +1872,9 @@ void EntityRainbowTriangleAttack(Entity* self) {
             }
             extXY = &self->ext.finalDrac.triangleXY[0];
             tmp = self->scaleX;
-            for (i = 0; i < 3; i++, extXY += 2) {
-                extXY[0] = ((extXY[0] * tmp) >> 8);
-                extXY[1] = ((extXY[1] * tmp) >> 8);
+            for (i = 0; i < 3; i++, extXY++) {
+                extXY->x = ((extXY->x * tmp) >> 8);
+                extXY->y = ((extXY->y * tmp) >> 8);
             }
             self->step++;
             return;
@@ -1916,18 +1916,18 @@ void EntityRainbowTriangleAttack(Entity* self) {
             greenAngle += 0x280;
             blueAngle += 0x100;
         }
-        primXY = &prim->x0;
+        primXY = (Point16*)&prim->x0;
         xVar = self->posX.i.hi;
         yVar = self->posY.i.hi;
         extXY = &self->ext.finalDrac.triangleXY[0];
         angle = self->rotate;
         sine = rsin(angle);
         cosine = rcos(angle);
-        for (i = 0; i < 3; i++, extXY += 2, primXY += 6) {
-            primXY[0] =
-                xVar + (((extXY[0] * cosine) - (extXY[1] * sine)) >> 0xC);
-            primXY[1] =
-                yVar + (((extXY[0] * sine) + (extXY[1] * cosine)) >> 0xC);
+        for (i = 0; i < 3; i++, extXY++, primXY += 3) {
+            primXY->x =
+                xVar + (((extXY->x * cosine) - (extXY->y * sine)) >> 0xC);
+            primXY->y =
+                yVar + (((extXY->x * sine) + (extXY->y * cosine)) >> 0xC);
         }
         break;
     }

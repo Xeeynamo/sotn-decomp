@@ -4836,7 +4836,7 @@ typedef struct {
     /* 0x85 */ u8 handSwipesRemain;
     /* 0x88 */ u32 : 32;
     /* 0x8C */ s32 bloodSpeed;
-    /* 0x90 */ s16 triangleXY[6];
+    /* 0x90 */ Point16 triangleXY[3];
     /* 0x9C */ struct Entity* unk9C;
     /* 0xA0 */ struct Entity* unkA0;
     /* 0xA4 */ u32 : 32;
