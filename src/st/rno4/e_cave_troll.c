@@ -1,7 +1,65 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno4.h"
 
-INCLUDE_ASM("st/rno4/nonmatchings/e_cave_troll", StepTowards);
+extern Primitive* FindFirstUnkPrim(Primitive*);
+
+extern EInit D_us_80180B6C;
+extern EInit g_EInitCaveTroll;
+extern EInit D_us_80180B78;
+
+#if defined(VERSION_US)
+static s16 D_us_80182344[] = {
+    0x0000, 0x0019, 0x0000, 0x0004, 0x0008, 0xFFFC, 0xFFF0, 0x0000,
+    0x0000, 0x0019, 0x000C, 0x0000, 0x0206, 0x0306, 0x0440, 0x00FF};
+#else
+static s16 D_us_80182344[] = {
+    0x0000, 0x0019, 0x0000, 0x0004, 0x0008, 0xFFFC, 0xFFF0, 0x0000};
+#endif
+
+static AnimateEntityFrame D_us_80182364[] = {
+    {0x04, 0x05}, {0x06, 0x01}, {0x04, 0x06}, {0xFF, 0x00}};
+static AnimateEntityFrame D_us_8018236C[] = {
+    {0x06, 0x07}, {0x08, 0x08}, {0x06, 0x09}, {0xFF, 0x00}};
+static AnimateEntityFrame D_us_80182374[] = {
+    {0x10, 0x01}, {0x02, 0x0A}, {0x02, 0x0B}, {0x14, 0x0A},
+    {0x01, 0x12}, {0x01, 0x11}, {0x01, 0x10}, {0xFF, 0x00}};
+static AnimateEntityFrame D_us_80182384[] = {
+    {0x01, 0x0D}, {0x01, 0x0E}, {0x00, 0x00}, {0x00, 0x00}};
+static AnimateEntityFrame D_us_8018238C[] = {
+    {0x08, 0x01}, {0x16, 0x0C}, {0x01, 0x0E}, {0x01, 0x0D},
+    {0x01, 0x0F}, {0x01, 0x11}, {0x01, 0x12}, {0xFF, 0x00}};
+static AnimateEntityFrame D_us_8018239C[] = {
+    {0x01, 0x15}, {0x01, 0x16}, {0x01, 0x17}, {0x01, 0x18}, {0x01, 0x19},
+    {0x01, 0x1A}, {0x01, 0x1B}, {0x01, 0x1C}, {0x01, 0x00}, {0xFF, 0x00},
+};
+static AnimateEntityFrame D_us_801823B0[] = {
+    {0x02, 0x1D}, {0x02, 0x1E}, {0x02, 0x1F}, {0x02, 0x20},
+    {0x02, 0x21}, {0x02, 0x22}, {0x00, 0x00}, {0x00, 0x00}};
+static s8 D_us_801823C0[][4] = {
+    {0x00, 0x00, 0x00, 0x00}, {0x01, 0x07, 0x04, 0x12},
+    {0x01, 0x03, 0x07, 0x0E}, {0x04, 0x00, 0x04, 0x18},
+    {0x00, 0x05, 0x05, 0x14},
+};
+static u8 D_us_801823D4[] = {
+    0x00, 0x01, 0x02, 0x02, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x03, 0x03,
+    0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x02, 0x00, 0x00, 0x00};
+
+static bool StepTowards(s16* val, s32 target, s32 step) {
+    if (abs(*val - target) < step) {
+        *val = target;
+        return true;
+    }
+
+    if (*val > target) {
+        *val -= step;
+    }
+
+    if (*val < target) {
+        *val += step;
+    }
+
+    return false;
+}
 
 void func_us_801D5DC8(Primitive* prim) {
     s32 yPos;
@@ -26,16 +84,6 @@ void func_us_801D5DC8(Primitive* prim) {
         return;
     }
 }
-
-extern EInit g_EInitCaveTroll;
-extern s16 D_us_80182344[];
-extern u8 D_us_80182364[];
-extern u8 D_us_8018236C[];
-extern u8 D_us_80182374[];
-extern u8 D_us_80182384[];
-extern u8 D_us_8018238C[];
-extern s8 D_us_801823C0[][4];
-extern u8 D_us_801823D4[];
 
 void func_us_801D5E90(Entity* self) {
     Collider collider;
@@ -420,8 +468,6 @@ void func_us_801D5E90(Entity* self) {
     }
 }
 
-extern EInit D_us_80180B6C;
-
 void func_us_801D68E0(Entity* self) {
     Primitive* prim;
     Entity* ent;
@@ -519,4 +565,80 @@ void func_us_801D68E0(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno4/nonmatchings/e_cave_troll", func_us_801D6B8C);
+void func_us_801D6B8C(Entity* self) {
+    Entity* ent;
+    s32 dx;
+    s32 dy;
+    s16 angle;
+    s32 distance;
+    s32 size;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180B78);
+        self->animCurFrame = 0;
+        break;
+
+    case 1:
+        ent = self->ext.et_801D6B8C.unk9C;
+        if (ent->pose == 4) {
+            self->step++;
+        }
+        break;
+
+    case 2:
+        AnimateEntity(D_us_8018239C, self);
+        ent = self->ext.et_801D6B8C.unk9C;
+        if (ent->ext.et_801D6B8C.unk90) {
+            self->facingLeft = 0;
+            self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
+            self->scaleX = (self->scaleY = 0x180);
+            self->ext.et_801D6B8C.unk80 = 0x60;
+            self->zPriority = ent->zPriority - 1;
+            SetStep(3);
+        }
+        break;
+
+    case 3:
+        AnimateEntity(D_us_801823B0, self);
+        if (self->scaleX < 0x200) {
+            self->scaleX = (self->scaleY += 0x20);
+        } else if (!(self->ext.et_801D6B8C.unk80 -= 1)) {
+            SetStep(4);
+        }
+
+    case 4:
+        AnimateEntity(D_us_801823B0, self);
+        if (self->scaleX) {
+            self->scaleX = (self->scaleY -= 4);
+        } else {
+            ent = self->ext.et_801D6B8C.unk9C;
+            ent->ext.et_801D6B8C.unk90 = 0;
+            DestroyEntity(self);
+            return;
+        }
+        ent = g_Entities;
+        angle = GetAngleBetweenEntities(self, ent);
+        size = (self->scaleX * 30) >> 8;
+        dx = GetDistanceToPlayerX();
+        dy = GetDistanceToPlayerX();
+        distance = SquareRoot0(SQ(dx) + SQ(dy));
+        distance -= 4;
+        if (distance < size) {
+            size = distance;
+        }
+        self->hitboxOffX = (size * rcos(angle)) >> 0xC;
+        self->hitboxOffY = (size * rsin(angle)) >> 0xC;
+    }
+
+    if (g_Timer & 1) {
+        self->palette = PAL_FLAG(PAL_CC_CRITICAL_EFFECT);
+    } else {
+        self->palette = PAL_FLAG(PAL_UNK_19C);
+    }
+    ent = self->ext.et_801D6B8C.unk9C;
+    if (ent->entityId != 0x40) {
+        DestroyEntity(self);
+    }
+    return;
+}

@@ -65,7 +65,7 @@ segments:
       - [0x2184, .data, e_room_fg]
       - [0x2210, data]
       - [0x22CC, .data, e_dark_octopus]
-      - [0x2344, data]
+      - [0x2344, .data, e_cave_troll]
       - [0x23EC, .data, e_blue_venus_weed]
       - [0x256C, data]
       - [0x2904, .data, e_jack_o_bones]

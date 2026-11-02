@@ -4828,6 +4828,21 @@ typedef struct {
 
 } ET_BlackPanther;
 
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8c */ s32 : 32;
+    /* 0x90 */ u8 unk90;
+    /* 0x91 */ s8 : 8;
+    /* 0x92 */ s16 : 16;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ struct Entity* unk9C;
+} ET_801D6B8C;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -5234,6 +5249,7 @@ typedef union { // offset=0x7C
     ET_Scarecrow scarecrow;
     ET_SpectralSwordRdai spectralSwordRdai;
     ET_BlackPanther blackPanther;
+    ET_801D6B8C et_801D6B8C;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);
