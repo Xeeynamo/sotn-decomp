@@ -47,5 +47,5 @@ segments:
       - [0x698, c, w_init]
       - [0x700, .data, left_hand]
       - [0x708, .data, w_000]
-      - [0x1908, .data, w_init]
+      - [0x1910, .data, w_init]
   - [0x1980]

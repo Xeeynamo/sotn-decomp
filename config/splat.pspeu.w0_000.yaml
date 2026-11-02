@@ -44,10 +44,8 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, w_000]
-      # TODO: this is the wrong offset
       - [0x698, c, w_init]
-      - [0x6CC, .data, w_000]
-      # TODO: this is the wrong offset
+      - [0x700, .data, w_000]
       - [0x1908, .data, w_init]
       - {start: 0x1980, type: .bss, 0x92F4780, name: right_hand}
   - [0x1980]

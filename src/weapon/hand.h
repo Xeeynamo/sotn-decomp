@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#ifndef HAND_H
+#define HAND_H
 #include <types.h>
 
 #if defined(WEAPON0)
@@ -11,3 +13,4 @@
 #endif
 
 s32 g_HandId = HAND_ID;
+#endif // HAND_H

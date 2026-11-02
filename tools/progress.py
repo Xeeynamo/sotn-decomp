@@ -223,10 +223,14 @@ class DecompProgressWeaponStats:
         self.data_total = 0
         for i in range(0, 59):
             if hand_id == 1:
-                stats = DecompProgressStats(self.name, f"weapon/w{hand_id}_{i:03d}", "weapon")
+                stats = DecompProgressStats(
+                    self.name, f"weapon/w{hand_id}_{i:03d}", "weapon"
+                )
             else:
                 print(f"hand id: {hand_id}")
-                stats = DecompProgressStats("weapon", f"weapon/w{hand_id}_{i:03d}", "weapon")
+                stats = DecompProgressStats(
+                    "weapon", f"weapon/w{hand_id}_{i:03d}", "weapon"
+                )
             if stats.exists:
                 self.code_matching += stats.code_matching
                 self.code_total += stats.code_total

@@ -43,9 +43,12 @@ def is_hd(ver: str) -> bool:
 
 def is_weapon(ovl_name: str) -> bool:
     return (
-        ovl_name == "weapon" or ovl_name == "weapon1" or
-            ovl_name.startswith("w0_") or ovl_name.startswith("w1_")
+        ovl_name == "weapon"
+        or ovl_name == "weapon1"
+        or ovl_name.startswith("w0_")
+        or ovl_name.startswith("w1_")
     )
+
 
 def weapon_hand(ovl_name: str) -> int:
     if ovl_name == "weapon1":
@@ -399,7 +402,9 @@ def add_gfx_stage(
     )
 
 
-def add_gfx_weapon(nw: ninja_syntax, ver: str, base_file: str, linker_path: str, hand_id: int):
+def add_gfx_weapon(
+    nw: ninja_syntax, ver: str, base_file: str, linker_path: str, hand_id: int
+):
     ovl_id = os.path.basename(base_file).strip("f_").strip("f1_")
     in_file = f"{base_file}.png"
     step_raw = build_path(ver, f"{base_file}.bin")
@@ -473,14 +478,19 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config, han
             if not sotn_progress_report:
                 weapons.append(
                     add_gfx_weapon(
-                        nw, ver, os.path.join(asset_path, weapon_gfx), ld_path, hand_id,
+                        nw,
+                        ver,
+                        os.path.join(asset_path, weapon_gfx),
+                        ld_path,
+                        hand_id,
                     )
                 )
             continue
         if segment["type"] != "code":
             continue
-        weapon_id = re.sub(r'^f\d*_', '', weapon_gfx)
+        weapon_id = re.sub(r"^f\d*_", "", weapon_gfx)
         cpp_flags = f"-DW_{weapon_id} -DWEAPON{hand_id}"
+        needs_w_init = False
         objs = []
         for subsegment in segment["subsegments"]:
             kind = subsegment[1]
@@ -495,12 +505,14 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config, han
                 obj = add_c(nw, ver, f"{src_path}/{name}.c", ld_path, cpp_flags)
                 objs.insert(0, obj)  # the C file needs to always be linked first
             elif kind == ".data":
-                if name == 'left_hand' or name == 'right_hand':
+                if name == "left_hand" or name == "right_hand":
                     # w_init needs to come first because it's the
                     # the header
                     # or name.startswith('w_init'):
                     obj = add_c(nw, ver, f"{src_path}/{name}.c", ld_path, cpp_flags)
                     objs.append(obj)  # the C file needs to always be linked first
+                elif name == "w_init":
+                    needs_w_init = True
                 continue
             elif kind == ".rodata":
                 continue
@@ -519,8 +531,8 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config, han
             f"-T {undefined_syms_auto_path}",
         ]
 
-        if weapon_id == '000':
-            print("found weapon 000")
+        if needs_w_init:
+            print("found w_init")
             obj = add_c(nw, ver, f"{src_path}/w_init.c", ld_path, cpp_flags)
             objs.insert(0, obj)
             print(f"objs: {objs}")

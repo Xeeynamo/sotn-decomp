@@ -95,16 +95,4 @@ static Weapon WeaponOverlay = {
 #endif // !NO_HEADER
 #endif // !VERSION_PSP
 
-#ifdef VERSION_PC
-#include <psyz/module.h>
-#include <string.h>
-
-void Psyz_ModuleStart(void* param) {
-    Weapon* o = param;
-    memcpy(o, &WeaponOverlay, sizeof(Weapon));
-}
-
-void Psyz_ModuleStop(void) {}
-#endif
-
 #endif

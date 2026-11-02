@@ -2260,9 +2260,9 @@ add_overlay(mad ${SOURCE_FILES_STAGE_MAD})
 add_overlay(no3 ${SOURCE_FILES_STAGE_NO3})
 
 foreach(id 000 002 007 008 010 012 034 035 037 040 041 043 045 046 050 051 052)
-    add_overlay(w0_${id} src/weapon/w_${id}.c)
+    add_overlay(w0_${id} src/weapon/w_init.c src/weapon/right_hand.c src/weapon/w_${id}.c)
     target_compile_definitions(${w0_${id}_COMPILE_TARGET} PRIVATE WEAPON0)
-    add_overlay(w1_${id} src/weapon/w_${id}.c)
+    add_overlay(w1_${id} src/weapon/w_init.c src/weapon/left_hand.c src/weapon/w_${id}.c)
     target_compile_definitions(${w1_${id}_COMPILE_TARGET} PRIVATE WEAPON1)
 endforeach()
 
