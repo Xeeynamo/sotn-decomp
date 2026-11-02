@@ -1766,7 +1766,7 @@ void func_060BB90C(void) {
     g_RichterSavedMapVramBase = DAT_060476a0;
     g_RichterSavedMapPlaneConfig = DAT_060476a4;
     if (g_PlayableCharacter == 0) {
-        DAT_060476a0 = 0x252000;
+        DAT_060476a0 = (s32)&DAT_00252000;
         DAT_060476a4 = 1;
     }
     colors0 = SpGourTbl->colors0;

@@ -2,6 +2,9 @@
 #include "sattypes.h"
 #include "inc_asm.h"
 #include "zero.h"
+#include "zero/overlay.h"
+#define _SPR2_
+#include "lib/spr/spr.h"
 
 u16 DAT_060389CC[] = {
     /* 0x060389CC */ 0x0000,
@@ -44,113 +47,74 @@ char* DAT_06038A14[][2] = {
 
 s32 DAT_06038A44 = 0;
 
-u16 DAT_06038A48[] = {
-    /* 0x06038A48 */ 0x0000,
-    /* 0x06038A4A */ 0x0000,
-};
+s32 DAT_06038A48 = 0;
 
 extern char DAT_06006F80[];
 extern char DAT_06006F84[];
 extern char DAT_06006F90[];
 extern char DAT_06006F9C[];
 
-Unk0600654C DAT_06038A4C = {
-    DAT_06006F80, 0x060A5000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000};
+FileLoadEntry DAT_06038A4C = {{DAT_06006F80, &g_PlayerOvl, 0xFFFFFFFF,
+                               0x00000000, 0xFFFFFFFF, 0x00000000},
+                              0x00000000,
+                              0x00000000};
 
-u32 DAT_06038A64[] = {
+FileLoadEntry DAT_06038A6C = {{DAT_06006F80, DAT_00232000, 0xFFFFFFFF,
+                               0x00000000, 0xFFFFFFFF, 0x00000000},
+                              0x00000000,
+                              0x00000000};
+
+FileLoadEntry DAT_06038A8C = {{DAT_06006F80, g_FileLoadBuffer, 0xFFFFFFFF,
+                               0x00000000, 0x00000002, 0x00000001},
+                              0x00000001,
+                              0x00000000};
+
+FileLoadEntry DAT_06038AAC = {{DAT_06006F84, g_Weapon0OvlArea, 0x00003000,
+                               0x00000000, 0xFFFFFFFF, 0x00000000},
+                              0x00000000,
+                              0x00000000};
+
+FileLoadEntry DAT_06038ACC = {{DAT_06006F90, g_FileLoadBuffer, 0x00004000,
+                               0x00000000, 0x00000002, 0x00000001},
+                              0x00000001,
+                              0x00000000};
+
+FileLoadEntry DAT_06038AEC = {{DAT_06006F90, g_FileLoadBuffer, 0x00004000,
+                               0x00000000, 0xFFFFFFFF, 0x00000000},
+                              0x00000000,
+                              0x00000000};
+
+FileLoadEntry DAT_06038B0C = {{DAT_06006F9C, &g_StageOverlayData, 0xFFFFFFFF,
+                               0x00000000, 0xFFFFFFFF, 0x00000000},
+                              0x00000000,
+                              0x00000000};
+
+FileLoadEntry DAT_06038B2C = {{DAT_06006F9C, g_FileLoadBuffer, 0xFFFFFFFF,
+                               0x00000000, 0x00000002, 0x00000001},
+                              0x00000001,
+                              0x00000000};
+
+FileLoadEntry DAT_06038B4C = {{DAT_06006F9C, &DAT_00252000, 0xFFFFFFFF,
+                               0x00000000, 0xFFFFFFFF, 0x00000000},
+                              0x00000000,
+                              0x00000000};
+
+FileLoadEntry DAT_06038B6C = {
+    {NULL, &g_BatServantDesc, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000},
     0x00000000,
-    0x00000000,
-};
+    0x00000000};
 
-Unk0600654C DAT_06038A6C = {
-    DAT_06006F80, 0x00232000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000};
-
-u32 DAT_06038A84[] = {
-    0x00000000,
-    0x00000000,
-};
-
-Unk0600654C DAT_06038A8C = {
-    DAT_06006F80, 0x060485E0, 0xFFFFFFFF, 0x00000000, 0x00000002, 0x00000001};
-
-u32 DAT_06038AA4[] = {
+FileLoadEntry DAT_06038B8C = {
+    {NULL, g_FileLoadBuffer, 0xFFFFFFFF, 0x00000000, 0x00000002, 0x00000001},
     0x00000001,
+    0x00000000};
+
+FileLoadEntry DAT_06038BAC = {
+    {NULL, g_FileLoadBuffer, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000},
     0x00000000,
-};
+    0x00000000};
 
-Unk0600654C DAT_06038AAC = {
-    DAT_06006F84, 0x060D6000, 0x00003000, 0x00000000, 0xFFFFFFFF, 0x00000000};
-
-u32 DAT_06038AC4[] = {
-    0x00000000,
-    0x00000000,
-};
-
-Unk0600654C DAT_06038ACC = {
-    DAT_06006F90, 0x060485E0, 0x00004000, 0x00000000, 0x00000002, 0x00000001};
-
-u32 DAT_06038AE4[] = {
-    0x00000001,
-    0x00000000,
-};
-
-Unk0600654C DAT_06038AEC = {
-    DAT_06006F90, 0x060485E0, 0x00004000, 0x00000000, 0xFFFFFFFF, 0x00000000};
-
-u32 DAT_06038B04[] = {
-    0x00000000,
-    0x00000000,
-};
-
-Unk0600654C DAT_06038B0C = {
-    DAT_06006F9C, 0x060DC000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000};
-
-u32 DAT_06038B24[] = {
-    0x00000000,
-    0x00000000,
-};
-
-Unk0600654C DAT_06038B2C = {
-    DAT_06006F9C, 0x060485E0, 0xFFFFFFFF, 0x00000000, 0x00000002, 0x00000001};
-
-u32 DAT_06038B44[] = {
-    0x00000001,
-    0x00000000,
-};
-
-Unk0600654C DAT_06038B4C = {
-    DAT_06006F9C, 0x00252000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000};
-
-u32 DAT_06038B64[] = {
-    0x00000000,
-    0x00000000,
-};
-
-Unk0600654C DAT_06038B6C = {
-    NULL, 0x060CF000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000};
-
-u32 DAT_06038B84[] = {
-    0x00000000,
-    0x00000000,
-};
-
-Unk0600654C DAT_06038B8C = {
-    NULL, 0x060485E0, 0xFFFFFFFF, 0x00000000, 0x00000002, 0x00000001};
-
-u32 DAT_06038BA4[] = {
-    0x00000001,
-    0x00000000,
-};
-
-Unk0600654C DAT_06038BAC = {
-    NULL, 0x060485E0, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000};
-
-u32 DAT_06038BC4[] = {
-    0x00000000,
-    0x00000000,
-};
-
-Unk0600654C* DAT_06038BCC[] = {
+FileLoadEntry* DAT_06038BCC[] = {
     &DAT_06038A4C, &DAT_06038A6C, &DAT_06038A8C, &DAT_06038AAC, &DAT_06038ACC,
     &DAT_06038B0C, &DAT_06038B2C, &DAT_06038B4C, &DAT_06038B6C, &DAT_06038B8C,
 };
@@ -199,43 +163,28 @@ char* DAT_06038C24[][2] = {
 
 s32 DAT_06038C5C = 0x00000000;
 
-u16 DAT_06038C60[] = {
-    /* 0x06038C60 */ 0x0280,
-    /* 0x06038C62 */ 0x0304,
-    /* 0x06038C64 */ 0x0200,
-    /* 0x06038C66 */ 0x0001,
-    /* 0x06038C68 */ 0x0200,
-    /* 0x06038C6A */ 0x0000,
-    /* 0x06038C6C */ 0x0605,
-    /* 0x06038C6E */ 0x0674,
-    /* 0x06038C70 */ 0x0605,
-    /* 0x06038C72 */ 0x0684,
-    /* 0x06038C74 */ 0x0605,
-    /* 0x06038C76 */ 0x5684,
-    /* 0x06038C78 */ 0x0000,
-    /* 0x06038C7A */ 0x0000,
-    /* 0x06038C7C */ 0x0000,
-    /* 0x06038C7E */ 0x0000,
-    /* 0x06038C80 */ 0x0605,
-    /* 0x06038C82 */ 0x5E84,
+extern SprCharTbl g_SpriteCharTbl[1];
+extern SprSpCmd g_SpriteMstCmd[0x280];
+extern SprDrawPrtyBlk g_SpriteMstDrawPrtyBlk[0x200];
+extern SprGourTblR g_SpriteGourTbl[0x304 + 1];
+Spr2WorkArea g_SpriteWorkArea = {
+    0x280,
+    0x304,
+    0x200,
+    1,
+    0x200,
+    g_SpriteCharTbl,
+    g_SpriteMstCmd,
+    g_SpriteMstDrawPrtyBlk,
+    NULL,
+    NULL,
+    (SprGourTbl*)g_SpriteGourTbl,
 };
 
 u8 DAT_06038C84[] = {0x00, 0x21, 0x42, 0x00};
 
-u16 DAT_06038C88[] = {
-    /* 0x06038C88 */ 0x0000,
-    /* 0x06038C8A */ 0x0000,
-    /* 0x06038C8C */ 0x0000,
-    /* 0x06038C8E */ 0xE0D2,
-    /* 0x06038C90 */ 0x0000,
-    /* 0x06038C92 */ 0xE0D2,
-    /* 0x06038C94 */ 0x0000,
-    /* 0x06038C96 */ 0x018E,
-    /* 0x06038C98 */ 0x0000,
-    /* 0x06038C9A */ 0xE260,
-    /* 0x06038C9C */ 0x0000,
-    /* 0x06038C9E */ 0x0A86,
-};
+s32 DAT_06038C88[6] = {
+    0x00000000, 0x0000E0D2, 0x0000E0D2, 0x0000018E, 0x0000E260, 0x00000A86};
 
 s32 DAT_06038CA0[][6] = {
     {0x0006E600, 0x00001093, 0x0006F693, 0x00000024, 0x0006F6B7, 0x0000027A},
@@ -289,15 +238,9 @@ s32 g_SpritePartsInUse = 0;
 
 s32 DAT_06038DBC = 0;
 
-u16 DAT_06038DC0[] = {
-    /* 0x06038DC0 */ 0x0000,
-    /* 0x06038DC2 */ 0x0060,
-    /* 0x06038DC4 */ 0x0000,
-    /* 0x06038DC6 */ 0x0000,
-    /* 0x06038DC8 */ 0x0060,
-    /* 0x06038DCA */ 0x0080,
-    /* 0x06038DCC */ 0x8080,
-    /* 0x06038DCE */ 0x8080,
+u8 DAT_06038DC0[16] = {
+    0x00, 0x00, 0x00, 0x60, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x60, 0x00, 0x80, 0x80, 0x80, 0x80, 0x80,
 };
 
 u16 DAT_06038DD0[] = {
@@ -559,10 +502,7 @@ u16 DAT_06038DD0[] = {
     /* 0x06038FCE */ 0x0000,
 };
 
-u16 DAT_06038FD0[] = {
-    /* 0x06038FD0 */ 0x0000,
-    /* 0x06038FD2 */ 0x0000,
-};
+s32 DAT_06038FD0 = 0;
 
 s16 DAT_06038FD4 = 13;
 

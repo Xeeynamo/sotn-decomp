@@ -1,15 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
+#include "zero/sound.h"
 
 u32 D_060440D0[18] = {0};
 u16 D_06044118 = 0;
-
-typedef struct {
-    u8 unk0;
-    u8 unk1;
-    u16 command;
-    u16 value;
-} SaturnSoundCommandConfig;
 
 SaturnSoundCommandConfig g_SaturnSoundCommands[93] = {
     {0x00, 0x00, 0x0000, 0x3C6C}, {0x00, 0x00, 0x1001, 0x3C6C},

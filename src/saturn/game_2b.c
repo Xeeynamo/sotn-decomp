@@ -25,7 +25,6 @@ static u16 LookupTblNoToVram(u16 arg0) {
 }
 
 extern SaturnSpriteImage g_StatusPortraitImages[17];
-extern s16 DAT_0605AEE8;
 
 void func_060784B8(SprSpCmd* cmd, s32 portraitIndex, s32 colorTableIndex) {
     SaturnSpriteImage* image;
@@ -34,7 +33,7 @@ void func_060784B8(SprSpCmd* cmd, s32 portraitIndex, s32 colorTableIndex) {
     cmd->control = 0x1000;
     cmd->drawMode = 0x488;
     cmd->color = LookupTblNoToVram(colorTableIndex + 0x30);
-    cmd->charAddr = DAT_0605AEE8;
+    cmd->charAddr = DAT_0605aec0[10][0];
     cmd->charAddr += image->characterOffsetUnits;
     cmd->charSize =
         ((image->storedWidth / 4) << 8) | (image->storedHeight << 1);
@@ -267,7 +266,7 @@ void func_06079208(s32 arg0, Point16* pos) {
     cmd->control = 0x1000;
     cmd->drawMode = 0x4A0;
     cmd->color = LookupTblNoToVram(0x4000);
-    cmd->charAddr = DAT_0605AEE8;
+    cmd->charAddr = DAT_0605aec0[10][0];
     cmd->charAddr += image->characterOffsetUnits;
     cmd->charSize =
         ((image->storedWidth / 4) << 8) | (image->storedHeight << 1);
@@ -1648,7 +1647,7 @@ void CheckCollision(s32 x, s32 y, Collider* res, u16 unk) {
         u16 D;
         u16 E;
         posX = posX * 4 / 5;
-        A = DAT_0605CDB8 * 4 / 5;
+        A = DAT_0605CD90[0].width * 4 / 5;
         B = A / 2;
         C = posX >> 20;
         D = posY >> 20;
