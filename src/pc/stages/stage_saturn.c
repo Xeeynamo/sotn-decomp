@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#ifndef STAGE15_ROOM_TEST
+#ifndef SATURN_STAGE_ROOM_TEST
 #include <psyz/cd.h>
 #include <psyz/gpu.h>
 #include <psyz/module.h>
@@ -12,11 +12,11 @@
 #endif
 #include "overlay.h"
 
-#ifndef STAGE15_ASSET_DIR
-#define STAGE15_ASSET_DIR "stage15_assets"
+#ifndef SATURN_STAGE_ASSET_DIR
+#define SATURN_STAGE_ASSET_DIR "stage15_assets"
 #endif
 
-#include "stage15_data.h"
+#include "saturn_stage_data.h"
 
 static SpriteParts* s_SpriteBanks[0x14];
 static u_long s_EmptyClut[] = {(u_long)-1};
@@ -26,58 +26,55 @@ static GfxBank* s_GfxBanks[] = {&s_EmptyGfxBank};
 static RoomDef* s_TileLayers;
 static LayoutEntity* s_CurrentLayout;
 static size_t s_CurrentLayoutCount;
-static const u8 s_Stage15RoomBounds[7][4] = {
-    {4, 44, 12, 45}, {13, 44, 16, 44}, {21, 44, 21, 44}, {17, 44, 20, 44},
-    {3, 44, 3, 44},  {3, 45, 3, 45},   {13, 45, 13, 45},
-};
 
 static void Noop(void) {}
 
-#ifndef STAGE15_ROOM_TEST
-#define STAGE15_BACKDROP_ENTITY (TOTAL_ENTITY_COUNT - 1)
-#define STAGE15_MASONRY_CLUT_SLOT 0x1FF
-static void EntityStage15Backdrop(Entity* self);
-static void EntityStage15Masonry(Entity* self);
+#ifndef SATURN_STAGE_ROOM_TEST
+#define SATURN_STAGE_BACKDROP_ENTITY (TOTAL_ENTITY_COUNT - 1)
+#define SATURN_STAGE_MASONRY_CLUT_SLOT 0x1FF
+static void EntitySaturnStageBackdrop(Entity* self);
+static void EntitySaturnStageMasonry(Entity* self);
 
-#define STAGE15_MASONRY_PIXEL_BYTES (24 * 16 / 2)
-#define STAGE15_MASONRY_PALETTE_WORDS 16
-static u8 s_Stage15MasonryPixels[STAGE15_MASONRY_PIXEL_BYTES]
+#define SATURN_STAGE_MASONRY_PIXEL_BYTES (24 * 16 / 2)
+#define SATURN_STAGE_MASONRY_PALETTE_WORDS 16
+static u8 s_SaturnStageMasonryPixels[SATURN_STAGE_MASONRY_PIXEL_BYTES]
     __attribute__((aligned(4)));
-static u16 s_Stage15MasonryPalette[STAGE15_MASONRY_PALETTE_WORDS];
-static u16 s_Stage15MasonryTpage;
-static bool s_Stage15MasonryReady;
-static bool s_Stage15MusicStarted;
+static u16 s_SaturnStageMasonryPalette[SATURN_STAGE_MASONRY_PALETTE_WORDS];
+static u16 s_SaturnStageMasonryTpage;
+static bool s_SaturnStageMasonryReady;
+static bool s_SaturnStageMusicStarted;
 
-static bool Stage15LoadMasonry(void) {
+static bool SaturnStageLoadMasonry(void) {
     s32 length;
 
     length = FileReadToBuf(
-        STAGE15_ASSET_DIR "/stage15_masonry.chars.bin", s_Stage15MasonryPixels,
-        0, sizeof(s_Stage15MasonryPixels));
-    if (length != sizeof(s_Stage15MasonryPixels)) {
+        SATURN_STAGE_ASSET_DIR "/masonry.chars.bin", s_SaturnStageMasonryPixels,
+        0, sizeof(s_SaturnStageMasonryPixels));
+    if (length != sizeof(s_SaturnStageMasonryPixels)) {
         return false;
     }
     length = FileReadToBuf(
-        STAGE15_ASSET_DIR "/stage15_masonry.pal.bin", s_Stage15MasonryPalette,
-        0, sizeof(s_Stage15MasonryPalette));
-    return length == sizeof(s_Stage15MasonryPalette);
+        SATURN_STAGE_ASSET_DIR "/masonry.pal.bin", s_SaturnStageMasonryPalette,
+        0, sizeof(s_SaturnStageMasonryPalette));
+    return length == sizeof(s_SaturnStageMasonryPalette);
 }
 
-#ifndef STAGE15_ROOM_TEST
+#ifndef SATURN_STAGE_ROOM_TEST
 extern s32 g_CurCdPos;
 extern XaMusicConfig g_XaMusicConfigs[];
 
 enum {
-    STAGE15_MUSIC = 0x533,
-    STAGE15_MUSIC_LOOP_POINT,
+    SATURN_STAGE_MUSIC = 0x533,
+    SATURN_STAGE_MUSIC_LOOP_POINT,
 };
 
-static void Stage15ConfigureMusic(void) {
-    XaMusicConfig* start = &g_XaMusicConfigs[STAGE15_MUSIC - 0x300];
-    XaMusicConfig* loop = &g_XaMusicConfigs[STAGE15_MUSIC_LOOP_POINT - 0x300];
+static void SaturnStageConfigureMusic(void) {
+    XaMusicConfig* start = &g_XaMusicConfigs[SATURN_STAGE_MUSIC - 0x300];
+    XaMusicConfig* loop =
+        &g_XaMusicConfigs[SATURN_STAGE_MUSIC_LOOP_POINT - 0x300];
     u32 base = 0U - (u32)g_CurCdPos;
 
-    Psyz_CdSetDiskPath(STAGE15_ASSET_DIR "/music/audio.cue");
+    Psyz_CdSetDiskPath(SATURN_STAGE_ASSET_DIR "/music/audio.cue");
     *start = (XaMusicConfig){
         base,
         SATURN_XA_INTRO_VSYNC,
@@ -97,8 +94,8 @@ static void Stage15ConfigureMusic(void) {
 }
 #endif
 
-#ifdef STAGE15_ENTITY_LABELS
-static void Stage15DrawEntityLabels(void) {
+#ifdef SATURN_STAGE_ENTITY_LABELS
+static void SaturnStageDrawEntityLabels(void) {
     LayoutEntity* layout;
     DR_MODE* drawMode;
     SPRT* sprite;
@@ -189,14 +186,14 @@ static void Stage15DrawEntityLabels(void) {
 }
 #endif
 
-static s32 Stage15CurrentRoom(void) {
+static s32 SaturnStageCurrentRoom(void) {
     s32 room;
 
-    for (room = 0; room < LEN(s_Stage15RoomBounds); room++) {
-        if (g_Tilemap.left == s_Stage15RoomBounds[room][0] &&
-            g_Tilemap.top == s_Stage15RoomBounds[room][1] &&
-            g_Tilemap.right == s_Stage15RoomBounds[room][2] &&
-            g_Tilemap.bottom == s_Stage15RoomBounds[room][3]) {
+    for (room = 0; room < LEN(s_SaturnStageRoomBounds); room++) {
+        if (g_Tilemap.left == s_SaturnStageRoomBounds[room][0] &&
+            g_Tilemap.top == s_SaturnStageRoomBounds[room][1] &&
+            g_Tilemap.right == s_SaturnStageRoomBounds[room][2] &&
+            g_Tilemap.bottom == s_SaturnStageRoomBounds[room][3]) {
             return room;
         }
     }
@@ -209,13 +206,13 @@ enum Palettes { PAL_NONE };
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
 // clang-format on
 u16 g_RedDoorTiles[2][8];
-static u16 s_Stage15RedDoorTiles[32];
-static Tilemap s_Stage15RedDoorTilemap = {
-    .fg = &s_Stage15RedDoorTiles[4],
+static u16 s_SaturnStageRedDoorTiles[32];
+static Tilemap s_SaturnStageRedDoorTilemap = {
+    .fg = &s_SaturnStageRedDoorTiles[4],
     .hSize = 0,
 };
 
-static u8 Stage15DoorSideToPlayer(Entity* self) {
+static u8 SaturnStageDoorSideToPlayer(Entity* self) {
     u8 side = 0;
     if (self->posX.i.hi > PLAYER.posX.i.hi) {
         side |= 1;
@@ -226,7 +223,7 @@ static u8 Stage15DoorSideToPlayer(Entity* self) {
     return side;
 }
 
-static void Stage15InitializeDoor(Entity* self) {
+static void SaturnStageInitializeDoor(Entity* self) {
     u16* init = g_EInitCommon;
     EnemyDef* enemy;
 
@@ -252,76 +249,80 @@ static void Stage15InitializeDoor(Entity* self) {
     }
 }
 
-#define InitializeEntity(init) Stage15InitializeDoor(self)
-#define GetSideToPlayer() Stage15DoorSideToPlayer(self)
-#define g_Tilemap s_Stage15RedDoorTilemap
+#define InitializeEntity(init) SaturnStageInitializeDoor(self)
+#define GetSideToPlayer() SaturnStageDoorSideToPlayer(self)
+#define g_Tilemap s_SaturnStageRedDoorTilemap
 #include "../../st/e_red_door.h"
 #undef g_Tilemap
 #undef GetSideToPlayer
 #undef InitializeEntity
 
-static bool Stage15BackdropIsActive(void) {
-    return g_Entities[STAGE15_BACKDROP_ENTITY].pfnUpdate ==
-           EntityStage15Backdrop;
+static bool SaturnStageBackdropIsActive(void) {
+    return g_Entities[SATURN_STAGE_BACKDROP_ENTITY].pfnUpdate ==
+           EntitySaturnStageBackdrop;
 }
 #endif
 
-#ifdef STAGE15_NATIVE_8X8
-#define STAGE15_NATIVE_LAYERS 3
-#define STAGE15_NATIVE_CHARS_SIZE (STAGE15_MAX_LAYER_PAGES * 256 * 256 / 2)
-#define STAGE15_NATIVE_MAP_WORDS (360 * 64 + 2)
-#define STAGE15_NATIVE_PAL_WORDS (16 * 16)
-#define STAGE15_CHAR_SIZE 8
-#define STAGE15_ATLAS_COLUMNS 31
-#define STAGE15_PAGE_CHARS (STAGE15_ATLAS_COLUMNS * STAGE15_ATLAS_COLUMNS)
-#define STAGE15_PAGE_BYTES (256 * 256 / 2)
-#define STAGE15_MAX_LAYER_PAGES 2
-#define STAGE15_MAX_ROOM_PAGES 4
-#define STAGE15_PAGE_VRAM_X 0x200
-#define STAGE15_PAGE_VRAM_W 0x40
-#define STAGE15_SATURN_W 320
-#define STAGE15_TO_SATURN_X(x) ((x) * STAGE15_SATURN_W / DISP_STAGE_W)
-#define STAGE15_GRID_OPCODE 0x04u
+#ifdef SATURN_STAGE_NATIVE_8X8
+#define SATURN_STAGE_NATIVE_LAYERS 3
+#define SATURN_STAGE_NATIVE_CHARS_SIZE                                         \
+    (SATURN_STAGE_MAX_LAYER_PAGES * 256 * 256 / 2)
+#define SATURN_STAGE_NATIVE_MAP_WORDS (360 * 64 + 2)
+#define SATURN_STAGE_NATIVE_PAL_WORDS (16 * 16)
+#define SATURN_STAGE_CHAR_SIZE 8
+#define SATURN_STAGE_ATLAS_COLUMNS 31
+#define SATURN_STAGE_PAGE_CHARS                                                \
+    (SATURN_STAGE_ATLAS_COLUMNS * SATURN_STAGE_ATLAS_COLUMNS)
+#define SATURN_STAGE_PAGE_BYTES (256 * 256 / 2)
+#define SATURN_STAGE_MAX_LAYER_PAGES 2
+#define SATURN_STAGE_MAX_ROOM_PAGES 4
+#define SATURN_STAGE_PAGE_VRAM_X 0x200
+#define SATURN_STAGE_PAGE_VRAM_W 0x40
+#define SATURN_STAGE_SATURN_W 320
+#define SATURN_STAGE_TO_SATURN_X(x) ((x) * SATURN_STAGE_SATURN_W / DISP_STAGE_W)
+#define SATURN_STAGE_GRID_OPCODE 0x04u
 
 typedef struct {
-    u_long chars[STAGE15_NATIVE_CHARS_SIZE / sizeof(u_long)];
-    u16 map[STAGE15_NATIVE_MAP_WORDS];
-    u16 palettes[STAGE15_NATIVE_PAL_WORDS];
+    u_long chars[SATURN_STAGE_NATIVE_CHARS_SIZE / sizeof(u_long)];
+    u16 map[SATURN_STAGE_NATIVE_MAP_WORDS];
+    u16 palettes[SATURN_STAGE_NATIVE_PAL_WORDS];
     u16 cluts[16];
-    u16 tpages[STAGE15_MAX_LAYER_PAGES];
+    u16 tpages[SATURN_STAGE_MAX_LAYER_PAGES];
     s32 pageCount;
-    u8 characterVisible[STAGE15_MAX_LAYER_PAGES * STAGE15_PAGE_CHARS];
+    u8 characterVisible[SATURN_STAGE_MAX_LAYER_PAGES * SATURN_STAGE_PAGE_CHARS];
     s32 paletteCount;
     u16 width;
     u16 height;
-} Stage15NativeLayer;
+} SaturnStageNativeLayer;
 
 typedef struct {
     O_TAG;
     u_long code[1];
-} Stage15GridCommand;
+} SaturnStageGridCommand;
 
-static Stage15NativeLayer s_NativeLayers[STAGE15_NATIVE_LAYERS];
-static Stage15GridCommand s_GridCommands[2][STAGE15_NATIVE_LAYERS][2];
+static SaturnStageNativeLayer s_NativeLayers[SATURN_STAGE_NATIVE_LAYERS];
+static SaturnStageGridCommand s_GridCommands[2][SATURN_STAGE_NATIVE_LAYERS][2];
 static s32 s_NativeRoom = -1;
 static bool s_NativeReady;
 
-static bool Stage15LoadNativeLayer(s32 room, s32 layer) {
-    Stage15NativeLayer* native = &s_NativeLayers[layer];
+static bool SaturnStageLoadNativeLayer(s32 room, s32 layer) {
+    SaturnStageNativeLayer* native = &s_NativeLayers[layer];
     char path[256];
     s32 length;
     s32 entryCount;
 
     snprintf(path, sizeof(path),
-             STAGE15_ASSET_DIR "/native_room%d_layer%d.chars.bin", room, layer);
+             SATURN_STAGE_ASSET_DIR "/native_room%d_layer%d.chars.bin", room,
+             layer);
     length = FileReadToBuf(path, native->chars, 0, sizeof(native->chars));
-    if (length <= 0 || length % STAGE15_PAGE_BYTES) {
+    if (length <= 0 || length % SATURN_STAGE_PAGE_BYTES) {
         return false;
     }
-    native->pageCount = length / STAGE15_PAGE_BYTES;
+    native->pageCount = length / SATURN_STAGE_PAGE_BYTES;
 
     snprintf(path, sizeof(path),
-             STAGE15_ASSET_DIR "/native_room%d_layer%d.pal.bin", room, layer);
+             SATURN_STAGE_ASSET_DIR "/native_room%d_layer%d.pal.bin", room,
+             layer);
     length = FileReadToBuf(path, native->palettes, 0, sizeof(native->palettes));
     if (length <= 0 || (length & 0x1)) {
         return false;
@@ -340,11 +341,12 @@ static bool Stage15LoadNativeLayer(s32 room, s32 layer) {
             native->characterVisible[character] = 0;
             for (row = 0; row < 8 && !native->characterVisible[character];
                  row++) {
-                s32 index = character % STAGE15_PAGE_CHARS;
+                s32 index = character % SATURN_STAGE_PAGE_CHARS;
                 s32 offset =
-                    character / STAGE15_PAGE_CHARS * STAGE15_PAGE_BYTES +
-                    (index / STAGE15_ATLAS_COLUMNS * 8 + row) * 128 +
-                    index % STAGE15_ATLAS_COLUMNS * 4;
+                    character / SATURN_STAGE_PAGE_CHARS *
+                        SATURN_STAGE_PAGE_BYTES +
+                    (index / SATURN_STAGE_ATLAS_COLUMNS * 8 + row) * 128 +
+                    index % SATURN_STAGE_ATLAS_COLUMNS * 4;
                 for (byte = 0; byte < 4; byte++) {
                     if (pixels[offset + byte] != 0) {
                         native->characterVisible[character] = 1;
@@ -355,7 +357,8 @@ static bool Stage15LoadNativeLayer(s32 room, s32 layer) {
         }
     }
     snprintf(path, sizeof(path),
-             STAGE15_ASSET_DIR "/native_room%d_layer%d.map.bin", room, layer);
+             SATURN_STAGE_ASSET_DIR "/native_room%d_layer%d.map.bin", room,
+             layer);
     length = FileReadToBuf(path, native->map, 0, sizeof(native->map));
     if (length < 4 || (length & 0x1)) {
         return false;
@@ -364,16 +367,16 @@ static bool Stage15LoadNativeLayer(s32 room, s32 layer) {
     native->height = native->map[1];
     entryCount = native->width * native->height;
     if (native->width == 0 || native->height == 0 ||
-        entryCount > STAGE15_NATIVE_MAP_WORDS - 2 ||
+        entryCount > SATURN_STAGE_NATIVE_MAP_WORDS - 2 ||
         length < (entryCount + 2) * sizeof(u16)) {
         return false;
     }
     return true;
 }
 
-static bool Stage15LoadNativeRoom(s32 room) {
+static bool SaturnStageLoadNativeRoom(s32 room) {
     RECT paletteRect;
-    Stage15NativeLayer* native;
+    SaturnStageNativeLayer* native;
     s32 layer;
     s32 palette;
     s32 paletteSlot;
@@ -382,25 +385,26 @@ static bool Stage15LoadNativeRoom(s32 room) {
 
     s_NativeReady = false;
     s_NativeRoom = room;
-    for (layer = 0; layer < STAGE15_NATIVE_LAYERS; layer++) {
-        if (!Stage15LoadNativeLayer(room, layer)) {
+    for (layer = 0; layer < SATURN_STAGE_NATIVE_LAYERS; layer++) {
+        if (!SaturnStageLoadNativeLayer(room, layer)) {
             return false;
         }
     }
 
-    for (layer = 0; layer < STAGE15_NATIVE_LAYERS; layer++) {
+    for (layer = 0; layer < SATURN_STAGE_NATIVE_LAYERS; layer++) {
         native = &s_NativeLayers[layer];
         for (page = 0; page < native->pageCount; page++, vramPage++) {
-            if (vramPage >= STAGE15_MAX_ROOM_PAGES) {
+            if (vramPage >= SATURN_STAGE_MAX_ROOM_PAGES) {
                 return false;
             }
             native->tpages[page] = LoadTPage(
-                &native->chars[page * STAGE15_PAGE_BYTES / sizeof(u_long)], 0,
-                0, STAGE15_PAGE_VRAM_X + vramPage * STAGE15_PAGE_VRAM_W, 0,
-                0x100, 0x100);
+                &native->chars[page * SATURN_STAGE_PAGE_BYTES / sizeof(u_long)],
+                0, 0,
+                SATURN_STAGE_PAGE_VRAM_X + vramPage * SATURN_STAGE_PAGE_VRAM_W,
+                0, 0x100, 0x100);
         }
     }
-    for (layer = 0; layer < STAGE15_NATIVE_LAYERS; layer++) {
+    for (layer = 0; layer < SATURN_STAGE_NATIVE_LAYERS; layer++) {
         native = &s_NativeLayers[layer];
         for (palette = 0; palette < native->paletteCount; palette++) {
             paletteSlot = layer * 16 + palette;
@@ -417,9 +421,9 @@ static bool Stage15LoadNativeRoom(s32 room) {
     return true;
 }
 
-static void Stage15DrawNativeBlock(
-    Stage15NativeLayer* native, s32 order, s32 mapX, s32 mapY, s32 blockWidth,
-    s32 blockHeight, s32 x0, s32 y0, s32 x1) {
+static void SaturnStageDrawNativeBlock(
+    SaturnStageNativeLayer* native, s32 order, s32 mapX, s32 mapY,
+    s32 blockWidth, s32 blockHeight, s32 x0, s32 y0, s32 x1) {
     POLY_FT4* poly;
     u16 pnd;
     u16 character;
@@ -433,7 +437,7 @@ static void Stage15DrawNativeBlock(
     s32 dx;
     s32 dy;
 
-    if (x1 <= 0 || x0 >= STAGE15_SATURN_W || y0 <= -blockHeight * 8 ||
+    if (x1 <= 0 || x0 >= SATURN_STAGE_SATURN_W || y0 <= -blockHeight * 8 ||
         y0 >= DISP_STAGE_H || g_GpuUsage.gt4 >= MAX_POLY_GT4_COUNT) {
         return;
     }
@@ -457,34 +461,34 @@ static void Stage15DrawNativeBlock(
         return;
     }
 
-    if (character >= native->pageCount * STAGE15_PAGE_CHARS) {
+    if (character >= native->pageCount * SATURN_STAGE_PAGE_CHARS) {
         return;
     }
-    index = character % STAGE15_PAGE_CHARS;
-    u0 = index % STAGE15_ATLAS_COLUMNS * STAGE15_CHAR_SIZE;
-    v0 = index / STAGE15_ATLAS_COLUMNS * STAGE15_CHAR_SIZE;
-    u1 = u0 + blockWidth * STAGE15_CHAR_SIZE;
-    v1 = v0 + blockHeight * STAGE15_CHAR_SIZE;
+    index = character % SATURN_STAGE_PAGE_CHARS;
+    u0 = index % SATURN_STAGE_ATLAS_COLUMNS * SATURN_STAGE_CHAR_SIZE;
+    v0 = index / SATURN_STAGE_ATLAS_COLUMNS * SATURN_STAGE_CHAR_SIZE;
+    u1 = u0 + blockWidth * SATURN_STAGE_CHAR_SIZE;
+    v1 = v0 + blockHeight * SATURN_STAGE_CHAR_SIZE;
 
     poly = (POLY_FT4*)&g_CurrentBuffer->polyGT4[g_GpuUsage.gt4++];
     setPolyFT4(poly);
     setShadeTex(poly, true);
     setSemiTrans(poly, false);
     setRGB0(poly, 0x80, 0x80, 0x80);
-    poly->x0 = poly->x2 = x0 + STAGE15_TO_SATURN_X(g_cameraOffsetX);
-    poly->x1 = poly->x3 = x1 + STAGE15_TO_SATURN_X(g_cameraOffsetX);
+    poly->x0 = poly->x2 = x0 + SATURN_STAGE_TO_SATURN_X(g_cameraOffsetX);
+    poly->x1 = poly->x3 = x1 + SATURN_STAGE_TO_SATURN_X(g_cameraOffsetX);
     poly->y0 = poly->y1 = y0 + g_cameraOffsetY;
     poly->y2 = poly->y3 = y0 + blockHeight * 8 + g_cameraOffsetY;
     poly->u0 = poly->u2 = u0;
     poly->u1 = poly->u3 = u1;
     poly->v0 = poly->v1 = v0;
     poly->v2 = poly->v3 = v1;
-    poly->tpage = native->tpages[character / STAGE15_PAGE_CHARS];
+    poly->tpage = native->tpages[character / SATURN_STAGE_PAGE_CHARS];
     poly->clut = native->cluts[palette];
     AddPrim(&g_CurrentBuffer->ot[order], poly);
 }
 
-static int Stage15GridCommandHandler(
+static int SaturnStageGridCommandHandler(
     const u_long* words, int available, void* userdata) {
     (void)userdata;
     if (available < 1 ||
@@ -494,18 +498,18 @@ static int Stage15GridCommandHandler(
     return 1;
 }
 
-static void Stage15AddGridCommand(
-    Stage15GridCommand* command, s32 order, u32 sourceWidth) {
+static void SaturnStageAddGridCommand(
+    SaturnStageGridCommand* command, s32 order, u32 sourceWidth) {
     setlen(command, 1);
-    command->code[0] = (STAGE15_GRID_OPCODE << 24) | sourceWidth;
+    command->code[0] = (SATURN_STAGE_GRID_OPCODE << 24) | sourceWidth;
     AddPrim(&g_CurrentBuffer->ot[order], command);
 }
 
-static void Stage15DrawNativeLayer(s32 layer, s32 order, bool wrap) {
-    Stage15NativeLayer* native = &s_NativeLayers[layer];
-    Stage15GridCommand* grid =
+static void SaturnStageDrawNativeLayer(s32 layer, s32 order, bool wrap) {
+    SaturnStageNativeLayer* native = &s_NativeLayers[layer];
+    SaturnStageGridCommand* grid =
         s_GridCommands[g_CurrentBuffer == &g_GpuBuffers[0] ? 0 : 1][layer];
-    s32 scrollX = STAGE15_TO_SATURN_X(g_Tilemap.scrollX.i.hi);
+    s32 scrollX = SATURN_STAGE_TO_SATURN_X(g_Tilemap.scrollX.i.hi);
     s32 scrollY = g_Tilemap.scrollY.i.hi;
     s32 startX;
     s32 startY;
@@ -523,40 +527,40 @@ static void Stage15DrawNativeLayer(s32 layer, s32 order, bool wrap) {
         scrollY = 10;
     }
     if (wrap) {
-        scrollX %= native->width * STAGE15_CHAR_SIZE;
-        scrollY %= native->height * STAGE15_CHAR_SIZE;
+        scrollX %= native->width * SATURN_STAGE_CHAR_SIZE;
+        scrollY %= native->height * SATURN_STAGE_CHAR_SIZE;
         if (scrollX < 0) {
-            scrollX += native->width * STAGE15_CHAR_SIZE;
+            scrollX += native->width * SATURN_STAGE_CHAR_SIZE;
         }
         if (scrollY < 0) {
-            scrollY += native->height * STAGE15_CHAR_SIZE;
+            scrollY += native->height * SATURN_STAGE_CHAR_SIZE;
         }
     }
-    Stage15AddGridCommand(&grid[1], order, DISP_STAGE_W);
-    startX = scrollX / STAGE15_CHAR_SIZE;
-    startY = scrollY / STAGE15_CHAR_SIZE;
-    endX = startX + STAGE15_SATURN_W / STAGE15_CHAR_SIZE + 1;
-    endY = startY + DISP_STAGE_H / STAGE15_CHAR_SIZE;
+    SaturnStageAddGridCommand(&grid[1], order, DISP_STAGE_W);
+    startX = scrollX / SATURN_STAGE_CHAR_SIZE;
+    startY = scrollY / SATURN_STAGE_CHAR_SIZE;
+    endX = startX + SATURN_STAGE_SATURN_W / SATURN_STAGE_CHAR_SIZE + 1;
+    endY = startY + DISP_STAGE_H / SATURN_STAGE_CHAR_SIZE;
     for (logicalY = startY; logicalY <= endY; logicalY++) {
         mapY = wrap ? logicalY % native->height : logicalY;
         if (mapY < 0 || mapY >= native->height) {
             continue;
         }
-        y0 = logicalY * STAGE15_CHAR_SIZE - scrollY;
+        y0 = logicalY * SATURN_STAGE_CHAR_SIZE - scrollY;
         for (logicalX = startX; logicalX <= endX; logicalX++) {
             mapX = wrap ? logicalX % native->width : logicalX;
             if (mapX < 0 || mapX >= native->width) {
                 continue;
             }
-            x0 = logicalX * STAGE15_CHAR_SIZE - scrollX;
-            Stage15DrawNativeBlock(native, order, mapX, mapY, 1, 1, x0, y0,
-                                   x0 + STAGE15_CHAR_SIZE);
+            x0 = logicalX * SATURN_STAGE_CHAR_SIZE - scrollX;
+            SaturnStageDrawNativeBlock(native, order, mapX, mapY, 1, 1, x0, y0,
+                                       x0 + SATURN_STAGE_CHAR_SIZE);
         }
     }
-    Stage15AddGridCommand(&grid[0], order, STAGE15_SATURN_W);
+    SaturnStageAddGridCommand(&grid[0], order, SATURN_STAGE_SATURN_W);
 }
 
-static void Stage15DrawBackScreen(void) {
+static void SaturnStageDrawBackScreen(void) {
     enum {
         BACKDROP_PRIORITY = 0x10,
         BACKDROP_RED = 0x31,
@@ -577,13 +581,13 @@ static void Stage15DrawBackScreen(void) {
     AddPrim(&g_CurrentBuffer->ot[BACKDROP_PRIORITY], tile);
 }
 
-static bool Stage15RenderNativeLayers(void) {
-    s32 room = Stage15CurrentRoom();
+static bool SaturnStageRenderNativeLayers(void) {
+    s32 room = SaturnStageCurrentRoom();
 
     if (room < 0) {
         return false;
     }
-    if (room != s_NativeRoom && !Stage15LoadNativeRoom(room)) {
+    if (room != s_NativeRoom && !SaturnStageLoadNativeRoom(room)) {
         return false;
     }
     if (!s_NativeReady) {
@@ -594,21 +598,24 @@ static bool Stage15RenderNativeLayers(void) {
         return true;
     }
 
-    if (room < 4 && Stage15BackdropIsActive()) {
-        Stage15DrawBackScreen();
-        Stage15DrawNativeLayer(1, 0x20, true);
+    if (room < SATURN_STAGE_ORDINARY_ROOMS && SaturnStageBackdropIsActive()) {
+#if SATURN_STAGE_HAS_BACK_SCREEN
+        SaturnStageDrawBackScreen();
+#endif
+        SaturnStageDrawNativeLayer(1, 0x20, true);
     }
-    Stage15DrawNativeLayer(2, 0x40, false);
-    Stage15DrawNativeLayer(0, room >= 4 ? 0xA0 : 0x60, false);
-#ifdef STAGE15_ENTITY_LABELS
-    Stage15DrawEntityLabels();
+    SaturnStageDrawNativeLayer(2, 0x40, false);
+    SaturnStageDrawNativeLayer(
+        0, room >= SATURN_STAGE_ORDINARY_ROOMS ? 0xA0 : 0x60, false);
+#ifdef SATURN_STAGE_ENTITY_LABELS
+    SaturnStageDrawEntityLabels();
 #endif
     return true;
 }
 #endif
 
-#ifndef STAGE15_ROOM_TEST
-static void EntityStage15Backdrop(Entity* self) {
+#ifndef SATURN_STAGE_ROOM_TEST
+static void EntitySaturnStageBackdrop(Entity* self) {
     LayerDef* def;
     BgLayer* bg = &g_BgLayers[1];
 
@@ -616,7 +623,7 @@ static void EntityStage15Backdrop(Entity* self) {
     if (s_TileLayers == NULL) {
         return;
     }
-    def = s_TileLayers[7].bg;
+    def = s_TileLayers[SATURN_STAGE_BACKDROP_LAYER].bg;
     if (def == NULL || def->tileDef == NULL) {
         bg->flags = 0;
         return;
@@ -633,9 +640,9 @@ static void EntityStage15Backdrop(Entity* self) {
     bg->hideTimer = 1;
 }
 
-static void EntityStage15Dummy(Entity* self) { (void)self; }
+static void EntitySaturnStageDummy(Entity* self) { (void)self; }
 
-static void EntityStage15Masonry(Entity* self) {
+static void EntitySaturnStageMasonry(Entity* self) {
     static const s8 offsetsX[3] = {-14, 2, 18};
     Primitive* prim;
     s32 column;
@@ -643,11 +650,11 @@ static void EntityStage15Masonry(Entity* self) {
     s32 row;
     s32 rows;
 
-    if (!s_Stage15MasonryReady) {
+    if (!s_SaturnStageMasonryReady) {
         return;
     }
     rows = (self->params & 2) ? 6 : 2;
-    g_ClutIds[STAGE15_MASONRY_CLUT_SLOT] = getClut(0x3F0, 0xF3);
+    g_ClutIds[SATURN_STAGE_MASONRY_CLUT_SLOT] = getClut(0x3F0, 0xF3);
     if (self->step == 0) {
         primIndex = g_api.AllocPrimitives(PRIM_GT4, rows * 3);
         if (primIndex == -1) {
@@ -664,8 +671,8 @@ static void EntityStage15Masonry(Entity* self) {
             s32 centerX = self->posX.i.hi + offsetsX[column];
             s32 centerY = self->posY.i.hi - 8 - row * 16;
 
-            prim->tpage = s_Stage15MasonryTpage;
-            prim->clut = STAGE15_MASONRY_CLUT_SLOT;
+            prim->tpage = s_SaturnStageMasonryTpage;
+            prim->clut = SATURN_STAGE_MASONRY_CLUT_SLOT;
             prim->u0 = prim->u2 = 0;
             prim->u1 = prim->u3 = 24;
             prim->v0 = prim->v1 = 0;
@@ -680,9 +687,9 @@ static void EntityStage15Masonry(Entity* self) {
     }
 }
 
-static void EntityStage15SpecialController(Entity* self) { self->step = 1; }
+static void EntitySaturnStageSpecialController(Entity* self) { self->step = 1; }
 
-static void Stage15SyncRoomEntities(void) {
+static void SaturnStageSyncRoomEntities(void) {
     LayoutEntity* layout;
     Entity* entity;
     size_t layoutIndex;
@@ -706,31 +713,32 @@ static void Stage15SyncRoomEntities(void) {
                   layout->posY <= g_Tilemap.scrollY.i.hi + 288;
         entity = &g_Entities[index];
         if (!visible) {
-            if (entity->pfnUpdate == EntityStage15Dummy ||
-                entity->pfnUpdate == EntityStage15Masonry ||
+            if (entity->pfnUpdate == EntitySaturnStageDummy ||
+                entity->pfnUpdate == EntitySaturnStageMasonry ||
                 entity->pfnUpdate == EntityRedDoor ||
-                entity->pfnUpdate == EntityStage15SpecialController) {
+                entity->pfnUpdate == EntitySaturnStageSpecialController) {
                 DestroyEntity(entity);
             }
             continue;
         }
         if (entity->entityId != entityId ||
-            (entity->pfnUpdate != EntityStage15Dummy &&
-             entity->pfnUpdate != EntityStage15Masonry &&
+            (entity->pfnUpdate != EntitySaturnStageDummy &&
+             entity->pfnUpdate != EntitySaturnStageMasonry &&
              entity->pfnUpdate != EntityRedDoor &&
-             entity->pfnUpdate != EntityStage15SpecialController)) {
+             entity->pfnUpdate != EntitySaturnStageSpecialController)) {
             DestroyEntity(entity);
             entity->entityId = entityId;
             entity->params = layout->params;
             entity->entityRoomIndex = layout->entityRoomIndex >> 8;
             if (entityId == 5) {
                 entity->pfnUpdate = EntityRedDoor;
-            } else if (entityId == 15 && Stage15CurrentRoom() == 6) {
-                entity->pfnUpdate = EntityStage15Masonry;
+            } else if (entityId == 15 &&
+                       SaturnStageCurrentRoom() == SATURN_STAGE_SAVE_ROOM) {
+                entity->pfnUpdate = EntitySaturnStageMasonry;
             } else if (entityId == 16) {
-                entity->pfnUpdate = EntityStage15SpecialController;
+                entity->pfnUpdate = EntitySaturnStageSpecialController;
             } else {
-                entity->pfnUpdate = EntityStage15Dummy;
+                entity->pfnUpdate = EntitySaturnStageDummy;
             }
         }
         entity->posX.i.hi =
@@ -745,70 +753,70 @@ static void Stage15SyncRoomEntities(void) {
     }
 }
 
-static void Stage15Update(void) {
+static void SaturnStageUpdate(void) {
     Entity* entity;
 
-    if (!s_Stage15MusicStarted) {
-        s_Stage15MusicStarted = true;
-        g_api.PlaySfx(STAGE15_MUSIC);
+    if (!s_SaturnStageMusicStarted) {
+        s_SaturnStageMusicStarted = true;
+        g_api.PlaySfx(SATURN_STAGE_MUSIC);
     }
-    Stage15SyncRoomEntities();
+    SaturnStageSyncRoomEntities();
     for (entity = &g_Entities[STAGE_ENTITY_START];
          entity < &g_Entities[TOTAL_ENTITY_COUNT]; entity++) {
-        if (entity->pfnUpdate == EntityStage15Dummy ||
-            entity->pfnUpdate == EntityStage15Masonry ||
+        if (entity->pfnUpdate == EntitySaturnStageDummy ||
+            entity->pfnUpdate == EntitySaturnStageMasonry ||
             entity->pfnUpdate == EntityRedDoor ||
-            entity->pfnUpdate == EntityStage15SpecialController ||
-            entity->pfnUpdate == EntityStage15Backdrop) {
+            entity->pfnUpdate == EntitySaturnStageSpecialController ||
+            entity->pfnUpdate == EntitySaturnStageBackdrop) {
             entity->pfnUpdate(entity);
         }
     }
 }
 
-static void Stage15InitRoomEntities(s32 layoutId) {
+static void SaturnStageInitRoomEntities(s32 layoutId) {
     Entity* entity;
     Entity* backdrop;
 
     for (entity = &g_Entities[STAGE_ENTITY_START];
          entity < &g_Entities[TOTAL_ENTITY_COUNT]; entity++) {
-        if (entity->pfnUpdate == EntityStage15Dummy ||
-            entity->pfnUpdate == EntityStage15Masonry ||
+        if (entity->pfnUpdate == EntitySaturnStageDummy ||
+            entity->pfnUpdate == EntitySaturnStageMasonry ||
             entity->pfnUpdate == EntityRedDoor ||
-            entity->pfnUpdate == EntityStage15SpecialController) {
+            entity->pfnUpdate == EntitySaturnStageSpecialController) {
             DestroyEntity(entity);
         }
     }
-    s_CurrentLayout = layoutId >= 0 && layoutId < LEN(s_Stage15ObjLayouts)
-                          ? s_Stage15ObjLayouts[layoutId]
+    s_CurrentLayout = layoutId >= 0 && layoutId < LEN(s_SaturnStageObjLayouts)
+                          ? s_SaturnStageObjLayouts[layoutId]
                           : NULL;
     s_CurrentLayoutCount =
-        layoutId >= 0 && layoutId < LEN(s_Stage15ObjLayoutCounts)
-            ? s_Stage15ObjLayoutCounts[layoutId]
+        layoutId >= 0 && layoutId < LEN(s_SaturnStageObjLayoutCounts)
+            ? s_SaturnStageObjLayoutCounts[layoutId]
             : 0;
-    backdrop = &g_Entities[STAGE15_BACKDROP_ENTITY];
-    if (backdrop->pfnUpdate != EntityStage15Backdrop) {
+    backdrop = &g_Entities[SATURN_STAGE_BACKDROP_ENTITY];
+    if (backdrop->pfnUpdate != EntitySaturnStageBackdrop) {
         DestroyEntity(backdrop);
         backdrop->entityId = 1;
-        backdrop->pfnUpdate = EntityStage15Backdrop;
+        backdrop->pfnUpdate = EntitySaturnStageBackdrop;
     }
-    Stage15SyncRoomEntities();
-    EntityStage15Backdrop(backdrop);
+    SaturnStageSyncRoomEntities();
+    EntitySaturnStageBackdrop(backdrop);
 }
 #else
-static void Stage15Update(void) {}
-static void Stage15InitRoomEntities(s32 layoutId) { (void)layoutId; }
+static void SaturnStageUpdate(void) {}
+static void SaturnStageInitRoomEntities(s32 layoutId) { (void)layoutId; }
 #endif
 
 Overlay g_Overlay = {
-    .Update = Stage15Update,
+    .Update = SaturnStageUpdate,
     .HitDetection = Noop,
     .UpdateRoomPosition = Noop,
-    .InitRoomEntities = Stage15InitRoomEntities,
-    .rooms = s_Stage15Rooms,
+    .InitRoomEntities = SaturnStageInitRoomEntities,
+    .rooms = s_SaturnStageRooms,
     .spriteBanks = s_SpriteBanks,
     .cluts = s_Cluts,
-    .objLayoutHorizontal = s_Stage15ObjLayouts,
-    .tileLayers = s_Stage15TileLayers,
+    .objLayoutHorizontal = s_SaturnStageObjLayouts,
+    .tileLayers = s_SaturnStageTileLayers,
     .gfxBanks = s_GfxBanks,
     .UpdateStageEntities = Noop,
 };
@@ -816,41 +824,41 @@ Overlay g_Overlay = {
 void Psyz_ModuleStart(void* param) {
     Overlay* o = param;
 
-#ifdef STAGE15_NATIVE_8X8
+#ifdef SATURN_STAGE_NATIVE_8X8
     Psyz_GpuRegisterCommandHandler(
-        STAGE15_GRID_OPCODE, Stage15GridCommandHandler, NULL);
+        SATURN_STAGE_GRID_OPCODE, SaturnStageGridCommandHandler, NULL);
 #endif
     s_CurrentLayout = NULL;
     s_CurrentLayoutCount = 0;
     s_TileLayers = g_Overlay.tileLayers;
-#ifndef STAGE15_ROOM_TEST
-    if (!PcLoadStageChr(STAGE15_ASSET_DIR "/F_STAGE15.BIN")) {
+#ifndef SATURN_STAGE_ROOM_TEST
+    if (!PcLoadStageChr(SATURN_STAGE_ASSET_DIR "/F_STAGE.BIN")) {
         ERRORF("could not load Stage 15 graphics");
     }
-    Stage15ConfigureMusic();
-    s_Stage15MusicStarted = false;
-    s_Stage15MasonryReady = Stage15LoadMasonry();
-    if (s_Stage15MasonryReady) {
-        s_Stage15MasonryTpage =
-            LoadTPage((u_long*)s_Stage15MasonryPixels, 0, 0, 0x300, 0, 24, 16);
-        g_ClutIds[STAGE15_MASONRY_CLUT_SLOT] =
-            LoadClut2((u_long*)s_Stage15MasonryPalette, 0x3F0, 0xF3);
+    SaturnStageConfigureMusic();
+    s_SaturnStageMusicStarted = false;
+    s_SaturnStageMasonryReady = SaturnStageLoadMasonry();
+    if (s_SaturnStageMasonryReady) {
+        s_SaturnStageMasonryTpage = LoadTPage(
+            (u_long*)s_SaturnStageMasonryPixels, 0, 0, 0x300, 0, 24, 16);
+        g_ClutIds[SATURN_STAGE_MASONRY_CLUT_SLOT] =
+            LoadClut2((u_long*)s_SaturnStageMasonryPalette, 0x3F0, 0xF3);
     }
 #endif
 
     memcpy(o, &g_Overlay, sizeof(Overlay));
-#ifdef STAGE15_NATIVE_8X8
+#ifdef SATURN_STAGE_NATIVE_8X8
     s_NativeRoom = -1;
     s_NativeReady = false;
-    g_PcStageLayerRenderer = Stage15RenderNativeLayers;
+    g_PcStageLayerRenderer = SaturnStageRenderNativeLayers;
 #endif
 }
 
 void Psyz_ModuleStop(void) {
-#ifdef STAGE15_NATIVE_8X8
-    Psyz_GpuRegisterCommandHandler(STAGE15_GRID_OPCODE, NULL, NULL);
+#ifdef SATURN_STAGE_NATIVE_8X8
+    Psyz_GpuRegisterCommandHandler(SATURN_STAGE_GRID_OPCODE, NULL, NULL);
 #endif
-#ifndef STAGE15_ROOM_TEST
+#ifndef SATURN_STAGE_ROOM_TEST
     Psyz_CdSetDiskPath(g_GameParams.diskPath);
 #endif
 }
