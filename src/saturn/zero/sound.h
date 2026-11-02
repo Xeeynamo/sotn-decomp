@@ -30,7 +30,13 @@ typedef struct {
 extern volatile SoundRequest DAT_06063C30[];
 extern SoundMemoryLayout DAT_06062270;
 
+#ifdef SATZ
+#define UNCACHED_SOUND_REQUESTS DAT_06063C30
+#define SOUND_REQUEST_WAIT() satz_idle()
+#else
 #define UNCACHED_SOUND_REQUESTS ((volatile SoundRequest*)0x26063C30)
+#define SOUND_REQUEST_WAIT()
+#endif
 
 s32 PcmOpen(s32 code);
 void PcmClose(GfsHn gfs, s32 type);
