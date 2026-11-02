@@ -24,13 +24,13 @@ void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
 void func_us_8019D330_from_rcen(Entity* self);
 void EntityBossDracula(Entity* self);
-void EntityUnk18(Entity* self);
-void EntityUnk19(Entity* self);
+void EntityDraculaSmallHand(Entity* self);
+void EntityDraculaDecoration(Entity* self);
 void EntityDraculaArm(Entity* self);
 void EntityDraculaHand(Entity* self);
-void EntityUnk1C(Entity* self);
-void EntityUnk1D(Entity* self);
-void EntityUnk1E(Entity* self);
+void EntityDraculaPuppetHead(Entity* self);
+void EntityDraculaPuppetVertebra(Entity* self);
+void EntityDraculaWings(Entity* self);
 void EntityUnk1F(Entity* self);
 void EntityUnk20(Entity* self);
 void EntityUnk21(Entity* self);
@@ -76,13 +76,13 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityGreyPuff,
     func_us_8019D330_from_rcen,
     EntityBossDracula,
-    EntityUnk18,
-    EntityUnk19,
+    EntityDraculaSmallHand,
+    EntityDraculaDecoration,
     EntityDraculaArm,
     EntityDraculaHand,
-    EntityUnk1C,
-    EntityUnk1D,
-    EntityUnk1E,
+    EntityDraculaPuppetHead,
+    EntityDraculaPuppetVertebra,
+    EntityDraculaWings,
     EntityUnk1F,
     EntityUnk20,
     EntityUnk21,
