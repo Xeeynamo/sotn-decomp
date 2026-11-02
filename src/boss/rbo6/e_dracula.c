@@ -897,8 +897,8 @@ void EntityDraculaPuppetHead(Entity* self) {
             xVar -= self->posX.i.hi;
             yVar -= self->posY.i.hi;
             angle = ratan2(yVar, xVar);
-            self->velocityX = rcos(angle) * FIX(1/2048.0);
-            self->velocityY = rsin(angle) * FIX(1/2048.0);
+            self->velocityX = rcos(angle) * FIX(1 / 2048.0);
+            self->velocityY = rsin(angle) * FIX(1 / 2048.0);
             if ((abs(xVar) < 3) && (abs(yVar) < 3)) {
                 headAttackCycler++;
                 SetStep(1);
@@ -1844,7 +1844,7 @@ void EntityRainbowTriangleAttack(Entity* self) {
         xVar = self->posX.i.hi;
         yVar = self->posY.i.hi;
         extXY = &self->ext.finalDrac.triangleXY[0];
-        for (i = 0; i < 3; i++, extXY ++, primXY += 3) {
+        for (i = 0; i < 3; i++, extXY++, primXY += 3) {
             primXY->x = xVar + ((extXY->x * tmp) >> 8);
             primXY->y = yVar + ((extXY->y * tmp) >> 8);
         }
