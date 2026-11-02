@@ -23,10 +23,10 @@ void func_060DC418(Entity* self) {
         } else {
             self->animCurFrame = 5;
         }
-        func_0600AFA8(sprite, DAT_060E8898[self->animCurFrame]);
+        func_0600AFA8(sprite, g_RStage16SpriteBank16Frames[self->animCurFrame]);
         sprite->zPriority = 0x6A;
         self->step = 0x100;
-        func_06079BB4(self);
+        SyncSpriteObjectPos(self);
     }
 }
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60DC4C0, func_060DC4C0);
@@ -48,7 +48,7 @@ void func_060DC658(u16 arg0) {
     if (arg0) {
         if (!(collider.effects & 5)) {
             MoveEntity(entity);
-            func_06079BE4(entity);
+            FallEntity(entity);
             return;
         }
 
@@ -93,14 +93,15 @@ void func_060DC764(u16 cardIndex) {
     status = &g_Status;
     params = status->subWeapon;
     player = g_Entities;
-    subWeaponId = DAT_060E9CFC[cardIndex];
+    subWeaponId =
+        ((s16*)g_RStage16AlucardSubweaponIndices.indices - 14)[cardIndex];
     status->subWeapon = subWeaponId;
 
     if (params == subWeaponId) {
         params = 1;
         self->unk6D[0] = 0x10;
     } else {
-        params = DAT_060E9AE0[params];
+        params = g_RStage16AlucardSubweaponIds[params];
         self->unk6D[0] = 0x60;
     }
 
@@ -172,7 +173,7 @@ INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E0024, func_060E0024);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E0104, func_060E0104);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E03F0, func_060E03F0);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E08C8, func_060E08C8);
-void func_060E09D4(void) { DestroyEntity(); }
+void func_060E09D4(Entity* self) { DestroyEntity(); }
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E09EC, func_060E09EC);
 
 void func_060E16B8(void* arg0) {
@@ -273,7 +274,7 @@ void func_060E1834(Entity* self) {
     }
 }
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E1860, func_060E1860);
-void func_060E1C64(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+void func_060E1C64(Primitive* arg0, s32 arg1, s32 arg2, s32 arg3) {
     func_060E1CB4(arg1, arg3);
     func_060E1E74(arg1, arg2, arg3);
     func_060E1FC0(arg0, arg1, arg3);
@@ -281,7 +282,7 @@ void func_060E1C64(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E1CB4, func_060E1CB4);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E1E74, func_060E1E74);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E1FC0, func_060E1FC0);
-void func_060E22C4(s32 arg0, s32 arg1, s32 arg2) {
+void func_060E22C4(Primitive* arg0, s32 arg1, s32 arg2) {
     func_060E2300(arg1, arg2);
     func_060E23D0(arg0, arg1, arg2);
 }
@@ -294,7 +295,7 @@ void func_060E2300(s32 scale, s32 unused) {
     s32 i;
 
     base = DAT_060485E0;
-    src = DAT_060EA000;
+    src = (MthXyz*)g_RStage16Entity08ModelVertices14;
     dst = base;
     factor = scale << 8;
     for (i = 0; i < 14; i++) {
@@ -331,15 +332,16 @@ INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E4664, func_060E4664);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E4804, func_060E4804);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E4AFC, func_060E4AFC);
 void func_060E4E50(Entity* entity) {
-    entity->unk0 =
-        CreateSpriteObject(g_RStage16SpriteBankWight.allocationIndex,
-                           g_RStage16SpriteBankWight.flags, DAT_060EDE4C, 5);
-    SyncSpriteObjectPosUnchecked(entity, DAT_060ED9FA);
+    entity->unk0 = CreateSpriteObject(
+        g_RStage16SpriteBankWight.allocationIndex,
+        g_RStage16SpriteBankWight.flags, g_RStage16SpriteBankWightImages, 5);
+    SyncSpriteObjectPosUnchecked(entity, g_RStage16WightInitOffset);
     entity->step++;
 }
 void func_060E4EA4(Entity* self) {
-    func_06079BB4(self);
-    func_0600B004(self->unk0, DAT_060EDDE4[self->animCurFrame]);
+    SyncSpriteObjectPos(self);
+    func_0600B004(
+        self->unk0, g_RStage16SpriteBankWightFrames[self->animCurFrame]);
 }
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E4EDC, func_060E4EDC);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E56DC, func_060E56DC);
@@ -355,24 +357,26 @@ void func_060E5E70(Entity* entity) {
         bank = &g_RStage16SpriteBankWight.flags;
         createSpriteObject = CreateSpriteObject;
         maxParts = 5;
-        entity->unk0 =
-            createSpriteObject(bank[-1], bank[0], DAT_060EDE4C, maxParts);
+        entity->unk0 = createSpriteObject(
+            bank[-1], bank[0], g_RStage16SpriteBankWightImages, maxParts);
         syncSpriteObjectPos = SyncSpriteObjectPosUnchecked;
-        syncSpriteObjectPos(entity, DAT_060EDA60);
+        syncSpriteObjectPos(entity, g_RStage16Entity30Offset);
         TekiInit(entity, 2);
         entity->step = 1;
         entity->hitboxState = 0;
     case 1:
-        if (AnimateEntityWithSpriteData(entity, DAT_060EDA34, DAT_060EDDE4) ==
-            0) {
+        if (AnimateEntityWithSpriteData(
+                entity, g_RStage16Entity30Anim,
+                (s16**)g_RStage16SpriteBankWightFrames) == 0) {
             DestroyEntity(entity);
         }
         break;
     }
 }
 void func_060E5F0C(Entity* self) {
-    func_06079BB4(self);
-    func_0600B004(self->unk0, DAT_060EEFD0[self->animCurFrame]);
+    SyncSpriteObjectPos(self);
+    func_0600B004(
+        self->unk0, g_RStage16SpriteBankGargoyleFrames[self->animCurFrame]);
 }
 
 const u32 DAT_060E5F44 = 0xAAAAAAAB;
@@ -381,9 +385,10 @@ INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E660C, func_060E660C);
 void func_060E6828(Entity* self) {
     if (self->step == 0) {
         self->unk0 = CreateSpriteObject(
-            g_RStage16SpriteBankGargoyle[0].allocationIndex,
-            g_RStage16SpriteBankGargoyle[0].flags, DAT_060EF0C0, 1);
-        SyncSpriteObjectPosUnchecked(self, &DAT_060EDEBC);
+            g_RStage16SpriteBankGargoyle.allocationIndex,
+            g_RStage16SpriteBankGargoyle.flags,
+            g_RStage16SpriteBankGargoyleImages, 1);
+        SyncSpriteObjectPosUnchecked(self, g_RStage16Entity33Offset);
         self->step = 1;
         TekiInit(self, 5);
         self->ext.gargoyle.clutBase = self->unk0->clutBase;
@@ -404,16 +409,17 @@ void func_060E6828(Entity* self) {
         }
 
         self->unk0->zPriority -= 2;
-        func_06079BB4(self);
-        func_0600B004(self->unk0, DAT_060EEFD0[self->animCurFrame]);
+        SyncSpriteObjectPos(self);
+        func_0600B004(
+            self->unk0, g_RStage16SpriteBankGargoyleFrames[self->animCurFrame]);
     }
 }
 void func_060E6930(Entity* self) {
     u8 sensorHit;
     u16 collision;
 
-    sensorHit = func_06079DEC(self, &DAT_060EF2B4);
-    collision = func_06079F60(self, &DAT_060EF2BC, 3);
+    sensorHit = UnkCollisionFunc2(self, g_RStage16Entity34InitOffset);
+    collision = UnkCollisionFunc(self, g_RStage16Entity34Hitbox, 3);
     if (sensorHit == 0x80 || (collision & 2)) {
         SetStep(5);
         return;
