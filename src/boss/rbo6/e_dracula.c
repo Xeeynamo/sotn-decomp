@@ -255,7 +255,7 @@ void EntityBossDracula(Entity* self) {
             AnimateEntity(anim_idle_flap, self);
             if (g_CutsceneFlags & 2) {
                 g_api.TimeAttackController(
-                    TIMEATTACK_EVENT_UNUSED_28, TIMEATTACK_SET_VISITED);
+                    TIMEATTACK_EVENT_FINALBOSS_DEFEAT, TIMEATTACK_SET_VISITED);
                 g_api.PlaySfx(SFX_DRACULA_BEHOLD_MY_TRUE_FORM);
                 SetStep(DRAC_COME_FROM_BACK);
             }
@@ -266,7 +266,7 @@ void EntityBossDracula(Entity* self) {
         switch (self->step_s) {
         case 0:
             g_api.TimeAttackController(
-                TIMEATTACK_EVENT_UNUSED_28, TIMEATTACK_SET_RECORD);
+                TIMEATTACK_EVENT_FINALBOSS_DEFEAT, TIMEATTACK_SET_RECORD);
             g_BossFlag |= 1;
             self->hitboxState = 0;
             self->palette = PAL_DRACULA;
