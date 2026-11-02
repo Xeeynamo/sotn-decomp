@@ -31,13 +31,13 @@ void EntityDraculaHand(Entity* self);
 void EntityDraculaPuppetHead(Entity* self);
 void EntityDraculaPuppetVertebra(Entity* self);
 void EntityDraculaWings(Entity* self);
-void EntityUnk1F(Entity* self);
-void EntityUnk20(Entity* self);
-void EntityUnk21(Entity* self);
-void EntityUnk22(Entity* self);
+void EntitySummoningLightning(Entity* self);
+void EntityBossPortal(Entity* self);
+void EntitySummonedBoss(Entity* self);
+void EntitySquishBloodBalls(Entity* self);
 void EntityBlueFlashingOrb(Entity* self);
-void EntityUnk24(Entity* self);
-void EntityUnk25(Entity* self);
+void EntityRainbowTriangleAttack(Entity* self);
+void EntityTriangleCornerGlow(Entity* self);
 void EntityBlueOrbShadow(Entity* self);
 void EntityUnk27(Entity* self);
 void func_us_801A367C(Entity* self);
@@ -83,13 +83,13 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityDraculaPuppetHead,
     EntityDraculaPuppetVertebra,
     EntityDraculaWings,
-    EntityUnk1F,
-    EntityUnk20,
-    EntityUnk21,
-    EntityUnk22,
+    EntitySummoningLightning,
+    EntityBossPortal,
+    EntitySummonedBoss,
+    EntitySquishBloodBalls,
     EntityBlueFlashingOrb,
-    EntityUnk24,
-    EntityUnk25,
+    EntityRainbowTriangleAttack,
+    EntityTriangleCornerGlow,
     EntityBlueOrbShadow,
     EntityUnk27,
     func_us_801A367C,

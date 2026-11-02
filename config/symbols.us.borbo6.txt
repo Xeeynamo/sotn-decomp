@@ -1,7 +1,7 @@
 g_EInitParticle = 0x801804E0;
 g_EInitInteractable = 0x801804F8;
 g_EInitDraculaLvl98 = 0x80180534;
-D_pspeu_0926C060 = 0x801806E4;
+g_BossFlag = 0x801806E4;
 actor_names = 0x8018090C;
 rooms = 0x80181460;
 EntityBossDracula = 0x8019DB9C;

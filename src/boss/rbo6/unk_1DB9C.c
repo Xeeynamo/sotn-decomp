@@ -10,26 +10,41 @@ extern s32 E_ID(DRACULA_HAND);
 extern s32 E_ID(DRACULA_PUPPET_HEAD);
 extern s32 E_ID(DRACULA_VERTEBRA);
 extern s32 E_ID(DRACULA_WINGS);
-extern s32 E_ID(UNK_1F);
-extern s32 E_ID(UNK_20);
-extern s32 E_ID(UNK_21);
-extern s32 E_ID(UNK_22);
+extern s32 E_ID(SUMMONING_LIGHTNING);
+extern s32 E_ID(BOSS_PORTAL);
+extern s32 E_ID(SUMMONED_BOSS);
+extern s32 E_ID(SQUISH_BLOOD_BALLS);
 extern s32 E_ID(BLUE_FLASH_ORB);
-extern s32 E_ID(UNK_24);
-extern s32 E_ID(UNK_25);
+extern s32 E_ID(RAINBOW_TRIANGLE);
+extern s32 E_ID(TRIANGLE_CORNER_GLOW);
 extern s32 E_ID(BLUE_ORB_SHADOW);
 extern s32 E_ID(UNK_27);
 #endif
 
 // BSS vars
-s32 D_pspeu_0926C060 = 0;
-s32 D_pspeu_0926C068 = 0;
-s32 D_pspeu_0926C070 = 0;
-s32 D_pspeu_0926C078 = 0;
-s32 D_pspeu_0926C080 = 0;
-s32 D_pspeu_0926C088 = 0;
-s32 D_pspeu_0926C090 = 0;
-s32 D_pspeu_0926C098 = 0;
+s32 g_BossFlag = 0;
+s32 draculaIsInBackground = 0;
+typedef enum{
+    SUMMON_INACTIVE = 0,
+    SUMMON_START,
+    SUMMON_ARRIVED,
+    SUMMON_SQUISH_START,
+    SUMMON_SQUISHING,
+    SUMMON_CLEANUP = 5,
+} SummonAtkState;
+s32 summonAttackState = 0;
+s32 bossSummonCycler = 0;
+// Used as a bool. When it hits 1, the orb fires at the player.
+s32 orbAttackLaunch = 0;
+// Indicates if attacking with left hand (1), right hand (2), or done (3)
+s32 handAttackMode = 0;
+// Identifies which head should attack when we do the three-head attack
+s32 headAttackCycler = 0;
+typedef enum{
+    TRI_INACTIVE = 0,
+    TRI_CLEANUP = 5,
+} TriAtkState;
+s32 triangleAttackState = TRI_INACTIVE;
 s32 currentDraculaPalette = 0;
 
 static AnimateEntityFrame anim_idle_flap[] = {{32, 1}, {32, 2}, POSE_LOOP(0)};
@@ -76,24 +91,27 @@ static s16 D_pspeu_0926B540[] = {
 typedef enum{
     DRAC_INIT,
     DRAC_START_FIGHT,
+    DRAC_COME_FROM_BACK,
     DRAC_DROP_IN,
-    DRAC_3,
-    DRAC_4,
-    DRAC_5,
-    DRAC_6,
-    DRAC_7,
+    DRAC_NORMAL,
+    DRAC_SUMMON_BOSS,
+    DRAC_AFTER_BOSS_SQUISH,
+    DRAC_FLY_TO_BACKGROUND,
     DRAC_BLUE_ORB_ATTACK,
-    DRAC_9,
-    DRAC_10,
-    DRAC_11,
+    DRAC_HAND_ATTACK,
+    DRAC_HEADS_ATTACK,
+    DRAC_TRIANGLE_ATTACK,
     DRAC_DEAD,
     DRAC_DEBUG = 255
 } BossDraculaSteps;
-static u16 D_pspeu_0926B548[] = {DRAC_9, DRAC_5, DRAC_10, DRAC_11};
-static s8 D_pspeu_0926B550[][4] = {
+
+// This is a strict cycle of one to the next. He always does these attacks in this
+// exact order. Note: The summon attack is followed by the blue orb but is not mentioned in this cycle.
+static u16 attackCycle[] = {DRAC_HAND_ATTACK, DRAC_SUMMON_BOSS, DRAC_HEADS_ATTACK, DRAC_TRIANGLE_ATTACK};
+static s8 handHitboxes[][4] = {
     {0, 0, 0, 0}, {-64, -84, 0, 0}, {0, 0, 16, 16}, {-18, 0, 12, 24}, {-10, 0, 12, 24}, {-72, 112, 0, 0}, {-12, -17, 0, 0}, 
 };
-static u8 D_pspeu_0926B570[] = {0, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 5, 5};
+static u8 handHitboxIndices[] = {0, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 5, 5};
 
 // Extern BSS var
 extern s32 g_CutsceneFlags;
@@ -120,6 +138,12 @@ extern EInit g_EInitDraculaLvl98;
 // 103: The third and final puppet head
 // 104-108: The last 5 vertebrae
 // 109: The wings. Note: one single entity (not one entity for each wing)
+// That covers all the "persistent" entities attached to Dracula. Others that
+// come and go include:
+// 129: The portal between Dracula's hands that summons in bosses to squish
+// 130: The boss that comes in from that portal
+// 132: The blue flashing orb attack, when Dracula is in background. Grows.
+
 
 void EntityBossDracula(Entity* self) {
     s32 distFromCenter;
@@ -179,7 +203,7 @@ void EntityBossDracula(Entity* self) {
         /* fallthrough */
     case DRAC_START_FIGHT: 
         self->hitboxState = 0;
-        D_pspeu_0926C068 = 1;
+        draculaIsInBackground = 1;
         switch (self->step_s) { 
         case 0:                 
             self->animCurFrame = 1;
@@ -210,7 +234,7 @@ void EntityBossDracula(Entity* self) {
                 g_api.TimeAttackController(
                     TIMEATTACK_EVENT_UNUSED_28, TIMEATTACK_SET_VISITED);
                 g_api.PlaySfx(SFX_DRACULA_BEHOLD_MY_TRUE_FORM);
-                SetStep(DRAC_DROP_IN);
+                SetStep(DRAC_COME_FROM_BACK);
             }
             break;
         }
@@ -220,7 +244,7 @@ void EntityBossDracula(Entity* self) {
         case 0:                 
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_UNUSED_28, TIMEATTACK_SET_RECORD);
-            D_pspeu_0926C060 |= 1;
+            g_BossFlag |= 1;
             self->hitboxState = 0;
             self->palette = 0x200;
             self->flags &= ~0xF;
@@ -251,7 +275,7 @@ void EntityBossDracula(Entity* self) {
             }
             break;
         case 3: 
-            D_pspeu_0926C060 |= 2;
+            g_BossFlag |= 2;
             self->velocityX = 0;
             self->velocityY = 0;
             self->step_s++;
@@ -265,27 +289,29 @@ void EntityBossDracula(Entity* self) {
             break;
         }
         break;
-    case DRAC_DROP_IN: 
+    case DRAC_COME_FROM_BACK: 
         AnimateEntity(anim_idle_flap, self);
-        D_pspeu_0926C068 = 1;
+        draculaIsInBackground = 1;
         self->hitboxState = 0;
         switch (self->step_s) { 
         case 0:                 
+            // Drop downward fast
             self->velocityY = FIX(6.0);
             self->step_s++;
             /* fallthrough */
         case 1: 
             MoveEntity();
+            // After dropping down, fly off top of screen
             self->velocityY -= FIX(0.25);
             if (self->posY.i.hi < -0x60) {
-                SetStep(DRAC_3);
+                SetStep(DRAC_DROP_IN);
             }
             break;
         }
         break;
-    case DRAC_3: 
+    case DRAC_DROP_IN: 
         AnimateEntity(anim_mainbody_engorge, self);
-        D_pspeu_0926C068 = 0;
+        draculaIsInBackground = 0;
         self->hitboxState = 2;
         switch (self->step_s) { 
         case 0:                 
@@ -304,72 +330,72 @@ void EntityBossDracula(Entity* self) {
             self->ext.ILLEGAL.s16[2]++;
             MoveEntity();
             if (self->posY.i.hi > 0x90) {
-                SetStep(DRAC_4);
+                SetStep(DRAC_NORMAL);
             }
             break;
         }
         break;
-    case DRAC_4: 
+    case DRAC_NORMAL: 
         if (!self->step_s) {
             self->ext.ILLEGAL.s16[2] = 0x40;
             self->step_s++;
         }
         AnimateEntity(anim_mainbody_engorge, self);
-        D_pspeu_0926C068 = 0;
+        draculaIsInBackground = 0;
         self->hitboxState = 2;
         MoveEntity();
         angle = self->ext.ILLEGAL.s16[3] += 0x20;
         self->velocityY = (rcos(angle) << 0xF) >> 0xC;
         if (!--self->ext.ILLEGAL.s16[2]) {
-            SetStep(D_pspeu_0926B548[self->ext.ILLEGAL.u8[8]]);
+            SetStep(attackCycle[self->ext.ILLEGAL.u8[8]]);
             self->ext.ILLEGAL.u8[8]++;
             self->ext.ILLEGAL.u8[8] &= 3;
         }
         break;
-    case DRAC_5: 
+    case DRAC_SUMMON_BOSS: 
         AnimateEntity(anim_mainbody_engorge, self);
-        D_pspeu_0926C068 = 0;
+        draculaIsInBackground = 0;
         self->hitboxState = 2;
         MoveEntity();
         angle = self->ext.ILLEGAL.s16[3] += 0x20;
         self->velocityY = (rcos(angle) << 0xF) >> 0xC;
         switch (self->step_s) { 
         case 0:                 
-            D_pspeu_0926C070 = 1;
+            summonAttackState = SUMMON_START;
             other = &g_Entities[129];
-            CreateEntityFromCurrentEntity(E_ID(UNK_20), other);
+            CreateEntityFromCurrentEntity(E_ID(BOSS_PORTAL), other);
             other->zPriority = self->zPriority + 3;
             self->step_s++;
             /* fallthrough */
         case 1: 
-            if (D_pspeu_0926C070 == 2) {
+            if (summonAttackState == SUMMON_ARRIVED) {
                 self->step_s++;
             }
             break;
         case 2: 
-            D_pspeu_0926C070 = 3;
+            summonAttackState = SUMMON_SQUISH_START;
             g_api.PlaySfx(SFX_DRACULA_SQUISH_GRUNT);
             self->step_s++;
             /* fallthrough */
         case 3: 
-            if (D_pspeu_0926C070 == 5) {
+            if (summonAttackState == SUMMON_CLEANUP) {
                 self->ext.ILLEGAL.s16[2] = 0xA0;
                 self->step_s++;
             }
             break;
         case 4: 
             if (!--self->ext.ILLEGAL.s16[2]) {
-                D_pspeu_0926C078++;
-                if (D_pspeu_0926C078 > 7) {
-                    D_pspeu_0926C078 = 0;
+                bossSummonCycler++;
+                if (bossSummonCycler > 7) {
+                    bossSummonCycler = 0;
                 }
-                D_pspeu_0926C070 = 0;
-                SetStep(DRAC_6);
+                summonAttackState = SUMMON_INACTIVE;
+                SetStep(DRAC_AFTER_BOSS_SQUISH);
             }
             break;
         }
         break;
-    case DRAC_6: 
+    case DRAC_AFTER_BOSS_SQUISH: 
         if (!self->step_s) {
             self->velocityX = 0;
             self->velocityY = FIX(1.0);
@@ -377,15 +403,15 @@ void EntityBossDracula(Entity* self) {
             self->step_s++;
         }
         AnimateEntity(anim_mainbody_engorge, self);
-        D_pspeu_0926C068 = 0;
+        draculaIsInBackground = 0;
         self->hitboxState = 2;
         MoveEntity();
         self->velocityY -= FIX(0.0625);
         if (self->posY.i.hi < -0x40) {
-            SetStep(DRAC_7);
+            SetStep(DRAC_FLY_TO_BACKGROUND);
         }
         break;
-    case DRAC_7: 
+    case DRAC_FLY_TO_BACKGROUND: 
         if (!self->step_s) {
             self->posX.i.hi = 0x80;
             self->posY.i.hi = -0x40;
@@ -395,7 +421,7 @@ void EntityBossDracula(Entity* self) {
             self->step_s++;
         }
         AnimateEntity(anim_idle_flap, self);
-        D_pspeu_0926C068 = 1;
+        draculaIsInBackground = 1;
         self->hitboxState = 0;
         MoveEntity();
         self->velocityY -= self->velocityY >> 6;
@@ -405,13 +431,13 @@ void EntityBossDracula(Entity* self) {
         break;
     case DRAC_BLUE_ORB_ATTACK: 
         if (!self->step_s) {
-            D_pspeu_0926C080 = 0;
+            orbAttackLaunch = 0;
             self->step_s++;
         }
-        D_pspeu_0926C068 = 1;
+        draculaIsInBackground = 1;
         self->hitboxState = 0;
         if (!AnimateEntity(anim_shoot_orb, self)) {
-            SetStep(DRAC_DROP_IN);
+            SetStep(DRAC_COME_FROM_BACK);
         }
         if ((!self->poseTimer) && (self->pose == 2)) {
             other = &g_Entities[132];
@@ -420,12 +446,12 @@ void EntityBossDracula(Entity* self) {
         }
         if ((!self->poseTimer) && (self->pose == 3)) {
             g_api.PlaySfx(SFX_DRACULA_MONSTER_MAGIC_ATTACK);
-            D_pspeu_0926C080 = 1;
+            orbAttackLaunch = 1;
         }
         break;
-    case DRAC_9: 
+    case DRAC_HAND_ATTACK: 
         AnimateEntity(anim_mainbody_engorge, self);
-        D_pspeu_0926C068 = 0;
+        draculaIsInBackground = 0;
         self->hitboxState = 2;
         MoveEntity();
         angle = self->ext.ILLEGAL.s16[3] += 0x20;
@@ -438,10 +464,10 @@ void EntityBossDracula(Entity* self) {
         case 1: 
             other = &PLAYER;
             if (other->posX.i.hi < 0x80) {
-                D_pspeu_0926C088 = 1;
+                handAttackMode = 1;
                 self->velocityX = FIX(-0.5);
             } else {
-                D_pspeu_0926C088 = 2;
+                handAttackMode = 2;
                 self->velocityX = FIX(0.5);
             }
             self->ext.ILLEGAL.s16[2] = 0x28;
@@ -450,7 +476,7 @@ void EntityBossDracula(Entity* self) {
         case 2: 
             self->velocityX -= self->velocityX >> 4;
             if (!--self->ext.ILLEGAL.s16[2]) {
-                if (D_pspeu_0926C088 == 1) {
+                if (handAttackMode == 1) {
                     self->velocityX = FIX(2.0);
                 } else {
                     self->velocityX = FIX(-2.0);
@@ -460,7 +486,7 @@ void EntityBossDracula(Entity* self) {
             break;
         case 3: 
             self->velocityX -= self->velocityX >> 4;
-            if (D_pspeu_0926C088 == 3) {
+            if (handAttackMode == 3) {
                 self->step_s++;
             }
             break;
@@ -475,8 +501,8 @@ void EntityBossDracula(Entity* self) {
             if (abs(xVar) < 3) {
                 self->velocityX = 0;
                 if (!--self->ext.ILLEGAL.u8[9]) {
-                    D_pspeu_0926C088 = 0;
-                    SetStep(DRAC_4);
+                    handAttackMode = 0;
+                    SetStep(DRAC_NORMAL);
                 } else {
                     self->step_s = 1;
                 }
@@ -484,46 +510,53 @@ void EntityBossDracula(Entity* self) {
             break;
         }
         break;
-    case DRAC_10: 
+    // Each of the 3 heads attacks in sequence
+    // This is done by setting headAttackCycler to 1.
+    // Each head is listening for headAttackCycler all the time.
+    // Heads have params 0-2 so it says "if cycler is me + 1, i go"
+    // When each head is finished, it increments the cycler. This signals
+    // the next head to launch.
+    // Once we have seen the cycler hit 4, we go back to DRAC_NORMAL.
+    case DRAC_HEADS_ATTACK: 
         AnimateEntity(anim_mainbody_engorge, self);
-        D_pspeu_0926C068 = 0;
+        draculaIsInBackground = 0;
         self->hitboxState = 2;
         MoveEntity();
         angle = self->ext.ILLEGAL.s16[3] += 0x20;
         self->velocityY = (rcos(angle) << 0xF) >> 0xC;
         switch (self->step_s) { 
         case 0:                 
-            D_pspeu_0926C090 = 1;
+            headAttackCycler = 1;
             self->step_s++;
             /* fallthrough */
         case 1: 
-            if (D_pspeu_0926C090 == 4) {
-                D_pspeu_0926C090 = 0;
-                SetStep(DRAC_4);
+            if (headAttackCycler == 4) {
+                headAttackCycler = 0;
+                SetStep(DRAC_NORMAL);
             }
             break;
         }
         break;
-    case DRAC_11: 
+    case DRAC_TRIANGLE_ATTACK: 
         AnimateEntity(anim_mainbody_engorge, self);
-        D_pspeu_0926C068 = 0;
+        draculaIsInBackground = 0;
         self->hitboxState = 2;
         switch (self->step_s) { 
         case 0:                 
-            D_pspeu_0926C098 = 1;
+            triangleAttackState = 1;
             self->step_s++;
             /* fallthrough */
         case 1: 
-            if (D_pspeu_0926C098 == 4) {
+            if (triangleAttackState == 4) {
                 self->ext.ILLEGAL.s16[2] = 0x40;
                 self->step_s++;
             }
             break;
         case 2: 
             if (!(self->ext.ILLEGAL.s16[2] & 0xF)) {
-                other = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
+                other = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (other != NULL) {
-                    CreateEntityFromCurrentEntity(E_ID(UNK_24), other);
+                    CreateEntityFromCurrentEntity(E_ID(RAINBOW_TRIANGLE), other);
                     other->zPriority = self->zPriority + 8;
                 }
             }
@@ -534,13 +567,13 @@ void EntityBossDracula(Entity* self) {
             break;
         case 3: 
             if (!--self->ext.ILLEGAL.s16[2]) {
-                D_pspeu_0926C098 = 5;
+                triangleAttackState = TRI_CLEANUP;
                 self->step_s++;
             }
             break;
         case 4: 
-            D_pspeu_0926C098 = 0;
-            SetStep(DRAC_4);
+            triangleAttackState = 0;
+            SetStep(DRAC_NORMAL);
             break;
         }
         break;
@@ -565,7 +598,7 @@ void EntityDraculaArm(Entity* self) {
         self->posY.i.hi += 0x18;
     }
     self->palette = currentDraculaPalette;
-    if ((D_pspeu_0926C060 & 1) && (self->step != 16)) {
+    if ((g_BossFlag & 1) && (self->step != 16)) {
         SetStep(16);
     }
     switch (self->step) { 
@@ -579,10 +612,10 @@ void EntityDraculaArm(Entity* self) {
         /* fallthrough */
     case 1: 
         self->animCurFrame = 12;
-        if (D_pspeu_0926C070 == 1) {
+        if (summonAttackState == SUMMON_START) {
             SetStep(2);
         }
-        if (D_pspeu_0926C088 == ((self->params) + 1)) {
+        if (handAttackMode == ((self->params) + 1)) {
             SetStep(3);
         }
         break;
@@ -590,16 +623,21 @@ void EntityDraculaArm(Entity* self) {
         switch (self->step_s) { 
         case 0:                 
             self->animCurFrame = 12;
-            if (D_pspeu_0926C070 == 3) {
+            // Once we see that the summoned monster is being squished,
+            // we step ahead into the squish process
+            if (summonAttackState == SUMMON_SQUISH_START) {
                 self->step_s++;
             }
             break;
         case 1: 
+            // Once our pose is finished we can move onward
             if ((!self->poseTimer) && (self->pose == 3)) {
-                D_pspeu_0926C070 = 4;
+                summonAttackState = SUMMON_SQUISHING;
             }
+            // Once we've swooped, the summon is done and can
+            // cleanup the spawned entities, while we unswoop.
             if (AnimateEntity(anim_arm_swoop, self) == 0) {
-                D_pspeu_0926C070 = 5;
+                summonAttackState = SUMMON_CLEANUP;
                 SetSubStep(2);
             }
             break;
@@ -622,7 +660,7 @@ void EntityDraculaArm(Entity* self) {
             break;
         case 1: 
             if (AnimateEntity(anim_arm_unswoop, self) == 0) {
-                D_pspeu_0926C088 = 3;
+                handAttackMode = 3;
                 SetStep(1);
             }
             break;
@@ -650,7 +688,7 @@ void EntityDraculaArm(Entity* self) {
         }
         break;
     }
-    if (D_pspeu_0926C068) {
+    if (draculaIsInBackground) {
         self->animCurFrame = 0;
         self->hitboxState = 0;
     }
@@ -665,7 +703,7 @@ void EntityDraculaHand(Entity* self) {
     s8* hitbox;
 
     self->palette = currentDraculaPalette;
-    if ((D_pspeu_0926C060 & 1) && (self->step != 16)) {
+    if ((g_BossFlag & 1) && (self->step != 16)) {
         SetStep(16);
     }
     switch (self->step) { 
@@ -681,10 +719,10 @@ void EntityDraculaHand(Entity* self) {
         /* fallthrough */
     case 1: 
         AnimateEntity(anim_hand_flex, self);
-        if (D_pspeu_0926C070 == 1) {
+        if (summonAttackState == SUMMON_START) {
             SetStep(2);
         }
-        if (D_pspeu_0926C088 == self->params + 1) {
+        if (handAttackMode == self->params + 1) {
             self->animCurFrame = 10;
         }
         break;
@@ -694,7 +732,7 @@ void EntityDraculaHand(Entity* self) {
             for (i = 0; i < 2; i++) {
                 other = AllocEntity(&g_Entities[144], &g_Entities[152]);
                 if (other != NULL) {
-                    CreateEntityFromCurrentEntity(E_ID(UNK_1F), other);
+                    CreateEntityFromCurrentEntity(E_ID(SUMMONING_LIGHTNING), other);
                     other->params = self->params;
                     other->zPriority = self->zPriority + 4;
                 }
@@ -703,13 +741,13 @@ void EntityDraculaHand(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case 1: 
-            if (D_pspeu_0926C070 == 3) {
+            if (summonAttackState == SUMMON_SQUISH_START) {
                 SetSubStep(2);
             }
             break;
         case 2: 
             AnimateEntity(anim_hand_grab, self);
-            if (D_pspeu_0926C070 == 5) {
+            if (summonAttackState == SUMMON_CLEANUP) {
                 SetSubStep(3);
             }
             break;
@@ -748,18 +786,18 @@ void EntityDraculaHand(Entity* self) {
         self->posX.i.hi -= D_pspeu_0926B518[offsetIndex].x;
     }
     self->posY.i.hi += D_pspeu_0926B518[offsetIndex].y;
-    hitbox = (s8*)&D_pspeu_0926B550;
-    hitbox += D_pspeu_0926B570[self->animCurFrame] * 4;
+    hitbox = (s8*)&handHitboxes;
+    hitbox += handHitboxIndices[self->animCurFrame] * 4;
     self->hitboxOffX = *hitbox++;
     self->hitboxOffY = *hitbox++;
     self->hitboxWidth = *hitbox++;
     self->hitboxHeight = *hitbox++;
-    if (D_pspeu_0926C068 != 0) {
+    if (draculaIsInBackground) {
         self->animCurFrame = 0;
         self->hitboxState = 0;
-        return;
+    } else {
+        self->hitboxState = 3;
     }
-    self->hitboxState = 3;
 }
 
 extern EInit D_us_8018054C;
@@ -776,7 +814,7 @@ void EntityDraculaPuppetHead(Entity* self) {
     s32 yVar;
 
     self->palette = currentDraculaPalette;
-    if ((D_pspeu_0926C060 & 1) && ((self->step) != 0x10)) {
+    if ((g_BossFlag & 1) && ((self->step) != 0x10)) {
         SetStep(0x10);
     }
     switch (self->step) { 
@@ -795,14 +833,14 @@ void EntityDraculaPuppetHead(Entity* self) {
         yVar = other->posY.i.hi + D_pspeu_0926B530[self->params].y;
         self->posX.i.hi = xVar;
         self->posY.i.hi = yVar;
-        self->zPriority = ((other->zPriority) + 2);
+        self->zPriority = other->zPriority + 2;
         self->hitboxState = 0;
-        if (D_pspeu_0926C090 == ((self->params) + 1)) {
-            self->zPriority = ((other->zPriority) + 6);
+        if (headAttackCycler == self->params + 1) {
+            self->zPriority = other->zPriority + 6;
             SetStep(2);
         }
-        if (D_pspeu_0926C098 == 1) {
-            self->zPriority = ((other->zPriority) + 6);
+        if (triangleAttackState == 1) {
+            self->zPriority = other->zPriority + 6;
             SetStep(3);
         }
         break;
@@ -837,7 +875,7 @@ void EntityDraculaPuppetHead(Entity* self) {
             self->velocityX = rcos(angle) << 5;
             self->velocityY = rsin(angle) << 5;
             if ((abs(xVar) < 3) && (abs(yVar) < 3)) {
-                D_pspeu_0926C090++;
+                headAttackCycler++;
                 SetStep(1);
             }
             break;
@@ -855,18 +893,18 @@ void EntityDraculaPuppetHead(Entity* self) {
             MoveEntity();
             if (AnimateEntity(anim_head_open_mouth, self) == 0) {
                 g_api.PlaySfx(SFX_WEAPON_APPEAR);
-                other = AllocEntity(&g_Entities[0xC0], &g_Entities[256]);
+                other = AllocEntity(&g_Entities[192], &g_Entities[256]);
                 if (other != NULL) {
-                    CreateEntityFromCurrentEntity(E_ID(UNK_25), other);
+                    CreateEntityFromCurrentEntity(E_ID(TRIANGLE_CORNER_GLOW), other);
                     other->ext.ILLEGAL.u32[8] = (u32)self;
-                    other->zPriority = (self->zPriority + 1);
+                    other->zPriority = self->zPriority + 1;
                 }
-                D_pspeu_0926C098++;
+                triangleAttackState++;
                 self->step_s++;
             }
             break;
         case 2: 
-            if (D_pspeu_0926C098 == 5) {
+            if (triangleAttackState == TRI_CLEANUP) {
                 self->step_s++;
             }
             break;
@@ -950,7 +988,7 @@ void EntityDraculaPuppetHead(Entity* self) {
         xVar2 = other->posX.i.hi;
         yVar2 = other->posY.i.hi;
     }
-    if (D_pspeu_0926C068 != 0) {
+    if (draculaIsInBackground) {
         self->animCurFrame = 0;
         self->hitboxState = 0;
     }
@@ -969,7 +1007,7 @@ void EntityDraculaPuppetVertebra(Entity* self) {
         break;
     }
 
-    if (D_pspeu_0926C068 != 0) {
+    if (draculaIsInBackground) {
         self->animCurFrame = 0;
         self->hitboxState = 0;
     }
@@ -994,7 +1032,7 @@ void EntityDraculaDecoration(Entity* self) {
         break;
     }
 
-    if (D_pspeu_0926C068 != 0) {
+    if (draculaIsInBackground) {
         self->animCurFrame = 0;
         self->hitboxState = 0;
     }
@@ -1008,7 +1046,7 @@ void EntityDraculaSmallHand(Entity* self) {
     self->posX.i.hi = other->posX.i.hi;
     self->posY.i.hi = other->posY.i.hi;
     self->palette = currentDraculaPalette;
-    if ((D_pspeu_0926C060 & 1) && (self->step != 16)) {
+    if ((g_BossFlag & 1) && (self->step != 16)) {
         SetStep(16);
     }
     switch (self->step) {
@@ -1022,7 +1060,7 @@ void EntityDraculaSmallHand(Entity* self) {
         self->animCurFrame = 27;
         break;
     }
-    if (D_pspeu_0926C068 != 0) {
+    if (draculaIsInBackground) {
         self->animCurFrame = 0;
         self->hitboxState = 0;
     }
@@ -1152,7 +1190,7 @@ void EntityDraculaWings(Entity* self) {
     }
     while (prim != NULL) {
         prim->clut = color;
-        if (D_pspeu_0926C068 != 0) {
+        if (draculaIsInBackground) {
             prim->drawMode |= DRAW_HIDE;
         }
         prim = prim->next;
@@ -1160,7 +1198,9 @@ void EntityDraculaWings(Entity* self) {
     FntPrint("color %x\n", currentDraculaPalette);
 }
 
-void EntityUnk1F(Entity* self) {
+// Very faint lightning appears between the hands in front of the summoning
+// portal. Destroyed once the boss has arrived. Hard to see this entity.
+void EntitySummoningLightning(Entity* self) {
     Entity* other;
     s16 arctan;
     s32 primIndex;
@@ -1174,11 +1214,11 @@ void EntityUnk1F(Entity* self) {
     s32 yVar;
     s16 angle2;
 
-    if (D_pspeu_0926C060 & 1) {
+    if (g_BossFlag & 1) {
         DestroyEntity(self);
         return;
     }
-    if (D_pspeu_0926C070 == 2) {
+    if (summonAttackState == SUMMON_ARRIVED) {
         DestroyEntity(self);
         return;
     }
@@ -1242,7 +1282,7 @@ void EntityUnk1F(Entity* self) {
         prim->x3 = prim->x2;
         prim->y3 = prim->y2 - 0x10;
         self->ext.ILLEGAL.u32[1] = (u32)prim;
-        self->ext.ILLEGAL.s16[4] = (Random() * 0x10);
+        self->ext.ILLEGAL.s16[4] = Random() * 0x10;
         while (prim != NULL) {
             prim->r0 = prim->g0 = prim->b0 = 0x50;
             LOW(prim->r1) = LOW(prim->r0);
@@ -1328,11 +1368,11 @@ void EntityUnk1F(Entity* self) {
     }
 }
 
-void EntityUnk20(Entity* self) {
+void EntityBossPortal(Entity* self) {
     Entity* other;
     s32 temp_s1;
 
-    if (D_pspeu_0926C060 & 1) {
+    if (g_BossFlag & 1) {
         DestroyEntity(self);
         return;
     }
@@ -1342,7 +1382,7 @@ void EntityUnk20(Entity* self) {
     switch (self->step) { 
     case 0:
         InitializeEntity(D_us_80180540);
-        self->animCurFrame = 0x2A;
+        self->animCurFrame = 42;
         self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleX = self->scaleY = 0;
         /* fallthrough */
@@ -1353,13 +1393,14 @@ void EntityUnk20(Entity* self) {
         }
         break;
     case 2:
-        other = &g_Entities[0x82];
-        CreateEntityFromCurrentEntity(E_ID(UNK_21), other);
+        other = &g_Entities[130];
+        CreateEntityFromCurrentEntity(E_ID(SUMMONED_BOSS), other);
         other->zPriority = self->zPriority + 1;
         self->step++;
         break;
     case 3:
-        if (D_pspeu_0926C070 == 2) {
+        // Once the summoned boss has arrived, we start to shrink
+        if (summonAttackState == SUMMON_ARRIVED) {
             self->step++;
         }
         break;
@@ -1374,12 +1415,19 @@ void EntityUnk20(Entity* self) {
     }
 }
 
-void EntityUnk21(Entity* self) {
+// Fake bosses summon in, but then squished by Dracula.
+// Runs in a fixed cycle of 8 bosses: Karasuman, Succubus,
+// Slogra, Medusa, Akmodan, Cerberus, Gaibon, Werewolf
+// Weirdly this cycle is maintained with a global var that
+// I'm calling bossSummonCycler. Normally I would expect this
+// to be kept in Dracula's Ext, and then passed to this entity
+// in its params field. Somewhat unusual.
+void EntitySummonedBoss(Entity* self) {
     Entity* other;
     s32 scaleY;
     s32 i;
 
-    if (D_pspeu_0926C060 & 1) {
+    if (g_BossFlag & 1) {
         DestroyEntity(self);
         return;
     }
@@ -1389,7 +1437,7 @@ void EntityUnk21(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_80180540);
-        self->animCurFrame = D_pspeu_0926C078 + 0x2D;
+        self->animCurFrame = bossSummonCycler + 45;
         self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleX = self->scaleY = 0;
         self->drawFlags |= ENTITY_OPACITY;
@@ -1403,14 +1451,15 @@ void EntityUnk21(Entity* self) {
         }
         /* fallthrough */
     case 2:
+        // Increase opacity until 0x80. Then flag that we have arrived.
         self->opacity += 2;
         if (self->opacity >= 0x80) {
-            D_pspeu_0926C070 = 2;
+            summonAttackState = SUMMON_ARRIVED;
             self->step = 3;
         }
         break;
     case 3:
-        if (D_pspeu_0926C070 == 4) {
+        if (summonAttackState == SUMMON_SQUISHING) {
             g_api.PlaySfx(SFX_DRACULA_KARASUMAN_SQUISH);
             self->step++;
         }
@@ -1423,10 +1472,10 @@ void EntityUnk21(Entity* self) {
             scaleY = 0;
         }
         self->scaleY = scaleY;
-        for (i = 0; i < 0x10; i++) {
-            other = AllocEntity(&g_Entities[0xC0], &g_Entities[256]);
+        for (i = 0; i < 16; i++) {
+            other = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (other != NULL) {
-                CreateEntityFromEntity(E_ID(UNK_22), self, other);
+                CreateEntityFromEntity(E_ID(SQUISH_BLOOD_BALLS), self, other);
                 other->zPriority = self->zPriority + 1;
             }
         }
@@ -1445,14 +1494,15 @@ void EntityUnk21(Entity* self) {
     }
 }
 
-void EntityUnk22(Entity* self) {
+// The balls of blood that pop out when the summoned boss is squished
+void EntitySquishBloodBalls(Entity* self) {
     s32 xVar;
     s32 yVar;
     Entity* other;
     s16 angle;
     s32 speed;
 
-    if (D_pspeu_0926C060 & 1) {
+    if (g_BossFlag & 1) {
         DestroyEntity(self);
         return;
     }
@@ -1475,7 +1525,7 @@ void EntityUnk22(Entity* self) {
         AnimateEntity(anim_red_ball_squish, self);
         self->velocityX -= self->velocityX >> 5;
         self->velocityY -= self->velocityY >> 5;
-        if (D_pspeu_0926C070 == 5) {
+        if (summonAttackState == SUMMON_CLEANUP) {
             self->velocityX = 0;
             self->velocityY = 0;
             self->step++;
@@ -1521,7 +1571,7 @@ void EntityBlueFlashingOrb(Entity* self) {
     s32 xVar;
     s32 yVar;
 
-    if (D_pspeu_0926C060 & 1) {
+    if (g_BossFlag & 1) {
         DestroyEntity(self);
         return;
     }
@@ -1543,7 +1593,7 @@ void EntityBlueFlashingOrb(Entity* self) {
             scale = 0xCC;
         }
         self->scaleX = self->scaleY = scale;
-        if (D_pspeu_0926C080 != 0) {
+        if (orbAttackLaunch) {
             self->ext.ILLEGAL.s16[2] = 0x60;
             other = &PLAYER;
             xVar = other->posX.val - self->posX.val;
@@ -1562,7 +1612,7 @@ void EntityBlueFlashingOrb(Entity* self) {
         scale = 0x6000 / (self->ext.ILLEGAL.s16[2] + 0x18);
         self->scaleX = self->scaleY = scale;
         if (!(self->ext.ILLEGAL.s16[2] & 3)) {
-            other = AllocEntity(&g_Entities[0xC0], &g_Entities[256]);
+            other = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (other != NULL) {
                 CreateEntityFromEntity(E_ID(BLUE_ORB_SHADOW), self, other);
                 other->scaleX = other->scaleY = self->scaleX;
@@ -1618,7 +1668,7 @@ void EntityBlueOrbShadow(Entity* self) {
 
 extern EInit D_us_80180570;
 
-void EntityUnk24(Entity* self) {
+void EntityRainbowTriangleAttack(Entity* self) {
     s16 angle;
     s16 redAngle;
     s32 primIndex;
@@ -1638,7 +1688,7 @@ void EntityUnk24(Entity* self) {
     s16* extXY;
     u8* rgb;
 
-    if (D_pspeu_0926C060 & 1) {
+    if (g_BossFlag & 1) {
         DestroyEntity(self);
         return;
     }
@@ -1647,7 +1697,7 @@ void EntityUnk24(Entity* self) {
     case 0:
         InitializeEntity(D_us_80180570);
         self->hitboxState = 0;
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0xA);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 10);
         if (primIndex == -1) {
             self->step = 0;
             return;
@@ -1656,6 +1706,7 @@ void EntityUnk24(Entity* self) {
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         self->ext.prim = prim;
+        // 3 lines to connect the heads and make a triangle
         for (i = 0; i < 3; i++) {
             prim->type = PRIM_LINE_G2;
             prim->r0 = prim->g0 = prim->b0 = 0xC0;
@@ -1680,14 +1731,23 @@ void EntityUnk24(Entity* self) {
             DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         self->opacity = 0;
     case 1:
-        other = &g_Entities[0x5B];
+        // Iterate over the 3 heads and save where they are so we can
+        // draw around them
+        other = &g_Entities[91];
         for (i = 0; i < 3; i++, other += 6) {
             SP_PosArr[i].x.i.hi = other->posX.i.hi;
-            SP_PosArr[i].y.i.hi = (other->posY.i.hi + 0xC);
+            SP_PosArr[i].y.i.hi = other->posY.i.hi + 12;
         }
-        other = &g_Entities[0x5B];
+        // Take the first head and save its location again.
+        // We'll draw lines between head i and head i+1 and it's
+        // easiest to draw from the third one to a fake fourth one
+        // than to have a special case to connect back to the start.
+        other = &g_Entities[91];
         SP_PosArr[3].x.i.hi = other->posX.i.hi;
-        SP_PosArr[3].y.i.hi = other->posY.i.hi + 0xC;
+        SP_PosArr[3].y.i.hi = other->posY.i.hi + 12;
+
+        // Iterate over the 3 white lines and set each one's first xy
+        // to the location of one of the heads
         prim = self->ext.prim;
         for (i = 0; i < 3; i++) {
             prim->x0 = SP_PosArr[i].x.i.hi;
@@ -1695,11 +1755,13 @@ void EntityUnk24(Entity* self) {
             prim = prim->next;
         }
         prim = self->ext.prim;
+        // Mark the second point to go to the next head
         for (i = 1; i < 4; i++) {
             prim->x1 = SP_PosArr[i].x.i.hi;
             prim->y1 = SP_PosArr[i].y.i.hi;
             prim = prim->next;
         }
+        // Now set all 3 vertices of the big triangle
         prim->x0 = SP_PosArr[0].x.i.hi;
         prim->y0 = SP_PosArr[0].y.i.hi;
         prim->x1 = SP_PosArr[1].x.i.hi;
@@ -1707,9 +1769,9 @@ void EntityUnk24(Entity* self) {
         prim->x2 = SP_PosArr[2].x.i.hi;
         prim->y2 = SP_PosArr[2].y.i.hi;
         self->opacity += 3;
-        redAngle = self->ext.ILLEGAL.s16[0x18] += 0x100;
-        greenAngle = self->ext.ILLEGAL.s16[0x19] += 0x40;
-        blueAngle = self->ext.ILLEGAL.s16[0x1A] += 0x80;
+        redAngle = self->ext.ILLEGAL.s16[24] += 0x100;
+        greenAngle = self->ext.ILLEGAL.s16[25] += 0x40;
+        blueAngle = self->ext.ILLEGAL.s16[26] += 0x80;
         rgb = &prim->r0;
         tmp = self->opacity;
         for (i = 0; i < 3; i++, rgb += 12) {
@@ -1761,9 +1823,9 @@ void EntityUnk24(Entity* self) {
         if (self->opacity < 0xC0) {
             self->opacity += 4;
         }
-        redAngle = self->ext.ILLEGAL.s16[0x18] += 0x100;
-        greenAngle = self->ext.ILLEGAL.s16[0x19] += 0x40;
-        blueAngle = self->ext.ILLEGAL.s16[0x1A] += 0x80;
+        redAngle = self->ext.ILLEGAL.s16[24] += 0x100;
+        greenAngle = self->ext.ILLEGAL.s16[25] += 0x40;
+        blueAngle = self->ext.ILLEGAL.s16[26] += 0x80;
         rgb = &prim->r0;
         tmp = self->opacity;
         for (i = 0; i < 3; i++, rgb += 12) {
@@ -1813,9 +1875,9 @@ void EntityUnk24(Entity* self) {
         for (i = 0; i < 3; i++) {
             prim = prim->next;
         }
-        redAngle = self->ext.ILLEGAL.s16[0x18] += 0x100;
-        greenAngle = self->ext.ILLEGAL.s16[0x19] += 0x40;
-        blueAngle = self->ext.ILLEGAL.s16[0x1A] += 0x80;
+        redAngle = self->ext.ILLEGAL.s16[24] += 0x100;
+        greenAngle = self->ext.ILLEGAL.s16[25] += 0x40;
+        blueAngle = self->ext.ILLEGAL.s16[26] += 0x80;
         rgb = &prim->r0;
         tmp = self->opacity;
         for (i = 0; i < 3; i++, rgb += 12) {
@@ -1843,10 +1905,12 @@ void EntityUnk24(Entity* self) {
     }
 }
 
-void EntityUnk25(Entity* self) {
-    Entity* real;
+// When the triangle attack is happening, each corner gets a small glowing
+// blue ball. This entity is that ball.
+void EntityTriangleCornerGlow(Entity* self) {
+    Entity* other;
 
-    if (D_pspeu_0926C060 & 1) {
+    if (g_BossFlag & 1) {
         DestroyEntity(self);
         return;
     }
@@ -1858,11 +1922,11 @@ void EntityUnk25(Entity* self) {
 
     AnimateEntity(anim_small_blue_ball_pulse, self);
 
-    real = self->ext.succubus.real;
-    self->posX.i.hi = real->posX.i.hi;
-    self->posY.i.hi = real->posY.i.hi + 0xC;
+    other = (Entity*)self->ext.ILLEGAL.u32[8];
+    self->posX.i.hi = other->posX.i.hi;
+    self->posY.i.hi = other->posY.i.hi + 12;
 
-    if (D_pspeu_0926C098 == 5) {
+    if (triangleAttackState == TRI_CLEANUP) {
         DestroyEntity(self);
     }
 }

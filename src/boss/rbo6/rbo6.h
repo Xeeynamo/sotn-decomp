@@ -43,13 +43,13 @@ typedef enum EntityID {
     E_DRACULA_PUPPET_HEAD,  // EntityDraculaPuppetHead
     E_DRACULA_VERTEBRA,     // EntityDraculaPuppetVertebra
     E_DRACULA_WINGS,        // EntityDraculaWings
-    E_UNK_1F,               // EntityUnk1F
-    E_UNK_20,               // EntityUnk20
-    E_UNK_21,               // EntityUnk21
-    E_UNK_22,               // EntityUnk22
+    E_SUMMONING_LIGHTNING,  // EntitySummoningLightning
+    E_BOSS_PORTAL,          // EntityBossPortal
+    E_SUMMONED_BOSS,        // EntitySummonedBoss
+    E_SQUISH_BLOOD_BALLS,   // EntitySquishBloodBalls
     E_BLUE_FLASH_ORB,       // EntityBlueFlashingOrb
-    E_UNK_24,               // EntityUnk24
-    E_UNK_25,               // EntityUnk25
+    E_RAINBOW_TRIANGLE,     // EntityRainbowTriangleAttack
+    E_TRIANGLE_CORNER_GLOW, // EntityTriangleCornerGlow
     E_BLUE_ORB_SHADOW,      // EntityBlueOrbShadow
     E_UNK_27,               // EntityUnk27
     E_UNK_28,               // func_us_801A367C
