@@ -289,8 +289,8 @@ void EntityBossDracula(Entity* self) {
             // Set velocity to push us back toward the center
             // Note: this angle stuff is a bit excessive, they could
             // have just had velocities as function of distances.
-            self->velocityX = (rcos(angle) << 0xF) >> 0xC;
-            self->velocityY = (rsin(angle) << 0xF) >> 0xC;
+            self->velocityX = (rcos(angle) * FIX(0.5)) >> 0xC;
+            self->velocityY = (rsin(angle) * FIX(0.5)) >> 0xC;
             MoveEntity();
             distFromCenter = SquareRoot0((xVar * xVar) + (yVar * yVar));
             if (distFromCenter < 3) {
@@ -368,7 +368,7 @@ void EntityBossDracula(Entity* self) {
         self->hitboxState = 2;
         MoveEntity();
         angle = self->ext.finalDrac.hoverPhase += 0x20;
-        self->velocityY = (rcos(angle) << 0xF) >> 0xC;
+        self->velocityY = (rcos(angle) * FIX(0.5)) >> 0xC;
         if (!--self->ext.finalDrac.timer) {
             SetStep(attackCycle[self->ext.finalDrac.nextAttack]);
             self->ext.finalDrac.nextAttack++;
@@ -381,7 +381,7 @@ void EntityBossDracula(Entity* self) {
         self->hitboxState = 2;
         MoveEntity();
         angle = self->ext.finalDrac.hoverPhase += 0x20;
-        self->velocityY = (rcos(angle) << 0xF) >> 0xC;
+        self->velocityY = (rcos(angle) * FIX(0.5)) >> 0xC;
         switch (self->step_s) {
         case 0:
             summonAttackState = SUMMON_START;
@@ -478,7 +478,7 @@ void EntityBossDracula(Entity* self) {
         self->hitboxState = 2;
         MoveEntity();
         angle = self->ext.finalDrac.hoverPhase += 0x20;
-        self->velocityY = (rcos(angle) << 0xF) >> 0xC;
+        self->velocityY = (rcos(angle) * FIX(0.5)) >> 0xC;
         switch (self->step_s) {
         case 0:
             self->ext.finalDrac.handSwipesRemain = 4;
@@ -546,7 +546,7 @@ void EntityBossDracula(Entity* self) {
         self->hitboxState = 2;
         MoveEntity();
         angle = self->ext.finalDrac.hoverPhase += 0x20;
-        self->velocityY = (rcos(angle) << 0xF) >> 0xC;
+        self->velocityY = (rcos(angle) * FIX(0.5)) >> 0xC;
         switch (self->step_s) {
         case 0:
             headAttackCycler = 1;
@@ -877,8 +877,8 @@ void EntityDraculaPuppetHead(Entity* self) {
             xVar = other->posX.i.hi - self->posX.i.hi;
             yVar = other->posY.i.hi - self->posY.i.hi;
             angle = ratan2(yVar, xVar);
-            self->velocityX = (rcos(angle) << 0x12) >> 0xC;
-            self->velocityY = (rsin(angle) << 0x12) >> 0xC;
+            self->velocityX = (rcos(angle) * FIX(4)) >> 0xC;
+            self->velocityY = (rsin(angle) * FIX(4)) >> 0xC;
             PlaySfxPositional(SFX_DRACULA_MONSTER_ROAR);
             self->step_s++;
             /* fallthrough */
@@ -897,8 +897,8 @@ void EntityDraculaPuppetHead(Entity* self) {
             xVar -= self->posX.i.hi;
             yVar -= self->posY.i.hi;
             angle = ratan2(yVar, xVar);
-            self->velocityX = rcos(angle) << 5;
-            self->velocityY = rsin(angle) << 5;
+            self->velocityX = rcos(angle) * FIX(1/2048.0);
+            self->velocityY = rsin(angle) * FIX(1/2048.0);
             if ((abs(xVar) < 3) && (abs(yVar) < 3)) {
                 headAttackCycler++;
                 SetStep(1);
@@ -910,8 +910,8 @@ void EntityDraculaPuppetHead(Entity* self) {
         switch (self->step_s) {
         case 0:
             angle = headTriangleAngles[self->params];
-            self->velocityX = (rcos(angle) << 0x12) >> 0xC;
-            self->velocityY = (rsin(angle) << 0x12) >> 0xC;
+            self->velocityX = (rcos(angle) * FIX(4)) >> 0xC;
+            self->velocityY = (rsin(angle) * FIX(4)) >> 0xC;
             self->step_s++;
             /* fallthrough */
         case 1:
@@ -981,8 +981,8 @@ void EntityDraculaPuppetHead(Entity* self) {
         break;
     }
     other = &g_Entities[80];
-    xVar2 = other->posX.val + (headLocations[self->params].x << 0x10);
-    yVar2 = other->posY.val + (headLocations[self->params].y << 0x10);
+    xVar2 = other->posX.val + (headLocations[self->params].x * FIX(1.0));
+    yVar2 = other->posY.val + (headLocations[self->params].y * FIX(1.0));
 
     other = self + 5;
     for (i = 0; i < 5; i++) {
@@ -1346,11 +1346,11 @@ void EntitySummoningLightning(Entity* self) {
                 }
                 arctan = ratan2(-yVar, xVar);
                 angle2 = arctan - angle1;
-                if (angle2 > 0x800) {
-                    angle2 = angle2 - 0x1000;
+                if (angle2 > ROT(180)) {
+                    angle2 = angle2 - ROT(360);
                 }
-                if (angle2 < -0x800) {
-                    angle2 = angle2 + 0x1000;
+                if (angle2 < ROT(-180)) {
+                    angle2 = angle2 + ROT(360);
                 }
                 if (!var_s7) {
                     angle2 /= 4;
@@ -1373,11 +1373,11 @@ void EntitySummoningLightning(Entity* self) {
             LOW(prim2->x1) = LOW(prim->x3);
             self->ext.dracZap.angle1 = angle1;
             self->ext.dracZap.prim2 = prim2;
-            xVar = (rcos(angle1) * 0xC) >> 0xC;
-            yVar = -((rsin(angle1) * 0xC) >> 0xC);
+            xVar = (rcos(angle1) * 12) >> 0xC;
+            yVar = -((rsin(angle1) * 12) >> 0xC);
             prim2->x2 = (prim2->x0 + xVar);
             prim2->y2 = (prim2->y0 + yVar);
-            angle2 = angle1 - 0x400;
+            angle2 = angle1 - ROT(90);
             length = 0x10;
             xVar = (length * rcos(angle2)) >> 0xC;
             yVar = -((length * rsin(angle2)) >> 0xC);
@@ -1885,8 +1885,8 @@ void EntityRainbowTriangleAttack(Entity* self) {
         xVar = other->posX.i.hi - self->posX.i.hi;
         yVar = other->posY.i.hi - self->posY.i.hi;
         angle = ratan2(yVar, xVar);
-        self->velocityX = (rcos(angle) << 0x12) >> 0xC;
-        self->velocityY = (rsin(angle) << 0x12) >> 0xC;
+        self->velocityX = (rcos(angle) * FIX(4)) >> 0xC;
+        self->velocityY = (rsin(angle) * FIX(4)) >> 0xC;
         self->hitboxState = 1;
         g_api.PlaySfx(SFX_DRACULA_TRIANGLE_ATTACK);
         self->step++;
