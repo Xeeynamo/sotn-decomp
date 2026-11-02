@@ -763,33 +763,24 @@ void func_060E62D4(s32 arg0, s32 arg1, s32 arg2) {
     func_060E6310(arg1, arg2);
     func_060E63E0(arg0, arg1, arg2);
 }
+
 void func_060E6310(s32 scale, s32 unused) {
-    s32* dst_base;
-    s32* dst;
-    s32* dst1;
-    s32* src;
-    s32* src1;
+    MthXyz* src;
+    MthXyz* base;
+    MthXyz* dst;
     s32 factor;
     s32 i;
-    s32 limit;
 
-    dst_base = DAT_060485E0;
+    base = DAT_060485E0;
     src = g_Stage15Entity08ModelVertices14[0];
-    dst = dst_base;
+    dst = base;
     factor = scale << 8;
-    i = 0;
-    limit = 13;
-    src1 = src + 1;
-    dst1 = dst_base + 1;
-
-    for (; i <= limit; i++) {
-        dst[0] = src[0] * factor;
-        dst1[0] = src1[0] * factor;
-        dst1[1] = src1[1] * factor;
-        src += 3;
-        dst += 3;
-        src1 += 3;
-        dst1 += 3;
+    for (i = 0; i < 14; i++) {
+        dst->x = src->x * factor;
+        dst->y = src->y * factor;
+        dst->z = src->z * factor;
+        dst++;
+        src++;
     }
 
     SetCurrentMatrixBinAngle(&DAT_060FB0D0, &DAT_060FB0E0);
@@ -798,9 +789,9 @@ void func_060E6310(s32 scale, s32 unused) {
     DAT_06061DF0.current->val[0][1] = DAT_06061DF0.current->val[0][1] * 5 / 4;
     DAT_06061DF0.current->val[0][2] = DAT_06061DF0.current->val[0][2] * 5 / 4;
 
-    TransformAndProjectPoints(
-        (MthXyz*)dst_base, (XyInt*)(dst_base + 0x102), 14);
+    TransformAndProjectPoints(base, (XyInt*)((char*)base + 0x408), 14);
 }
+
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E63E0, func_060E63E0);
 extern u8 g_Stage15SpriteBank23Frames[];
 extern u8 g_Stage15SkeletonBeastAnimations[];

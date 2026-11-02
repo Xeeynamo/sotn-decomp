@@ -442,39 +442,27 @@ void func_060E4368(s32 arg0, s32 arg1, s32 arg2) {
     func_060E43A4(arg1, arg2);
     func_060E4474(arg0, arg1, arg2);
 }
-extern s32 DAT_060F34D0[];
-extern s32 DAT_060F34E0[];
+extern MthXyz DAT_060F34D0[];
+extern MthXyz DAT_060F34E0[];
 
 void func_060E43A4(s32 scale, s32 unused) {
-    s32* base;
-    s32* srcX;
-    s32* dstX;
-    s32* srcY;
-    s32* dstY;
+    MthXyz* src;
+    MthXyz* base;
+    MthXyz* dst;
     s32 factor;
-    s32 scaledZ;
     s32 i;
-    s32 last;
 
     base = DAT_060485E0;
-    srcX = g_RStage15Entity08ModelVertices14[0];
-    dstX = base;
+    src = g_RStage15Entity08ModelVertices14[0];
+    dst = base;
     factor = scale << 8;
-    i = 0;
-    last = 13;
-    srcY = srcX + 1;
-    dstY = dstX + 1;
-    do {
-        *dstX = *srcX * factor;
-        i++;
-        dstY[0] = srcY[0] * factor;
-        srcX += 3;
-        scaledZ = srcY[1] * factor;
-        dstX += 3;
-        srcY += 3;
-        dstY[1] = scaledZ;
-        dstY += 3;
-    } while (i <= last);
+    for (i = 0; i < 14; i++) {
+        dst->x = src->x * factor;
+        dst->y = src->y * factor;
+        dst->z = src->z * factor;
+        dst++;
+        src++;
+    }
 
     SetCurrentMatrixBinAngle(DAT_060F34D0, DAT_060F34E0);
 
@@ -482,8 +470,9 @@ void func_060E43A4(s32 scale, s32 unused) {
     DAT_06061DF0.current->val[0][1] = DAT_06061DF0.current->val[0][1] * 5 / 4;
     DAT_06061DF0.current->val[0][2] = DAT_06061DF0.current->val[0][2] * 5 / 4;
 
-    TransformAndProjectPoints((MthXyz*)base, (XyInt*)((char*)base + 0x408), 14);
+    TransformAndProjectPoints(base, (XyInt*)((char*)base + 0x408), 14);
 }
+
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E4474, func_060E4474);
 void func_060E45E0(Entity* entity) {
     entity->unk0 = CreateSpriteObject(
