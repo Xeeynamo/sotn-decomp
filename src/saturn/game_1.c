@@ -67,7 +67,7 @@ static u16 LookupTblNoToVram(u16 arg0) {
 void func_06066B74(Primitive* prim0, Primitive* prim1, Primitive* prim2) {
     prim0->type = 0x1000;
     prim0->unk4 = 0x488;
-    prim0->unk8 = DAT_0605aec0[1][0];
+    prim0->unk8 = DAT_0605AEC0[1][0];
     prim0->unkA = 0x1840;
     prim0->unk6 =
         LookupTblNoToVram(g_SaturnSharedSpriteBank12Resource.flags + 1);
@@ -525,7 +525,7 @@ void func_0606797C(char* str, s16* arg1, s32 arg2) {
 
 void func_06067A04(void) {
     s32 temp = 1;
-    s32 temp2 = (DAT_0605aec0[temp][0] * 8) + VRAM_ADDR;
+    s32 temp2 = (DAT_0605AEC0[temp][0] * 8) + VRAM_ADDR;
 
     QueueVramTransfer(temp2, DAT_0604E5E0, 0x1800);
 }

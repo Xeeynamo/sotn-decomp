@@ -161,24 +161,25 @@ char* DAT_06038C24[][2] = {
     {DAT_06007108, DAT_060070F8},
 };
 
-s32 DAT_06038C5C = 0x00000000;
+s32 DAT_06038C5C = 0;
 
-extern SprCharTbl g_SpriteCharTbl[1];
-extern SprSpCmd g_SpriteMstCmd[0x280];
-extern SprDrawPrtyBlk g_SpriteMstDrawPrtyBlk[0x200];
-extern SprGourTblR g_SpriteGourTbl[0x304 + 1];
-Spr2WorkArea g_SpriteWorkArea = {
+extern SprCharTbl sp2CharTbl[1];
+extern SprSpCmd sp2MstSpCmd[0x280];
+extern SprDrawPrtyBlk sp2MstDrawPrtyBlk[0x200];
+extern SprGourTblR sp2GourTbl[0x304 + 1];
+
+Spr2WorkArea sp2WorkArea = {
     0x280,
     0x304,
     0x200,
     1,
     0x200,
-    g_SpriteCharTbl,
-    g_SpriteMstCmd,
-    g_SpriteMstDrawPrtyBlk,
+    sp2CharTbl,
+    (SprSpCmd*)sp2MstSpCmd,
+    sp2MstDrawPrtyBlk,
     NULL,
     NULL,
-    (SprGourTbl*)g_SpriteGourTbl,
+    (SprGourTbl*)sp2GourTbl,
 };
 
 u8 DAT_06038C84[] = {0x00, 0x21, 0x42, 0x00};

@@ -297,36 +297,25 @@ void func_060E3200(s32 arg0, s32 arg1, s32 arg2) {
     func_060E323C(arg1, arg2);
     func_060E330C(arg0, arg1, arg2);
 }
+
 void func_060E323C(s32 scale, s32 unused) {
-    s32* base;
-    s32* dstY;
-    s32* srcY;
-    s32* dstX;
-    s32* srcX;
-    s32 scaledZ;
+    MthXyz* src;
+    MthXyz* base;
+    MthXyz* dst;
     s32 factor;
     s32 i;
-    s32 last;
 
     base = DAT_060485E0;
-    srcX = g_Stage16Entity08ModelVertices14[0];
-    dstX = base;
+    src = g_Stage16Entity08ModelVertices14[0];
+    dst = base;
     factor = scale << 8;
-    i = 0;
-    last = 13;
-    srcY = srcX + 1;
-    dstY = dstX + 1;
-    do {
-        *dstX = *srcX * factor;
-        i += 1;
-        dstY[0] = srcY[0] * factor;
-        srcX += 3;
-        scaledZ = srcY[1] * factor;
-        dstX += 3;
-        srcY += 3;
-        dstY[1] = scaledZ;
-        dstY += 3;
-    } while (i <= last);
+    for (i = 0; i < 14; i++) {
+        dst->x = src->x * factor;
+        dst->y = src->y * factor;
+        dst->z = src->z * factor;
+        dst++;
+        src++;
+    }
 
     SetCurrentMatrixBinAngle(&DAT_060EF100, &DAT_060EF110);
 
@@ -334,8 +323,9 @@ void func_060E323C(s32 scale, s32 unused) {
     DAT_06061DF0.current->val[0][1] = DAT_06061DF0.current->val[0][1] * 5 / 4;
     DAT_06061DF0.current->val[0][2] = DAT_06061DF0.current->val[0][2] * 5 / 4;
 
-    TransformAndProjectPoints((MthXyz*)base, (XyInt*)((char*)base + 0x408), 14);
+    TransformAndProjectPoints(base, (XyInt*)((char*)base + 0x408), 14);
 }
+
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E330C, func_060E330C);
 void func_060E3478(Entity* entity) {
     entity->unk0 = CreateSpriteObject(
