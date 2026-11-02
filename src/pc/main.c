@@ -9,14 +9,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-enum CustomStageId {
-    STAGE_ID_SATURN_15 = 0x4C,
-    STAGE_ID_SATURN_16 = 0x4D,
-    STAGE_ID_REVERSE_SATURN_15 = 0x6C,
-    STAGE_ID_REVERSE_SATURN_16 = 0x6D,
-    STAGE_ID_USER_MOD_FIRST = 0x51,
-};
-
 static const char* allowed_players[] = {"alu", "ric", "mar"};
 static const char* allowed_tests[] = {"sndlib"};
 #define PARSE_PARAM(param, allowed) parseStrParam(param, allowed, LEN(allowed))
