@@ -303,7 +303,6 @@ INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DF204, func_060DF204);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DF354, func_060DF354);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DF62C, func_060DF62C);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DF77C, func_060DF77C);
-extern MthMatrixTbl DAT_06061DF0;
 
 s32 func_060DF938(s32* arg0, XyInt* arg1) {
     Fixed32 point[3];

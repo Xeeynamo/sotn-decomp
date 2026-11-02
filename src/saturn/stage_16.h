@@ -168,7 +168,6 @@ void func_060DC040(Entity* self);
 extern s32 DAT_060EF100;
 extern s32 DAT_060EF110;
 extern s32 g_Stage16Entity08ModelVertices14[14][3];
-extern MthMatrixTbl DAT_06061DF0;
 extern SaturnSpriteFrameHeader* g_Stage16SpriteBank16Frames[];
 extern LayoutEntity g_Stage16LayoutVertical02[];
 extern LayoutEntity g_Stage16LayoutVertical01[];

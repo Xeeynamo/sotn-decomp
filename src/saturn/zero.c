@@ -614,7 +614,7 @@ void func_06004F50(u16 arg0) {
         InitPrimBuf();
         ((s32(*)(void))func_060195F0)();
         DAT_0605C6E4 = 0;
-        SetSpriteEraseData(0);
+        SetSpriteEraseData(RGB16_COLOR(0, 0, 0) & 0x7FFF);
         g_CurrentRoom.stageID = 0;
         g_CurrentRoom.unk4 = 0;
         g_CurrentRoom.unk2 = -1;
@@ -669,7 +669,7 @@ void func_06005208(s32 arg0) {
     DAT_0605cd70.unk2 = mode;
     DAT_0605cd70.unk0 = 0;
     DAT_0605cd70.unk8 = 0;
-    DAT_0605c110 = 0;
+    DAT_0605C110 = 0;
 
     if (mode == 5) {
         Scl_s_reg.dispenbl &= ~0x0001;
@@ -1478,9 +1478,71 @@ void func_060078EC(s32 arg0) {
     }
 }
 
-// _InitVdp1
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007968, InitSpriteEngine);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007A34, AllocSpriteCharVram);
+extern s32 DAT_06038C5C;
+extern Spr2WorkArea sp2WorkArea;
+extern SprSpCmd sp2MstSpCmd[];
+extern s32 DAT_060576AC;
+extern XyInt DAT_0605AEA0[2];
+extern SprSpCmd* DAT_0605AEAC;
+
+// original name: InitVdp1
+void InitSpriteEngine(s32 arg0) {
+    SPR_2Initial(&sp2WorkArea);
+    SPR_2SetTvMode(SPR_TV_NORMAL, SPR_TV_320X240, OFF);
+    DAT_0605BEC0.x = 320 - 1;
+    DAT_0605BEC0.y = 240 - 1;
+    DAT_0605AEA0[0].x = 0;
+    DAT_0605AEA0[0].y = 12;
+    DAT_0605AEA0[1].x = 320 - 1;
+    DAT_0605AEA0[1].y = 240 - 1;
+    SetSpriteEraseData(RGB16_COLOR(0, 0, 0) & 0x7FFF);
+    DAT_0605BECA = 0;
+    DAT_0605AEB0 = 0;
+    DAT_0605AEA8 = 0;
+    DAT_0605BEC8 = 0x304;
+    DAT_060576AC = 0;
+    DAT_0605AEAC = &sp2MstSpCmd;
+    DAT_0605BEC4 = 0x11180;
+    func_0600E240(&DAT_0605BEC0);
+    DAT_06038C5C = 2;
+}
+
+u16 AllocSpriteCharVram(u16 arg0, s32 arg1, s16* size, void* src) {
+    u32 temp_r2;
+    s32 dst;
+    u32 var_r8;
+    u16 temp_r10;
+
+    temp_r10 = DAT_0605BECA;
+    var_r8 = size[0] * size[1];
+    if (arg0 == 0 || arg0 == 8) {
+        var_r8 = var_r8 / 2;
+    } else if (arg0 == 40) {
+        var_r8 = var_r8 * 2;
+    }
+    var_r8 = (var_r8 + 0x1F) & ~0x1F;
+    if (DAT_0605BECA < 0x400) {
+        u16* ptr = DAT_0605AEC0[DAT_0605BECA];
+        ptr[0] = DAT_0605BEC4 / 8;
+        ptr[1] = (((u16)size[0] / 8) << 8) | size[1];
+        if (src != NULL) {
+            dst = VRAM_ADDR + DAT_0605BEC4;
+            temp_r2 = (u32)src & 0x0FF00000;
+            if (temp_r2 == 0x00200000) {
+                DMA_CpuMemCopy2(dst, src, var_r8 / 2);
+                while (DMA_CpuResult() == 2) {
+                }
+            } else if (temp_r2 == 0x06000000) {
+                DMA_ScuMemCopy(dst, src, var_r8);
+                while (DMA_ScuResult() == 2) {
+                }
+            }
+        }
+        DAT_0605BEC4 += var_r8;
+        DAT_0605BECA++;
+    }
+    return temp_r10;
+}
 
 u16 func_06007B34(SprLookupTbl* tbl) {
     u16* entry;
@@ -1553,7 +1615,6 @@ u16 func_06007BE0(s16* colors, s32 arg1) {
 }
 
 extern s32 DAT_06038DBC;
-extern s32 DAT_060576AC;
 
 // original name: SprSetGourTbl
 u16 SprSetGourTbl(SprGourTbl* gourTbl) {
@@ -1582,9 +1643,6 @@ void ResetSpriteVram() {
     DAT_06038DBC = 0;
 }
 
-extern XyInt DAT_0605AEA0[2];
-extern SprSpCmd g_SpriteMstCmd[];
-extern SprSpCmd* d_0605AEAC;
 extern const XyInt DAT_0600E23C;
 
 void func_06007D54(void) {
@@ -1596,7 +1654,7 @@ void func_06007D54(void) {
     LOW(cmd.cx) = LOW(DAT_0605BEC0);
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(0, &cmd);
-        d_0605AEAC++;
+        DAT_0605AEAC++;
     }
 
     cmd.control = 0x1008;
@@ -1604,20 +1662,18 @@ void func_06007D54(void) {
     LOW(cmd.cx) = LOW(DAT_0605AEA0[1]);
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(0, &cmd);
-        d_0605AEAC++;
+        DAT_0605AEAC++;
     }
 
     cmd.control = 0x100A;
     LOW(cmd.ax) = LOW(DAT_0600E23C);
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(0, &cmd);
-        d_0605AEAC++;
+        DAT_0605AEAC++;
     }
 
-    d_0605AEAC = &g_SpriteMstCmd[SpMstCmdPos];
+    DAT_0605AEAC = &sp2MstSpCmd[SpMstCmdPos];
 }
-
-extern s32 DAT_06038C5C;
 
 // func_06007E14
 void CloseSpriteList(void) {
@@ -1633,14 +1689,14 @@ void CloseSpriteList(void) {
         cmd.ay = cmd.by = 0;
         cmd.cy = cmd.dy = DAT_0605AEA0[0].y - 1;
         SPR_2Cmd(0x1FF, &cmd);
-        d_0605AEAC++;
+        DAT_0605AEAC++;
     }
 
     SPR_2CloseCommand();
 }
 
 // func_06007EB8
-void SetSpriteEraseData(s16 arg0) {
+void SetSpriteEraseData(u16 arg0) {
     SPR_2FrameEraseData(arg0);
     SPR_SetEraseData(arg0, DAT_0605AEA0[0].x, DAT_0605AEA0[0].y,
                      DAT_0605AEA0[1].x, DAT_0605AEA0[1].y);
@@ -1813,7 +1869,7 @@ void func_06008488(void) {
     Unk0605DB60* entry;
     s32 i;
 
-    chars = (u16*)(VRAM_ADDR + DAT_0605aec0[0][0] * 8);
+    chars = (u16*)(VRAM_ADDR + DAT_0605AEC0[0][0] * 8);
     palettes = (u16*)(VRAM_ADDR + SPR_2LookupTblNoToVram(0x10) * 8);
     entry = d_0605DB60;
     for (i = 0; i < 0x20;) {
@@ -2631,7 +2687,7 @@ void func_0600A240(s32 arg0) {
 
 // original name: SetCharTrans
 void SetCharTrans(u16 arg0, s32 arg1, s32 arg2) {
-    QueueVramTransfer(VRAM_ADDR + DAT_0605aec0[arg0][0] * 8, arg2, arg1);
+    QueueVramTransfer(VRAM_ADDR + DAT_0605AEC0[arg0][0] * 8, arg2, arg1);
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A29C, LookupTblNoToVramAddr);
@@ -2928,7 +2984,7 @@ void func_0600BEA8(void) {
 
     size[0] = 0x80;
     size[1] = 0x40;
-    AllocSpriteCharVram(8, 0, size, 0);
+    AllocSpriteCharVram(8, 0, size, NULL);
 
     entry = d_0605DB60;
 
@@ -2946,7 +3002,7 @@ void func_0600BF08(void) {
 
     size[0] = 0x60;
     size[1] = 0x80;
-    AllocSpriteCharVram(8, 0, size, 0);
+    AllocSpriteCharVram(8, 0, size, NULL);
 }
 
 void func_0600BF38(void) {
@@ -2956,7 +3012,7 @@ void func_0600BF38(void) {
     size[0] = 0x80;
     size[1] = 0x50;
     for (i = 0; i < 8; i++) {
-        AllocSpriteCharVram(8, 0, size, 0);
+        AllocSpriteCharVram(8, 0, size, NULL);
     }
     func_0600AB60();
 }
@@ -2968,7 +3024,7 @@ void func_0600BF8C(void) {
     size[0] = 0x100;
     size[1] = 0x80;
     for (i = 0; i < 2; i++) {
-        AllocSpriteCharVram(8, 0, size, 0);
+        AllocSpriteCharVram(8, 0, size, NULL);
     }
 }
 
@@ -2977,7 +3033,7 @@ void func_0600BFD8(void) {
 
     size[0] = 0x100;
     size[1] = 0xA0;
-    AllocSpriteCharVram(8, 0, size, 0);
+    AllocSpriteCharVram(8, 0, size, NULL);
 }
 
 void func_0600C00C(void) {
@@ -4044,7 +4100,7 @@ void func_0600E164(void) {
         cmd.ay = cmd.by = DAT_0605AEA0[0].y;
         cmd.cy = cmd.dy = DAT_0605BEC0.y;
         SPR_2Cmd(0x1FF, &cmd);
-        d_0605AEAC++;
+        DAT_0605AEAC++;
     }
 }
 
@@ -4053,7 +4109,7 @@ const Uint16 DAT_0600E228[10] = {0};
 const XyInt DAT_0600E23C = {0, 0};
 
 void func_0600E240(XyInt* arg0) {
-    MTH_InitialMatrix(&DAT_06061DF0, 2, &DAT_060579A8);
+    MTH_InitialMatrix(&DAT_06061DF0, 2, DAT_060579A8);
     DAT_06061DE8.x = DAT_0600E23C.x;
     DAT_06061DE8.y = DAT_0600E23C.y;
     DAT_06057A08.x = -(arg0->x / 2);

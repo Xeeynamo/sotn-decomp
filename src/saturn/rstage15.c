@@ -444,7 +444,6 @@ void func_060E4368(s32 arg0, s32 arg1, s32 arg2) {
 }
 extern s32 DAT_060F34D0[];
 extern s32 DAT_060F34E0[];
-extern MthMatrixTbl DAT_06061DF0;
 
 void func_060E43A4(s32 scale, s32 unused) {
     s32* base;
