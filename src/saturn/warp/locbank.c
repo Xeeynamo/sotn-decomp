@@ -3,8 +3,9 @@
 #include <saturn_sprite.h>
 #include "warp.h"
 
-struct SpriteParts* g_WarpSpriteBank16[] = {
-    (struct SpriteParts*)g_WarpSpriteBank16Images,
-    (struct SpriteParts*)&g_WarpSpriteBank16Palettes,
-    (struct SpriteParts*)-1,
+SaturnSpriteResource g_WarpSpriteBank16 = {
+    g_WarpSpriteBank16Images,
+    (u16*)&g_WarpSpriteBank16Palettes,
+    -1,
+    0xFFFF,
 };
