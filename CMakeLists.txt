@@ -2437,5 +2437,5 @@ add_overlay(tt_001 ${SOURCE_FILES_TT_001})
 add_overlay(tt_002 ${SOURCE_FILES_TT_002})
 
 if(ENABLE_SATURN_STAGES)
-    include(cmake/stage15.cmake)
+    include(cmake/saturn_stages.cmake)
 endif()
