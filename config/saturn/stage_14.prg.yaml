@@ -1,0 +1,147 @@
+options:
+  target_path: disks/saturn/STAGE_14.PRG
+  asm_path: asm/saturn/stage_14
+  src_path: src/saturn
+  obj_path: build/saturn
+  ld_scripts_path: config/saturn
+  syms_path: config/saturn
+  decomp_empty_funcs: true
+  symbol_files:
+    - game_user_syms.txt
+    - zero_user_syms.txt
+    - game_syms.gen.txt
+    - zero_syms.gen.txt
+segments:
+  - name: stage_14
+    type: code
+    start: 0x00000000
+    vram: 0x060DC000
+    subalign: 2
+    subsegments:
+      - start: 0x0
+        type: .data
+        file: stage_14/header
+        end: 0x40
+      - start: 0x40
+        type: c
+        file: stage_14
+        function_ranges:
+          - [0x3B40, 0x3B40]
+          - [0x4774, 0x4774]
+          - [0x72AC, 0x72AC]
+          - [0x9190, 0x9190]
+        data_ranges:
+          - [0x7438, 0x7479]
+          - [0x7E58, 0x7E73]
+          - [0x860C, 0x8613]
+          - [0x88B8, 0x88C1]
+          - [0x8C18, 0x8C25]
+        end: 0xA860
+      - start: 0xA860
+        type: .data
+        file: stage_14/s16res
+        end: 0xB558
+      - start: 0xB558
+        type: .data
+        file: stage_14/sprbank
+        end: 0xB5B8
+      - start: 0xB5B8
+        type: .data
+        file: stage_14/entupd
+        end: 0xB650
+      - start: 0xB650
+        type: .data
+        file: stage_14/hlay
+        end: 0xB724
+      - start: 0xB724
+        type: .data
+        file: stage_14/vlay
+        end: 0xB7F8
+      - start: 0xB7F8
+        type: .data
+        file: stage_14/laydata
+        end: 0xBD38
+      - start: 0xBD38
+        type: .data
+        file: stage_14/metadata
+        end: 0xBE00
+      - start: 0xBE00
+        type: .data
+        file: stage_14/elev
+        end: 0xBE48
+      - start: 0xBE48
+        type: .data
+        file: stage_14/prio
+        end: 0xBFC8
+      - start: 0xBFC8
+        type: .data
+        file: stage_14/cutscn
+        end: 0xC620
+      - start: 0xC620
+        type: .data
+        file: stage_14/ent22
+        end: 0xC698
+      - start: 0xC698
+        type: .data
+        file: stage_14/prcfg
+        end: 0xC6B4
+      - start: 0xC6B4
+        type: .data
+        file: stage_14/gold
+        end: 0xC6DC
+      - start: 0xC6DC
+        type: .data
+        file: stage_14/przan
+        end: 0xC87C
+      - start: 0xC87C
+        type: .data
+        file: stage_14/ent04
+        end: 0xC948
+      - start: 0xC948
+        type: .data
+        file: stage_14/ent09
+        end: 0xC968
+      - start: 0xC968
+        type: .data
+        file: stage_14/expl
+        end: 0xCA34
+      - start: 0xCA34
+        type: .data
+        file: stage_14/ent05
+        end: 0xCAB4
+      - start: 0xCAB4
+        type: .data
+        file: stage_14/ent06
+        end: 0xCB14
+      - start: 0xCB14
+        type: .data
+        file: stage_14/ent07
+        end: 0xCB24
+      - start: 0xCB24
+        type: .data
+        file: stage_14/mariadat
+        end: 0xD448
+      - start: 0xD448
+        type: .data
+        file: stage_14/s21res
+        end: 0xD454
+      - start: 0xD454
+        type: .data
+        file: stage_14/entmaria
+        end: 0xD608
+      - start: 0xD608
+        type: .data
+        file: stage_14/s22res
+        end: 0xD614
+      - start: 0xD614
+        type: .data
+        file: stage_14/entmeff
+        end: 0xD6A4
+      - start: 0xD6A4
+        type: .data
+        file: stage_14/s21gfx
+        end: 0xF3A8
+      - start: 0xF3A8
+        type: .data
+        file: stage_14/s22gfx
+        end: 0xF824
