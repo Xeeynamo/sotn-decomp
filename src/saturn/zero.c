@@ -467,31 +467,6 @@ void InitializePads(void) {
         g_pads[0].repeat = PAD_NONE;
 }
 
-#ifndef SATZ
-static inline void set_sr(u32 sr) { asm volatile("ldc\t%0,sr" : : "r"(sr)); }
-
-static inline u32 get_sr(void) {
-    u32 sr;
-
-    asm volatile("stc\tsr,%0" : "=r"(sr));
-    return sr;
-}
-
-static inline u32 get_imask(void) {
-    u32 imask = (get_sr() & 0x000000F0) >> 4;
-
-    return imask;
-}
-
-static inline void set_imask(u32 imask) {
-    u32 sr = get_sr();
-
-    sr &= ~0x000000F0;
-    sr |= (imask << 4);
-    set_sr(sr);
-}
-#endif
-
 // original name: SET_VBLANK
 void SetVblank(s32 useAlternateHandlers) {
 

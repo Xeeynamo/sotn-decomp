@@ -10,6 +10,7 @@
 #include "lib/gfs/gfs.h"
 #include "lib/snd.h"
 #include "lib/dma/dma.h"
+#include "lib/machine.h"
 #include "inc_asm.h"
 #include <saturn_sprite.h>
 
