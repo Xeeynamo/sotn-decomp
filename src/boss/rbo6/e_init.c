@@ -26,8 +26,8 @@ void func_us_8019D330_from_rcen(Entity* self);
 void EntityBossDracula(Entity* self);
 void EntityUnk18(Entity* self);
 void EntityUnk19(Entity* self);
-void EntityUnk1A(Entity* self);
-void EntityUnk1B(Entity* self);
+void EntityDraculaArm(Entity* self);
+void EntityDraculaHand(Entity* self);
 void EntityUnk1C(Entity* self);
 void EntityUnk1D(Entity* self);
 void EntityUnk1E(Entity* self);
@@ -35,10 +35,10 @@ void EntityUnk1F(Entity* self);
 void EntityUnk20(Entity* self);
 void EntityUnk21(Entity* self);
 void EntityUnk22(Entity* self);
-void EntityUnk23(Entity* self);
+void EntityBlueFlashingOrb(Entity* self);
 void EntityUnk24(Entity* self);
 void EntityUnk25(Entity* self);
-void EntityUnk26(Entity* self);
+void EntityBlueOrbShadow(Entity* self);
 void EntityUnk27(Entity* self);
 void func_us_801A367C(Entity* self);
 void func_us_801A9208_from_bo6(Entity* self);
@@ -78,8 +78,8 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityBossDracula,
     EntityUnk18,
     EntityUnk19,
-    EntityUnk1A,
-    EntityUnk1B,
+    EntityDraculaArm,
+    EntityDraculaHand,
     EntityUnk1C,
     EntityUnk1D,
     EntityUnk1E,
@@ -87,10 +87,10 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityUnk20,
     EntityUnk21,
     EntityUnk22,
-    EntityUnk23,
+    EntityBlueFlashingOrb,
     EntityUnk24,
     EntityUnk25,
-    EntityUnk26,
+    EntityBlueOrbShadow,
     EntityUnk27,
     func_us_801A367C,
     func_us_801A9208_from_bo6,

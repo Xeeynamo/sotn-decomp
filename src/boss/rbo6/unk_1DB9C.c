@@ -5,8 +5,8 @@
 #ifdef VERSION_PSP
 extern s32 E_ID(UNK_18);
 extern s32 E_ID(UNK_19);
-extern s32 E_ID(UNK_1A);
-extern s32 E_ID(UNK_1B);
+extern s32 E_ID(DRACULA_ARM);
+extern s32 E_ID(DRACULA_HAND);
 extern s32 E_ID(UNK_1C);
 extern s32 E_ID(UNK_1D);
 extern s32 E_ID(UNK_1E);
@@ -14,10 +14,10 @@ extern s32 E_ID(UNK_1F);
 extern s32 E_ID(UNK_20);
 extern s32 E_ID(UNK_21);
 extern s32 E_ID(UNK_22);
-extern s32 E_ID(UNK_23);
+extern s32 E_ID(BLUE_FLASH_ORB);
 extern s32 E_ID(UNK_24);
 extern s32 E_ID(UNK_25);
-extern s32 E_ID(UNK_26);
+extern s32 E_ID(BLUE_ORB_SHADOW);
 extern s32 E_ID(UNK_27);
 #endif
 
@@ -32,14 +32,14 @@ s32 D_pspeu_0926C090 = 0;
 s32 D_pspeu_0926C098 = 0;
 s32 D_pspeu_0926C0A0 = 0;
 
-static AnimateEntityFrame D_pspeu_0926B3F0[] = {{32, 1}, {32, 2}, POSE_LOOP(0)};
-static AnimateEntityFrame D_pspeu_0926B3F8[] = {{64, 1}, {8, 4}, {72, 3}, {2, 1}, {48, 4}, POSE_END};
-static AnimateEntityFrame D_pspeu_0926B408[] = {{1, 5}, {1, 6}, {1, 7}, POSE_LOOP(0)};
-static AnimateEntityFrame D_pspeu_0926B410[] = {{1, 6}, {1, 7}, POSE_LOOP(0)};
-static AnimateEntityFrame D_pspeu_0926B418[] = {{30, 8}, {30, 9}, POSE_LOOP(0)};
-static AnimateEntityFrame D_pspeu_0926B420[] = {{4, 8}, {4, 9}, {4, 8}, {4, 10}, {32, 11}, {12, 10}, POSE_END};
-static AnimateEntityFrame D_pspeu_0926B430[] = {{8, 10}, {8, 8}, {8, 9}, POSE_END};
-static AnimateEntityFrame D_pspeu_0926B438[] = {{4, 12}, {4, 13}, {4, 14}, {4, 15}, {48, 16}, POSE_END};
+static AnimateEntityFrame anim_idle_flap[] = {{32, 1}, {32, 2}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_shoot_orb[] = {{64, 1}, {8, 4}, {72, 3}, {2, 1}, {48, 4}, POSE_END};
+static AnimateEntityFrame anim_blue_flashing_orb[] = {{1, 5}, {1, 6}, {1, 7}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_blue_orb_shadow[] = {{1, 6}, {1, 7}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_hand_flex[] = {{30, 8}, {30, 9}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_hand_grab[] = {{4, 8}, {4, 9}, {4, 8}, {4, 10}, {32, 11}, {12, 10}, POSE_END};
+static AnimateEntityFrame anim_hand_release[] = {{8, 10}, {8, 8}, {8, 9}, POSE_END};
+static AnimateEntityFrame anim_arm_swoop[] = {{4, 12}, {4, 13}, {4, 14}, {4, 15}, {48, 16}, POSE_END};
 static AnimateEntityFrame D_pspeu_0926B448[] = {{32, 12}, {2, 13}, {2, 14}, {2, 15}, {64, 16}, POSE_END};
 static AnimateEntityFrame D_pspeu_0926B458[] = {{32, 12}, {8, 13}, {8, 14}, {8, 15}, {32, 16}, POSE_END};
 static AnimateEntityFrame D_pspeu_0926B468[] = {{4, 16}, {8, 15}, {8, 14}, {8, 13}, {15, 12}, {1, 12}, POSE_END};
@@ -73,14 +73,14 @@ static s16 D_pspeu_0926B540[] = {
 };
 typedef enum{
     DRAC_INIT,
-    DRAC_1,
-    DRAC_2,
+    DRAC_START_FIGHT,
+    DRAC_DROP_IN,
     DRAC_3,
     DRAC_4,
     DRAC_5,
     DRAC_6,
     DRAC_7,
-    DRAC_8,
+    DRAC_BLUE_ORB_ATTACK,
     DRAC_9,
     DRAC_10,
     DRAC_11,
@@ -118,8 +118,8 @@ void EntityBossDracula(Entity* self) {
     if ((self->flags & FLAG_DEAD) && (self->step != DRAC_DEAD)) {
         SetStep(DRAC_DEAD);
     }
-    switch (self->step) { /* switch 1; irregular */
-    case DRAC_INIT:             /* switch 1 */
+    switch (self->step) { 
+    case DRAC_INIT:             
         InitializeEntity(g_EInitDraculaLvl98);
         self->zPriority = 0x80;
         self->hitboxOffY = -4;
@@ -130,11 +130,11 @@ void EntityBossDracula(Entity* self) {
             other->params = i;
         }
         other = &g_Entities[86];
-        CreateEntityFromCurrentEntity(E_ID(UNK_1A), other);
+        CreateEntityFromCurrentEntity(E_ID(DRACULA_ARM), other);
         other->params = 0;
         other->zPriority = self->zPriority + 3;
         other += 2;
-        CreateEntityFromCurrentEntity(E_ID(UNK_1A), other);
+        CreateEntityFromCurrentEntity(E_ID(DRACULA_ARM), other);
         other->params = 1;
         other->zPriority = self->zPriority + 3;
         other = &g_Entities[86];
@@ -152,13 +152,13 @@ void EntityBossDracula(Entity* self) {
         other = &g_Entities[109];
         CreateEntityFromCurrentEntity(E_ID(UNK_1E), other);
         other->zPriority = self->zPriority;
-        SetStep(DRAC_1);
+        SetStep(DRAC_START_FIGHT);
         /* fallthrough */
-    case DRAC_1: /* switch 1 */
+    case DRAC_START_FIGHT: 
         self->hitboxState = 0;
         D_pspeu_0926C068 = 1;
-        switch (self->step_s) { /* switch 2; irregular */
-        case 0:                 /* switch 2 */
+        switch (self->step_s) { 
+        case 0:                 
             self->animCurFrame = 1;
             self->drawFlags = ENTITY_OPACITY;
             self->opacity = 0;
@@ -167,34 +167,34 @@ void EntityBossDracula(Entity* self) {
                 self->step_s++;
             }
             break;
-        case 1: /* switch 2 */
-            AnimateEntity(D_pspeu_0926B3F0, self);
+        case 1: 
+            AnimateEntity(anim_idle_flap, self);
             if (!--self->ext.ILLEGAL.s16[2]) {
                 self->step_s++;
             }
             break;
-        case 2: /* switch 2 */
-            AnimateEntity(D_pspeu_0926B3F0, self);
+        case 2: 
+            AnimateEntity(anim_idle_flap, self);
             self->opacity++;
-            if ((self->opacity) >= 0x80) {
+            if (self->opacity >= 0x80) {
                 self->drawFlags = ENTITY_DEFAULT;
                 self->step_s++;
             }
             break;
-        case 3: /* switch 2 */
-            AnimateEntity(D_pspeu_0926B3F0, self);
+        case 3: 
+            AnimateEntity(anim_idle_flap, self);
             if (g_CutsceneFlags & 2) {
                 g_api.TimeAttackController(
                     TIMEATTACK_EVENT_UNUSED_28, TIMEATTACK_SET_VISITED);
                 g_api.PlaySfx(SFX_DRACULA_BEHOLD_MY_TRUE_FORM);
-                SetStep(2);
+                SetStep(DRAC_DROP_IN);
             }
             break;
         }
         break;
-    case DRAC_DEAD:                   /* switch 1 */
-        switch (self->step_s) { /* switch 3; irregular */
-        case 0:                 /* switch 3 */
+    case DRAC_DEAD:                   
+        switch (self->step_s) { 
+        case 0:                 
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_UNUSED_28, TIMEATTACK_SET_RECORD);
             D_pspeu_0926C060 |= 1;
@@ -203,7 +203,7 @@ void EntityBossDracula(Entity* self) {
             self->flags &= ~0xF;
             self->step_s++;
             break;
-        case 1: /* switch 3 */
+        case 1: 
             other = &g_Entities[200];
             CreateEntityFromCurrentEntity(E_ID(UNK_27), other);
             other->flags |= FLAG_UNK_10000;
@@ -227,13 +227,13 @@ void EntityBossDracula(Entity* self) {
                 self->step_s++;
             }
             break;
-        case 3: /* switch 3 */
+        case 3: 
             D_pspeu_0926C060 |= 2;
             self->velocityX = 0;
             self->velocityY = 0;
             self->step_s++;
             break;
-        case 4: /* switch 3 */
+        case 4: 
             // Test g_timer, but don't actually do anything. But PSP
             // needs something in the body, so I use "self".
             if (!(g_Timer & 0xF)) {
@@ -242,16 +242,16 @@ void EntityBossDracula(Entity* self) {
             break;
         }
         break;
-    case DRAC_2: /* switch 1 */
-        AnimateEntity(D_pspeu_0926B3F0, self);
+    case DRAC_DROP_IN: 
+        AnimateEntity(anim_idle_flap, self);
         D_pspeu_0926C068 = 1;
         self->hitboxState = 0;
-        switch (self->step_s) { /* switch 4; irregular */
-        case 0:                 /* switch 4 */
+        switch (self->step_s) { 
+        case 0:                 
             self->velocityY = FIX(6.0);
             self->step_s++;
             /* fallthrough */
-        case 1: /* switch 4 */
+        case 1: 
             MoveEntity();
             self->velocityY -= FIX(0.25);
             if (self->posY.i.hi < -0x60) {
@@ -260,12 +260,12 @@ void EntityBossDracula(Entity* self) {
             break;
         }
         break;
-    case DRAC_3: /* switch 1 */
+    case DRAC_3: 
         AnimateEntity(D_pspeu_0926B4A0, self);
         D_pspeu_0926C068 = 0;
         self->hitboxState = 2;
-        switch (self->step_s) { /* switch 5; irregular */
-        case 0:                 /* switch 5 */
+        switch (self->step_s) { 
+        case 0:                 
             self->velocityX = 0;
             self->velocityY = FIX(1.25);
             self->posY.i.hi = -0x50;
@@ -274,7 +274,7 @@ void EntityBossDracula(Entity* self) {
             self->ext.ILLEGAL.s16[2] = 0;
             self->step_s++;
             /* fallthrough */
-        case 1: /* switch 5 */
+        case 1: 
             if (!(self->ext.ILLEGAL.s16[2] & 0x3F)) {
                 g_api.PlaySfx(SFX_DRACULA_FLY_IN);
             }
@@ -286,7 +286,7 @@ void EntityBossDracula(Entity* self) {
             break;
         }
         break;
-    case DRAC_4: /* switch 1 */
+    case DRAC_4: 
         if (!self->step_s) {
             self->ext.ILLEGAL.s16[2] = 0x40;
             self->step_s++;
@@ -303,38 +303,38 @@ void EntityBossDracula(Entity* self) {
             self->ext.ILLEGAL.u8[8] &= 3;
         }
         break;
-    case DRAC_5: /* switch 1 */
+    case DRAC_5: 
         AnimateEntity(D_pspeu_0926B4A0, self);
         D_pspeu_0926C068 = 0;
         self->hitboxState = 2;
         MoveEntity();
         angle = self->ext.ILLEGAL.s16[3] += 0x20;
         self->velocityY = (rcos(angle) << 0xF) >> 0xC;
-        switch (self->step_s) { /* switch 6; irregular */
-        case 0:                 /* switch 6 */
+        switch (self->step_s) { 
+        case 0:                 
             D_pspeu_0926C070 = 1;
             other = &g_Entities[129];
             CreateEntityFromCurrentEntity(E_ID(UNK_20), other);
             other->zPriority = self->zPriority + 3;
             self->step_s++;
             /* fallthrough */
-        case 1: /* switch 6 */
+        case 1: 
             if (D_pspeu_0926C070 == 2) {
                 self->step_s++;
             }
             break;
-        case 2: /* switch 6 */
+        case 2: 
             D_pspeu_0926C070 = 3;
             g_api.PlaySfx(SFX_DRACULA_SQUISH_GRUNT);
             self->step_s++;
             /* fallthrough */
-        case 3: /* switch 6 */
+        case 3: 
             if (D_pspeu_0926C070 == 5) {
                 self->ext.ILLEGAL.s16[2] = 0xA0;
                 self->step_s++;
             }
             break;
-        case 4: /* switch 6 */
+        case 4: 
             if (!--self->ext.ILLEGAL.s16[2]) {
                 D_pspeu_0926C078++;
                 if (D_pspeu_0926C078 > 7) {
@@ -346,7 +346,7 @@ void EntityBossDracula(Entity* self) {
             break;
         }
         break;
-    case DRAC_6: /* switch 1 */
+    case DRAC_6: 
         if (!self->step_s) {
             self->velocityX = 0;
             self->velocityY = FIX(1.0);
@@ -362,7 +362,7 @@ void EntityBossDracula(Entity* self) {
             SetStep(DRAC_7);
         }
         break;
-    case DRAC_7: /* switch 1 */
+    case DRAC_7: 
         if (!self->step_s) {
             self->posX.i.hi = 0x80;
             self->posY.i.hi = -0x40;
@@ -371,28 +371,28 @@ void EntityBossDracula(Entity* self) {
             self->zPriority = 0x80;
             self->step_s++;
         }
-        AnimateEntity(D_pspeu_0926B3F0, self);
+        AnimateEntity(anim_idle_flap, self);
         D_pspeu_0926C068 = 1;
         self->hitboxState = 0;
         MoveEntity();
         self->velocityY -= self->velocityY >> 6;
         if (self->posY.i.hi > 0x70) {
-            SetStep(DRAC_8);
+            SetStep(DRAC_BLUE_ORB_ATTACK);
         }
         break;
-    case DRAC_8: /* switch 1 */
+    case DRAC_BLUE_ORB_ATTACK: 
         if (!self->step_s) {
             D_pspeu_0926C080 = 0;
             self->step_s++;
         }
         D_pspeu_0926C068 = 1;
         self->hitboxState = 0;
-        if (!AnimateEntity(D_pspeu_0926B3F8, self)) {
-            SetStep(DRAC_2);
+        if (!AnimateEntity(anim_shoot_orb, self)) {
+            SetStep(DRAC_DROP_IN);
         }
         if ((!self->poseTimer) && (self->pose == 2)) {
             other = &g_Entities[132];
-            CreateEntityFromEntity(E_ID(UNK_23), self, other);
+            CreateEntityFromEntity(E_ID(BLUE_FLASH_ORB), self, other);
             other->zPriority = self->zPriority + 1;
         }
         if ((!self->poseTimer) && (self->pose == 3)) {
@@ -400,19 +400,19 @@ void EntityBossDracula(Entity* self) {
             D_pspeu_0926C080 = 1;
         }
         break;
-    case DRAC_9: /* switch 1 */
+    case DRAC_9: 
         AnimateEntity(D_pspeu_0926B4A0, self);
         D_pspeu_0926C068 = 0;
         self->hitboxState = 2;
         MoveEntity();
         angle = self->ext.ILLEGAL.s16[3] += 0x20;
         self->velocityY = (rcos(angle) << 0xF) >> 0xC;
-        switch (self->step_s) { /* switch 7; irregular */
-        case 0:                 /* switch 7 */
+        switch (self->step_s) { 
+        case 0:                 
             self->ext.ILLEGAL.u8[9] = 4;
             self->step_s++;
             /* fallthrough */
-        case 1: /* switch 7 */
+        case 1: 
             other = &PLAYER;
             if (other->posX.i.hi < 0x80) {
                 D_pspeu_0926C088 = 1;
@@ -424,7 +424,7 @@ void EntityBossDracula(Entity* self) {
             self->ext.ILLEGAL.s16[2] = 0x28;
             self->step_s++;
             /* fallthrough */
-        case 2: /* switch 7 */
+        case 2: 
             self->velocityX -= self->velocityX >> 4;
             if (!--self->ext.ILLEGAL.s16[2]) {
                 if (D_pspeu_0926C088 == 1) {
@@ -435,13 +435,13 @@ void EntityBossDracula(Entity* self) {
                 self->step_s++;
             }
             break;
-        case 3: /* switch 7 */
+        case 3: 
             self->velocityX -= self->velocityX >> 4;
             if (D_pspeu_0926C088 == 3) {
                 self->step_s++;
             }
             break;
-        case 4: /* switch 7 */
+        case 4: 
             xVar = 0x80 - self->posX.i.hi;
             if (xVar > 0) {
                 self->velocityX = FIX(1.125);
@@ -461,19 +461,19 @@ void EntityBossDracula(Entity* self) {
             break;
         }
         break;
-    case DRAC_10: /* switch 1 */
+    case DRAC_10: 
         AnimateEntity(D_pspeu_0926B4A0, self);
         D_pspeu_0926C068 = 0;
         self->hitboxState = 2;
         MoveEntity();
         angle = self->ext.ILLEGAL.s16[3] += 0x20;
         self->velocityY = (rcos(angle) << 0xF) >> 0xC;
-        switch (self->step_s) { /* switch 8; irregular */
-        case 0:                 /* switch 8 */
+        switch (self->step_s) { 
+        case 0:                 
             D_pspeu_0926C090 = 1;
             self->step_s++;
             /* fallthrough */
-        case 1: /* switch 8 */
+        case 1: 
             if (D_pspeu_0926C090 == 4) {
                 D_pspeu_0926C090 = 0;
                 SetStep(DRAC_4);
@@ -481,22 +481,22 @@ void EntityBossDracula(Entity* self) {
             break;
         }
         break;
-    case DRAC_11: /* switch 1 */
+    case DRAC_11: 
         AnimateEntity(D_pspeu_0926B4A0, self);
         D_pspeu_0926C068 = 0;
         self->hitboxState = 2;
-        switch (self->step_s) { /* switch 9; irregular */
-        case 0:                 /* switch 9 */
+        switch (self->step_s) { 
+        case 0:                 
             D_pspeu_0926C098 = 1;
             self->step_s++;
             /* fallthrough */
-        case 1: /* switch 9 */
+        case 1: 
             if (D_pspeu_0926C098 == 4) {
                 self->ext.ILLEGAL.s16[2] = 0x40;
                 self->step_s++;
             }
             break;
-        case 2: /* switch 9 */
+        case 2: 
             if (!(self->ext.ILLEGAL.s16[2] & 0xF)) {
                 other = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
                 if (other != NULL) {
@@ -509,19 +509,19 @@ void EntityBossDracula(Entity* self) {
                 self->step_s++;
             }
             break;
-        case 3: /* switch 9 */
+        case 3: 
             if (!--self->ext.ILLEGAL.s16[2]) {
                 D_pspeu_0926C098 = 5;
                 self->step_s++;
             }
             break;
-        case 4: /* switch 9 */
+        case 4: 
             D_pspeu_0926C098 = 0;
             SetStep(DRAC_4);
             break;
         }
         break;
-    case DRAC_DEBUG: /* switch 1 */
+    case DRAC_DEBUG: 
 #include "../../st/pad2_anim_debug.h"
     }
     D_pspeu_0926C0A0 = self->palette;
@@ -529,7 +529,7 @@ void EntityBossDracula(Entity* self) {
 
 extern EInit D_us_80180540;
 
-void EntityUnk1A(Entity* self) {
+void EntityDraculaArm(Entity* self) {
     Entity* other;
     other = &g_Entities[80];
     self->posX.i.hi = other->posX.i.hi;
@@ -545,17 +545,17 @@ void EntityUnk1A(Entity* self) {
     if ((D_pspeu_0926C060 & 1) && (self->step != 16)) {
         SetStep(16);
     }
-    switch (self->step) { /* switch 1; irregular */
-    case 0:               /* switch 1 */
+    switch (self->step) { 
+    case 0:               
         InitializeEntity(D_us_80180540);
         self->facingLeft = self->params;
         other = self + 1;
-        CreateEntityFromCurrentEntity(E_ID(UNK_1B), other);
+        CreateEntityFromCurrentEntity(E_ID(DRACULA_HAND), other);
         other->params = self->params;
         other->zPriority = ((self->zPriority) + 1);
         /* fallthrough */
-    case 1: /* switch 1 */
-        self->animCurFrame = 0xC;
+    case 1: 
+        self->animCurFrame = 12;
         if (D_pspeu_0926C070 == 1) {
             SetStep(2);
         }
@@ -563,33 +563,33 @@ void EntityUnk1A(Entity* self) {
             SetStep(3);
         }
         break;
-    case 2:                     /* switch 1 */
-        switch (self->step_s) { /* switch 2; irregular */
-        case 0:                 /* switch 2 */
-            self->animCurFrame = 0xC;
+    case 2:                     
+        switch (self->step_s) { 
+        case 0:                 
+            self->animCurFrame = 12;
             if (D_pspeu_0926C070 == 3) {
                 self->step_s++;
             }
             break;
-        case 1: /* switch 2 */
+        case 1: 
             if ((!self->poseTimer) && (self->pose == 3)) {
                 D_pspeu_0926C070 = 4;
             }
-            if (AnimateEntity(D_pspeu_0926B438, self) == 0) {
+            if (AnimateEntity(anim_arm_swoop, self) == 0) {
                 D_pspeu_0926C070 = 5;
                 SetSubStep(2);
             }
             break;
-        case 2: /* switch 2 */
+        case 2: 
             if (AnimateEntity(D_pspeu_0926B468, self) == 0) {
                 SetStep(1);
             }
             break;
         }
         break;
-    case 3:                     /* switch 1 */
-        switch (self->step_s) { /* switch 3; irregular */
-        case 0:                 /* switch 3 */
+    case 3:                     
+        switch (self->step_s) { 
+        case 0:                 
             if (AnimateEntity(D_pspeu_0926B448, self) == 0) {
                 SetSubStep(1);
             }
@@ -597,7 +597,7 @@ void EntityUnk1A(Entity* self) {
                 PlaySfxPositional(SFX_FIREBALL_SHOT_C);
             }
             break;
-        case 1: /* switch 3 */
+        case 1: 
             if (AnimateEntity(D_pspeu_0926B468, self) == 0) {
                 D_pspeu_0926C088 = 3;
                 SetStep(1);
@@ -605,19 +605,19 @@ void EntityUnk1A(Entity* self) {
             break;
         }
         break;
-    case 8: /* switch 1 */
+    case 8: 
         if (AnimateEntity(D_pspeu_0926B458, self) == 0) {
             self->pose = 0;
             self->poseTimer = 0;
         }
         break;
-    case 16:                    /* switch 1 */
-        switch (self->step_s) { /* switch 4; irregular */
-        case 0:                 /* switch 4 */
+    case 16:                    
+        switch (self->step_s) { 
+        case 0:                 
             self->pose = (0x10 - (s16)self->animCurFrame);
             self->step_s++;
             /* fallthrough */
-        case 1: /* switch 4 */
+        case 1: 
             if (AnimateEntity(D_pspeu_0926B468, self) == 0) {
                 self->pose = 0;
                 self->poseTimer = 0;
@@ -635,7 +635,7 @@ void EntityUnk1A(Entity* self) {
 
 extern EInit D_us_80180558;
 
-void EntityUnk1B(Entity* self) {
+void EntityDraculaHand(Entity* self) {
     Entity* other;
     s32 i;
     s32 offsetIndex;
@@ -645,8 +645,8 @@ void EntityUnk1B(Entity* self) {
     if ((D_pspeu_0926C060 & 1) && (self->step != 0x10)) {
         SetStep(0x10);
     }
-    switch (self->step) { /* switch 1; irregular */
-    case 0:               /* switch 1 */
+    switch (self->step) { 
+    case 0:               
         InitializeEntity(D_us_80180558);
         self->facingLeft = self->params;
         self->parent = &g_Entities[0x50];
@@ -656,8 +656,8 @@ void EntityUnk1B(Entity* self) {
             self->nextPart = &g_Entities[0x50];
         }
         /* fallthrough */
-    case 1: /* switch 1 */
-        AnimateEntity(D_pspeu_0926B418, self);
+    case 1: 
+        AnimateEntity(anim_hand_flex, self);
         if (D_pspeu_0926C070 == 1) {
             SetStep(2);
         }
@@ -665,9 +665,9 @@ void EntityUnk1B(Entity* self) {
             self->animCurFrame = 0xA;
         }
         break;
-    case 2:                     /* switch 1 */
-        switch (self->step_s) { /* switch 2; irregular */
-        case 0:                 /* switch 2 */
+    case 2:                     
+        switch (self->step_s) { 
+        case 0:                 
             for (i = 0; i < 2; i++) {
                 other = AllocEntity(&g_Entities[0x90], &g_Entities[0x98]);
                 if (other != NULL) {
@@ -679,27 +679,27 @@ void EntityUnk1B(Entity* self) {
             self->animCurFrame = 9;
             self->step_s++;
             /* fallthrough */
-        case 1: /* switch 2 */
+        case 1: 
             if (D_pspeu_0926C070 == 3) {
                 SetSubStep(2);
             }
             break;
-        case 2: /* switch 2 */
-            AnimateEntity(D_pspeu_0926B420, self);
+        case 2: 
+            AnimateEntity(anim_hand_grab, self);
             if (D_pspeu_0926C070 == 5) {
                 SetSubStep(3);
             }
             break;
-        case 3: /* switch 2 */
-            if (AnimateEntity(D_pspeu_0926B430, self) == 0) {
+        case 3: 
+            if (AnimateEntity(anim_hand_release, self) == 0) {
                 SetStep(1);
             }
             break;
         }
         break;
-    case 16:                    /* switch 1 */
-        switch (self->step_s) { /* switch 3; irregular */
-        case 0:                 /* switch 3 */
+    case 16:                    
+        switch (self->step_s) { 
+        case 0:                 
             self->hitboxState = 0;
             self->animCurFrame = 9;
             self->step_s++;
@@ -756,8 +756,8 @@ void EntityUnk1C(Entity* self) {
     if ((D_pspeu_0926C060 & 1) && ((self->step) != 0x10)) {
         SetStep(0x10);
     }
-    switch (self->step) { /* switch 1; irregular */
-    case 0:               /* switch 1 */
+    switch (self->step) { 
+    case 0:               
         InitializeEntity(D_us_8018054C);
         other = self + 1;
         for (i = 0; i < 5; i++, other++) {
@@ -765,7 +765,7 @@ void EntityUnk1C(Entity* self) {
             other->zPriority = self->zPriority - i;
         }
         /* fallthrough */
-    case 1: /* switch 1 */
+    case 1: 
         AnimateEntity(D_pspeu_0926B478, self);
         other = &g_Entities[0x50];
         xVar = other->posX.i.hi + D_pspeu_0926B530[self->params].x;
@@ -783,10 +783,10 @@ void EntityUnk1C(Entity* self) {
             SetStep(3);
         }
         break;
-    case 2: /* switch 1 */
+    case 2: 
         self->hitboxState = 3;
-        switch (self->step_s) { /* switch 2; irregular */
-        case 0:                 /* switch 2 */
+        switch (self->step_s) { 
+        case 0:                 
             other = &PLAYER;
             xVar = other->posX.i.hi - self->posX.i.hi;
             yVar = other->posY.i.hi - self->posY.i.hi;
@@ -796,13 +796,13 @@ void EntityUnk1C(Entity* self) {
             PlaySfxPositional(SFX_DRACULA_MONSTER_ROAR);
             self->step_s++;
             /* fallthrough */
-        case 1: /* switch 2 */
+        case 1: 
             MoveEntity();
             if (AnimateEntity(D_pspeu_0926B480, self) == 0) {
                 SetSubStep(2);
             }
             break;
-        case 2: /* switch 2 */
+        case 2: 
             AnimateEntity(D_pspeu_0926B490, self);
             MoveEntity();
             other = &g_Entities[0x50];
@@ -820,15 +820,15 @@ void EntityUnk1C(Entity* self) {
             break;
         }
         break;
-    case 3:                     /* switch 1 */
-        switch (self->step_s) { /* switch 3; irregular */
-        case 0:                 /* switch 3 */
+    case 3:                     
+        switch (self->step_s) { 
+        case 0:                 
             angle = D_pspeu_0926B540[self->params];
             self->velocityX = (rcos(angle) << 0x12) >> 0xC;
             self->velocityY = (rsin(angle) << 0x12) >> 0xC;
             self->step_s++;
             /* fallthrough */
-        case 1: /* switch 3 */
+        case 1: 
             MoveEntity();
             if (AnimateEntity(D_pspeu_0926B480, self) == 0) {
                 g_api.PlaySfx(SFX_WEAPON_APPEAR);
@@ -842,12 +842,12 @@ void EntityUnk1C(Entity* self) {
                 self->step_s++;
             }
             break;
-        case 2: /* switch 3 */
+        case 2: 
             if (D_pspeu_0926C098 == 5) {
                 self->step_s++;
             }
             break;
-        case 3: /* switch 3 */
+        case 3: 
             AnimateEntity(D_pspeu_0926B490, self);
             MoveEntity();
             other = &g_Entities[0x50];
@@ -864,9 +864,9 @@ void EntityUnk1C(Entity* self) {
             break;
         }
         break;
-    case 16:                    /* switch 1 */
-        switch (self->step_s) { /* switch 4; irregular */
-        case 0:                 /* switch 4 */
+    case 16:                    
+        switch (self->step_s) { 
+        case 0:                 
             self->hitboxState = 0;
             self->animCurFrame = 0x12;
             MoveEntity();
@@ -883,7 +883,7 @@ void EntityUnk1C(Entity* self) {
                 self->step_s++;
             }
             break;
-        case 1: /* switch 4 */
+        case 1: 
             other = &g_Entities[0x50];
             xVar = other->posX.i.hi + D_pspeu_0926B530[self->params].x;
             yVar = other->posY.i.hi + D_pspeu_0926B530[self->params].y;
@@ -1484,7 +1484,7 @@ void EntityUnk22(Entity* self) {
 
 extern EInit D_us_80180564;
 
-void EntityUnk23(Entity* self) {
+void EntityBlueFlashingOrb(Entity* self) {
     Entity* other;
     s32 scale;
     s32 xVar;
@@ -1505,7 +1505,7 @@ void EntityUnk23(Entity* self) {
         self->hitboxState = 0;
         /* fallthrough */
     case 1:
-        AnimateEntity(D_pspeu_0926B408, self);
+        AnimateEntity(anim_blue_flashing_orb, self);
         scale = self->scaleX;
         scale += 0x10;
         if (scale > 0xCC) {
@@ -1526,14 +1526,14 @@ void EntityUnk23(Entity* self) {
         }
         break;
     case 2:
-        AnimateEntity(D_pspeu_0926B408, self);
+        AnimateEntity(anim_blue_flashing_orb, self);
         MoveEntity();
         scale = 0x6000 / (self->ext.ILLEGAL.s16[2] + 0x18);
         self->scaleX = self->scaleY = scale;
         if (!(self->ext.ILLEGAL.s16[2] & 3)) {
             other = AllocEntity(&g_Entities[0xC0], &g_Entities[256]);
             if (other != NULL) {
-                CreateEntityFromEntity(E_ID(UNK_26), self, other);
+                CreateEntityFromEntity(E_ID(BLUE_ORB_SHADOW), self, other);
                 other->scaleX = other->scaleY = self->scaleX;
                 other->zPriority = self->zPriority;
                 other->opacity = self->opacity;
@@ -1556,7 +1556,6 @@ void EntityUnk23(Entity* self) {
                 self->hitboxState = 1;
             }
             self->step++;
-            return;
         }
         break;
     case 3:
@@ -1565,7 +1564,7 @@ void EntityUnk23(Entity* self) {
     }
 }
 
-void EntityUnk26(Entity* self) {
+void EntityBlueOrbShadow(Entity* self) {
     s32 opacity;
 
     if (!self->step) {
@@ -1574,7 +1573,7 @@ void EntityUnk26(Entity* self) {
         self->drawFlags |= ENTITY_OPACITY;
         self->blendMode = BLEND_ADD | BLEND_TRANSP;
     }
-    AnimateEntity(D_pspeu_0926B410, self);
+    AnimateEntity(anim_blue_orb_shadow, self);
     opacity = self->opacity;
     opacity -= 2;
     if (opacity < 0) {

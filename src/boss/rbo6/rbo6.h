@@ -35,11 +35,11 @@ typedef enum EntityID {
     E_EXPLOSION_VARIANTS,   // EntityExplosionVariants
     E_GREY_PUFF,            // EntityGreyPuff
     E_UNK_16,               // func_us_8019D330_from_rcen
-    E_BOSS_DRACULA,               // EntityBossDracula
+    E_BOSS_DRACULA,         // EntityBossDracula
     E_UNK_18,               // EntityUnk18
     E_UNK_19,               // EntityUnk19
-    E_UNK_1A,               // EntityUnk1A
-    E_UNK_1B,               // EntityUnk1B
+    E_DRACULA_ARM,          // EntityDraculaArm
+    E_DRACULA_HAND,         // EntityDraculaHand
     E_UNK_1C,               // EntityUnk1C
     E_UNK_1D,               // EntityUnk1D
     E_UNK_1E,               // EntityUnk1E
@@ -47,10 +47,10 @@ typedef enum EntityID {
     E_UNK_20,               // EntityUnk20
     E_UNK_21,               // EntityUnk21
     E_UNK_22,               // EntityUnk22
-    E_UNK_23,               // EntityUnk23
+    E_BLUE_FLASH_ORB,       // EntityBlueFlashingOrb
     E_UNK_24,               // EntityUnk24
     E_UNK_25,               // EntityUnk25
-    E_UNK_26,               // EntityUnk26
+    E_BLUE_ORB_SHADOW,               // EntityBlueOrbShadow
     E_UNK_27,               // EntityUnk27
     E_UNK_28,               // func_us_801A367C
     E_UNK_29,               // func_us_801A9208_from_bo6
