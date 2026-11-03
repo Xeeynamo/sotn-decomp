@@ -200,7 +200,7 @@ extern SaturnLayerMapOffsets* DAT_06064654;
 extern SaturnRoomLayerSetup* DAT_0606466C;
 extern SaturnRoomGraphics* DAT_060645C8;
 extern s32 DAT_0605C104;
-extern s32 D_8006C374;
+extern u32 D_8006C374;
 extern s32 DAT_0605C10C;
 void func_060195F0(void);
 void func_0600E240(XyInt*);

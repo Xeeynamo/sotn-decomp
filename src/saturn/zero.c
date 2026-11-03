@@ -198,8 +198,6 @@ void func_0600456C(void) {
     SCL_DisplayFrame();
 }
 
-void GFS_Reset();
-
 // original name: RESET_SYSTEM
 void func_0600460C(void) {
     CSH_Init(0);
@@ -1321,10 +1319,262 @@ const char DAT_06007180[] = "T_GHOST.CHR";
 const char DAT_0600718C[] = "T_GHOST.PRG";
 const char DAT_06007198[] = "T_BAT.CHR";
 const char DAT_060071A4[] = "T_BAT.PRG";
-const char DAT_060071B0[] = "WEAPON1.PRG";
-const char DAT_060071BC[] = "WEAPON1.CHR";
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60071C8, func_060071C8);
+extern FileLoadEntry DAT_06038AAC;
+extern FileLoadEntry DAT_06038ACC;
+extern FileLoadEntry DAT_06038AEC;
+extern FileLoadEntry DAT_06038B6C;
+extern FileLoadEntry DAT_06038B8C;
+extern FileLoadEntry DAT_06038BAC;
+extern FileLoadEntry* DAT_06038BCC[];
+extern char* DAT_06038BF4[][3];
+extern char* DAT_06038C24[][2];
+extern char* DAT_06048178[];
+extern char* DAT_06048180[];
+extern char* DAT_06048188[];
+extern char* DAT_06048194[];
+extern char* DAT_0604819C[];
+extern char* DAT_060481A4[];
+extern char* DAT_060481AC[];
+extern char* DAT_060481B8[];
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    FileLoadEntry* unk8;
+} Unk0605AE90;
+
+extern Unk0605AE90 DAT_0605AE90;
+
+Equipment* func_060076D0(s32 arg0);
+
+s32 func_060071C8(void) {
+    bool temp_r5;
+    u8 id;
+    s32 temp_r0;
+
+    temp_r5 = false;
+    switch (DAT_0605D770.unk8) {
+    case 1:
+        DAT_0605AE90.unk8 = DAT_06038BCC[0];
+        DAT_0605AE90.unk4 = 0;
+        temp_r5 = true;
+        if ((DAT_0605CEAC != 0) && (g_PlayableCharacter == 1)) {
+            DAT_0605AE90.unk8->req.unk0 = DAT_06038BF4[3][0];
+        } else {
+            DAT_0605AE90.unk8->req.unk0 = DAT_06038BF4[g_PlayableCharacter][0];
+        }
+        break;
+
+    case 2:
+        DAT_0605AE90.unk8 = DAT_06038BCC[1];
+        DAT_0605AE90.unk4 = 0;
+        if ((DAT_0605CEAC != 0) && (g_PlayableCharacter == 1)) {
+            DAT_0605AE90.unk8->req.unk0 = DAT_06038BF4[3][1];
+        } else {
+            DAT_0605AE90.unk8->req.unk0 = DAT_06038BF4[g_PlayableCharacter][1];
+        }
+        DAT_06038FDC = 0;
+        break;
+
+    case 3:
+        DAT_0605AE90.unk8 = DAT_06038BCC[2];
+        DAT_0605AE90.unk4 = 0;
+        DAT_0605AE90.unk8->unk1C = VRAM_ADDR + DAT_0605BEC4;
+        if ((DAT_0605CEAC != 0) && (g_PlayableCharacter == 1)) {
+            DAT_0605AE90.unk8->req.unk0 = DAT_06038BF4[3][2];
+        } else {
+            DAT_0605AE90.unk8->req.unk0 = DAT_06038BF4[g_PlayableCharacter][2];
+        }
+        break;
+
+    case 4:
+        id = func_060076D0(0)->weaponId;
+        if (id == 0xFF) {
+            func_0601AE5C(0);
+            return 0;
+        }
+        DAT_06038AAC.req.unk0 = DAT_06006F84;
+        DAT_06038AAC.req.unk4 = g_Weapon0OvlArea;
+        DAT_06038AAC.req.unkA = id * 6;
+        DAT_0605AE90.unk8 = DAT_06038BCC[3];
+        DAT_0605AE90.unk4 = 0;
+        temp_r5 = true;
+        break;
+
+    case 5:
+        id = func_060076D0(0)->weaponId;
+        if (id == 0xFF) {
+            func_0601AE5C(0);
+            return 0;
+        }
+        DAT_06038ACC.req.unk0 = DAT_06006F90;
+        DAT_06038ACC.req.unkA = id * 8;
+        DAT_0605AE90.unk8 = DAT_06038BCC[4];
+        DAT_0605AE90.unk4 = 0;
+        DAT_0605AE90.unk8->unk1C = VRAM_ADDR + 0x1D980;
+        temp_r5 = true;
+        break;
+
+    case 6:
+        id = func_060076D0(1)->weaponId;
+        if (id == 0xFF) {
+            func_0601AE5C(1);
+            return 0;
+        }
+        DAT_06038AAC.req.unk0 = "WEAPON1.PRG";
+        DAT_06038AAC.req.unk4 = g_Weapon1OvlArea;
+        DAT_06038AAC.req.unkA = id * 6;
+        DAT_0605AE90.unk8 = DAT_06038BCC[3];
+        DAT_0605AE90.unk4 = 0;
+        temp_r5 = true;
+        break;
+
+    case 7:
+        id = func_060076D0(1)->weaponId;
+        if (id == 0xFF) {
+            func_0601AE5C(1);
+            return 0;
+        }
+        DAT_06038ACC.req.unk0 = "WEAPON1.CHR";
+        DAT_06038ACC.req.unkA = id * 8;
+        DAT_0605AE90.unk8 = DAT_06038BCC[4];
+        DAT_0605AE90.unk4 = 0;
+        DAT_0605AE90.unk8->unk1C = VRAM_ADDR + 0x21980;
+        temp_r5 = true;
+        break;
+
+    case 8:
+        DAT_0605AE90.unk8 = DAT_06038BCC[5];
+        DAT_0605AE90.unk8->req.unk0 =
+            g_StageFileRecords[g_CurrentRoom.stageID].prg;
+        DAT_0605AE90.unk4 = 0;
+        temp_r5 = true;
+        break;
+
+    case 9:
+        DAT_0605AE90.unk8 = DAT_06038BCC[6];
+        DAT_0605AE90.unk8->req.unk0 =
+            g_StageFileRecords[g_CurrentRoom.stageID].chr;
+        DAT_0605AE90.unk4 = 0;
+        DAT_0605AE90.unk8->unk1C = VRAM_ADDR + DAT_0605BEC4;
+        break;
+
+    case 10:
+        DAT_0605AE90.unk8 = DAT_06038BCC[7];
+        DAT_0605AE90.unk4 = 0;
+        if (D_8003C730 == 0) {
+            g_CurrentRoom.unk8 = 0;
+            temp_r0 = g_CurrentRoom.stageID & 0xDF;
+            if (temp_r0 == 9) {
+                if (D_8006C374 > 0xB) {
+                    g_CurrentRoom.unk8 = 1;
+                }
+                if ((g_CurrentRoom.stageID & 0x20) == 0) {
+                    DAT_0605AE90.unk8->req.unk0 =
+                        DAT_06048188[g_CurrentRoom.unk8];
+                } else {
+                    DAT_0605AE90.unk8->req.unk0 =
+                        DAT_060481AC[g_CurrentRoom.unk8];
+                }
+            } else if (temp_r0 == 6) {
+                if (D_8006C374 == 6 || D_8006C374 == 0x29) {
+                    g_CurrentRoom.unk8 = 1;
+                }
+                if (g_CurrentRoom.stageID & 0x20) {
+                    DAT_0605AE90.unk8->req.unk0 =
+                        DAT_0604819C[g_CurrentRoom.unk8];
+                } else {
+                    DAT_0605AE90.unk8->req.unk0 =
+                        DAT_06048178[g_CurrentRoom.unk8];
+                }
+            } else {
+                if (D_8006C374 == 0xA8 || D_8006C374 == 0xA9) {
+                    g_CurrentRoom.unk8 = 1;
+                    DAT_0605AE90.unk8->req.unk0 =
+                        DAT_06048180[g_CurrentRoom.unk8];
+                } else {
+                    DAT_0605AE90.unk8->req.unk0 =
+                        g_StageFileRecords[g_CurrentRoom.stageID].map;
+                }
+            }
+        } else {
+            temp_r0 = g_CurrentRoom.stageID & 0xDF;
+            if (temp_r0 == 9) {
+                if ((g_CurrentRoom.stageID & 0x20) == 0) {
+                    DAT_0605AE90.unk8->req.unk0 =
+                        DAT_06048188[g_CurrentRoom.unk8];
+                } else {
+                    DAT_0605AE90.unk8->req.unk0 =
+                        DAT_060481AC[g_CurrentRoom.unk8];
+                }
+            } else if (temp_r0 == 6) {
+                if (g_CurrentRoom.stageID & 0x20) {
+                    DAT_0605AE90.unk8->req.unk0 =
+                        DAT_0604819C[g_CurrentRoom.unk8];
+                } else {
+                    DAT_0605AE90.unk8->req.unk0 =
+                        DAT_06048178[g_CurrentRoom.unk8];
+                }
+            } else if (temp_r0 == 3) {
+                if (g_CurrentRoom.stageID & 0x20) {
+                    DAT_0605AE90.unk8->req.unk0 =
+                        DAT_060481B8[g_CurrentRoom.unk8];
+                } else {
+                    DAT_0605AE90.unk8->req.unk0 =
+                        DAT_06048194[g_CurrentRoom.unk8];
+                }
+            } else {
+                if (D_8006C374 == 0xA8 || D_8006C374 == 0xA9) {
+                    g_CurrentRoom.unk8 = 1;
+                    DAT_0605AE90.unk8->req.unk0 =
+                        DAT_06048180[g_CurrentRoom.unk8];
+                } else {
+                    DAT_0605AE90.unk8->req.unk0 =
+                        g_StageFileRecords[g_CurrentRoom.stageID].map;
+                }
+            }
+        }
+        DAT_0605AE90.unk8->req.unk4 = DAT_0605D7DC;
+        break;
+
+    case 11:
+        if (g_Servant <= 0) {
+            return 0;
+        }
+        DAT_06038B6C.req.unk0 = DAT_06038C24[g_Servant - 1][0];
+        DAT_0605AE90.unk8 = DAT_06038BCC[8];
+        DAT_0605AE90.unk4 = 0;
+        temp_r5 = true;
+        break;
+
+    case 12:
+        if (g_Servant <= 0) {
+            return 0;
+        }
+        DAT_06038B8C.req.unk0 = DAT_06038C24[g_Servant - 1][1];
+        DAT_06038B8C.unk1C = VRAM_ADDR + 0x25980;
+        DAT_0605AE90.unk8 = DAT_06038BCC[9];
+        DAT_0605AE90.unk4 = 0;
+        break;
+
+    default:
+        return 0;
+    }
+
+    if (temp_r5 && (g_FileLoadEnabled == 0)) {
+        DAT_06038A44 += 1;
+        return 1;
+    }
+    func_06006720(DAT_0605AE90.unk8, 3, 0);
+    if (DAT_0605D770.unk8 == 0xA) {
+        DAT_0605D7DC += DAT_0605AE8C[2];
+        if (DAT_0605D7DC & 1) {
+            DAT_0605D7DC++;
+        }
+    }
+    return 1;
+}
 
 Equipment* func_060076D0(s32 arg0) {
     Equipment* ret;
@@ -1404,15 +1654,9 @@ s32 func_06007714(void) {
     return ret;
 }
 
-extern FileLoadEntry DAT_06038AAC;
-extern FileLoadEntry DAT_06038AEC;
-
-extern char WEAPON1_PRG[];
-extern char WEAPON1_CHR[];
-
 void func_06007824(s32 arg0, s32 arg1) {
     if ((g_FileLoadEnabled == 0) || (arg1 > 0x3F)) {
-        func_0601AE5C(arg0, arg1);
+        func_0601AE5C(arg0);
     } else {
         DAT_06038AAC.req.unkA = arg1 * 6;
         DAT_06038AEC.req.unkA = arg1 * 8;
@@ -1422,9 +1666,9 @@ void func_06007824(s32 arg0, s32 arg1) {
             DAT_06038AEC.req.unk0 = DAT_06006F90;
             DAT_06038AEC.req.unk4 = (void*)(VRAM_ADDR + 0x1D980);
         } else {
-            DAT_06038AAC.req.unk0 = WEAPON1_PRG;
+            DAT_06038AAC.req.unk0 = "WEAPON1.PRG";
             DAT_06038AAC.req.unk4 = g_Weapon1OvlArea;
-            DAT_06038AEC.req.unk0 = WEAPON1_CHR;
+            DAT_06038AEC.req.unk0 = "WEAPON1.CHR";
             DAT_06038AEC.req.unk4 = (void*)(VRAM_ADDR + 0x21980);
         }
         func_06006574(&DAT_06038AAC.req);
@@ -1434,11 +1678,6 @@ void func_06007824(s32 arg0, s32 arg1) {
         func_0600C0C4(arg0);
     }
 }
-
-extern FileLoadEntry DAT_06038B6C;
-extern FileLoadEntry DAT_06038BAC;
-
-extern char* DAT_06038C24[][2];
 
 void func_060078EC(s32 arg0) {
     if (g_FileLoadEnabled != 0) {
