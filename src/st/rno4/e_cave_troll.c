@@ -612,7 +612,7 @@ void func_us_801D6B8C(Entity* self) {
             self->scaleX = (self->scaleY -= 4);
         } else {
             ent = self->ext.et_caveTroll.ent9C;
-            ent->ext.et_caveTroll.unk90 = 0;
+            ent->ext.et_caveTrollUnk.unk90 = 0;
             DestroyEntity(self);
             return;
         }
