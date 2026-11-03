@@ -326,7 +326,7 @@ void UpdatePrimitives(Entity* self, s32 frameIndex) {
     switch (frameIndex) {
     case 1:
         image = &g_BatTextureResource.images[22];
-        prim->unk8 = DAT_0605aec0[g_BatTextureResource.allocationIndex][0] +
+        prim->unk8 = DAT_0605AEC0[g_BatTextureResource.allocationIndex][0] +
                      image->characterOffsetUnits;
         prim->unkA =
             (image->storedWidth >> 2) << 8 | (image->storedHeight) << 1;
@@ -334,7 +334,7 @@ void UpdatePrimitives(Entity* self, s32 frameIndex) {
         break;
     case 2:
         image = &g_BatTextureResource.images[23];
-        prim->unk8 = DAT_0605aec0[g_BatTextureResource.allocationIndex][0] +
+        prim->unk8 = DAT_0605AEC0[g_BatTextureResource.allocationIndex][0] +
                      image->characterOffsetUnits;
         prim->unkA =
             (image->storedWidth >> 2) << 8 | (image->storedHeight) << 1;
@@ -342,7 +342,7 @@ void UpdatePrimitives(Entity* self, s32 frameIndex) {
         break;
     default:
         ptr =
-            DAT_0605aec0[g_SaturnSharedSpriteBank0Resource.allocationIndex + 7];
+            DAT_0605AEC0[g_SaturnSharedSpriteBank0Resource.allocationIndex + 7];
         prim->unk8 = ptr[0];
         prim->unkA = ptr[1];
         prim->unk6 =
@@ -953,7 +953,7 @@ void UpdateBatBlueTrailEntities(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 0x10; i++) {
             image = &g_BatTextureResource.images[10];
-            prim->unk8 = DAT_0605aec0[g_BatTextureResource.allocationIndex][0] +
+            prim->unk8 = DAT_0605AEC0[g_BatTextureResource.allocationIndex][0] +
                          image->characterOffsetUnits;
             prim->unkA =
                 (image->storedWidth >> 2) << 8 | (image->storedHeight) << 1;

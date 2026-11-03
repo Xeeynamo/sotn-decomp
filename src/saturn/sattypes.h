@@ -1515,7 +1515,7 @@ typedef struct {
     /* 0x0E */ s16 unkE;
 } Unk0605DB60; /* size = 0x10 */
 
-extern u16 DAT_0605aec0[][2];
+extern u16 DAT_0605AEC0[][2];
 
 #define NUM_HORIZONTAL_SENSORS 4
 #define NUM_VERTICAL_SENSORS 7

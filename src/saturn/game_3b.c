@@ -497,7 +497,7 @@ void HitDetection(void) {
     while (prim != NULL) {
         if (prim->drawMode != DRAW_HIDE) {
             miscVar2 = prim->x3;
-            ptr = DAT_0605aec0[DAT_060645EC[2]->allocationIndex +
+            ptr = DAT_0605AEC0[DAT_060645EC[2]->allocationIndex +
                                g_PrimitiveUvOffsetByType[miscVar2]];
             prim->unk8 = ptr[0];
             prim->unkA = ptr[1];

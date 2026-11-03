@@ -10,6 +10,7 @@
 #include "lib/gfs/gfs.h"
 #include "lib/snd.h"
 #include "lib/dma/dma.h"
+#include "lib/machine.h"
 #include "inc_asm.h"
 #include <saturn_sprite.h>
 
@@ -152,11 +153,11 @@ void func_06005208(s32);
 extern bool DAT_0605D7F0;
 extern s32 DAT_0605C6E4;
 extern s32 DAT_0605c664;
-extern s16 DAT_0605c110;
+extern s16 DAT_0605C110;
 extern XyInt DAT_0605BEC0;
-extern s32 DAT_0605BEC4;
+extern u32 DAT_0605BEC4;
 extern u16 DAT_0605BEC8;
-extern s16 DAT_0605BECA;
+extern u16 DAT_0605BECA;
 extern u16 DAT_0605BECC;
 extern u8 DAT_06057f68;
 extern u8* DAT_060645b8;
@@ -202,6 +203,7 @@ extern s32 DAT_0605C104;
 extern s32 D_8006C374;
 extern s32 DAT_0605C10C;
 void func_060195F0(void);
+void func_0600E240(XyInt*);
 void func_0600FACC(void);
 void func_0600FB34(void);
 extern s32 g_CutsceneHasControl;
@@ -334,10 +336,10 @@ void func_0601B184(void);
 void func_0601B19C(void);
 void BlankScreen(void);
 void CSH_AllClr(void);
-void SetSpriteEraseData(s16 arg0);
+void SetSpriteEraseData(u16);
 void AllocGameSprite(s32);
 void ResetSpriteVram(void);
-void InitSpriteEngine(s32 arg0);
+void InitSpriteEngine(s32);
 void InitVdp2Display(void);
 void InitDebugPrint(void);
 extern u8 DAT_06057F40;
@@ -386,7 +388,7 @@ void func_06009AE8(s32, Unk0605CD90*, UNK_0605c680*);
 void func_06009D60(u32);
 void func_06009F84(Unk0605CD90*);
 void SPR_2OpenCommand(Uint16);
-extern MthMatrix DAT_060579A8;
+extern MthMatrix DAT_060579A8[2];
 typedef struct {
     void* src;
     u32 dst;
@@ -449,8 +451,8 @@ s32 sprintf(char* str, const char* format, ...);
 extern void (*DAT_0603908C[])(Primitive* prim, s16 x, s16 y);
 extern s32 DAT_06061DD4;
 extern MthMatrixTbl DAT_06061DF0;
-extern Point16 DAT_06057A08;
-extern Point16 DAT_06057A0C;
+extern XyInt DAT_06057A08;
+extern XyInt DAT_06057A0C;
 bool CdSoundCommandQueueEmpty(void);
 /* End moved declarations */
 
