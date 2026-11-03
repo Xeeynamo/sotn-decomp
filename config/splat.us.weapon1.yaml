@@ -72,7 +72,10 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x12000, data, w1_002]
+      - [0x12000, .data, w_init]
+      - [0x12040, .data, w_002]
+      - [0x12BD8, .data, right_hand]
+      - [0x12BDC, c, w_002]
   - name: f1_003
     type: grey4
     start: 0x15000
@@ -142,7 +145,10 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x35000, data, w1_007]
+      - [0x35000, .data, w_init]
+      - [0x35040, .data, w_007]
+      - [0x35C9C, .data, right_hand]
+      - [0x35CA0, c, w_007]
   - name: f1_008
     type: grey4
     start: 0x38000
@@ -212,7 +218,11 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x58000, data, w1_012]
+      - [0x58000, .data, w_init]
+      - [0x58040, .data, w_012]
+      - [0x58AC8, .data, right_hand]
+      - [0x58ACC, c, w_012]
+      - [0x59B28, .bss, w_012]
   - name: f1_013
     type: grey4
     start: 0x5B000
