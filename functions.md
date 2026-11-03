@@ -900,8 +900,8 @@
 | rno2       | e_flying_zombie.rodata            |       20 |          0 | Yes    |       |     |
 | rno3       | e_nova_skeleton.rodata            |       20 |          0 | Yes    |       |     |
 | rno3       | e_orobourous.rodata               |       20 |          0 | Yes    |       |     |
-| rno4       | e_nova_skeleton.rodata            |       20 |          0 | Yes    |       |     |
 | rno4       | e_cave_troll.rodata               |       20 |          0 | Yes    |       |     |
+| rno4       | e_nova_skeleton.rodata            |       20 |          0 | Yes    |       |     |
 | rnz1       | e_cloaked_knight.rodata           |       20 |          0 | Yes    |       |     |
 | top        | e_blue_axe_knight.rodata          |       20 |          0 | Yes    |       |     |
 | top        | e_flea_rider.rodata               |       20 |          0 | Yes    |       |     |
@@ -2357,7 +2357,7 @@
 | rno1       | func_pspeu_09246BF8               |       37 |          2 |        |       |     |
 | rno2       | func_pspeu_09250418               |       37 |          2 |        |       |     |
 | rno3       | func_pspeu_092509A0               |       37 |          2 |        |       |     |
-| rno4       | GetAngleBetweenEntities           |       37 |          2 |        |       |     |
+| rno4       | func_pspeu_0924F6A8               |       37 |          2 |        |       |     |
 | rnz0       | func_pspeu_09253438               |       37 |          2 |        |       |     |
 | rnz1       | func_pspeu_0924C070               |       37 |          2 |        |       |     |
 | rtop       | func_pspeu_092464D8               |       37 |          2 |        |       |     |
@@ -4222,7 +4222,7 @@
 | nz1        | func_pspeu_092485D8               |       65 |          6 |        |       |     |
 | rdai       | func_pspeu_09249150               |       65 |          6 |        |       |     |
 | rno0       | func_pspeu_0923E5F0               |       65 |          6 |        |       |     |
-| rno4       | StepTowards                       |       65 |          6 |        |       |     |
+| rno4       | func_pspeu_0923D090               |       65 |          6 |        |       |     |
 | rnz1       | func_pspeu_092463C8               |       65 |          6 |        |       |     |
 | bo0        | func_us_801B5470                  |       65 |          7 |        |       |     |
 | no2        | func_pspeu_09254880               |       65 |          7 |        |       |     |
@@ -7842,7 +7842,7 @@
 | no4        | func_pspeu_092457E8               |      244 |         31 |        |       |     |
 | rnz0       | func_pspeu_092581F8               |      244 |         35 |        |       |     |
 | rbo0       | func_pspeu_0923F298               |      244 |         36 |        |       |     |
-| rno4       | func_us_801D6B8C                  |      244 |         36 |        |       |     |
+| rno4       | func_pspeu_0923E578               |      244 |         36 |        |       |     |
 | rno4       | func_pspeu_09251BD0               |      245 |          1 |        |       |     |
 | rno3       | func_pspeu_09257DB8               |      245 |         25 |        |       |     |
 | dra        | func_psp_0913C788                 |      245 |         26 | Yes    |       |     |
