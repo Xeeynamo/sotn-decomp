@@ -25,7 +25,6 @@ static u16 LookupTblNoToVram(u16 arg0) {
 }
 
 extern SaturnSpriteImage g_StatusPortraitImages[17];
-extern s16 DAT_0605AEE8;
 
 void func_060784B8(SprSpCmd* cmd, s32 portraitIndex, s32 colorTableIndex) {
     SaturnSpriteImage* image;
@@ -34,7 +33,7 @@ void func_060784B8(SprSpCmd* cmd, s32 portraitIndex, s32 colorTableIndex) {
     cmd->control = 0x1000;
     cmd->drawMode = 0x488;
     cmd->color = LookupTblNoToVram(colorTableIndex + 0x30);
-    cmd->charAddr = DAT_0605AEE8;
+    cmd->charAddr = DAT_0605AEC0[10][0];
     cmd->charAddr += image->characterOffsetUnits;
     cmd->charSize =
         ((image->storedWidth / 4) << 8) | (image->storedHeight << 1);
@@ -42,7 +41,7 @@ void func_060784B8(SprSpCmd* cmd, s32 portraitIndex, s32 colorTableIndex) {
 
 extern SaturnSpriteResource** DAT_060645EC;
 extern SprSpCmd DAT_06086108;
-extern SprSpCmd* d_0605AEAC;
+extern SprSpCmd* DAT_0605AEAC;
 
 // original name: disp_char
 void func_06078550(s32 arg0, u8 ch, Point16* pos);
@@ -55,11 +54,11 @@ void func_06078550_noInline(s32 arg0, u8 ch, Point16* pos) {
     cmd->drawMode = 0x488;
     cmd->charSize = 0x108;
     cmd->color = LookupTblNoToVram(0x30);
-    cmd->charAddr = DAT_0605aec0[iVar5->allocationIndex][0] + ch * 4;
+    cmd->charAddr = DAT_0605AEC0[iVar5->allocationIndex][0] + ch * 4;
     LOW(cmd->ax) = (pos->x << 0x10) | (pos->y & 0xFFFF);
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(arg0, cmd);
-        d_0605AEAC++;
+        DAT_0605AEAC++;
     }
 }
 
@@ -168,15 +167,15 @@ void func_06078920(s32 arg0, Point16* pos) {
 
     cmd->control = 0x1000;
     cmd->drawMode = 0x488;
-    cmd->charAddr = DAT_0605aec0[1][0];
-    ptr = DAT_0605aec0[1];
+    cmd->charAddr = DAT_0605AEC0[1][0];
+    ptr = DAT_0605AEC0[1];
     cmd->charSize = 0x910;
     cmd->color = LookupTblNoToVram(0x31);
     cmd->charAddr = ptr[2] + 0x480;
     LOW(cmd->ax) = (pos->x << 0x10) | (pos->y & 0xFFFF);
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(arg0, cmd);
-        d_0605AEAC++;
+        DAT_0605AEAC++;
     }
 }
 
@@ -190,16 +189,16 @@ void func_060789C4(s32 arg0, s32 arg1, Point16* pos) {
 
         cmd->control = 0x1000;
         cmd->drawMode = 0x488;
-        cmd->charAddr = DAT_0605aec0[1][0];
+        cmd->charAddr = DAT_0605AEC0[1][0];
         cmd->charSize = 0x1210;
         cmd->color = LookupTblNoToVram(0x31);
-        ptr = DAT_0605aec0[1];
+        ptr = DAT_0605AEC0[1];
         charBase = ptr[2];
         cmd->charAddr = arg1 * 0x90 + ptr[2];
         LOW(cmd->ax) = (pos->x << 0x10) | (pos->y & 0xFFFF);
         if (SpMstCmdPos < 0x278) {
             SPR_2Cmd(arg0, cmd);
-            d_0605AEAC++;
+            DAT_0605AEAC++;
         }
     } else {
         func_06078604(arg0, GetMenuItemName(arg1), pos);
@@ -218,17 +217,17 @@ void func_06078F58(s32 arg0, s32 arg1, Point16* pos) {
 
     cmd->control = 0x1000;
     cmd->drawMode = 0x488;
-    cmd->charAddr = DAT_0605aec0[1][0];
+    cmd->charAddr = DAT_0605AEC0[1][0];
     cmd->charSize = 0x610;
     cmd->color = LookupTblNoToVram(0x31);
-    ptr = DAT_0605aec0[1];
+    ptr = DAT_0605AEC0[1];
     charBase = ptr[2];
     cmd->charAddr = (arg1 + 0xB) * 0x30 + ptr[2];
     LOW(cmd->ax) = (pos->x << 0x10) | (u16)pos->y;
 
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(arg0, cmd);
-        d_0605AEAC++;
+        DAT_0605AEAC++;
     }
 }
 
@@ -241,16 +240,16 @@ void func_06079008(s32 arg0, s32 arg1, Point16* pos) {
     cmd = &DAT_06086108;
     cmd->control = 0x1000;
     cmd->drawMode = 0x488;
-    cmd->charAddr = DAT_0605aec0[1][0];
+    cmd->charAddr = DAT_0605AEC0[1][0];
     cmd->charSize = 0x610;
     cmd->color = LookupTblNoToVram(0x31);
-    ptr = DAT_0605aec0[1];
+    ptr = DAT_0605AEC0[1];
     charBase = ptr[2];
     cmd->charAddr = arg1 * 0x30 + ptr[2];
     LOW(cmd->ax) = (pos->x << 0x10) | (pos->y & 0xFFFF);
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(arg0, cmd);
-        d_0605AEAC++;
+        DAT_0605AEAC++;
     }
 }
 
@@ -267,14 +266,14 @@ void func_06079208(s32 arg0, Point16* pos) {
     cmd->control = 0x1000;
     cmd->drawMode = 0x4A0;
     cmd->color = LookupTblNoToVram(0x4000);
-    cmd->charAddr = DAT_0605AEE8;
+    cmd->charAddr = DAT_0605AEC0[10][0];
     cmd->charAddr += image->characterOffsetUnits;
     cmd->charSize =
         ((image->storedWidth / 4) << 8) | (image->storedHeight << 1);
     LOW(cmd->ax) = (pos->x << 0x10) | ((u16)pos->y);
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(arg0, cmd);
-        d_0605AEAC++;
+        DAT_0605AEAC++;
     }
 }
 
@@ -313,7 +312,7 @@ void func_06079424(s32 arg0, s32 arg1, s32 arg2, Point16* pos) {
     LOW(cmd->ax) = (pos->x << 0x10) | (pos->y & 0xFFFF);
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(arg0, cmd);
-        d_0605AEAC++;
+        DAT_0605AEAC++;
     }
 }
 
@@ -325,7 +324,7 @@ void func_06079580(s32 arg0, s32 arg1, Point16* pos) {
     LOW(cmd->ax) = (pos->x << 0x10) | (pos->y & 0xFFFF);
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(arg0, cmd);
-        d_0605AEAC++;
+        DAT_0605AEAC++;
     }
 }
 
@@ -364,7 +363,7 @@ void func_0607973C(s32 arg0, Point16* pos) {
 
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(arg0, cmd);
-        d_0605AEAC++;
+        DAT_0605AEAC++;
     }
 }
 
@@ -407,7 +406,7 @@ void func_06079A2C(s32 arg0, s32 arg1, Point16* pos) {
     LOW(cmd->dx) = (left << 0x10) | ((u16)bottom);
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(arg0, cmd);
-        d_0605AEAC++;
+        DAT_0605AEAC++;
     }
 }
 
@@ -1648,7 +1647,7 @@ void CheckCollision(s32 x, s32 y, Collider* res, u16 unk) {
         u16 D;
         u16 E;
         posX = posX * 4 / 5;
-        A = DAT_0605CDB8 * 4 / 5;
+        A = DAT_0605CD90[0].width * 4 / 5;
         B = A / 2;
         C = posX >> 20;
         D = posY >> 20;
@@ -1989,7 +1988,7 @@ void DrawScreenWaveEffect(void) {
     spCmd->control = JUMP_ASSIGN;
     spCmd->drawMode = UCLPIN_ENABLE | ECD_DISABLE;
     spCmd->color = 0x6400;
-    spCmd->charAddr = DAT_0605aec0[1][0];
+    spCmd->charAddr = DAT_0605AEC0[1][0];
     spCmd->charSize = 0x2801;
     angle = DAT_06086130;
     for (i = 0; i < 0x20; i++, angle += 0x80) {
@@ -1997,7 +1996,7 @@ void DrawScreenWaveEffect(void) {
         spCmd->ay = i + 0x68;
         if (SpMstCmdPos < 0x278) {
             SPR_2Cmd(0x1C0, spCmd);
-            d_0605AEAC++;
+            DAT_0605AEAC++;
         }
         spCmd->charAddr += 20;
     }

@@ -103,9 +103,17 @@ static bool parseArgs(
             outParams->stage = parseIntParam(stage);
             if (outParams->stage < 0) {
                 outParams->stageName = stage;
-                if (!strcmp(stage, "stage15")) {
-                    outParams->stage = STAGE_ID_SATURN_15;
-                    outParams->stageOwnsAssets = true;
+                static const int saturnStages[] = {
+                    STAGE_ID_SATURN_15,
+                    STAGE_ID_SATURN_16,
+                    STAGE_ID_REVERSE_SATURN_15,
+                    STAGE_ID_REVERSE_SATURN_16,
+                };
+                for (int j = 0; j < LEN(saturnStages); j++) {
+                    if (!strcmp(stage, SaturnStageOverlay(saturnStages[j]))) {
+                        outParams->stage = saturnStages[j];
+                        outParams->stageOwnsAssets = true;
+                    }
                 }
             }
         } else if (strcmp(argv[i], "--player") == 0 && i + 1 < argc) {

@@ -285,36 +285,25 @@ void func_060E22C4(s32 arg0, s32 arg1, s32 arg2) {
     func_060E2300(arg1, arg2);
     func_060E23D0(arg0, arg1, arg2);
 }
+
 void func_060E2300(s32 scale, s32 unused) {
-    s32* base;
-    s32* srcX;
-    s32* dstX;
-    s32* srcY;
-    s32* dstY;
+    MthXyz* src;
+    MthXyz* base;
+    MthXyz* dst;
     s32 factor;
-    s32 scaledZ;
     s32 i;
-    s32 last;
 
     base = DAT_060485E0;
-    srcX = DAT_060EA000;
-    dstX = base;
+    src = DAT_060EA000;
+    dst = base;
     factor = scale << 8;
-    i = 0;
-    last = 13;
-    srcY = srcX + 1;
-    dstY = dstX + 1;
-    do {
-        *dstX = *srcX * factor;
-        i++;
-        dstY[0] = srcY[0] * factor;
-        srcX += 3;
-        scaledZ = srcY[1] * factor;
-        dstX += 3;
-        srcY += 3;
-        dstY[1] = scaledZ;
-        dstY += 3;
-    } while (i <= last);
+    for (i = 0; i < 14; i++) {
+        dst->x = src->x * factor;
+        dst->y = src->y * factor;
+        dst->z = src->z * factor;
+        dst++;
+        src++;
+    }
 
     SetCurrentMatrixBinAngle(DAT_060EFCC0, DAT_060EFCD0);
 
@@ -322,8 +311,9 @@ void func_060E2300(s32 scale, s32 unused) {
     DAT_06061DF0.current->val[0][1] = DAT_06061DF0.current->val[0][1] * 5 / 4;
     DAT_06061DF0.current->val[0][2] = DAT_06061DF0.current->val[0][2] * 5 / 4;
 
-    TransformAndProjectPoints((MthXyz*)base, (XyInt*)((char*)base + 0x408), 14);
+    TransformAndProjectPoints(base, (XyInt*)((char*)base + 0x408), 14);
 }
+
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E23D0, func_060E23D0);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E253C, func_060E253C);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E3244, func_060E3244);

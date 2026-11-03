@@ -187,5 +187,6 @@ void DMA_ScuGetStatus(DmaScuStatus*, Uint32);
 #define DMA_SCU_BUSY 2
 
 void DMA_ScuInit(void);
+void DMA_ScuMemCopy(void*, void*, Uint32);
 
 #endif

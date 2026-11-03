@@ -846,7 +846,7 @@ void func_060AA974(void) { func_060AA8AC(1, 1); }
 void func_060AA9EC(void) {
     g_CurrentEntity = &PLAYER;
     if (g_unkGraphicsStruct.unk28 == 4) {
-        func_060aa608(g_MariaFrameProperties, g_MariaAnimationGroups);
+        func_060AA608(g_MariaFrameProperties, g_MariaAnimationGroups);
     }
 }
 
@@ -1025,7 +1025,7 @@ s32 func_060AC148(Primitive* prim, s16 posX, s16 posY) {
     prim->y2 = posY + offset;
 
     texture =
-        DAT_0605aec0[(u16)DAT_060C6D7C + g_MariaPrimitiveSizeIndices[frame]];
+        DAT_0605AEC0[(u16)DAT_060C6D7C + g_MariaPrimitiveSizeIndices[frame]];
     prim->unk8 = texture[0];
     prim->unkA = texture[1];
 
@@ -1213,7 +1213,8 @@ void func_060B18C8(Entity* entity) {
 
     if (entity->step == 0) {
         sprite = CreateSpriteObject(
-            g_EntitySpriteBank09.allocationIndex, (u16)(DAT_06046C02 + 0x1C),
+            g_EntitySpriteBank09.allocationIndex,
+            (u16)(g_SaturnSharedSpriteBank7Resource.flags + 0x1C),
             g_EntitySpriteBank09.images, 1);
         entity->unk0 = sprite;
         if (sprite != NULL) {
@@ -1675,7 +1676,7 @@ void func_060BE258(void) {
     d_060cd748 = DAT_060476a0;
     d_060cd74c = DAT_060476a4;
     if (g_PlayableCharacter == 0) {
-        DAT_060476a0 = 0x252000;
+        DAT_060476a0 = (s32)&DAT_00252000;
         DAT_060476a4 = 1;
     }
     colors0 = SpGourTbl->colors0;
@@ -1690,7 +1691,7 @@ void func_060BE308(s32* src) {
     Unk0605DB60* entry;
     s32 i;
 
-    dst = (s32*)((DAT_0605aec0[0][0] * 8) + 0x25C00000);
+    dst = (s32*)((DAT_0605AEC0[0][0] * 8) + 0x25C00000);
     DMA_CpuMemCopy2(dst, src, 0x8400);
     while (DMA_CpuResult() == 2) {
     }
@@ -1756,14 +1757,14 @@ void func_060BE440(void) {
 
     i = 0;
     do {
-        func_06078700(dst, DAT_06085DE8[i], 4);
+        func_06078700(dst, (s8*)g_StatusMenuLabelPointers[7 + i], 4);
         dst += 0x180;
         i++;
     } while (i <= 10);
 
     i = 0;
     do {
-        func_06078700(dst, DAT_06085E14[i], 4);
+        func_06078700(dst, (s8*)g_StatusMenuLabelPointers[18 + i], 4);
         dst += 0x180;
         i++;
     } while (i <= 7);
@@ -1775,7 +1776,7 @@ void func_060BE440(void) {
         i++;
     } while (i <= 1);
 
-    table_base = (u8*)DAT_0605aec0;
+    table_base = (u8*)DAT_0605AEC0;
     table_offset = 8;
     dma_offset = *(u16*)(table_base + table_offset);
     dma_offset *= 8U;
@@ -1805,7 +1806,7 @@ void func_060BE54C(void) {
     func_06078700(text, DAT_06085DCC[2], 6);
 
     slot = 2;
-    dst = (s32*)((DAT_0605aec0[slot][0] * 8) + 0x25C00000);
+    dst = (s32*)((DAT_0605AEC0[slot][0] * 8) + 0x25C00000);
     DMA_CpuMemCopy2(dst, base + 0x4501, 0x1320);
     while (DMA_CpuResult() == 2) {
     }
@@ -1829,7 +1830,7 @@ void func_060BE618(void) {
     }
 
     slot = 2;
-    dst = (s32*)((DAT_0605aec0[slot][0] * 8) + 0x25C00000);
+    dst = (s32*)((DAT_0605AEC0[slot][0] * 8) + 0x25C00000);
     DMA_CpuMemCopy2(dst, base + 0x4501, 0x4800);
     while (DMA_CpuResult() == 2) {
     }

@@ -1,23 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 #include "game.h"
+#include "zero/overlay.h"
 
 void InitStatsAndGear(void);
-
-typedef struct {
-    void* equipDefs;
-    void* unk04;
-    void* destroyStageEntities;
-    void* unk0C;
-    void* unk10;
-    void* unk14;
-    void* unk18;
-    void* unk1C;
-    void* unk20;
-    void* unk24;
-    void* unk28;
-    void* unk2C;
-} SaturnGameApi;
 
 SaturnGameApi g_ApiInit = {
     g_EquipDefs,   ModeGame,      func_8011A9D8, LoadSubDisplayFiles,

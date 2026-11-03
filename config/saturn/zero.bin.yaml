@@ -311,6 +311,16 @@ segments:
 
       - start: 0x3494A
         type: .data
+        file: zero/zero_data_0
+        end: 0x34BDB
+
+      - start: 0x34BDC
+        type: .data
+        file: zero
+        end: 0x34C03
+
+      - start: 0x34C04
+        type: .data
         file: zero/zero_data
         end: 0x369BF
 
@@ -355,3 +365,5 @@ segments:
         type: .data
         file: lib/sys_bss
         end: 0x4C560
+
+      - [0x4C5F4, .bss, zero]
