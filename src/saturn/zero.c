@@ -1453,9 +1453,9 @@ void func_060078EC(s32 arg0) {
     }
 }
 
-extern s32 DAT_06038C5C;
-extern Spr2WorkArea sp2WorkArea;
-extern SprSpCmd sp2MstSpCmd[];
+s32 DAT_06038C5C = 0;
+SPR_2DefineWork(sp2WorkArea, 0x280, 0x304, 0x200, 1, 0x200);
+
 extern s32 DAT_060576AC;
 extern XyInt DAT_0605AEA0[2];
 extern SprSpCmd* DAT_0605AEAC;
@@ -1476,7 +1476,7 @@ void InitSpriteEngine(s32 arg0) {
     DAT_0605AEA8 = 0;
     DAT_0605BEC8 = 0x304;
     DAT_060576AC = 0;
-    DAT_0605AEAC = &sp2MstSpCmd;
+    DAT_0605AEAC = (SprSpCmd*)sp2MstSpCmd;
     DAT_0605BEC4 = 0x11180;
     func_0600E240(&DAT_0605BEC0);
     DAT_06038C5C = 2;
@@ -1647,7 +1647,7 @@ void func_06007D54(void) {
         DAT_0605AEAC++;
     }
 
-    DAT_0605AEAC = &sp2MstSpCmd[SpMstCmdPos];
+    DAT_0605AEAC = (SprSpCmd*)&sp2MstSpCmd[SpMstCmdPos];
 }
 
 // func_06007E14
