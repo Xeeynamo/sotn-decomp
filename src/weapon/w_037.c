@@ -71,7 +71,6 @@ static AnimationFrame D_107000_8017A798[] = {
     {0x0004, 0x0014}, {0x0007, 0x0015}, {0x0006, 0x0016}, {0x0003, 0x0017},
     {0x0003, 0x0018}, {0x0006, 0x0019}, {0x0002, 0x0015}, {0x0000, 0x0000}};
 static u16* g_WeaponCluts[] = {pal_0, pal_0};
-static s32 g_HandId = HAND_ID;
 
 s32 D_107000_8017BBE4;
 Point16 D_107000_8017BBE8[0x50];

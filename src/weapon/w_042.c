@@ -3,7 +3,6 @@
 // Monster vial 3
 #include "weapon_private.h"
 extern u16* g_WeaponCluts[];
-extern s32 g_HandId;
 #include "shared.h"
 #include "gen/w_042_1.h"
 #include "gen/w_042_2.h"

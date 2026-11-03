@@ -73,7 +73,6 @@ static s32 shieldAngles[] = {
     0x1000, 0x1200, 0x1400, 0x1600, 0x1800, 0x1A00, 0x1C00, 0x1E00};
 
 static u16* g_WeaponCluts[] = {(u16*)pal_0, (u16*)pal_0};
-static s32 g_HandId = HAND_ID;
 
 #include "shared.h"
 

@@ -3,7 +3,6 @@
 // Alucart shield, Unknown#215
 #include "weapon_private.h"
 extern u16* g_WeaponCluts[];
-extern s32 g_HandId;
 #include "gen/w_058_1.h"
 #include "gen/w_058_2.h"
 #define g_Animset w_058_1

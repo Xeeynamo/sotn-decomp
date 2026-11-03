@@ -3,7 +3,6 @@
 // Firebrand, Marsil, Unknown#179, Unknown#180
 #include "weapon_private.h"
 extern u16* g_WeaponCluts[];
-extern s32 g_HandId;
 #include "gen/w_049_1.h"
 #include "gen/w_049_2.h"
 #define g_Animset w_049_1

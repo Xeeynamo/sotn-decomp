@@ -3,7 +3,6 @@
 // Were Bane, Unknown#190
 #include "weapon_private.h"
 extern u16* g_WeaponCluts[];
-extern s32 g_HandId;
 #include "shared.h"
 #include "gen/w_039_1.h"
 #include "gen/w_039_2.h"

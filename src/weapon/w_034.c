@@ -91,7 +91,6 @@ static WeaponAnimation D_F2000_8017A934[] = {
     {D_F2000_8017A918, D_F2000_8017A8B4, 0, SFX_WEAPON_SWISH_B, 0x92, 0x04, 0}};
 
 static u16* g_WeaponCluts[] = {(u16*)D_F2000_8017A784, (u16*)D_F2000_8017A784};
-static s32 g_HandId = HAND_ID;
 
 #include "shared.h"
 

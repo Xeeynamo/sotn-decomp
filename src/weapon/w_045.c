@@ -15,7 +15,6 @@ static u16 D_13F000_8017A330[N_ARRAY_PAL][COLORS_PER_PAL] = {
      0x80DD, 0xAA5F, 0x84D1, 0x98C6, 0xB5AD, 0xC631, 0x8421}};
 
 static u16* g_WeaponCluts[] = {D_13F000_8017A330};
-static s32 g_HandId = HAND_ID;
 
 #include "shared.h"
 

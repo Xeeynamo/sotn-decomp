@@ -3,7 +3,6 @@
 // Mablung Sword
 #include "weapon_private.h"
 extern u16* g_WeaponCluts[];
-extern s32 g_HandId;
 #include "shared.h"
 #include "gen/w_057_1.h"
 #include "gen/w_057_2.h"

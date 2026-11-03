@@ -3,7 +3,6 @@
 // Holy sword, Unknown#196
 #include "weapon_private.h"
 extern u16* g_WeaponCluts[];
-extern s32 g_HandId;
 #include "shared.h"
 #include "gen/w_055_1.h"
 #include "gen/w_055_2.h"

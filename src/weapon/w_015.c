@@ -3,7 +3,6 @@
 // Shuriken, Cross shuriken, Buffalo star, Flame star, TNT
 #include "weapon_private.h"
 extern u16* g_WeaponCluts[];
-extern s32 g_HandId;
 #include "shared.h"
 #include "gen/w_015_1.h"
 #include "gen/w_015_2.h"

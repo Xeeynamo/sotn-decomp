@@ -129,7 +129,6 @@ static WeaponAnimation weaponAnims[] = {
     {animGroup0, hitboxes, 0, SFX_ALUCARD_SWORD_SWISH, 0x41, 0x04},
     {animGroup0, hitboxes, 0, SFX_ALUCARD_SWORD_SWISH, 0x41, 0x04}};
 static u16* g_WeaponCluts[] = {pal_0, pal_1, pal_2, pal_3, pal_4};
-static s32 g_HandId = HAND_ID;
 
 #include "shared.h"
 

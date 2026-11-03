@@ -54,8 +54,6 @@ static WeaponAnimation g_WeaponAnims[] = {
 
 static u16* g_WeaponCluts[] = {(u16*)pal0, (u16*)pal0};
 
-static s32 g_HandId = HAND_ID;
-
 #include "shared.h"
 
 void EntityWeaponAttack(Entity* self) {

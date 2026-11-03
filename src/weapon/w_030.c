@@ -3,7 +3,6 @@
 // Sword of Dawn, Unknown#177
 #include "weapon_private.h"
 extern u16* g_WeaponCluts[];
-extern s32 g_HandId;
 #include "shared.h"
 #include "gen/w_030_1.h"
 #include "gen/w_030_2.h"

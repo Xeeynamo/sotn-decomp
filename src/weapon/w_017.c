@@ -133,7 +133,6 @@ static Point16 unused_8017A380[] = {
     {0, 0},       {0x1, 0},     {0, 0},       {-1, 0}};
 
 static u16* g_WeaponCluts[] = {D_7B000_8017A040, D_7B000_8017A040};
-static s32 g_HandId = HAND_ID;
 #include "shared.h"
 
 extern SVECTOR D_7B000_8017B0F4[LEN(D_7B000_8017A260)][4];

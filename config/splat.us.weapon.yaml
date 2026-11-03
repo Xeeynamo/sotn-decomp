@@ -43,7 +43,7 @@ segments:
     subsegments:
       - [0x04000, .data, w_init]
       - [0x04040, .data, w_000]
-      - [0x050D0, .data, right_hand]
+      - [0x050D0, .data, left_hand]
       - [0x050D4, c, w_000]
   - name: f_001
     type: grey4
@@ -61,6 +61,7 @@ segments:
       - [0x0B000, .data, w_init]
       - [0x0B040, .data, w_001]
       - [0x0BA44, data, w_001]
+      - [0x0BFF4, .data, left_hand]
       - [0x0BFF8, .rodata, w_001]
       - [0x0C014, c, w_001]
   - name: f_002
@@ -78,7 +79,7 @@ segments:
     subsegments:
       - [0x12000, .data, w_init]
       - [0x12040, .data, w_002]
-      - [0x12BD8, .data, right_hand]
+      - [0x12BD8, .data, left_hand]
       - [0x12BDC, c, w_002]
   - name: f_003
     type: grey4
@@ -96,6 +97,7 @@ segments:
       - [0x19000, .data, w_init]
       - [0x19040, .data, w_003]
       - [0x19884, data, w_003]
+      - [0x19C3C, .data, left_hand]
       - [0x19C40, c, w_003]
   - name: f_004
     type: grey4
@@ -113,6 +115,7 @@ segments:
       - [0x20000, .data, w_init]
       - [0x20040, .data, w_004]
       - [0x20EAC, data, w_004]
+      - [0x21318, .data, left_hand]
       - [0x2131C, c, w_004]
   - name: f_005
     type: grey4
@@ -130,6 +133,7 @@ segments:
       - [0x27000, .data, w_init]
       - [0x27040, .data, w_005]
       - [0x27EAC, data, w_005]
+      - [0x28318, .data, left_hand]
       - [0x2831C, c, w_005]
   - name: f_006
     type: grey4
@@ -147,6 +151,7 @@ segments:
       - [0x2E000, .data, w_init]
       - [0x2E040, .data, w_006]
       - [0x2E884, data, w_006]
+      - [0x2EC3C, .data, left_hand]
       - [0x2EC40, .rodata, w_006]
       - [0x2EC54, c, w_006]
   - name: f_007
@@ -164,6 +169,7 @@ segments:
     subsegments:
       - [0x35000, .data, w_init]
       - [0x35040, .data, w_007]
+      - [0x35C9C, .data, left_hand]
       - [0x35CA0, c, w_007]
   - name: f_008
     type: grey4
@@ -180,6 +186,7 @@ segments:
     subsegments:
       - [0x3C000, .data, w_init]
       - [0x3C040, .data, w_008]
+      - [0x3CAC0, .data, left_hand]
       - [0x3CAC4, .rodata, w_008]
       - [0x3CB4C, c, w_008]
   - name: f_009
@@ -198,6 +205,7 @@ segments:
       - [0x43000, .data, w_init]
       - [0x43040, .data, w_009]
       - [0x43804, data, w_009]
+      - [0x43AC0, .data, left_hand]
       - [0x43AC4, .rodata, w_009]
       - [0x43B4C, c, w_009]
   - name: f_010
@@ -215,6 +223,7 @@ segments:
     subsegments:
       - [0x4A000, .data, w_init]
       - [0x4A040, .data, w_010]
+      - [0x4AC04, .data, left_hand]
       - [0x4AC08, .rodata, w_010]
       - [0x4ACC0, c, w_010]
       - [0x4CC1C, .bss, w_010]
@@ -234,6 +243,7 @@ segments:
       - [0x51000, .data, w_init]
       - [0x51040, .data, w_011]
       - [0x51958, data, w_011]
+      - [0x51C3C, .data, left_hand]
       - [0x51C40, .rodata, w_011]
       - [0x51CDC, c, w_011]
   - name: f_012
@@ -251,6 +261,7 @@ segments:
     subsegments:
       - [0x58000, .data, w_init]
       - [0x58040, .data, w_012]
+      - [0x58AC8, .data, left_hand]
       - [0x58ACC, c, w_012]
       - [0x59B28, .bss, w_012]
   - name: f_013
@@ -269,6 +280,7 @@ segments:
       - [0x5F000, .data, w_init]
       - [0x5F040, .data, w_013]
       - [0x5F2B0, data, w_013]
+      - [0x5F604, .data, left_hand]
       - [0x5F608, .rodata, w_013]
       - [0x5F62C, c, w_013]
   - name: f_014
@@ -287,6 +299,7 @@ segments:
       - [0x66000, .data, w_init]
       - [0x66040, .data, w_014]
       - [0x662B0, data, w_014]
+      - [0x665B8, .data, left_hand]
       - [0x665BC, c, w_014]
   - name: f_015
     type: grey4
@@ -304,6 +317,7 @@ segments:
       - [0x6D000, .data, w_init]
       - [0x6D040, .data, w_015]
       - [0x6D478, data, w_015]
+      - [0x6D7E0, .data, left_hand]
       - [0x6D7E4, c, w_015]
   - name: f_016
     type: grey4
@@ -321,6 +335,7 @@ segments:
       - [0x74000, .data, w_init]
       - [0x74040, .data, w_016]
       - [0x742B0, data, w_016]
+      - [0x745F4, .data, left_hand]
       - [0x745F8, .rodata, w_016]
       - [0x7460C, c, w_016]
   - name: f_017
@@ -338,6 +353,7 @@ segments:
     subsegments:
       - [0x7B000, .data, w_init]
       - [0x7B040, .data, w_017]
+      - [0x7B3A8, .data, left_hand]
       - [0x7B3AC, c, w_017]
   - name: f_018
     type: grey4
@@ -355,6 +371,7 @@ segments:
       - [0x82000, .data, w_init]
       - [0x82040, .data, w_018]
       - [0x82488, data, w_018]
+      - [0x82738, .data, left_hand]
       - [0x8273C, .rodata, w_018]
       - [0x82740, c, w_018]
       - [0x831B4, .bss, w_018]
@@ -374,6 +391,7 @@ segments:
       - [0x89000, .data, w_init]
       - [0x89040, .data, w_019]
       - [0x8930C, data, w_019]
+      - [0x89550, .data, left_hand]
       - [0x89554, c, w_019]
   - name: f_020
     type: grey4
@@ -391,6 +409,7 @@ segments:
       - [0x90000, .data, w_init]
       - [0x90040, .data, w_020]
       - [0x90630, data, w_020]
+      - [0x90B9C, .data, left_hand]
       - [0x90BA0, .rodata, w_020]
       - [0x90BC8, c, w_020]
   - name: f_021
@@ -409,6 +428,7 @@ segments:
       - [0x97000, .data, w_init]
       - [0x97040, .data, w_021]
       - [0x97564, data, w_021]
+      - [0x97794, .data, left_hand]
       - [0x97798, .rodata, w_021]
       - [0x977B4, c, w_021]
   - name: f_022
@@ -427,6 +447,7 @@ segments:
       - [0x9E000, .data, w_init]
       - [0x9E040, .data, w_022]
       - [0x9E540, data, w_022]
+      - [0x9E810, .data, left_hand]
       - [0x9E814, c, w_022]
   - name: f_023
     type: grey4
@@ -444,6 +465,7 @@ segments:
       - [0xA5000, .data, w_init]
       - [0xA5040, .data, w_023]
       - [0xA58A4, data, w_023]
+      - [0xA5CF0, .data, left_hand]
       - [0xA5CF4, .rodata, w_023]
       - [0xA5D80, c, w_023]
   - name: f_024
@@ -462,6 +484,7 @@ segments:
       - [0xAC000, .data, w_init]
       - [0xAC040, .data, w_024]
       - [0xAC804, data, w_024]
+      - [0xACD50, .data, left_hand]
       - [0xACD54, .rodata, w_024]
       - [0xACDE0, c, w_024]
   - name: f_025
@@ -480,6 +503,7 @@ segments:
       - [0xB3000, .data, w_init]
       - [0xB3040, .data, w_025]
       - [0xB3804, data, w_025]
+      - [0xB3AE0, .data, left_hand]
       - [0xB3AE4, .rodata, w_025]
       - [0xB3B74, c, w_025]
   - name: f_026
@@ -498,6 +522,7 @@ segments:
       - [0xBA000, .data, w_init]
       - [0xBA040, .data, w_026]
       - [0xBA804, data, w_026]
+      - [0xBAAEC, .data, left_hand]
       - [0xBAAF0, .rodata, w_026]
       - [0xBAB9C, c, w_026]
   - name: f_027
@@ -516,6 +541,7 @@ segments:
       - [0xC1000, .data, w_init]
       - [0xC1040, .data, w_027]
       - [0xC1A18, data, w_027]
+      - [0xC1CC8, .data, left_hand]
       - [0xC1CCC, .rodata, w_027]
       - [0xC1D54, c, w_027]
   - name: f_028
@@ -534,6 +560,7 @@ segments:
       - [0xC8000, .data, w_init]
       - [0xC8040, .data, w_028]
       - [0xC8804, data, w_028]
+      - [0xC8B64, .data, left_hand]
       - [0xC8B68, .rodata, w_028]
       - [0xC8BF4, c, w_028]
   - name: f_029
@@ -552,6 +579,7 @@ segments:
       - [0xCF000, .data, w_init]
       - [0xCF040, .data, w_029]
       - [0xCF884, data, w_029]
+      - [0xCFD50, .data, left_hand]
       - [0xCFD54, .rodata, w_029]
       - [0xCFDD8, c, w_029]
   - name: f_030
@@ -570,6 +598,7 @@ segments:
       - [0xD6000, .data, w_init]
       - [0xD6040, .data, w_030]
       - [0xD6040, data, w_030]
+      - [0xD667C, .data, left_hand]
       - [0xD6680, .rodata, w_030]
       - [0xD66DC, c, w_030]
   - name: f_031
@@ -588,6 +617,7 @@ segments:
       - [0xDD000, .data, w_init]
       - [0xDD040, .data, w_031]
       - [0xDD704, data, w_031]
+      - [0xDD914, .data, left_hand]
       - [0xDD918, c, w_031]
   - name: f_032
     type: grey4
@@ -605,6 +635,7 @@ segments:
       - [0xE4000, .data, w_init]
       - [0xE4040, .data, w_032]
       - [0xE4704, data, w_032]
+      - [0xE4920, .data, left_hand]
       - [0xE4924, c, w_032]
   - name: f_033
     type: grey4
@@ -622,6 +653,7 @@ segments:
       - [0xEB000, .data, w_init]
       - [0xEB040, .data, w_033]
       - [0xEBA9C, data, w_033]
+      - [0xEBC54, .data, left_hand]
       - [0xEBC58, c, w_033]
   - name: f_034
     type: grey4
@@ -638,6 +670,7 @@ segments:
     subsegments:
       - [0xF2000, .data, w_init]
       - [0xF2040, .data, w_034]
+      - [0xF294C, .data, left_hand]
       - [0xF2950, c, w_034]
   - name: f_035
     type: grey4
@@ -654,6 +687,7 @@ segments:
     subsegments:
       - [0xF9000, .data, w_init]
       - [0xF9040, .data, w_035]
+      - [0xF9548, .data, left_hand]
       - [0xF954C, c, w_035]
   - name: f_036
     type: grey4
@@ -671,6 +705,7 @@ segments:
       - [0x100000, .data, w_init]
       - [0x100040, .data, w_036]
       - [0x100404, data, w_036]
+      - [0x100558, .data, left_hand]
       - [0x10055C, c, w_036]
   - name: f_037
     type: grey4
@@ -687,6 +722,7 @@ segments:
     subsegments:
       - [0x107000, .data, w_init]
       - [0x107040, .data, w_037]
+      - [0x1077C0, .data, left_hand]
       - [0x1077C4, c, w_037]
       - [0x108BE4, .bss, w_037]
   - name: f_038
@@ -705,6 +741,7 @@ segments:
       - [0x10E000, .data, w_init]
       - [0x10E040, .data, w_038]
       - [0x10EC08, data, w_038]
+      - [0x10EDE8, .data, left_hand]
       - [0x10EDEC, c, w_038]
   - name: f_039
     type: grey4
@@ -722,6 +759,7 @@ segments:
       - [0x115000, .data, w_init]
       - [0x115040, .data, w_039]
       - [0x115C08, data, w_039]
+      - [0x115DE8, .data, left_hand]
       - [0x115DEC, c, w_039]
   - name: f_040
     type: grey4
@@ -738,6 +776,7 @@ segments:
     subsegments:
       - [0x11C000, .data, w_init]
       - [0x11C040, .data, w_040]
+      - [0x11C870, .data, left_hand]
       - [0x11C874, c, w_040]
       - [0x11D540, .bss, w_040]
   - name: f_041
@@ -755,6 +794,7 @@ segments:
     subsegments:
       - [0x123000, .data, w_init]
       - [0x123040, .data, w_041]
+      - [0x12355C, .data, left_hand]
       - [0x123560, .rodata, w_041]
       - [0x123574, c, w_041]
       - [0x124200, .bss, w_041]
@@ -774,6 +814,7 @@ segments:
       - [0x12A000, .data, w_init]
       - [0x12A040, .data, w_042]
       - [0x12A3E4, data, w_042]
+      - [0x12A75C, .data, left_hand]
       - [0x12A760, .rodata, w_042]
       - [0x12AB04, c, w_042]
       - [0x12B5EC, .bss, w_042]
@@ -792,6 +833,7 @@ segments:
     subsegments:
       - [0x131000, .data, w_init]
       - [0x131040, .data, w_043]
+      - [0x132058, .data, left_hand]
       - [0x13205C, c, w_043]
   - name: f_044
     type: grey4
@@ -808,6 +850,7 @@ segments:
     subsegments:
       - [0x138000, .data, w_init]
       - [0x138040, .data, w_044]
+      - [0x1382A4, .data, left_hand]
       - [0x1382A8, .rodata, w_044]
       - [0x1382C0, c, w_044]
   - name: f_045
@@ -825,6 +868,7 @@ segments:
     subsegments:
       - [0x13F000, .data, w_init]
       - [0x13F040, .data, w_045]
+      - [0x13F374, .data, left_hand]
       - [0x13F378, c, w_045]
       - [0x1403B8, .bss, w_045]
   - name: f_046
@@ -842,6 +886,7 @@ segments:
     subsegments:
       - [0x146000, .data, w_init]
       - [0x146040, .data, w_046]
+      - [0x146C60, .data, left_hand]
       - [0x146C64, c, w_046]
   - name: f_047
     type: grey4
@@ -859,6 +904,7 @@ segments:
       - [0x14D000, .data, w_init]
       - [0x14D040, .data, w_047]
       - [0x14D228, data, w_047]
+      - [0x14D550, .data, left_hand]
       - [0x14D554, .rodata, w_047]
       - [0x14D568, c, w_047]
   - name: f_048
@@ -877,6 +923,7 @@ segments:
       - [0x154000, .data, w_init]
       - [0x154040, .data, w_048]
       - [0x154A44, data, w_048]
+      - [0x15504C, .data, left_hand]
       - [0x155050, c, w_048]
   - name: f_049
     type: grey4
@@ -894,6 +941,7 @@ segments:
       - [0x15B000, .data, w_init]
       - [0x15B040, .data, w_049]
       - [0x15BC00, data, w_049]
+      - [0x15C148, .data, left_hand]
       - [0x15C14C, c, w_049]
   - name: f_050
     type: grey4
@@ -910,6 +958,7 @@ segments:
     subsegments:
       - [0x162000, .data, w_init]
       - [0x162040, .data, w_050]
+      - [0x16307C, .data, left_hand]
       - [0x163080, c, w_050]
       - [0x164bf8, .bss, w_050]
   - name: f_051
@@ -927,6 +976,7 @@ segments:
     subsegments:
       - [0x169000, .data, w_init]
       - [0x169040, .data, w_051]
+      - [0x169ED0, .data, left_hand]
       - [0x169ED4, c, w_051]
       - [0x16B0E0, .bss, w_051]
   - name: f_052
@@ -944,6 +994,7 @@ segments:
     subsegments:
       - [0x170000, .data, w_init]
       - [0x170040, .data, w_052]
+      - [0x170C20, .data, left_hand]
       - [0x170C24, .rodata, w_052]
       - [0x170CB0, c, w_052]
       - [0x172B84, .bss, w_052]
@@ -963,6 +1014,7 @@ segments:
       - [0x177000, .data, w_init]
       - [0x177040, .data, w_053]
       - [0x177A44, data, w_053]
+      - [0x178268, .data, left_hand]
       - [0x17826C, .rodata, w_053]
       - [0x178280, c, w_053]
   - name: f_054
@@ -981,6 +1033,7 @@ segments:
       - [0x17E000, .data, w_init]
       - [0x17E040, .data, w_054]
       - [0x17EA44, data, w_054]
+      - [0x17EF08, .data, left_hand]
       - [0x17EF0C, c, w_054]
   - name: f_055
     type: grey4
@@ -998,6 +1051,7 @@ segments:
       - [0x185000, .data, w_init]
       - [0x185040, .data, w_055]
       - [0x185A44, data, w_055]
+      - [0x18619C, .data, left_hand]
       - [0x1861A0, c, w_055]
   - name: f_056
     type: grey4
@@ -1015,6 +1069,7 @@ segments:
       - [0x18C000, .data, w_init]
       - [0x18C040, .data, w_056]
       - [0x18CA44, data, w_056]
+      - [0x18D05C, .data, left_hand]
       - [0x18D060, c, w_056]
   - name: f_057
     type: grey4
@@ -1032,6 +1087,7 @@ segments:
       - [0x193000, .data, w_init]
       - [0x193040, .data, w_057]
       - [0x193A44, data, w_057]
+      - [0x1940B0, .data, left_hand]
       - [0x1940B4, c, w_057]
   - name: f_058
     type: grey4
@@ -1049,6 +1105,7 @@ segments:
       - [0x19A000, .data, w_init]
       - [0x19A040, .data, w_058]
       - [0x19A808, data, w_058]
+      - [0x19ABC8, .data, left_hand]
       - [0x19ABCC, .rodata, w_058]
       - [0x19AC50, c, w_058]
   - [0x19D000]

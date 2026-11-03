@@ -74,7 +74,6 @@ static FrameProperty hitboxes[] = {
     {4, 1, 10, 4}, {0, 0, 3, 3},  {-63, -63, 0, 0}};
 static s32 speed_mod[] = {FIX(0.875), FIX(1), FIX(0.75), FIX(1.125)};
 static u16* g_WeaponCluts[] = {pal_0};
-static s32 g_HandId = HAND_ID;
 static s32 D_11C000_8017B540;
 
 #include "shared.h"

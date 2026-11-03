@@ -8,7 +8,6 @@
 // Chinese bun, Dim Sum set, Pot roast, Sirloin, Turkey, Meal ticket
 #include "weapon_private.h"
 extern u16* g_WeaponCluts[];
-extern s32 g_HandId;
 #include "shared.h"
 #include "gen/w_021_1.h"
 #include "gen/w_021_2.h"

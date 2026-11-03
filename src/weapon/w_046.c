@@ -181,8 +181,6 @@ static s32 D_146000_8017AC10[] = {
 static u16* g_WeaponCluts[] = {
     (u16*)pal_0, (u16*)pal_2, D_146000_8017A670, (u16*)pal_1};
 
-static s32 g_HandId = HAND_ID;
-
 #include "shared.h"
 
 void EntityWeaponAttack(Entity* self) {

@@ -136,7 +136,6 @@ static s32 D_123000_8017A54C[] = {
 };
 
 static u16* g_WeaponCluts[] = {D_123000_8017A284};
-static s32 g_HandId = HAND_ID;
 
 #include "shared.h"
 

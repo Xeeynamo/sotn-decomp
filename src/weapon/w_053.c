@@ -4,7 +4,6 @@
 // Unknown#193, Unknown#194
 #include "weapon_private.h"
 extern u16* g_WeaponCluts[];
-extern s32 g_HandId;
 #include "shared.h"
 #include "gen/w_053_1.h"
 #include "gen/w_053_2.h"

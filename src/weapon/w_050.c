@@ -132,7 +132,6 @@ static s16 D_162000_8017B030[] = {
     24, -14, 64, 0,   24, -14, 64, 0,   20, 2, 64, 0, 18, 14,
     48, 34,  24, -16, 64, 0,   24, -14, 64, 0, 24, 4, 48, 34};
 static u16* g_WeaponCluts[] = {pal1, pal4, pal0, pal2, pal3};
-static s32 g_HandId = HAND_ID;
 
 static s32 prev_player_pose;
 static Point16 D_162000_8017CBFC[80];
