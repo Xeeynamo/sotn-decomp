@@ -53,7 +53,7 @@ void func_060040D8(void) {
         UpdateScrollForRoom();
         break;
     case 3:
-        func_0606468c();
+        func_0606468C();
         break;
     case 7:
         func_06064614();
@@ -679,7 +679,101 @@ void func_06005208(s32 arg0) {
 
 void func_06005310(void) { func_06006FA8(); }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6005328, func_06005328);
+void func_0600544C(void);
+void func_06005470(void);
+void func_06005508(void);
+void func_0600583C(void);
+void func_060058D0(void);
+void func_06005944(void);
+void func_060059F4(void);
+
+static inline bool HACK(void) {
+    if (D_8003C730) {
+        return D_8003C730;
+    } else {
+        return true;
+    }
+}
+
+s32 func_06005328(void) {
+    switch (DAT_0605D770.unk2) {
+    case 0:
+        break;
+
+    case 1:
+        func_0600544C();
+        break;
+
+    case 7:
+        func_06005470();
+        break;
+
+    case 2:
+        func_06005508();
+        break;
+
+    case 3:
+        if (HACK()) {
+        }
+        if (func_060055C8() == 0) {
+            DAT_0605D770.unk2 = 10;
+            DAT_0605D770.unk8 = 0;
+        }
+        goto here;
+
+    case 11:
+        func_06064680();
+        break;
+
+    case 8:
+        func_0606462C();
+        break;
+
+    case 4:
+        if (func_060645DC() != 0) {
+            goto here;
+        }
+        break;
+
+    case 9:
+        func_06064598();
+        break;
+
+    case 5:
+        func_060645CC();
+        break;
+
+    case 6:
+        func_06005944();
+        break;
+
+    case 10:
+        DAT_06038A44 = 0;
+        if (func_06005A90() != 0) {
+            goto here;
+        }
+        break;
+
+    case 12:
+        func_060059F4();
+        break;
+
+    case 13:
+        func_0600583C();
+        break;
+
+    case 14:
+        func_060058D0();
+        break;
+    }
+    DAT_0605D770.unk0 = 0;
+    DAT_0605D770.unk2 = 0;
+    DAT_0605D770.unk8 = 0;
+    DAT_06038A44 = 0;
+    return 0;
+here:
+    return 1;
+}
 
 void func_0600544C(void) {}
 

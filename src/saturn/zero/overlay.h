@@ -32,20 +32,16 @@ extern SaturnPlayerOvl g_PlayerOvl;
 
 extern s32 DAT_06064584;
 extern SaturnPlayerDisableAfterImageCallback DAT_06064588;
-extern s32 (*DAT_06064598)();
-extern s32 (*DAT_060645CC)();
-extern s32 (*DAT_060645DC)();
 extern LayoutEntity** DAT_060645E4;
 extern SaturnSpriteResource** DAT_060645EC;
 extern SaturnPlayerEntityCallback DAT_060645F0;
 extern LayoutEntity** DAT_060645F8;
 extern s32 DAT_0606460C;
 extern s32* DAT_06064610;
-extern s32 (*DAT_0606462C)();
+
 extern SaturnPlayerGraphicsRecord* DAT_06064668;
 extern s32 DAT_06064678;
 extern s32 DAT_0606467C;
-extern s32 (*DAT_06064680)();
 
 extern s32 (*DAT_06066000)();
 extern void (*DAT_06066004)();
