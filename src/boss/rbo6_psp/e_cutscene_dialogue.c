@@ -23,6 +23,6 @@ extern Dialogue g_Dialogue;
 #define CUTSCENE_TILEMAP_SCROLL
 #include "../../st/cutscene_events.h"
 
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/e_cutscene_dialogue", CutsceneSkip);
+#include "../../st/cutscene_skip.h"
 
 INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/e_cutscene_dialogue", EntityCutscene);
