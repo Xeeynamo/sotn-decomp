@@ -1673,10 +1673,10 @@ void func_060BE258(void) {
 
     ptr = func_060784A8();
     func_060BE72C(ptr);
-    d_060cd748 = DAT_060476a0;
-    d_060cd74c = DAT_060476a4;
+    g_MariaSavedMapVramBase = DAT_060476a0;
+    g_MariaSavedMapPlaneConfig = DAT_060476a4;
     if (g_PlayableCharacter == 0) {
-        DAT_060476a0 = (s32)&DAT_00252000;
+        DAT_060476a0 = (u8*)&DAT_00252000;
         DAT_060476a4 = 1;
     }
     colors0 = SpGourTbl->colors0;
@@ -1703,7 +1703,7 @@ void func_060BE308(s32* src) {
         entry++;
     }
 
-    dst = (s32*)((SPR_2LookupTblNoToVram(0x10) * 8) + 0x25C00000);
+    dst = (s32*)((SPR_2LookupTblNoToVram(0x10) * 8) + 0x25C00000ul);
     DMA_CpuMemCopy2(dst, src + 0x4200, 0x400);
     while (DMA_CpuResult() == 2) {
     }
@@ -1715,7 +1715,7 @@ void func_060BE308(s32* src) {
 }
 
 s32 DAT_06086390;
-s32 DAT_060476a0;
+u8* DAT_060476a0;
 s32 DAT_060476a4;
 s32* func_060784A8();
 

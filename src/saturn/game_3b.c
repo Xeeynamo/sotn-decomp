@@ -10,7 +10,7 @@ extern s32 DAT_060486A0[];
 
 extern SaturnSpriteResource** DAT_060645EC;
 
-extern u8 g_PrimitiveUvOffsetByType[6];
+extern u8 g_PrimitiveUvOffsetByType[8];
 extern u16 g_testCollEnemyLookup[];
 extern u8 g_testCollLuckCutoff[];
 extern u16 g_testCollElementLookup[];

@@ -12,7 +12,7 @@
 typedef struct {
     s32 unk0;
     s32 unk4;
-    s32 unk8;
+    u8* unk8;
     s32 unkC;
     s32 unk10;
     s32 unk14;
@@ -24,8 +24,8 @@ typedef struct {
 } SoundRequest;
 
 typedef struct {
-    s32 unk0;
-    s32 unk4;
+    u8* unk0;
+    u8* unk4;
 } SoundMemoryLayout;
 
 extern volatile SoundRequest DAT_06063C30[];
@@ -39,7 +39,8 @@ extern SoundMemoryLayout DAT_06062270;
 #define SOUND_REQUEST_WAIT()
 #endif
 
-s32 PcmOpen(s32 code);
+GfsHn PcmOpen(s32 code);
+GfsHn func_06017F5C(char* fname);
 void PcmClose(GfsHn gfs, s32 type);
 
 extern u16 DAT_0603AA40[];
@@ -78,7 +79,7 @@ extern s32 DAT_06057C2C;
 extern s32 DAT_06057C30;
 extern s32 DAT_06062238;
 extern GfsHn DAT_0606223C;
-extern s32 DAT_06062244;
+extern u8* DAT_06062244;
 extern s32 DAT_06062248;
 extern s32 DAT_06062250;
 extern s32 DAT_06062258;
@@ -87,7 +88,7 @@ extern s8 DAT_0606227C;
 extern GfsHn DAT_06062280;
 extern GfsHn DAT_06062290[];
 extern s8 DAT_06062374;
-extern s32 DAT_06062378;
+extern u8* DAT_06062378;
 extern u32 DAT_06062388;
 extern s32 DAT_0606238C;
 extern s32 DAT_06062390[4];
@@ -203,7 +204,7 @@ extern s8 DAT_0606446C;
 extern s32 DAT_06064470;
 extern s8 DAT_06064474;
 extern s16 DAT_0606447C;
-extern s32 DAT_06064480;
+extern u8* DAT_06064480;
 extern s32 DAT_06064484;
 extern s8 DAT_06064488;
 extern u32 DAT_0606448C;

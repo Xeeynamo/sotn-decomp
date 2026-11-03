@@ -361,8 +361,8 @@ typedef union {
 typedef struct {
     s32 unk0;
     s32 unk4;
-    s32 unk8;
-    s32 unkC;
+    Primitive* unk8;
+    Primitive* unkC;
     Primitive* unk10;
     Primitive* unk14;
     Primitive* unk18;

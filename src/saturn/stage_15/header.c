@@ -8,7 +8,7 @@ SaturnStageDataTables g_Stage15Data = {
     g_Stage15SpriteBanks,
     g_Stage15LayoutHorizontal,
     g_Stage15LayoutVertical,
-    g_Stage15Rooms,
+    (SaturnRoomHeader*)g_Stage15Rooms,
     g_Stage15LayerCompressedSizes,
     g_Stage15LayerMapOffsets,
     g_Stage15LayerSetup,

@@ -185,7 +185,7 @@ void func_060BC834(void);
 extern s16 g_RichterMapRevealRowIndices[];
 void func_060BB9BC(s32*);
 extern s32 g_RichterSavedMapPlaneConfig;
-extern s32 g_RichterSavedMapVramBase;
+extern u8* g_RichterSavedMapVramBase;
 extern u8 g_RichterCastleMapBitmap[240][160];
 extern u32 g_RichterCastleMapState;
 void func_060BB330();

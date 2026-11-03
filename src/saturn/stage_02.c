@@ -1106,9 +1106,9 @@ void func_060E8350(Entity* self) {
 
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E837C, func_060E837C);
 
-void func_060E8ADC(s32, s32, s32);
+void func_060E8ADC(Primitive*, s32, s32);
 
-void func_060E8780(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+void func_060E8780(Primitive* arg0, s32 arg1, s32 arg2, s32 arg3) {
     func_060E87D0(arg1, arg3);
     func_060E8990(arg1, arg2, arg3);
     func_060E8ADC(arg0, arg1, arg3);
@@ -1118,7 +1118,7 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E87D0, func_060E87D0);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E8990, func_060E8990);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E8ADC, func_060E8ADC);
 
-void func_060E8DE0(s32 arg0, s32 arg1, s32 arg2) {
+void func_060E8DE0(Primitive* arg0, s32 arg1, s32 arg2) {
     func_060E8E1C(arg1, arg2);
     func_060E8EEC(arg0, arg1, arg2);
 }

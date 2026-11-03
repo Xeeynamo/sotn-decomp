@@ -113,7 +113,7 @@ extern SaturnStageDataTables g_StageOverlayData;
 
 void func_06006FA8(void);
 
-extern s32 DAT_060476a0;
+extern u8* DAT_060476a0;
 extern s32 DAT_060476a4;
 extern s32 DAT_06038A44;
 
