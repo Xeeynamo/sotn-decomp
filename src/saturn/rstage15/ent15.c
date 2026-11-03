@@ -10,7 +10,8 @@ typedef struct {
     u8 hitboxHeight;
 } Entity15FrameGeometry;
 
-EntityEntry g_RStage15EntityEntry15 = {&g_EntitySpriteBank14, func_060E2A90};
+EntityEntry g_RStage15EntityEntry15 = {
+    &g_SaturnSharedSpriteBank14Resource, func_060E2A90};
 
 s16 g_RStage15Entity15CollisionSensors[6][2] = {
     {0, 25}, {0, 4}, {8, -4}, {-16, 0}, {0, 25}, {12, 0},
@@ -28,8 +29,7 @@ u8 g_RStage15Entity15Animation2[8] = {
 u8 g_RStage15Entity15Animation3[16] = {
     0x10, 1, 2, 0xA, 2, 0xB, 0x14, 0xA, 1, 0x12, 1, 0x11, 1, 0x10, 0xFF, 0,
 };
-u8 g_RStage15Entity15Animation4[4] = {1, 0xD, 1, 0xE};
-u32 g_RStage15Entity15Animation4Padding = 0;
+u8 g_RStage15Entity15Animation4[8] = {1, 0xD, 1, 0xE, 0, 0, 0, 0};
 u8 g_RStage15Entity15Animation5[16] = {
     8, 1, 0x16, 0xC, 1, 0xE, 1, 0xD, 1, 0xF, 1, 0x11, 1, 0x12, 0xFF, 0,
 };
@@ -38,10 +38,9 @@ u8 g_RStage15Entity15Animation6[20] = {
     1, 0x15, 1, 0x16, 1, 0x17, 1, 0x18, 1,    0x19,
     1, 0x1A, 1, 0x1B, 1, 0x1C, 1, 0,    0xFF, 0,
 };
-u8 g_RStage15Entity15Animation7[12] = {
-    2, 0x1D, 2, 0x1E, 2, 0x1F, 2, 0x20, 2, 0x21, 2, 0x22,
+u8 g_RStage15Entity15Animation7[16] = {
+    2, 0x1D, 2, 0x1E, 2, 0x1F, 2, 0x20, 2, 0x21, 2, 0x22, 0, 0, 0, 0,
 };
-u32 g_RStage15Entity15AnimationPadding = 0;
 
 Entity15FrameGeometry g_RStage15Entity15FrameGeometry[5] = {
     {0, 0, 0, 0}, {1, 7, 4, 18}, {1, 3, 7, 14}, {4, 0, 4, 24}, {0, 5, 5, 20},

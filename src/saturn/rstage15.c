@@ -27,7 +27,7 @@ void func_060DC3A4(Entity* self) {
                                          frameOffset));
         sprite->zPriority = 0x6A;
         self->step = 0x100;
-        func_06079BB4(self);
+        SyncSpriteObjectPos(self);
     }
 }
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DC434, func_060DC434);
@@ -228,7 +228,8 @@ void func_060DE40C(Entity* self) {
         } else {
             self->flags |= FLAG_HAS_PRIMS;
             func_060DE4CC(self);
-            self->ext.et_060DE40C.path = &DAT_060EE52C[self->params * 0x10];
+            self->ext.et_060DE40C.path =
+                (u8*)g_RStage15WaterRegions[self->params];
             self->ext.et_060DE40C.spanX = g_Tilemap.hSize * 0x140;
             self->ext.et_060DE40C.spanY = g_Tilemap.vSize << 8;
         }
@@ -251,13 +252,16 @@ void func_060DE654(Entity* self) {
     }
 }
 
-const u16 DAT_060DE6B0[] = {
-    0x0415, 0x1010, 0x10FF, 0x0000, 0x0412, 0x1010, 0x10FF, 0x0000,
-    0x0411, 0x1010, 0x10FF, 0x0000, 0x0417, 0x1010, 0xFF00, 0x0009,
-    0x0414, 0x1010, 0xFF00, 0x0009, 0x0412, 0x1510, 0xFF00, 0x0009,
-    0x0411, 0x1010, 0xFF00, 0x0009, 0x0415, 0x10FF, 0x0000, 0x0009,
-    0x0412, 0x15FF, 0x0000, 0x0009, 0x0411, 0xFF00,
-};
+const char g_RStage15GoldText5000[] = "\x04\x15\x10\x10\x10\xFF";
+const char g_RStage15GoldText2000[] = "\x04\x12\x10\x10\x10\xFF";
+const char g_RStage15GoldText1000[] = "\x04\x11\x10\x10\x10\xFF";
+const char g_RStage15GoldText700[] = "\x04\x17\x10\x10\xFF";
+const char g_RStage15GoldText400[] = "\x04\x14\x10\x10\xFF";
+const char g_RStage15GoldText250[] = "\x04\x12\x15\x10\xFF";
+const char g_RStage15GoldText100[] = "\x04\x11\x10\x10\xFF";
+const char g_RStage15GoldText50[] = "\x04\x15\x10\xFF";
+const char g_RStage15GoldText25[] = "\x04\x12\x15\xFF";
+const char g_RStage15GoldText1[] = "\x04\x11\xFF";
 void func_060DE6FC(u16 arg0) {
     Entity* entity;
     Entity* current;
@@ -276,7 +280,7 @@ void func_060DE6FC(u16 arg0) {
     if (arg0) {
         if (!(collider.effects & 5)) {
             MoveEntity(entity);
-            func_06079BE4(entity);
+            FallEntity(entity);
             return;
         }
 
@@ -321,7 +325,8 @@ void func_060DE808(u16 cardIndex) {
     status = &g_Status;
     params = status->subWeapon;
     player = g_Entities;
-    subWeaponId = DAT_060EE880[cardIndex];
+    subWeaponId =
+        ((s16*)g_RStage15AlucardSubweaponIndices.indices - 14)[cardIndex];
     status->subWeapon = subWeaponId;
 
     if (params == subWeaponId) {
@@ -352,7 +357,43 @@ void func_060DE808(u16 cardIndex) {
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DE8E4, func_060DE8E4);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DF140, func_060DF140);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DFE20, func_060DFE20);
-INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E0160, func_060E0160);
+extern u8 g_CastleFlags[];
+extern u16 g_RStage15PrizeDrops[];
+
+void func_060E0160(Entity* self) {
+    u16 item;
+    PfnEntityUpdate update;
+
+    if (self->step == 0) {
+        self->ext.prizeDrop.itemFlagIndex = self->params + 0x260;
+        item = self->ext.prizeDrop.itemFlagIndex;
+        if (((g_CastleFlags + 0x100)[item >> 3] >> (item & 7)) & 1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        item -= 0x260;
+        item = g_RStage15PrizeDrops[item];
+        if (item < 0x80) {
+            self->unkB4 = (Entity*)func_060DE8E4;
+        } else {
+            self->unkB4 = (Entity*)func_060DF140;
+            item -= 0x80;
+        }
+        self->params = item + 0x8000;
+    } else {
+        item = self->ext.prizeDrop.itemFlagIndex;
+        if (self->step < 5 && self->hitFlags) {
+            (g_CastleFlags + 0x100)[item >> 3] |= 1 << (item & 7);
+            self->step = 5;
+        }
+    }
+
+    update = (PfnEntityUpdate)self->unkB4;
+    update(self);
+}
+
+INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E0260, func_060E0260);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E0774, func_060E0774);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E0DE4, func_060E0DE4);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E0E3C, func_060E0E3C);
@@ -429,7 +470,7 @@ void func_060E38D8(Entity* self) {
     }
 }
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E3904, func_060E3904);
-void func_060E3D08(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+void func_060E3D08(Primitive* arg0, s32 arg1, s32 arg2, s32 arg3) {
     func_060E3D58(arg1, arg3);
     func_060E3F18(arg1, arg2, arg3);
     func_060E4064(arg0, arg1, arg3);
@@ -438,7 +479,7 @@ INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E3D58, func_060E3D58);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E3F18, func_060E3F18);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E4064, func_060E4064);
 
-void func_060E4368(s32 arg0, s32 arg1, s32 arg2) {
+void func_060E4368(Primitive* arg0, s32 arg1, s32 arg2) {
     func_060E43A4(arg1, arg2);
     func_060E4474(arg0, arg1, arg2);
 }
@@ -483,12 +524,13 @@ void func_060E45E0(Entity* entity) {
 }
 void func_060E4630(Entity* self) {
     SyncSpriteObjectPos(self);
-    func_0600B004(self->unk0, DAT_060EF1A8[self->animCurFrame]);
+    func_0600B004(self->unk0, g_RStage15SpriteBank22Frames[self->animCurFrame]);
 }
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E4668, func_060E4668);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E519C, func_060E519C);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E540C, func_060E540C);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E56F4, func_060E56F4);
+INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E5804, func_060E5804);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E6750, func_060E6750);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E6878, func_060E6878);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E76C4, func_060E76C4);
@@ -508,7 +550,7 @@ void func_060E8A54(Entity* entity) {
 }
 void func_060E8AA4(Entity* self) {
     SyncSpriteObjectPos(self);
-    func_0600B004(self->unk0, DAT_060F2670[self->animCurFrame]);
+    func_0600B004(self->unk0, g_RStage15SpriteBank25Frames[self->animCurFrame]);
 }
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E8ADC, func_060E8ADC);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E8EFC, func_060E8EFC);
@@ -516,28 +558,32 @@ INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E9104, func_060E9104);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E9284, func_060E9284);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E98F0, func_060E98F0);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E9D28, func_060E9D28);
+extern u8 g_RStage15Entity50Data[];
+extern u8 g_RStage15CopperArmorWeaponData[];
+
 void func_060EA0B0(Entity* entity) {
     entity->unk0 = CreateSpriteObject(
         g_RStage15SpriteBank26.allocationIndex, g_RStage15SpriteBank26.flags,
         g_RStage15SpriteBank26Images, 1);
-    SyncSpriteObjectPosUnchecked(entity, DAT_060F288E);
+    SyncSpriteObjectPosUnchecked(entity, (s16*)(g_RStage15Entity50Data + 0x72));
     entity->step = 1;
 }
 void func_060EA100(Entity* self) {
-    func_06079BB4(self);
-    func_0600B004(self->unk0, DAT_060F2B4C[self->animCurFrame]);
+    SyncSpriteObjectPos(self);
+    func_0600B004(self->unk0, g_RStage15SpriteBank26Frames[self->animCurFrame]);
 }
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EA138, func_060EA138);
 void func_060EA578(Entity* entity) {
     entity->unk0 = CreateSpriteObject(
         g_RStage15SpriteBank27.allocationIndex, g_RStage15SpriteBank27.flags,
         g_RStage15SpriteBank27Images, 1);
-    SyncSpriteObjectPosUnchecked(entity, DAT_060F2C32);
+    SyncSpriteObjectPosUnchecked(
+        entity, (s16*)(g_RStage15CopperArmorWeaponData + 0xA));
     entity->step = 1;
 }
 void func_060EA5C8(Entity* self) {
-    func_06079BB4(self);
-    func_0600B004(self->unk0, DAT_060F2D68[self->animCurFrame]);
+    SyncSpriteObjectPos(self);
+    func_0600B004(self->unk0, g_RStage15SpriteBank27Frames[self->animCurFrame]);
 }
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EA600, func_060EA600);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EAE6C, func_060EAE6C);

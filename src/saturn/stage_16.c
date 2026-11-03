@@ -25,7 +25,7 @@ void func_060DC418(Entity* self) {
         func_0600AFA8(sprite, g_Stage16SpriteBank16Frames[self->animCurFrame]);
         sprite->zPriority = 0x6A;
         self->step = 0x100;
-        func_06079BB4(self);
+        SyncSpriteObjectPos(self);
     }
 }
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60DC4C0, func_060DC4C0);
@@ -55,14 +55,14 @@ void func_060DCDBC(u16 arg0) {
     PlaySfx(0x67C);
     mappedId = (u16)g_Status.subWeapon;
     entities = g_Entities;
-    subweaponId = DAT_060EA4B0[arg0];
+    subweaponId = ((s16*)g_Stage16AlucardSubweaponIndices.indices - 14)[arg0];
     g_Status.subWeapon = (u32)subweaponId;
     if (mappedId == subweaponId) {
         mappedId = 1;
         stepPtr = self->unk6D;
         step = 0x10;
     } else {
-        mappedId = DAT_060EA294[mappedId];
+        mappedId = g_Stage16AlucardSubweaponIds[mappedId];
         stepPtr = self->unk6D;
         step = 0x60;
     }
@@ -159,8 +159,9 @@ void func_060E0F20(Entity* self) {
         }
 
         sprite = CreateSpriteObject(
-            g_EntitySpriteBank08.allocationIndex, g_EntitySpriteBank08.flags,
-            g_EntitySpriteBank08.images, spriteSize);
+            g_SaturnSharedSpriteBank8Resource.allocationIndex,
+            g_SaturnSharedSpriteBank8Resource.flags,
+            g_SaturnSharedSpriteBank8Resource.images, spriteSize);
         self->unk0 = sprite;
         TekiInit(self, 3);
 
@@ -285,7 +286,7 @@ void func_060E2770(Entity* self) {
     }
 }
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E279C, func_060E279C);
-void func_060E2BA0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+void func_060E2BA0(Primitive* arg0, s32 arg1, s32 arg2, s32 arg3) {
     func_060E2BF0(arg1, arg3);
     func_060E2DB0(arg1, arg2, arg3);
     func_060E2EFC(arg0, arg1, arg3);
@@ -293,7 +294,7 @@ void func_060E2BA0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E2BF0, func_060E2BF0);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E2DB0, func_060E2DB0);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E2EFC, func_060E2EFC);
-void func_060E3200(s32 arg0, s32 arg1, s32 arg2) {
+void func_060E3200(Primitive* arg0, s32 arg1, s32 arg2) {
     func_060E323C(arg1, arg2);
     func_060E330C(arg0, arg1, arg2);
 }
@@ -366,7 +367,8 @@ void func_060E411C(Entity* self, u8 arg1) {
     s32 velocityX;
 
     if ((AnimateEntityWithSpriteData(
-             self, DAT_060EB46C[arg1], g_Stage16SpriteBank21Frames) &
+             self, g_Stage16Entity25WalkAnimations[arg1],
+             g_Stage16SpriteBank21Frames) &
          0x80) &&
         self->step == 7) {
         if (self->pose != 3) {
@@ -378,22 +380,23 @@ void func_060E411C(Entity* self, u8 arg1) {
     }
 
     velocityX = self->velocityX;
-    if (self->pose >= DAT_060EB38C[arg1]) {
+    if (self->pose >= g_Stage16Entity25WalkPoses[arg1]) {
         if (velocityX != 0) {
             if (self->ext.et_060E411C.facingLatch != 0) {
-                velocityX += DAT_060EB394[arg1];
+                velocityX += g_Stage16Entity25WalkAccel[arg1];
             } else {
-                velocityX -= DAT_060EB394[arg1];
+                velocityX -= g_Stage16Entity25WalkAccel[arg1];
             }
         }
     } else if (self->ext.et_060E411C.facingLatch != 0) {
-        velocityX -= DAT_060EB394[arg1];
+        velocityX -= g_Stage16Entity25WalkAccel[arg1];
     } else {
-        velocityX += DAT_060EB394[arg1];
+        velocityX += g_Stage16Entity25WalkAccel[arg1];
     }
 
     self->velocityX = velocityX;
-    if ((func_06079DEC(self, DAT_060EB47C) & 0x60) == 0x60) {
+    if ((UnkCollisionFunc2(self, g_Stage16Entity25WallSensors) & 0x60) ==
+        0x60) {
         self->posX.val -= velocityX;
     }
 }
@@ -446,7 +449,7 @@ void func_060E4C74(Entity* self) {
     self->ext.spriteAnimEnemy.unk81 = 0;
     self->ext.spriteAnimEnemy.unk82 = 0;
 
-    SyncSpriteObjectPosUnchecked(self, DAT_060EC690);
+    SyncSpriteObjectPosUnchecked(self, g_Stage16BoneScimitarSensors);
     self->step++;
 }
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E4CF4, func_060E4CF4);
@@ -463,7 +466,7 @@ const u16 DAT_060E55AC = 0x8888;
 const u16 DAT_060E55AE = 0x8889;
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E55B0, func_060E55B0);
 void func_060E636C(Entity* self) {
-    func_06079BB4(self);
+    SyncSpriteObjectPos(self);
     func_0600B004(self->unk0, g_Stage16SpriteBank24Frames[self->animCurFrame]);
 }
 
@@ -500,7 +503,7 @@ void func_060E6C88(Entity* self) {
         }
 
         self->unk0->zPriority -= 2;
-        func_06079BB4(self);
+        SyncSpriteObjectPos(self);
         func_0600B004(
             self->unk0, g_Stage16SpriteBank24Frames[self->animCurFrame]);
     }
@@ -529,6 +532,8 @@ s32 func_060E6DB8(Entity* self, Entity* other) {
 const u16 DAT_060E6DD8 = 0x8888;
 const u16 DAT_060E6DDA = 0x8889;
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E6DDC, func_060E6DDC);
+extern s8 g_Stage16SkeletonBreederHitboxes[][4];
+
 void func_060E72FC(Entity* self) {
     Entity* parent = self - 1;
     s8* hitbox;
@@ -539,7 +544,8 @@ void func_060E72FC(Entity* self) {
         self->step++;
     case 1:
         if ((u16)(parent->animCurFrame - 0x14) <= 0xAU) {
-            hitbox = DAT_060EE27C[parent->animCurFrame];
+            hitbox =
+                (g_Stage16SkeletonBreederHitboxes - 0x14)[parent->animCurFrame];
             self->hitboxWidth = hitbox[0];
             self->hitboxHeight = hitbox[1];
             self->hitboxOffX = hitbox[2];
