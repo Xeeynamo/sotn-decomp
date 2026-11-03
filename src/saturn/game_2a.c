@@ -379,7 +379,6 @@ typedef struct {
 extern SprGourTbl* SpGourTbl;
 extern u32 D_8003C744;
 extern s16 g_StatusHudPrimitiveLayout[];
-extern u16 DAT_0605AED8[][2];
 extern s16 g_StatusHudSpriteOffsets[][2];
 
 void func_06075838(void) {
@@ -403,7 +402,7 @@ void func_06075838(void) {
     temp2 = g_StatusHudSpriteOffsets;
     while (prim != NULL) {
         u16* ptr;
-        ptr = DAT_0605aec0[DAT_06086388->allocationIndex + *temp2++];
+        ptr = DAT_0605AEC0[DAT_06086388->allocationIndex + *temp2++];
         prim->unk8 = ptr[0];
         prim->unkA = ptr[1];
         prim->unk6 =
@@ -512,7 +511,7 @@ void func_06075838(void) {
         s16* y3p;
 
         texOffset = i * 0xC0;
-        ptr2 = DAT_0605AED8[DAT_06086388->allocationIndex];
+        ptr2 = DAT_0605AEC0[6 + DAT_06086388->allocationIndex];
         prim->unk8 = ptr2[0];
         prim->unkA = ptr2[1];
         prim->unk8 += (texOffset >> 4) & 0xFFFC;
@@ -724,7 +723,7 @@ void func_06075D24(void) {
         prim->unk6 = sVar11;
         prim = prim->next;
         ptr =
-            DAT_0605aec0[DAT_06086388->allocationIndex +
+            DAT_0605AEC0[DAT_06086388->allocationIndex +
                          g_StatusHudSpriteOffsets[5][0] + g_Status.hearts / 10];
         prim->unk8 = ptr[0];
         prim->unkA = ptr[1];
@@ -743,7 +742,7 @@ void func_06075D24(void) {
         altPrim = prim;
         prim = prim->next;
         ptr =
-            DAT_0605aec0[DAT_06086388->allocationIndex +
+            DAT_0605AEC0[DAT_06086388->allocationIndex +
                          g_StatusHudSpriteOffsets[5][0] + g_Status.hearts % 10];
         prim->unk8 = ptr[0];
         prim->unkA = ptr[1];
@@ -755,7 +754,7 @@ void func_06075D24(void) {
         } else {
             s32 sub = g_Status.subWeapon;
             ptr =
-                DAT_0605aec0[g_SaturnSharedSpriteBank0Resource.allocationIndex +
+                DAT_0605AEC0[g_SaturnSharedSpriteBank0Resource.allocationIndex +
                              local_38[sub]];
             prim->unk8 = ptr[0];
             prim->unkA = ptr[1];
@@ -771,50 +770,50 @@ void func_06075D24(void) {
             return;
         }
         if (g_PlayerHud.unk24 < 0x6) {
-            ptr = DAT_0605aec0[DAT_06086388->allocationIndex + 1];
+            ptr = DAT_0605AEC0[DAT_06086388->allocationIndex + 1];
             prim->unk8 = ptr[0];
             prim->unkA = ptr[1];
             SetXY(prim, 0x2D, 0x19);
             g_PlayerHud.unk24++;
         } else if (g_PlayerHud.unk24 < 0xC) {
-            ptr = DAT_0605aec0[DAT_06086388->allocationIndex + 2];
+            ptr = DAT_0605AEC0[DAT_06086388->allocationIndex + 2];
             prim->unk8 = ptr[0];
             prim->unkA = ptr[1];
             SetXY(prim, 0x2D, 0x1D);
             g_PlayerHud.unk24++;
         } else if (g_PlayerHud.unk24 < 0x11) {
-            ptr = DAT_0605aec0[DAT_06086388->allocationIndex + 3];
+            ptr = DAT_0605AEC0[DAT_06086388->allocationIndex + 3];
             prim->unk8 = ptr[0];
             prim->unkA = ptr[1];
             SetXY(prim, 0x2D, 0x19);
             g_PlayerHud.unk24++;
         } else if (g_PlayerHud.unk24 < 0x15) {
-            ptr = DAT_0605aec0[DAT_06086388->allocationIndex + 4];
+            ptr = DAT_0605AEC0[DAT_06086388->allocationIndex + 4];
             prim->unk8 = ptr[0];
             prim->unkA = ptr[1];
             SetXY(prim, 0x2D, 0x15);
             g_PlayerHud.unk24++;
         } else if (g_PlayerHud.unk24 == 0x15) {
         } else if (g_PlayerHud.unk24 > 0x32 && g_PlayerHud.unk24 < 0x39) {
-            ptr = DAT_0605aec0[DAT_06086388->allocationIndex + 3];
+            ptr = DAT_0605AEC0[DAT_06086388->allocationIndex + 3];
             prim->unk8 = ptr[0];
             prim->unkA = ptr[1];
             SetXY(prim, 0x2D, 0x19);
             g_PlayerHud.unk24++;
         } else if (g_PlayerHud.unk24 < 0x3D) {
-            ptr = DAT_0605aec0[DAT_06086388->allocationIndex + 2];
+            ptr = DAT_0605AEC0[DAT_06086388->allocationIndex + 2];
             prim->unk8 = ptr[0];
             prim->unkA = ptr[1];
             SetXY(prim, 0x2D, 0x1D);
             g_PlayerHud.unk24++;
         } else if (g_PlayerHud.unk24 < 0x42) {
-            ptr = DAT_0605aec0[DAT_06086388->allocationIndex + 1];
+            ptr = DAT_0605AEC0[DAT_06086388->allocationIndex + 1];
             prim->unk8 = ptr[0];
             prim->unkA = ptr[1];
             SetXY(prim, 0x2D, 0x19);
             g_PlayerHud.unk24++;
         } else if (g_PlayerHud.unk24 < 0x47) {
-            ptr = DAT_0605aec0[DAT_06086388->allocationIndex];
+            ptr = DAT_0605AEC0[DAT_06086388->allocationIndex];
             prim->unk8 = ptr[0];
             prim->unkA = ptr[1];
             SetXY(prim, 0x2D, 0x15);
@@ -899,7 +898,7 @@ void UpdateCompactStatusHud(void) {
         prim->drawMode |= DRAW_HIDE;
     } else {
         prim->drawMode &= ~DRAW_HIDE;
-        ptr = DAT_0605aec0[DAT_06086388->allocationIndex +
+        ptr = DAT_0605AEC0[DAT_06086388->allocationIndex +
                            g_AlternateStatusHudSpriteOffsets[3][0] +
                            (g_Status.hearts / 100)];
         prim->unk8 = ptr[0];
@@ -910,14 +909,14 @@ void UpdateCompactStatusHud(void) {
         prim->drawMode |= DRAW_HIDE;
     } else {
         prim->drawMode &= ~DRAW_HIDE;
-        ptr = DAT_0605aec0[DAT_06086388->allocationIndex +
+        ptr = DAT_0605AEC0[DAT_06086388->allocationIndex +
                            g_AlternateStatusHudSpriteOffsets[4][0] +
                            ((g_Status.hearts / 10) % 10)];
         prim->unk8 = ptr[0];
         prim->unkA = ptr[1];
     }
     prim = prim->next;
-    ptr = DAT_0605aec0[DAT_06086388->allocationIndex +
+    ptr = DAT_0605AEC0[DAT_06086388->allocationIndex +
                        g_AlternateStatusHudSpriteOffsets[5][0] +
                        (g_Status.hearts % 10)];
     prim->unk8 = ptr[0];
@@ -927,7 +926,7 @@ void UpdateCompactStatusHud(void) {
         prim->drawMode |= DRAW_HIDE;
     } else {
         s32 sub = g_Status.subWeapon;
-        ptr = DAT_0605aec0[g_SaturnSharedSpriteBank0Resource.allocationIndex +
+        ptr = DAT_0605AEC0[g_SaturnSharedSpriteBank0Resource.allocationIndex +
                            local_30[sub]];
         prim->unk8 = ptr[0];
         prim->unkA = ptr[1];
@@ -960,50 +959,50 @@ void UpdateCompactStatusHud(void) {
             }
         }
     } else if (g_PlayerHud.unk24 != 0x0 && g_PlayerHud.unk24 < 0x6) {
-        ptr = DAT_0605aec0[DAT_06086388->allocationIndex + 1];
+        ptr = DAT_0605AEC0[DAT_06086388->allocationIndex + 1];
         prim->unk8 = ptr[0];
         prim->unkA = ptr[1];
         SetXY(prim, 0x2D, 0x19);
         g_PlayerHud.unk24++;
     } else if (g_PlayerHud.unk24 < 0xC) {
-        ptr = DAT_0605aec0[DAT_06086388->allocationIndex + 2];
+        ptr = DAT_0605AEC0[DAT_06086388->allocationIndex + 2];
         prim->unk8 = ptr[0];
         prim->unkA = ptr[1];
         SetXY(prim, 0x2D, 0x1D);
         g_PlayerHud.unk24++;
     } else if (g_PlayerHud.unk24 < 0x11) {
-        ptr = DAT_0605aec0[DAT_06086388->allocationIndex + 3];
+        ptr = DAT_0605AEC0[DAT_06086388->allocationIndex + 3];
         prim->unk8 = ptr[0];
         prim->unkA = ptr[1];
         SetXY(prim, 0x2D, 0x19);
         g_PlayerHud.unk24++;
     } else if (g_PlayerHud.unk24 < 0x15) {
-        ptr = DAT_0605aec0[DAT_06086388->allocationIndex + 4];
+        ptr = DAT_0605AEC0[DAT_06086388->allocationIndex + 4];
         prim->unk8 = ptr[0];
         prim->unkA = ptr[1];
         SetXY(prim, 0x2D, 0x15);
         g_PlayerHud.unk24++;
     } else if (g_PlayerHud.unk24 == 0x15) {
     } else if (g_PlayerHud.unk24 > 0x32 && g_PlayerHud.unk24 < 0x39) {
-        ptr = DAT_0605aec0[DAT_06086388->allocationIndex + 3];
+        ptr = DAT_0605AEC0[DAT_06086388->allocationIndex + 3];
         prim->unk8 = ptr[0];
         prim->unkA = ptr[1];
         SetXY(prim, 0x2D, 0x19);
         g_PlayerHud.unk24++;
     } else if (g_PlayerHud.unk24 < 0x3D) {
-        ptr = DAT_0605aec0[DAT_06086388->allocationIndex + 2];
+        ptr = DAT_0605AEC0[DAT_06086388->allocationIndex + 2];
         prim->unk8 = ptr[0];
         prim->unkA = ptr[1];
         SetXY(prim, 0x2D, 0x1D);
         g_PlayerHud.unk24++;
     } else if (g_PlayerHud.unk24 < 0x42) {
-        ptr = DAT_0605aec0[DAT_06086388->allocationIndex + 1];
+        ptr = DAT_0605AEC0[DAT_06086388->allocationIndex + 1];
         prim->unk8 = ptr[0];
         prim->unkA = ptr[1];
         SetXY(prim, 0x2D, 0x19);
         g_PlayerHud.unk24++;
     } else if (g_PlayerHud.unk24 < 0x47) {
-        ptr = DAT_0605aec0[DAT_06086388->allocationIndex];
+        ptr = DAT_0605AEC0[DAT_06086388->allocationIndex];
         prim->unk8 = ptr[0];
         prim->unkA = ptr[1];
         SetXY(prim, 0x2D, 0x15);
@@ -1038,7 +1037,7 @@ static void SetUnk(Primitive* prim, u16* arg1) {
 
 // func_060771D4
 void SetHudPrimSprite(Primitive* prim, s32 arg1) {
-    SetUnk(prim, DAT_0605aec0[DAT_06086388->allocationIndex + arg1]);
+    SetUnk(prim, DAT_0605AEC0[DAT_06086388->allocationIndex + arg1]);
     prim->unk6 =
         LookupTblNoToVram(DAT_06086388->flags + arg1) & 0x8FFF | 0x4000;
 }
@@ -1108,7 +1107,7 @@ void SetHeartsNum(Primitive* prim) {
         digit = 10;
     }
     digit += g_SaturnSharedSpriteBank4Resource.allocationIndex + 3;
-    SetUnk(prim, DAT_0605aec0[digit]);
+    SetUnk(prim, DAT_0605AEC0[digit]);
     prim->unk6 = LookupTblNoToVram(uVar13) & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
         leading_zeros--;
@@ -1126,7 +1125,7 @@ void SetHeartsNum(Primitive* prim) {
         digit = 10;
     }
     digit += g_SaturnSharedSpriteBank4Resource.allocationIndex + 3;
-    SetUnk(prim, DAT_0605aec0[digit]);
+    SetUnk(prim, DAT_0605AEC0[digit]);
     prim->unk6 = LookupTblNoToVram(uVar13) & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
         leading_zeros--;
@@ -1144,7 +1143,7 @@ void SetHeartsNum(Primitive* prim) {
         digit = 10;
     }
     digit += g_SaturnSharedSpriteBank4Resource.allocationIndex + 3;
-    SetUnk(prim, DAT_0605aec0[digit]);
+    SetUnk(prim, DAT_0605AEC0[digit]);
     prim->unk6 = LookupTblNoToVram(uVar13) & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
         prim->drawMode |= DRAW_HIDE;
@@ -1160,7 +1159,7 @@ void SetHeartsNum(Primitive* prim) {
         digit = 10;
     }
     digit += g_SaturnSharedSpriteBank4Resource.allocationIndex + 3;
-    SetUnk(prim, DAT_0605aec0[digit]);
+    SetUnk(prim, DAT_0605AEC0[digit]);
     prim->unk6 = LookupTblNoToVram(uVar13) & 0x8FFF | 0x4000;
     SetXW(prim, g_HudSpriteX[i], g_HudSpriteW[i]);
 }
@@ -1196,7 +1195,7 @@ void SetLifeNum(Primitive* prim) {
     }
     digit = (displayHP / 1000) % 10;
     digit += DAT_06086388->allocationIndex + 10;
-    SetUnk(prim, DAT_0605aec0[digit]);
+    SetUnk(prim, DAT_0605AEC0[digit]);
     prim->unk6 = LookupTblNoToVram(uVar11) & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
         leading_zeros--;
@@ -1211,7 +1210,7 @@ void SetLifeNum(Primitive* prim) {
     prim = prim->next;
     digit = (displayHP / 100) % 10;
     digit += DAT_06086388->allocationIndex + 10;
-    SetUnk(prim, DAT_0605aec0[digit]);
+    SetUnk(prim, DAT_0605AEC0[digit]);
     prim->unk6 = LookupTblNoToVram(uVar11) & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
         leading_zeros--;
@@ -1226,7 +1225,7 @@ void SetLifeNum(Primitive* prim) {
     prim = prim->next;
     digit = (displayHP / 10) % 10;
     digit += DAT_06086388->allocationIndex + 10;
-    SetUnk(prim, DAT_0605aec0[digit]);
+    SetUnk(prim, DAT_0605AEC0[digit]);
     prim->unk6 = LookupTblNoToVram(uVar11) & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
         prim->drawMode |= DRAW_HIDE;
@@ -1239,7 +1238,7 @@ void SetLifeNum(Primitive* prim) {
     prim = prim->next;
     digit = displayHP % 10;
     digit += DAT_06086388->allocationIndex + 10;
-    SetUnk(prim, DAT_0605aec0[digit]);
+    SetUnk(prim, DAT_0605AEC0[digit]);
     prim->unk6 = LookupTblNoToVram(uVar11) & 0x8FFF | 0x4000;
     prim->x0 = x;
     prim->y0 = g_HudSpriteY[6];
@@ -1307,7 +1306,7 @@ void func_06077D88(Primitive* prim) {
     SaturnSpritePart* part = &frame->parts[0];
 
     SetUnk(
-        prim, DAT_0605aec0[g_SaturnSharedSpriteBank0Resource.allocationIndex +
+        prim, DAT_0605AEC0[g_SaturnSharedSpriteBank0Resource.allocationIndex +
                            part->imageIndex]);
     prim->unk6 =
         LookupTblNoToVram(DAT_06086388->flags + local_20[sub]) & 0x8FFF |
@@ -1330,7 +1329,7 @@ void func_06077D88(Primitive* prim) {
         prim->y3 = (MTH_GetRand() & 0x3F) * 6 + 0xC8;
     }
     sub = prim->x3 & 0xF;
-    SetUnk(prim, DAT_0605aec0[DAT_06086388->allocationIndex +
+    SetUnk(prim, DAT_0605AEC0[DAT_06086388->allocationIndex +
                               g_HudAnimationTextureOffsets[sub]]);
     prim->unk6 = LookupTblNoToVram(
                      DAT_06086388->flags + g_HudAnimationClutOffsets[sub]) &
@@ -1340,7 +1339,7 @@ void func_06077D88(Primitive* prim) {
     prim->y0 = g_HudSpriteY[1];
     prim = prim->next;
 
-    SetUnk(prim, DAT_0605aec0[DAT_06086388->allocationIndex + 2]);
+    SetUnk(prim, DAT_0605AEC0[DAT_06086388->allocationIndex + 2]);
     prim->unk6 = LookupTblNoToVram(DAT_06086388->flags + 8) & 0x8FFF | 0x4000;
     prim->x0 = g_HudSpriteX[2];
     prim->y0 = g_HudSpriteY[2];

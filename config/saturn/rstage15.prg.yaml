@@ -25,10 +25,18 @@ segments:
       - start: 0x40
         type: c
         file: rstage15
-        end: 0x10EFC
+        end: 0x105BC
         function_ranges:
+          - [0x4160, 0x4260]
+          - [0x4260, 0x4774]
+          - [0x96F4, 0x9804]
+          - [0x9804, 0xA750]
           - [0xF4CC, 0xF550]
           - [0xF550, 0x10170]
+      - start: 0x105BC
+        type: .data
+        file: rstage15/s16res
+        end: 0x10EFC
       - start: 0x10EFC
         type: .data
         file: rstage15/sprbank

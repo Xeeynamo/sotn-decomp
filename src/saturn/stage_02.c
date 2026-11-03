@@ -759,7 +759,7 @@ void func_060E7508(Entity* self) {
         func_060e8330();
         DAT_060F5088[1] += self->ext.save.unk34;
         func_060E8780(self->ext.save.unk8, 0, self->ext.save.unk24, 0);
-        if (DAT_0605DD94 != 0) {
+        if (DAT_0605DD90[1].unit_id != 0) {
             iVar6 = func_06066B30(self, 1);
             if (iVar6 == 0) {
                 break;
@@ -1123,36 +1123,27 @@ void func_060E8DE0(s32 arg0, s32 arg1, s32 arg2) {
     func_060E8EEC(arg0, arg1, arg2);
 }
 
-extern s32 DAT_060F5098;
-extern MthMatrixTbl DAT_06061DF0;
+extern MthXyz DAT_060F5098;
 extern s32 g_Stage02Entity08ModelVertices14[];
 
-void func_060E8E1C(s32 arg0, s32 arg1) {
-    s32* dst_base;
-    s32* dst;
-    s32* src;
-    s32* src1;
-    s32* dst1;
+void func_060E8E1C(s32 scale, s32 unused) {
+    MthXyz* src;
+    MthXyz* base;
+    MthXyz* dst;
+    s32 factor;
     s32 i;
-    s32 limit;
 
-    dst_base = DAT_060485E0;
+    base = DAT_060485E0;
     src = g_Stage02Entity08ModelVertices14;
-    dst = dst_base;
-    arg0 <<= 8;
-    i = 0;
-    limit = 13;
-    src1 = src + 1;
-    dst1 = dst_base + 1;
+    dst = base;
+    factor = scale << 8;
 
-    for (; i <= limit; i++) {
-        dst[0] = src[0] * arg0;
-        dst1[0] = src1[0] * arg0;
-        dst1[1] = src1[1] * arg0;
-        src += 3;
-        dst += 3;
-        src1 += 3;
-        dst1 += 3;
+    for (i = 0; i < 14; i++) {
+        dst->x = src->x * factor;
+        dst->y = src->y * factor;
+        dst->z = src->z * factor;
+        dst++;
+        src++;
     }
 
     SetCurrentMatrixBinAngle(DAT_060F5088, &DAT_060F5098);
@@ -1161,9 +1152,9 @@ void func_060E8E1C(s32 arg0, s32 arg1) {
     DAT_06061DF0.current->val[0][1] = DAT_06061DF0.current->val[0][1] * 5 / 4;
     DAT_06061DF0.current->val[0][2] = DAT_06061DF0.current->val[0][2] * 5 / 4;
 
-    TransformAndProjectPoints(
-        (MthXyz*)dst_base, (XyInt*)(dst_base + 0x102), 14);
+    TransformAndProjectPoints(base, (XyInt*)((char*)base + 0x408), 14);
 }
+
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E8EEC, func_060E8EEC);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E9058, func_060E9058);
 extern s16 DAT_060F212E[];

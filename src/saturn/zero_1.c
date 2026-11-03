@@ -1,79 +1,57 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "zero.h"
+#include "saturn_hw.h"
 #include "zero/sound.h"
 #include "inc_asm.h"
 #include "sattypes.h"
-
-static inline void set_sr(register Uint32 sr) {
-    __asm__ volatile("ldc	%0, sr" : : "r"(sr));
-}
-
-static inline Uint32 get_sr(void) {
-    Uint32 sr;
-    __asm__ volatile("stc	sr, %0" : "=r"(sr));
-    return sr;
-}
-
-static inline Uint32 get_imask(void) {
-    Uint32 imask = (get_sr() & 0x000000F0) >> 4;
-    return imask;
-}
-
-static inline void set_imask(register Uint32 imask) {
-    Uint32 sr = get_sr();
-
-    sr &= ~0x000000F0;
-    sr |= imask << 4;
-    set_sr(sr);
-}
 
 // original name: pause_seq
 void func_060110C0(s32 arg0) {
     switch (arg0) {
     case 0xFE00000E:
-        if (DAT_06041655[DAT_060643E0[0]][2] == 9) {
+        if (g_SaturnSoundConfigs[DAT_060643E0[0]].unk2 == 9) {
             SND_PauseSeq(0);
         }
-        if (DAT_06041655[DAT_060643E0[1]][2] == 9) {
+        if (g_SaturnSoundConfigs[DAT_060643E0[1]].unk2 == 9) {
             SND_PauseSeq(1);
         }
-        if (DAT_06041655[DAT_060643E0[2]][2] == 9) {
+        if (g_SaturnSoundConfigs[DAT_060643E0[2]].unk2 == 9) {
             SND_PauseSeq(2);
         }
         break;
 
     case 0xFE000010:
-        if (DAT_06041655[DAT_060643E0[3]][2] == 9) {
+        if (g_SaturnSoundConfigs[DAT_060643E0[3]].unk2 == 9) {
             SND_PauseSeq(3);
         }
-        if (DAT_06041655[DAT_060643E0[4]][2] == 9) {
+        if (g_SaturnSoundConfigs[DAT_060643E0[4]].unk2 == 9) {
             SND_PauseSeq(4);
         }
-        if (DAT_06041655[DAT_060643E0[5]][2] == 9) {
+        if (g_SaturnSoundConfigs[DAT_060643E0[5]].unk2 == 9) {
             SND_PauseSeq(5);
         }
         break;
 
     case 0xFE00000F:
-        if (DAT_06041655[DAT_060643E0[0]][2] == 9) {
+        if (g_SaturnSoundConfigs[DAT_060643E0[0]].unk2 == 9) {
             SND_ContSeq(0);
         }
-        if (DAT_06041655[DAT_060643E0[1]][2] == 9) {
+        if (g_SaturnSoundConfigs[DAT_060643E0[1]].unk2 == 9) {
             SND_ContSeq(1);
         }
-        if (DAT_06041655[DAT_060643E0[2]][2] == 9) {
+        if (g_SaturnSoundConfigs[DAT_060643E0[2]].unk2 == 9) {
             SND_ContSeq(2);
         }
         break;
 
     case 0xFE000011:
-        if (DAT_06041655[DAT_060643E0[3]][2] == 9) {
+        if (g_SaturnSoundConfigs[DAT_060643E0[3]].unk2 == 9) {
             SND_ContSeq(3);
         }
-        if (DAT_06041655[DAT_060643E0[4]][2] == 9) {
+        if (g_SaturnSoundConfigs[DAT_060643E0[4]].unk2 == 9) {
             SND_ContSeq(4);
         }
-        if (DAT_06041655[DAT_060643E0[5]][2] == 9) {
+        if (g_SaturnSoundConfigs[DAT_060643E0[5]].unk2 == 9) {
             SND_ContSeq(5);
         }
         break;
@@ -83,7 +61,7 @@ void func_060110C0(s32 arg0) {
 // func_06011264
 void SignalSlaveSh2(void) {
     // set input capture flag on sub-sh2
-    *((u16*)SH2_REG_M_FRT_IC) = 0xFFFF;
+    HW_WRITE16(SH2_REG_M_FRT_IC, 0xFFFF);
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011278, PlaySfx);
@@ -204,7 +182,11 @@ void func_06011CE4(void) {
     SND_INI_PRG_ADR(sys_ini) = g_SoundDriver68k;
     SND_INI_PRG_SZ(sys_ini) = 0x67F2;
     SND_INI_ARA_ADR(sys_ini) = DAT_0603AA40;
+#ifdef SATZ
+    SND_INI_ARA_SZ(sys_ini) = 0x1D;
+#else
     SND_INI_ARA_SZ(sys_ini) = 0x3A;
+#endif
     SND_Init(&sys_ini);
     SND_ChgMap(0);
     DAT_0606441C = func_06012C4C(0xFF, 0);
@@ -321,7 +303,7 @@ s32 func_06012108(void) {
     s32 base;
 
     DAT_060641D0 = 0x11800;
-    base = 0x200000;
+    base = (s32)DAT_00200000;
     DAT_06062244 = base;
     DAT_06062378 = DAT_06062244 + 0x4000;
     DAT_06062270.unk0 = DAT_06062378 + 0x800;
@@ -563,7 +545,7 @@ s32 func_060126D4(s32 arg0) {
         GFS_GetFileSize(DAT_06064390, &sctsz, &nsct, &lstlen);
         DAT_06057C28 = sctsz * (nsct - 1) + lstlen;
         PcmLseek(DAT_06064390, 0);
-        result = func_06016B9C(DAT_06064390, 0x211800, DAT_06057C28);
+        result = func_06016B9C(DAT_06064390, (s32)DAT_00211800, DAT_06057C28);
         if (result == -1) {
             DAT_06064390 = NULL;
             DAT_060644AC = 0;
@@ -609,7 +591,7 @@ s32 func_060127F0(s32 arg0) {
         GFS_GetFileSize(DAT_060643D0, &sctsz, &nsct, &lstlen);
         DAT_06057C30 = sctsz * (nsct - 1) + lstlen;
         PcmLseek(DAT_060643D0, 0);
-        result = func_06016B9C(DAT_060643D0, 0x22A000, DAT_06057C30);
+        result = func_06016B9C(DAT_060643D0, (s32)DAT_0022A000, DAT_06057C30);
         if (result == -1) {
             DAT_060643D0 = NULL;
             DAT_060644AC = 0;
@@ -947,12 +929,12 @@ void func_06013538(u8* arg0, u16* arg1, u16* arg2, u32 arg3, s16* arg4,
         CLAMP(var_r3, -0x8000, 0x7FFF);
         var_r2 += g_AdpcmIndexAdjust[hi];
         CLAMP(var_r2, 0, 0x58);
-        *arg1++ = var_r3;
+        HW_STORE(arg1++, var_r3);
         var_r3 += g_AdpcmDeltaTable[(var_r2 * 0x10) + lo];
         CLAMP(var_r3, -0x8000, 0x7FFF);
         var_r2 += g_AdpcmIndexAdjust[lo];
         CLAMP(var_r2, 0, 0x58);
-        *arg1++ = var_r3;
+        HW_STORE(arg1++, var_r3);
 
         temp_r1 = *ptr++;
         hi = temp_r1 >> 4;
@@ -961,12 +943,12 @@ void func_06013538(u8* arg0, u16* arg1, u16* arg2, u32 arg3, s16* arg4,
         CLAMP(var_r3, -0x8000, 0x7FFF);
         var_r2 += g_AdpcmIndexAdjust[hi];
         CLAMP(var_r2, 0, 0x58);
-        *arg1++ = var_r3;
+        HW_STORE(arg1++, var_r3);
         var_r3 += g_AdpcmDeltaTable[(var_r2 * 0x10) + lo];
         CLAMP(var_r3, -0x8000, 0x7FFF);
         var_r2 += g_AdpcmIndexAdjust[lo];
         CLAMP(var_r2, 0, 0x58);
-        *arg1++ = var_r3;
+        HW_STORE(arg1++, var_r3);
 
         temp_r1 = *ptr++;
         hi = temp_r1 >> 4;
@@ -975,12 +957,12 @@ void func_06013538(u8* arg0, u16* arg1, u16* arg2, u32 arg3, s16* arg4,
         CLAMP(var_r3, -0x8000, 0x7FFF);
         var_r2 += g_AdpcmIndexAdjust[hi];
         CLAMP(var_r2, 0, 0x58);
-        *arg1++ = var_r3;
+        HW_STORE(arg1++, var_r3);
         var_r3 += g_AdpcmDeltaTable[(var_r2 * 0x10) + lo];
         CLAMP(var_r3, -0x8000, 0x7FFF);
         var_r2 += g_AdpcmIndexAdjust[lo];
         CLAMP(var_r2, 0, 0x58);
-        *arg1++ = var_r3;
+        HW_STORE(arg1++, var_r3);
 
         temp_r1 = *ptr;
         hi = temp_r1 >> 4;
@@ -990,12 +972,12 @@ void func_06013538(u8* arg0, u16* arg1, u16* arg2, u32 arg3, s16* arg4,
         CLAMP(var_r3, -0x8000, 0x7FFF);
         var_r2 += g_AdpcmIndexAdjust[hi];
         CLAMP(var_r2, 0, 0x58);
-        *arg1++ = var_r3;
+        HW_STORE(arg1++, var_r3);
         var_r3 += g_AdpcmDeltaTable[(var_r2 * 0x10) + lo];
         CLAMP(var_r3, -0x8000, 0x7FFF);
         var_r2 += g_AdpcmIndexAdjust[lo];
         CLAMP(var_r2, 0, 0x58);
-        *arg1++ = var_r3;
+        HW_STORE(arg1++, var_r3);
     }
     *arg6 = var_r2;
     *arg4 = var_r3;
@@ -1011,12 +993,12 @@ void func_06013538(u8* arg0, u16* arg1, u16* arg2, u32 arg3, s16* arg4,
         CLAMP(var_r3, -0x8000, 0x7FFF);
         var_r2 += g_AdpcmIndexAdjust[hi];
         CLAMP(var_r2, 0, 0x58);
-        *arg2++ = var_r3;
+        HW_STORE(arg2++, var_r3);
         var_r3 += g_AdpcmDeltaTable[(var_r2 * 0x10) + lo];
         CLAMP(var_r3, -0x8000, 0x7FFF);
         var_r2 += g_AdpcmIndexAdjust[lo];
         CLAMP(var_r2, 0, 0x58);
-        *arg2++ = var_r3;
+        HW_STORE(arg2++, var_r3);
 
         temp_r1 = *ptr++;
         hi = temp_r1 >> 4;
@@ -1025,12 +1007,12 @@ void func_06013538(u8* arg0, u16* arg1, u16* arg2, u32 arg3, s16* arg4,
         CLAMP(var_r3, -0x8000, 0x7FFF);
         var_r2 += g_AdpcmIndexAdjust[hi];
         CLAMP(var_r2, 0, 0x58);
-        *arg2++ = var_r3;
+        HW_STORE(arg2++, var_r3);
         var_r3 += g_AdpcmDeltaTable[(var_r2 * 0x10) + lo];
         CLAMP(var_r3, -0x8000, 0x7FFF);
         var_r2 += g_AdpcmIndexAdjust[lo];
         CLAMP(var_r2, 0, 0x58);
-        *arg2++ = var_r3;
+        HW_STORE(arg2++, var_r3);
 
         temp_r1 = *ptr++;
         hi = temp_r1 >> 4;
@@ -1039,12 +1021,12 @@ void func_06013538(u8* arg0, u16* arg1, u16* arg2, u32 arg3, s16* arg4,
         CLAMP(var_r3, -0x8000, 0x7FFF);
         var_r2 += g_AdpcmIndexAdjust[hi];
         CLAMP(var_r2, 0, 0x58);
-        *arg2++ = var_r3;
+        HW_STORE(arg2++, var_r3);
         var_r3 += g_AdpcmDeltaTable[(var_r2 * 0x10) + lo];
         CLAMP(var_r3, -0x8000, 0x7FFF);
         var_r2 += g_AdpcmIndexAdjust[lo];
         CLAMP(var_r2, 0, 0x58);
-        *arg2++ = var_r3;
+        HW_STORE(arg2++, var_r3);
 
         temp_r1 = *ptr;
         hi = temp_r1 >> 4;
@@ -1054,12 +1036,12 @@ void func_06013538(u8* arg0, u16* arg1, u16* arg2, u32 arg3, s16* arg4,
         CLAMP(var_r3, -0x8000, 0x7FFF);
         var_r2 += g_AdpcmIndexAdjust[hi];
         CLAMP(var_r2, 0, 0x58);
-        *arg2++ = var_r3;
+        HW_STORE(arg2++, var_r3);
         var_r3 += g_AdpcmDeltaTable[(var_r2 * 0x10) + lo];
         CLAMP(var_r3, -0x8000, 0x7FFF);
         var_r2 += g_AdpcmIndexAdjust[lo];
         CLAMP(var_r2, 0, 0x58);
-        *arg2++ = var_r3;
+        HW_STORE(arg2++, var_r3);
     }
     *arg7 = var_r2;
     *arg5 = var_r3;
@@ -1079,6 +1061,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601449C, func_0601449C);
 
 void func_06014504(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     while (UNCACHED_SOUND_REQUESTS[arg4].unk0 != 0) {
+        SOUND_REQUEST_WAIT();
     }
 
     DAT_06063C30[arg4].unk8 = arg0;
@@ -1092,6 +1075,7 @@ void func_06014504(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 
 void func_0601454C(s32 arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4, s32 arg5) {
     while (UNCACHED_SOUND_REQUESTS[arg5].unk0 != 0) {
+        SOUND_REQUEST_WAIT();
     }
 
     DAT_06063C30[arg5].unk8 = arg0;
@@ -1106,6 +1090,7 @@ void func_0601454C(s32 arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4, s32 arg5) {
 
 void func_060145AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     while (UNCACHED_SOUND_REQUESTS[arg3].unk0 != 0) {
+        SOUND_REQUEST_WAIT();
     }
 
     DAT_06063C30[arg3].unk8 = arg0;
@@ -1118,6 +1103,7 @@ void func_060145AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 
 void func_060145F8(s32 arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4, s32 arg5) {
     while (UNCACHED_SOUND_REQUESTS[arg5].unk0 != 0) {
+        SOUND_REQUEST_WAIT();
     }
 
     DAT_06063C30[arg5].unk8 = arg0;
@@ -1132,6 +1118,7 @@ void func_060145F8(s32 arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4, s32 arg5) {
 
 void func_06014658(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     while (UNCACHED_SOUND_REQUESTS[arg3].unk0 != 0) {
+        SOUND_REQUEST_WAIT();
     }
 
     DAT_06063C30[arg3].unk8 = arg0;
@@ -1145,6 +1132,7 @@ void func_06014658(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 void func_060146A4(s32 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4, s32 arg5,
                    s32 arg6, s32 arg7, s32 arg8) {
     while (UNCACHED_SOUND_REQUESTS[arg8].unk0 != 0) {
+        SOUND_REQUEST_WAIT();
     }
 
     DAT_06063C30[arg8].unk8 = arg0;
@@ -1162,6 +1150,7 @@ void func_060146A4(s32 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4, s32 arg5,
 
 void func_06014724(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     while (UNCACHED_SOUND_REQUESTS[arg4].unk0 != 0) {
+        SOUND_REQUEST_WAIT();
     }
 
     DAT_06063C30[arg4].unk8 = arg0;

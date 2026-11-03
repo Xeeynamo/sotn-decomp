@@ -25,6 +25,10 @@ segments:
       - start: 0x40
         type: c
         file: rstage16
+        end: 0xC5A0
+      - start: 0xC5A0
+        type: .data
+        file: rstage16/s16res
         end: 0xC908
       - start: 0xC908
         type: .data
@@ -52,5 +56,149 @@ segments:
         end: 0xD958
       - start: 0xD958
         type: .data
-        file: rstage16/data
+        file: rstage16/stdata
+        end: 0xDAE0
+      - start: 0xDAE0
+        type: .data
+        file: rstage16/prcfg
+        end: 0xDAFC
+      - start: 0xDAFC
+        type: .data
+        file: rstage16/gold
+        end: 0xDB24
+      - start: 0xDB24
+        type: .data
+        file: rstage16/przan
+        end: 0xDCC4
+      - start: 0xDCC4
+        type: .data
+        file: rstage16/ent04
+        end: 0xDD90
+      - start: 0xDD90
+        type: .data
+        file: rstage16/ent09
+        end: 0xDDB0
+      - start: 0xDDB0
+        type: .data
+        file: rstage16/expl
+        end: 0xDE7C
+      - start: 0xDE7C
+        type: .data
+        file: rstage16/ent05
+        end: 0xDEFC
+      - start: 0xDEFC
+        type: .data
+        file: rstage16/ent06
+        end: 0xDF5C
+      - start: 0xDF5C
+        type: .data
+        file: rstage16/ent07
+        end: 0xDF6C
+      - start: 0xDF6C
+        type: .data
+        file: rstage16/3dcoord
+        end: 0xE0A8
+      - start: 0xE0A8
+        type: .data
+        file: rstage16/3dindex
+        end: 0xE25C
+      - start: 0xE25C
+        type: .data
+        file: rstage16/ent15
+        end: 0xE264
+      - start: 0xE264
+        type: .data
+        file: rstage16/s17part
+        end: 0xE3BC
+      - start: 0xE3BC
+        type: .data
+        file: rstage16/s18res
+        end: 0xE3C8
+      - start: 0xE3C8
+        type: .data
+        file: rstage16/ent20
+        end: 0xE444
+      - start: 0xE444
+        type: .data
+        file: rstage16/s18gfx
+        end: 0x10ECC
+      - start: 0x10ECC
+        type: .data
+        file: rstage16/s18part
+        end: 0x10FA0
+      - start: 0x10FA0
+        type: .data
+        file: rstage16/s19res
+        end: 0x10FAC
+      - start: 0x10FAC
+        type: .data
+        file: rstage16/entwrth
+        end: 0x10FCC
+      - start: 0x10FCC
+        type: .data
+        file: rstage16/s19gfx
+        end: 0x11938
+      - start: 0x11938
+        type: .data
+        file: rstage16/s19part
+        end: 0x11A00
+      - start: 0x11A00
+        type: .data
+        file: rstage16/s20res
+        end: 0x11A0C
+      - start: 0x11A0C
+        type: .data
+        file: rstage16/entwight
+        end: 0x11AD0
+      - start: 0x11AD0
+        type: .data
+        file: rstage16/s20gfx
+        end: 0x11E8C
+      - start: 0x11E8C
+        type: .data
+        file: rstage16/s20part
+        end: 0x11E90
+      - start: 0x11E90
+        type: .data
+        file: rstage16/s21res
+        end: 0x11E9C
+      - start: 0x11E9C
+        type: .data
+        file: rstage16/entgarg
+        end: 0x11F44
+      - start: 0x11F44
+        type: .data
+        file: rstage16/s21gfx
+        end: 0x131E0
+      - start: 0x131E0
+        type: .data
+        file: rstage16/s21part
+        end: 0x132C8
+      - start: 0x132C8
+        type: .data
+        file: rstage16/s22res
+        end: 0x132D4
+      - start: 0x132D4
+        type: .data
+        file: rstage16/ent34
+        end: 0x132EC
+      - start: 0x132EC
+        type: .data
+        file: rstage16/s22gfx
+        end: 0x135BC
+      - start: 0x135BC
+        type: .data
+        file: rstage16/s22part
+        end: 0x13730
+      - start: 0x13730
+        type: .data
+        file: rstage16/s23res
+        end: 0x1373C
+      - start: 0x1373C
+        type: .data
+        file: rstage16/ent37
+        end: 0x13764
+      - start: 0x13764
+        type: .data
+        file: rstage16/s23gfx
         end: 0x13CBC

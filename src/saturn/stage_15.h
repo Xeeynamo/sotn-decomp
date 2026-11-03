@@ -14,9 +14,9 @@ extern SaturnSpriteFrameHeader* g_Stage15SpriteBank24Frames[];
 void SyncSpriteObjectPosUnchecked(Entity* self, s16* offset);
 void CheckCollision(s32 x, s32 y, Collider* result, u16 flags);
 void MoveEntity(Entity* self);
-void func_06079BE4(Entity* self);
-void func_06079BB4(Entity* self);
-void func_0600B004(SpriteObject* sprite, SaturnSpriteFrameHeader* frame);
+void FallEntity(Entity* self);
+void SyncSpriteObjectPos(Entity* self);
+void func_0600B004(SpriteObject* sprite, void* frame);
 #include "../shared_sprite_banks.h"
 #include "inc_asm.h"
 
@@ -247,7 +247,12 @@ extern LayoutEntity g_Stage15LayoutVertical51[];
 extern LayoutEntity g_Stage15LayoutVertical50[];
 extern LayoutEntity g_Stage15LayoutVertical48[];
 extern LayoutEntity g_Stage15LayoutVertical49[];
-extern SaturnSpriteFrameHeader* DAT_060FA59C[];
+extern SaturnSpriteFrameHeader* g_Stage15SpriteBank30Frames[];
+typedef struct {
+    u16 indices[9];
+    u16 padding;
+} Stage15SubweaponIndices;
+extern Stage15SubweaponIndices g_Stage15AlucardSubweaponIndices;
 s32 AllocPrimitives(s32 type, s32 count);
 void DestroyEntity(Entity* self);
 void func_060DDD94(Entity* self);
@@ -258,8 +263,8 @@ extern s16 g_Stage15WaterRegions[][8];
 void func_060DFA98(MthMatrixTbl* unused, s32 angle);
 void func_060DFB74(MthMatrixTbl* unused, s32 angle);
 void func_060DFC08(MthMatrixTbl* unused, s32 angle);
-extern s32 DAT_060FB0D0;
-extern s32 DAT_060FB0E0;
+extern MthXyz DAT_060FB0D0;
+extern MthXyz DAT_060FB0E0;
 extern s32 g_Stage15Entity08ModelVertices14[14][3];
 extern s16 g_Stage15HumanFaceTreeSensors[];
 extern s16 g_Stage15WaterLeaperInitOffset[];
