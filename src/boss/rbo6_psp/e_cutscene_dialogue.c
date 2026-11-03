@@ -20,7 +20,8 @@ extern Dialogue g_Dialogue;
 
 #include "../../st/set_cutscene_events.h"
 
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/e_cutscene_dialogue", RunCutsceneEvents);
+#define CUTSCENE_TILEMAP_SCROLL
+#include "../../st/cutscene_events.h"
 
 INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/e_cutscene_dialogue", CutsceneSkip);
 
