@@ -440,7 +440,7 @@ s32 func_060BA604(Primitive* prim, s16 posX, s16 posY) {
     prim->x2 = posX + xOffset;
     prim->y2 = posY + offset;
 
-    texture = DAT_0605aec0[(u16)DAT_060CBE3C +
+    texture = DAT_0605AEC0[(u16)DAT_060CBE3C +
                            g_AlucardFactoryAnimationLookup[frame]];
     prim->unk8 = texture[0];
     prim->unkA = texture[1];

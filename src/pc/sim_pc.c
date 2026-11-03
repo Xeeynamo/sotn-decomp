@@ -425,8 +425,23 @@ static s32 FindStageIdByName(const char* name) {
     return -1;
 }
 
+const char* SaturnStageOverlay(int stageId) {
+    switch (stageId) {
+    case STAGE_ID_SATURN_15:
+        return "stage15";
+    case STAGE_ID_SATURN_16:
+        return "stage16";
+    case STAGE_ID_REVERSE_SATURN_15:
+        return "rstage15";
+    case STAGE_ID_REVERSE_SATURN_16:
+        return "rstage16";
+    default:
+        return NULL;
+    }
+}
+
 static bool StageOwnsAssets(void) {
-    if (g_StageId == STAGE_ID_SATURN_15) {
+    if (SaturnStageOverlay(g_StageId) != NULL) {
         return true;
     }
     if (g_GameParams.stageName == NULL) {
@@ -585,8 +600,8 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
                 g_GameStep = 1;
             }
         }
-        if (g_StageId == STAGE_ID_SATURN_15) {
-            return LoadStagePrg("stage15") ? 0 : -1;
+        if (SaturnStageOverlay(g_StageId) != NULL) {
+            return LoadStagePrg(SaturnStageOverlay(g_StageId)) ? 0 : -1;
         }
         if (g_GameParams.stageName != NULL && g_StageId == g_GameParams.stage) {
             return LoadStagePrg(g_GameParams.stageName) ? 0 : -1;

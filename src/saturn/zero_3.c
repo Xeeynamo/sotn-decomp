@@ -7,9 +7,9 @@
 // original name: SET_STAGE_OVERLAYADDR
 void SetStageOverlayAddress(void) {
     PfnEntityUpdates[0] = g_StageOverlayData.entityEntries;
-    *DAT_060645EC = *DAT_060DC004;
-    *DAT_060645E4 = *DAT_060DC008;
-    *DAT_060645F8 = *DAT_060DC00C;
+    DAT_060645EC = *(SaturnSpriteResource***)DAT_060DC004;
+    DAT_060645E4 = *(LayoutEntity***)DAT_060DC008;
+    DAT_060645F8 = *(LayoutEntity***)DAT_060DC00C;
 }
 
 // _SET_SCL_OVERLAYADDR
@@ -44,7 +44,7 @@ void func_0601AE2C(s32 arg0) {
     }
 }
 
-s32 func_0601AE5C(s32 arg0, s32 arg1) {
+s32 func_0601AE5C(s32 arg0) {
     OverlayHandler* handler;
     s32 i;
 

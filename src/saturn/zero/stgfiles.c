@@ -190,21 +190,18 @@ SaturnStageFileRecord g_StageFileRecords[100] = {
      0x00},
 };
 
-static const char alt_STAGE06B[] = "STAGE06B.MAP";
-static const char alt_STAGE_7B[] = "STAGE_7B.MAP";
-static const char alt_STAGE_9C[] = "STAGE_9C.MAP";
-static const char alt_STAGE_9B[] = "STAGE_9B.MAP";
-static const char alt_STAGE13B[] = "STAGE13B.MAP";
-static const char alt_RSTAGE6B[] = "RSTAGE6B.MAP";
-static const char alt_RSTAGE7B[] = "RSTAGE7B.MAP";
-static const char alt_RSTAGE9C[] = "RSTAGE9C.MAP";
-static const char alt_RSTAGE9B[] = "RSTAGE9B.MAP";
-static const char alt_RSTAG13B[16] = "RSTAG13B.MAP";
+const char* DAT_06048178[] = {"STAGE06A.MAP", "STAGE06B.MAP"};
 
-const char* g_StageAlternateMapNames[18] = {
-    "STAGE06A.MAP", alt_STAGE06B,   "STAGE_7A.MAP", alt_STAGE_7B,
-    "STAGE_9A.MAP", alt_STAGE_9B,   alt_STAGE_9C,   "STAGE13A.MAP",
-    alt_STAGE13B,   "RSTAGE6A.MAP", alt_RSTAGE6B,   "RSTAGE7A.MAP",
-    alt_RSTAGE7B,   "RSTAGE9A.MAP", alt_RSTAGE9B,   alt_RSTAGE9C,
-    "RSTAG13A.MAP", alt_RSTAG13B,
-};
+const char* DAT_06048180[] = {"STAGE_7A.MAP", "STAGE_7B.MAP"};
+
+const char* DAT_06048188[] = {"STAGE_9A.MAP", "STAGE_9B.MAP", "STAGE_9C.MAP"};
+
+const char* DAT_06048194[] = {"STAGE13A.MAP", "STAGE13B.MAP"};
+
+const char* DAT_0604819C[] = {"RSTAGE6A.MAP", "RSTAGE6B.MAP"};
+
+const char* DAT_060481A4[] = {"RSTAGE7A.MAP", "RSTAGE7B.MAP"};
+
+const char* DAT_060481AC[] = {"RSTAGE9A.MAP", "RSTAGE9B.MAP", "RSTAGE9C.MAP"};
+
+const char* DAT_060481B8[] = {"RSTAG13A.MAP", "RSTAG13B.MAP"};

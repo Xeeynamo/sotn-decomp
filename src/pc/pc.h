@@ -4,6 +4,8 @@
 
 #define LEN(x) ((s32)(sizeof(x) / sizeof(*(x))))
 
+const char* SaturnStageOverlay(int stageId);
+
 enum CustomStageId {
     STAGE_ID_SATURN_15 = 0x4C,
     STAGE_ID_SATURN_16 = 0x4D,

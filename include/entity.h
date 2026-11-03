@@ -4825,6 +4825,33 @@ typedef struct {
     /* 0x90 */ u8 unk90;
 } ET_CaveTrollUnk;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 hoverPhase;
+    /* 0x84 */ u8 nextAttack;
+    /* 0x85 */ u8 handSwipesRemain;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ s32 bloodSpeed;
+    /* 0x90 */ Point16 triangleXY[3];
+    /* 0x9C */ struct Entity* unk9C;
+    /* 0xA0 */ struct Entity* unkA0;
+    /* 0xA4 */ u32 : 32;
+    /* 0xA8 */ u32 : 32;
+    /* 0xAC */ s16 redAngle;
+    /* 0xAE */ s16 greenAngle;
+    /* 0xB0 */ s16 blueAngle;
+} ET_FinalBossDracula;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ struct Primitive* prim2;
+    /* 0x84 */ s16 angle1;
+    /* 0x86 */ s16 angle2;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ s16 timer;
+} ET_DraculaSummonLightning;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -5231,6 +5258,8 @@ typedef union { // offset=0x7C
     ET_BlackPanther blackPanther;
     ET_CaveTroll et_caveTroll;
     ET_CaveTrollUnk et_caveTrollUnk;
+    ET_FinalBossDracula finalDrac;
+    ET_DraculaSummonLightning dracZap;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);
