@@ -2,11 +2,6 @@
 
 #include "bo2.h"
 
-enum {
-    PAL_TORCH_A = 0x5A,
-    PAL_TORCH_B = 0x5B,
-};
-
 extern EInit D_us_80180524;
 extern AnimateEntityFrame D_us_80180B60[];
 extern s16 D_us_80180B6C[];

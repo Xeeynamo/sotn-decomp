@@ -8,6 +8,8 @@
 
 enum Palettes {
     PAL_NONE,
+    PAL_TORCH_A = 0x5A,
+    PAL_TORCH_B = 0x5B,
     PAL_MINOTAURUS = 0x200,
     PAL_WEREWOLF = 0x210,
 };
