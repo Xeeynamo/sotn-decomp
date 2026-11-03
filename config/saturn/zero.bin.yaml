@@ -16,91 +16,31 @@ segments:
       - start: 0x0
         type: c
         file: zero
-        end: 0x57
-        function_ranges:
-          - [0x0, 0x56]
+        end: 0x2267
 
-      - start: 0x58
-        type: c
-        file: zero
-        end: 0x2FDF
-        function_ranges:
-          - [0x0768, 0x07C2]
-          - [0x0806, 0x0874]
-          - [0x08A4, 0x08A4]
-          - [0x09C6, 0x09E2]
-
-      - start: 0x2FE0
+      - start: 0x2268
         type: text
         file: zero
-        end: 0x3147
+        end: 0x2277
 
-      - start: 0x3148
+      - start: 0x2278
         type: c
         file: zero
-        end: 0xA5C3
-        function_ranges:
-          - [0x40DC, 0x4110]
-          - [0x411C, 0x419C]
-          - [0x4BAC, 0x4C5E]
-          - [0x4C84, 0x4E3C]
-          - [0x4E68, 0x4F4C]
-          - [0x4F90, 0x4FCC]
-          # entry hints
-          - [0x8AA0, 0x8AA0]
-          - [0x9C24, 0x9C24]
+        end: 0x23C7
 
-      - start: 0xA5C4
-        type: data
+      - start: 0x23C8
+        type: text
         file: zero
-        end: 0xADE4
+        end: 0x23EF
 
-      - start: 0xADE5
+      - start: 0x23F0
         type: c
         file: zero
-        end: 0xAE07
+        end: 0x2EFD
 
-      # ratan2
-      - start: 0xAE08
+      - start: 0x2EFE
         type: c
-        file: zero
-        end: 0xAF3B
-
-      - start: 0xAF3C
-        type: data
-        file: zero
-        end: 0xB73B
-
-      - start: 0xB73C
-        type: c
-        file: zero
-        end: 0xB893
-        function_ranges:
-          - [0xB73C, 0xB79A]
-          - [0xB79C, 0xB7FA]
-          - [0xB7FC, 0xB892]
-
-      # squareroot12
-      - start: 0xB894
-        type: c
-        file: zero
-        end: 0xB8EB
-
-      - start: 0xB8EC
-        type: c
-        file: zero
-        end: 0xBF37
-
-      # DestroyEntity
-      - start: 0xBF38
-        type: c
-        file: zero
-        end: 0xBF87
-
-      # before DGFS
-      - start: 0xBF88
-        type: c
-        file: zero
+        file: zero_0
         end: 0xD03F
 
       - start: 0xD040
@@ -312,11 +252,11 @@ segments:
       - start: 0x3494A
         type: .data
         file: zero/zero_data_0
-        end: 0x34BDB
+        end: 0x349CB
 
-      - start: 0x34BDC
+      - start: 0x349CC
         type: .data
-        file: zero
+        file: zero_0
         end: 0x34C03
 
       - start: 0x34C04
@@ -366,4 +306,4 @@ segments:
         file: lib/sys_bss
         end: 0x4C560
 
-      - [0x4C5F4, .bss, zero]
+      - [0x4C5F4, .bss, zero_0]

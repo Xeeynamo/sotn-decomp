@@ -73,8 +73,16 @@ typedef struct {
 typedef struct {
     Unk0600654C req;
     s32 unk18;
-    s32 unk1C;
+    s32* unk1C;
 } FileLoadEntry;
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    FileLoadEntry* unk8;
+} Unk0605AE90;
+
+extern Unk0605AE90 DAT_0605AE90;
 
 extern u8 DAT_00232000[];
 extern u8 DAT_00200000[];
@@ -130,7 +138,7 @@ s32 func_0600D028(u32 device, s8 arg1);
 s8 func_0600D264(u32 device, s8 arg1);
 s8 func_0600D47C(u32 device, s8 arg1);
 void InitSystem();
-void func_060040d8();
+void func_060040D8(void);
 
 s32 func_0600DCF0(Primitive* prim);
 s32 func_0600DD38(Primitive* prim);
@@ -394,7 +402,6 @@ typedef struct {
     u32 dst;
     s32 size;
 } VramTransfer;
-extern VramTransfer DAT_060576B0[16];
 extern s32 DAT_06057770;
 extern s16 DAT_06057774[];
 extern s16 DAT_06057780[];
@@ -409,6 +416,7 @@ void SetCurrentMatrixBinAngle(MthXyz* rot, MthXyz* pos);
 void TransformAndProjectPoints(MthXyz* src, XyInt* dst, s32 count);
 void func_0600DE38(void);
 void func_0600E164(void);
+Equipment* func_060076D0(s32 arg0);
 void func_06008B20(void);
 void func_06008EE8(void);
 void SignalSlaveSh2(void);

@@ -508,6 +508,7 @@ snd_srcs = [
     'src/saturn/alucard/crossgfx.c',
     'src/saturn/alucard/crosscfg.c',
     'src/saturn/zero.c',
+    'src/saturn/zero_0.c',
     'src/saturn/zero_1.c',
     'src/saturn/lib/snd.c',
     'src/saturn/zero_2.c',
@@ -1724,6 +1725,7 @@ multi_objs = {
         'build/saturn/warp/particle.o',
     ],
     'build/saturn/zero.o' : [
+        'build/saturn/zero_0.o',
         'build/saturn/zero_1.o',
         'build/saturn/lib/snd.o',
         'build/saturn/zero_2.o',
