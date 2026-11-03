@@ -13,7 +13,7 @@ extern s32 g_HandId;
 
 // Weapon 16
 
-static void EntityWeaponAttack(Entity* self) {
+void EntityWeaponAttack(Entity* self) {
     FakePrim* fakePrim;
     s16 angle;
     u16 temp_a0;
@@ -219,7 +219,7 @@ void func_ptr_80170008(Entity* self) {
     }
 }
 
-static void func_ptr_8017000C(Entity* self) {
+void func_ptr_8017000C(Entity* self) {
     s16 temp_a0;
 
     switch (self->step) {
@@ -308,7 +308,7 @@ s32 func_ptr_80170010(Entity* self) {
 
 // Tracing function calls in emulator indicates that this function manages
 // the physics for the Iron Ball item.
-static s32 func_ptr_80170014(Entity* self) {
+s32 func_ptr_80170014(Entity* self) {
     Collider collider;
     s16 collX;
     s16 collY;
@@ -500,20 +500,20 @@ static s32 func_ptr_80170014(Entity* self) {
     }
 }
 
-static int GetWeaponId(void) { return 16; }
+int GetWeaponId(void) { return 16; }
 
-static void EntityWeaponShieldSpell(Entity* self) {}
+void EntityWeaponShieldSpell(Entity* self) {}
 
-static void func_ptr_80170024(Entity* self) {}
+void func_ptr_80170024(Entity* self) {}
 
-static void func_ptr_80170028(Entity* self) {}
+void func_ptr_80170028(Entity* self) {}
 
-static void WeaponUnused2C(void) {}
+void WeaponUnused2C(void) {}
 
-static void WeaponUnused30(void) {}
+void WeaponUnused30(void) {}
 
-static void WeaponUnused34(void) {}
+void WeaponUnused34(void) {}
 
-static void WeaponUnused38(void) {}
+void WeaponUnused38(void) {}
 
-static void WeaponUnused3C(void) {}
+void WeaponUnused3C(void) {}

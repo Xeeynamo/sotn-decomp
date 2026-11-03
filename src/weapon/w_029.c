@@ -35,7 +35,7 @@ typedef struct {
 
 extern FireShieldDragon D_CF000_8017C9A0[][20];
 
-static void EntityWeaponAttack(Entity* self) {
+void EntityWeaponAttack(Entity* self) {
     s32 anim;
     s32 handButton;
     s32 unkAC_offset;
@@ -197,17 +197,17 @@ s32 func_ptr_80170004(Entity* self) {
         self->ext.weapon.unk80 + D_CF000_8017AD04[g_GameTimer / 2 % 5];
 }
 
-static void func_ptr_80170008(Entity* self) {}
+void func_ptr_80170008(Entity* self) {}
 
-static void func_ptr_8017000C(Entity* self) {}
+void func_ptr_8017000C(Entity* self) {}
 
-static s32 func_ptr_80170010(Entity* self) {}
+s32 func_ptr_80170010(Entity* self) {}
 
-static s32 func_ptr_80170014(Entity* self) {}
+s32 func_ptr_80170014(Entity* self) {}
 
-static int GetWeaponId(void) { return 29; }
+int GetWeaponId(void) { return 29; }
 
-static void EntityWeaponShieldSpell(Entity* self) {
+void EntityWeaponShieldSpell(Entity* self) {
     Primitive* prim;
     s32 var_v0;
     u16 selfX;
@@ -357,7 +357,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
     return;
 }
 
-static void func_ptr_80170024(Entity* self) {
+void func_ptr_80170024(Entity* self) {
     // All these variables are kind of guessing names, behavior of this
     // function is a little unclear.
     Primitive* firstPrim;
@@ -567,7 +567,7 @@ static void func_ptr_80170024(Entity* self) {
     g_api.CreateEntFactoryFromEntity(self, ((g_HandId + 1) << 14) + 100, 0);
 }
 
-static void func_ptr_80170028(Entity* self) {
+void func_ptr_80170028(Entity* self) {
     if (self->ext.weapon.parent->entityId == 0) {
         DestroyEntity(self);
         return;
@@ -586,12 +586,12 @@ static void func_ptr_80170028(Entity* self) {
     }
 }
 
-static void WeaponUnused2C(void) {}
+void WeaponUnused2C(void) {}
 
-static void WeaponUnused30(void) {}
+void WeaponUnused30(void) {}
 
-static void WeaponUnused34(void) {}
+void WeaponUnused34(void) {}
 
-static void WeaponUnused38(void) {}
+void WeaponUnused38(void) {}
 
-static void WeaponUnused3C(void) {}
+void WeaponUnused3C(void) {}

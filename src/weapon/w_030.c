@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #30. Used by weapons:
 // Sword of Dawn, Unknown#177
-#define FUNC_04_VOID
 #include "weapon_private.h"
 extern u16* g_WeaponCluts[];
 extern s32 g_HandId;
@@ -25,7 +24,7 @@ extern u16 D_D6000_8017A660[];
 extern s16 D_D6000_8017A66C[16];
 extern s32 D_D6000_8017CC44;
 
-static void EntityWeaponAttack(Entity* self) {
+void EntityWeaponAttack(Entity* self) {
     WeaponAnimation* anim;
     WeaponAnimation* anim2;
     s8 animIndex;
@@ -994,22 +993,22 @@ s32 func_ptr_80170010(Entity* self) {
     self->hitboxHeight = hitboxSize;
 }
 
-static s32 func_ptr_80170014(Entity* self) {}
+s32 func_ptr_80170014(Entity* self) {}
 
-static int GetWeaponId(void) { return 30; }
+int GetWeaponId(void) { return 30; }
 
-static void EntityWeaponShieldSpell(Entity* self) {}
+void EntityWeaponShieldSpell(Entity* self) {}
 
-static void func_ptr_80170024(Entity* self) {}
+void func_ptr_80170024(Entity* self) {}
 
-static void func_ptr_80170028(Entity* self) {}
+void func_ptr_80170028(Entity* self) {}
 
-static void WeaponUnused2C(void) {}
+void WeaponUnused2C(void) {}
 
-static void WeaponUnused30(void) {}
+void WeaponUnused30(void) {}
 
-static void WeaponUnused34(void) {}
+void WeaponUnused34(void) {}
 
-static void WeaponUnused38(void) {}
+void WeaponUnused38(void) {}
 
-static void WeaponUnused3C(void) {}
+void WeaponUnused3C(void) {}

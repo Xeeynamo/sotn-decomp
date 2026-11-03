@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #2. Used by weapons:
 // Mace
-#define NO_HEADER
 #include "weapon_private.h"
 #include "gen/w_002_1.h"
 #include "gen/w_002_2.h"

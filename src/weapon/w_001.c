@@ -2,7 +2,6 @@
 // Weapon ID #1. Used by weapons:
 // Knuckle duster, Jewel knuckles, Iron Fist, Fist of Tulkas, Unknown#186,
 // Unknown#187, Unknown#188
-#define NO_HEADER
 #include "weapon_private.h"
 extern u16* g_WeaponCluts[];
 extern s32 g_HandId;

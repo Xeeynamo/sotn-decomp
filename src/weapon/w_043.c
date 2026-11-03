@@ -133,7 +133,7 @@ static s32 g_HandId = HAND_ID;
 
 #include "shared.h"
 
-static void EntityWeaponAttack(Entity* self) {
+void EntityWeaponAttack(Entity* self) {
     s8 animIndex = (self->params & 0x7FFF) >> 8;
     WeaponAnimation* anim = &weaponAnims[animIndex];
     Primitive* prim;
@@ -324,7 +324,7 @@ s32 func_ptr_80170004(Entity* self) {
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
-static void func_ptr_80170008(Entity* self) {
+void func_ptr_80170008(Entity* self) {
     if (self->step == 0) {
         self->anim = D_131000_8017AF40;
         SetSpriteBank1(g_Animset);
@@ -366,26 +366,26 @@ static void func_ptr_80170008(Entity* self) {
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
-static void func_ptr_8017000C(Entity* self) {}
+void func_ptr_8017000C(Entity* self) {}
 
-static s32 func_ptr_80170010(Entity* self) {}
+s32 func_ptr_80170010(Entity* self) {}
 
-static s32 func_ptr_80170014(Entity* self) {}
+s32 func_ptr_80170014(Entity* self) {}
 
-static int GetWeaponId(void) { return 43; }
+int GetWeaponId(void) { return 43; }
 
-static void EntityWeaponShieldSpell(Entity* self) {}
+void EntityWeaponShieldSpell(Entity* self) {}
 
-static void func_ptr_80170024(Entity* self) {}
+void func_ptr_80170024(Entity* self) {}
 
-static void func_ptr_80170028(Entity* self) {}
+void func_ptr_80170028(Entity* self) {}
 
-static void WeaponUnused2C(void) {}
+void WeaponUnused2C(void) {}
 
-static void WeaponUnused30(void) {}
+void WeaponUnused30(void) {}
 
-static void WeaponUnused34(void) {}
+void WeaponUnused34(void) {}
 
-static void WeaponUnused38(void) {}
+void WeaponUnused38(void) {}
 
-static void WeaponUnused3C(void) {}
+void WeaponUnused3C(void) {}

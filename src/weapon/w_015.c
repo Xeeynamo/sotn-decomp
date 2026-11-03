@@ -131,7 +131,7 @@ s32 func_ptr_80170004(Entity* self) {
     }
 }
 
-static void func_ptr_80170008(Entity* self) {
+void func_ptr_80170008(Entity* self) {
     Entity* factory;
 
     if (self->step == 0) {
@@ -464,7 +464,7 @@ s32 func_ptr_80170010(Entity* self) {
     }
 }
 
-static s32 func_ptr_80170014(Entity* self) {
+s32 func_ptr_80170014(Entity* self) {
     s16 angle;
 
     if (self->step == 0) {
@@ -509,20 +509,20 @@ static s32 func_ptr_80170014(Entity* self) {
     self->velocityY += self->ext.weapon.accelerationY;
 }
 
-static int GetWeaponId(void) { return 15; }
+int GetWeaponId(void) { return 15; }
 
-static void EntityWeaponShieldSpell(Entity* self) {}
+void EntityWeaponShieldSpell(Entity* self) {}
 
-static void func_ptr_80170024(Entity* self) {}
+void func_ptr_80170024(Entity* self) {}
 
-static void func_ptr_80170028(Entity* self) {}
+void func_ptr_80170028(Entity* self) {}
 
-static void WeaponUnused2C(void) {}
+void WeaponUnused2C(void) {}
 
-static void WeaponUnused30(void) {}
+void WeaponUnused30(void) {}
 
-static void WeaponUnused34(void) {}
+void WeaponUnused34(void) {}
 
-static void WeaponUnused38(void) {}
+void WeaponUnused38(void) {}
 
-static void WeaponUnused3C(void) {}
+void WeaponUnused3C(void) {}

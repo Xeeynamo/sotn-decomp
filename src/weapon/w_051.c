@@ -292,7 +292,7 @@ void func_169000_8017B1DC(s32 arg0) {
     LoadImage(&rect, (u_long*)dst);
 }
 
-static void EntityWeaponAttack(Entity* self) {
+void EntityWeaponAttack(Entity* self) {
     WeaponAnimation* anim;
     s16 subType;
 
@@ -420,7 +420,7 @@ s32 func_ptr_80170004(Entity* self) {
     }
 }
 
-static void func_ptr_80170008(Entity* self) {
+void func_ptr_80170008(Entity* self) {
     AnimProperties* anim;
     Primitive* prim;
     s16 rot;
@@ -555,26 +555,26 @@ static void func_ptr_80170008(Entity* self) {
     prim->y3 = y - (((rsin(rot) >> 4) * t) >> 9);
 }
 
-static void func_ptr_8017000C(Entity* self) {}
+void func_ptr_8017000C(Entity* self) {}
 
-static s32 func_ptr_80170010(Entity* self) {}
+s32 func_ptr_80170010(Entity* self) {}
 
-static s32 func_ptr_80170014(Entity* self) {}
+s32 func_ptr_80170014(Entity* self) {}
 
-static int GetWeaponId(void) { return 51; }
+int GetWeaponId(void) { return 51; }
 
-static void EntityWeaponShieldSpell(Entity* self) {}
+void EntityWeaponShieldSpell(Entity* self) {}
 
-static void func_ptr_80170024(Entity* self) {}
+void func_ptr_80170024(Entity* self) {}
 
-static void func_ptr_80170028(Entity* self) {}
+void func_ptr_80170028(Entity* self) {}
 
-static void WeaponUnused2C(void) {}
+void WeaponUnused2C(void) {}
 
-static void WeaponUnused30(void) {}
+void WeaponUnused30(void) {}
 
-static void WeaponUnused34(void) {}
+void WeaponUnused34(void) {}
 
-static void WeaponUnused38(void) {}
+void WeaponUnused38(void) {}
 
-static void WeaponUnused3C(void) {}
+void WeaponUnused3C(void) {}

@@ -93,6 +93,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x19000, .data, w_init]
       - [0x19040, .data, w_003]
       - [0x19884, data, w_003]
       - [0x19C40, c, w_003]
@@ -109,6 +110,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x20000, .data, w_init]
       - [0x20040, .data, w_004]
       - [0x20EAC, data, w_004]
       - [0x2131C, c, w_004]
@@ -125,6 +127,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x27000, .data, w_init]
       - [0x27040, .data, w_005]
       - [0x27EAC, data, w_005]
       - [0x2831C, c, w_005]
@@ -141,6 +144,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x2E000, .data, w_init]
       - [0x2E040, .data, w_006]
       - [0x2E884, data, w_006]
       - [0x2EC40, .rodata, w_006]
@@ -158,6 +162,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x35000, .data, w_init]
       - [0x35040, .data, w_007]
       - [0x35CA0, c, w_007]
   - name: f_008
@@ -173,6 +178,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x3C000, .data, w_init]
       - [0x3C040, .data, w_008]
       - [0x3CAC4, .rodata, w_008]
       - [0x3CB4C, c, w_008]
@@ -189,6 +195,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x43000, .data, w_init]
       - [0x43040, .data, w_009]
       - [0x43804, data, w_009]
       - [0x43AC4, .rodata, w_009]
@@ -206,6 +213,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x4A000, .data, w_init]
       - [0x4A040, .data, w_010]
       - [0x4AC08, .rodata, w_010]
       - [0x4ACC0, c, w_010]
@@ -223,6 +231,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x51000, .data, w_init]
       - [0x51040, .data, w_011]
       - [0x51958, data, w_011]
       - [0x51C40, .rodata, w_011]
@@ -240,6 +249,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x58000, .data, w_init]
       - [0x58040, .data, w_012]
       - [0x58ACC, c, w_012]
       - [0x59B28, .bss, w_012]
@@ -256,6 +266,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x5F000, .data, w_init]
       - [0x5F040, .data, w_013]
       - [0x5F2B0, data, w_013]
       - [0x5F608, .rodata, w_013]
@@ -273,6 +284,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x66000, .data, w_init]
       - [0x66040, .data, w_014]
       - [0x662B0, data, w_014]
       - [0x665BC, c, w_014]
@@ -289,6 +301,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x6D000, .data, w_init]
       - [0x6D040, .data, w_015]
       - [0x6D478, data, w_015]
       - [0x6D7E4, c, w_015]
@@ -305,6 +318,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x74000, .data, w_init]
       - [0x74040, .data, w_016]
       - [0x742B0, data, w_016]
       - [0x745F8, .rodata, w_016]
@@ -322,6 +336,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x7B000, .data, w_init]
       - [0x7B040, .data, w_017]
       - [0x7B3AC, c, w_017]
   - name: f_018
@@ -337,6 +352,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x82000, .data, w_init]
       - [0x82040, .data, w_018]
       - [0x82488, data, w_018]
       - [0x8273C, .rodata, w_018]
@@ -355,6 +371,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x89000, .data, w_init]
       - [0x89040, .data, w_019]
       - [0x8930C, data, w_019]
       - [0x89554, c, w_019]
@@ -371,6 +388,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x90000, .data, w_init]
       - [0x90040, .data, w_020]
       - [0x90630, data, w_020]
       - [0x90BA0, .rodata, w_020]
@@ -388,6 +406,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x97000, .data, w_init]
       - [0x97040, .data, w_021]
       - [0x97564, data, w_021]
       - [0x97798, .rodata, w_021]
@@ -405,6 +424,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x9E000, .data, w_init]
       - [0x9E040, .data, w_022]
       - [0x9E540, data, w_022]
       - [0x9E814, c, w_022]
@@ -421,6 +441,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0xA5000, .data, w_init]
       - [0xA5040, .data, w_023]
       - [0xA58A4, data, w_023]
       - [0xA5CF4, .rodata, w_023]
@@ -438,6 +459,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0xAC000, .data, w_init]
       - [0xAC040, .data, w_024]
       - [0xAC804, data, w_024]
       - [0xACD54, .rodata, w_024]
@@ -455,6 +477,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0xB3000, .data, w_init]
       - [0xB3040, .data, w_025]
       - [0xB3804, data, w_025]
       - [0xB3AE4, .rodata, w_025]
@@ -472,6 +495,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0xBA000, .data, w_init]
       - [0xBA040, .data, w_026]
       - [0xBA804, data, w_026]
       - [0xBAAF0, .rodata, w_026]
@@ -489,6 +513,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0xC1000, .data, w_init]
       - [0xC1040, .data, w_027]
       - [0xC1A18, data, w_027]
       - [0xC1CCC, .rodata, w_027]
@@ -506,6 +531,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0xC8000, .data, w_init]
       - [0xC8040, .data, w_028]
       - [0xC8804, data, w_028]
       - [0xC8B68, .rodata, w_028]
@@ -523,6 +549,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0xCF000, .data, w_init]
       - [0xCF040, .data, w_029]
       - [0xCF884, data, w_029]
       - [0xCFD54, .rodata, w_029]
@@ -540,6 +567,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0xD6000, .data, w_init]
       - [0xD6040, .data, w_030]
       - [0xD6040, data, w_030]
       - [0xD6680, .rodata, w_030]
@@ -557,6 +585,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0xDD000, .data, w_init]
       - [0xDD040, .data, w_031]
       - [0xDD704, data, w_031]
       - [0xDD918, c, w_031]
@@ -573,6 +602,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0xE4000, .data, w_init]
       - [0xE4040, .data, w_032]
       - [0xE4704, data, w_032]
       - [0xE4924, c, w_032]
@@ -589,6 +619,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0xEB000, .data, w_init]
       - [0xEB040, .data, w_033]
       - [0xEBA9C, data, w_033]
       - [0xEBC58, c, w_033]
@@ -605,6 +636,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0xF2000, .data, w_init]
       - [0xF2040, .data, w_034]
       - [0xF2950, c, w_034]
   - name: f_035
@@ -620,6 +652,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0xF9000, .data, w_init]
       - [0xF9040, .data, w_035]
       - [0xF954C, c, w_035]
   - name: f_036
@@ -635,6 +668,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x100000, .data, w_init]
       - [0x100040, .data, w_036]
       - [0x100404, data, w_036]
       - [0x10055C, c, w_036]
@@ -651,6 +685,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x107000, .data, w_init]
       - [0x107040, .data, w_037]
       - [0x1077C4, c, w_037]
       - [0x108BE4, .bss, w_037]
@@ -667,6 +702,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x10E000, .data, w_init]
       - [0x10E040, .data, w_038]
       - [0x10EC08, data, w_038]
       - [0x10EDEC, c, w_038]
@@ -683,6 +719,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x115000, .data, w_init]
       - [0x115040, .data, w_039]
       - [0x115C08, data, w_039]
       - [0x115DEC, c, w_039]
@@ -699,6 +736,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x11C000, .data, w_init]
       - [0x11C040, .data, w_040]
       - [0x11C874, c, w_040]
       - [0x11D540, .bss, w_040]
@@ -715,6 +753,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x123000, .data, w_init]
       - [0x123040, .data, w_041]
       - [0x123560, .rodata, w_041]
       - [0x123574, c, w_041]
@@ -732,6 +771,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x12A000, .data, w_init]
       - [0x12A040, .data, w_042]
       - [0x12A3E4, data, w_042]
       - [0x12A760, .rodata, w_042]
@@ -750,6 +790,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x131000, .data, w_init]
       - [0x131040, .data, w_043]
       - [0x13205C, c, w_043]
   - name: f_044
@@ -765,6 +806,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x138000, .data, w_init]
       - [0x138040, .data, w_044]
       - [0x1382A8, .rodata, w_044]
       - [0x1382C0, c, w_044]
@@ -781,6 +823,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x13F000, .data, w_init]
       - [0x13F040, .data, w_045]
       - [0x13F378, c, w_045]
       - [0x1403B8, .bss, w_045]
@@ -797,6 +840,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x146000, .data, w_init]
       - [0x146040, .data, w_046]
       - [0x146C64, c, w_046]
   - name: f_047
@@ -812,6 +856,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x14D000, .data, w_init]
       - [0x14D040, .data, w_047]
       - [0x14D228, data, w_047]
       - [0x14D554, .rodata, w_047]
@@ -829,6 +874,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x154000, .data, w_init]
       - [0x154040, .data, w_048]
       - [0x154A44, data, w_048]
       - [0x155050, c, w_048]
@@ -845,6 +891,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x15B000, .data, w_init]
       - [0x15B040, .data, w_049]
       - [0x15BC00, data, w_049]
       - [0x15C14C, c, w_049]
@@ -861,6 +908,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x162000, .data, w_init]
       - [0x162040, .data, w_050]
       - [0x163080, c, w_050]
       - [0x164bf8, .bss, w_050]
@@ -877,6 +925,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x169000, .data, w_init]
       - [0x169040, .data, w_051]
       - [0x169ED4, c, w_051]
       - [0x16B0E0, .bss, w_051]
@@ -893,6 +942,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x170000, .data, w_init]
       - [0x170040, .data, w_052]
       - [0x170C24, .rodata, w_052]
       - [0x170CB0, c, w_052]
@@ -910,6 +960,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x177000, .data, w_init]
       - [0x177040, .data, w_053]
       - [0x177A44, data, w_053]
       - [0x17826C, .rodata, w_053]
@@ -927,6 +978,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x17E000, .data, w_init]
       - [0x17E040, .data, w_054]
       - [0x17EA44, data, w_054]
       - [0x17EF0C, c, w_054]
@@ -943,6 +995,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x185000, .data, w_init]
       - [0x185040, .data, w_055]
       - [0x185A44, data, w_055]
       - [0x1861A0, c, w_055]
@@ -959,6 +1012,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x18C000, .data, w_init]
       - [0x18C040, .data, w_056]
       - [0x18CA44, data, w_056]
       - [0x18D060, c, w_056]
@@ -975,6 +1029,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x193000, .data, w_init]
       - [0x193040, .data, w_057]
       - [0x193A44, data, w_057]
       - [0x1940B4, c, w_057]
@@ -991,6 +1046,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      - [0x19A000, .data, w_init]
       - [0x19A040, .data, w_058]
       - [0x19A808, data, w_058]
       - [0x19ABCC, .rodata, w_058]

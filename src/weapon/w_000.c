@@ -5,7 +5,6 @@
 // Hador, Luminus, Harper, Gram, Mormegil, Terminus Est, Dark Blade,
 // Mourneblade, Badelaire, Unknown#169
 
-#define NO_HEADER
 #include "weapon_private.h"
 
 #ifdef VERSION_PSP

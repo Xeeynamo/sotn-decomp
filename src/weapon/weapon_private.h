@@ -31,12 +31,12 @@ typedef struct {
 } WeaponParams;
 
 #if defined(WEAPON0)
-#define HAND_ID 0
+#define HAND_ID LEFT_HAND
 #elif defined(WEAPON1)
-#define HAND_ID 1
+#define HAND_ID RIGHT_HAND
 #else
 #warning "WEAPON0 or WEAPON1 not specified. Falling back to WEAPON0."
-#define HAND_ID 0
+#define HAND_ID LEFT_HAND
 #endif
 
 extern s32 g_HandId;
@@ -49,50 +49,5 @@ extern s32 g_HandId;
 // the shifted params. `WFACTORY` groups the `id` and `param`
 // addition operation and is required for all other instances.
 #define WFACTORY2(id, param) FACTORY(((g_HandId + 1) << 12) + (id), (param))
-
-// PSP builds one overlay per weapon per hand, so each w*_*.c declares its own
-// entry points and overlay table rather than sharing the ones below.
-#ifndef VERSION_PSP
-#ifndef NO_HEADER
-// exported
-void EntityWeaponAttack(Entity* self);
-void LoadWeaponPalette(s32 clutIndex);
-#ifndef FUNC_04_VOID
-s32 func_ptr_80170004(Entity* self);
-#else
-void func_ptr_80170004(Entity* self);
-#endif
-void func_ptr_80170008(Entity* self);
-#ifdef FUNC_0C_S32
-s32 func_ptr_8017000C(Entity* self);
-#else
-void func_ptr_8017000C(Entity* self);
-#endif
-s32 func_ptr_80170010(Entity* self);
-s32 func_ptr_80170014(Entity* self);
-int GetWeaponId(void);
-#ifdef SHIELDSPELL_S32
-s32 EntityWeaponShieldSpell(Entity* self);
-#else
-void EntityWeaponShieldSpell(Entity* self);
-#endif
-void func_ptr_80170024(Entity* self);
-void func_ptr_80170028(Entity* self);
-void WeaponUnused2C(void);
-void WeaponUnused30(void);
-void WeaponUnused34(void);
-void WeaponUnused38(void);
-void WeaponUnused3C(void);
-
-static Weapon WeaponOverlay = {
-    EntityWeaponAttack, func_ptr_80170004, func_ptr_80170008,
-    func_ptr_8017000C,  func_ptr_80170010, func_ptr_80170014,
-    GetWeaponId,        LoadWeaponPalette, EntityWeaponShieldSpell,
-    func_ptr_80170024,  func_ptr_80170028, WeaponUnused2C,
-    WeaponUnused30,     WeaponUnused34,    WeaponUnused38,
-    WeaponUnused3C,
-};
-#endif // !NO_HEADER
-#endif // !VERSION_PSP
 
 #endif

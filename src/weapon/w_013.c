@@ -68,7 +68,7 @@ s32 func_5F000_8017A9CC(Primitive* prim, s32 x, s32 y) {
     return 0;
 }
 
-static void EntityWeaponAttack(Entity* self) {
+void EntityWeaponAttack(Entity* self) {
     Entity* unused;
     s16 var_s1;
 
@@ -240,7 +240,7 @@ s32 func_ptr_80170004(Entity* self) {
     DestroyEntity(self);
 }
 
-static void func_ptr_80170008(Entity* self) {
+void func_ptr_80170008(Entity* self) {
     Entity* ents2;
     Primitive* prim;
     s16 angle;
@@ -419,7 +419,7 @@ static void func_ptr_80170008(Entity* self) {
 
 // Pay attention to unk80, unk8A, and childPalette. These all seem to be
 // special for Heaven Sword and we should probably have it as a special weapon.
-static void func_ptr_8017000C(Entity* self) {
+void func_ptr_8017000C(Entity* self) {
     s16 angle;
 
     if (self->ext.weapon.parent->entityId == 0) {
@@ -481,24 +481,24 @@ static void func_ptr_8017000C(Entity* self) {
     }
 }
 
-static s32 func_ptr_80170010(Entity* self) {}
+s32 func_ptr_80170010(Entity* self) {}
 
-static s32 func_ptr_80170014(Entity* self) {}
+s32 func_ptr_80170014(Entity* self) {}
 
-static int GetWeaponId(void) { return 13; }
+int GetWeaponId(void) { return 13; }
 
-static void EntityWeaponShieldSpell(Entity* self) {}
+void EntityWeaponShieldSpell(Entity* self) {}
 
-static void func_ptr_80170024(Entity* self) {}
+void func_ptr_80170024(Entity* self) {}
 
-static void func_ptr_80170028(Entity* self) {}
+void func_ptr_80170028(Entity* self) {}
 
-static void WeaponUnused2C(void) {}
+void WeaponUnused2C(void) {}
 
-static void WeaponUnused30(void) {}
+void WeaponUnused30(void) {}
 
-static void WeaponUnused34(void) {}
+void WeaponUnused34(void) {}
 
-static void WeaponUnused38(void) {}
+void WeaponUnused38(void) {}
 
-static void WeaponUnused3C(void) {}
+void WeaponUnused3C(void) {}
