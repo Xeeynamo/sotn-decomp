@@ -4594,19 +4594,6 @@ typedef struct {
 } ET_801C5C78;
 
 typedef struct {
-    /* 0x7C */ Primitive* unk7C;
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ s16 : 16;
-    /* 0x84 */ s32 : 32;
-    /* 0x88 */ s32 : 32;
-    /* 0x8C */ s16 unk8C;
-    /* 0x90 */ s32 : 32;
-    /* 0x94 */ s32 : 32;
-    /* 0x98 */ s32 : 32;
-    /* 0x9C */ struct Entity* unk9C;
-} ET_801D68E0;
-
-typedef struct {
     /* 0x7C */ s32 : 32;
     /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 unk82;
@@ -4626,21 +4613,6 @@ typedef struct {
     /* 0x88 */ s16 : 16;
     /* 0x8A */ struct Entity* entity;
 } ET_801D58FC;
-
-typedef struct {
-    struct Primitive* prim7C;
-    s16 unk80;
-    s32 : 32;
-    s32 : 32;
-    s16 unk8C;
-    s16 : 16;
-    u8 unk90;
-    u8 unk91;
-    s16 unk92;
-    s32 : 32;
-    s32 : 32;
-    struct Entity* ent9C;
-} ET_801D5E90;
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim7C;
@@ -4829,19 +4801,29 @@ typedef struct {
 } ET_BlackPanther;
 
 typedef struct {
-    /* 0x7C */ u32 : 32;
+    /* 0x7C */ struct Primitive* prim7C;
     /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 : 16;
     /* 0x84 */ s32 : 32;
     /* 0x88 */ s32 : 32;
-    /* 0x8c */ s32 : 32;
+    /* 0x8C */ s16 unk8C;
+    /* 0x8E */ s16 : 16;
     /* 0x90 */ u8 unk90;
-    /* 0x91 */ s8 : 8;
-    /* 0x92 */ s16 : 16;
+    /* 0x91 */ u8 unk91;
+    /* 0x92 */ s16 unk92;
     /* 0x94 */ s32 : 32;
     /* 0x98 */ s32 : 32;
-    /* 0x9C */ struct Entity* unk9C;
-} ET_801D6B8C;
+    /* 0x9C */ struct Entity* ent9C;
+} ET_CaveTroll;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ u8 unk90;
+} ET_CaveTrollUnk;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -5229,10 +5211,8 @@ typedef union { // offset=0x7C
     ET_Crusher crusher;
     ET_801D5BA4 et_801D5BA4;
     ET_801C5C78 et_801C5C78;
-    ET_801D68E0 et_801D68E0;
     ET_801D511C et_801D511C;
     ET_801D58FC et_801D58FC;
-    ET_801D5E90 et_801D5E90;
     ET_801C5364 et_801C5364;
     ET_801C81C8 et_801C81C8;
     ET_801C5EE4 et_801C5EE4;
@@ -5249,7 +5229,8 @@ typedef union { // offset=0x7C
     ET_Scarecrow scarecrow;
     ET_SpectralSwordRdai spectralSwordRdai;
     ET_BlackPanther blackPanther;
-    ET_801D6B8C et_801D6B8C;
+    ET_CaveTroll et_caveTroll;
+    ET_CaveTrollUnk et_caveTrollUnk;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);
