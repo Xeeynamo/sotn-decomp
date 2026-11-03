@@ -5,6 +5,10 @@
 #include <scratchpad.h>
 #include <sfx.h>
 
+#if defined(VERSION_PC) && !defined(gte_stdp)
+#define gte_stdp(r0) ((void)(r0))
+#endif
+
 #define UNK_SWORD_PRIM_COUNT 96
 #define CLUT_INDEX_SERVANT_2 0x410
 
@@ -14,10 +18,21 @@ typedef struct {
     s32 z;
 } SwordUnkStruct;
 
+typedef struct SwordScratchPad {
+    /* 0x0 */ s32 i;
+    /* 0x4 */ s32 gteDP;
+    /* 0x8 */ s32 gteFLG;
+    /* 0xC */ s32 gteOTZ;
+    /* 0x10 */ Primitive* prim;
+    /* 0x14 */ s32 unk14;
+    /* 0x18 */ s32 unk18;
+    /* 0x1C */ s32 zPriority;
+} SwordScratchPad;
+
 #ifdef VERSION_PSP
 #define sp2 ((SwordUnkStruct*)SP(0x24))
 #else
-#define sp2 ((SwordUnkStruct*)SP(0x20))
+#define sp2 ((SwordUnkStruct*)SP(sizeof(SwordScratchPad)))
 #endif
 
 static FamiliarStats s_SwordStats;
@@ -369,20 +384,13 @@ void func_us_80172C8C(SVECTOR* arg0, MATRIX* arg1) {
     arg1->m[2][2] = FLT_TO_I(D_us_801782C0 * D_us_801782BC);
 }
 
-typedef struct SwordScratchPad {
-    /* 0x0 */ s32 i;
-    /* 0x4 */ s32 gteDP;
-    /* 0x8 */ s32 gteFLG;
-    /* 0xC */ s32 gteOTZ;
-    /* 0x10 */ Primitive* prim;
-    /* 0x14 */ s32 unk14;
-    /* 0x18 */ s32 unk18;
-    /* 0x1C */ s32 zPriority;
-} SwordScratchPad;
-
+#ifdef VERSION_PC
+#define sp(field) (((SwordScratchPad*)SP(0))->field)
+#else
 #define sp(field)                                                              \
     (*((typeof(((SwordScratchPad*)0)->field)*)SP(                              \
         (size_t) & (((SwordScratchPad*)0)->field))))
+#endif
 
 void func_us_80172E84(Entity* self, s32 arg1) {
     static s32 D_us_801782C8;

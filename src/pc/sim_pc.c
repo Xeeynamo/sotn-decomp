@@ -101,6 +101,54 @@ SimFile D_800A036C[] = {
         D_80280000,
         SD_TUKA2_VB_LEN,
         SIM_VB,
+    },
+    {
+        "SERVANT/SD_DEVIL.VH",
+        aPbav_1,
+        SD_KOA1_VH_LEN,
+        SIM_VH,
+    },
+    {
+        "SERVANT/SD_DEVIL.VB",
+        D_80280000,
+        SD_KOA1_VB_LEN,
+        SIM_VB,
+    },
+    {
+        "SERVANT/SD_SWORD.VH",
+        aPbav_1,
+        SD_MAK_VH_LEN,
+        SIM_VH,
+    },
+    {
+        "SERVANT/SD_SWORD.VB",
+        D_80280000,
+        SD_MAK_VB_LEN,
+        SIM_VB,
+    },
+    {
+        "SERVANT/SD_FAIR2.VH",
+        aPbav_1,
+        SD_TUKA2_VH_LEN,
+        SIM_VH,
+    },
+    {
+        "SERVANT/SD_FAIR2.VB",
+        D_80280000,
+        SD_TUKA2_VB_LEN,
+        SIM_VB,
+    },
+    {
+        "SERVANT/SD_DEVI2.VH",
+        aPbav_1,
+        SD_KOA2_VH_LEN,
+        SIM_VH,
+    },
+    {
+        "SERVANT/SD_DEVI2.VB",
+        D_80280000,
+        SD_KOA2_VB_LEN,
+        SIM_VB,
     }};
 
 const char* D_800A04AC[] = {

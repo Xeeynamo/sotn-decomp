@@ -337,6 +337,37 @@ set(SOURCE_FILES_TT_002
     src/pc/servants/servant_002.c
 )
 
+set(SOURCE_FILES_TT_003
+    src/servant/tt_003/init.c
+    src/servant/tt_003/demon.c
+    src/servant/tt_003/demon_spriteparts.c
+    src/pc/servants/servant_003.c
+)
+
+set(SOURCE_FILES_TT_004
+    src/servant/tt_004/init.c
+    src/servant/tt_004/sword.c
+    src/servant/tt_004/servant_common.c
+    src/servant/tt_004/servant_clutdata.c
+    src/pc/servants/servant_004.c
+)
+
+set(SOURCE_FILES_TT_005
+    src/servant/tt_005/init.c
+    src/servant/tt_005/sprite.c
+    src/servant/tt_005/sprite_clutdata.c
+    src/servant/tt_005/sprite_spriteparts.c
+    src/pc/servants/servant_005.c
+)
+
+set(SOURCE_FILES_TT_006
+    src/servant/tt_006/init.c
+    src/servant/tt_006/nosedevil.c
+    src/servant/tt_006/nosedevil_spriteparts.c
+    src/servant/tt_006/servant_clutdata.c
+    src/pc/servants/servant_006.c
+)
+
 set(SOURCE_FILES_STAGE_SEL
     src/pc/stages/stage_sel.c
     src/st/sel/bss.c
@@ -2435,6 +2466,10 @@ endforeach()
 add_overlay(tt_000 ${SOURCE_FILES_TT_000})
 add_overlay(tt_001 ${SOURCE_FILES_TT_001})
 add_overlay(tt_002 ${SOURCE_FILES_TT_002})
+add_overlay(tt_003 ${SOURCE_FILES_TT_003})
+add_overlay(tt_004 ${SOURCE_FILES_TT_004})
+add_overlay(tt_005 ${SOURCE_FILES_TT_005})
+add_overlay(tt_006 ${SOURCE_FILES_TT_006})
 
 if(ENABLE_SATURN_STAGES)
     include(cmake/saturn_stages.cmake)
