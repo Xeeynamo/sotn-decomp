@@ -32,7 +32,7 @@ void func_060DCE50(u16 arg0) {
     if (arg0) {
         if (!(collider.effects & 5)) {
             MoveEntity(self);
-            func_06079BE4(self);
+            FallEntity(self);
             return;
         }
 
@@ -81,7 +81,7 @@ void func_060DCF5C(u16 arg0) {
         params = 1;
         entity->unk6D[0] = 0x10;
     } else {
-        params = DAT_060E1FFC[params];
+        params = g_WarpAlucardSubweaponIds[params];
         entity->unk6D[0] = 0x60;
     }
     if (params != 0) {

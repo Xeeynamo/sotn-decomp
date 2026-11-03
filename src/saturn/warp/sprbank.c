@@ -23,6 +23,6 @@ void* g_WarpSpriteBanks[18] = {
     &g_SaturnSharedSpriteBank12Resource,
     &g_SaturnSharedSpriteBank14Resource,
     g_EntitySpriteBank15,
-    g_WarpSpriteBank16,
+    &g_WarpSpriteBank16,
     NULL,
 };

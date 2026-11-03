@@ -5,18 +5,22 @@
 
 typedef struct {
     u8* animation;
-    s32 velocityX;
-    s32 velocityY;
+    u8 throwFrame0;
+    u8 throwFrame1;
+    s16 offsetX;
+    s16 offsetY;
+    s16 padding;
 } Entity15Attack;
 
-EntityEntry g_Stage16EntityEntry15 = {&g_EntitySpriteBank14, func_060E1928};
+EntityEntry g_Stage16EntityEntry15 = {
+    &g_SaturnSharedSpriteBank14Resource, func_060E1928};
 
 s16 g_Stage16Entity15CollisionSensors[8][2] = {
     {0, 16}, {0, 4}, {8, -4}, {-16, 0}, {0, 16}, {12, 0}, {-12, 16}, {0, -16},
 };
 
-u8 g_Stage16Entity15Animation0[8] = {8, 0xB, 7, 0xC, 8, 0xD, 7, 0xC};
-u32 g_Stage16Entity15Animation0Padding = 0;
+u8 g_Stage16Entity15Animation0[12] = {
+    8, 0xB, 7, 0xC, 8, 0xD, 7, 0xC, 0, 0, 0, 0};
 u8 g_Stage16Entity15Animation1[8] = {
     5, 0xD, 5, 0xC, 5, 0xB, 0xFF, 0,
 };
@@ -51,10 +55,10 @@ u8 g_Stage16Entity15Animation7[42] = {
 u16 g_Stage16Entity15AnimationPadding = 0;
 
 Entity15Attack g_Stage16Entity15Attacks[4] = {
-    {g_Stage16Entity15Animation3, 0x0600000A, (s32)0xFFFE0000},
-    {g_Stage16Entity15Animation4, 0x0F00000A, 0x00020000},
-    {g_Stage16Entity15Animation7, 0x24000008, (s32)0xFFF10000},
-    {g_Stage16Entity15Animation5, 0x1306000A, 0x00020000},
+    {g_Stage16Entity15Animation3, 0x06, 0x00, 10, -2, 0},
+    {g_Stage16Entity15Animation4, 0x0F, 0x00, 10, 2, 0},
+    {g_Stage16Entity15Animation7, 0x24, 0x00, 8, -15, 0},
+    {g_Stage16Entity15Animation5, 0x13, 0x06, 10, 2, 0},
 };
 
 s32 g_Stage16Entity15PartVelocityX[8] = {

@@ -14,7 +14,7 @@ void func_060DE8B4(Entity* self) {
     if (self->step == 0) {
         self->ext.et_060DE8B4.savedParams = savedParams = self->params;
         param = savedParams;
-        if ((DAT_0605CB50[param >> 3] >> (param & 7)) & 1) {
+        if ((g_CastleFlags[0x100 + (param >> 3)] >> (param & 7)) & 1) {
             update = DestroyEntity;
         } else {
             param = ((u16*)g_WarpHLayout49)[param];
@@ -31,7 +31,7 @@ void func_060DE8B4(Entity* self) {
         savedParams = self->ext.et_060DE8B4.savedParams;
         param = savedParams;
         if (self->step <= 4 && self->hitFlags != 0) {
-            DAT_0605CB50[param >> 3] |= 1 << (param & 7);
+            g_CastleFlags[0x100 + (param >> 3)] |= 1 << (param & 7);
             self->step = 5;
         }
         update = (PfnEntityUpdate)self->unkB4;

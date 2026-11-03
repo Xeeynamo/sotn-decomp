@@ -709,6 +709,7 @@ snd_srcs = [
     'src/saturn/stage_02/stspr48b.c',
     'src/saturn/rstage15.c',
     'src/saturn/rstage15/header.c',
+    'src/saturn/rstage15/s16res.c',
     'src/saturn/rstage15/sprbank.c',
     'src/saturn/rstage15/entupd.c',
     'src/saturn/rstage15/hlay.c',
@@ -859,6 +860,7 @@ snd_srcs = [
     'src/saturn/rstage16/ent37.c',
     'src/saturn/rstage16/s23gfx.c',
     'src/saturn/stage_16.c',
+    'src/saturn/stage_16/s16res.c',
     'src/saturn/stage_16/header.c',
     'src/saturn/stage_16/sprbank.c',
     'src/saturn/stage_16/entupd.c',
@@ -1389,6 +1391,7 @@ multi_objs = {
     ],
     'build/saturn/rstage15.o' : [
         'build/saturn/rstage15/header.o',
+        'build/saturn/rstage15/s16res.o',
         'build/saturn/rstage15/sprbank.o',
         'build/saturn/rstage15/entupd.o',
         'build/saturn/rstage15/hlay.o',
@@ -1543,6 +1546,7 @@ multi_objs = {
     ],
     'build/saturn/stage_16.o' : [
         'build/saturn/stage_16/header.o',
+        'build/saturn/stage_16/s16res.o',
         'build/saturn/stage_16/sprbank.o',
         'build/saturn/stage_16/entupd.o',
         'build/saturn/stage_16/hlay.o',
