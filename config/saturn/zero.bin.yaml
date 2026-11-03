@@ -13,35 +13,13 @@ segments:
     vram:  0x06004080
     subalign: 4
     subsegments:
-      - start: 0x0
-        type: c
-        file: zero
-        end: 0x2267
+      - [0x0, c, zero]
+      - [0x2268, text, zero]
+      - [0x2278, c, zero]
+      - [0x23C8, text, zero]
+      - [0x23F0, c, zero]
 
-      - start: 0x2268
-        type: text
-        file: zero
-        end: 0x2277
-
-      - start: 0x2278
-        type: c
-        file: zero
-        end: 0x23C7
-
-      - start: 0x23C8
-        type: text
-        file: zero
-        end: 0x23EF
-
-      - start: 0x23F0
-        type: c
-        file: zero
-        end: 0x2EFD
-
-      - start: 0x2EFE
-        type: c
-        file: zero_0
-        end: 0xD03F
+      - [0x2EFE, c, zero_0]
 
       - start: 0xD040
         type: c
