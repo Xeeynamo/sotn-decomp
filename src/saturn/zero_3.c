@@ -44,7 +44,7 @@ void func_0601AE2C(s32 arg0) {
     }
 }
 
-s32 func_0601AE5C(s32 arg0, s32 arg1) {
+s32 func_0601AE5C(s32 arg0) {
     OverlayHandler* handler;
     s32 i;
 
