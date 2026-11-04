@@ -115,7 +115,7 @@ RoomTeleport D_800A245C[] = {
     {496, 132, 0x0000, 36, STAGE_MAR},
     {128, 388, 0x0000, 0x0038, STAGE_CEN},
 #if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP11)
+    defined(VERSION_USPROTO) || defined(VERSION_JP11) || defined(VERSION_JP12)
     {496, 132, 0x0000, 0x0001, STAGE_BO4},
 #else
     {128, 77, 0x0010, 0x0028, STAGE_BO6},
@@ -195,7 +195,7 @@ RoomBossTeleport g_RoomBossTeleports[] = {
     {0x28, 0x27, STAGE_NO4, TIMEATTACK_EVENT_SCYLLA_DEFEAT, 0x6F},
     {0x39, 0x17, STAGE_NO1, TIMEATTACK_EVENT_DOPPLEGANGER_10_DEFEAT, 0x6C},
 #if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP11)
+    defined(VERSION_USPROTO) || defined(VERSION_JP11) || defined(VERSION_JP12)
     {0x3A, 0x17, STAGE_NO1, TIMEATTACK_EVENT_DOPPLEGANGER_10_DEFEAT, 0x48},
 #endif
     {0x17, 0x0D, STAGE_DAI, TIMEATTACK_EVENT_HYPPOGRYPH_DEFEAT, 0x68},
@@ -1292,9 +1292,20 @@ void RunMainEngine(void) {
             LoadGfxAsync(ANIMSET_DRA(4));
         }
         currentMusicId = g_StagesLba[g_StageId].musicId;
+#if defined(VERSION_JP12)
+        if (g_StageId == STAGE_NO3) {
+            if (D_8003C730 == 0) {
+                currentMusicId = SE_INTRO_WIND;
+            } else {
+                currentMusicId = MU_DRACULAS_CASTLE;
+                g_StagesLba[STAGE_NO3].musicId = MU_DRACULAS_CASTLE;
+            }
+        }
+#else
         if (g_StageId == STAGE_NO3 && D_8003C730 == 0) {
             currentMusicId = SE_INTRO_WIND;
         }
+#endif
         if (
 #if defined(VERSION_PSP)
             (D_8003C730 == 4) ||
@@ -1685,10 +1696,10 @@ void RunMainEngine(void) {
         DrawHudSubweapon2();
 #else
         DrawHudSubweapon();
-#if defined(VERSION_EU) || defined(VERSION_HK)
+#if defined(VERSION_EU) || defined(VERSION_HK) || defined(VERSION_JP12)
         if (g_pads[0].tapped & PAD_SELECT) {
             g_Settings.isSoundMono ^= 1;
-            func_800E493C();
+            ApplySoundMode();
         }
 #endif
         if ((g_pads[0].tapped & PAD_START) && StatusPause(1)) {
@@ -1905,7 +1916,7 @@ void RunMainEngine(void) {
                 g_GameEngineStep = Engine_Normal;
             }
 #if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP11)
+    defined(VERSION_USPROTO) || defined(VERSION_JP11) || defined(VERSION_JP12)
             func_8011A9D8();
 #endif
             g_MenuStep++;

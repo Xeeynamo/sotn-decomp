@@ -4000,7 +4000,7 @@ block_4:
         break;
     case MENU_STEP_SYSTEM_SOUND:
         MenuHandleCursorInput(&g_Settings.isSoundMono, 2, 0);
-        func_800E493C();
+        ApplySoundMode();
         if (g_pads[0].tapped & PAD_MENU_BACK_ALT) {
             PlaySfx(SFX_UI_CONFIRM);
             MenuHide(MENU_DG_CFG_SOUND);

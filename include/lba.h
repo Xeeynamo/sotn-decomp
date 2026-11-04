@@ -14,6 +14,9 @@
 #elif defined(VERSION_USPROTO)
 #include "lba_usproto.h"
 
+#elif defined(VERSION_JP12)
+#include "lba_jp12.h"
+
 #elif defined(VERSION_JP11)
 #include "lba_jp11.h"
 

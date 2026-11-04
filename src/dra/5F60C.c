@@ -283,7 +283,8 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         g_Status.timerMinutes = 0;
         g_Status.timerSeconds = 0;
         g_Status.timerFrames = 0;
-#if defined(VERSION_PSP) || defined(VERSION_EU) || defined(VERSION_HK)
+#if defined(VERSION_PSP) || defined(VERSION_EU) || defined(VERSION_HK) ||      \
+    defined(VERSION_JP12)
         g_TimerCopyFrames = g_TimerCopySeconds = g_TimerCopyMinutes =
             g_TimerCopyHours = 0;
 #endif
@@ -469,7 +470,8 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         g_Status.heartsMax = 2000;
         g_Status.gold = 500000;
         g_Status.exp = 11000;
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_JP12)
         g_Status.level = 20;
 #endif
 #if !defined(VERSION_HD) && !defined(VERSION_JP10)
@@ -499,7 +501,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
 #endif
 
 #if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO)
+    defined(VERSION_USPROTO) || defined(VERSION_JP12)
         g_Status.equipment[LEFT_HAND_SLOT] = ITEM_SHORT_SWORD;
         g_Status.equipment[RIGHT_HAND_SLOT] = ITEM_LEATHER_SHIELD;
         g_Status.equipment[HEAD_SLOT] = ITEM_EMPTY_HEAD;
@@ -511,7 +513,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         g_Status.timerMinutes = 0;
         g_Status.timerSeconds = 0;
         g_Status.timerFrames = 0;
-#if defined(VERSION_EU) || defined(VERSION_HK)
+#if defined(VERSION_EU) || defined(VERSION_HK) || defined(VERSION_JP12)
         g_TimerCopyFrames = g_TimerCopySeconds = g_TimerCopyMinutes =
             g_TimerCopyHours = 0;
 #endif

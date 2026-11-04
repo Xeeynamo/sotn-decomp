@@ -532,7 +532,7 @@ void RenderEntities(void) {
                         polyX += 4;
                     }
 #if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO)
+    defined(VERSION_USPROTO) || defined(VERSION_JP12)
                     setSemiTrans(poly, true);
                     poly->tpage += 0x20;
 #endif

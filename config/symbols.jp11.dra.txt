@@ -1,6 +1,6 @@
 D_800ACE88 = 0x800ACE88; // ignore:true
-D_800B0788 = 0x800B0884;
-D_800B0884 = 0x800B0980;
+D_800B0788 = 0x800B0884; // used:true
+D_800B0884 = 0x800B0980; // used:true
 D_800DBFFC = 0x800DC010;
 padding_CdSoundCommand14 = 0x800E1FDC;
 g_PlOvl = 0x8013C000;

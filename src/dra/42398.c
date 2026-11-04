@@ -6,7 +6,7 @@
 #if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
 #define PAD_RESETCOMBO ((PAD_START) | (PAD_SELECT))
 #elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) || \
-    defined(VERSION_USPROTO)
+    defined(VERSION_JP12) || defined(VERSION_USPROTO)
 #define PAD_RESETCOMBO                                                         \
     ((PAD_START) | (PAD_SELECT) | (PAD_L2) | (PAD_R2) | (PAD_L1) | (PAD_R1))
 #endif
@@ -780,7 +780,8 @@ void MainGame(void) {
 
 #if defined(VERSION_EU)
     SetVideoMode(MODE_PAL);
-#elif defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
+#elif defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||     \
+    defined(VERSION_JP12)
     SetVideoMode(MODE_NTSC);
 #endif
     InitializePads();
@@ -807,7 +808,8 @@ void MainGame(void) {
     g_Settings.D_8003CB04 = 0;
     g_CurrentBuffer = &g_GpuBuffers[0];
 #if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP10) || defined(VERSION_JP11)
+    defined(VERSION_USPROTO) || defined(VERSION_JP10) ||                       \
+    defined(VERSION_JP11) || defined(VERSION_JP12)
     SetCdPos(OFF_SD_XA_STR1);
 #elif defined(VERSION_HD)
     do {
@@ -834,7 +836,8 @@ void MainGame(void) {
     g_GpuMaxUsage.sp = 0;
     g_GpuMaxUsage.env = 0;
 #if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP10) || defined(VERSION_JP11)
+    defined(VERSION_USPROTO) || defined(VERSION_JP10) ||                       \
+    defined(VERSION_JP11) || defined(VERSION_JP12)
     g_DebugPlayer = 0;
 #elif defined(VERSION_HD)
     g_DebugPlayer = 1;
@@ -939,10 +942,10 @@ loop_5:
 #endif
             g_softResetTimer = 0;
 #elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) || \
-    defined(VERSION_USPROTO)
+    defined(VERSION_JP12) || defined(VERSION_USPROTO)
         if (g_pads[0].pressed == PAD_RESETCOMBO &&
             g_pads[0].tapped & PAD_START &&
-#if defined(VERSION_JP11) || defined(VERSION_USPROTO)
+#if defined(VERSION_JP11) || defined(VERSION_USPROTO) || defined(VERSION_JP12)
             !g_IsUsingCd &&
 #endif
             D_800978C4 != 0) {
@@ -1025,7 +1028,9 @@ loop_5:
                     }
                 }
             }
-#if defined(VERSION_EU) || defined(VERSION_HK)
+#if defined(VERSION_EU) || defined(VERSION_HK) || defined(VERSION_JP12)
+            // BUGFIX: fixes the clock at the center of the castle works after
+            // 99:59:59 play time
             g_TimerCopyFrames += D_801362D4;
 #if defined(VERSION_EU)
             if (g_TimerCopyFrames >= 50) {

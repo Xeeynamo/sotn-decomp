@@ -390,7 +390,8 @@ u8* g_saveIconTexture[] = {
     g_saveIcon12, g_saveIcon13, g_saveIcon14, g_saveIcon15,
 };
 
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_JP12)
 s32 g_saveUnkData[] = {
     1, 1, 3, 1, 1, 1, 3, 1, 2, 2, 1, 1, 1, 1, 1, 2,
 };
@@ -583,7 +584,7 @@ void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
     }
 
 #if defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) ||   \
-    defined(VERSION_USPROTO)
+    defined(VERSION_JP12) || defined(VERSION_USPROTO)
     // writes stage name
     strcat(h.Title, "　");
     strcat(h.Title, g_SaveAreaNames[g_StageId]);
@@ -676,7 +677,7 @@ s32 ApplySaveData(SaveData* save) {
     g_Tilemap.top = savePtr->info.roomY;
 
     g_Status = *srcStatus;
-#if defined(VERSION_EU) || defined(VERSION_HK)
+#if defined(VERSION_EU) || defined(VERSION_HK) || defined(VERSION_JP12)
     g_TimerCopyHours = g_Status.timerHours;
     g_TimerCopyMinutes = g_Status.timerMinutes;
     g_TimerCopySeconds = g_Status.timerSeconds;

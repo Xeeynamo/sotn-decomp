@@ -140,8 +140,11 @@ u16 g_SjisPages[] = {
 #else
     '鬱', // copyright symbol
 #endif
-#if defined(VERSION_JP11) || defined(VERSION_USPROTO)
+#if defined(VERSION_JP11) || defined(VERSION_USPROTO) || defined(VERSION_JP12)
     '憑',
+#endif
+#if defined(VERSION_JP12)
+    '顰',
 #endif
 };
 
@@ -318,7 +321,7 @@ u8 g_CustomGlyphs[][30] = {
         0x18, 0x30, // □□□■■□□□□□■■□□□□
         0x07, 0xC0, // □□□□□■■■■■□□□□□□
     },
-#if defined(VERSION_JP11) || defined(VERSION_USPROTO)
+#if defined(VERSION_JP11) || defined(VERSION_USPROTO) || defined(VERSION_JP12)
     {
         0x00, 0x00, // □□□□□□□□□□□□□□□□
         0x47, 0xFC, // □■□□□■■■■■■■■■□□
@@ -335,6 +338,25 @@ u8 g_CustomGlyphs[][30] = {
         0x48, 0x84, // □■□□■□□□■□□□□■□□
         0x48, 0x12, // □■□□■□□□□□□■□□■□
         0x87, 0xF2, // ■□□□□■■■■■■■□□■□
+    },
+#endif
+#if defined(VERSION_JP12)
+    {
+        0x00, 0x00, // □□□□□□□□□□□□□□□□
+        0x40, 0x00, // □■□□□□□□□□□□□□□□
+        0x20, 0x00, // □□■□□□□□□□□□□□□□
+        0x10, 0x00, // □□□■□□□□□□□□□□□□
+        0x08, 0x00, // □□□□■□□□□□□□□□□□
+        0x04, 0x00, // □□□□□■□□□□□□□□□□
+        0x02, 0x00, // □□□□□□■□□□□□□□□□
+        0x01, 0x08, // □□□□□□□■□□□□■□□□
+        0x00, 0x88, // □□□□□□□□■□□□■□□□
+        0x00, 0x48, // □□□□□□□□□■□□■□□□
+        0x00, 0x28, // □□□□□□□□□□■□■□□□
+        0x00, 0x18, // □□□□□□□□□□□■■□□□
+        0x01, 0xF8, // □□□□□□□■■■■■■□□□
+        0x00, 0x00, // □□□□□□□□□□□□□□□□
+        0x00, 0x00, // □□□□□□□□□□□□□□□□
     },
 #endif
 };

@@ -1719,7 +1719,7 @@ void UpdatePlayerEntities(void) {
     if ((g_Player.status & (PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK80000)) ||
         (PLAYER.step == Player_Teleport && PLAYER.step_s == 0)) {
 #if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP11)
+    defined(VERSION_USPROTO) || defined(VERSION_JP11) || defined(VERSION_JP12)
         // Japanese for "without hit".
         FntPrint("atari nuki\n");
 #else
@@ -1786,7 +1786,7 @@ void func_8011A9D8(void) {
             DestroyEntity(entity);
         }
 #if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP11)
+    defined(VERSION_USPROTO) || defined(VERSION_JP11) || defined(VERSION_JP12)
         if (g_PlayableCharacter == PLAYER_ALUCARD && 0x36 < entity->entityId &&
             entity->entityId < 0x3D && entity->step != 0) {
             entity->pfnUpdate(entity);

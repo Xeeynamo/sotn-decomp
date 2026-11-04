@@ -456,7 +456,7 @@ static AnimationFrame D_800AEB64[] = {
 static AnimationFrame D_800AEB84[] = {
     POSE(4, 0xCB, 3), POSE(6, 0xCC, 3), POSE(5, 0xCD, 3),
     POSE(5, 0xCE, 3), POSE(5, 0xCF, 3), POSE(64, 0x0F, 3),
-#if defined(VERSION_EU) || defined(VERSION_HK)
+#if defined(VERSION_EU) || defined(VERSION_HK) || defined(VERSION_JP12)
     POSE_END,
 #endif
 };

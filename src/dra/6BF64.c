@@ -73,7 +73,7 @@ void func_8010BFFC(void) {
         return;
     }
 #if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO)
+    defined(VERSION_USPROTO) || defined(VERSION_JP12)
     if ((g_Player.status &
          (PLAYER_STATUS_TRANSFORM | PLAYER_STATUS_UNK40000000)) ||
         ((g_PlayableCharacter != 0) && (PLAYER.step == 0x18))) {
@@ -127,7 +127,7 @@ void func_8010BFFC(void) {
                 x = PLAYER.posX.i.hi + g_SensorsCeiling[i].x;
                 y = PLAYER.posY.i.hi + g_SensorsCeiling[i].y;
 #if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO)
+    defined(VERSION_USPROTO) || defined(VERSION_JP12)
                 if (g_PlayableCharacter != PLAYER_ALUCARD) {
                     y += 6;
                 }

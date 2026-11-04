@@ -30,6 +30,10 @@ __asm__(".pushsection .data\n"
         ".popsection\n");
 #endif
 
+#if defined(VERSION_JP12)
+u8 D_800BD1E4 = 0;
+#endif
+
 s16 g_CdVolumeTable[] = {
     0,   2,   4,   6,   8,   10,  12,  14,  16,  18,  20,  22,  24,  26,  28,
     30,  32,  34,  36,  38,  40,  42,  44,  46,  48,  50,  52,  54,  56,  58,
@@ -108,6 +112,38 @@ void func_80131FCC(void) {
     }
     D_8013B680 = 0;
 }
+
+#if defined(VERSION_JP12)
+u8 DoCdCommandF(u_char com, u_char* param, u_char* result) {
+    g_CdCommandStatus = CdSync(CdlNop, g_CdCommandResult);
+
+    if (D_800BD1E4 == CdlGetlocL) {
+        if (g_CdCommandStatus != CdlComplete) {
+            CdControlF(CdlNop, NULL);
+            D_8013B680 = 2;
+            return D_8013B680;
+        }
+    } else if (*g_CdCommandResult & CdlStatShellOpen) {
+        CdControlF(CdlNop, NULL);
+        D_8013B680 = 2;
+        return D_8013B680;
+    } else if (*g_CdCommandResult & CdlStatSeekError) {
+        CdControlF(CdlNop, NULL);
+        D_8013B680 = 2;
+        return D_8013B680;
+    }
+
+    if (g_CdCommandStatus == CdlComplete) {
+        CdControlF(com, param);
+        D_800BD1E4 = com;
+        D_8013B680 = 0;
+        return D_8013B680;
+    }
+
+    D_8013B680 = 1;
+    return D_8013B680;
+}
+#endif
 
 u8 DoCdCommand(u_char com, u_char* param, u_char* result) {
     g_CdCommandStatus = CdSync(CdlNop, g_CdCommandResult);
@@ -448,7 +484,8 @@ void CdSoundCommand4(void) {
     case 0:
         D_801390A0 = 1;
         g_CurrentXaConfigId = g_QueuedXaBgmId;
-#if defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
+#if defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) ||   \
+    defined(VERSION_JP12)
         if (g_QueuedXaBgmId < 0x3D) {
 #else
         if (g_QueuedXaBgmId < 0x40) {
@@ -505,6 +542,23 @@ void CdSoundCommand4(void) {
         break;
 
     case 7:
+#if defined(VERSION_JP12)
+        if (DoCdCommandF(CdlNop, NULL, NULL) == 0) {
+            g_CdSoundCommandStep++;
+        }
+        break;
+
+    case 8:
+        CdSync(CdlNop, g_CdCommandResult);
+        if (*g_CdCommandResult & CdlStatSeek) {
+            g_CdSoundCommandStep--;
+        } else {
+            g_CdSoundCommandStep++;
+        }
+        break;
+
+    case 9:
+#else
         if (DoCdCommand(CdlNop, NULL, g_CdCommandResult) == 0) {
             if ((*g_CdCommandResult & CdlStatSeek) == 0) {
                 g_CdSoundCommandStep++;
@@ -513,6 +567,7 @@ void CdSoundCommand4(void) {
         break;
 
     case 8:
+#endif
         SsSetSerialAttr(SS_SERIAL_A, SS_MIX, SS_SON);
         D_8013AEF4 = VSync(-1);
         g_PlayingXaBgmId = g_CurrentXaConfigId;
@@ -555,6 +610,23 @@ void CdSoundCommand6(void) {
         break;
 
     case 3:
+#if defined(VERSION_JP12)
+        if (DoCdCommandF(CdlNop, NULL, NULL) == 0) {
+            g_CdSoundCommandStep++;
+        }
+        break;
+
+    case 4:
+        CdSync(CdlNop, g_CdCommandResult);
+        if (*g_CdCommandResult & CdlStatSeek) {
+            g_CdSoundCommandStep--;
+        } else {
+            g_CdSoundCommandStep++;
+        }
+        break;
+
+    case 5:
+#else
         if (DoCdCommand(CdlNop, NULL, g_CdCommandResult) == 0) {
             if ((*g_CdCommandResult & CdlStatSeek) == 0) {
                 g_CdSoundCommandStep++;
@@ -563,6 +635,7 @@ void CdSoundCommand6(void) {
         break;
 
     case 4:
+#endif
         D_8013AEF4 = VSync(-1);
         D_8013AE90 = g_XaMusicConfigs[D_8013845C + 1].unk228;
         SetReverbDepth(g_ReverbDepth);
@@ -831,6 +904,23 @@ void CdSoundStartXaPlayback(void) {
         break;
 
     case 5:
+#if defined(VERSION_JP12)
+        if (DoCdCommandF(CdlNop, NULL, NULL) == 0) {
+            g_CdSoundCommandStep++;
+        }
+        break;
+
+    case 6:
+        CdSync(CdlNop, g_CdCommandResult);
+        if (*g_CdCommandResult & CdlStatSeek) {
+            g_CdSoundCommandStep--;
+        } else {
+            g_CdSoundCommandStep++;
+        }
+        break;
+
+    case 7:
+#else
         if (DoCdCommand(CdlNop, NULL, g_CdCommandResult) == 0) {
             if ((*g_CdCommandResult & CdlStatSeek) == 0) {
                 g_CdSoundCommandStep++;
@@ -839,6 +929,7 @@ void CdSoundStartXaPlayback(void) {
         break;
 
     case 6:
+#endif
         D_8013AEF4 = VSync(-1);
         SsSetSerialAttr(SS_SERIAL_A, SS_MIX, SS_SON);
         D_8013AE90 = D_8013B5F4[g_CdSoundCommand16 - 1].unk8;
@@ -846,7 +937,11 @@ void CdSoundStartXaPlayback(void) {
         g_CdSoundCommandStep++;
         break;
 
+#if defined(VERSION_JP12)
+    case 8:
+#else
     case 7:
+#endif
         if (g_CdVolume < g_XaMusicVolume) {
             g_CdVolume += 12;
         }
@@ -857,7 +952,11 @@ void CdSoundStartXaPlayback(void) {
         SetCdVolume(0, g_CdVolume, g_CdVolume);
         break;
 
+#if defined(VERSION_JP12)
+    case 9:
+#else
     case 8:
+#endif
         g_CdSoundCommand16--;
         D_801390A0 = 0;
         D_8013980C = 0;
@@ -873,7 +972,9 @@ void CdSoundStartXaPlayback(void) {
     }
 }
 
+#if !defined(VERSION_JP12)
 const u32 padding_CdSoundCommand14 = 0;
+#endif
 
 void func_80133FCC(void) {
     if (g_PlayingXaBgmId == 0) {
@@ -1256,7 +1357,8 @@ void ExecSoundCommands(void) {
 
 #if defined(VERSION_PC)
         if (id > 0x300 && id < 0x535) {
-#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
+#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) || \
+    defined(VERSION_JP12)
         if (id > 0x300 && id < 0x531) {
 #elif defined(VERSION_PSP)
         if (id > 0x300 && id < 0x532) {

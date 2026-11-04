@@ -37,7 +37,7 @@ def apply(config, args):
     name = re.sub(
         r"^(?:st|bos?s?)/?(?=[a-z])",
         "",
-        f"{args.overlay.upper() if version in ('us', 'jp10', 'jp11', 'usproto', 'eu', 'hk') else args.overlay.lower()}",
+        f"{args.overlay.upper() if version in ('us', 'jp10', 'jp11', 'jp12', 'usproto', 'eu', 'hk') else args.overlay.lower()}",
         flags=re.IGNORECASE,
     )
 
@@ -47,6 +47,7 @@ def apply(config, args):
         "pspeu": "disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN",
         "jp10": "disks/jp10",
         "jp11": "disks/jp11",
+        "jp12": "disks/jp12",
         "usproto": "disks/usproto",
         "eu": "disks/eu",
         "hk": "disks/hk",
@@ -57,6 +58,7 @@ def apply(config, args):
         "pspeu": "bin",
         "jp10": "BIN",
         "jp11": "BIN",
+        "jp12": "BIN",
         "usproto": "BIN",
         "eu": "BIN",
         "hk": "BIN",

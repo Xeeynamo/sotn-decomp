@@ -628,7 +628,8 @@ extern Point16 g_SensorsCeiling[];
 extern Point16 g_SensorsFloor[];
 extern Point16 g_SensorsWall[];
 
-#if !defined(VERSION_US) && !defined(VERSION_EU) && !defined(VERSION_HK)
+#if !defined(VERSION_US) && !defined(VERSION_EU) && !defined(VERSION_HK) &&    \
+    !defined(VERSION_JP12)
 extern s32 D_800ACEDC_hd;
 #define TRANSFORM_LOCKOUT_TIMER D_800ACEDC_hd
 #else
@@ -779,6 +780,7 @@ void func_8010E570(s32);
 void func_8010E83C(bool);
 void DoGravityJump(void);
 bool WolfFormFinished(void);
+bool IsWolfTouchingFloor(void);
 bool StatusPause(s32 arg0);
 s32 func_801104D0();
 bool CheckGravityBootsInput(void);

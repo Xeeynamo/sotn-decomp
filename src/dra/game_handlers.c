@@ -160,7 +160,8 @@ void HandleTitle(void) {
 #endif
         g_GameStep++;
         break;
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_JP12)
     case 100:
         if (!g_IsUsingCd) {
             RECT rect;
@@ -219,29 +220,17 @@ void HandleTitle(void) {
         g_GameStep++;
         break;
     case 2:
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
-        g_GameStep = 3;
-#else
         g_GameStep++;
-#endif
         break;
     case 3:
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
-        g_GameStep = 4;
-#else
         g_GameStep++;
-#endif
         break;
     case 4:
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_StagePrg;
         }
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
-        g_GameStep = 5;
-#else
         g_GameStep++;
-#endif
         break;
     case 5:
         if (g_UseDisk) {
@@ -257,7 +246,8 @@ void HandleTitle(void) {
         g_GameEngineStep = Engine_Init;
         break;
     case 6:
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_JP12)
         if (g_GameState == Game_Title) {
             callback = g_api.o.HitDetection;
             callback();
@@ -278,7 +268,7 @@ void HandleTitle(void) {
     }
 }
 
-void func_800E493C(void) {
+void ApplySoundMode(void) {
     if (g_Settings.isSoundMono == false) {
         PlaySfx(SET_SOUNDMODE_STEREO);
     } else {
@@ -301,7 +291,7 @@ void func_800E4970(void) {
     PlaySfx(SET_UNK_12);
     PlaySfx(SET_UNK_0B);
     MuteSound();
-    func_800E493C();
+    ApplySoundMode();
 }
 
 void func_800E4A04(void) { s32 pad[3]; }
@@ -471,11 +461,11 @@ void HandlePlay(void) {
             if (g_StageId == STAGE_ST0 ||
                 g_PlayableCharacter != PLAYER_ALUCARD) {
                 g_Settings.isSoundMono = true;
-                func_800E493C();
+                ApplySoundMode();
             }
-#else
+#elif !defined(VERSION_JP12)
             g_Settings.isSoundMono = true;
-            func_800E493C();
+            ApplySoundMode();
 #endif
             for (i = 0; i < LEN(g_Settings.equipOrderTypes); i++) {
                 g_Settings.equipOrderTypes[i] = i;
@@ -1961,7 +1951,8 @@ void HandleVideoPlayback(void) {
 #if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
     defined(VERSION_USPROTO)
                 prim2->drawMode = DRAW_HIDE;
-#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
+#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) || \
+    defined(VERSION_JP12)
                 prim2->drawMode = DRAW_DEFAULT;
 #endif
             }
@@ -2228,7 +2219,8 @@ void HandleEnding(void) {
         g_api.o.UpdateStageEntities();
         break;
     case 10:
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_JP12)
         PlaySfx(18);
         PlaySfx(11);
         MuteSound();
@@ -2255,7 +2247,8 @@ void UpdateGame(void) {
     case Game_Title:
         HandleTitle();
         break;
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_JP12)
     case Game_99:
         HandleTitle();
         break;

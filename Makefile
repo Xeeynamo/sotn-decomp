@@ -93,7 +93,7 @@ endif
 
 ##@ Variables
 ##@
-##@     VERSION              the game version to build (us, hd, jp10, jp11, usproto, eu, hk, pspeu, saturn, pc) (Default: us)
+##@     VERSION              the game version to build (us, hd, jp10, jp11, jp12, usproto, eu, hk, pspeu, saturn, pc) (Default: us)
 ##@
 ##@ Primary Targets
 ##@
@@ -117,6 +117,7 @@ extract_us: extract_assets
 extract_hd: extract_assets
 extract_jp10: extract_assets
 extract_jp11: extract_assets
+extract_jp12: extract_assets
 extract_usproto: extract_assets
 extract_eu: extract_assets
 extract_hk: extract_assets
@@ -125,7 +126,7 @@ extract_pspeu: extract_assets
 .PHONY: build
 build: ##@ build game files
 build: build_$(VERSION)
-build_us build_hd build_jp10 build_jp11 build_usproto build_eu build_hk build_pspeu build_saturn:
+build_us build_hd build_jp10 build_jp11 build_jp12 build_usproto build_eu build_hk build_pspeu build_saturn:
 	@./sotn.sh build $(subst build_,,$@)
 .PHONY: build_all
 build_all:
@@ -381,7 +382,7 @@ disks/sotn.%.bin disks/sotn.%.cue:
 # They are grouped in the general order you will find the targets in the file.
 PHONY: # Since .PHONY reads % as a literal %, we need this target as a prereq to treat pattern targets as .PHONY
 PHONY_TARGETS += all all-clean clean $(addprefix CLEAN_,$(CLEAN_FILES)) extract build patch expected
-PHONY_TARGETS += dump-disk $(addprefix dump-disk_,eu hk jp10 jp11 saturn us usproto) extract-disk disk disk-prepare disk-debug
+PHONY_TARGETS += dump-disk $(addprefix dump-disk_,eu hk jp10 jp11 jp12 saturn us usproto) extract-disk disk disk-prepare disk-debug
 PHONY_TARGETS += force-symbols $(addprefix FORCE_,$(FORCE_SYMBOLS)) force-extract context function-finder duplicates-report
 PHONY_TARGETS += git-submodules update-dependencies update-dependencies-all $(addprefix dependencies_,us pspeu hd saturn) requirements-python graphviz
 PHONY_TARGETS += help get-debug get-phony get-silent

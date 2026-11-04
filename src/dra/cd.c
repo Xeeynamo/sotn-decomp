@@ -146,6 +146,67 @@ CdFile g_LbaStagePrg = {0x0000, 8, 0x00000, 0, 0, 0xFF, 0};
 CdFile g_LbaBinGo = {0x6599, 9, 0x1C000, 0, 0, 0xFF, 0};
 CdFile g_LbaBinEnd = {0x74D2, 9, 0x16000, 0, 0, 0xFF, 0};
 CdFile D_800ACC64 = {0x0000, 3, 0x00000, 0, 0, 0xFF, 0};
+#elif defined(VERSION_JP12)
+CdFile g_LbaBinTitle = {0x64C7, 0, 0x80000, 0, 0, 0xFF, 0};
+CdFile g_LbaBinProlo = {0x63C7, 6, 0x80000, 0, 0, 0xFF, 0};
+CdFile g_LbaBinGame = {0x0000, 1, 0x42000, 0, 0, 0x13, 0};
+CdFile g_LbaStageChr = {0x7F3F, 2, 0x40000, 0, 0, 0xFF, 0};
+CdFile g_LbaSdAlkVh = {0x61FE, 19, 0x01020, 1, 1, 0xFF, 7};
+CdFile g_LbaSdAlkVb = {0x6201, 17, 0x0E1D0, 1, 1, 0xFF, 0};
+CdFile g_LbaSdRihVh = {0x621E, 19, 0x01020, 1, 1, 0x16, 21};
+CdFile g_LbaSdRihVb = {0x6221, 17, 0x0CC20, 1, 1, 0xFF, 0};
+CdFile g_LbaSdMarVh = {0x623B, 19, 0x00E20, 2, 2, 0xFF, 23};
+CdFile g_LbaSdMarVb = {0x623D, 17, 0x0E290, 2, 2, 0xFF, 0};
+CdFile g_LbaSdJ010_1_Vh = {0x6173, 19, 0x02A20, 0, 0, 0x0A, 9};
+CdFile g_LbaSdJ010_1_Vb = {0x6179, 17, 0x41CB0, 0, 0, 0xFF, 0};
+CdFile g_LbaSdJ010_2_Vh = {0x6173, 19, 0x41CB0, 4, 4, 0x0C, 11};
+CdFile g_LbaSdJ010_2_Vb = {0x6179, 17, 0x1A510, 4, 4, 0x0C, 0};
+CdFile g_LbaStageSeq = {0x0000, 18, 0x00000, 0, 6, 0xFF, 0};
+CdFile g_LbaStageVh = {0x0000, 19, 0x00000, 3, 3, 0xFF, 14};
+CdFile g_LbaStageVb = {0x0000, 17, 0x00000, 3, 3, 0xFF, 0};
+CdFile g_LbaSdJ010_3_Vh = {0x6173, 19, 0x02A20, 3, 3, 0xFF, 16};
+CdFile g_LbaSdJ010_3_Vb = {0x6179, 17, 0x41CB0, 3, 3, 0xFF, 0};
+CdFile g_LbaBinWeapon0 = {0x6673, 12, 0x04000, 0, 0, 0xFF, 0};
+CdFile g_LbaBinWeapon1 = {0x69AD, 13, 0x04000, 0, 0, 0xFF, 1};
+CdFile g_LbaBinMonster = {0x6CE7, 14, 0x05800, 0, 0, 0xFF, 0};
+CdFile g_LbaBinDemokey = {0x7500, 4, 0x02000, 0, 0, 0xFF, 0};
+
+// SERVANT/FT_xxx.BIN off
+s32 g_LbaServantChrOff[] = {
+    0x7339, 0x737C, 0x73BF, 0x7402, 0x7442, 0x747D, 0x74C0,
+};
+
+// SERVANT/SD_xxx.VH off
+s32 g_LbaServantVhOff[] = {
+    0x7359, 0x739C, 0x73DF, 0x7422, 0x7462, 0x749D, 0x74E0,
+};
+
+// SERVANT/SD_xxx.VH len
+s32 g_LbaServantVhLen[] = {
+    4128, 4128, 4128, 3616, 3104, 4128, 3616,
+};
+
+// SERVANT/SD_xxx.VB off
+s32 g_LbaServantVbOff[] = {
+    0x735C, 0x739F, 0x73E2, 0x7424, 0x7464, 0x74A0, 0x74E2,
+};
+
+// SERVANT/SD_xxx.VB len
+s32 g_LbaServantVbLen[] = {
+    63904, 63904, 65200, 59488, 51024, 63904, 60992,
+};
+
+CdFile g_LbaServantChr = {0x0000, 15, 0x06000, 0, 0, 0x1D, 0};
+CdFile g_LbaServantVh = {0x0000, 19, 0x00000, 2, 2, 0xFF, 30};
+CdFile g_LbaServantVb = {0x0000, 17, 0x00000, 2, 2, 0xFF, 0};
+CdFile g_LbaBinRichter = {0x65C7, 10, 0x39A68, 0, 0, 0x14, 0};
+CdFile g_LbaBinAlucard = {0x625B, 10, 0x31BEC, 0, 0, 0x04, 0};
+CdFile g_LbaOpnWsStr = {0x362A, 0, 0x00000, 0, 0, 0xFF, 0};
+CdFile g_LbaStagePrg = {0x0000, 8, 0x00000, 0, 0, 0xFF, 0};
+CdFile g_LbaBinGo = {0x663B, 9, 0x1C000, 0, 0, 0xFF, 0};
+CdFile g_LbaBinEnd = {0x7574, 9, 0x16000, 0, 0, 0xFF, 0};
+CdFile D_800ACC64 = {0x0000, 3, 0x00000, 0, 0, 0xFF, 0};
+
 #elif defined(VERSION_JP11)
 CdFile g_LbaBinTitle = {0x6425, 0, 0x80000, 0, 0, 0xFF, 0};
 CdFile g_LbaBinProlo = {0x6325, 6, 0x80000, 0, 0, 0xFF, 0};
@@ -746,7 +807,8 @@ void PlaySfx(s32);
 void SsVabClose(short);
 
 void UpdateCd(void) {
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_JP12)
     const bool UseEuWarning = true;
 #elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) || \
     defined(VERSION_USPROTO)

@@ -509,7 +509,7 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
             subwpn->attack += 10;
         }
 #if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP11)
+    defined(VERSION_USPROTO) || defined(VERSION_JP11) || defined(VERSION_JP12)
         if (subweaponId == 4 || subweaponId == 12) {
 #elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_PSP)
         if (subweaponId == 4) {
@@ -951,7 +951,7 @@ u16 DealDamage(Entity* enemyEntity, Entity* attackerEntity) {
             break;
         case STAT_LCK:
 #if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP11)
+    defined(VERSION_USPROTO) || defined(VERSION_JP11) || defined(VERSION_JP12)
             damage += (rand() % g_Status.statsTotal[STAT_LCK]) + 1;
 #else
             damage += (rand() % g_Status.statsTotal[STAT_LCK]);

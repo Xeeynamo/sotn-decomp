@@ -8,7 +8,7 @@
 s32 D_80137FB4;
 s32 D_80137FB8;
 #if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP11)
+    defined(VERSION_USPROTO) || defined(VERSION_JP11) || defined(VERSION_JP12)
 s32 D_80137FBC;
 #endif
 
@@ -26,7 +26,7 @@ s32 g_WasFacingLeft7;
 
 // 71830.c
 #if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP11)
+    defined(VERSION_USPROTO) || defined(VERSION_JP11) || defined(VERSION_JP12)
 s32 D_80137FDC;
 #endif
 
@@ -99,6 +99,9 @@ s32 D_8013843C;
 s32 D_80138440;
 s32 D_80138444;
 s32 D_80138448;
+#if defined(VERSION_JP12)
+s32 g_WolfIsTouchingFloor;
+#endif
 s32 D_8013844C;
 s32 D_80138450;
 
@@ -299,6 +302,7 @@ s32 D_8013B694;
 s16 g_volumeR;
 STATIC_PAD_BSS(2);
 s32 D_8013B69C;
-#if defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
+#if defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) ||   \
+    defined(VERSION_JP12)
 u32 D_8013B6A0; // TODO VAB from BSS, fake symbol
 #endif

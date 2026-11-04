@@ -7,7 +7,7 @@
 // maybe this suggests a file split
 
 #if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP11)
+    defined(VERSION_USPROTO) || defined(VERSION_JP11) || defined(VERSION_JP12)
 s32 D_800ACDF8 = 0;
 s32 D_800ACDFC = 0;
 s32 D_800ACE00[] = {
@@ -267,7 +267,7 @@ void AluInit() {
     D_80137FB8 = 0;
 
 #if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP11)
+    defined(VERSION_USPROTO) || defined(VERSION_JP11) || defined(VERSION_JP12)
     D_80137FBC = true;
 #endif
 
@@ -824,7 +824,7 @@ void EntityAlucard() {
     if (g_Player.demo_timer != 0) {
         g_Player.demo_timer--;
 #if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP11)
+    defined(VERSION_USPROTO) || defined(VERSION_JP11) || defined(VERSION_JP12)
         if (g_Player.demo_timer == 0) {
             D_80137FBC = true;
         }
@@ -863,7 +863,7 @@ void EntityAlucard() {
             }
         }
 #if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP11)
+    defined(VERSION_USPROTO) || defined(VERSION_JP11) || defined(VERSION_JP12)
         if (D_80137FBC) {
             D_80137FBC = false;
             g_Player.padHeld = g_Player.padPressed;
@@ -877,7 +877,8 @@ void EntityAlucard() {
         g_Player.padPressed &= ~(PAD_SQUARE | PAD_CIRCLE);
     }
     if ((g_DebugPlayer != 0) && (func_801119C4() != 0)) {
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_JP12)
         FntPrint("step:%04x\n", PLAYER.step);
         FntPrint("bat_i_step:%04x\n", g_Player.unk66);
 #endif
@@ -890,7 +891,8 @@ void EntityAlucard() {
 
 // US uses a different ordering than HD/PSP
 #if !defined(VERSION_US) && !defined(VERSION_EU) && !defined(VERSION_HK) &&    \
-    !defined(VERSION_USPROTO) && !defined(VERSION_JP11)
+    !defined(VERSION_USPROTO) && !defined(VERSION_JP11) &&                     \
+    !defined(VERSION_JP12)
     if (g_Player.timers[ALU_T_INVINCIBLE] |
         g_Player.timers[ALU_T_INVINCIBLE_CONSUMABLES]) {
         goto specialmove;
@@ -906,7 +908,7 @@ void EntityAlucard() {
         goto block_159;
     }
 #if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP11)
+    defined(VERSION_USPROTO) || defined(VERSION_JP11) || defined(VERSION_JP12)
     if (g_Player.timers[ALU_T_INVINCIBLE] |
         g_Player.timers[ALU_T_INVINCIBLE_CONSUMABLES]) {
         goto specialmove;
@@ -1331,7 +1333,13 @@ block_159:
         PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
         break;
     case Player_MorphWolf:
+#if defined(VERSION_JP12)
+        if (IsWolfTouchingFloor()) {
+            g_unkGraphicsStruct.unk24 |= 2;
+        }
+#else
         g_unkGraphicsStruct.unk24 |= 2;
+#endif
         if (abs(PLAYER.velocityX) > FIX(3)) {
             func_8010E168(1, 4);
         }
@@ -1487,7 +1495,8 @@ block_159:
             sp3c = (AluFrame*)D_800CFE48[PLAYER.animCurFrame & 0x7FFF];
             sp3c->pivotY = D_8013AECC + D_800ACE20[PLAYER.animCurFrame];
         }
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_JP12)
         FntPrint("step:%04x\n", PLAYER.step);
         FntPrint("bat_i_step:%04x\n", g_Player.unk66);
 #endif

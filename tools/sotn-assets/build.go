@@ -12,10 +12,10 @@ import (
 )
 
 // allVersions are built by `./sotn.sh build` with no arguments.
-var allVersions = []string{"us", "hd", "jp10", "jp11", "usproto", "eu", "hk", "pspeu"}
+var allVersions = []string{"us", "hd", "jp10", "jp11", "jp12", "usproto", "eu", "hk", "pspeu"}
 
 // buildableVersions are all versions accepted by the build command.
-var buildableVersions = []string{"us", "hd", "jp10", "jp11", "usproto", "eu", "hk", "pspeu", "saturn"}
+var buildableVersions = []string{"us", "hd", "jp10", "jp11", "jp12", "usproto", "eu", "hk", "pspeu", "saturn"}
 
 func buildVersions(versions []string) error {
 	if err := deps.EnsureBuildDeps(versions); err != nil {

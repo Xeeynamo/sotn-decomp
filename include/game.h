@@ -237,7 +237,7 @@ typedef enum {
 #else
 #define PAD_SHOULDERS (PAD_L1 | PAD_R1 | PAD_L2 | PAD_R2)
 #define BTN_WOLF PAD_R2
-#if defined(VERSION_EU) || defined(VERSION_HK)
+#if defined(VERSION_EU) || defined(VERSION_HK) || defined(VERSION_JP12)
 #define WOLF_CHARGE_ATK_BTN (PAD_SQUARE | PAD_CIRCLE)
 #else
 #define WOLF_CHARGE_ATK_BTN (PAD_SQUARE)
@@ -1739,11 +1739,17 @@ typedef struct {
     /* 8003C898 */ void (*LearnSpell)(s32 spellId);
     /* 8003C89C */ void (*DebugInputWait)(const char* str);
 
+#if defined(VERSION_JP12)
+    /* 8003C8A0 */ void (*ApplySoundMode)(void);
+    /* 8003C8A4 */ Lba* g_StagesLba;
+    /* 8003C8A8 */ void* unusedJp12[2];
+#else
     // exclusive to PSP
     /* 8003C8A0 */ int (*CalcDealDamageMaria)(s32 baseAttack);
     /* 8003C8A4 */ bool (*CalcPlayerDamageMaria)(DamageParam* damageParam);
     /* 8003C8A8 */ u16* (*func_psp_0913FA28)(u32 ch, u16 kind);
     /* 8003C8AC */ u16 (*func_psp_0913F960)(const char*, u8* ch);
+#endif
     /* 8003C8B4 */ void* unused13C;
 } GameApi; /* size=0x140 */
 
@@ -2123,7 +2129,8 @@ typedef struct {
     RECT D_800ACDD8;
     RECT D_800ACDE0;
     RECT D_800ACDE8;
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_JP12)
     RECT D_800ACDF0;
 #endif
 } Vram;
@@ -2154,7 +2161,8 @@ extern s16 D_8003C710;
 extern s16 D_8003C712;
 extern s32 D_8003C728;
 extern s32 D_8003C730;
-#if defined(VERSION_PSP) || defined(VERSION_EU) || defined(VERSION_HK)
+#if defined(VERSION_PSP) || defined(VERSION_EU) || defined(VERSION_HK) ||      \
+    defined(VERSION_JP12)
 extern s32 g_TimerCopyFrames;
 extern s32 g_TimerCopyHours;
 extern s32 g_TimerCopySeconds;

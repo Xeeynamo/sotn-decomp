@@ -334,7 +334,12 @@ void PlayerStepStand(void) {
         }
         break;
     case Player_Stand_ChairSit:
+#if defined(VERSION_JP12)
+        if (PLAYER.ext.player.anim == 0xF2 && g_Servant != FAM_ACTIVE_YOUSEI &&
+            --g_AlucardChairSleepTimer == 0) {
+#else
         if (PLAYER.ext.player.anim == 0xF2 && --g_AlucardChairSleepTimer == 0) {
+#endif
             if (g_StageId == STAGE_NO1) {
                 PlaySfx(SFX_ALU_ZZZ_SNORE);
             }
@@ -2035,7 +2040,8 @@ void PlayerStepTeleport(void) {
 
     PLAYER.velocityX = PLAYER.velocityY = 0;
     g_Player.padSim = 0;
-#if defined(VERSION_PSP) || defined(VERSION_EU) || defined(VERSION_HK)
+#if defined(VERSION_PSP) || defined(VERSION_EU) || defined(VERSION_HK) ||      \
+    defined(VERSION_JP12)
     g_pads[0].pressed = g_pads[0].tapped = 0;
 #endif
     g_Player.demo_timer = 4;
@@ -2049,7 +2055,8 @@ void PlayerStepTeleport(void) {
                 PLAYER.poseTimer = 2;
             }
         }
-#if !defined(VERSION_PSP) && !defined(VERSION_EU) && !defined(VERSION_HK)
+#if !defined(VERSION_PSP) && !defined(VERSION_EU) && !defined(VERSION_HK) &&   \
+    !defined(VERSION_JP12)
         if (PLAYER.poseTimer < 0) {
             func_8010E570(0);
         }
@@ -2072,7 +2079,8 @@ void PlayerStepTeleport(void) {
                 PLAYER.poseTimer = 2;
             }
         }
-#if !defined(VERSION_PSP) && !defined(VERSION_EU) && !defined(VERSION_HK)
+#if !defined(VERSION_PSP) && !defined(VERSION_EU) && !defined(VERSION_HK) &&   \
+    !defined(VERSION_JP12)
         if (PLAYER.poseTimer < 0) {
             func_8010E570(0);
         }
@@ -2095,7 +2103,8 @@ void PlayerStepTeleport(void) {
                 PLAYER.poseTimer = 2;
             }
         }
-#if !defined(VERSION_PSP) && !defined(VERSION_EU) && !defined(VERSION_HK)
+#if !defined(VERSION_PSP) && !defined(VERSION_EU) && !defined(VERSION_HK) &&   \
+    !defined(VERSION_JP12)
         if (PLAYER.poseTimer < 0) {
             func_8010E570(0);
         }
