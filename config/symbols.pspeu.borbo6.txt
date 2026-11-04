@@ -1,3 +1,4 @@
+D_8003C73C = 0x91FC480;
 CreateEntityFromCurrentEntity = 0x09238598;
 Random = 0x0923A830;
 DestroyEntity = 0x09243530;

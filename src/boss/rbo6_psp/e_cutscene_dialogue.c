@@ -60,8 +60,6 @@ extern u8* cutscene_2;
 extern u8* cutscene_3;
 extern u8* cutscene_4;
 
-extern s32 D_91FC480;
-
 extern u_long* D_893DD0C;
 extern u_long* D_pspeu_09263820;
 extern u_long* D_893EA8C;
@@ -109,7 +107,7 @@ void EntityCutscene(Entity* self) {
     switch (self->step) {
     case 0:
         if (self->params) {
-            D_91FC480 = 2;
+            D_8003C73C = 2;
             i = SetCutsceneScript(cutscene_3);
             cutscene_text_offset = cutscene_4;
         } else {
@@ -713,8 +711,17 @@ void EntityCutscene(Entity* self) {
             g_Settings.D_8003CB04 |= 0x200000;
         }
         g_unkGraphicsStruct.unk28 = 0;
-        D_91FC480 = 0;
+        D_8003C73C = 0;
         DestroyEntity(self);
         break;
+    }
+}
+
+void EntityUnk27(Entity* self) {
+    if (D_8003C73C != 0) {
+        EntityCutscene(self);
+    }
+    if (self->entityId) {
+        EntityCutscene(self);
     }
 }

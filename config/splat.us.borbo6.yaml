@@ -88,7 +88,6 @@ segments:
       - [0x1D7C4, c, unk_1D7C4]
       - [0x1DB9C, c, e_dracula]
       - [0x21BE0, c, e_cutscene_dialogue]
-      - [0x2362C, c, unk_2362C]
       - [0x2367C, c, unk_2367C]
       - [0x24530, c, unk_24530]
       - [0x254BC, c, st_update]

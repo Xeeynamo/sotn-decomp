@@ -3,7 +3,6 @@
 #include <cutscene.h>
 
 extern Dialogue g_Dialogue;
-extern const char* actor_names[];
 
 #define CUTSCENE_UNK1_NEXT_X 0
 #include "../../st/cutscene_unk1.h"
@@ -544,5 +543,15 @@ void EntityCutscene(Entity* self) {
         D_8003C73C = 0;
         DestroyEntity(self);
         break;
+    }
+}
+
+
+void EntityUnk27(Entity* self) {
+    if (D_8003C73C != 0) {
+        EntityCutscene(self);
+    }
+    if (self->entityId) {
+        EntityCutscene(self);
     }
 }
