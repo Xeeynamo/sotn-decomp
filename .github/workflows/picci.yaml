@@ -54,6 +54,11 @@ jobs:
           git submodule update --init tools/psyz
           cd tools/psyz
           git submodule update --init --recursive external/SDL
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: 'go.work'
+          cache: true
+          cache-dependency-path: "**/*.sum"
       - name: Get dependencies
         uses: ./.github/actions/get-dependencies
         with:
@@ -148,4 +153,6 @@ jobs:
     - name: Test demo playback
       timeout-minutes: 15
       shell: bash
+      env:
+        SDL_VIDEODRIVER: offscreen
       run: make pc-test-demos -j
