@@ -1651,7 +1651,79 @@ void func_0600A030(void) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A088, func_0600A088);
+void func_0600A088(void) {
+    u16* ptr;
+    s32 i, j;
+    u8 flag;
+    s32 temp;
+    u16 save;
+
+    ptr = DAT_06038DD0;
+    for (i = 0; i < 0x10; i++, ptr += 0x10) {
+        flag = DAT_06038DC0[i];
+        if (flag & 0x40) {
+            if (g_Timer % 4) {
+                continue;
+            }
+        }
+        if (flag & 0x80) {
+            continue;
+        }
+        flag %= 0x40;
+        if (flag == 1) {
+            save = ptr[14];
+            for (j = 14; j > 1; j--) {
+                ptr[j] = ptr[j - 1];
+            }
+            ptr[1] = save;
+        } else if (flag == 2) {
+            if (g_Timer % 8) {
+                continue;
+            }
+            if (DAT_06038FD0 > 2) {
+                for (j = 0; j < 8; j++) {
+                    ptr[8 + j] = ptr[j];
+                }
+            } else {
+                for (j = 15; j > 8; j--) {
+                    ptr[j] = ptr[j - 1];
+                }
+            }
+            DAT_06038FD0++;
+            if (DAT_06038FD0 > 4) {
+                DAT_06038FD0 = 0;
+            }
+        } else if (flag & 0x10) {
+            if (flag & 0x20) {
+                j = 1;
+                save = ptr[1];
+            } else {
+                j = 0;
+                save = ptr[0];
+            }
+
+            for (; j < 15; j++) {
+                ptr[j] = ptr[j + 1];
+            }
+            ptr[15] = save;
+        } else {
+            save = ptr[15];
+            for (j = 15; j > 0; j--) {
+                ptr[j] = ptr[j - 1];
+            }
+            if (flag & 0x20) {
+                ptr[1] = save;
+            } else {
+                ptr[0] = save;
+            }
+        }
+    }
+    temp = 0x25C00000 + SPR_2LookupTblNoToVram(0) * 8;
+    QueueVramTransfer(temp, DAT_06038DD0[0], 0x200);
+    if (DAT_06038DBC != 0) {
+        QueueVramTransfer(DAT_06038DBC, DAT_06038DD0[3], 0x20);
+    }
+}
 
 typedef struct {
     u16 unk0[5];
