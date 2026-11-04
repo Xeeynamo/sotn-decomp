@@ -150,7 +150,12 @@ jobs:
         $SOTN_ASSETS = (Get-Command sotn-assets).Source
         make extract_assets
         & make build_assets SOTNASSETS=$SOTN_ASSETS
+    - name: Set up MSVC environment
+      uses: ./.github/actions/setup-msvc
     - name: Build
+      env:
+        CC: cl
+        CXX: cl
       run: make pc PC_BUILD_TYPE=${{ matrix.build_type }}
     - name: Test demo playback
       timeout-minutes: 15
