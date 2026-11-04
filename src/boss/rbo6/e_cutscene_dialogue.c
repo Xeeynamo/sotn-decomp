@@ -546,7 +546,6 @@ void EntityCutscene(Entity* self) {
     }
 }
 
-
 void EntityLaunchCutscene(Entity* self) {
     if (D_8003C73C != 0) {
         EntityCutscene(self);
