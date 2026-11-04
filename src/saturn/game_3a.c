@@ -734,7 +734,7 @@ void func_0606D554(s32 arg0) {
                 g_CurrentRoom.stageID ^= 0x20;
             }
         }
-        D_801375BC.def = DAT_0606459c + ptr->roomId + 4;
+        D_801375BC.def = DAT_0606459C + ptr->roomId + 4;
         g_CurrentRoom.unk4 = D_801375BC.def->tileLayoutId;
     }
 }
@@ -833,7 +833,7 @@ void func_0606D798(void) {
 s32 GetRoomLoadDefTable(u16 arg0) {
     s32 ret;
 
-    ret = DAT_0606459c;
+    ret = DAT_0606459C;
 
     switch (arg0) {
     case 6:

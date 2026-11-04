@@ -4,11 +4,6 @@
 #include "rstage15.h"
 
 extern struct SpriteParts* g_EntitySpriteBank15[];
-extern u8 g_RStage15SpriteBank18[];
-extern u8 g_RStage15SpriteBank19[];
-extern u8 g_RStage15SpriteBank20[];
-extern u8 g_RStage15SpriteBank21[];
-extern u8 g_RStage15SpriteBank23[];
 
 void* g_RStage15SpriteBanks[] = {
     &g_SaturnSharedSpriteBank0Resource,
@@ -28,17 +23,17 @@ void* g_RStage15SpriteBanks[] = {
     &g_SaturnSharedSpriteBank14Resource,
     g_EntitySpriteBank15,
     &g_RStage15SpriteBank16,
-    g_RStage15SpriteBank17,
-    g_RStage15SpriteBank18,
-    g_RStage15SpriteBank19,
-    g_RStage15SpriteBank20,
-    g_RStage15SpriteBank21,
+    &g_RStage15SpriteBank17,
+    &g_RStage15SpriteBank18,
+    &g_RStage15SpriteBank19,
+    &g_RStage15SpriteBank20,
+    &g_RStage15SpriteBank21,
     &g_RStage15SpriteBank22,
-    g_RStage15SpriteBank23,
-    g_RStage15SpriteBankEfreet,
+    &g_RStage15SpriteBank23,
+    &g_RStage15SpriteBank24,
     &g_RStage15SpriteBank25,
     &g_RStage15SpriteBank26,
-    g_RStage15SpriteBankCopperArmor,
-    g_RStage15SpriteBankSkeletonGuardian,
+    &g_RStage15SpriteBank27,
+    &g_RStage15SpriteBank28,
     NULL,
 };
