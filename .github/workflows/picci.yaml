@@ -12,6 +12,7 @@ on:
       - 'cmake/**'
       - 'CMakeLists*'
       - 'Makefile*'
+      - '.github/workflows/picci.yaml'
   pull_request:
     paths:
       - 'include/**'
@@ -21,6 +22,7 @@ on:
       - 'cmake/**'
       - 'CMakeLists*'
       - 'Makefile*'
+      - '.github/workflows/picci.yaml'
   workflow_dispatch:
 
 env:
