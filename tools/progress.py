@@ -422,7 +422,7 @@ if __name__ == "__main__":
     progress = dict[str, DecompProgressStats]()
     progress["main"] = DecompProgressStats("main", "main")
     progress["dra"] = DecompProgressStats("dra", "dra")
-    progress["weapon0"] = DecompProgressWeaponStats(0)
+    progress["weapon"] = DecompProgressWeaponStats(0)
     progress["weapon1"] = DecompProgressWeaponStats(1)
     progress["ric"] = DecompProgressStats("ric", "ric")
     progress["maria"] = DecompProgressStats("maria", "maria")
