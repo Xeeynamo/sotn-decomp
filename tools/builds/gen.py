@@ -434,7 +434,6 @@ def add_gfx_weapon(
 
 
 def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config, hand_id):
-    # hand_id = 0  # hardcoded for the time being
     platform = str(splat_config["options"]["platform"])
     asset_path = str(splat_config["options"]["asset_path"])
     ld_path = str(splat_config["options"]["ld_script_path"])
