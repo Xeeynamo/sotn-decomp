@@ -70,7 +70,7 @@ jobs:
           fi
           export CC=${{ matrix.compiler }}
           cmake -B ${{github.workspace}}/pc $PC_FLAGS -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DENABLE_ASAN=OFF
-          cmake --build ${{github.workspace}}/pc --config ${{ matrix.build_type }}
+          cmake --build ${{github.workspace}}/pc --config ${{ matrix.build_type }} --parallel $(nproc)
       - name: Test demo playback
         timeout-minutes: 15
         env:
@@ -116,7 +116,7 @@ jobs:
       - name: Build
         run: |
           cmake -B ${{github.workspace}}/pc -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DENABLE_ASAN=OFF
-          cmake --build ${{github.workspace}}/pc --config ${{ matrix.build_type }}
+          cmake --build ${{github.workspace}}/pc --config ${{ matrix.build_type }} --parallel $(sysctl -n hw.ncpu)
       - name: Test demo playback
         timeout-minutes: 15
         env:
