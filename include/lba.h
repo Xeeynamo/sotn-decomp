@@ -6,7 +6,7 @@
 #include "lba_us.h"
 
 #elif defined(VERSION_HD) || defined(VERSION_PSP)
-#include "lba_hd.h"
+#include "lba_jp10.h"
 
 #endif
 

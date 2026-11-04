@@ -7,6 +7,7 @@
 #define LEN_WARNING_TIM 0x50014
 #define OFF_BIN_FGAME2 25248
 #define OFF_BIN_FGAME 25116
+#define OFF_SD_XA_STR1 0xB994
 
 #define vab0Len 269488
 #define SD_ALK_VH_LEN 4128

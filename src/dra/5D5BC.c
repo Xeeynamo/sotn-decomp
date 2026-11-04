@@ -457,7 +457,7 @@ s32 func_800FE044(s32 amount, s32 type) {
             i++;
             playerXPBoost >>= 1;
         }
-#if defined(VERSION_HD)
+#if defined(VERSION_HD) && !defined(VERSION_JP10)
         i -= 2;
 #endif
         if (i <= 0) {

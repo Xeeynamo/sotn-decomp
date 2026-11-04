@@ -364,7 +364,7 @@ void DebugEditColorChannel(s32 colorAdd) {
 }
 
 s32 DebugUpdate(void) {
-#if defined(VERSION_HD) || defined(VERSION_PC)
+#if (defined(VERSION_HD) && !defined(VERSION_JP10)) || defined(VERSION_PC)
     DebugCaptureScreen();
     DebugCaptureVideo();
     if (g_DebugEnabled) {
@@ -768,7 +768,7 @@ extern int g_TimeLimit;
 #endif
 
 void MainGame(void) {
-#if defined(VERSION_HD)
+#if defined(VERSION_HD) && !defined(VERSION_JP10)
     CdlFILE fp;
 #endif
     s32 i;
@@ -799,7 +799,7 @@ void MainGame(void) {
     g_Settings.D_8003CB00 = 0;
     g_Settings.D_8003CB04 = 0;
     g_CurrentBuffer = &g_GpuBuffers[0];
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_JP10)
     SetCdPos(OFF_SD_XA_STR1);
 #elif defined(VERSION_HD)
     do {
@@ -825,7 +825,7 @@ void MainGame(void) {
     g_GpuMaxUsage.tile = 0;
     g_GpuMaxUsage.sp = 0;
     g_GpuMaxUsage.env = 0;
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_JP10)
     g_DebugPlayer = 0;
 #elif defined(VERSION_HD)
     g_DebugPlayer = 1;
@@ -897,13 +897,13 @@ loop_5:
         }
         RenderPrimitives();
         UpdateCd();
-#if defined(VERSION_HD)
+#if defined(VERSION_HD) && !defined(VERSION_JP10)
         PrintGpuInfo();
 #endif
         func_800E385C(g_CurrentOT);
         DrawSync(0);
         D_801362D4 = GsGetVcount();
-#if defined(VERSION_HD)
+#if defined(VERSION_HD) && !defined(VERSION_JP10)
         PrintHBlankInfo();
 #endif
         VSync(D_8003C73C);
@@ -937,7 +937,7 @@ loop_5:
             VSync(D_8003C73C);
             MuteSound();
             SetGameState(Game_Title);
-#if defined(VERSION_HD)
+#if defined(VERSION_HD) && !defined(VERSION_JP10)
             FntFlush(-1);
 #endif
             goto loop_5;
@@ -1004,7 +1004,7 @@ loop_5:
             }
         }
         rand();
-#if defined(VERSION_HD)
+#if defined(VERSION_HD) && !defined(VERSION_JP10)
         FntFlush(-1);
 #endif
     }

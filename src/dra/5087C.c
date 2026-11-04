@@ -1161,6 +1161,11 @@ void DrawMapCursor(void) {
     g_GpuUsage.gt4++;
 }
 
+#if defined(VERSION_JP10)
+bool func_800F27F4(s32 arg0) {
+    return false;
+}
+#else
 bool func_800F27F4(s32 arg0) {
     if (arg0 == 0) {
         if (g_unkGraphicsStruct.D_800973FC != 0 || D_8006BB00 != 0) {
@@ -1174,6 +1179,7 @@ bool func_800F27F4(s32 arg0) {
     }
     D_801375C8 = 8;
 }
+#endif
 
 // Needs PlaySfx to have a signature of
 // void PlaySfx(s32 sfxId); but changing it causes other parts
@@ -1407,7 +1413,7 @@ void RunMainEngine(void) {
         return;
     case Engine_Normal:
         g_GameTimer++;
-#if defined(VERSION_HD)
+#if defined(VERSION_HD) && !defined(VERSION_JP10)
         func_800F1424();
 #endif
         func_800F2014();

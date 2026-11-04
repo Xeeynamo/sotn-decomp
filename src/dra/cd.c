@@ -139,7 +139,11 @@ s32 g_LbaServantVbLen[] = {
 CdFile g_LbaServantChr = {0x0000, 15, 0x06000, 0, 0, 0x1D, 0};
 CdFile g_LbaServantVh = {0x0000, 19, 0x00000, 2, 2, 0xFF, 30};
 CdFile g_LbaServantVb = {0x0000, 17, 0x00000, 2, 2, 0xFF, 0};
+#if defined(VERSION_JP10)
+CdFile g_LbaBinRichter = {0x6524, 10, 0x399AC, 0, 0, 0x14, 0};
+#else
 CdFile g_LbaBinRichter = {0x6524, 10, 0x3999C, 0, 0, 0x14, 0};
+#endif
 CdFile g_LbaBinAlucard = {0x61B8, 10, 0x31BEC, 0, 0, 0x04, 0};
 CdFile g_LbaOpnWsStr = {0x3628, 0, 0x00000, 0, 0, 0xFF, 0};
 CdFile g_LbaStagePrg = {0x0000, 8, 0x00000, 0, 0, 0xFF, 0};
