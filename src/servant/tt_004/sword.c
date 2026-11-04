@@ -6,7 +6,7 @@
 #include <sfx.h>
 
 #if defined(VERSION_PC) && !defined(gte_stdp)
-#define gte_stdp(r0) ((void)(r0))
+void gte_stdp(s32* r0);
 #endif
 
 #define UNK_SWORD_PRIM_COUNT 96
