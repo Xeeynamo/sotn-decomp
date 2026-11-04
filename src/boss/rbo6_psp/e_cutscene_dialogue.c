@@ -29,6 +29,7 @@ extern s32 g_IsCutsceneDone;
 extern s32 g_SkipCutscene;
 extern u32 g_CutsceneFlags;
 extern s32 D_91FC480;
+extern u8 D_801813CC[2];
 
 extern u_long* D_893DD0C;
 extern u_long* D_pspeu_09263820;
@@ -48,23 +49,21 @@ extern s32 D_pspeu_0926C648[8];
 extern u8 cutsceneUnk3Unknown[0x380];
 extern u16 actor_names[0x100];
 
-extern u8 D_pspeu_0926B8A8[2];// = {0x00, 0x40};
-extern u8 D_801813CC[2];
-extern u16 D_pspeu_0926B8B0[];// = {0x0238, 0x0240};
-extern u16 D_pspeu_0926B8B8[];// = {0x0000, 0x0020};
-extern u16 D_pspeu_0926B8C0[];// = {0x01A1, 0x01A1};
-extern s16 D_pspeu_0926B8C8[];/* = {
-    0x0008, 0x0013, 0x0011, 0x0031, 0x004F, 0x0026, 0x0036, 0x001D, 0x001B,
-    0x0033, 0x002C, 0x0021, 0x0019, 0x000A, 0x0033, 0x001F, 0x0048, 0x002F,
-    0x0013, 0x0019, 0x004D, 0x004B, 0x0017, 0x001D, 0x0012, 0x0002, 0x001B,
-    0x002A, 0x0050, 0x0045, 0x0032, 0x000D, 0x002A, 0x004D, 0x0006, 0x0027,
-    0x0007, 0x0048, 0x002F, 0x001B, 0x0036, 0x0022, 0x0039, 0x0014, 0x0039,
-    0x001D, 0x000A, 0x0035, 0x0010, 0x001B, 0x003D, 0x0017, 0x002E, 0x000B,
-    0x0049, 0x0042, 0x003D, 0x002A, 0x0001, 0x000C, 0x001B, 0x0034, 0x0041,
-    0x0035, 0x0008, 0x000E, 0x004D, 0x0011, 0x0034, 0x0041, 0x0029, 0x0048};
-*/
-extern u8 D_pspeu_0926B958[];// = {3, 4, 9, 7};
-extern u8 D_pspeu_0926B960[];// = {3, 4, 9, 7};
+static u8 D_pspeu_0926B8A8[2] = {0x00, 0x40};
+static u16 D_pspeu_0926B8B0[] = {0x210, 0x218};
+static u16 D_pspeu_0926B8B8[] = {0, 0x20};
+extern u16 D_pspeu_0926B8C0[] = {0x1A1, 0x1A1, 0x1A1, 0x1A1};
+extern s16 D_pspeu_0926B8C8[] = {
+     0x0008, 0x0013, 0x0011, 0x0031, 0x004F, 0x0026, 0x0036, 0x001D, 0x001B,
+     0x0033, 0x002C, 0x0021, 0x0019, 0x000A, 0x0033, 0x001F, 0x0048, 0x002F,
+     0x0013, 0x0019, 0x004D, 0x004B, 0x0017, 0x001D, 0x0012, 0x0002, 0x001B,
+     0x002A, 0x0050, 0x0045, 0x0032, 0x000D, 0x002A, 0x004D, 0x0006, 0x0027,
+     0x0007, 0x0048, 0x002F, 0x001B, 0x0036, 0x0022, 0x0039, 0x0014, 0x0039,
+     0x001D, 0x000A, 0x0035, 0x0010, 0x001B, 0x003D, 0x0017, 0x002E, 0x000B,
+     0x0049, 0x0042, 0x003D, 0x002A, 0x0001, 0x000C, 0x001B, 0x0034, 0x0041,
+     0x0035, 0x0008, 0x000E, 0x004D, 0x0011, 0x0034, 0x0041, 0x0029, 0x0048};
+extern u8 D_pspeu_0926B958[] = {3, 1};
+extern u8 D_pspeu_0926B960[] = {3, 1};
 
 extern u8* cutscene_text_offset;
 extern u8* cutscene_1;
@@ -106,7 +105,7 @@ void EntityCutscene(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        if(self->params){
+        if (self->params) {
             D_91FC480 = 2;
             i = SetCutsceneScript(cutscene_3);
             cutscene_text_offset = cutscene_4;
@@ -124,13 +123,13 @@ void EntityCutscene(Entity* self) {
         g_IsCutsceneDone = 0;
         g_SkipCutscene = 0;
         self->step++;
-        if(g_PlayableCharacter != PLAYER_ALUCARD || g_DemoMode) {
+        if (g_PlayableCharacter != PLAYER_ALUCARD || g_DemoMode) {
             g_IsCutsceneDone = true;
             g_SkipCutscene = true;
             g_api.FreePrimitives(self->primIndex);
             self->flags ^= FLAG_HAS_PRIMS;
         }
-        
+
     case 1:
         nextChar = 0;
         // this is a huge While-loop! Don't miss it!
@@ -400,8 +399,8 @@ void EntityCutscene(Entity* self) {
                         }
 
                         var_s5 = g_Dialogue.scriptCur++[0];
-                        LoadTPage((u_long*)ptr, 1, 0, D_pspeu_0926B8B8[var_s5], 0x100,
-                                  0x30, 0x48);
+                        LoadTPage((u_long*)ptr, 1, 0, D_pspeu_0926B8B8[var_s5],
+                                  0x100, 0x30, 0x48);
                     }
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_20:
@@ -704,12 +703,11 @@ void EntityCutscene(Entity* self) {
         break;
     case 7:
         g_CutsceneHasControl = 0;
-        if(self->params){
+        if (self->params) {
             g_CastleFlags[0xE1] = 1;
             g_Settings.D_8003CB04 |= 0x400000;
         } else {
             g_Settings.D_8003CB04 |= 0x200000;
-
         }
         g_unkGraphicsStruct.unk28 = 0;
         D_91FC480 = 0;

@@ -86,6 +86,7 @@ segments:
       - [0x33D30, .data, rbo6/header]
       - [0x33D70, .data, rbo6/e_dracula]
       - [0x33F20, data]
+      - [0x34228, .data, rbo6_psp/e_cutscene_dialogue]
       - [0x342E8, .data, rbo6/e_room_bg]
       - [0x34328, data]
       - [0x34530, .data, rbo6/unk_1D7C4]
