@@ -53,12 +53,12 @@ typedef enum EntityID {
     E_TRIANGLE_CORNER_GLOW, // EntityTriangleCornerGlow
     E_BLUE_ORB_SHADOW,      // EntityBlueOrbShadow
     E_LAUNCH_CUTSCENE,      // EntityLaunchCutscene
-    E_UNK_28,               // func_us_801A367C
-    E_UNK_29,               // func_us_801A9208_from_bo6
-    E_UNK_2A,               // func_us_801A37B4
-    E_UNK_2B,               // func_us_801A399C
-    E_UNK_2C,               // func_us_801A3BE0
-    E_UNK_2D,               // func_us_801A4028
+    E_UNK_28,               // EntityUnkID28
+    E_UNK_29,               // EntityUnkID29
+    E_UNK_2A,               // EntityUnkID2A
+    E_UNK_2B,               // EntityUnkID2B
+    E_UNK_2C,               // EntityUnkID2C
+    E_UNK_2D,               // EntityUnkID2D
     E_BACKGROUND_VORTEX,    // EntityBackgroundVortex
     E_UNK_2F,               // func_us_801B1738
     E_UNK_30,               // func_us_801B2864

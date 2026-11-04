@@ -4,7 +4,7 @@
 extern s32 g_CutsceneFlags;
 extern EInit g_EInitInteractable;
 
-void func_us_801A367C(Entity* self) {
+void EntityUnkID28(Entity* self) {
     Tilemap* unusedTilemap = &g_Tilemap;
     Entity* player = &PLAYER;
     s16 unusedX = player->posX.i.hi + g_Tilemap.scrollX.i.hi;
@@ -43,7 +43,7 @@ void func_us_801A367C(Entity* self) {
     }
 }
 
-void func_us_801A37B4(Entity* self) {
+void EntityUnkID2A(Entity* self) {
     Primitive* prim;
     s32 primIndex;
 
@@ -80,7 +80,7 @@ void func_us_801A37B4(Entity* self) {
     }
 }
 
-void func_us_801A399C(Entity* self) {
+void EntityUnkID2B(Entity* self) {
     Primitive* prim;
     s32 primIndex;
 
@@ -121,7 +121,7 @@ void func_us_801A399C(Entity* self) {
     }
 }
 
-void func_us_801A3BE0(Entity* self) {
+void EntityUnkID2C(Entity* self) {
     Primitive* prim;
     s32 primIndex;
 
@@ -214,7 +214,7 @@ void func_us_801A3BE0(Entity* self) {
     }
 }
 
-void func_us_801A4028(Entity* self) {
+void EntityUnkID2D(Entity* self) {
     switch (self->step) {                              /* irregular */
     case 0:
         InitializeEntity(g_EInitInteractable);
@@ -246,7 +246,7 @@ void func_us_801A4028(Entity* self) {
 }
 
 extern u32 g_RoomCount;
-void func_us_801A9208_from_bo6(Entity* self) {
+void EntityUnkID29(Entity* self) {
     Primitive* prim;
     s32 primIndex;
 
