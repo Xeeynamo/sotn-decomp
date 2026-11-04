@@ -43,7 +43,42 @@ void func_us_801A367C(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/rbo6/nonmatchings/unk_2367C", func_us_801A37B4);
+void func_us_801A37B4(Entity* self) {
+    Primitive* prim;
+    s32 primIndex;
+
+    switch (self->step) {
+    case 0:
+        primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
+        if (primIndex != -1) {
+            InitializeEntity(&g_EInitInteractable);
+            self->flags |= 0x800000;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            
+            prim->x0 = prim->x2 = 0;
+            prim->x1 = prim->x3 = 0x100;
+            prim->y0 = prim->y1 = 0;
+            prim->y2 = prim->y3 = 0xF0;
+            
+            PCOL(prim) = 0xFF;
+            prim->priority = 0x1F8;
+            prim->drawMode = 0x55;
+        }
+        break;
+    case 1:
+        self->step += 1;
+        break;
+    case 2:
+        prim = &g_PrimBuf[self->primIndex];
+        PCOL(prim) -= 4;
+        if (prim->r0 < 4) {
+            DestroyEntity(self);
+            g_CutsceneFlags |= 1;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("boss/rbo6/nonmatchings/unk_2367C", func_us_801A399C);
 
