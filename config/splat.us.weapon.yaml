@@ -60,7 +60,7 @@ segments:
     subsegments:
       - [0x0B000, .data, w_init]
       - [0x0B040, .data, w_001]
-      - [0x0BA44, data, w_001]
+      - [0x0BA44, data, w_001_001]
       - [0x0BFF4, .data, left_hand]
       - [0x0BFF8, .rodata, w_001]
       - [0x0C014, c, w_001]

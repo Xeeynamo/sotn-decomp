@@ -59,8 +59,11 @@ segments:
     subalign: 4
     subsegments:
       - [0x0B000, .data, w_init]
-      - [0x0B040, data, w1_001]
-      - [0x0C014, asm, w1_001_c]
+      - [0x0B040, data, w_001_c]
+      - [0x0BA44, data, w_001]
+      - [0x0BFF4, data, right_hand_001]
+      - [0x0BFF8, data, w_001_ro]
+      - [0x0C014, asm, w_001_c]
   - name: f1_002
     type: grey4
     start: 0x0E000
@@ -94,7 +97,6 @@ segments:
       - [0x19000, .data, w_init]
       - [0x19040, data, w1_003]
       - [0x19C40, asm, w_003]
-
   - name: f1_004
     type: grey4
     start: 0x1C000
@@ -126,6 +128,7 @@ segments:
     subsegments:
       - [0x27000, .data, w_init]
       - [0x27040, data, w1_005]
+      - [0x28318, data, left_hand_005]
       - [0x2831C, asm, w_005]
   - name: f1_006
     type: grey4
@@ -142,6 +145,8 @@ segments:
     subsegments:
       - [0x2E000, .data, w_init]
       - [0x2E040, data, w1_006]
+      - [0x2EC3C, data, left_hand_006]
+      - [0x2EC40, data, w_006_ro]
       - [0x2EC54, asm, w_006]
   - name: f1_007
     type: grey4
@@ -174,8 +179,10 @@ segments:
     subalign: 4
     subsegments:
       - [0x3C000, .data, w_init]
-      - [0x3C040, data, w1_008]
-      # - [0x3CB4C, asm, w_008]
+      - [0x3C040, .data, w_008]
+      - [0x3CAC0, .data, right_hand]
+      - [0x3CAC4, .rodata, w_008]
+      - [0x3CB4C, c, w_008]
   - name: f1_009
     type: grey4
     start: 0x3F000
@@ -222,8 +229,11 @@ segments:
     subalign: 4
     subsegments:
       - [0x51000, .data, w_init]
-      - [0x51040, data, w1_011]
-      # - [0x51CDC, asm, w_011]
+      - [0x51040, data, w_011_c]
+      - [0x51958, data, w_011]
+      - [0x51C3C, data, right_hand_011]
+      - [0x51C40, data, w_011_ro]
+      #- [0x51CDC, asm, w_011]
   - name: f1_012
     type: grey4
     start: 0x54000
@@ -880,6 +890,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      # identical to weapon0 except for 1 byte
       - [0x169000, .data, w_init]
       - [0x169040, data, w1_051]
       - [0x169ED4, asm, w_051]
@@ -897,8 +908,11 @@ segments:
     subalign: 4
     subsegments:
       - [0x170000, .data, w_init]
-      - [0x170040, data, w1_052]
-      # - [0x170CB0, asm, w_052]
+      - [0x170040, .data, w_052]
+      - [0x170C20, .data, right_hand]
+      - [0x170C24, .rodata, w_052]
+      - [0x170CB0, c, w_052]
+      - [0x172B84, .bss, w_052]
   - name: f1_053
     type: grey4
     start: 0x173000
