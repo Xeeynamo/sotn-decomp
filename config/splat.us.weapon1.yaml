@@ -58,7 +58,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0B000, data, w1_001]
+      - [0x0B000, .data, w_init]
+      - [0x0B040, data, w1_001]
+      - [0x0C014, asm, w1_001_c]
   - name: f1_002
     type: grey4
     start: 0x0E000
@@ -89,7 +91,10 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x19000, data, w1_003]
+      - [0x19000, .data, w_init]
+      - [0x19040, data, w1_003]
+      - [0x19C40, asm, w_003]
+
   - name: f1_004
     type: grey4
     start: 0x1C000
@@ -103,7 +108,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x20000, data, w1_004]
+      - [0x20000, .data, w_init]
+      - [0x20040, data, w1_004]
+      - [0x2131C, asm, w_004]
   - name: f1_005
     type: grey4
     start: 0x23000
@@ -117,7 +124,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x27000, data, w1_005]
+      - [0x27000, .data, w_init]
+      - [0x27040, data, w1_005]
+      - [0x2831C, asm, w_005]
   - name: f1_006
     type: grey4
     start: 0x2A000
@@ -131,7 +140,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x2E000, data, w1_006]
+      - [0x2E000, .data, w_init]
+      - [0x2E040, data, w1_006]
+      - [0x2EC54, asm, w_006]
   - name: f1_007
     type: grey4
     start: 0x31000
@@ -162,7 +173,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x3C000, data, w1_008]
+      - [0x3C000, .data, w_init]
+      - [0x3C040, data, w1_008]
+      # - [0x3CB4C, asm, w_008]
   - name: f1_009
     type: grey4
     start: 0x3F000
@@ -176,7 +189,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x43000, data, w1_009]
+      - [0x43000, .data, w_init]
+      - [0x43040, data, w1_009]
+      # - [0x43B4C, asm, w_009]
   - name: f1_010
     type: grey4
     start: 0x46000
@@ -190,7 +205,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x4A000, data, w1_010]
+      - [0x4A000, .data, w_init]
+      - [0x4A040, data, w1_010]
+      # - [0x4ACC0, asm, w_010]
   - name: f1_011
     type: grey4
     start: 0x4D000
@@ -204,7 +221,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x51000, data, w1_011]
+      - [0x51000, .data, w_init]
+      - [0x51040, data, w1_011]
+      # - [0x51CDC, asm, w_011]
   - name: f1_012
     type: grey4
     start: 0x54000
@@ -236,7 +255,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x5F000, data, w1_013]
+      - [0x5F000, .data, w_init]
+      - [0x5F040, data, w1_013]
+      # - [0x5F62C, asm, w_013]
   - name: f1_014
     type: grey4
     start: 0x62000
@@ -250,7 +271,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x66000, data, w1_014]
+      - [0x66000, .data, w_init]
+      - [0x66040, data, w1_014]
+      - [0x665BC, asm, w_014]
   - name: f1_015
     type: grey4
     start: 0x69000
@@ -264,7 +287,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x6D000, data, w1_015]
+      - [0x6D000, .data, w_init]
+      - [0x6D040, data, w1_015]
+      - [0x6D7E4, asm, w_015]
   - name: f1_016
     type: grey4
     start: 0x70000
@@ -278,7 +303,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x74000, data, w1_016]
+      - [0x74000, .data, w_init]
+      - [0x74040, data, w1_016]
+      - [0x7460C, asm, w_016]
   - name: f1_017
     type: grey4
     start: 0x77000
@@ -292,7 +319,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x7B000, data, w1_017_init]
+      - [0x7B000, .data, w_init]
       - [0x7B040, data, w1_017]
       - [0x7B3A8, data, right_hand]
       - [0x7B3AC, data, w1_017_c]
@@ -309,7 +336,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x82000, data, w1_018]
+      - [0x82000, .data, w_init]
+      - [0x82040, data, w1_018]
+      - [0x82740, asm, w_018]
   - name: f1_019
     type: grey4
     start: 0x85000
@@ -323,7 +352,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x89000, data, w1_019]
+      - [0x89000, .data, w_init]
+      - [0x89040, data, w1_019]
+      - [0x89554, asm, w_019]
   - name: f1_020
     type: grey4
     start: 0x8C000
@@ -337,7 +368,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x90000, data, w1_020]
+      - [0x90000, .data, w_init]
+      - [0x90040, data, w1_020]
+      - [0x90BC8, asm, w_020]
   - name: f1_021
     type: grey4
     start: 0x93000
@@ -351,7 +384,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x97000, data, w1_021]
+      - [0x97000, .data, w_init]
+      - [0x97040, data, w1_021]
+      - [0x977B4, asm, w_021]
   - name: f1_022
     type: grey4
     start: 0x9A000
@@ -365,7 +400,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x9E000, data, w1_022]
+      - [0x9E000, .data, w_init]
+      - [0x9E040, data, w1_022]
+      - [0x9E814, asm, w_022]
   - name: f1_023
     type: grey4
     start: 0xA1000
@@ -379,7 +416,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0xA5000, data, w1_023]
+      - [0xA5000, .data, w_init]
+      - [0xA5040, data, w1_023]
+      - [0xA5D80, asm, w_023]
   - name: f1_024
     type: grey4
     start: 0xA8000
@@ -393,7 +432,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0xAC000, data, w1_024]
+      - [0xAC000, .data, w_init]
+      - [0xAC040, data, w1_024]
+      - [0xACDE0, asm, w_024]
   - name: f1_025
     type: grey4
     start: 0xAF000
@@ -407,7 +448,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0xB3000, data, w1_025]
+      - [0xB3000, .data, w_init]
+      - [0xB3040, data, w1_025]
+      # - [0xB3B74, asm, w_025]
   - name: f1_026
     type: grey4
     start: 0xB6000
@@ -421,7 +464,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0xBA000, data, w1_026]
+      - [0xBA000, .data, w_init]
+      - [0xBA040, data, w1_026]
+      # - [0xBAB9C, asm, w_026]
   - name: f1_027
     type: grey4
     start: 0xBD000
@@ -435,7 +480,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0xC1000, data, w1_027]
+      - [0xC1000, .data, w_init]
+      - [0xC1040, data, w1_027]
+      - [0xC1D54, asm, w_027]
   - name: f1_028
     type: grey4
     start: 0xC4000
@@ -449,7 +496,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0xC8000, data, w1_028]
+      - [0xC8000, .data, w_init]
+      - [0xC8040, data, w1_028]
+      # - [0xC8BF4, asm, w_028]
   - name: f1_029
     type: grey4
     start: 0xCB000
@@ -463,7 +512,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0xCF000, data, w1_029]
+      - [0xCF000, .data, w_init]
+      - [0xCF040, data, w1_029]
+      - [0xCFDD8, asm, w_029]
   - name: f1_030
     type: grey4
     start: 0xD2000
@@ -477,7 +528,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0xD6000, data, w1_030]
+      - [0xD6000, .data, w_init]
+      - [0xD6040, data, w1_030]
+      - [0xD66DC, asm, w_030]
   - name: f1_031
     type: grey4
     start: 0xD9000
@@ -491,7 +544,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0xDD000, data, w1_031]
+      - [0xDD000, .data, w_init]
+      - [0xDD040, data, w1_031]
+      - [0xDD918, asm, w_031]
   - name: f1_032
     type: grey4
     start: 0xE0000
@@ -505,7 +560,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0xE4000, data, w1_032]
+      - [0xE4000, .data, w_init]
+      - [0xE4040, data, w1_032]
+      - [0xE4924, asm, w_032]
   - name: f1_033
     type: grey4
     start: 0xE7000
@@ -519,7 +576,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0xEB000, data, w1_033]
+      - [0xEB000, .data, w_init]
+      - [0xEB040, data, w1_033]
+      - [0xEBC58, asm, w_033]
   - name: f1_034
     type: grey4
     start: 0xEE000
@@ -567,7 +626,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x100000, data, w1_036]
+      - [0x100000, .data, w_init]
+      - [0x100040, data, w1_036]
+      - [0x10055C, asm, w_036]
   - name: f1_037
     type: grey4
     start: 0x103000
@@ -598,7 +659,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x10E000, data, w1_038]
+      - [0x10E000, data, w_init]
+      - [0x10E040, data, w1_038]
+      - [0x10EDEC, asm, w_038]
   - name: f1_039
     type: grey4
     start: 0x111000
@@ -612,7 +675,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x115000, data, w1_039]
+      - [0x115000, .data, w_init]
+      - [0x115040, data, w1_039]
+      - [0x115DEC, asm, w_039]
   - name: f1_040
     type: grey4
     start: 0x118000
@@ -663,7 +728,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x12A000, data, w1_042]
+      - [0x12A000, .data, w_init]
+      - [0x12A040, data, w1_042]
+      - [0x12A764, asm, w_042]
   - name: f1_043
     type: grey4
     start: 0x12D000
@@ -747,7 +814,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x14D000, data, w1_047]
+      - [0x14D000, .data, w_init]
+      - [0x14D040, data, w1_047]
+      - [0x14D568, asm, w_047]
   - name: f1_048
     type: grey4
     start: 0x150000
@@ -761,7 +830,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x154000, data, w1_048]
+      - [0x154000, .data, w_init]
+      - [0x154040, data, w1_048]
+      - [0x155050, asm, w_048]
   - name: f1_049
     type: grey4
     start: 0x157000
@@ -775,7 +846,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x15B000, data, w1_049]
+      - [0x15B000, .data, w_init]
+      - [0x15B040, data, w1_049]
+      - [0x15C14C, asm, w_049]
   - name: f1_050
     type: grey4
     start: 0x15E000
@@ -807,7 +880,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x169000, data, w1_051]
+      - [0x169000, .data, w_init]
+      - [0x169040, data, w1_051]
+      - [0x169ED4, asm, w_051]
   - name: f1_052
     type: grey4
     start: 0x16C000
@@ -821,7 +896,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x170000, data, w1_052]
+      - [0x170000, .data, w_init]
+      - [0x170040, data, w1_052]
+      # - [0x170CB0, asm, w_052]
   - name: f1_053
     type: grey4
     start: 0x173000
@@ -835,7 +912,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x177000, data, w1_053]
+      - [0x177000, .data, w_init]
+      - [0x177040, data, w1_053]
+      - [0x178280, asm, w_053]
   - name: f1_054
     type: grey4
     start: 0x17A000
@@ -849,7 +928,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x17E000, data, w1_054]
+      - [0x17E000, .data, w_init]
+      - [0x17E040, data, w1_054]
+      - [0x17EF0C, asm, w_054]
   - name: f1_055
     type: grey4
     start: 0x181000
@@ -863,7 +944,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x185000, data, w1_055]
+      - [0x185000, .data, w_init]
+      - [0x185040, data, w1_055]
+      - [0x1861A0, asm, w_055]
   - name: f1_056
     type: grey4
     start: 0x188000
@@ -877,7 +960,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x18C000, data, w1_056]
+      - [0x18C000, .data, w_init]
+      - [0x18C040, data, w1_056]
+      - [0x18D060, asm, w_056]
   - name: f1_057
     type: grey4
     start: 0x18F000
@@ -891,7 +976,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x193000, data, w1_057]
+      - [0x193000, .data, w_init]
+      - [0x193040, data, w1_057]
+      - [0x1940B4, asm, w_057]
   - name: f1_058
     type: grey4
     start: 0x196000
@@ -905,6 +992,8 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x19A000, data, w1_058]
+      - [0x19A000, .data, w_init]
+      - [0x19A040, data, w1_058]
+      # - [0x19AC50, asm, w_058]
   - [0x19D000]
 

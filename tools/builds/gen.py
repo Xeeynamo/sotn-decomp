@@ -517,6 +517,8 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config, han
             elif kind == ".bss":
                 continue
             elif kind == "asm":
+                obj = add_s(nw, ver, f"{asm_path}/{name}.s", ld_path)
+                objs.append(obj)
                 continue
             else:
                 raise Exception(f"unknown subsegment type {kind}")
