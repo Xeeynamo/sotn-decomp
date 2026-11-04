@@ -1635,7 +1635,7 @@ Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
         arg2->u3 = arg2->u2 = prim->u2;
         arg2->v3 = arg2->v2 = prim->v2;
         if (PLAYER.animSet == 0xF) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             arg2->tpage = 0x4118;
 #else
             arg2->tpage = 0x118;
@@ -2057,7 +2057,7 @@ void EntityMist(Entity* self) {
         prim->y3 = yVar4;
         PGREY(prim, 0) = PGREY(prim, 1) = 0;
         PGREY(prim, 2) = PGREY(prim, 3) = D_80138398;
-#if !defined(VERSION_HD) && !defined(VERSION_JP10) && !defined(VERSION_JP11)
+#if VERSION >= VER_USPROTO
         if (D_80138398 < 0x10) {
             prim->drawMode |= DRAW_HIDE;
         } else {
@@ -2466,7 +2466,7 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.unk90 = 0xFF;
             var_s5 = true;
             self->step = Player_Unk20;
-#if !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP
             PlaySfx(SFX_TELEPORT_SYNTH_DOWN);
 #endif
         } else {
@@ -2524,7 +2524,7 @@ void EntityTeleport(Entity* self) {
         break;
     case 6:
         PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         func_psp_0892A620(0, true);
         func_psp_0892A620(1, true);
 #endif
@@ -2551,7 +2551,7 @@ void EntityTeleport(Entity* self) {
     case 21:
         var_s5 = true;
         if (--self->ext.teleport.timer == 0) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             PlaySfx(SFX_TELEPORT_SYNTH_DOWN);
 #endif
             self->step++;

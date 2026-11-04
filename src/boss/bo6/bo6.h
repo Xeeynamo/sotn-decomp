@@ -41,7 +41,7 @@ typedef enum EntityID {
     /* 0x90 */ E_ID_90 = 0x90,
 } EntityID;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 D_pspeu_0927BAF8;
 #undef E_ID
 #define E_ID(ID_17) D_pspeu_0927BAF8

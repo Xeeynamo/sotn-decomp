@@ -34,13 +34,13 @@
 #define __builtin_memcpy memcpy
 #endif
 
-#if defined(VERSION_PSP) || defined(_MSC_VER)
+#if TARGET == TARGET_PSP || defined(_MSC_VER)
 #define ZERO_LEN 1
 #else
 #define ZERO_LEN 0
 #endif
 
-#if defined(VERSION_PC)
+#ifdef PLATFORM_PSYZ
 #include <assert.h>
 #ifndef _MSC_VER
 #define STATIC_ASSERT _Static_assert
@@ -53,7 +53,7 @@
 #define SYNC_FIELD(struct1, struct2, field)                                    \
     STATIC_ASSERT(OFF(struct1, field) == OFF(struct2, field), "unsynced")
 
-#elif defined(VERSION_PSP)
+#elif TARGET == TARGET_PSP
 #define ASSERT(x)
 #define STATIC_ASSERT(x, y)
 #define UNUSED
@@ -73,7 +73,7 @@
 #define LOW(x) (*(s32*)&(x))
 #define LOWU(x) (*(u32*)&(x))
 
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
 // on 64-bit builds, this needs to read 64-bit, not 32-bit with LOW
 #define PRIM_DR_ENV(prim) (*(DR_ENV**)&(prim)->r1)
 #else
@@ -143,7 +143,7 @@
     CRITICAL_PAD_TYPE_FIELD(type, size)
 #define UNKNOWN_CRITICAL_PAD_FIELD(size) CRITICAL_PAD_FIELD(size)
 
-#ifndef VERSION_PC
+#ifndef PLATFORM_PSYZ
 #define PAD_FIELD(size) const CRITICAL_PAD_FIELD(size)
 #define STATIC_PAD_BSS(size) static CRITICAL_PAD_FIELD(size)
 #define STATIC_PAD_DATA(size) STATIC_PAD_BSS(size) = {0}

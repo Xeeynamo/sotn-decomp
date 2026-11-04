@@ -24,7 +24,7 @@ enum BreakableDebrisSteps {
     DEBRIS_NOP = 256,
 };
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(BREAKABLE_DEBRIS);
 #endif
 

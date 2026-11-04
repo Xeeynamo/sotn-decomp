@@ -3,10 +3,9 @@
 #include "dra_bss.h"
 #include "lba.h"
 
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
+#if IS_VER_INTL
 #define PAD_RESETCOMBO ((PAD_START) | (PAD_SELECT))
-#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) || \
-    defined(VERSION_JP12) || defined(VERSION_USPROTO)
+#elif TARGET != TARGET_PSP
 #define PAD_RESETCOMBO                                                         \
     ((PAD_START) | (PAD_SELECT) | (PAD_L2) | (PAD_R2) | (PAD_L1) | (PAD_R1))
 #endif
@@ -30,7 +29,7 @@ static GpuUsage g_GpuMaxUsage;
 static s32 g_DebugWaitInfoTimer;
 static s32 g_DebugRecordVideoFid;
 static s16 D_80136308[128];
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
+#if IS_VER_INTL
 static s32 g_softResetTimer;
 #endif
 
@@ -47,7 +46,7 @@ void DebugShowWaitInfo(const char* msg) {
     VSync(0);
     PutDrawEnv(&g_CurrentBuffer->draw);
     PutDispEnv(&g_CurrentBuffer->disp);
-#if !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP
     FntFlush(-1);
 #endif
 }
@@ -365,7 +364,7 @@ void DebugEditColorChannel(s32 colorAdd) {
 }
 
 s32 DebugUpdate(void) {
-#if defined(VERSION_HD) || defined(VERSION_PC)
+#if VERSION < VER_JP10 || defined(PLATFORM_PSYZ)
     DebugCaptureScreen();
     DebugCaptureVideo();
     if (g_DebugEnabled) {
@@ -676,7 +675,7 @@ void func_800E34DC(s32 arg0) {
     SetGPUBuffRGBZero();
     g_GpuBuffers[0].draw.dtd = g_GpuBuffers[1].draw.dtd = 0;
     g_GpuBuffers[0].disp.isrgb24 = g_GpuBuffers[1].disp.isrgb24 = 0;
-#if defined(VERSION_EU)
+#if REGION == REGION_EU
     g_GpuBuffers[0].disp.screen.y = g_GpuBuffers[1].disp.screen.y = 24;
 #endif
 }
@@ -719,7 +718,7 @@ static void SetTitleDisplayBuffer(void) {
     g_GpuBuffers[0].draw.isbg = g_GpuBuffers[1].draw.isbg = 1;
     SetGPUBuffRGBZero();
     g_GpuBuffers[0].disp.isrgb24 = g_GpuBuffers[1].disp.isrgb24 = 0;
-#if defined(VERSION_EU)
+#if REGION == REGION_EU
     g_GpuBuffers[0].disp.screen.y = g_GpuBuffers[1].disp.screen.y = 24;
 #endif
 }
@@ -762,7 +761,7 @@ void func_800E38CC(void) {
     }
 }
 
-#if defined(VERSION_PC)
+#ifdef PLATFORM_PSYZ
 #define IS_QUIT_REQUESTED                                                      \
     (g_IsQuitRequested || (g_TimedExit && g_Timer >= g_TimeLimit))
 extern bool g_IsQuitRequested;
@@ -773,15 +772,14 @@ extern int g_TimeLimit;
 #endif
 
 void MainGame(void) {
-#if defined(VERSION_HD)
+#if VERSION < VER_JP10
     CdlFILE fp;
 #endif
     s32 i;
 
-#if defined(VERSION_EU)
+#if REGION == REGION_EU
     SetVideoMode(MODE_PAL);
-#elif defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||     \
-    defined(VERSION_JP12)
+#elif VERSION >= VER_US
     SetVideoMode(MODE_NTSC);
 #endif
     InitializePads();
@@ -807,11 +805,9 @@ void MainGame(void) {
     g_Settings.D_8003CB00 = 0;
     g_Settings.D_8003CB04 = 0;
     g_CurrentBuffer = &g_GpuBuffers[0];
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP10) ||                       \
-    defined(VERSION_JP11) || defined(VERSION_JP12)
+#if VERSION >= VER_JP10
     SetCdPos(OFF_SD_XA_STR1);
-#elif defined(VERSION_HD)
+#else
     do {
 
     } while (CdSearchFile(&fp, "\\SD\\XA_STR1.;1") == 0);
@@ -835,11 +831,9 @@ void MainGame(void) {
     g_GpuMaxUsage.tile = 0;
     g_GpuMaxUsage.sp = 0;
     g_GpuMaxUsage.env = 0;
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP10) ||                       \
-    defined(VERSION_JP11) || defined(VERSION_JP12)
+#if VERSION >= VER_JP10
     g_DebugPlayer = 0;
-#elif defined(VERSION_HD)
+#else
     g_DebugPlayer = 1;
 #endif
 loop_5:
@@ -875,7 +869,7 @@ loop_5:
     D_80097904 = 0;
     D_8006C3AC = 0;
     D_80097C98 = 0;
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
+#if IS_VER_INTL
     g_softResetTimer = 0;
 #endif
     D_800978C4 = 1;
@@ -909,20 +903,20 @@ loop_5:
         }
         RenderPrimitives();
         UpdateCd();
-#if defined(VERSION_HD)
+#if VERSION < VER_JP10
         PrintGpuInfo();
 #endif
         func_800E385C(g_CurrentOT);
         DrawSync(0);
         D_801362D4 = GsGetVcount();
-#if defined(VERSION_HD)
+#if VERSION < VER_JP10
         PrintHBlankInfo();
 #endif
         VSync(D_8003C73C);
         GsClearVcount();
         LoadPendingGfx();
         ReadPads();
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
+#if IS_VER_INTL
         if ((g_pads[0].pressed & PAD_RESETCOMBO) == PAD_RESETCOMBO) {
             if (g_pads[0].tapped & PAD_START) {
                 g_softResetTimer = 1;
@@ -935,17 +929,16 @@ loop_5:
         } else {
             g_softResetTimer = 0;
         }
-#if defined(VERSION_EU) || defined(VERSION_HK)
+#if VERSION >= VER_EU
         if (g_softResetTimer >= 0x80 && !g_IsUsingCd && D_800978C4 != 0) {
 #else
         if (g_softResetTimer >= 0x80) {
 #endif
             g_softResetTimer = 0;
-#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) || \
-    defined(VERSION_JP12) || defined(VERSION_USPROTO)
+#elif TARGET != TARGET_PSP
         if (g_pads[0].pressed == PAD_RESETCOMBO &&
             g_pads[0].tapped & PAD_START &&
-#if defined(VERSION_JP11) || defined(VERSION_USPROTO) || defined(VERSION_JP12)
+#if VERSION >= VER_JP11
             !g_IsUsingCd &&
 #endif
             D_800978C4 != 0) {
@@ -958,7 +951,7 @@ loop_5:
             VSync(D_8003C73C);
             MuteSound();
             SetGameState(Game_Title);
-#if defined(VERSION_HD)
+#if VERSION < VER_JP10
             FntFlush(-1);
 #endif
             goto loop_5;
@@ -1006,7 +999,7 @@ loop_5:
         g_MapCursorTimer += D_801362D4;
         if (D_800973EC == 0 && D_800974A4 == 0) {
             g_Status.timerFrames += D_801362D4;
-#if defined(VERSION_EU)
+#if REGION == REGION_EU
             if (g_Status.timerFrames >= 50) {
                 g_Status.timerFrames -= 50;
 #else
@@ -1028,11 +1021,11 @@ loop_5:
                     }
                 }
             }
-#if defined(VERSION_EU) || defined(VERSION_HK) || defined(VERSION_JP12)
+#if VERSION >= VER_EU
             // BUGFIX: fixes the clock at the center of the castle works after
             // 99:59:59 play time
             g_TimerCopyFrames += D_801362D4;
-#if defined(VERSION_EU)
+#if REGION == REGION_EU
             if (g_TimerCopyFrames >= 50) {
                 g_TimerCopyFrames -= 50;
 #else
@@ -1055,7 +1048,7 @@ loop_5:
 #endif
         }
         rand();
-#if defined(VERSION_HD)
+#if VERSION < VER_JP10
         FntFlush(-1);
 #endif
     }

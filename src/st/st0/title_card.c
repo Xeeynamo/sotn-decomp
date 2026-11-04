@@ -2,7 +2,7 @@
 #include "st0.h"
 #include "sfx.h"
 
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 void* GetLang(void* en, void* fr, void* sp, void* ge, void* it);
 extern u16 D_pspeu_09253FB0[];
 extern u8 D_pspeu_09253FF0[];
@@ -195,7 +195,7 @@ void EntityStageTitleFadeout(Entity* self) {
 }
 
 void EntityStageTitleCard(Entity* self) {
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
     // on PSP the title card is 8px taller
     const int TexHeightMod = 8;
 #else
@@ -216,7 +216,7 @@ void EntityStageTitleCard(Entity* self) {
             return;
         }
         InitializeEntity(g_EInit3DObject);
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
         D_pspeu_09254EA4 =
             GetLang(D_pspeu_09253FF0, D_pspeu_09254BD8, D_pspeu_092545D8,
                     D_pspeu_092548E8, D_pspeu_09254300);
@@ -254,7 +254,7 @@ void EntityStageTitleCard(Entity* self) {
         prim->u1 = prim->u3 = 0x6F;
         prim->v0 = prim->v1 = 0;
         prim->v2 = prim->v3 = 0xF + TexHeightMod;
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
         prim->y0 = prim->y1 = 0x70;
         prim->y2 = prim->y3 = 0x7F + TexHeightMod;
         prim->priority = 0x1FF;
@@ -277,7 +277,7 @@ void EntityStageTitleCard(Entity* self) {
         prim->u1 = prim->u3 = 0x7F;
         prim->v0 = prim->v1 = 0x10 + TexHeightMod;
         prim->v2 = prim->v3 = 0x2A;
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
         prim->y0 = prim->y1 = 0x80 + TexHeightMod;
         prim->y2 = prim->y3 = 0x9A;
         prim->priority = 0x1FF;
@@ -372,7 +372,7 @@ void EntityStageTitleCard(Entity* self) {
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
         D_80180908 = 1;
         self->ext.stageTitleCard.unk88 = 0x10;
 #else
@@ -381,7 +381,7 @@ void EntityStageTitleCard(Entity* self) {
         self->step++;
         break;
     case 4:
-#if defined(VERSION_US)
+#if VERSION == VER_US
         if (self->ext.stageTitleCard.unk88 == 0x10) {
             D_80180908 = 1;
         }

@@ -460,7 +460,7 @@ static void PixelPhysics(Primitive* prim) {
         prim->g3 = 1;
         prim->r3 = 0x20;
     }
-#ifdef VERSION_US
+#if VERSION == VER_US
     x = (prim->x0 << 0x10) + (u16)prim->x1;
 #else
     x = (prim->x0 << 0x10) + prim->x1;
@@ -468,7 +468,7 @@ static void PixelPhysics(Primitive* prim) {
     x += LOW(prim->x2);
     prim->x0 = HIHU(x);
     prim->x1 = LOHU(x);
-#ifdef VERSION_US
+#if VERSION == VER_US
     y = (prim->y0 << 0x10) + (u16)prim->y1;
 #else
     y = (prim->y0 << 0x10) + prim->y1;

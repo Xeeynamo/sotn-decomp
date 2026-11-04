@@ -7,7 +7,7 @@ static u8 anim_tongue[] = {
     0x0C, 0x18, 0x04, 0x17, 0x04, 0x16, 0x04, 0x15, 0x02, 0x14, 0x08,
     0x10, 0x01, 0x11, 0x04, 0x12, 0x01, 0x11, 0x10, 0x10, 0xFF, 0x00};
 static u8 anim_jump[] = {0x03, 0x10, 0x0C, 0x13, 0x03, 0x10, 0xFF, 0x00};
-#if defined(STAGE_IS_TEK)
+#if VERSION < VER_BETA_MAD
 static s16 sensors_ground[4][2] = {{0, 8}, {0, 4}, {8, -4}, {-16, 0}};
 #else
 static s16 sensors_ground[4][2] = {{0, 8}, {0, 4}, {3, -4}, {-6, 0}};
@@ -31,7 +31,7 @@ static u8 jumpType[][2] = {
 };
 
 static s32 FrogJump(s32 index) {
-#if !defined(STAGE_IS_TEK)
+#if VERSION >= VER_BETA_MAD
     Collider collider;
     s32 posX;
     s32 posY;
@@ -46,14 +46,14 @@ static s32 FrogJump(s32 index) {
             }
             g_CurrentEntity->velocityY = jumpVelocities[index].y;
             g_CurrentEntity->ext.frogToad.jumpStep++;
-#if !defined(STAGE_IS_TEK)
+#if VERSION >= VER_BETA_MAD
             PlaySfxPositional(SFX_BLIPS_C);
 #endif
             g_CurrentEntity->ext.frogToad.jumpTimer = 4;
         }
         break;
     case 1:
-#if !defined(STAGE_IS_TEK)
+#if VERSION >= VER_BETA_MAD
         posX = g_CurrentEntity->posX.i.hi;
         if (g_CurrentEntity->velocityX > 0) {
             posX += 0xC;
@@ -97,7 +97,7 @@ void EntityFrog(Entity* self) {
     s32 index;
 
     if (self->flags & FLAG_DEAD) {
-#if !defined(STAGE_IS_TEK)
+#if VERSION >= VER_BETA_MAD
         PlaySfxPositional(SFX_FROG_CROAK);
 #endif
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -106,14 +106,14 @@ void EntityFrog(Entity* self) {
             entity->params = 0;
         }
         DestroyEntity(self);
-#if !defined(STAGE_IS_TEK)
+#if VERSION >= VER_BETA_MAD
         return;
 #endif
     }
 
     switch (self->step) {
     case 0:
-#if defined(STAGE_IS_TEK)
+#if VERSION < VER_BETA_MAD
         InitializeEntity(g_EInitToad);
 #else
         InitializeEntity(g_EInitFrog);
@@ -126,7 +126,7 @@ void EntityFrog(Entity* self) {
         self->ext.frogToad.lickTimer = 0x80;
         break;
     case 1:
-#if !defined(STAGE_IS_TEK)
+#if VERSION >= VER_BETA_MAD
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
 #endif
         if (UnkCollisionFunc3(sensors_ground) & 1) {
@@ -136,7 +136,7 @@ void EntityFrog(Entity* self) {
     case 2:
         if (!AnimateEntity(anim_throat_inflate, self)) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-#if !defined(STAGE_IS_TEK)
+#if VERSION >= VER_BETA_MAD
             PlaySfxPositional(SFX_FROG_CROAK);
 #endif
         }
@@ -160,7 +160,7 @@ void EntityFrog(Entity* self) {
             SetStep(2);
         }
 
-#if !defined(STAGE_IS_TEK)
+#if VERSION >= VER_BETA_MAD
         if (!self->poseTimer && self->pose == 9) {
             PlaySfxPositional(SFX_FROG_TOAD_TONGUE);
         }

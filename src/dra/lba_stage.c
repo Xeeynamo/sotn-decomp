@@ -3,7 +3,7 @@
 #include "sfx.h"
 #include "lba.h"
 
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 #define NAME_CEN "mar2"
 #else
 #define NAME_CEN "rou"

@@ -4,7 +4,7 @@
 static s32 g_Rbo3DoorFlag = 0;
 
 extern EInit g_Rbo3DoorInit;
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 extern s32 E_ID(BOSS_DOOR);
 #endif
 

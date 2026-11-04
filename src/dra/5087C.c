@@ -15,7 +15,7 @@ extern s32 D_psp_091CE578;
 extern void (*D_psp_08CE9C48)();
 extern s32 D_psp_091CE570;
 
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 #define CAN_PAUSE g_PauseAllowed&& D_psp_091CE578
 #else
 #define CAN_PAUSE g_PauseAllowed
@@ -32,7 +32,7 @@ static s32 D_801375B0;
 static s32 D_801375B4;
 static s32 D_801375B8;
 static RoomLoadDefHolder D_801375BC;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 bool g_canRevealMap;
 #endif
 static s32 D_801375C8;
@@ -54,7 +54,7 @@ RoomTeleport D_800A245C[] = {
     {752, 132, 0x0050, STAGE_NO3, STAGE_NZ0},
     {240, 132, 0x0018, STAGE_NO3, STAGE_WRP},
     {16, 180, 0x0000, STAGE_DRE, STAGE_DRE},
-#if defined(VERSION_USPROTO)
+#if VERSION == VER_USPROTO
     {16, 388, 0x0050, STAGE_CAT, STAGE_ST0},
 #else
     {16, 388, 0x0050, STAGE_CAT, STAGE_CHI},
@@ -114,8 +114,7 @@ RoomTeleport D_800A245C[] = {
     {752, 132, 0x0068, 0x0037, STAGE_NO2},
     {496, 132, 0x0000, 36, STAGE_MAR},
     {128, 388, 0x0000, 0x0038, STAGE_CEN},
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP11) || defined(VERSION_JP12)
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
     {496, 132, 0x0000, 0x0001, STAGE_BO4},
 #else
     {128, 77, 0x0010, 0x0028, STAGE_BO6},
@@ -179,7 +178,7 @@ RoomTeleport D_800A245C[] = {
     {1264, 392, 0x0000, 0x0002, STAGE_LIB},
     {16, 132, 0x0000, 0x002D, STAGE_NZ1},
 };
-#if defined(VERSION_PC) && defined(ENABLE_SATURN_STAGES)
+#if defined(PLATFORM_PSYZ) && defined(ENABLE_SATURN_STAGES)
 _Static_assert(LEN(D_800A245C) == RETAIL_ROOM_TELEPORT_COUNT,
                "stitched door triggers assume the retail teleport count");
 #endif
@@ -194,8 +193,7 @@ RoomBossTeleport g_RoomBossTeleports[] = {
     {0x14, 0x16, STAGE_ARE, TIMEATTACK_EVENT_MINOTAUR_WEREWOLF_DEFEAT, 0x73},
     {0x28, 0x27, STAGE_NO4, TIMEATTACK_EVENT_SCYLLA_DEFEAT, 0x6F},
     {0x39, 0x17, STAGE_NO1, TIMEATTACK_EVENT_DOPPLEGANGER_10_DEFEAT, 0x6C},
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP11) || defined(VERSION_JP12)
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
     {0x3A, 0x17, STAGE_NO1, TIMEATTACK_EVENT_DOPPLEGANGER_10_DEFEAT, 0x48},
 #endif
     {0x17, 0x0D, STAGE_DAI, TIMEATTACK_EVENT_HYPPOGRYPH_DEFEAT, 0x68},
@@ -362,7 +360,7 @@ s32 func_800F0CD8(s32 arg0) {
                 ret = SetNextRoomToLoad(
                     g_Tilemap.left - 1, g_Tilemap.top + (g_PlayerY >> 8));
                 if (ret) {
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
                     if (PLAYER.posX.i.hi < 4) {
                         PLAYER.posX.i.hi = -1;
                         PLAYER.posX.i.lo = 0;
@@ -381,7 +379,7 @@ s32 func_800F0CD8(s32 arg0) {
                 ret = SetNextRoomToLoad(
                     g_Tilemap.right + 1, g_Tilemap.top + (g_PlayerY >> 8));
                 if (ret) {
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
                     if (PLAYER.posX.i.hi > 252) {
                         PLAYER.posX.i.hi = 256;
                         PLAYER.posX.i.lo = 0;
@@ -487,7 +485,7 @@ block_25:
 // evident so far. It's possible the real code is somewhere in between.
 // Perhaps Saturn or X360 version could someday reveal the truth.
 // Or just someone REALLY clever coming along ;). Good luck!
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
             g_Tilemap.scrollY.i.hi = g_Tilemap.y + 4;
             PLAYER.posY.i.hi = g_PlayerY - g_Tilemap.scrollY.i.hi;
         }
@@ -1167,7 +1165,7 @@ void DrawMapCursor(void) {
     g_GpuUsage.gt4++;
 }
 
-#if defined(VERSION_JP10)
+#if VERSION == VER_JP10
 bool func_800F27F4(s32 arg0) { return false; }
 #else
 bool func_800F27F4(s32 arg0) {
@@ -1243,7 +1241,7 @@ void RunMainEngine(void) {
     u32 tempX;
     u32 tempY;
 
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
     if (g_InfiniteHearts) {
         g_Status.hearts = 99;
     }
@@ -1258,7 +1256,7 @@ void RunMainEngine(void) {
         D_8006BB00 = 0;
         D_801375C8 = 0;
         g_PauseAllowed = true;
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
         D_psp_091CE578 = 1;
 #endif
         g_StageId = func_800F16D0();
@@ -1292,7 +1290,7 @@ void RunMainEngine(void) {
             LoadGfxAsync(ANIMSET_DRA(4));
         }
         currentMusicId = g_StagesLba[g_StageId].musicId;
-#if defined(VERSION_JP12)
+#if VERSION == VER_JP12
         if (g_StageId == STAGE_NO3) {
             if (D_8003C730 == 0) {
                 currentMusicId = SE_INTRO_WIND;
@@ -1307,7 +1305,7 @@ void RunMainEngine(void) {
         }
 #endif
         if (
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
             (D_8003C730 == 4) ||
 #endif
             (D_8003C730 == 0) && !(D_8003C708.flags & FLAG_UNK_20)) {
@@ -1389,7 +1387,7 @@ void RunMainEngine(void) {
         if (D_8003C730 == 3) {
             D_8003C730 = 0;
         }
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
         if (D_8003C730 == 4) {
             D_8003C730 = 0;
             stopMusicFlag = true;
@@ -1406,7 +1404,7 @@ void RunMainEngine(void) {
         }
 #endif
         func_800F24F4();
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
         g_unkGraphicsStruct.primIndex = (s16)AllocPrimitives(PRIM_GT4, 16);
 #else
         g_unkGraphicsStruct.primIndex = AllocPrimitives(PRIM_GT4, 16);
@@ -1422,15 +1420,15 @@ void RunMainEngine(void) {
         }
         RefreshCapePalette();
         g_GameEngineStep++; // Move to Engine_Normal
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
         func_psp_090DFBD0();
 #endif
         return;
     case Engine_Normal:
         g_GameTimer++;
-#if defined(VERSION_HD)
+#if VERSION < VER_JP10
         func_800F1424();
-#elif defined(VERSION_USPROTO)
+#elif VERSION == VER_USPROTO
         if (!g_CutsceneHasControl) {
             DrawE3Banner();
         }
@@ -1458,7 +1456,7 @@ void RunMainEngine(void) {
         g_api.o.UpdateRoomPosition();
         g_api.o.Update();
 
-#if !defined(VERSION_HD) && !defined(VERSION_JP10)
+#if VERSION >= VER_JP11
         if (g_GameState == Game_Ending) {
             if (D_80097C98 == 6) {
                 D_80097C98 = 0;
@@ -1532,7 +1530,7 @@ void RunMainEngine(void) {
                 g_GameStep = Play_PrepareNextStage;
                 return;
             }
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
             func_psp_08932B50();
 #endif
             g_GameEngineStep = Engine_3;
@@ -1643,7 +1641,7 @@ void RunMainEngine(void) {
                 D_8006BB00 = 0;
             }
         }
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
         D_psp_091CE570 = 0;
 #endif
         if (g_Player.status & PLAYER_STATUS_DEAD) {
@@ -1653,20 +1651,20 @@ void RunMainEngine(void) {
             HideMap();
             if ((g_StageId == STAGE_ST0) ||
                 (g_PlayableCharacter != PLAYER_ALUCARD)) {
-#if !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP
                 if (!StatusPause(0)) {
                     return;
                 }
 #endif
                 D_800974A4 = 1;
                 g_GameEngineStep = Engine_0x70;
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
                 g_MenuStep = MENU_STEP_INIT;
 #endif
                 PlaySfx(SET_RELEASE_RATE_LOW_22_23);
                 PlaySfx(SET_RELEASE_RATE_LOW_20_21);
                 PlaySfx(SET_PAUSE_SFX_SCRIPTS);
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
+#if IS_VER_INTL
                 if (g_StageId == STAGE_ST0) {
                     MuteCd();
                 }
@@ -1678,7 +1676,7 @@ void RunMainEngine(void) {
                 SetFadeMode(FADE_TO_BLACK);
                 g_GameEngineStep++; // Goes from 1 to 2, into Engine_Menu
                 g_MenuStep = MENU_STEP_INIT;
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
                 D_psp_091CE570 = 1;
 #endif
             }
@@ -1692,11 +1690,11 @@ void RunMainEngine(void) {
         }
         break;
     case Engine_0x70:
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
         DrawHudSubweapon2();
 #else
         DrawHudSubweapon();
-#if defined(VERSION_EU) || defined(VERSION_HK) || defined(VERSION_JP12)
+#if VERSION >= VER_EU
         if (g_pads[0].tapped & PAD_SELECT) {
             g_Settings.isSoundMono ^= 1;
             ApplySoundMode();
@@ -1708,7 +1706,7 @@ void RunMainEngine(void) {
             PlaySfx(SET_UNPAUSE_SFX_SCRIPTS);
             PlaySfx(SET_KEY_ON_20_21);
             PlaySfx(SET_KEY_ON_22_23);
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
+#if IS_VER_INTL
             if (g_StageId == STAGE_ST0) {
                 UnMuteCd();
             }
@@ -1915,8 +1913,7 @@ void RunMainEngine(void) {
             if (D_80097C98 == 3) {
                 g_GameEngineStep = Engine_Normal;
             }
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP11) || defined(VERSION_JP12)
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
             func_8011A9D8();
 #endif
             g_MenuStep++;
@@ -1956,7 +1953,7 @@ void RunMainEngine(void) {
                         g_api.o.UpdateStageEntities();
                         UpdateCameraShake();
                     }
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
                 } else if (g_PlayableCharacter == PLAYER_RICHTER) {
                     g_api.o.UpdateStageEntities();
                     UpdateCameraShake();

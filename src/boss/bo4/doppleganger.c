@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo4.h"
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 PlayerState g_Dop;
 s32 D_us_801D4118[32];
 s32 D_us_801D4198[32];
@@ -732,7 +732,7 @@ static void DopplegangerThinking(void) {
                 D_us_801D3D2C--;
             } else {
                 // crouch attack
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 g_Dop.padSim |= PAD_SQUARE;
 #else
                 g_Dop.padSim |= PAD_DOWN | PAD_SQUARE;
@@ -766,7 +766,7 @@ static void DopplegangerThinking(void) {
             g_Dop.padSim |= PAD_CROSS;
             if (DOPPLEGANGER.velocityY > 0) {
                 if (DOPPLEGANGER.velocityY > FIX(2)) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     g_Dop.padSim |= PAD_DOWN | PAD_SQUARE;
 #else
                     g_Dop.padSim |= PAD_DOWN | PAD_SQUARE | PAD_CROSS;

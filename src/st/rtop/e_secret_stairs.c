@@ -2,7 +2,7 @@
 #include "rtop.h"
 
 extern EInit g_EInitRTOPCommon;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(STAIR_SEGMENT);
 #endif
 

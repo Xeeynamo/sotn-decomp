@@ -2402,7 +2402,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC
     _USE_MATH_DEFINES # needed for msvc
-    VERSION_PC
+    PLATFORM_PSYZ
     PERMUTER
     NON_MATCHING
     HARD_LINK
@@ -2441,7 +2441,7 @@ function(add_overlay name)
 
     target_compile_definitions(${_target} PRIVATE
         _USE_MATH_DEFINES
-        VERSION_PC
+        PLATFORM_PSYZ
         PERMUTER
         NON_MATCHING
         HARD_LINK

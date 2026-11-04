@@ -10,7 +10,7 @@ void EntityPushAlucard(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitSpawner);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         g_CastleFlags[PROLOGUE_COMPLETE] = 0;
 #endif
         g_Entities[E_AFTERIMAGE_1].ext.alucardController.disableAfterImageFlag =

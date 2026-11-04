@@ -2,7 +2,7 @@
 #include "rcen.h"
 #include <cutscene.h>
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 u8 cutscene_script_pre_fight_it[] = {
 #include <gen/cutscene_script_pre_fight_it.h>
 };

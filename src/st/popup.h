@@ -32,7 +32,7 @@ void BottomCornerText(u8* str, u8 leftAlign) {
             }
         }
         *chIdx++ = ch;
-#if defined(VERSION_US) && !defined(VERSION_BETA)
+#if VERSION == VER_US
         if (ch) {
             xPos++;
         }
@@ -87,7 +87,7 @@ void BottomCornerText(u8* str, u8 leftAlign) {
         prim->g0 = prim->g1 = 0x5F;
     }
 
-#if !defined(VERSION_US) || defined(VERSION_BETA)
+#if VERSION != VER_US
     textWidth <<= 3;
 #endif
 
@@ -166,7 +166,13 @@ void BottomCornerText(u8* str, u8 leftAlign) {
             prim->y0 = 0xD4;
             prim = prim->next;
         }
-#if !defined(VERSION_US) || defined(VERSION_BETA)
+#if VERSION == VER_US
+        if (ch) {
+            xPos2 += 8;
+        } else {
+            xPos2 += 4;
+        }
+#else
         ch = *chIdx++;
         if (ch) {
             prim->tpage = 0x1E;
@@ -184,12 +190,6 @@ void BottomCornerText(u8* str, u8 leftAlign) {
             xPos2 += 12;
         } else {
             xPos2 += 8;
-        }
-#else
-        if (ch) {
-            xPos2 += 8;
-        } else {
-            xPos2 += 4;
         }
 #endif
     }

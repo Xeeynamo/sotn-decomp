@@ -7,8 +7,7 @@
 // 692E8.c
 s32 D_80137FB4;
 s32 D_80137FB8;
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP11) || defined(VERSION_JP12)
+#if VERSION >= VER_JP11
 s32 D_80137FBC;
 #endif
 
@@ -25,8 +24,7 @@ s32 g_WasFacingLeft6;
 s32 g_WasFacingLeft7;
 
 // 71830.c
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP11) || defined(VERSION_JP12)
+#if VERSION >= VER_JP11
 s32 D_80137FDC;
 #endif
 
@@ -99,7 +97,7 @@ s32 D_8013843C;
 s32 D_80138440;
 s32 D_80138444;
 s32 D_80138448;
-#if defined(VERSION_JP12)
+#if VERSION == VER_JP12
 s32 g_WolfIsTouchingFloor;
 #endif
 s32 D_8013844C;
@@ -111,7 +109,7 @@ s16 g_CurrentXaConfigId;
 STATIC_PAD_BSS(2);
 s16 D_8013845C;
 STATIC_PAD_BSS(2);
-#if defined(VERSION_PC)
+#ifdef PLATFORM_PSYZ
 u8 g_SeqTable[SS_SEQ_TABSIZ * SEQ_TABLE_S_MAX * SEQ_TABLE_T_MAX];
 u_long* D_80138784[0x700];
 #else
@@ -132,7 +130,7 @@ s32 g_SeqPointers[10];
 s16 g_SfxRingBufferReadPos;
 STATIC_PAD_BSS(2);
 DebugMode g_DebugMode;
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
 SpuVoiceAttr D_80138FB4_;
 SpuVoiceAttr* D_80138FB4 = &D_80138FB4_;
 #else
@@ -302,7 +300,6 @@ s32 D_8013B694;
 s16 g_volumeR;
 STATIC_PAD_BSS(2);
 s32 D_8013B69C;
-#if defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) ||   \
-    defined(VERSION_JP12)
+#if REGION == REGION_JP
 u32 D_8013B6A0; // TODO VAB from BSS, fake symbol
 #endif

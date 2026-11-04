@@ -412,7 +412,7 @@ static AnimateEntityFrame anim[] = {
 
 // BSS vars, not sure why order is reversed.
 // Likely something we could remove ifdef on, just don't know how
-#ifdef VERSION_US
+#if VERSION == VER_US
 static batWingStruct wing1;
 static batWingStruct wing2;
 static batWingStruct* wingPtrs[2];

@@ -698,7 +698,7 @@ void RicEntityPlayerBlinkWhite(Entity* self) {
     self->posY.i.hi = RIC.posY.i.hi;
     self->posX.i.hi = RIC.posX.i.hi;
     self->facingLeft = RIC.facingLeft;
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
     sp44 = D_92641C8[RIC.animCurFrame & 0x7FFF];
 #endif
     sp44 = D_us_801A39B0[RIC.animCurFrame & 0x7FFF];

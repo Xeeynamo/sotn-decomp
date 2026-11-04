@@ -2,7 +2,7 @@
 
 // enable like
 //
-// #if !defined(VERSION_PSP) || !defined(MARIA_SFX_DEBUG)
+// #if TARGET != TARGET_PSP || !defined(MARIA_SFX_DEBUG)
 //
 // // MarMain left out
 //
@@ -22,7 +22,7 @@
 // }
 // #endif
 
-#if defined(VERSION_PSP) && defined(MARIA_SFX_DEBUG)
+#if TARGET == TARGET_PSP && defined(MARIA_SFX_DEBUG)
 
 #define MARIA_PSP_SFX_FIRST 0x601
 #define MARIA_PSP_SFX_LAST 0x90B

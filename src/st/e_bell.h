@@ -13,7 +13,7 @@ typedef struct {
     s16 priority;
 } BellParams;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(BELL);
 #endif
 

@@ -6,7 +6,7 @@ extern EInit D_8018047C;
 extern s32 g_CutsceneFlags;
 extern s32 g_SkipCutscene;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern u8* D_801816C0; // defined in st_init_psp
 #else
 extern u8 D_801816C0; // defined in cutscene_data
@@ -38,7 +38,7 @@ void EntityCSMoveAlucard(Entity* self) {
     Entity* player = &PLAYER;
     s16 posX;
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
     FntPrint("step %x\n", self->step);
 #endif
 
@@ -53,7 +53,7 @@ void EntityCSMoveAlucard(Entity* self) {
         g_unkGraphicsStruct.pauseEnemies = 1;
         g_Player.padSim = PAD_NONE;
         g_Player.demo_timer = 1;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         self->ext.utimer.t = 128;
 #else
         if (g_DemoMode != Demo_None) {
@@ -73,7 +73,7 @@ void EntityCSMoveAlucard(Entity* self) {
                 if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
                     g_Player.padSim = PAD_BAT;
                 } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     g_Player.padSim = PAD_NONE;
 #else
                     g_Player.padSim = PAD_MIST;
@@ -210,7 +210,7 @@ void EntityUnkId23(Entity* self) {
             delta = player->posX.i.hi - entity->posX.i.hi;
             if (delta < -0x50) {
                 g_Player.padSim = PAD_RIGHT;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 *D_801816C0 = 0;
 #else
                 D_801816C0 = 0;
@@ -218,7 +218,7 @@ void EntityUnkId23(Entity* self) {
                 self->step += 3;
             } else if (delta > 0x50) {
                 g_Player.padSim = PAD_LEFT;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 *D_801816C0 = 1;
 #else
                 D_801816C0 = 1;
@@ -240,7 +240,7 @@ void EntityUnkId23(Entity* self) {
         delta = player->posX.i.hi - entity->posX.i.hi;
         if (delta > 64) {
             g_Player.padSim = PAD_LEFT;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             *D_801816C0 = 1;
 #else
             D_801816C0 = 1;
@@ -255,7 +255,7 @@ void EntityUnkId23(Entity* self) {
         delta = player->posX.i.hi - entity->posX.i.hi;
         if (delta < -64) {
             g_Player.padSim = PAD_RIGHT;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             *D_801816C0 = 0;
 #else
             D_801816C0 = 0;

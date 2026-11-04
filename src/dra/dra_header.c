@@ -62,18 +62,18 @@ s32 func_800FD664(s32 arg0);
 bool CalcPlayerDamage(DamageParam* arg0);
 void LearnSpell(s32 spellId);
 void DebugInputWait(const char* msg);
-#if defined(VERSION_JP12)
+#if VERSION == VER_JP12
 void ApplySoundMode(void);
 extern Lba g_StagesLba[];
 #endif
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 s32 func_psp_091007E0(s32 baseAttack);
 bool CalcPlayerDamageMaria(DamageParam* damageParam);
 u16* func_psp_0913FA28(u32 ch, u16 kind);
 u16 func_psp_0913F960(const char* str, u8* type);
 #endif
 
-#if !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP
 typedef void (*Entrypoint)(void);
 void MainGame(void);
 Entrypoint g_MainGame = MainGame;
@@ -102,7 +102,7 @@ GameApi g_ApiInit = {
     func_800EDB08,
     func_80106A28,
     func_80118894,
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     NULL,
 #else
     g_EnemyDefs,
@@ -144,11 +144,11 @@ GameApi g_ApiInit = {
     CalcPlayerDamage,
     LearnSpell,
     DebugInputWait,
-#if defined(VERSION_JP12)
+#if VERSION == VER_JP12
     ApplySoundMode,
     g_StagesLba,
 #endif
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     func_psp_091007E0,
     CalcPlayerDamageMaria,
     func_psp_0913FA28,

@@ -90,7 +90,7 @@ void DebugShowWaitInfo(const char* msg) {
     VSync(0);
     PutDrawEnv(&g_CurrentBuffer->draw);
     PutDispEnv(&g_CurrentBuffer->disp);
-#if !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP
     FntFlush(-1);
 #endif
 }
@@ -1408,7 +1408,7 @@ void func_psp_090F5B10(void) {
     D_psp_091CF814 = g_RelicDefs;
 }
 
-#if defined(VERSION_PC)
+#ifdef PLATFORM_PSYZ
 #define IS_QUIT_REQUESTED                                                      \
     (g_IsQuitRequested || (g_TimedExit && g_Timer >= g_TimeLimit))
 extern bool g_IsQuitRequested;
@@ -1419,12 +1419,12 @@ extern int g_TimeLimit;
 #endif
 
 void MainGame(void) {
-#if defined(VERSION_HD)
+#if VERSION < VER_JP10
     CdlFILE fp;
 #endif
     s32 i;
 
-#if defined(VERSION_US)
+#if VERSION == VER_US
     SetVideoMode(0);
 #endif
     func_psp_090F5560();
@@ -1452,9 +1452,9 @@ void MainGame(void) {
     g_Settings.D_8003CB00 = 0;
     g_Settings.D_8003CB04 = 0;
     g_CurrentBuffer = &g_GpuBuffers[0];
-#if defined(VERSION_US)
+#if VERSION == VER_US
     SetCdPos(OFF_SD_XA_STR1);
-#elif defined(VERSION_HD)
+#elif VERSION < VER_JP10
     do {
 
     } while (CdSearchFile(&fp, "\\SD\\XA_STR1.;1") == 0);
@@ -1478,7 +1478,7 @@ void MainGame(void) {
     g_GpuMaxUsage.tile = 0;
     g_GpuMaxUsage.sp = 0;
     g_GpuMaxUsage.env = 0;
-#if defined(VERSION_US)
+#if VERSION == VER_US
     g_DebugPlayer = 0;
 #else
     g_DebugPlayer = 1;
@@ -1520,7 +1520,7 @@ loop_5:
     D_80097904 = 0;
     D_psp_091FC4A0 = 0;
     D_80097C98 = 0;
-#if defined(VERSION_US)
+#if VERSION == VER_US
     g_softResetTimer = 0;
 #endif
     g_GameClearFlag = SAVE_FLAG_CLEAR;
@@ -1645,7 +1645,7 @@ loop_5:
             }
         }
         rand();
-#if defined(VERSION_HD)
+#if VERSION < VER_JP10
         FntFlush(-1);
 #endif
     }

@@ -57,19 +57,19 @@ static SVECTOR* doorColorNormalVectors[] = {
 static u8 castleDoorUCoords[] = {
     0x3A, 0x46, 0x01, 0x35, 0x35, 0x01, 0x00, 0x00};
 
-#if !defined(INVERTED_STAGE)
-static u16 castleDoorTilesOpen[] = {
-    0x06D1, 0x06D2, 0x06D3, 0x06D4, 0x06D5, 0x06D6, 0x06D3, 0x06D4,
-};
-static u16 castleDoorTilesShut[] = {
-    0x010F, 0x112, 0x114, 0x116, 0x118, 0x11A, 0x114, 0x116,
-};
-#else
+#ifdef INVERTED_STAGE
 static u16 castleDoorTilesOpen[] = {
     0x6d4, 0x6d3, 0x6d6, 0x6d5, 0x6d3, 0x6d2, 0x6d4, 0x6d1,
 };
 static u16 castleDoorTilesShut[] = {
     0x116, 0x114, 0x11a, 0x118, 0x116, 0x114, 0x112, 0x10f,
+};
+#else
+static u16 castleDoorTilesOpen[] = {
+    0x06D1, 0x06D2, 0x06D3, 0x06D4, 0x06D5, 0x06D6, 0x06D3, 0x06D4,
+};
+static u16 castleDoorTilesShut[] = {
+    0x010F, 0x112, 0x114, 0x116, 0x118, 0x11A, 0x114, 0x116,
 };
 #endif
 
@@ -194,13 +194,13 @@ void EntityCastleDoor(Entity* self) {
     SetGeomOffset(selfX, selfY);
     sVec1.vx = 0;
     sVec1.vy = self->ext.castleDoor.rotate;
-#if !defined(INVERTED_STAGE)
-    sVec1.vz = 0;
-    RotMatrix(&sVec2, &mtx1);
-#else
+#ifdef INVERTED_STAGE
     sVec1.vz = 0x800;
     RotMatrix(&sVec2, &mtx1);
     RotMatrixZ(sVec1.vz, &mtx1);
+#else
+    sVec1.vz = 0;
+    RotMatrix(&sVec2, &mtx1);
 #endif
     RotMatrixY(sVec1.vy, &mtx1);
     vec1.vx = 0;

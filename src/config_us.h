@@ -44,7 +44,7 @@ const char* g_MenuStr[] = {
     _S("LEVEL"),
     _S("TIME"),
     _S("ROOMS"),
-#if defined(VERSION_USPROTO)
+#if VERSION == VER_USPROTO
     _S("BEAT"),
 #else
     _S("KILLS"),
@@ -57,7 +57,7 @@ const char* g_MenuStr[] = {
     _S("Cloak lining"),
     _S("Cloak color"),
     _S("・・・・・"),
-#if defined(VERSION_USPROTO)
+#if VERSION == VER_USPROTO
     _S("Lining"),
     _S("Exterior"),
 #else
@@ -99,34 +99,34 @@ const char* g_MenuStr[] = {
     _S("Defeat Olrox"),
     _S("Defeat Doppleganger 10"),
     _S("Defeat Granfaloon"),
-#if defined(VERSION_USPROTO)
+#if VERSION == VER_USPROTO
     _S("Defeat Minotaurus and Werewolf"),
-#elif defined(VERSION_EU) || defined(VERSION_HK)
+#elif VERSION >= VER_EU
     _S("Defeat Minotaur & Werewolf"),
 #else
     _S("Defeat Minotaur and Werewolf"),
 #endif
     _S("Defeat Scylla"),
-#if defined(VERSION_EU) || defined(VERSION_HK)
+#if VERSION >= VER_EU
     _S("Defeat Slogra & Gaibon"),
 #else
     _S("Defeat Slogra and Gaibon"),
 #endif
     _S("Defeat Hippogryph"),
-#if defined(VERSION_USPROTO)
+#if VERSION == VER_USPROTO
     _S("Defeat Beezelbub"),
 #else
     _S("Defeat Beelzebub"),
 #endif
     _S("Defeat Succubus"),
     _S("Defeat Karasuman"),
-#if defined(VERSION_EU) || defined(VERSION_HK)
+#if VERSION >= VER_EU
     _S("Defeat Trevor, Grant & Sypha"),
 #else
     _S("Defeat Ralph, Grant & Sypha"),
 #endif
     _S("Defeat Death"),
-#if defined(VERSION_USPROTO)
+#if VERSION == VER_USPROTO
     _S("Defeat Cerberos"),
 #else
     _S("Defeat Cerberus"),
@@ -233,7 +233,7 @@ RelicDesc g_RelicDefs[] = {
     {" Sword Card", "Summons ””Sword”” familiar", 265, 272, 5},
     {"Sprite Card", "Summons ””Pixie”” familiar", 265, 272, 6},
     {" Nosedevil Card", "Summons ””Nose−devil”” familiar", 265, 272, 7},
-#if defined(VERSION_USPROTO)
+#if VERSION == VER_USPROTO
     {"Heart of Vlad", "１ of ５ Treasures． Voide Curse．", 268, 275, 0},
 #else
     {"Heart of Vlad", "１ of ５ Treasures． Avoid Curse．", 268, 275, 0},

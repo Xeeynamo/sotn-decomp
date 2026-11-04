@@ -851,7 +851,7 @@ void func_us_801C2474(Entity* self) {
             pan = 8;
         }
     }
-#ifdef VERSION_US
+#if VERSION == VER_US
     FntPrint("vol ; %x\n", volume);
     FntPrint("pan : %d\n", pan);
 #endif
@@ -1149,7 +1149,7 @@ static u16 D_us_8018152C[] = {0, 10, 4, 8, 1, 12, 5, 9, 2, 6, 11, 3, 7};
 
 void func_us_801C2E60(Entity* self) {
     s32 var_s5;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     u32 scrollX;
 #else
     s32 scrollX;
@@ -1198,7 +1198,7 @@ void func_us_801C2E60(Entity* self) {
         while (prim != NULL) {
             if (prim->drawMode == DRAW_HIDE) {
                 prim->y0 = prim->y1 = prim->y2 = prim->y3 = var_s2;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 var_s5 = (D_us_8018152C[self->ext.et_801C12B0.unk80] * 4) +
                          0xBB - scrollX - 9;
                 prim->x2 = prim->x0 = var_s5 + (rand() & 3);
@@ -1729,7 +1729,7 @@ void func_us_801C3CC4(Entity* self) {
     while (prim != NULL) {
         if (prim->drawMode == DRAW_HIDE) {
             prim->y0 = prim->y1 = prim->y2 = prim->y3 = var_s2;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             var_s5 = D_us_8018155C[self->ext.et_801C12B0.unk80] * 4;
             prim->x2 = prim->x0 = var_s5 + (rand() & 3) - 0x19 + posX;
 #else
@@ -1940,7 +1940,7 @@ void func_us_801C4228(Entity* self) {
         prim = prim->next;
 
         // Prim 2
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         prim->x0 = prim->x2 = xOffset;
         prim->x1 = prim->x3 = xOffset + 1;
 #else
@@ -1950,7 +1950,7 @@ void func_us_801C4228(Entity* self) {
 #endif
         prim->y0 = prim->y1 = yOffset;
         prim->y2 = prim->y3 = yMax;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         prim->r0 = prim->r2 = prim->g0 = prim->g2 = prim->r1 = prim->r3 =
             prim->g1 = prim->g3 = 8;
         prim->b0 = prim->b2 = prim->b1 = prim->b3 = 0;
@@ -1968,7 +1968,7 @@ void func_us_801C4228(Entity* self) {
 
         // Prim 3
         prim->x0 = prim->x2 = xOffset;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         xOffset += 0x30;
 #else
         xOffset += 0x2D;

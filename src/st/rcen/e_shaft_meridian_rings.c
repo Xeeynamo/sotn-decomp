@@ -2,7 +2,7 @@
 #include "rcen.h"
 #include <scratchpad.h>
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(SHAFT_CRYSTAL_BALL);
 #endif
 extern EInit g_EInitInteractable;

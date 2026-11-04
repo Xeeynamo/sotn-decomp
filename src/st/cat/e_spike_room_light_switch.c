@@ -124,7 +124,7 @@ void EntitySpikeRoomLightSwitch(Entity* self) {
         prim = self->ext.spikeRoomSwitch.prim;
         prim->y2 -= 3;
         prim->y3 = prim->y2;
-#ifdef VERSION_US
+#if VERSION == VER_US
         prim->r0 = prim->r0;
 #endif
         prim->b0 = prim->g0 = prim->r0;
@@ -136,7 +136,7 @@ void EntitySpikeRoomLightSwitch(Entity* self) {
 
         prim->y2 += 2;
         prim->y3 = prim->y2;
-#ifdef VERSION_US
+#if VERSION == VER_US
         prim->r0 = prim->r0;
 #endif
         prim->b0 = prim->g0 = prim->r0;

@@ -351,7 +351,7 @@ void EntityCloakedKnightAura(Entity* self) {
     }
     self->opacity -= 4;
     if (self->opacity < 32
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
         || parent->entityId != E_CLOAKED_KNIGHT
 #endif
     ) {

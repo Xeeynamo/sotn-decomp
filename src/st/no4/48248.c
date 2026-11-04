@@ -4,7 +4,7 @@
 void func_us_801C8248(Entity* self) {
     s32 posX, posY;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     if (g_CastleFlags[SUCCUBUS_CS]) {
 #else
     if (g_api.TimeAttackController(

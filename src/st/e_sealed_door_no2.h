@@ -241,7 +241,7 @@ void EntitySealedDoor(Entity* self) {
         if (!SealedDoorIsNearPlayer(self)) {
             g_api.PlaySfx(SFX_DOOR_OPEN);
             self->step++;
-#if defined(VERSION_PSP) || defined(BOSS_IS_BO0)
+#if TARGET == TARGET_PSP || defined(BOSS_IS_BO0)
             g_Player.demo_timer = 0;
 #endif
         }

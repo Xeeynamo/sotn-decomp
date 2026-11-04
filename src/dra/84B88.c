@@ -2529,7 +2529,7 @@ void EntitySummonSpirit(Entity* self) {
         self->ext.summonspirit.spawnTimer = 10;
         func_80118C28(13);
         self->step++;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         func_psp_0891B0DC(0, 0);
 #endif
         return;
@@ -2561,7 +2561,7 @@ void EntitySummonSpirit(Entity* self) {
         prim->y1 = prim->y0 = selfY - 0x20;
         prim->y2 = prim->y3 = selfY + 0x1F;
         D_80138424.x = prim->x0;
-#if !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP
         if (g_CurrentBuffer->disp.disp.x == 0) {
             D_80138424.x += 0x100;
         }

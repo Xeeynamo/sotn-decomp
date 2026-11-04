@@ -34,13 +34,13 @@ static void CutsceneCameraPan(s16 arg0) {
         g_Tilemap.height = arg0;
     }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     g_Tilemap.x = 0;
     g_Tilemap.width = 0x300;
 #endif
 }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(CUTSCENE);
 
 static void SetTilemap(void) {
@@ -86,7 +86,7 @@ void EntityPlatform(Entity* self) {
 
     switch (self->step) {
     case 0:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         g_api.TimeAttackController(
             TIMEATTACK_EVENT_FIRST_MARIA_MEET, TIMEATTACK_SET_VISITED);
 #endif
@@ -97,7 +97,7 @@ void EntityPlatform(Entity* self) {
             self->animCurFrame = 9;
             self->zPriority = 0x80;
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
             if (g_CastleFlags[MET_MARIA_IN_CEN]) {
                 self->step = 9;
             }
@@ -116,7 +116,7 @@ void EntityPlatform(Entity* self) {
             prim->priority = 0x7F;
             prim->drawMode = DRAW_UNK02;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             if (g_CastleFlags[INVERTED_CASTLE_UNLOCKED]) {
                 self->step = 9;
             } else if (PlayerAlucardMetMaria()) {
@@ -137,7 +137,7 @@ void EntityPlatform(Entity* self) {
                 g_Player.padSim = PAD_BAT;
             } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
                 // Strange difference here on PSP, is this a bug?
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 g_Player.padSim = PAD_NONE;
 #else
                 g_Player.padSim = PAD_MIST;
@@ -199,7 +199,7 @@ void EntityPlatform(Entity* self) {
             g_api.PlaySfx(SFX_METAL_CLANG_A);
             g_CutsceneFlags |= 1;
             tilemap->height = ((s16)tilemap->scrollY.i.hi + 0x100);
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
             func_8018F8EC(0);
 #endif
         }
@@ -216,7 +216,7 @@ void EntityPlatform(Entity* self) {
             player->posY.i.hi--;
             g_unkGraphicsStruct.shoveY.i.hi--;
         } else {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             func_8018F8EC(1);
 #endif
             g_api.PlaySfx(SFX_DOOR_CLOSE_A);
@@ -224,7 +224,7 @@ void EntityPlatform(Entity* self) {
                 g_Player.padSim = PAD_LEFT;
             }
             g_CutsceneFlags |= 4;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             self->ext.platformUnk.unk7C = 0;
 #endif
             self->step++;
@@ -236,7 +236,7 @@ void EntityPlatform(Entity* self) {
         CutsceneCameraPan(0x200);
         g_Player.padSim = PAD_NONE;
         g_Player.demo_timer = 1;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (g_Tilemap.height == 0x200 && g_CutsceneFlags & 8) {
             self->ext.platformUnk.unk7C++;
             if (self->ext.platformUnk.unk7C > 3) {
@@ -261,7 +261,7 @@ void EntityPlatform(Entity* self) {
         break;
 
     case 6:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         SetTilemap();
         if (g_CutsceneFlags & 0x200) {
             g_Player.padSim = PAD_NONE;
@@ -292,7 +292,7 @@ void EntityPlatform(Entity* self) {
 #endif
         break;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     case 10:
         g_Player.padSim = PAD_NONE;
         if (g_Player.status &
@@ -430,14 +430,14 @@ void EntityPlatform(Entity* self) {
     case 8:
         CutsceneCameraPan(0x300);
         if (tilemap->height == 0x300) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             g_Tilemap.y = 0;
 #endif
             self->step++;
         }
         break;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     case 20:
         g_PauseAllowed = false;
         if (PlayerAlucardMetMaria()) {
@@ -551,9 +551,7 @@ void EntityPlatform(Entity* self) {
         }
         g_Player.demo_timer = 1;
         break;
-#endif
 
-#ifdef VERSION_PSP
     case 1000:
         break;
 #else
@@ -580,7 +578,7 @@ void EntityRoomDarkness(Entity* self) {
 
     switch (self->step) {
     case 0:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (g_CastleFlags[INVERTED_CASTLE_UNLOCKED]) {
             DestroyEntity(self);
             return;
@@ -592,7 +590,7 @@ void EntityRoomDarkness(Entity* self) {
             return;
         }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (g_PlayableCharacter != PLAYER_ALUCARD) {
             DestroyEntity(self);
             return;
@@ -634,7 +632,7 @@ void EntityRoomDarkness(Entity* self) {
 
     case 1:
         if (g_CutsceneFlags & 4) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             if (g_CutsceneFlags & 8) {
                 self->step++;
                 break;
@@ -666,7 +664,7 @@ void EntityRoomDarkness(Entity* self) {
     }
 }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 static bool PlayerAlucardMetMaria(void) {
     if (g_CastleFlags[MET_MARIA_IN_CEN] &&
         g_PlayableCharacter == PLAYER_ALUCARD) {

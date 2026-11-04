@@ -2,7 +2,7 @@
 #include "memcard.h"
 
 void SetupEvents(void) {
-#ifndef VERSION_PC
+#ifndef PLATFORM_PSYZ
     EnterCriticalSection();
 #endif
     g_EvSwCardEnd = OpenEvent(SwCARD, EvSpIOE, EvMdNOINTR, NULL);
@@ -13,7 +13,7 @@ void SetupEvents(void) {
     g_EvHwCardErr = OpenEvent(HwCARD, EvSpERROR, EvMdNOINTR, NULL);
     g_EvHwCardTmo = OpenEvent(HwCARD, EvSpTIMOUT, EvMdNOINTR, NULL);
     g_EvHwCardNew = OpenEvent(HwCARD, EvSpNEW, EvMdNOINTR, NULL);
-#ifndef VERSION_PC
+#ifndef PLATFORM_PSYZ
     ExitCriticalSection();
 #endif
     EnableEvent(g_EvSwCardEnd);
@@ -184,7 +184,8 @@ s32 MemcardReadFile(
 
     sprintf(savePath, "bu%1d%1d:%s", nPort, nCard, name);
     if (nBlock == 0) {
-#if defined(VERSION_EU)
+#if REGION == REGION_EU
+        // The EU build does not have the animated memcard icons
         nBytes = 0x1B8;
 #else
         nBytes = 0x2B8;
@@ -390,8 +391,7 @@ u8* g_saveIconTexture[] = {
     g_saveIcon12, g_saveIcon13, g_saveIcon14, g_saveIcon15,
 };
 
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_JP12)
+#if VERSION >= VER_US
 s32 g_saveUnkData[] = {
     1, 1, 3, 1, 1, 1, 3, 1, 2, 2, 1, 1, 1, 1, 1, 2,
 };
@@ -403,7 +403,7 @@ void GetSaveIcon(u8* dst, s32 iconIdx) {
     u8* src;
 
     src = g_saveIconTexture[iconIdx];
-#if defined(VERSION_EU)
+#if REGION == REGION_EU
     src += (g_saveUnkData[iconIdx] - 1) * IconSize;
 #endif
     for (i = 0; i < IconSize; i++) {
@@ -532,7 +532,7 @@ void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
 
     h.Magic[0] = 'S';
     h.Magic[1] = 'C';
-#if defined(VERSION_EU)
+#if REGION == REGION_EU
     h.Type = 0x11; // save icon is not animated
 #else
     h.Type = 0x13; // save icon has three animation frames
@@ -546,7 +546,7 @@ void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
         h.Title[i] = 0;
     }
 
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
+#if IS_VER_INTL
     strcpy(h.Title, "ＣＡＳＴＬＥＶＡＮＩＡ−");
 #else
     strcpy(h.Title, "ドラキュラＸ−");
@@ -583,8 +583,7 @@ void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
         }
     }
 
-#if defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) ||   \
-    defined(VERSION_JP12) || defined(VERSION_USPROTO)
+#if !IS_VER_INTL
     // writes stage name
     strcat(h.Title, "　");
     strcat(h.Title, g_SaveAreaNames[g_StageId]);
@@ -677,7 +676,7 @@ s32 ApplySaveData(SaveData* save) {
     g_Tilemap.top = savePtr->info.roomY;
 
     g_Status = *srcStatus;
-#if defined(VERSION_EU) || defined(VERSION_HK) || defined(VERSION_JP12)
+#if VERSION >= VER_EU
     g_TimerCopyHours = g_Status.timerHours;
     g_TimerCopyMinutes = g_Status.timerMinutes;
     g_TimerCopySeconds = g_Status.timerSeconds;

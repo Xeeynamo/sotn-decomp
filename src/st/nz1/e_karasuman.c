@@ -93,7 +93,7 @@ static u8 D_us_801812B8[] = {
     8, 8, 8, 1, 1, 10, 7, 7, 7, 5, 11, 11, 11, 11, 11, 12, 10, 13, 13, 14,
 };
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(EXPLODE_PUFF_OPAQUE);
 extern s32 E_ID(KARASUMAN_FEATHER_ATTACK);
 extern s32 E_ID(KARASUMAN_ORB_ATTACK);
@@ -564,7 +564,7 @@ void EntityKarasuman(Entity* self) {
     } else if (offsetX > 0xDC) {
         self->posX.i.hi = 0xDC - g_Tilemap.scrollX.i.hi;
     }
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
     if (self->velocityY < 0) {
         if (offsetY < 80) {
             self->posY.i.hi = 80 - g_Tilemap.scrollY.i.hi;
@@ -620,7 +620,7 @@ void EntityKarasumanOrbAttack(Entity* self) {
     s16 angle;
     s16 angleBetweenEntities;
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
     if (g_BossFlag & 2) {
         DestroyEntity(self);
         return;

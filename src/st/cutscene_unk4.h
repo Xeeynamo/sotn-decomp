@@ -7,13 +7,13 @@
 #define CUTSCENE_UNK4_V_OFFSET 128
 #endif
 
-#ifdef VERSION_HD
+#if VERSION < VER_JP10
 #define CUTSCENE_UNK4_V 16
 #else
 #define CUTSCENE_UNK4_V 12
 #endif
 
-#ifndef VERSION_HD
+#if VERSION >= VER_JP10
 static
 #endif
     void
@@ -24,12 +24,12 @@ static
     prim = g_Dialogue.prim[g_Dialogue.nextCharY];
     prim->tpage = CUTSCENE_UNK4_TPAGE;
     prim->clut = g_Dialogue.clutIndex;
-#ifdef VERSION_HD
+#if VERSION < VER_JP10
     prim->x0 = g_Dialogue.startX;
 #endif
     prim->y0 = g_Dialogue.nextLineY;
     prim->u0 = 0;
-#ifndef VERSION_HD
+#if VERSION >= VER_JP10
     prim->x0 = g_Dialogue.startX + 4;
 #endif
     prim->v0 = g_Dialogue.nextCharY * CUTSCENE_UNK4_V + CUTSCENE_UNK4_V_OFFSET;

@@ -52,7 +52,7 @@ void func_us_801BB4CC(Entity* self) {
         self->posY.i.hi = tempEntity->posY.i.hi - 0x14;
         if (g_Player.status &
             (
-#ifdef VERSION_US
+#if VERSION == VER_US
                 PLAYER_STATUS_UNK40000000 | PLAYER_STATUS_UNK800000 |
                 PLAYER_STATUS_UNK400000 | PLAYER_STATUS_WOLF_FORM |
 #endif

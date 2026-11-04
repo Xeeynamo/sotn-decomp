@@ -483,7 +483,7 @@ typedef struct {
     u16 mode;
 } GuardTextControl;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 GuardTextControl D_psp_091835F0[] = {
     0x43, 0x4A,   0x59,   0x52, 0x0185, 0x0001, 0x4E, 0x53,   0x66,
     0x5B, 0x01B1, 0x0001, 0x20, 0x53,   0x36,   0x5B, 0x01B1, 0x0001,
@@ -1097,7 +1097,7 @@ void EntityGuardText(Entity* self) {
     u8 upperParams;
     s16 halfWidth;
     s16 halfHeight;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     GuardTextControl sp40;
     GuardTextControl sp38;
 #endif
@@ -1106,7 +1106,7 @@ void EntityGuardText(Entity* self) {
 
     upperParams = self->params >> 8;
     lowerParams = self->params & 0xFF;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     params_gtc = func_psp_09125DB8(&sp40, upperParams);
 #else
     params_gtc = &D_800ACFEC[upperParams];
@@ -1270,7 +1270,7 @@ void EntityGuardText(Entity* self) {
     prim->drawMode = DRAW_UNK_100;
     prim = prim->next;
     if (params_gtc->mode == 2) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         fixed_gtc = func_psp_09125DB8(&sp38, 5);
 #else
         fixed_gtc = &D_800ACFEC[5];
@@ -1290,7 +1290,7 @@ void EntityGuardText(Entity* self) {
              2);
     }
     if (params_gtc->mode == 3) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         fixed_gtc = func_psp_09125DB8(&sp38, 6);
 #else
         fixed_gtc = &D_800ACFEC[6];
@@ -1683,7 +1683,7 @@ void UpdatePlayerEntities(void) {
                     DestroyEntity(g_CurrentEntity);
                 } else {
                     if (entity->flags & FLAG_UNK_100000) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                         UpdateAnim(NULL, &D_psp_09234DC8);
 #else
                         UpdateAnim(NULL, D_800ACFB4);
@@ -1718,8 +1718,7 @@ void UpdatePlayerEntities(void) {
     // Appears to be a temporary debugging block that was left in.
     if ((g_Player.status & (PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK80000)) ||
         (PLAYER.step == Player_Teleport && PLAYER.step_s == 0)) {
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP11) || defined(VERSION_JP12)
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
         // Japanese for "without hit".
         FntPrint("atari nuki\n");
 #else
@@ -1764,7 +1763,7 @@ void func_8011A870(void) {
                      entity->posY.i.hi > 0x100 || entity->posY.i.hi < -0x10)) {
                     DestroyEntity(g_CurrentEntity);
                 } else if (entity->flags & FLAG_UNK_100000) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     UpdateAnim(NULL, &D_psp_09234DC8);
 #else
                     UpdateAnim(NULL, D_800ACFB4);
@@ -1785,8 +1784,7 @@ void func_8011A9D8(void) {
         if (!(entity->flags & FLAG_UNK_20000)) {
             DestroyEntity(entity);
         }
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP11) || defined(VERSION_JP12)
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
         if (g_PlayableCharacter == PLAYER_ALUCARD && 0x36 < entity->entityId &&
             entity->entityId < 0x3D && entity->step != 0) {
             entity->pfnUpdate(entity);
@@ -2200,7 +2198,7 @@ void EntitySmokePuff(Entity* self) {
     switch (self->step) {
     case 0:
         if (g_Player.status & PLAYER_STATUS_UNK20000) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             // Looks like US forgot to initialize this variable.
             paramsHi = self->params >> 8;
 #endif
@@ -2390,7 +2388,7 @@ static bool func_8011BD48(Entity* entity) {
 }
 
 // This is BSS on PSP.
-#if !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP
 static s32 D_800AD630[] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
@@ -2525,26 +2523,26 @@ void EntityPlayerBlinkWhite(Entity* self) {
         if (sp48 != 0) {
             if (D_801396E0 == 0xD) {
                 sp5c = D_800CFE48[D_801396EC & 0x7FFF];
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 if (sp5c) {
 #endif
                     sp72 = *sp5c++;
                     sp72 &= 0x7FFF;
                     sp58 = (*g_PlOvlAluBatSpritesheet)[sp72];
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 } else {
                     sp58 = 0;
                 }
 #endif
             } else {
                 sp5c = D_800CF324[D_801396EC & 0x7FFF];
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 if (sp5c) {
 #endif
                     sp72 = *sp5c++;
                     sp72 &= 0x7FFF;
                     sp58 = ((u8**)SPRITESHEET_PTR)[sp72];
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 } else {
                     sp58 = 0;
                 }
@@ -2553,7 +2551,7 @@ void EntityPlayerBlinkWhite(Entity* self) {
         } else {
             sp7c = 0x2C;
             if (PLAYER.facingLeft) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 sp7c = 0x13;
 #else
                 sp7c = 0x14;
@@ -2561,7 +2559,7 @@ void EntityPlayerBlinkWhite(Entity* self) {
             }
             var_s7 = sp7c + D_8013AEBC[2];
             sp7f = sp7c + D_8013AEBC[0];
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             var_s6 = D_8013AEBC[3] + 24;
 #else
             var_s6 = D_8013AEBC[3] - 40;
@@ -2585,7 +2583,7 @@ void EntityPlayerBlinkWhite(Entity* self) {
             sp58 = (*g_PlOvlAluBatSpritesheet)[sp72];
         }
     }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     if (sp58) {
 #endif
         var_s7 = 4;
@@ -2596,7 +2594,7 @@ void EntityPlayerBlinkWhite(Entity* self) {
         var_s5 = sp7e - var_s6;
         sp7c = sp5c[0] + sp58[2];
         sp7a = sp5c[1] + sp58[3];
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 
     } else {
         var_s7 = 4;
@@ -2625,7 +2623,7 @@ block_748:
         }
         self->primIndex = AllocPrimitives(PRIM_GT4, 8);
         if (self->primIndex == -1) {
-#if defined(VERSION_HD) || defined(VERSION_JP10)
+#if VERSION < VER_JP11
             DestroyEntity(self);
 #endif
             return;
@@ -2891,7 +2889,7 @@ block_748:
     prim = &g_PrimBuf[self->primIndex];
     for (var_s1 = 0; var_s1 < 8; var_s1++) {
         if (PLAYER.animSet == 0xF && sp48 == 0) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             prim->tpage = 0x4118;
 #else
             prim->tpage = 0x118;

@@ -148,7 +148,7 @@ void RicMain(void) {
     // status = saved_reg_s3;
     // step = saved_reg_s5;
     // step_s = saved_reg_s6;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     status = 0;
 #endif
     g_CurrentEntity = &RIC;
@@ -263,7 +263,7 @@ void RicMain(void) {
             damage.effects =
                 D_us_80181210[g_CurrentEntity->nFramesInvincibility];
             RicSetStep(0x11);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_SAVE_RICHTER, TIMEATTACK_SET_RECORD);
 #endif
@@ -391,7 +391,7 @@ void RicMain(void) {
         RicSetInvincibilityFrames(1, 8);
         break;
     case PL_S_DEAD: /* switch 4 */
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         g_api.TimeAttackController(
             TIMEATTACK_EVENT_SAVE_RICHTER, TIMEATTACK_SET_RECORD);
 #endif
@@ -425,7 +425,7 @@ void RicMain(void) {
         status |= 0x08000000;
         break;
     case PL_S_ENDING_3: /* switch 4 */
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         g_api.TimeAttackController(
             TIMEATTACK_EVENT_SAVE_RICHTER, TIMEATTACK_SET_RECORD);
 #endif
@@ -495,7 +495,7 @@ void RicMain(void) {
     posY = RIC.posY.val;
     func_us_801B4EAC();
     func_us_801B96F4();
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     FntPrint("pl_color:%04x\n", RIC.palette);
 #endif
 }

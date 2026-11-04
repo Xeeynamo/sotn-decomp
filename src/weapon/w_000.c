@@ -7,7 +7,7 @@
 
 #include "weapon_private.h"
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #include path(HAND_ID, w_000_1.h)
 #include path(HAND_ID, w_000_2.h)
 #else

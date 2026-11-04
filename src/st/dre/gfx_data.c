@@ -53,7 +53,7 @@ u8 gfx_portrait_succubus[] = {
 #include <gen/gfx_portrait_succubus.h>
 };
 
-#ifdef VERSION_US
+#if VERSION == VER_US
 u8 gfx_stage_name_en[] = {
 #include <gen/gfx_stage_name_en.h>
 };

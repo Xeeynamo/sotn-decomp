@@ -2,7 +2,7 @@
 
 extern EInit g_EInitInteractable;
 
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
 void DpqColor(CVECTOR* v0, long p, CVECTOR* v1);
 long VectorNormalS(VECTOR* v0, SVECTOR* v1);
 
@@ -21,7 +21,7 @@ long VectorNormalS(VECTOR* v0, SVECTOR* v1);
 #define STAGE_NAME_BOX_RIGHT_X 248
 #endif
 
-#if defined(VERSION_HD) || defined(VERSION_BETA)
+#if VERSION < VER_JP10
 #define NUM_PRIMS 181
 #define TEXT_X 192
 #define TEXT_Y 177
@@ -51,7 +51,7 @@ enum StageNameSteps {
     STAGE_NAME_WAIT = 2,
     STAGE_NAME_WIPE_AWAY = 18,
     STAGE_NAME_SET_FLAG = 32,
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
     STAGE_NAME_RENDER_COLORS = 2,
     STAGE_NAME_RENDER_ZOOM = 3,
     STAGE_NAME_RENDER_DRUM = 4,
@@ -91,7 +91,7 @@ static void LoadStageNameGraphics(void) {
 }
 #endif
 
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
 static SVECTOR corner_top_left = {-64, -11, 0};
 static SVECTOR corner_top_right = {64, -11, 0};
 static SVECTOR corner_bottom_left = {-64, 28, 0};
@@ -128,7 +128,8 @@ static SVECTOR no_rotation = {0, 0, 0};
 // This is the banner version which "shutter opens" and wipes away to the left.
 // psp prims 8-183 and hd prims 6-181 seem to be completely unused
 void EntityStageNamePopup(Entity* self) {
-#if defined(STAGE_IS_TEK)
+#if VERSION < VER_JP10
+    // NOTE: These vars are used in TEK, unused in MAD, removed in JP10
     SVECTOR rotVector;
     VECTOR transVector;
     MATRIX mtx;
@@ -142,9 +143,6 @@ void EntityStageNamePopup(Entity* self) {
     CVECTOR colors[5];
     s16 z[5];
     s32 p, flag;
-#elif defined(VERSION_HD) || defined(VERSION_BETA)
-    // the TEK locals above, unused once the other effects were removed
-    u8 padding[0xD8];
 #endif
     Primitive* prim;
     s32 i;
@@ -153,7 +151,7 @@ void EntityStageNamePopup(Entity* self) {
     s16 starRightX;
     s16 starTopY;
     s16 boxRightX;
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
     s16* rotSlicePtr;
     VECTOR** normals;
 #endif
@@ -166,7 +164,7 @@ void EntityStageNamePopup(Entity* self) {
 
     switch (self->step) {
     case STAGE_NAME_INIT:
-#ifndef STAGE_IS_TEK
+#if VERSION >= VER_BETA_MAD
         if (g_CastleFlags[STAGE_FLAG]) {
             DestroyEntity(self);
             return;
@@ -187,7 +185,7 @@ void EntityStageNamePopup(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         prim = &g_PrimBuf[primIndex];
         self->ext.stpopupj.firstTextPrim = prim;
-#if !defined(VERSION_HD) && !defined(VERSION_BETA)
+#if VERSION >= VER_JP10
         while (prim != NULL) {
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
@@ -205,7 +203,7 @@ void EntityStageNamePopup(Entity* self) {
 // This splits the two loops in the middle because that is what is happening
 // functionally.  The two prims for psp together have the same left and right
 // sides (conceptually) as the single prim for hd.
-#if !defined(VERSION_HD) && !defined(VERSION_BETA)
+#if VERSION >= VER_JP10
             prim->x3 = prim->x1 = 128;
             prim->y3 = prim->y2 = 173;
             prim->u2 = prim->u0 = 0;
@@ -296,7 +294,7 @@ void EntityStageNamePopup(Entity* self) {
         prim->v2 = 255;
         prim->v3 = prim->v2;
         prim->x2 = prim->x0 = STAGE_NAME_BOX_LEFT_X;
-#if defined(VERSION_HD) || defined(VERSION_BETA)
+#if VERSION < VER_JP10
         prim->y1 = prim->y0 = 155;
         prim->x3 = prim->x1 = STAGE_NAME_BOX_RIGHT_X;
 #else
@@ -317,7 +315,7 @@ void EntityStageNamePopup(Entity* self) {
         prim->priority = 176;
         prim->drawMode = DRAW_TRANSP | DRAW_TPAGE | DRAW_COLORS;
         prim = prim->next;
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
         self->ext.stpopupj.firstRowPrim = prim;
         for (i = 0; i < 40; i++) {
             prim->tpage = 17;
@@ -426,7 +424,7 @@ void EntityStageNamePopup(Entity* self) {
                 prim = prim->next;
             }
 
-#if !defined(VERSION_HD) && !defined(VERSION_BETA)
+#if VERSION >= VER_JP10
             for (i = 0; i < 2; i++) {
                 prim->u0 = prim->u2 = 128;
                 prim->v0 = prim->v1 = 48;
@@ -465,14 +463,14 @@ void EntityStageNamePopup(Entity* self) {
 
             if (!primsSet) {
                 self->step_s++;
-#if !defined(VERSION_HD) && !defined(VERSION_BETA)
+#if VERSION >= VER_JP10
                 self->ext.stpopupj.timer = 0;
-#endif
                 prim = self->ext.stpopupj.firstTextPrim;
-#if !defined(VERSION_HD) && !defined(VERSION_BETA)
                 prim = prim->next;
                 prim->drawMode = DRAW_TRANSP | DRAW_TPAGE | DRAW_COLORS;
                 prim = prim->next;
+#else
+                prim = self->ext.stpopupj.firstTextPrim;
 #endif
                 prim = prim->next;
                 prim->drawMode = DRAW_TRANSP | DRAW_TPAGE | DRAW_COLORS;
@@ -483,7 +481,7 @@ void EntityStageNamePopup(Entity* self) {
             break;
         case STAGE_NAME_DRAW_TEXT:
             prim = self->ext.stpopupj.firstTextPrim;
-#if defined(VERSION_HD) || defined(VERSION_BETA)
+#if VERSION < VER_JP10
             for (i = 0; i < 2; i++) {
                 prim->u0 -= 8;
                 prim->u2 = prim->u0;
@@ -540,7 +538,7 @@ void EntityStageNamePopup(Entity* self) {
                     } else {
                         self->step_s = STAGE_NAME_HOLD_TEXT;
                     }
-#if !defined(VERSION_HD) && !defined(VERSION_BETA)
+#if VERSION >= VER_JP10
                     if (prim->y2 < i * 2 + PRIM_BOTTOM_Y) {
                         prim->v2++;
                         prim->v3 = prim->v2;
@@ -576,7 +574,7 @@ void EntityStageNamePopup(Entity* self) {
             break;
         }
         break;
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
     case STAGE_NAME_RENDER_COLORS:
         switch (self->step_s) {
         case 0:
@@ -1097,7 +1095,7 @@ void EntityStageNamePopup(Entity* self) {
         prim->x1 -= 4; // Aligns right side of box with right side of text
         boxRightX = prim->x3 = prim->x1;
         prim = self->ext.stpopupj.firstTextPrim;
-#if defined(VERSION_HD) || defined(VERSION_BETA)
+#if VERSION < VER_JP10
         for (i = 0; i < 2; i++) {
             if (prim->x1 > boxRightX) {
                 prim->x1 -= 4;
@@ -1111,7 +1109,7 @@ void EntityStageNamePopup(Entity* self) {
                 if (prim->x1 < prim->x0) {
                     prim->drawMode = DRAW_HIDE;
                 }
-#if defined(VERSION_HD) || defined(VERSION_BETA)
+#if VERSION < VER_JP10
                 prim->u1 -= 4;
                 prim->u3 = prim->u1;
             }
@@ -1155,14 +1153,14 @@ void EntityStageNamePopup(Entity* self) {
         break;
     case STAGE_NAME_SET_FLAG:
         if (!--self->ext.stpopupj.timer) {
-#ifndef STAGE_IS_TEK
+#if VERSION >= VER_BETA_MAD
             g_CastleFlags[STAGE_FLAG] = true;
 #endif
             self->step_s = 0;
             self->step = STAGE_NAME_WIPE_AWAY;
         }
         break;
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
     case STAGE_NAME_RENDER_CUBE:
         switch (self->step_s) {
         case 0:

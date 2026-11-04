@@ -307,7 +307,7 @@ func buildGenericU16(fileName string, symbol string, outputDir string) error {
 
 	var sb strings.Builder
 	sb.WriteString("// clang-format off\n")
-	sb.WriteString("#if defined(VERSION_PSP) || defined(VERSION_PC)\n")
+	sb.WriteString("#if TARGET == TARGET_PSP || defined(PLATFORM_PSYZ)\n")
 	sb.WriteString(fmt.Sprintf("u16 %s[] = {\n", symbol))
 	if u16Count > 0 {
 		u16Data := unsafe.Slice((*uint16)(unsafe.Pointer(&data[0])), u16Count)

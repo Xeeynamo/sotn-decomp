@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "ric.h"
 
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 extern AnimationFrame* g_RicEmptyAnimGroup[ZERO_LEN]; // BSS
 #else
 static AnimationFrame* g_RicEmptyAnimGroup[ZERO_LEN] = {};
@@ -42,7 +42,7 @@ static Entity* RicGetFreeEntityReverse(s16 start, s16 end) {
     return NULL;
 }
 
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 extern s32 D_80174F80[11];
 #else
 static s32 D_80174F80[11];
@@ -67,7 +67,7 @@ void func_8015F9F0(Entity* entity) {
     }
 }
 
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 extern u8 D_80174FAC;
 extern u8 D_80174FB0;
 extern u8 D_80174FB4;
@@ -188,7 +188,7 @@ s32 func_8015FDB0(Primitive* prim, s16 posX, s16 posY) {
 }
 
 // Corresponding DRA function is func_80119F70
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 extern Point16 D_80174FBC[16];
 #else
 static Point16 D_80174FBC[16];
@@ -278,7 +278,7 @@ static AnimationFrame anim_smoke_dark[] = {
     POSE(2, 5, 0),  POSE(2, 6, 0),  POSE(2, 7, 0),  POSE(2, 8, 0),
     POSE(2, 9, 0),  POSE(2, 10, 0), POSE(2, 11, 0), POSE(2, 12, 0),
     POSE(2, 13, 0), POSE_END};
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 extern s32 D_80174FFC;
 #else
 static s32 D_80174FFC;
@@ -1094,7 +1094,7 @@ void RicEntityHitByCutBlood(Entity* self) {
             case 8:
                 tilePrim->posX.i.hi = x;
                 tilePrim->posY.i.hi = y;
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
                 tilePrim->velocityX.val = ((rand() & 0x7FFF) - FIX(0.25)) >> 1;
 #else
                 tilePrim->velocityX.val = (rand() - FIX(0.25)) >> 1;
@@ -1719,7 +1719,7 @@ bool func_80162E9C(Entity* entity) {
 
 // EntityPlayerBlinkWhite (Richter's version).
 // Same general logic flow as in DRA but lots of missing cases.
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 extern s32 D_80154F7C[];
 #else
 static s32 D_80154F7C[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -1783,7 +1783,7 @@ void RicEntityPlayerBlinkWhite(Entity* self) {
     self->posY.i.hi = PLAYER.posY.i.hi;
     self->posX.i.hi = PLAYER.posX.i.hi;
     self->facingLeft = PLAYER.facingLeft;
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
     sp44 = D_92641C8[PLAYER.animCurFrame & 0x7FFF];
 #endif
     sp44 = spritebank0[PLAYER.animCurFrame & 0x7FFF];
@@ -2765,7 +2765,7 @@ static void func_80166044() {
 // Entity ID 66. Made by blueprint 77 (the very last one).
 // Created in 3 spots in 2 functions (total of 6 calls).
 // DRA version is very similar.
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 extern Point16 D_80175000[32];
 #else
 static Point16 D_80175000[32];
@@ -2840,7 +2840,7 @@ void RicEntityTeleport(Entity* self) {
             self->ext.teleport.unk90 = 0xFF;
             var_s5 = true;
             self->step = Player_Unk20;
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
             g_api.PlaySfx(SFX_TELEPORT_SYNTH_DOWN);
 #endif
         } else {
@@ -2921,7 +2921,7 @@ void RicEntityTeleport(Entity* self) {
     case 21:
         var_s5 = true;
         if (--self->ext.teleport.timer == 0) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             g_api.PlaySfx(SFX_TELEPORT_SYNTH_DOWN);
 #endif
             self->step++;

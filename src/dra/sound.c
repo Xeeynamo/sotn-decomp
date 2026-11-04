@@ -16,7 +16,7 @@ u8 aPbav_1[] = {
 };
 
 // files included as headers as data should not be aligned by 4
-#if !defined(VERSION_PC)
+#ifndef PLATFORM_PSYZ
 __asm__(".pushsection .data\n"
         ".globl aPqes_1\n"
         "aPqes_1:\n"
@@ -30,7 +30,7 @@ __asm__(".pushsection .data\n"
         ".popsection\n");
 #endif
 
-#if defined(VERSION_JP12)
+#if VERSION == VER_JP12
 u8 D_800BD1E4 = 0;
 #endif
 
@@ -54,10 +54,10 @@ static s16 D_800BD17C[][2] = {
 s32 g_DebugEnabled = 0;
 s32 D_800BD1C4 = 0;
 
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
+#if IS_VER_INTL
 s32 g_VabAddrs[] = {0x00001010, 0x00042CC0, 0x00050E50,
                     0x00060A40, 0x00060A40, 0x00060A40};
-#else // VERSION_HD
+#else
 s32 g_VabAddrs[] = {0x00001010, 0x00042CC0, 0x00050E90,
                     0x00060D40, 0x00060D40, 0x00060D40};
 #endif
@@ -113,7 +113,7 @@ void func_80131FCC(void) {
     D_8013B680 = 0;
 }
 
-#if defined(VERSION_JP12)
+#if VERSION == VER_JP12
 u8 DoCdCommandF(u_char com, u_char* param, u_char* result) {
     g_CdCommandStatus = CdSync(CdlNop, g_CdCommandResult);
 
@@ -484,8 +484,7 @@ void CdSoundCommand4(void) {
     case 0:
         D_801390A0 = 1;
         g_CurrentXaConfigId = g_QueuedXaBgmId;
-#if defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) ||   \
-    defined(VERSION_JP12)
+#if REGION == REGION_JP
         if (g_QueuedXaBgmId < 0x3D) {
 #else
         if (g_QueuedXaBgmId < 0x40) {
@@ -542,7 +541,7 @@ void CdSoundCommand4(void) {
         break;
 
     case 7:
-#if defined(VERSION_JP12)
+#if VERSION == VER_JP12
         if (DoCdCommandF(CdlNop, NULL, NULL) == 0) {
             g_CdSoundCommandStep++;
         }
@@ -610,7 +609,7 @@ void CdSoundCommand6(void) {
         break;
 
     case 3:
-#if defined(VERSION_JP12)
+#if VERSION == VER_JP12
         if (DoCdCommandF(CdlNop, NULL, NULL) == 0) {
             g_CdSoundCommandStep++;
         }
@@ -904,7 +903,7 @@ void CdSoundStartXaPlayback(void) {
         break;
 
     case 5:
-#if defined(VERSION_JP12)
+#if VERSION == VER_JP12
         if (DoCdCommandF(CdlNop, NULL, NULL) == 0) {
             g_CdSoundCommandStep++;
         }
@@ -937,7 +936,7 @@ void CdSoundStartXaPlayback(void) {
         g_CdSoundCommandStep++;
         break;
 
-#if defined(VERSION_JP12)
+#if VERSION == VER_JP12
     case 8:
 #else
     case 7:
@@ -952,7 +951,7 @@ void CdSoundStartXaPlayback(void) {
         SetCdVolume(0, g_CdVolume, g_CdVolume);
         break;
 
-#if defined(VERSION_JP12)
+#if VERSION == VER_JP12
     case 9:
 #else
     case 8:
@@ -972,7 +971,7 @@ void CdSoundStartXaPlayback(void) {
     }
 }
 
-#if !defined(VERSION_JP12)
+#if VERSION < VER_JP12
 const u32 padding_CdSoundCommand14 = 0;
 #endif
 
@@ -1355,12 +1354,11 @@ void ExecSoundCommands(void) {
             continue;
         }
 
-#if defined(VERSION_PC)
+#ifdef PLATFORM_PSYZ
         if (id > 0x300 && id < 0x535) {
-#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) || \
-    defined(VERSION_JP12)
+#elif REGION == REGION_JP
         if (id > 0x300 && id < 0x531) {
-#elif defined(VERSION_PSP)
+#elif TARGET == TARGET_PSP
         if (id > 0x300 && id < 0x532) {
 #else
         if (id > 0x300 && id < 0x533) {
@@ -1524,7 +1522,7 @@ void ExecSoundCommands(void) {
 
         case SET_UNK_0B:
             AddCdSoundCommand(CD_SOUND_COMMAND_FADE_OUT_2);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             func_psp_0892A620(0, false);
             func_psp_0892A620(1, false);
 #endif
@@ -1534,7 +1532,7 @@ void ExecSoundCommands(void) {
 
         case SET_UNK_0C:
             AddCdSoundCommand(CD_SOUND_COMMAND_FADE_OUT_2);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             func_psp_0892A620(0, false);
             func_psp_0892A620(1, false);
 #endif

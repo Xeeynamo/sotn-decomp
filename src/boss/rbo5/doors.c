@@ -10,7 +10,7 @@ extern s32 D_us_801D43C0;
 extern s32 D_us_801D43C4;
 extern EInit g_EInitInteractable;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(ID_16);
 extern s32 E_ID(ID_17);
 extern s32 E_ID(ID_19);
@@ -67,7 +67,7 @@ void EntityUnkId18(Entity* self) {
         if (GetDistanceToPlayerX() < 64) {
             g_Player.demo_timer = 2;
             if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 g_Player.padSim = PAD_NONE;
 #else
                 g_Player.padSim = PAD_MIST;

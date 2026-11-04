@@ -31,7 +31,7 @@ static s16 D_us_80180CAC[] = {
     0, 8, 0, 4, 4, -4, -8, 0,
 };
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(STAIR_SWITCH);
 extern s32 E_ID(SECRET_STAIRS);
 #endif

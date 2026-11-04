@@ -7,7 +7,7 @@ s32 SpuSetReverb(s32 on_off) {
     switch (on_off) {
     case 0:
         _spu_rev_flag = 0;
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
         cnt = read_16(0x1F801DAA, __FILE__, __LINE__); // spucnt
         cnt &= ~0x80;
         write_16(0x1F801DAA, cnt, __FILE__, __LINE__); // spucnt
@@ -22,7 +22,7 @@ s32 SpuSetReverb(s32 on_off) {
         if ((_spu_rev_reserve_wa != on_off) &&
             _SpuIsInAllocateArea_(_spu_rev_offsetaddr)) {
             _spu_rev_flag = 0;
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
             cnt = read_16(0x1F801DAA, __FILE__, __LINE__);
             cnt &= ~0x80;
             write_16(0x1F801DAA, cnt, __FILE__, __LINE__);
@@ -33,7 +33,7 @@ s32 SpuSetReverb(s32 on_off) {
 #endif
         } else {
             _spu_rev_flag = on_off;
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
             cnt = read_16(0x1F801DAA, __FILE__, __LINE__);
             cnt |= 0x80;
             write_16(0x1F801DAA, cnt, __FILE__, __LINE__);

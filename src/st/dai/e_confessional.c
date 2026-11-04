@@ -62,7 +62,7 @@ typedef struct {
     ConfessionalGhostAnimSet* animations;
 } ConfessionalGhost;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(CONFESSIONAL_BLADES);
 extern s32 E_ID(CONFESSIONAL_BLADE_DEBRIS);
 #endif
@@ -154,7 +154,7 @@ void EntityConfessionalGhost(Entity* self) {
         prim->y3 = prim->y2 = 186;
         prim->priority = 159;
         prim->drawMode = DRAW_DEFAULT;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         self->ext.confessionalGhost.activateChime = false;
         if (self->params & CONFESSIONAL_GHOST_PARISHIONER) {
             func_psp_0892A620(0, true);
@@ -201,7 +201,7 @@ void EntityConfessionalGhost(Entity* self) {
                 SetStep(CONFESSIONAL_GHOST_BAD_SIT);
             } else {
                 SetStep(CONFESSIONAL_GHOST_GOOD_SIT);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 if (!(self->params & CONFESSIONAL_GHOST_PARISHIONER)) {
                     g_api.PlaySfx(UNK_4E7);
                 }
@@ -219,7 +219,7 @@ void EntityConfessionalGhost(Entity* self) {
         if (!(self->params & CONFESSIONAL_GHOST_PARISHIONER)) {
             switch (self->step_s) {
             case CONFESSIONAL_GHOST_GOOD_INIT:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 if (g_api.func_80131F68() == 1) {
                     self->ext.confessionalGhost.timer = 288;
                     self->step_s++;
@@ -239,7 +239,7 @@ void EntityConfessionalGhost(Entity* self) {
             if ((PLAYER.step != Player_Stand) ||
                 ((PLAYER.step_s) != Player_Stand_ChairSit)) {
                 self->ext.confessionalGhost.timer = 1;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 if (g_api.func_80131F68()) {
                     g_api.PlaySfx(SET_UNK_90);
                 }
@@ -248,7 +248,7 @@ void EntityConfessionalGhost(Entity* self) {
             }
         } else if ((PLAYER.step != Player_Stand) ||
                    (PLAYER.step_s != Player_Stand_ChairSit)) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             if (g_api.func_80131F68()) {
                 g_api.PlaySfx(SET_UNK_90);
             }
@@ -259,7 +259,7 @@ void EntityConfessionalGhost(Entity* self) {
     case CONFESSIONAL_GHOST_GOOD_DEPART:
         animPtr = ghost->animations->anim_depart;
         AnimateEntity(animPtr, self);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if ((self->ext.confessionalGhost.timer) && (g_api.func_80131F68())) {
             g_api.PlaySfx(SET_UNK_90);
         }

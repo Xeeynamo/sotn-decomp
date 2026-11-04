@@ -18,7 +18,7 @@ void LoadWeaponPalette(s32 clutIndex) {
         *dst++ = *src++;
     }
 
-#if defined(VERSION_PSP) || defined(W_029)
+#if TARGET == TARGET_PSP || defined(W_029)
     dstRect.x = 0;
     dstRect.w = 0x100;
     dstRect.h = 3;

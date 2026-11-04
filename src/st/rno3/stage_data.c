@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 
 // Two unused images that say "Golem Maker". Likely stripped on PSP.
 u8 stage_title_rno3_jp[] = {
@@ -67,7 +67,7 @@ u8 D_8018E514[] = {
 };
 
 // Unused. Stripped on PSP. Ifdef here because on PSP the .h file doesn't exist
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 u16 e_skyswirl_p[] = {
 #include <gen/e_skyswirl_p.h>
 };
@@ -85,7 +85,7 @@ u16 pal_jacko_bones[] = {
 u16 pal_nova_skeleton[] = {
 #include <gen/pal_nova_skeleton.h>
 };
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
 // palette_def bulk copies 0x50 colors, PSX reads the rest from pal_unused
 u16 pal_dragons[] = {
 #include <gen/pal_dragons.h>
@@ -97,7 +97,7 @@ u16 pal_dragons[] = {
 };
 
 // Stripped on PSP
-#if !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP
 u16 pal_unused[] = {
 #include <gen/pal_unused.h>
 };

@@ -44,7 +44,7 @@ typedef enum EntityID {
     NUM_ENTITIES,
 };
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(BACKGROUND_BLOCK);
 extern s32 E_ID(LOCK_CAMERA);
 extern s32 E_ID(UNK_ID13);

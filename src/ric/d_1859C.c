@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "ric.h"
 
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 extern s32 D_8015459C;
 extern s16 g_DeadPrologueTimer;
 extern s16 D_801545AA;
@@ -37,7 +37,7 @@ Point16 g_RicSensorsWall[NUM_VERTICAL_SENSORS * 2] = {
 s16 g_RicSensorsCeilingDefault[NUM_HORIZONTAL_SENSORS] = {-16, -16, -16, -16};
 s16 g_RicSensorsFloorDefault[NUM_HORIZONTAL_SENSORS] = {28, 24, 24, 24};
 s16 g_RicSensorsWallDefault[NUM_VERTICAL_SENSORS] = {23, 16, 8, 0, -8, -8, -15};
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 extern s16 g_RicSensorsCeilingCrouch[NUM_HORIZONTAL_SENSORS]; // on BSS
 #else
 s16 g_RicSensorsCeilingCrouch[NUM_HORIZONTAL_SENSORS] = {0, 0, 0, 0};

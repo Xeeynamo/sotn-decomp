@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no3.h"
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(BG_LIGHTNING);
 extern s32 E_ID(DEATH_STOLEN_ITEM);
 #endif
@@ -28,7 +28,7 @@ void EntityDeathCutsceneManager(Entity* self) {
         g_PauseAllowed = false;
         g_Player.padSim = PAD_RIGHT;
         g_Player.demo_timer = 1;
-#ifdef VERSION_US
+#if VERSION == VER_US
         g_CutsceneFlags |= 0x100;
 #endif
         break;
@@ -233,7 +233,7 @@ void EntityDeathStolenItem(Entity* self) {
     }
 }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(DEATH_SCYTHE_SHADOW);
 extern s32 E_ID(DEATH_SCYTHE);
 #endif

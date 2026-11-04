@@ -4,7 +4,7 @@
 s32 D_us_801805A0 = 0;
 s32 g_stone_flag = 0;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(ID_16);
 extern s32 E_ID(ID_17);
 extern s32 E_ID(ID_19);
@@ -59,7 +59,7 @@ void EntityUnkId18(Entity* self) {
         if (GetDistanceToPlayerX() < 64) {
             g_Player.demo_timer = 2;
             if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 g_Player.padSim = PAD_NONE;
 #else
                 g_Player.padSim = PAD_MIST;

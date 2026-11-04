@@ -33,7 +33,7 @@ static TeleportCheck GetTeleportToOtherCastle(void) {
     // Check for X/Y boundaries in RTOP
     if (g_StageId == STAGE_RTOP) {
         if (abs((g_Tilemap.left << 8) + g_PlayerX - 8384) < 4 &&
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
             abs((g_Tilemap.top << 8) + g_PlayerY - 14407) < 4) {
 #else
             abs((g_Tilemap.top << 8) + g_PlayerY) - 14407 < 4) {
@@ -122,7 +122,7 @@ void MarInit(s16 initParam) {
     SpriteParts** spriteptr;
     s32* memset_ptr;
     s32 memset_len;
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
     Entity* g_CurrentEntity;
 #endif
 
@@ -200,7 +200,7 @@ void MarInit(s16 initParam) {
     }
     MarLoadPalettes();
     MarLoadGraphics();
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     // ifdef'fed for the same reason in RicInit
     D_pspeu_092E5F20 = 30;
 
@@ -548,7 +548,7 @@ void MarMain(void) {
         g_Player.padPressed = g_Player.padSim;
     } else {
         g_Player.padPressed = g_pads[0].pressed;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (D_pspeu_092E5F20 > 0) {
             D_pspeu_092E5F20--;
             g_Player.padPressed = 0;
@@ -591,7 +591,7 @@ void MarMain(void) {
                     playerStepS = PLAYER.step_s;
                     damage.effects = PLAYER.hitParams & ~0x1F;
                     damage.damageKind = PLAYER.hitParams & 0x1F;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     if (g_InvincibleFlag) {
                         PLAYER.hitPoints = 0;
                     }
@@ -778,7 +778,7 @@ void MarMain(void) {
         if (PLAYER.poseTimer < 0) {
             PLAYER.animCurFrame |= ANIM_FRAME_LOAD;
         }
-#if defined(VERSION_HD) || defined(VERSION_PSP)
+#if VERSION < VER_JP10 || TARGET == TARGET_PSP
         PLAYER.posX.val += PLAYER.velocityX;
         PLAYER.posY.val += PLAYER.velocityY;
         return;

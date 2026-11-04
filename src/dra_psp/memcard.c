@@ -249,7 +249,7 @@ void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
         h.Title[i] = 0;
     }
 
-#if defined(VERSION_US)
+#if VERSION == VER_US
     strcpy(h.Title, "ＣＡＳＴＬＥＶＡＮＩＡ−");
 #else
     strcpy(h.Title, "ドラキュラＸ−");
@@ -286,7 +286,7 @@ void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
         }
     }
 
-#if defined(VERSION_HD)
+#if VERSION < VER_JP10
     // writes stage name
     strcat(h.Title, "　");
     strcat(h.Title, g_SaveAreaNames[g_StageId]);

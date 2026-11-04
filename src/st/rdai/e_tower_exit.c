@@ -25,7 +25,7 @@ void EntityTowerExit(Entity* self) {
     case 1:
         yRaw = self->posY.i.hi - PLAYER.posY.i.hi;
         yAbs = abs(yRaw);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (yAbs < 0x20) {
 #else
         if (yAbs < 0x30) {

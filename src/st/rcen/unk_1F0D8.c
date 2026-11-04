@@ -55,7 +55,7 @@ void func_us_8019F148(Entity* self) {
         break;
 
     case 1:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if ((GetDistanceToPlayerX() < 0x20) &&
             ((player->posY.i.hi - self->posY.i.hi) < 0x50)) {
 #else
@@ -74,7 +74,7 @@ void func_us_8019F148(Entity* self) {
             if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
                 g_Player.padSim = PAD_BAT;
             } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 g_Player.padSim = PAD_NONE;
 #else
                 g_Player.padSim = PAD_MIST;
@@ -84,7 +84,7 @@ void func_us_8019F148(Entity* self) {
             }
             g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 0;
             g_Player.demo_timer = 1;
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
             g_Tilemap.height = 0x200;
 #endif
             self->step++;
@@ -99,7 +99,7 @@ void func_us_8019F148(Entity* self) {
                 if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
                     g_Player.padSim = PAD_BAT;
                 } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     g_Player.padSim = PAD_NONE;
 #else
                     g_Player.padSim = PAD_MIST;
@@ -130,7 +130,7 @@ void func_us_8019F148(Entity* self) {
         if (g_Player.padSim == PAD_NONE) {
             player->posX.i.hi = 0x180 - g_Tilemap.scrollX.i.hi;
             self->step++;
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
             g_Tilemap.x = 0x100;
             g_Tilemap.width = 0x200;
 #endif
@@ -147,7 +147,7 @@ void func_us_8019F148(Entity* self) {
                 g_Player.padSim = PAD_RIGHT;
             }
             func_8018F8EC(1);
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
             g_Tilemap.y = 0x100;
 #endif
             g_CutsceneFlags |= 1;
@@ -175,7 +175,7 @@ void func_us_8019F148(Entity* self) {
         break;
 
     case 7:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         g_PauseAllowed = 1;
         g_unkGraphicsStruct.pauseEnemies = 0;
         g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
@@ -331,7 +331,7 @@ void func_us_8019F9C0(Entity* self) {
             prim->drawMode = DRAW_UNK02 | DRAW_HIDE;
             self->animSet = ANIMSET_OVL(1);
             self->animCurFrame = 4;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             self->zPriority--;
 #else
             self->zPriority = 0x64;
@@ -384,7 +384,7 @@ void func_us_801B4148_from_bo0(Entity* self) {
         InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 6;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         self->zPriority -= 2;
 #else
         self->zPriority = 0x63;

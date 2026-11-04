@@ -4,7 +4,7 @@
 #include "sfx.h"
 
 extern EInit g_EInitElevator;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(ELEVATOR_STATIONARY);
 #endif
 
@@ -125,7 +125,7 @@ void EntityElevatorStationary(Entity* self) {
         if (playerIsTouching) {
             posX = self->posX.i.hi - player->posX.i.hi;
             if (g_pads[0].pressed & PAD_UP && abs(posX) < 8) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 if (F(player->velocityX).i.hi != 0) {
                     break;
                 }
@@ -133,7 +133,7 @@ void EntityElevatorStationary(Entity* self) {
                 g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
                 g_Player.demo_timer = 2;
                 g_Player.padSim = PAD_NONE;
-#ifdef VERSION_US
+#if VERSION == VER_US
                 PLAYER.velocityX = 0;
                 PLAYER.velocityY = 0;
 #endif

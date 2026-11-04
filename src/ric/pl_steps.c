@@ -131,7 +131,7 @@ void RicStepWalk(void) {
 }
 
 void RicStepRun(void) {
-#ifdef VERSION_US
+#if VERSION == VER_US
     if (g_Player.unk7A != 0) {
         RicSetWalk(0);
         return;
@@ -452,7 +452,7 @@ static void func_80159C04(void) {
     s16 var_s1;
 
     entity = PLAYER.unkB8;
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
     if (!entity) {
         return;
     }
@@ -487,7 +487,7 @@ static void func_80159C04(void) {
 
 void RicStepDead(
     s32 damageEffects, s32 damageKind, s32 prevStep, s32 prevStepS);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 ric_hit_stun_timer;
 #else
 static s32 ric_hit_stun_timer;
@@ -889,7 +889,7 @@ enum DeathKind {
     DEATH_BY_THUNDER,
     DEATH_BY_ICE,
 };
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 extern u8 dead_dissolve_bmp[0x1400];
 extern s16 D_80174F68;
 extern s16 D_80174F6C;
@@ -1122,7 +1122,7 @@ void RicStepGenericSubwpnCrash(void) {
     }
 }
 
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 extern s32 throw_dagger_timer;
 #else
 static s32 throw_dagger_timer;
@@ -1154,7 +1154,7 @@ void RicStepThrowDaggers(void) {
 }
 
 // This happens when he dies in prologue and gets saved by Maria.
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 extern s32 dead_prologue_timer;
 #else
 static s32 dead_prologue_timer;
@@ -1327,7 +1327,7 @@ void RicStepSlide(void) {
     }
 
     RicDecelerateX(FIX(0.125));
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
     FntPrint("pl_pose = %d\n", PLAYER.pose);
     FntPrint("pl_ptimer = %d\n", PLAYER.poseTimer);
 #endif
@@ -1531,7 +1531,7 @@ void RicStepBladeDash(void) {
 void RicStepHighJump(void) {
     bool loadAnim;
 
-#if defined(VERSION_US)
+#if VERSION == VER_US
     FntPrint("pl_vram_flag:%04x\n", g_Player.vram_flag);
     FntPrint("pl_high_jump_timer:%04x\n", g_Player.high_jump_timer);
     FntPrint("pl_step_s:%02x\n", PLAYER.step_s);

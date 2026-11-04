@@ -46,7 +46,7 @@ void EntityDodoBird(Entity* self) {
         break;
     case DODO_WALK:
         AnimateEntity(dodo_walk, self);
-#if !defined(STAGE_IS_TEK)
+#if VERSION >= VER_BETA_MAD
         if (!(g_Timer & 7)) {
             PlaySfxPositional(SFX_QUIET_STEPS);
         }
@@ -112,7 +112,7 @@ void EntityDodoBird(Entity* self) {
         case 0:
             self->ext.dodo.timer = 16;
             self->step_s++;
-#if !defined(STAGE_IS_TEK)
+#if VERSION >= VER_BETA_MAD
             PlaySfxPositional(SFX_FLEA_RIDER_EXPLODE);
 #endif
             self->drawFlags |= ENTITY_ROTATE;

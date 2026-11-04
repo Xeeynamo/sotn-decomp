@@ -2,7 +2,7 @@
 #include "cat.h"
 
 extern EInit g_EInitCoffin;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(COFFIN);
 extern s32 E_ID(BLOOD_SKELETON);
 #endif

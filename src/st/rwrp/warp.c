@@ -4,10 +4,10 @@
 #include "common.h"
 #include "sfx.h"
 
-#if defined(VERSION_US) || defined(VERSION_HD)
+#if VERSION < VER_JP10 || VERSION == VER_US
 s16 GetDistanceToPlayerX();
 #define ImplicitGetDistanceToPlayerX ((int (*)())GetDistanceToPlayerX)
-#elif defined(VERSION_PSP)
+#elif TARGET == TARGET_PSP
 int GetDistanceToPlayerX();
 #define ImplicitGetDistanceToPlayerX GetDistanceToPlayerX
 #else
@@ -179,7 +179,7 @@ void EntityRWarpRoom(Entity* self) {
             g_Player.padSim = 0;
             g_Player.demo_timer = 128;
             g_PauseAllowed = false;
-#ifdef VERSION_US
+#if VERSION == VER_US
             PLAYER.velocityX = 0;
             PLAYER.velocityY = 0;
 #endif

@@ -23,7 +23,7 @@ static int EntityIsNearPlayer(Entity* self) {
 
     diffX = PLAYER.posX.i.hi - self->posX.i.hi;
     distanceX = abs(diffX);
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
     if (distanceX > 24) {
 #else
     if (distanceX > 16) {
@@ -141,7 +141,7 @@ void EntityRedDoor(Entity* self) {
         }
         break;
     case 1:
-#if defined(VERSION_BETA) || defined(STAGE_IS_TEK)
+#if VERSION < VER_BETA_HD
         if (PLAYER.step != 1) {
             break;
         }

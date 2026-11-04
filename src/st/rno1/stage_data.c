@@ -2,7 +2,7 @@
 #include <stage.h>
 
 // These .h files don't exist for PSP
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 u8 gfx_unused_1[] = {
 #include "gen/gfx_unused_1.h"
 };
@@ -48,7 +48,7 @@ u8 D_8018B778[] = {
 #include "gen/D_8018B778.h"
 };
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 u16 D_us_8018C680[] = {
 #include "gen/D_us_8018C680.h"
 };

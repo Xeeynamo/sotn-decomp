@@ -3,7 +3,7 @@
 
 typedef struct EntityPrim {
     struct EntityPrim* next;
-#if defined(VERSION_PC) || defined(VERSION_PSP)
+#if TARGET == TARGET_PSP || defined(PLATFORM_PSYZ)
     u_long dummy;
 #endif
     /* 0x04 */ u8 r0;
@@ -50,7 +50,7 @@ static s32 D_us_801B2378;
 extern EInit g_EInitParticle;
 extern EInit g_EInitBossDoor;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(UNK_17);
 extern s32 E_ID(EXPLOSION_FLAME);
 #endif

@@ -94,7 +94,7 @@ void EntityMedusaHeadBlue(Entity* self);
 void EntityMedusaHeadYellow(Entity* self);
 void EntityBreakableDebris(Entity* self);
 void EntityMistDoor(Entity* self);
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 void func_us_801C10F4(Entity* self);
 #endif
 
@@ -192,7 +192,7 @@ PfnEntityUpdate EntityUpdates[] = {
     /* 0x5B */ EntityMedusaHeadYellow,
     /* 0x5C */ EntityBreakableDebris,
     /* 0x5D */ EntityMistDoor,
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
     /* 0x5E */ func_us_801C10F4,
 #endif
 };

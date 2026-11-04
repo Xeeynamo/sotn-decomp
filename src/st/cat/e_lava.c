@@ -14,7 +14,7 @@ static SVECTOR unused = {.vx = 0, .vy = 0, .vz = -512, .pad = 0};
 
 // BSS
 static SVECTOR empty = {0};
-#ifdef VERSION_US
+#if VERSION == VER_US
 static Primitive* main_lava_prims[14];
 static Primitive* top_layer_prims[14];
 #else
@@ -329,7 +329,7 @@ void EntityLavaEmbers(Entity* self) {
         if (!(g_Timer % 7)) {
             prim = self->ext.lava.prim;
             prim = FindFirstUnkPrim(prim);
-#if defined(VERSION_PSP) || defined(FIX_UB)
+#if TARGET == TARGET_PSP || defined(FIX_UB)
             // Non-PSX versions fix a null pointer here
             if (prim != NULL) {
 #else

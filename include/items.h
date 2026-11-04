@@ -186,7 +186,7 @@ typedef enum HandItems {
     /* 0x0A9 */ NUM_HAND_ITEMS,
 } HandItems;
 
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
 // Earlier builds have a smaller amount of equippable armors.
 // Unfortunately the list of those armors is unknown.
 enum BodyItems {

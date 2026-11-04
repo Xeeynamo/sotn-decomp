@@ -282,7 +282,7 @@ void func_us_801B0930(Entity* self) {
         clip.h = 0x100;
         drawEnv.clip = clip;
         drawEnv.ofs[0] = 0;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         drawEnv.ofs[1] = 0x100;
 #else
         drawEnv.ofs[1] = 0;
@@ -300,7 +300,7 @@ void func_us_801B0930(Entity* self) {
         DestroyEntity(entity);
         CreateEntityFromEntity(E_ID(UNK_33), self, entity);
         entity->posX.i.hi = 0x40;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         entity->posY.i.hi = 0xEC;
 #else
         entity->posY.i.hi = 0x1EC;

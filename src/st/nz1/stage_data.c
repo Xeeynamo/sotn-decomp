@@ -74,7 +74,7 @@ u8 D_80192B68[] = {
 #include <gen/D_80192B68.h>
 };
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 u16 D_us_80192DD8[] = {
 #include "gen/D_us_80192DD8.h"
 };

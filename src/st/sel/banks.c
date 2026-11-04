@@ -86,7 +86,7 @@ static u_long* D_801806F8[] = {
 u_long* g_Cluts[] = {
     (u_long*)D_8018061C, (u_long*)D_801806A0, (u_long*)D_801806C0,
     (u_long*)D_801806D8, (u_long*)D_801806F8, (u_long*)D_8018063C,
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
     (u_long*)D_8018068C,
 #endif
 };

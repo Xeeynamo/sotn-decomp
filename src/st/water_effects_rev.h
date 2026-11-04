@@ -271,7 +271,7 @@ void EntityAlucardWaterEffect(Entity* self) {
                     } else {
                         var_s1 = (var_s1 * var_s3) / 0x50;
                     }
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
                     if ((var_s1 < 0 &&
                          !(g_Player.vram_flag & TOUCHING_L_WALL)) ||
                         (var_s1 > 0 &&

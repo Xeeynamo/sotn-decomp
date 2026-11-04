@@ -567,7 +567,7 @@ void EntityAzaghal(Entity* self) {
     switch (self->step) {
     case INIT:
         InitializeEntity(g_EInitAzaghal);
-#if defined(STAGE_IS_RNO2) && !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP && defined(STAGE_IS_RNO2)
         self->hitboxWidth = self->hitboxHeight = 0xC;
         self->hitboxState = 0;
 #else

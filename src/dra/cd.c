@@ -63,7 +63,7 @@ s32 g_LbaServantVhOff[] = {
 
 // SERVANT/SD_xxx.VH len
 s32 g_LbaServantVhLen[] = {
-    SD_TUKA2_VH_LEN, SD_MAR2_VH_LEN, SD_TUKA1_VH_LEN, SD_KOA1_VH_LEN,
+    SD_TUKA2_VH_LEN, SD_MAR2_VH_LEN,  SD_TUKA1_VH_LEN, SD_KOA1_VH_LEN,
     SD_MAK_VH_LEN,   SD_FAIR2_VH_LEN, SD_KOA2_VH_LEN,
 };
 
@@ -562,11 +562,9 @@ void PlaySfx(s32);
 void SsVabClose(short);
 
 void UpdateCd(void) {
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_JP12)
+#if VERSION >= VER_US
     const bool UseEuWarning = true;
-#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) || \
-    defined(VERSION_USPROTO)
+#else
     const bool UseEuWarning = false;
 #endif
 

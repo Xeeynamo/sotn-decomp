@@ -22,7 +22,7 @@ AbbreviatedOverlay g_Overlay = {
     .UpdateStageEntities = UpdateStageEntities,
 };
 
-#ifdef VERSION_US
+#if VERSION == VER_US
 #include <gen/sprite_banks.h>
 #include <gen/palette_def.h>
 #include <gen/layers.h>

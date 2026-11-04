@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 u8 unused_cmpgfx1[] = {
 #include <gen/unused_cmpgfx1.h>
 };
@@ -73,7 +73,7 @@ u8 D_80191DCC[] = {
 #include "gen/D_80191DCC.h"
 };
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 u16 D_us_80192884[] = {
 #include "gen/D_us_80192884.h"
 };

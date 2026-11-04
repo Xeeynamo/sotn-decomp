@@ -62,7 +62,7 @@ bool RicCheckInput(s32 checks) {
                         g_CurrentEntity, BP_SKID_SMOKE, 0);
                 } else if (g_Player.padPressed & (PAD_LEFT | PAD_RIGHT)) {
                     if (g_Player.unk44 & 0x10
-#if defined(VERSION_US)
+#if VERSION == VER_US
                         && !g_Player.unk7A
 #endif
                     ) {

@@ -6,8 +6,7 @@
 // data order is slightly different between US and HD
 // maybe this suggests a file split
 
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP11) || defined(VERSION_JP12)
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
 s32 D_800ACDF8 = 0;
 s32 D_800ACDFC = 0;
 s32 D_800ACE00[] = {
@@ -18,7 +17,7 @@ s16 D_800ACE20[] = {
     0xFFD0, 0xFFD0, 0xFFD1, 0xFFD8, 0xFFD7, 0xFFE2, 0xFFE1, 0xFFE2, 0xFFD7,
     0xFFD7, 0xFFCF, 0xFFCD, 0xFFCD, 0xFFD6, 0xFFD7, 0xFFE3, 0xFFE3, 0x0000,
 };
-#if defined(VERSION_JP11) || defined(VERSION_USPROTO)
+#if VERSION < VER_US
 s32 D_800ACEDC_hd = 0;
 #endif
 s32 D_800ACE44 = 0;
@@ -30,7 +29,7 @@ RECT D_800ACE60 = {0x0200, 0x01C0, 0x003F, 0x003F};
 // BSS
 extern bool D_80137FBC;
 
-#elif defined(VERSION_HD) || defined(VERSION_JP10)
+#elif VERSION < VER_JP11
 s16 D_800ACE20[] = {
     0xFFD0, 0xFFD0, 0xFFD1, 0xFFD8, 0xFFD7, 0xFFE2, 0xFFE1, 0xFFE2, 0xFFD7,
     0xFFD7, 0xFFCF, 0xFFCD, 0xFFCD, 0xFFD6, 0xFFD7, 0xFFE3, 0xFFE3, 0x0000,
@@ -50,7 +49,7 @@ s32 D_800ACE00[] = {
     PAD_R2,     PAD_L1,     PAD_R1,    PAD_L2,
 };
 
-#elif defined(VERSION_PSP)
+#elif TARGET == TARGET_PSP
 
 extern u8 D_psp_09148C10[];
 extern u8 D_psp_091490B0[];
@@ -189,7 +188,7 @@ void func_801093C4(void) {
         drawEnv.clip = D_800ACE60;
         drawEnv.ofs[1] = 0x1C0;
         dr_env = *(DR_ENV**)&prim->r1;
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
         if (dr_env == NULL) {
             return;
         }
@@ -259,15 +258,14 @@ void AluInit() {
     }
     func_801093C4();
 
-#if !defined(VERSION_HD) && !defined(VERSION_JP10)
+#if VERSION >= VER_JP11
     TRANSFORM_LOCKOUT_TIMER = 0x10;
     g_Player.padSim = 0;
     g_Player.demo_timer = 16;
 #endif
     D_80137FB8 = 0;
 
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP11) || defined(VERSION_JP12)
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
     D_80137FBC = true;
 #endif
 
@@ -312,7 +310,7 @@ void AluInit() {
             func_80109328();
         }
     }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     func_psp_091040A0(g_FontImage);
     D_psp_09183150[3] = GetLang(D_psp_0917DCA8, D_psp_09180EC0, D_psp_0917ED60,
                                 D_psp_09182028, D_psp_0917FF10);
@@ -550,7 +548,7 @@ void func_8010A234(s32 arg0) {
         if (arg0 != 0) {
             PlayAnimation(D_800B0130, D_800B01B8);
         }
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
         for (i = 0, ent = &g_Entities[0]; i < TOTAL_ENTITY_COUNT; i++, ent++) {
             if (ent->palette == PAL_UNK_110 && ent->unk5A == 100) {
                 ent->animSet = 0;
@@ -605,8 +603,7 @@ static TeleportCheck GetTeleportToOtherCastle(void) {
     // Check for X/Y boundaries in RTOP
     if (g_StageId == STAGE_RTOP) {
         if (abs((g_Tilemap.left << 8) + g_PlayerX - 8384) < 4 &&
-#if defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) ||   \
-    defined(VERSION_USPROTO)
+#if VERSION < VER_US
             (abs((g_Tilemap.top << 8) + g_PlayerY) - 14407) < 4) {
 #else
             abs((g_Tilemap.top << 8) + g_PlayerY - 14407) < 4) {
@@ -619,7 +616,7 @@ static TeleportCheck GetTeleportToOtherCastle(void) {
 }
 
 void EntityAlucard() {
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 #define CHECK_SHOULDER(x) ((g_Player.padTapped & PAD_SHOULDERS) == x)
 #else
 #define CHECK_SHOULDER(x) (g_Player.padTapped & x)
@@ -817,14 +814,13 @@ void EntityAlucard() {
     }
     g_Player.padHeld = g_Player.padPressed;
 
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
     sp40 = (g_Player.demo_timer != 0) ? 1 : 0;
 #endif
 
     if (g_Player.demo_timer != 0) {
         g_Player.demo_timer--;
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP11) || defined(VERSION_JP12)
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
         if (g_Player.demo_timer == 0) {
             D_80137FBC = true;
         }
@@ -850,7 +846,7 @@ void EntityAlucard() {
         }
     } else {
         g_Player.padPressed = g_pads[0].pressed & ~(PAD_SHOULDERS | PAD_SHAPES);
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 #define TEST_BTN()                                                             \
     ((g_pads[0].pressed & g_Settings.buttonMask[i]) == g_Settings.buttonMask[i])
         for (i = 0; i < 6; i++) {
@@ -862,8 +858,7 @@ void EntityAlucard() {
                 g_Player.padPressed |= D_800ACE00[i];
             }
         }
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP11) || defined(VERSION_JP12)
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
         if (D_80137FBC) {
             D_80137FBC = false;
             g_Player.padHeld = g_Player.padPressed;
@@ -877,8 +872,7 @@ void EntityAlucard() {
         g_Player.padPressed &= ~(PAD_SQUARE | PAD_CIRCLE);
     }
     if ((g_DebugPlayer != 0) && (func_801119C4() != 0)) {
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_JP12)
+#if VERSION >= VER_US && TARGET != TARGET_PSP
         FntPrint("step:%04x\n", PLAYER.step);
         FntPrint("bat_i_step:%04x\n", g_Player.unk66);
 #endif
@@ -890,9 +884,7 @@ void EntityAlucard() {
     }
 
 // US uses a different ordering than HD/PSP
-#if !defined(VERSION_US) && !defined(VERSION_EU) && !defined(VERSION_HK) &&    \
-    !defined(VERSION_USPROTO) && !defined(VERSION_JP11) &&                     \
-    !defined(VERSION_JP12)
+#if VERSION < VER_JP11 || TARGET == TARGET_PSP
     if (g_Player.timers[ALU_T_INVINCIBLE] |
         g_Player.timers[ALU_T_INVINCIBLE_CONSUMABLES]) {
         goto specialmove;
@@ -907,8 +899,7 @@ void EntityAlucard() {
         SetPlayerStep(Player_BossGrab);
         goto block_159;
     }
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO) || defined(VERSION_JP11) || defined(VERSION_JP12)
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
     if (g_Player.timers[ALU_T_INVINCIBLE] |
         g_Player.timers[ALU_T_INVINCIBLE_CONSUMABLES]) {
         goto specialmove;
@@ -918,7 +909,7 @@ void EntityAlucard() {
         playerStep = PLAYER.step;
         playerStepS = PLAYER.step_s;
         i = HandleDamage(&damage, PLAYER.hitParams, PLAYER.hitPoints, 0);
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
         if (g_InvincibleFlag) {
             PLAYER.hitPoints = 0;
             i = 0;
@@ -1006,7 +997,7 @@ specialmove:
     }
     if (TRANSFORM_LOCKOUT_TIMER == 0) {
 
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
         var_s7 = g_Player.padPressed;
         if (sp40 != 0 || PLAYER.step == Player_MorphMist ||
             PLAYER.step == Player_MorphWolf || PLAYER.step == Player_MorphBat) {
@@ -1333,7 +1324,7 @@ block_159:
         PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
         break;
     case Player_MorphWolf:
-#if defined(VERSION_JP12)
+#if VERSION == VER_JP12
         if (IsWolfTouchingFloor()) {
             g_unkGraphicsStruct.unk24 |= 2;
         }
@@ -1495,8 +1486,7 @@ block_159:
             sp3c = (AluFrame*)D_800CFE48[PLAYER.animCurFrame & 0x7FFF];
             sp3c->pivotY = D_8013AECC + D_800ACE20[PLAYER.animCurFrame];
         }
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_JP12)
+#if VERSION >= VER_US && TARGET != TARGET_PSP
         FntPrint("step:%04x\n", PLAYER.step);
         FntPrint("bat_i_step:%04x\n", g_Player.unk66);
 #endif

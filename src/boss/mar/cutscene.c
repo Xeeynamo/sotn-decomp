@@ -48,7 +48,7 @@ extern u8 cutscene_data[];
 void EntityCutscene(Entity* self) {
     const int PrimCount = 72;
     Primitive* prim;
-#if defined(VERSION_PC) || defined(VERSION_PSP)
+#if TARGET == TARGET_PSP || defined(PLATFORM_PSYZ)
     RECT rect;
 #else
     // BUG! the PSX version uses this uninitialized `rect` pointer
@@ -400,23 +400,23 @@ void EntityCutscene(Entity* self) {
             return;
         }
 
-#if defined(VERSION_PC) || defined(VERSION_PSP)
+#if TARGET == TARGET_PSP || defined(PLATFORM_PSYZ)
         rect.x = ((nextChar & 0xF) * 2) + 0x380;
         rect.y = ((nextChar & 0xF0) >> 1) + 0xF0;
         rect.w = 2;
         rect.h = 8;
+
+        y = ((g_Dialogue.nextCharY * 0xC) + 0x180);
+        x = g_Dialogue.nextCharX;
+        MoveImage(&rect, x, y);
 #else
         rect->x = ((nextChar & 0xF) * 2) + 0x380;
         rect->y = ((nextChar & 0xF0) >> 1) + 0xF0;
         rect->w = 2;
         rect->h = 8;
-#endif
 
         y = ((g_Dialogue.nextCharY * 0xC) + 0x180);
         x = g_Dialogue.nextCharX;
-#if defined(VERSION_PC) || defined(VERSION_PSP)
-        MoveImage(&rect, x, y);
-#else
         MoveImage(rect, x, y);
 #endif
         g_Dialogue.nextCharX += 2;

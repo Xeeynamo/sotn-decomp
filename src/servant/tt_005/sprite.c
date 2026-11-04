@@ -499,7 +499,7 @@ void TT_005_ServantInit(InitializeMode mode) {
     if (mode == MENU_SWITCH_SERVANT) {
 
 // PSP version does this in 2 chunks, the PSX version uses an lw instruction
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_20 ||
             D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_40) {
 #else
@@ -1521,7 +1521,7 @@ void UpdateServantSitOnShoulder(Entity* self) {
             self->flags |= FLAG_POS_PLAYER_LOCKED;
             self->flags &= ~FLAG_POS_CAMERA_LOCKED;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             if (D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_20 ||
                 D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_40 ||
                 s_RoomSpecialState == ROOM_SPECIAL_STATE_UNK1 ||
@@ -1664,7 +1664,7 @@ void UpdateServantSitOnShoulder(Entity* self) {
     }
     ProcessEvent(self, false);
     CheckForValidAbility(self);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     if ((self->step == 3 || self->step == 4) &&
         g_AlucardChairSleepTimer < 0x200) {
         g_AlucardChairSleepTimer = 0x200;

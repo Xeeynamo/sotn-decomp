@@ -101,10 +101,10 @@ void EntityTransparentWater(Entity* self) {
     vCoord = uvPtr[1];
     selfY = self->posY.i.hi;
     prim = self->ext.transparentWater.prim;
-#if !defined(INVERTED_STAGE)
-    while (prim_xPos > 0) {
-#else
+#ifdef INVERTED_STAGE
     while (prim_xPos < 0x100) {
+#else
+    while (prim_xPos > 0) {
 #endif
         prim->u0 = prim->u2 = uCoord;
         prim->u1 = prim->u3 = uCoord + TILE_WIDTH;

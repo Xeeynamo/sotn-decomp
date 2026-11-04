@@ -3,7 +3,7 @@
 #include "rbo3.h"
 extern EInit D_us_801804BC;
 s32 D_us_8018072C = 0;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(UNK_29);
 #endif
 

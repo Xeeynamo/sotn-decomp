@@ -4,7 +4,7 @@
 // This is part of a different water effects data segment
 extern s16 D_us_80180F1A[];
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(SURFACING_WATER);
 #endif
 
@@ -91,7 +91,7 @@ static u8 anim_stationary[] = {0x18, 0x1C, 0x10, 0x1D, 0x10, 0x1E, 0x10, 0x1F,
                                0x10, 0x20, 0x10, 0x1C, 0xFF, 0x00, 0x00, 0x00};
 static s32 y_offsets[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(SPLASH_WATER);
 extern s32 E_ID(FERRYMAN);
 extern s32 E_ID(ID_4F);
@@ -943,7 +943,7 @@ void MoveBoatElevator(
 static u8 anim_floor_open[] = {0x04, 0x23, 0x84, 0x24, 0xFF, 0x00, 0x00, 0x00};
 static u8 anim_floor_close[] = {0x04, 0x23, 0x04, 0x05, 0xFF, 0x00, 0x00, 0x00};
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #define COLLISION_WIDTH 0x24
 #else
 #define COLLISION_WIDTH 0x20
@@ -1239,7 +1239,7 @@ void LoadFerrymanGateTiles(void) {
     }
 }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(SURFACING_WATER);
 #endif
 

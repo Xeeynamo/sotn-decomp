@@ -90,7 +90,7 @@ void EntityHouseShader(Entity* self) {
 
         for (i = 2; i >= 0; i--) {
             prim->type = PRIM_GT4;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             prim->tpage = 0x1110;
 #else
             prim->tpage = 0x110;
@@ -117,7 +117,7 @@ void EntityHouseShader(Entity* self) {
         }
 
         prim->type = PRIM_GT4;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         prim->tpage = 0x101A;
 #else
         prim->tpage = 0x1A;
@@ -142,7 +142,7 @@ void EntityHouseShader(Entity* self) {
 
         prim = prim->next;
         prim->type = PRIM_GT4;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         prim->tpage = 0x104;
 #else
         if (flag) {
@@ -164,7 +164,7 @@ void EntityHouseShader(Entity* self) {
 
         prim = prim->next;
         prim->type = PRIM_GT4;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         prim->tpage = 0x1110;
 #else
         prim->tpage = 0x110;
@@ -177,7 +177,7 @@ void EntityHouseShader(Entity* self) {
         prim->x1 = prim->x3 = 0x81;
         prim->y0 = prim->y1 = 0x87;
         prim->y2 = prim->y3 = 0xCF;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         prim->r0 = 0x20;
         prim->g0 = 0x10;
         prim->b0 = 0x20;

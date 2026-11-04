@@ -603,7 +603,7 @@ void EntityKarasumanOrbAttack(Entity* self) {
         if (entity->ext.karasuman.flag1) {
             self->step++;
         }
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
         if (entity->entityId != E_KARASUMAN || entity->flags & FLAG_DEAD) {
             DestroyEntity(self);
             return;

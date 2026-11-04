@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game.h>
 
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 
 #pragma optimization_level 0
 

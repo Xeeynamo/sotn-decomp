@@ -22,7 +22,7 @@ static u8 anim_owl_7[] = {8, 8, 8, 9, 8, 10, 8, 11, 0, 0};
 void EntityOwl(Entity* self) {
 #define KNIGHT (self + 1)
 // Invisible target entity
-#define TARGET (self + 3)
+#define OWL_TARGET (self + 3)
 
     Collider collider;
     Entity* tempEntity;
@@ -54,7 +54,7 @@ void EntityOwl(Entity* self) {
         InitializeEntity(g_EInitOwl);
         // Turns out the knight is spawned from the owl. Neat!
         CreateEntityFromEntity(E_OWL_KNIGHT, self, KNIGHT);
-        CreateEntityFromEntity(E_OWL_TARGET, self, TARGET);
+        CreateEntityFromEntity(E_OWL_TARGET, self, OWL_TARGET);
         break;
     case 1:
         AnimateEntity(anim_owl_1, self);
@@ -116,9 +116,9 @@ void EntityOwl(Entity* self) {
             self->step_s++;
             break;
         case 1:
-            TARGET->posX.i.hi = dx + self->posX.i.hi;
-            TARGET->posY.i.hi = dy + self->posY.i.hi;
-            angle = GetAngleBetweenEntitiesShifted(self, TARGET);
+            OWL_TARGET->posX.i.hi = dx + self->posX.i.hi;
+            OWL_TARGET->posY.i.hi = dy + self->posY.i.hi;
+            angle = GetAngleBetweenEntitiesShifted(self, OWL_TARGET);
             self->ext.owl.unk84 =
                 AdjustValueWithinThreshold(6, self->ext.owl.unk84, angle);
             SetEntityVelocityFromAngle(self->ext.owl.unk84, 0x20);
@@ -288,17 +288,17 @@ void EntityOwl(Entity* self) {
             AnimateEntity(anim_owl_5, self);
             MoveEntity();
             if (KNIGHT->facingLeft) {
-                TARGET->posX.i.hi = KNIGHT->posX.i.hi - 10;
+                OWL_TARGET->posX.i.hi = KNIGHT->posX.i.hi - 10;
             } else {
-                TARGET->posX.i.hi = KNIGHT->posX.i.hi + 10;
+                OWL_TARGET->posX.i.hi = KNIGHT->posX.i.hi + 10;
             }
-            TARGET->posY.i.hi = KNIGHT->posY.i.hi - 0x20;
-            angle = GetAngleBetweenEntitiesShifted(self, TARGET);
+            OWL_TARGET->posY.i.hi = KNIGHT->posY.i.hi - 0x20;
+            angle = GetAngleBetweenEntitiesShifted(self, OWL_TARGET);
             self->ext.owl.unk84 =
                 AdjustValueWithinThreshold(4, self->ext.owl.unk84, angle);
             SetEntityVelocityFromAngle(self->ext.owl.unk84, 0x10);
-            dx = TARGET->posX.i.hi - self->posX.i.hi;
-            dy = TARGET->posY.i.hi - self->posY.i.hi;
+            dx = OWL_TARGET->posX.i.hi - self->posX.i.hi;
+            dy = OWL_TARGET->posY.i.hi - self->posY.i.hi;
             if (dx > 0) {
                 self->facingLeft = 1;
             } else {

@@ -34,7 +34,7 @@ static s32 D_80155B2C_4[] = {5, 5, 5, 0, 0, 5, 1, 2, 0};
 static s32 D_80155B2C_5[] = {6, 6, 0, 6, 0, 1, 6, 0, 3};
 static s32 D_80155B2C_6[] = {7, 0, 7, 0, 7, 1, 0, 7, 4};
 static s32 D_80155B2C_7[] = {8, 0, 0, 8, 8, 4, 3, 7, 8};
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 extern s32 D_80155B2C_8[];
 #else
 static s32 D_80155B2C_8[] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -42,13 +42,13 @@ static s32 D_80155B2C_8[] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 static u16 D_80155C70[] = {0x8139, 0x813A, 0x813B};
 static s16 D_80155C78[] = {
     16, 14, 12, 10, 8, 6, 4, 2, 15, 13, 11, 9, 7, 5, 3, 255};
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 static s16 D_80155C98[] = {
 #else
 static u16 D_80155C98[] = {
 #endif
     0, 2, 4, 6, 8, 10, 12, 14, 1, 3, 5, 7, 9, 11, 13, 15};
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 extern u32 D_80175080;
 extern s32 D_80175084;
 #else

@@ -2,7 +2,7 @@
 #include "../rbo6/rbo6.h"
 #include "scratchpad.h"
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(DRACULA_SMALL_HAND);
 extern s32 E_ID(DRACULA_DECOR);
 extern s32 E_ID(DRACULA_ARM);

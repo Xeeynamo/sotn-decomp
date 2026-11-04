@@ -18,6 +18,6 @@ PlayerOvl RIC_player = {
     richter_sprites,
 };
 
-#if !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP
 #include "gen/richter.h"
 #endif

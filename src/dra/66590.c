@@ -124,32 +124,32 @@ void DrawEntitiesHitbox(s32 drawMode) {
     }
 }
 
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
 u16 g_CharBuffer[0x42]; // needs  more space on PC
 #else
 u16 g_CharBuffer[0x30];
 #endif
 
 u16 g_SjisPages[] = {
-#if !defined(VERSION_US) && !defined(VERSION_EU) && !defined(VERSION_HK)
+#if !IS_VER_INTL
     '踪',   '眷', '翔', '彷', '徨', '苺', '獰', '賤', '贄',
 #endif
 
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
     0x9F54, // use raw Shift-JIS value for the copyright symbol
 #else
     '鬱', // copyright symbol
 #endif
-#if defined(VERSION_JP11) || defined(VERSION_USPROTO) || defined(VERSION_JP12)
+#if (VERSION >= VER_JP11 && VERSION < VER_US) || VERSION == VER_JP12
     '憑',
 #endif
-#if defined(VERSION_JP12)
+#if VERSION == VER_JP12
     '顰',
 #endif
 };
 
 u8 g_CustomGlyphs[][30] = {
-#if !defined(VERSION_US) && !defined(VERSION_EU) && !defined(VERSION_HK)
+#if !IS_VER_INTL
     {
         0x00, 0x20, // □□□□□□□□□□■□□□□□
         0x7C, 0x20, // □■■■■■□□□□■□□□□□
@@ -321,7 +321,7 @@ u8 g_CustomGlyphs[][30] = {
         0x18, 0x30, // □□□■■□□□□□■■□□□□
         0x07, 0xC0, // □□□□□■■■■■□□□□□□
     },
-#if defined(VERSION_JP11) || defined(VERSION_USPROTO) || defined(VERSION_JP12)
+#if (VERSION >= VER_JP11 && VERSION < VER_US) || VERSION == VER_JP12
     {
         0x00, 0x00, // □□□□□□□□□□□□□□□□
         0x47, 0xFC, // □■□□□■■■■■■■■■□□
@@ -340,7 +340,7 @@ u8 g_CustomGlyphs[][30] = {
         0x87, 0xF2, // ■□□□□■■■■■■■□□■□
     },
 #endif
-#if defined(VERSION_JP12)
+#if VERSION == VER_JP12
     {
         0x00, 0x00, // □□□□□□□□□□□□□□□□
         0x40, 0x00, // □■□□□□□□□□□□□□□□

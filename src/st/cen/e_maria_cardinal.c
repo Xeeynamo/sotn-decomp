@@ -109,7 +109,7 @@ void EntityMariaCardinalCrash(Entity* self) {
         }
         self->posX.i.hi = MARIA.posX.i.hi + var_s0;
         self->posY.i.hi = MARIA.posY.i.hi + 24;
-#if defined(VERSION_PC)
+#ifdef PLATFORM_PSYZ
         g_Maria.unk20 = (signed long long)self;
 #else
         g_Maria.unk20 = (s32)self;

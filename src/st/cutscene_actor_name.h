@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#if defined(VERSION_PSP) || defined(VERSION_HD)
+#if VERSION < VER_JP10 || TARGET == TARGET_PSP
 #include "cutscene_actor_name_psp.h"
 #else
 extern const char* actor_names[];

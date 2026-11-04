@@ -68,7 +68,7 @@ void EntityCutsceneStage(Entity* self) {
         self->step++;
         break;
     case 3:
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
         g_Player.padSim = PAD_NONE;
 #endif
         if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
@@ -89,11 +89,11 @@ void EntityCutsceneStage(Entity* self) {
             if (posScrollX < 256) {
                 posScrollX = 256;
             }
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
             CutsceneCameraPan(posScrollX);
 #endif
         }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         CutsceneCameraPan(posScrollX);
 #endif
         g_Player.demo_timer = 1;

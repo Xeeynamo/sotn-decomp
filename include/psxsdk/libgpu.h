@@ -1,7 +1,8 @@
 #ifndef LIBGPU_H
 #define LIBGPU_H
+#include <version.h>
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #define SPRT_CODE 0x1
 #define SPRT16_CODE 0x2
 #define POLYGT3_CODE 0x4
@@ -127,7 +128,7 @@
 #define setLineG4(p) setlen(p, 9), setcode(p, 0x5c), (p)->pad = 0x55555555
 
 // On PSP these are proper function calls.
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 #define setSemiTrans(p, abe)                                                   \
     ((abe) ? setcode(p, getcode(p) | 0x02) : setcode(p, getcode(p) & ~0x02))
 
@@ -163,7 +164,7 @@ typedef struct {
 // for different platforms to safely store the pointer to the next primitive and
 // separately the packet length. On 64-bit builds the packet header is now
 // 128-bit long.
-#if defined(VERSION_PSP) || defined(VERSION_PC)
+#if TARGET == TARGET_PSP || defined(PLATFORM_PSYZ)
 #define O_TAG                                                                  \
     u_long tag;                                                                \
     u_long len
@@ -178,9 +179,9 @@ typedef struct {
 
 // This P_TAG implementation should maybe look more like the O_TAG listed above.
 // In func_800EDB08, the setcode needs to write to offset 0xb.
-#ifndef VERSION_PC
+#ifndef PLATFORM_PSYZ
 typedef struct {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     u_long addr;
     u_long len;
 #else
@@ -204,7 +205,7 @@ typedef struct {
 
 typedef struct {
     O_TAG;
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
     /* 0x4 */ u_long code[15];
 #else
     /* 0x8 */ u_char r0, g0, b0, code;
@@ -540,7 +541,7 @@ typedef struct {
 
 typedef struct {
     O_TAG;
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
     u_long code[2];
 #else
     u_char r0, g0, b0, code;
@@ -550,7 +551,7 @@ typedef struct {
 
 typedef struct {
     O_TAG;
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
     u_long code[2];
 #else
     u_char r0, g0, b0, code;

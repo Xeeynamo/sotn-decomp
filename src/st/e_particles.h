@@ -7,7 +7,7 @@ extern EInit g_EInitObtainable;
 // this is how the original source code worked
 void MoveEntity(Entity*);
 
-#if defined(VERSION_HD) && !defined(STAGE_IS_TEK)
+#if VERSION == VER_BETA_HD
 static u32 padding = 0;
 #endif
 
@@ -17,7 +17,7 @@ u16 g_ESoulStealOrbAngles[] = {
 
 s16 g_ESoulStealOrbSprt[] = {
 // clang-format off
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
     -3,  -3,  8,  8,  80,  104, 88,  112,
     -3,  -3,  8,  8,  72,  104, 80,  112,
     -7,  -7,  16, 15, 72,  112, 88,  127,
@@ -35,14 +35,14 @@ s16 g_ESoulStealOrbSprt[] = {
     // clang-format on
 };
 
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
 u8 g_ESoulStealOrbAnim[] = {
     5, 1, 4, 2, 3, 3, 3, 4, 3, 5, 3, 6, 3, 3, 5, 2, 7, 1, 0, 0};
 #else
 u8 g_ESoulStealOrbAnim[] = {4, 2, 3, 3, 3, 4, 3, 5, 3, 6, 3, 3, 0, 0};
 #endif
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #include "e_particles_maria.h"
 #endif
 
@@ -56,7 +56,7 @@ void EntitySoulStealOrb(Entity* self) {
     u16 direction;
     Entity* player;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     if (g_PlayableCharacter == PLAYER_MARIA) {
         g_Player.unk28 = &func_psp_0923B2F0;
         func_psp_0923AD68(self);
@@ -127,7 +127,7 @@ void EntitySoulStealOrb(Entity* self) {
         MoveEntity(self);
         prim = &g_PrimBuf[self->primIndex];
         AnimateEntity(g_ESoulStealOrbAnim, self);
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
         // the involvement of ITEM_KARMA_COIN is speculative, since TEK does not
         // suggest what was the real item at 0x18.
         if (g_Status.equipment[0] == ITEM_KARMA_COIN) {
@@ -153,7 +153,7 @@ void EntitySoulStealOrb(Entity* self) {
         prim->y0 = prim->y1 = self->posY.i.hi + *spr++;
         prim->x1 = prim->x3 = prim->x0 + *spr++;
         prim->y2 = prim->y3 = prim->y0 + *spr++;
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
         prim->u0 = prim->u2 = *spr++ - 0x80;
         prim->v0 = prim->v1 = direction + *spr++;
         prim->u1 = prim->u3 = *spr++ - 0x80;
@@ -272,14 +272,14 @@ void EntityEnemyBlood(Entity* self) {
                     if (!g_Player.healKind) {
                         g_Player.healKind = 1;
                         g_Player.healAmount = 8;
-#ifndef STAGE_IS_TEK
+#if VERSION >= VER_BETA_MAD
                         if (g_api.CheckEquipmentItemCount(
                                 ITEM_BLOODSTONE, EQUIP_ACCESSORY)) {
                             g_Player.healAmount *= 2;
                         }
 #endif
                     }
-#ifndef STAGE_IS_TEK
+#if VERSION >= VER_BETA_MAD
                     g_Player.unk10++;
 #endif
                     self->hitboxState = 0;

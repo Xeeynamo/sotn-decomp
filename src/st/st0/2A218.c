@@ -15,7 +15,7 @@ static void func_801AA218(s16 arg0) {
 }
 
 extern s32 g_SkipCutscene;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern u32 g_CutsceneFlags;
 extern s32 g_IsCutsceneDone;
 #else

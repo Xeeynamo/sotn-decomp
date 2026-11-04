@@ -285,20 +285,18 @@ void EntityJackOBonesJack(Entity* self) {
         PlaySfxPositional(SFX_SKULL_KNOCK_A);
         self->ext.jackoBones.bouncesDone += 1;
         temp = sp10.unk18;
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
         xVar = self->posX.i.hi;
         yVar = self->posY.i.hi - 3;
         g_api.CheckCollision(xVar, yVar, &sp10, 0);
         if (sp10.effects & EFFECT_SOLID) {
             self->velocityX = -self->velocityX;
         } else {
-#else
-        if (1) {
-#endif
             self->posY.i.hi += temp;
-#if defined(VERSION_PSP)
             self->velocityY = -self->velocityY;
 #else
+        if (1) {
+            self->posY.i.hi += temp;
             self->velocityY =
                 -((self->velocityY < 0) ? -self->velocityY : self->velocityY);
 #endif
@@ -311,7 +309,7 @@ void EntityJackOBonesJack(Entity* self) {
         xVar = self->posX.i.hi + self->velocityX;
         yVar = self->posY.i.hi;
     }
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
     if (self->params) {
 #else
     if (1) {
@@ -323,7 +321,7 @@ void EntityJackOBonesJack(Entity* self) {
             self->posY.i.hi += sp10.unk20;
             self->velocityY = abs(self->velocityY);
         }
-#if !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP
         xVar = self->posX.i.hi;
         yVar = self->posY.i.hi;
         if (self->velocityX > 0) {

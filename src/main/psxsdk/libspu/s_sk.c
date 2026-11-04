@@ -12,7 +12,7 @@ void SpuSetKey(long on_off, unsigned long voice_bit) {
 
     switch (on_off) {
     case 1:
-#ifndef VERSION_PC
+#ifndef PLATFORM_PSYZ
         _spu_RXX->rxx.key_on[0] = new_var;
         _spu_RXX->rxx.key_on[1] = temp_a3;
 #else
@@ -23,7 +23,7 @@ void SpuSetKey(long on_off, unsigned long voice_bit) {
         break;
 
     case 0:
-#ifndef VERSION_PC
+#ifndef PLATFORM_PSYZ
         _spu_RXX->rxx.key_off[0] = temp_a1;
         _spu_RXX->rxx.key_off[1] = temp_a3;
 #else

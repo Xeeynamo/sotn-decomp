@@ -13,7 +13,7 @@
 #define DAMAGE_FLAG_IMMUNE 0xC000
 
 #define SFX_START (0x600)
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #define SFX_LAST (0x90B)
 #else
 #define SFX_LAST (0x8E0)
@@ -45,7 +45,7 @@ typedef enum {
     MENU_DG_TIME_ATTACK,
     MENU_DG_EQUIP_SORT,
     MENU_DG_FAMILIARS,
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
     MENU_PSP_EXTRA_1,
     MENU_PSP_EXTRA_2,
     MENU_PSP_EXTRA_3,
@@ -574,7 +574,7 @@ extern u32 D_800A04F8;
 extern s32 D_800A2438;
 
 extern RoomTeleport D_800A245C[];
-#if defined(VERSION_PC) && defined(ENABLE_SATURN_STAGES)
+#if defined(PLATFORM_PSYZ) && defined(ENABLE_SATURN_STAGES)
 #define RETAIL_ROOM_TELEPORT_COUNT 131
 RoomTeleport* PC_GetRoomTeleport(int id);
 #define ROOM_TELEPORT(id) PC_GetRoomTeleport(id)
@@ -593,7 +593,7 @@ extern Lba g_StagesLba[];
 
 extern SubweaponDef g_SubwpnDefs[13];
 // These are different on PSP since they have text that needs translating.
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 extern char** g_SaveAreaNamesSecondPart;
 extern char** g_SaveAreaNames;
 extern RelicDesc* g_RelicDefs;
@@ -628,8 +628,7 @@ extern Point16 g_SensorsCeiling[];
 extern Point16 g_SensorsFloor[];
 extern Point16 g_SensorsWall[];
 
-#if !defined(VERSION_US) && !defined(VERSION_EU) && !defined(VERSION_HK) &&    \
-    !defined(VERSION_JP12)
+#if VERSION < VER_US || TARGET == TARGET_PSP
 extern s32 D_800ACEDC_hd;
 #define TRANSFORM_LOCKOUT_TIMER D_800ACEDC_hd
 #else
@@ -719,7 +718,7 @@ void resetMapTileOnCastleBlueprint(s32, s32);
 void paintMapTileOnCastleBlueprint(s32, s32, s32);
 void RevealSecretPassageOnMap(s32, s32, s32);
 void func_800F2120(void);
-#if defined(VERSION_USPROTO)
+#if VERSION == VER_USPROTO
 void DrawE3Banner(void);
 #endif
 void CalcDefense(void);

@@ -41,7 +41,7 @@ static EInitUnk22 D_pspeu_092683B0[] = {
     {ANIMSET_OVL(5), 0x0059, 0x0006, BLEND_ADD | BLEND_TRANSP, anim1},
 };
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(EXPLOSION_FLAME);
 #endif
 

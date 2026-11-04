@@ -32,7 +32,7 @@ s32 func_800EDAE4(void) {
     for (i = 0; i < 16; i++, ptr++) {
         ptr->tag = 0;
     }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     return 0;
 #endif
 }
@@ -43,7 +43,7 @@ DR_ENV* func_800EDB08(Primitive* prim) {
 
     for (i = 0; i < LEN(D_800974AC); i++, dr++) {
         if (dr->tag == 0) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             SetDrawEnv(dr, 0);
 #endif
             dr->tag = 1;
@@ -140,7 +140,7 @@ s16 AllocPrimitivesReverse(u8 type, s32 count) {
             return i;
         }
     }
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
     return 0;
 #endif
 }
@@ -180,13 +180,13 @@ typedef struct {
 } PrimitivesRenderer;
 
 void RenderPrimitives(void) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #define RECT_LOC 0x12C
 #else
 #define RECT_LOC 0x128
 #endif
 
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
     RECT _rect;
     RECT* rect = &_rect;
     PrimitivesRenderer _r;
@@ -265,7 +265,7 @@ void RenderPrimitives(void) {
                 dtd = true;
                 if (!unkBool) {
                     SetDrawMode(r->dr, 0, 0, 0, rect);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     if (prim->priority < 0 || prim->priority >= 0x200) {
                         prim->priority = 0x1FF;
                     }
@@ -296,7 +296,7 @@ void RenderPrimitives(void) {
                     primbuf->tile.w = prim->u0;
                     primbuf->tile.h = prim->v0;
                     *r->tile = primbuf->tile;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     if (prim->priority < 0 || prim->priority >= 0x200) {
                         prim->priority = 0x1FF;
                     }
@@ -309,7 +309,7 @@ void RenderPrimitives(void) {
                         SetDrawMode(
                             r->dr, 0, dtd,
                             prim->drawMode & (DRAW_UNK_40 | DRAW_TPAGE2), rect);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                         if (prim->priority < 0 || prim->priority >= 0x200) {
                             prim->priority = 0x1FF;
                         }
@@ -344,7 +344,7 @@ void RenderPrimitives(void) {
                         primbuf->g2.y1 = prim->y1 + g_cameraOffsetY;
                     }
                     *r->g2 = primbuf->g2;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     if (prim->priority < 0 || prim->priority >= 0x200) {
                         prim->priority = 0x1FF;
                     }
@@ -357,7 +357,7 @@ void RenderPrimitives(void) {
                         SetDrawMode(
                             r->dr, 0, dtd,
                             prim->drawMode & (DRAW_UNK_40 | DRAW_TPAGE2), rect);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                         if (prim->priority < 0 || prim->priority >= 0x200) {
                             prim->priority = 0x1FF;
                         }
@@ -406,7 +406,7 @@ void RenderPrimitives(void) {
                         primbuf->g4.y3 = prim->y3 + g_cameraOffsetY;
                     }
                     *r->g4 = primbuf->g4;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     if (prim->priority < 0 || prim->priority >= 0x200) {
                         prim->priority = 0x1FF;
                     }
@@ -419,7 +419,7 @@ void RenderPrimitives(void) {
                         SetDrawMode(
                             r->dr, 0, dtd,
                             prim->drawMode & (DRAW_UNK_40 | DRAW_TPAGE2), rect);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                         if (prim->priority < 0 || prim->priority >= 0x200) {
                             prim->priority = 0x1FF;
                         }
@@ -479,7 +479,7 @@ void RenderPrimitives(void) {
                         (prim->drawMode & (DRAW_UNK_40 | DRAW_TPAGE2));
                     primbuf->gt4.clut = g_ClutIds[prim->clut];
                     *r->gt4 = primbuf->gt4;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     if (prim->priority < 0 || prim->priority >= 0x200) {
                         prim->priority = 0x1FF;
                     }
@@ -489,7 +489,7 @@ void RenderPrimitives(void) {
                     g_GpuUsage.gt4++;
                     if (dtd && g_GpuUsage.drawModes < MAX_DRAW_MODES) {
                         SetDrawMode(r->dr, 0, dtd, 0, rect);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                         if (prim->priority < 0 || prim->priority >= 0x200) {
                             prim->priority = 0x1FF;
                         }
@@ -541,7 +541,7 @@ void RenderPrimitives(void) {
                     primbuf->gt3.clut = g_ClutIds[prim->clut];
 
                     *r->gt3 = primbuf->gt3;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     if (prim->priority < 0 || prim->priority >= 0x200) {
                         prim->priority = 0x1FF;
                     }
@@ -551,7 +551,7 @@ void RenderPrimitives(void) {
                     g_GpuUsage.gt3++;
                     if (dtd && g_GpuUsage.drawModes < MAX_DRAW_MODES) {
                         SetDrawMode(r->dr, 0, dtd, 0, rect);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                         if (prim->priority < 0 || prim->priority >= 0x200) {
                             prim->priority = 0x1FF;
                         }
@@ -584,7 +584,7 @@ void RenderPrimitives(void) {
                     primbuf->sprt.h = prim->v1;
                     primbuf->sprt.clut = g_ClutIds[prim->clut];
                     *r->sprt = primbuf->sprt;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     if (prim->priority < 0 || prim->priority >= 0x200) {
                         prim->priority = 0x1FF;
                     }
@@ -598,7 +598,7 @@ void RenderPrimitives(void) {
                                     prim->tpage + (prim->drawMode &
                                                    (DRAW_UNK_40 | DRAW_TPAGE2)),
                                     rect);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                         if (prim->priority < 0 || prim->priority >= 0x200) {
                             prim->priority = 0x1FF;
                         }
@@ -614,11 +614,11 @@ void RenderPrimitives(void) {
                     env = *(DR_ENV**)&prim->r1;
                     if (prim->drawMode & DRAW_UNK_1000) {
                         drawOfs = g_CurrentBuffer->draw.ofs[0];
-#if !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP
                         *(s16*)&env->code[2] = drawOfs;
                         *(s16*)&env->code[7] = drawOfs;
 #endif
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                         env->ofs[0] = drawOfs;
                         env->clip.x = drawOfs;
 #endif
@@ -629,14 +629,14 @@ void RenderPrimitives(void) {
                         SetDrawEnv(env, &drawEnv);
                     }
                     *r->env = *env;
-#if !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP
                     if (prim->drawMode & DRAW_UNK_1000) {
                         env = r->env;
                         *(s16*)&env->code[0] += drawOfs;
                         *(s16*)&env->code[1] += drawOfs;
                     }
 #endif
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     if (prim->priority < 0 || prim->priority >= 0x200) {
                         prim->priority = 0x1FF;
                     }

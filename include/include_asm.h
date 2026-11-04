@@ -1,12 +1,13 @@
 #ifndef INCLUDE_ASM_H
 #define INCLUDE_ASM_H
+#include "version.h"
 
 #define STRINGIFY_(x) #x
 #define STRINGIFY(x) STRINGIFY_(x)
 
 #define ASM_RODATA __asm__(".section .rodata")
 
-#if !defined(PERMUTER) && !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP && !defined(PERMUTER)
 
 #ifdef SKIP_ASM
 #define INCLUDE_ASM(FOLDER, NAME)
@@ -23,7 +24,7 @@
             "\t.ent\t" #NAME "\n" #NAME ":\n"                                  \
             "\t.type\t" #NAME ".NON_MATCHING, @object\n"                       \
             "\t" #NAME ".NON_MATCHING:\n"                                      \
-            ".include \"asm/" VERSION "/" FOLDER "/" #NAME ".s\"\n"            \
+            ".include \"asm/" VERSION_STR "/" FOLDER "/" #NAME ".s\"\n"            \
             "\t.set reorder\n"                                                 \
             "\t.set at\n"                                                      \
             "\t.end\t" #NAME "\n"                                              \
@@ -45,7 +46,7 @@
 
 #define INCLUDE_RODATA(FOLDER, NAME)                                           \
     __asm__(".pushsection .rodata\n"                                           \
-            ".include \"asm/" VERSION "/" FOLDER "/" #NAME ".s\"\n"            \
+            ".include \"asm/" VERSION_STR "/" FOLDER "/" #NAME ".s\"\n"            \
             ".popsection")
 
 #endif
@@ -55,7 +56,7 @@
 __asm__(".include \"macro.inc\"\n");
 #endif
 
-#else // PERMUTER || VERSION_PSP
+#else // PERMUTER || TARGET_PSP
 #define INCLUDE_ASM(FOLDER, NAME)
 #define INCLUDE_RODATA(FOLDER, NAME)
 #endif

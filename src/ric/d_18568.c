@@ -3,11 +3,11 @@
 
 s16 D_80154568[4] = {0, -8, -16, 0};
 
-#if !defined(VERSION_PSP) // falls in BSS on PSP
+#if TARGET != TARGET_PSP // falls in BSS on PSP
 s32 g_IsPrologueStage = 0;
 #endif
 
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 u8 font_eu[] = {
 #include "gen/font_eu.h"
 };

@@ -129,8 +129,7 @@ enum {
     /* us:0x324, jp:0x324 */ MU_WANDERING_GHOSTS_LOOP_POINT,
     /* us:0x325, jp:0x325 */ MU_THE_DOOR_TO_THE_ABYSS,
     /* us:0x326, jp:0x326 */ MU_THE_DOOR_TO_THE_ABYSS_LOOP_POINT,
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO)
+#if REGION != REGION_JP
     /* us:0x327           */ MU_METAMORPHOSIS,
     /* us:0x328           */ MU_METAMORPHOSIS_II,
     /* us:0x329           */ MU_METAMORPHOSIS_III,
@@ -159,16 +158,15 @@ enum {
     /* us:0x33F, jp:0x33C */ MU_NOCTURNE,
     /* us:0x340, jp:0x33D */ MU_MOONLIGHT_NOCTURNE,
 
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO)
+#if REGION == REGION_JP
+    __ALIGN_ID_341 = 0x341, // TODO check what this ID does on JP/HD/PSP
+#else
     // Japanese intro
     /* us:0x341           */ JP_VO_NARRATOR_KATSUTE, // "Katsute ..."
     /* us:0x342           */ JP_VO_NARRATOR_SOSHITE, // "Soshite 5 nen no
                                                      // tsukihi ga nagareta"
     /* us:0x343           */ JP_VO_NARRATOR_AKUMAJO, // "Akumajo Dracula X Gekka
                                                      // no Yasoukyoku"
-#else
-    __ALIGN_ID_341 = 0x341, // TODO check what this ID does on JP/HD/PSP
 #endif
 
     // Used for the japanese sound test, messages from the developers
@@ -182,8 +180,7 @@ enum {
     /* us:0x34B, jp:0x349 */ JP_VO_YANAMI_JYOUJI_MESSAGE,    // Yanami Jyouji
     /* us:0x34B, jp:0x349 */ MU_ID_MAD = JP_VO_YANAMI_JYOUJI_MESSAGE,
 
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO)
+#if REGION != REGION_JP
     // Various voice actors saying konami
     /* us:0x34C           */ JP_VO_KONAMI_1,  // woman says konami
     /* us:0x34D           */ JP_VO_KONAMI_2,  // woman says konami
@@ -199,7 +196,7 @@ enum {
     /* us:0x357           */ JP_VO_KONAMI_12, // man says konami
 #endif
 
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
+#if IS_VER_INTL
     // Prologue cutscene
     /* us:0x358,          */ NA_VO_RI_DIE_MONSTER, // Richter: "Die monster ..."
     /* us:0x359,          */ NA_VO_DR_IT_WAS_NOT,  // Dracula: "It was not by my
@@ -211,16 +208,15 @@ enum {
                                                          // set your soul
                                                          // wandering for
                                                          // eternity, demon.
-#elif defined(VERSION_USPROTO)
+#elif VERSION == VER_USPROTO
     /*      usproto:0x393 */ VO_GAMEOVER_SUCCUBUS_TAUNT = 0x393,
 #else
     /*           jp:0x391 */ VO_GAMEOVER_SUCCUBUS_TAUNT = 0x391,
 #endif
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO)
-    /* us:0x3A8, jp:0x3A6 */ UNK_3A8 = 0x3A8,
-#else
+#if REGION == REGION_JP
     /* us:0x3A8, jp:0x3A6 */ UNK_3A8 = 0x3A6,
+#else
+    /* us:0x3A8, jp:0x3A6 */ UNK_3A8 = 0x3A8,
 #endif
     /* us:0x3A9, jp:0x3A7 */ NA_VO_AL_INTERESTED, // Alucard: "I'm interested in
                                                   // this"
@@ -234,17 +230,11 @@ enum {
     /* us:0x3B1, jp:0x3AF */ UNK_3B1,
     /* us:0x3B2, jp:0x3B0 */ NA_VO_ML_FAREWELL, // Master Librarian: "Farewell
                                                 // for now"
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
+#if IS_VER_INTL
     /* us:0x3CD,          */ UNK_3CD = 0x3CD,
     /* us:0x3CE,          */ NA_VO_MA_IF_YOU_WEAR, // Maria: If you wear these,
                                                    // you can see beyond evil
                                                    // illusions.
-#elif defined(VERSION_USPROTO)
-    /*      usproto:0x3D0 */ VO_GAMEOVER_MARIA = 0x3D0,
-#else
-    /*           jp:0x3CE */ VO_GAMEOVER_MARIA = 0x3CE,
-#endif
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
     /* us:0x3D9,          */ UNK_3D9 = 0x3D9,
     /* us:0x3DA,          */ NA_VO_RI_IMPRESSIVE_WHIP, // Richter: Impressive,
                                                        // you were able to avoid
@@ -256,20 +246,21 @@ enum {
     /* us:0x3DC,          */ NA_VO_RI_ONLY_THE_COUNT,    // Richter: Hah, I knew
                                                       // it. Only the count is a
                                                       // true match for me.
-#elif defined(VERSION_USPROTO)
+#elif VERSION == VER_USPROTO
+    /*      usproto:0x3D0 */ VO_GAMEOVER_MARIA = 0x3D0,
     /*      usproto:0x3DC */ VO_GAMEOVER_RICHTER_TAUNT_1 = 0x3DC,
     /*      usproto:0x3DD */ VO_GAMEOVER_RICHTER_TAUNT_2,
     /*      usproto:0x3DE */ VO_GAMEOVER_RICHTER_TAUNT_3,
 #else
+    /*           jp:0x3CE */ VO_GAMEOVER_MARIA = 0x3CE,
     /*           jp:0x3DA */ VO_GAMEOVER_RICHTER_TAUNT_1 = 0x3DA,
     /*           jp:0x3DB */ VO_GAMEOVER_RICHTER_TAUNT_2,
     /*           jp:0x3DC */ VO_GAMEOVER_RICHTER_TAUNT_3,
 #endif
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO)
-    /* us:0x45E, jp:0x45C */ NOSE_DEMON_INTRO_PREV_A = 0x45E,
-#else
+#if REGION == REGION_JP
     /* us:0x45E, jp:0x45C */ NOSE_DEMON_INTRO_PREV_A = 0x45C,
+#else
+    /* us:0x45E, jp:0x45C */ NOSE_DEMON_INTRO_PREV_A = 0x45E,
 #endif
     /* us:0x45F, jp:0x45D */ NOSE_DEMON_INTRO_PREV_B,
     /* us:0x460, jp:0x45E */ UNK_460,
@@ -286,11 +277,10 @@ enum {
     /* us:0x46B, jp:0x469 */ UNK_46B,
     /* us:0x46C, jp:0x46A */ UNK_46C,
     /* us:0x46D, jp:0x46B */ UNK_46D,
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO)
-    /* us:0x471, jp:0x46F */ UNK_471 = 0x471,
-#else
+#if REGION == REGION_JP
     /* us:0x471, jp:0x46F */ UNK_471 = 0x46F,
+#else
+    /* us:0x471, jp:0x46F */ UNK_471 = 0x471,
 #endif
     /* us:0x472, jp:0x470 */ FAERIE_INTRO_LIFE,    // "Thank you for giving me
                                                    // life"
@@ -330,11 +320,10 @@ enum {
     /* us:0x491, jp:0x48E */ UNK_491,
     /* us:0x492, jp:0x48F */ FAERIE_DARKNESS_HINT, // "Some animals can live in
                                                    // complete darkness"
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO)
-    /* us:0x4A1, jp:0x49F */ YOUSEI_INTRO = 0x4A1,
-#else
+#if REGION == REGION_JP
     /* us:0x4A1, jp:0x49F */ YOUSEI_INTRO = 0x49F,
+#else
+    /* us:0x4A1, jp:0x49F */ YOUSEI_INTRO = 0x4A1,
 #endif
     /* us:0x4A2, jp:0x4A0 */ UNK_4A2,
     /* us:0x4A3, jp:0x4A1 */ UNK_4A3,
@@ -387,11 +376,10 @@ enum {
     /* us:0x4D2, jp:0x4D0 */ UNK_4D2,
     /* us:0x4D3, jp:0x4D1 */ UNK_4D3,
     /* us:0x4D4, jp:0x4D2 */ YOUSEI_DARKNESS_HINT,
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
-    defined(VERSION_USPROTO)
-    /* us:0x4E6, jp:0x4E4 */ UNK_4E6 = 0x4E6,
-#else
+#if REGION == REGION_JP
     /* us:0x4E6, jp:0x4E4 */ UNK_4E6 = 0x4E4,
+#else
+    /* us:0x4E6, jp:0x4E4 */ UNK_4E6 = 0x4E6,
 #endif
     /* us:0x4E7, jp:0x4E5 */ UNK_4E7, // PSP: Unknown SFX related to the priest
     /* us:0x4E8, jp:0x4E6 */ DEMON_INTRO_COMMAND, // Command me, my lord and
@@ -405,12 +393,12 @@ enum {
                                                 // press it and see?
     /* us:0x4EF, jp:0x4ED */ DEMON_SWITCH_2,    // Hmm, this switch hasn't been
                                                 // pressed yet
-#if defined(VERSION_USPROTO)
+#if VERSION == VER_USPROTO
     /*      usproto:0x52F */ UNK_52D = 0x52F,
 #else
     /* us:0x52D, jp:0x52D */ UNK_52D = 0x52D,
 #endif
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
+#if IS_VER_INTL
     /* us:0x52E,          */ JP_VO_SH_GROAN,      // Shaft groans
     /* us:0x52F,          */ JP_VO_SH_SCREAM,     // Shaft screams
     /* us:0x530,          */ JP_VO_SH_SONO_TEIDO, // Shaft: Sono teido no
@@ -421,7 +409,6 @@ enum {
     /*           jp:0x530 */ VO_GAMEOVER_DEATH_TAUNT_3,
 #endif
 };
-
 
 // The VAB IDs appear in large chunks so all sounds proceeding
 // a vabid label comment will belong in that VAB group unless noted.
@@ -437,7 +424,7 @@ enum {
 // plays a different sample in ARE.  0x709 is another example; the pitch
 // is higher in NP3, but normal for RCHI and NZ0.
 
-#ifdef VERSION_BETA
+#if VERSION == VER_BETA_MAD
 // MAD uses an earlier build and has different sfx IDs
 enum Sfx {
     SFX_METAL_CLANG_E = 0x611, // Same ID as final
@@ -450,7 +437,7 @@ enum Sfx {
     SFX_GOLD_PICKUP = 0x69D,
     SFX_WEAPON_HIT_A = 0x6DB
 };
-#elif defined(STAGE_IS_TEK)
+#elif VERSION < VER_BETA_MAD
 // TEK links against a different build of the game with its own sfx IDs.
 // Only the sfx referenced by the TEK sources are listed here.
 enum Sfx {

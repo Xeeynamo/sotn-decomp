@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo5.h"
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 u8 D_us_80181FA0[] = {
 #include "gen/D_us_80181FA0.h"
 };

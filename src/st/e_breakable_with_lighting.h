@@ -16,7 +16,7 @@ enum BreakableDebrisSteps {
 #define DEBRIS_Y_OFFSET_TALL 20
 #define TALL_EXTRA_DEBRIS 3
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(BACKGROUND_BLOCK);
 extern s32 E_ID(BREAKABLE_DEBRIS);
 #endif

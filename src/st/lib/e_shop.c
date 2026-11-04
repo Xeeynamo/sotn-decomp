@@ -264,7 +264,7 @@ static u8* D_us_801812D8[] = {
     D_us_80181270, D_us_80181280, D_us_80181290, D_us_8018129C, D_us_801812A8,
     D_us_801812B4, D_us_801812C0, D_us_801812C8, D_us_801812D0};
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(ID_25);
 extern s32 E_ID(ID_27);
 extern s32 E_ID(ID_28);
@@ -307,13 +307,13 @@ void func_us_801AFE0C(Entity* self) {
 
     switch (self->step) {
     case 0:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         func_psp_0925D4D0();
 #endif
         InitializeEntity(D_us_80180824);
         if (player->posX.i.hi < 0x100) {
             // sfxID for SEQ_LIB was originally 0x202 but is 0x302 on PSP
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             g_api.PlaySfx(MU_SEQ_LIBRARIAN_PSP);
 #else
             g_api.PlaySfx(MU_SEQ_LIBRARIAN);
@@ -323,7 +323,7 @@ void func_us_801AFE0C(Entity* self) {
             self->step = 8;
             break;
         }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         g_Player.padSim = PAD_LEFT | PAD_SIM_UNK20000;
         g_Player.demo_timer = 1;
 #endif
@@ -338,7 +338,7 @@ void func_us_801AFE0C(Entity* self) {
         if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
             g_Player.padSim = PAD_BAT;
         } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             g_Player.padSim = PAD_NONE;
 #else
             g_Player.padSim = PAD_MIST;
@@ -356,19 +356,19 @@ void func_us_801AFE0C(Entity* self) {
                 g_Player.padSim = PAD_NONE;
                 if (g_Timer & 1) {
                     if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                         g_Player.padSim = PAD_BAT | PAD_SIM_UNK20000;
 #else
                         g_Player.padSim = PAD_BAT;
 #endif
                     } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                         g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
 #else
                         g_Player.padSim = PAD_MIST;
 #endif
                     } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                         g_Player.padSim = PAD_WOLF | PAD_SIM_UNK20000;
 #else
                         g_Player.padSim = PAD_WOLF;
@@ -453,7 +453,7 @@ void func_us_801AFE0C(Entity* self) {
                         if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
                             g_Player.padSim = PAD_BAT;
                         } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                             g_Player.padSim = PAD_NONE;
 #else
                             g_Player.padSim = PAD_MIST;
@@ -498,7 +498,7 @@ void func_us_801AFE0C(Entity* self) {
         break;
 
     case 16:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         g_PauseAllowed = false;
 #endif
         g_Player.demo_timer = 32;
@@ -508,11 +508,11 @@ void func_us_801AFE0C(Entity* self) {
         break;
 
     case 17:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         g_PauseAllowed = false;
 #endif
         if (!g_Player.demo_timer) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             g_PauseAllowed = true;
 #endif
             SetStep(9);
@@ -741,7 +741,7 @@ void EntityLibrarianChair(Entity* self) {
     }
 }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern const char** D_us_80181310;
 #else
 static const char* D_us_80181310[] = {
@@ -847,7 +847,7 @@ static u16 D_us_80181510[] = {
 
 static u16 D_us_8018151C[] = {0, 1, 2, 5, 6};
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern u8* cutscene_data_offset_four;
 #else
 extern u8 D_us_80183F64;
@@ -880,7 +880,7 @@ void* func_us_801B0C40(u8* pix, const char* str, s32 x, s32 y, s32 size) {
         pos = 0;
         while (*str >= 8) {
             s_8 = 0;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             ch = g_api.func_psp_0913F960(str, &sp3f);
 #else
             ch = *str;
@@ -897,7 +897,7 @@ void* func_us_801B0C40(u8* pix, const char* str, s32 x, s32 y, s32 size) {
                 ch = DOUBLE_SPACE;
                 s_8 = 2;
             } else {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 if (sp3f > 1) {
                     str += sp3f - 1;
                 }
@@ -993,7 +993,7 @@ loop:
         if (ch == ' ') {
             x++;
             goto loop;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         } else if (ch == 0xCC) {
             ch = 0xBB;
 #endif
@@ -1032,7 +1032,7 @@ Primitive* func_us_801B1064(
         }
         *chPtr++ = ch;
         length++;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         ch = *str;
         if (ch == 0xFF) {
             str++;
@@ -1055,7 +1055,7 @@ Primitive* func_us_801B1064(
     }
     do {
         ch = *chPtr++;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (ch) {
             prim->clut = clut;
             prim->u0 = (s8)((ch & 0x0F) << 3);
@@ -1171,7 +1171,7 @@ void func_us_801B12D0(Entity* self, u16 arg1) {
     i = 0;
     s_3 = g_CurrentEntity->ext.et_801B15C0.unk86;
     s_4 = g_CurrentEntity->ext.et_801B15C0.unk80 * 0x10;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     if (arg1) {
         posY = (g_CurrentEntity->ext.et_801B15C0.unk7C * ((s_3 + 0x18) - s_4)) /
                24;
@@ -1187,7 +1187,7 @@ void func_us_801B12D0(Entity* self, u16 arg1) {
                24;
         posX = 0;
     }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     for (; prim != NULL; i++) {
         prim->x0 = prim->x2 = posX + 0x94;
         prim->x1 = prim->x3 = posX + 0xEC;
@@ -1244,7 +1244,7 @@ void func_us_801B15C0(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             if (g_GameClearFlag) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 self->params = 3;
 #else
                 self->params = 2;
@@ -1267,7 +1267,7 @@ void func_us_801B15C0(Entity* self) {
                     PRED(prim) = 0x40;
                     PGRN(prim) = 0x10;
                     PBLU(prim) = 0x10;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     prim->x0 = prim->x2 = 0x95;
                     prim->x1 = prim->x3 = 0xEC;
 #else
@@ -1294,7 +1294,7 @@ void func_us_801B15C0(Entity* self) {
                     prim->tpage = 0x10;
                     prim->clut = PAL_UNK_1A1;
                     prim->u0 = prim->u2 = 0;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     prim->u1 = prim->u3 = 0x58;
 #else
                     prim->u1 = prim->u3 = 0x54;
@@ -1306,7 +1306,7 @@ void func_us_801B15C0(Entity* self) {
                 }
                 prim = prim->next;
             }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             func_us_801B11A0(0, 0x100, 0x58, self->ext.et_801B15C0.unk86 * 2);
 #else
             func_us_801B11A0(0, 0x100, 0x54, self->ext.et_801B15C0.unk86 * 2);
@@ -1347,7 +1347,7 @@ void func_us_801B15C0(Entity* self) {
         i = 0;
         tempVar2 = self->ext.et_801B15C0.unk86;
         for (; prim != NULL; i++) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             tempVar = (self->ext.et_801B15C0.unk7C * 0x2C) / 0x20;
             if (tempVar > 0x2C) {
                 tempVar = 0x2C;
@@ -1366,7 +1366,7 @@ void func_us_801B15C0(Entity* self) {
             }
             prim->y1 = 0x60 - tempVar;
             prim->y2 = tempVar + 0x60;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             tempVar = ((s16)self->ext.et_801B15C0.unk7C * 0x2C) / 0x40;
 #else
             tempVar = ((s16)self->ext.et_801B15C0.unk7C * 0x2A) / 0x40;
@@ -1477,7 +1477,7 @@ void func_us_801B15C0(Entity* self) {
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 break;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             case 6:
                 g_CutsceneFlags |= 0x400;
                 tempEntity = self + 1;
@@ -1520,7 +1520,7 @@ void func_us_801B15C0(Entity* self) {
                 } else {
                     self->ext.et_801B15C0.unk82 = 0;
                 }
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
                 if (self->ext.et_801B15C0.unk80 < 3) {
                     self->ext.et_801B15C0.unk82 |= 0x10;
                 }
@@ -1534,7 +1534,7 @@ void func_us_801B15C0(Entity* self) {
     case 6:
         switch (self->step_s) {
         case 0:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             *cutscene_data_offset_four = 0;
 #else
             D_us_80183F64 = 0;
@@ -1586,7 +1586,7 @@ void func_us_801B15C0(Entity* self) {
         i = 0;
         tempVar2 = self->ext.et_801B15C0.unk86;
         for (; prim != NULL; i++) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             tempVar = (self->ext.et_801B15C0.unk7C * 0x2C) / 0x20;
             if (tempVar > 0x2C) {
                 tempVar = 0x2C;
@@ -1605,7 +1605,7 @@ void func_us_801B15C0(Entity* self) {
             }
             prim->y0 = 0x60 - tempVar;
             prim->y3 = tempVar + 0x60;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             tempVar = ((s16)self->ext.et_801B15C0.unk7C * 0x2C) / 0x40;
 #else
             tempVar = ((s16)self->ext.et_801B15C0.unk7C * 0x2A) / 0x40;
@@ -1826,7 +1826,7 @@ void func_us_801B245C(Primitive* arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4,
             PGRN(arg0) = (arg2 * 2) + 0x40;
             PBLU(arg0) = (arg2 * 2) + 0x40;
         }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (arg1 == 0x400) {
             if (i) {
                 arg0->x1 = arg0->x3 = arg0->x0 + (arg0->u1 - arg0->u0);
@@ -1896,7 +1896,7 @@ u16 func_us_801B29C4(void) {
             }
             break;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         case 0x86:
         case 0x87:
         case 0x88:
@@ -1959,7 +1959,7 @@ void func_us_801B2BE4(Entity* self) {
     ShopItem* ptr;
     s32 primIndex;
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
     if (g_CastleFlags[MET_MARIA_AFTER_HIPPOGRYPH]) {
         FntPrint("HIP ");
     }
@@ -2010,7 +2010,7 @@ void func_us_801B2BE4(Entity* self) {
                     prim->drawMode = DRAW_HIDE;
                 } else if (i < 10) {
                     prim->type = PRIM_GT4;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     prim->tpage = 0x110;
 #else
                     prim->tpage = 0x114;
@@ -2508,7 +2508,7 @@ Primitive* func_us_801B3FB4(
     chPtr = str;
     max = 0;
     for (i = 0; i < length; i++) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (*chPtr == 0xFF) {
             break;
         }
@@ -2525,7 +2525,7 @@ Primitive* func_us_801B3FB4(
         }
         prim = prim->next;
     }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     for (; i < length; i++) {
         prim->drawMode = DRAW_HIDE;
         prim = prim->next;
@@ -2534,7 +2534,7 @@ Primitive* func_us_801B3FB4(
     return prim;
 }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern const char** D_us_80181528;
 #else
 static const char* D_us_80181528[] = {"ATT", "DEF"};
@@ -2562,7 +2562,7 @@ static char D_us_80181650[] = {
 static char D_us_80181658[] = {
     SQUARE, CIRCLE, CROSS, TRIANGLE, CH('2'), CH('1'), CH('1'), CH('2')};
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern char* D_us_80181660;
 extern char* D_us_80181668;
 extern char** D_us_80181674;
@@ -2661,7 +2661,7 @@ void func_us_801B420C(Primitive* prim, Entity* arg1) {
     }
     prim = func_us_801B3EC8(prim, g_Status.gold, 8);
     index = arg1->ext.et_801B6F30.unk80 + arg1->ext.et_801B6F30.unk82;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     condition = 0;
     if (arg1->params) {
         shopItem = &D_us_801814D8[index];
@@ -2793,7 +2793,7 @@ void func_us_801B420C(Primitive* prim, Entity* arg1) {
     g_api.MakeAll();
     ptr = stats;
     for (i = 0; i < 3; i++) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         primA = prim;
         for (j = 0; j < 7; j++) {
             prim->x0 = D_psp_092A49B8[j * 2 + (i * 7) * 2] + 0xBA;
@@ -2828,7 +2828,7 @@ void func_us_801B420C(Primitive* prim, Entity* arg1) {
             prim = prim->next;
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             ptr++;
 #endif
         }
@@ -2837,7 +2837,7 @@ void func_us_801B420C(Primitive* prim, Entity* arg1) {
         for (i = 0; i < 4; i++) {
             maxDigits = *ptr++;
             number = *ptr++;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             primA = prim;
             for (j = 0; j < 6; j++) {
                 prim->x2 = prim->x0 =
@@ -2911,7 +2911,7 @@ void func_us_801B4830(Entity* self) {
     tempEntity = self - 1;
     switch (self->step) {
     case 0:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x84);
 #else
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x53);
@@ -2941,7 +2941,7 @@ void func_us_801B4830(Entity* self) {
                     prim->drawMode = DRAW_HIDE;
                 } else if (i < 10) {
                     prim->type = PRIM_GT4;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     prim->tpage = 0x110;
 #else
                     prim->tpage = 0x114;
@@ -2956,16 +2956,15 @@ void func_us_801B4830(Entity* self) {
                     prim->priority = 0xC0;
                     prim->drawMode = DRAW_HIDE;
                 } else if (i == 10) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     func_us_801B11A0(0x50, 0x100, 0x24, 0x20);
-#else
-                    func_us_801B11A0(0x60, 0x100, 0x24, 0x20);
-#endif
                     prim->clut = PAL_UNK_1A1;
                     prim->tpage = 0x10;
-#ifdef VERSION_PSP
                     prim->u0 = 0x50;
 #else
+                    func_us_801B11A0(0x60, 0x100, 0x24, 0x20);
+                    prim->clut = PAL_UNK_1A1;
+                    prim->tpage = 0x10;
                     prim->u0 = 0x60;
 #endif
                     prim->v0 = 0;
@@ -3015,13 +3014,13 @@ void func_us_801B4830(Entity* self) {
                 }
                 prim = prim->next;
                 i++;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 if (j >= count) {
                     break;
                 }
 #endif
             }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             while (prim != NULL) {
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
@@ -3035,7 +3034,7 @@ void func_us_801B4830(Entity* self) {
             unused = g_Pix[0];
             for (i = 0; i < 2; i++) {
                 name = D_us_80181528[i];
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 func_us_801B0FBC(name, 0x17, 0x104 + i * 16);
 #else
                 func_us_801B0FBC(name, 0x1A, 0x104 + i * 16);
@@ -3110,7 +3109,7 @@ void func_us_801B4830(Entity* self) {
     }
 }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern const char** D_us_8018168C;
 #else
 static const char* D_us_8018168C[] = {
@@ -3178,7 +3177,7 @@ void func_us_801B5068(Entity* self) {
     Entity* tempEntity;
 
     tempEntity = self - 2;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     func_psp_09264E08();
 #endif
     switch (self->step) {
@@ -3263,7 +3262,7 @@ void func_us_801B5068(Entity* self) {
         for (i = 0; i < 4; i++) {
             prim = prim->next;
         }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         i = 0;
         if (self->ext.et_801B6F30.unk7C == 0) {
             for (; i < 2; i++) {
@@ -3390,7 +3389,7 @@ void func_us_801B5068(Entity* self) {
     }
 }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern char* D_us_801816A4;
 extern const char** D_us_801816AC;
 extern const char** D_us_801816B0;
@@ -3438,7 +3437,7 @@ void func_us_801B56E4(Entity* self) {
                 drawEnv = g_CurrentBuffer->draw;
                 drawEnv.isbg = 1;
                 drawEnv.clip = clipRect;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 drawEnv.ofs[0] = 0;
 #else
                 drawEnv.ofs[0] = 0x100;
@@ -3554,7 +3553,7 @@ void func_us_801B56E4(Entity* self) {
                 }
                 func_us_801B3EC8(prim2, price, 8);
             } else {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 posX = 0x80;
                 count = 16;
                 prim2 = prim;
@@ -3570,7 +3569,7 @@ void func_us_801B56E4(Entity* self) {
                     prim = prim->next;
                     posX += 8;
                 }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 func_us_801B3FB4(prim2, D_us_801816A4, count, 1);
 #else
                 func_us_801B3FB4(prim2, D_us_801816A4, LEN(D_us_801816A4), 1);
@@ -3668,14 +3667,14 @@ void func_us_801B5F18(Entity* self) {
     Entity* tempEntity = &g_Entities[192];
     CreateEntityFromCurrentEntity(E_ID(ID_25), tempEntity);
     self->step++;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     *cutscene_data_offset_four = 0;
 #else
     D_us_80183F64 = 0;
 #endif
     if (D_8003C730 == 2) {
         D_8003C730 = 0;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         *cutscene_data_offset_four = 1;
 #else
         D_us_80183F64 = 1;
@@ -3805,7 +3804,7 @@ void func_us_801B6124(Primitive* prim, Entity* arg1) {
     Primitive* prim2;
     ShopItem* enemyTactics;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     g_Settings.D_8003CB00 |= 1;
 #endif
     itemIndex = arg1->ext.et_801B6F30.unk82;
@@ -3814,7 +3813,7 @@ void func_us_801B6124(Primitive* prim, Entity* arg1) {
         enemyTactics = &D_us_8018173C[itemIndex];
         itemId = enemyTactics->itemId;
         itemMask = g_CastleFlags[(itemId >> 3) + ENEMY_TACTICS_180];
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (g_UnlockAllTactics) {
             itemMask |= (1 << (itemId & 7));
         }
@@ -3825,7 +3824,7 @@ void func_us_801B6124(Primitive* prim, Entity* arg1) {
         } else {
             enemyTactics->category = 0;
         }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         price = 0;
 #endif
         if (g_Settings.D_8003CB00 & (1 << itemId)) {
@@ -3834,7 +3833,7 @@ void func_us_801B6124(Primitive* prim, Entity* arg1) {
             if (g_Status.gold < price) {
                 clut = 0x183;
             }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             prim =
                 func_us_801B1064(prim, 8, posY, D_us_801816C8[itemIndex], clut);
 #else
@@ -3905,7 +3904,7 @@ void func_us_801B6324(Entity* self) {
                     prim->drawMode = DRAW_HIDE;
                 } else if (i < 10) {
                     prim->type = PRIM_GT4;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     prim->tpage = 0x110;
 #else
                     prim->tpage = 0x114;
@@ -3953,7 +3952,7 @@ void func_us_801B6324(Entity* self) {
                         drawEnv = g_CurrentBuffer->draw;
                         drawEnv.isbg = 1;
                         drawEnv.clip = clipRect;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                         drawEnv.ofs[0] = 0;
 #else
                         drawEnv.ofs[0] = 0x100;
@@ -3996,7 +3995,7 @@ void func_us_801B6324(Entity* self) {
             var_v1 = 0;
             for (i = 0; i < LEN(D_us_8018173C); i++) {
                 itemID = D_us_8018173C[i].itemId;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 if (g_UnlockAllTactics) {
                     g_Settings.D_8003CB00 |= (1 << itemID);
                 }
@@ -4114,7 +4113,7 @@ void func_us_801B6324(Entity* self) {
         break;
 
     case 4:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         D_psp_08C630DC =
             self->ext.et_801B6F30.unk82 + self->ext.et_801B6F30.unk80;
 #endif
@@ -4181,7 +4180,7 @@ void func_us_801B6E20(Primitive* prim, Entity* arg1) {
     posY = 4;
     for (i = 0; i < 14; i++) {
         if ((i & 1) == 0) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             posY += 12;
             posX = 4;
 #else
@@ -4246,7 +4245,7 @@ void func_us_801B6F30(Entity* self) {
                     prim->drawMode = DRAW_HIDE;
                 } else if (i < 10) {
                     prim->type = PRIM_GT4;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     prim->tpage = 0x110;
                     prim->u0 = prim->u2 = (i - 8) * 0x74 + 4;
 #else
@@ -4265,7 +4264,7 @@ void func_us_801B6F30(Entity* self) {
                     prim->type = PRIM_G4;
                     prim->y0 = prim->y1 = 0x2B;
                     prim->y2 = prim->y3 = 0x37;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     PRED(prim) = 0x40;
                     PGRN(prim) = 0x10;
                     PBLU(prim) = 0x10;
@@ -4299,7 +4298,7 @@ void func_us_801B6F30(Entity* self) {
                         drawEnv = g_CurrentBuffer->draw;
                         drawEnv.isbg = 1;
                         drawEnv.clip = clipRect;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                         drawEnv.ofs[0] = 0;
 #else
                         drawEnv.ofs[0] = 0x100;
@@ -4498,7 +4497,7 @@ void func_us_801B6F30(Entity* self) {
         self->ext.et_801B6F30.unk7C--;
         self->ext.et_801B6F30.unk7E -= 0x40;
         prim = &g_PrimBuf[self->primIndex];
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         func_us_801B245C(prim, self->ext.et_801B6F30.unk7E,
                          self->ext.et_801B6F30.unk7C, 0x7C, 0x20, 7, 1);
 #else
@@ -4572,7 +4571,7 @@ void func_us_801B6F30(Entity* self) {
     }
 }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern const char** D_us_8018181C;
 extern const char** D_us_8018187C;
 #else
@@ -4611,7 +4610,7 @@ static u16 D_us_801818A8[] = {
     ELEMENT_ICE,   ELEMENT_WATER, ELEMENT_STONE, ELEMENT_POISON,
     ELEMENT_CURSE, ELEMENT_CUT,   ELEMENT_HIT};
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern const char** D_us_801818C0;
 #else
 static const char* D_us_801818C0[] = {
@@ -4788,7 +4787,7 @@ void func_us_801B8234(Entity* self) {
     enemyId = D_us_80180E90[self->params];
     switch (self->step) {
     case 0:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0xAE);
 #else
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x86);
@@ -4814,7 +4813,7 @@ void func_us_801B8234(Entity* self) {
                     prim->y2 = prim->y3 = 0xDE;
                     prim->priority = 0x1FA;
                     prim->drawMode = DRAW_HIDE;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 } else if (i < 10) {
                     prim->type = PRIM_GT4;
                     prim->tpage = 0x110;
@@ -4930,7 +4929,7 @@ void func_us_801B8234(Entity* self) {
         case 3:
             func_us_801B11A0(0, 0x180, 0x100, 0x60);
             pix = g_Pix[0];
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             for (i = 0; i < 4; i++) {
                 s3 = D_psp_092A5F98[i];
             }
@@ -4962,7 +4961,7 @@ void func_us_801B8234(Entity* self) {
         self->ext.et_801B6F30.unk7C++;
         self->ext.et_801B6F30.unk7E += 0x40;
         prim = &g_PrimBuf[self->primIndex];
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         func_us_801B245C(prim, self->ext.et_801B6F30.unk7E,
                          self->ext.et_801B6F30.unk7C * 2, 0x80, 0x20, 7, 0);
 #else
@@ -4977,7 +4976,7 @@ void func_us_801B8234(Entity* self) {
     case 3:
         pads = g_pads[0].repeat;
         if (pads & PAD_RIGHT) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             for (enemyIndex = self->params + 1; enemyIndex < 0x94;
                  enemyIndex++) {
 #else
@@ -5019,7 +5018,7 @@ void func_us_801B8234(Entity* self) {
         self->ext.et_801B6F30.unk7C--;
         self->ext.et_801B6F30.unk7E -= 0x40;
         prim = &g_PrimBuf[self->primIndex];
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         func_us_801B245C(prim, self->ext.et_801B6F30.unk7E,
                          self->ext.et_801B6F30.unk7C, 0x80, 0x20, 7, 0);
 #else
@@ -5043,7 +5042,7 @@ void func_us_801B8234(Entity* self) {
         self->ext.et_801B6F30.unk7C--;
         self->ext.et_801B6F30.unk7E -= 0x40;
         prim = &g_PrimBuf[self->primIndex];
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         func_us_801B245C(prim, self->ext.et_801B6F30.unk7E,
                          self->ext.et_801B6F30.unk7C * 2, 0x80, 0x20, 7, 0);
 #else
@@ -5058,7 +5057,7 @@ void func_us_801B8234(Entity* self) {
     }
 }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern const char** D_us_801818F4;
 #else
 static const char* D_us_801818F4[] = {
@@ -5167,7 +5166,7 @@ void func_us_801B8A00(Entity* self) {
         if (primIndex != -1) {
             InitializeEntity(g_EInitCommon);
             i = 0;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             self->ext.et_801B6F30.unk86 = 0;
 #endif
             self->flags |= FLAG_HAS_PRIMS;
@@ -5190,7 +5189,7 @@ void func_us_801B8A00(Entity* self) {
                     prim->drawMode = DRAW_HIDE;
                 } else if (i < 10) {
                     prim->type = PRIM_GT4;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     prim->tpage = 0x110;
 #else
                     prim->tpage = 0x114;
@@ -5208,7 +5207,7 @@ void func_us_801B8A00(Entity* self) {
                     prim->type = PRIM_G4;
                     prim->y0 = prim->y1 = 0x4B;
                     prim->y2 = prim->y3 = 0x57;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     PRED(prim) = 0x40;
                     PGRN(prim) = 0x10;
                     PBLU(prim) = 0x10;
@@ -5242,7 +5241,7 @@ void func_us_801B8A00(Entity* self) {
                         drawEnv = g_CurrentBuffer->draw;
                         drawEnv.isbg = 1;
                         drawEnv.clip = clipRect;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                         drawEnv.ofs[0] = 0;
 #else
                         drawEnv.ofs[0] = 0x100;
@@ -5267,7 +5266,7 @@ void func_us_801B8A00(Entity* self) {
                         self->flags &= ~FLAG_HAS_PRIMS;
                         return;
                     }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 } else if (i == 14) {
                     prim->tpage = 0x10;
                     prim->clut = PAL_UNK_1A1;
@@ -5291,14 +5290,14 @@ void func_us_801B8A00(Entity* self) {
             }
             self->ext.et_801B6F30.unk80 = 0;
             self->ext.et_801B6F30.unk82 = 0;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             self->ext.et_801B6F30.unk84 = 0;
 #endif
         }
         break;
 
     case 1:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (!self->step_s) {
             func_us_801B11A0(0, 0x180, 0x100, 0x60);
             pix = g_Pix[0];
@@ -5323,7 +5322,7 @@ void func_us_801B8A00(Entity* self) {
         for (i = 0; i < 15; i++) {
             prim = prim->next;
         }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         func_psp_0926ADD8(prim, self);
 #else
         func_us_801B8958(prim, self);
@@ -5335,7 +5334,7 @@ void func_us_801B8A00(Entity* self) {
         break;
 
     case 3:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         pads = g_pads[0].repeat;
         if (pads & PAD_DOWN) {
             if (self->ext.et_801B6F30.unk80 < 3) {
@@ -5411,7 +5410,7 @@ void func_us_801B8A00(Entity* self) {
         for (i = 0; i < 10; i++) {
             prim = prim->next;
         }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (!self->ext.et_801B6F30.unk84) {
             prim->x0 = prim->x2 = 0x11;
             prim->x1 = prim->x3 = 0x80;
@@ -5428,7 +5427,7 @@ void func_us_801B8A00(Entity* self) {
         prim->y2 = prim->y3 = prim->y0 + 12;
         prim->drawMode = DRAW_COLORS;
         prim = prim->next;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         prim->drawMode = DRAW_HIDE;
         prim = prim->next;
         prim->drawMode = DRAW_HIDE;
@@ -5448,7 +5447,7 @@ void func_us_801B8A00(Entity* self) {
         prim = prim->next;
         prim = prim->next;
         prim = prim->next;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         func_psp_0926ADD8(prim, self);
 #else
         func_us_801B8958(prim, self);
@@ -5456,7 +5455,7 @@ void func_us_801B8A00(Entity* self) {
         break;
 
     case 4:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         switch (self->step_s) {
         case 0:
             func_psp_0892A620(1, true);
@@ -5548,7 +5547,7 @@ void func_us_801B8A00(Entity* self) {
         break;
 
     case 9:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (self->ext.et_801B6F30.unk86) {
             g_api.PlaySfx(MU_SEQ_LIBRARIAN_PSP);
         }

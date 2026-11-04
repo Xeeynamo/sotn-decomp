@@ -34,7 +34,7 @@ static TeleportCheck GetTeleportToOtherCastle(void) {
     // Check for X/Y boundaries in RTOP
     if (g_StageId == STAGE_RTOP) {
         if (abs((g_Tilemap.left << 8) + g_PlayerX - 8384) < 4 &&
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
             abs((g_Tilemap.top << 8) + g_PlayerY - 14407) < 4) {
 #else
             abs((g_Tilemap.top << 8) + g_PlayerY) - 14407 < 4) {
@@ -575,7 +575,7 @@ void MarMain(void) {
                 g_Maria.padPressed = g_Maria.padSim;
             } else {
                 g_Maria.padPressed = g_pads[0].pressed;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 if (D_pspeu_092E5F20 > 0) {
                     D_pspeu_092E5F20--;
                     g_Maria.padPressed = 0;

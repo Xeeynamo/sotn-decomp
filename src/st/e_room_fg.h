@@ -3,7 +3,7 @@
 
 extern EInit g_EInitCommon;
 
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
 static u8 foregroundAnim1[] = {64, 1, -1, 0};
 static u8 foregroundAnim2[] = {64, 2, -1, 0};
 static u8 foregroundAnim3[] = {64, 1, -1, 0};
@@ -45,7 +45,7 @@ void EntityRoomForeground(Entity* entity) {
         if (objInit->flags != 0) {
             entity->flags = objInit->flags;
         }
-#ifndef STAGE_IS_TEK
+#if VERSION >= VER_BETA_MAD
         if (entity->params > 4) {
             entity->drawFlags |= DRAW_COLORS;
             entity->rotate = ROT(180);

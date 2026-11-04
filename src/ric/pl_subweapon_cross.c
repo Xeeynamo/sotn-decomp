@@ -198,7 +198,7 @@ void RicEntityRevivalColumn(Entity* self) {
 static AnimationFrame anim_cross_boomerang[] = {
     POSE(36, 1, 0), POSE(1, 2, 0), POSE(1, 3, 0), POSE(1, 4, 0), POSE(1, 5, 0),
     POSE(1, 6, 0),  POSE(1, 7, 0), POSE(1, 8, 0), POSE_LOOP(0)};
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 extern Point16 D_80175088[4][128];
 extern s32 D_80175888;
 #else
@@ -376,7 +376,7 @@ void func_80169C10(Entity* self) {
         self->velocityY = FIX(0.5);
         self->posX.i.hi += (rand() & 0xF) - 8;
         self->posY.i.hi += (rand() & 0xF) - 4;
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
         prim = &g_PrimBuf[self->primIndex];
         prim->clut = PAL_UNK_1B0;
 #endif
@@ -401,7 +401,7 @@ void func_80169C10(Entity* self) {
 // made by blueprint #5, see step 0 of RicEntitySubwpnCross
 static s16 D_80155E68[] = {
     9, 10, 11, 12,
-#if defined(VERSION_PSP) // @bug: not sure if this is a bugfix for an array oob
+#if TARGET == TARGET_PSP // @bug: not sure if this is a bugfix for an array oob
     0, 0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 #endif
