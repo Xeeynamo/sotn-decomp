@@ -862,7 +862,7 @@ void SetDefaultSCLPriority(s32 arg0) {
     u8* ptr;
 
     if (g_CurrentRoom.unk4 < 0x20) {
-        ptr = &DAT_060645b8[g_CurrentRoom.unk4 * 12];
+        ptr = &DAT_060645B8[g_CurrentRoom.unk4 * 12];
         SCL_SetPriority(0x4, ptr[0]);
         SCL_SetPriority(0x8, ptr[1]);
         SCL_SetPriority(0x10, ptr[2]);
