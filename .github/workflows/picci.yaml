@@ -141,7 +141,9 @@ jobs:
         token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
     - uses: actions/setup-go@v7
       with:
-        go-version: '^1.22.4'
+        go-version-file: 'go.work'
+        cache: true
+        cache-dependency-path: "**/*.sum"
     - name: Generate assets
       run: |
         cd tools/sotn-assets; go install; cd -
