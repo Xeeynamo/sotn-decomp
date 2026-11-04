@@ -161,8 +161,8 @@ jobs:
         & make build_assets SOTNASSETS=$SOTN_ASSETS
     - name: Build
       run: |
-        cmake -B ${{github.workspace}}/pc -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
-        cmake --build ${{github.workspace}}/pc --config ${{ matrix.build_type }}
+        cmake -G Ninja -B ${{github.workspace}}/pc -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+        cmake --build ${{github.workspace}}/pc
     - name: Test demo playback
       timeout-minutes: 15
       shell: bash
