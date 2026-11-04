@@ -114,7 +114,8 @@ RoomTeleport D_800A245C[] = {
     {752, 132, 0x0068, 0x0037, STAGE_NO2},
     {496, 132, 0x0000, 36, STAGE_MAR},
     {128, 388, 0x0000, 0x0038, STAGE_CEN},
-#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_USPROTO) || defined(VERSION_JP11)
     {496, 132, 0x0000, 0x0001, STAGE_BO4},
 #else
     {128, 77, 0x0010, 0x0028, STAGE_BO6},
@@ -193,7 +194,8 @@ RoomBossTeleport g_RoomBossTeleports[] = {
     {0x14, 0x16, STAGE_ARE, TIMEATTACK_EVENT_MINOTAUR_WEREWOLF_DEFEAT, 0x73},
     {0x28, 0x27, STAGE_NO4, TIMEATTACK_EVENT_SCYLLA_DEFEAT, 0x6F},
     {0x39, 0x17, STAGE_NO1, TIMEATTACK_EVENT_DOPPLEGANGER_10_DEFEAT, 0x6C},
-#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_USPROTO) || defined(VERSION_JP11)
     {0x3A, 0x17, STAGE_NO1, TIMEATTACK_EVENT_DOPPLEGANGER_10_DEFEAT, 0x48},
 #endif
     {0x17, 0x0D, STAGE_DAI, TIMEATTACK_EVENT_HYPPOGRYPH_DEFEAT, 0x68},
@@ -1653,7 +1655,7 @@ void RunMainEngine(void) {
                 PlaySfx(SET_RELEASE_RATE_LOW_22_23);
                 PlaySfx(SET_RELEASE_RATE_LOW_20_21);
                 PlaySfx(SET_PAUSE_SFX_SCRIPTS);
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
                 if (g_StageId == STAGE_ST0) {
                     MuteCd();
                 }
@@ -1683,13 +1685,19 @@ void RunMainEngine(void) {
         DrawHudSubweapon2();
 #else
         DrawHudSubweapon();
+#if defined(VERSION_EU) || defined(VERSION_HK)
+        if (g_pads[0].tapped & PAD_SELECT) {
+            g_Settings.isSoundMono ^= 1;
+            func_800E493C();
+        }
+#endif
         if ((g_pads[0].tapped & PAD_START) && StatusPause(1)) {
             D_800974A4 = 0;
             g_GameEngineStep = Engine_Normal;
             PlaySfx(SET_UNPAUSE_SFX_SCRIPTS);
             PlaySfx(SET_KEY_ON_20_21);
             PlaySfx(SET_KEY_ON_22_23);
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
             if (g_StageId == STAGE_ST0) {
                 UnMuteCd();
             }
@@ -1896,7 +1904,8 @@ void RunMainEngine(void) {
             if (D_80097C98 == 3) {
                 g_GameEngineStep = Engine_Normal;
             }
-#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_USPROTO) || defined(VERSION_JP11)
             func_8011A9D8();
 #endif
             g_MenuStep++;

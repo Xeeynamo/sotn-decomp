@@ -135,6 +135,18 @@ void HandleTitle(void) {
         func_800EA538(0);
         ResetPendingGfxLoad();
         SetStageDisplayBuffer();
+#if defined(VERSION_EU)
+        if (g_GameState == Game_Init) {
+            if (g_IsUsingCd) {
+                return;
+            }
+            g_StageId = STAGE_EU_WARNING;
+            g_LoadFile = CdFile_StagePrg;
+            g_CdStep = CdStep_LoadInit;
+            g_GameStep = 100;
+            break;
+        }
+#endif
         g_StageId = STAGE_SEL;
         if (g_UseDisk) {
             if (g_IsUsingCd) {
@@ -148,7 +160,7 @@ void HandleTitle(void) {
 #endif
         g_GameStep++;
         break;
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
     case 100:
         if (!g_IsUsingCd) {
             RECT rect;
@@ -166,6 +178,9 @@ void HandleTitle(void) {
             SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 0x100, 0x280, 0x100);
             SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 0x100, 0x280, 0x100);
             SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, 0x280, 0x100);
+#if defined(VERSION_EU)
+            g_GpuBuffers[0].disp.screen.y = g_GpuBuffers[1].disp.screen.y = 24;
+#endif
             SetDispMask(0);
             D_8013640C = 110;
             g_GameStep++;
@@ -204,14 +219,14 @@ void HandleTitle(void) {
         g_GameStep++;
         break;
     case 2:
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
         g_GameStep = 3;
 #else
         g_GameStep++;
 #endif
         break;
     case 3:
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
         g_GameStep = 4;
 #else
         g_GameStep++;
@@ -222,7 +237,7 @@ void HandleTitle(void) {
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_StagePrg;
         }
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
         g_GameStep = 5;
 #else
         g_GameStep++;
@@ -242,7 +257,7 @@ void HandleTitle(void) {
         g_GameEngineStep = Engine_Init;
         break;
     case 6:
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
         if (g_GameState == Game_Title) {
             callback = g_api.o.HitDetection;
             callback();
@@ -452,8 +467,16 @@ void HandlePlay(void) {
             g_Settings.windowColors[1] = 0;
             g_Settings.windowColors[2] = 8;
             g_Settings.isCloakLiningReversed = 0;
+#if defined(VERSION_EU) || defined(VERSION_HK)
+            if (g_StageId == STAGE_ST0 ||
+                g_PlayableCharacter != PLAYER_ALUCARD) {
+                g_Settings.isSoundMono = true;
+                func_800E493C();
+            }
+#else
             g_Settings.isSoundMono = true;
             func_800E493C();
+#endif
             for (i = 0; i < LEN(g_Settings.equipOrderTypes); i++) {
                 g_Settings.equipOrderTypes[i] = i;
             }
@@ -940,7 +963,7 @@ void HandleGameOver(void) {
             func_psp_091040A0(D_psp_09156F28);
         }
 #endif
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
         PlaySfx(MU_LAND_OF_BENEDICTION);
 #else
         if (g_PlayableCharacter != PLAYER_ALUCARD) {
@@ -1935,7 +1958,8 @@ void HandleVideoPlayback(void) {
 #if !defined(VERSION_PSP)
             if (temp == 96) {
                 prim2 = prim->next;
-#if defined(VERSION_US) || defined(VERSION_USPROTO)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_USPROTO)
                 prim2->drawMode = DRAW_HIDE;
 #elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
                 prim2->drawMode = DRAW_DEFAULT;
@@ -2204,12 +2228,16 @@ void HandleEnding(void) {
         g_api.o.UpdateStageEntities();
         break;
     case 10:
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
         PlaySfx(18);
         PlaySfx(11);
         MuteSound();
 #endif
+#if defined(VERSION_EU)
+        SetGameState(Game_99);
+#else
         SetGameState(Game_Init);
+#endif
         break;
     case 256:
         g_StageId = STAGE_TOP_ALT;
@@ -2227,7 +2255,7 @@ void UpdateGame(void) {
     case Game_Title:
         HandleTitle();
         break;
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
     case Game_99:
         HandleTitle();
         break;

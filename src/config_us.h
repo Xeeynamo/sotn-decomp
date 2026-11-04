@@ -101,11 +101,17 @@ const char* g_MenuStr[] = {
     _S("Defeat Granfaloon"),
 #if defined(VERSION_USPROTO)
     _S("Defeat Minotaurus and Werewolf"),
+#elif defined(VERSION_EU) || defined(VERSION_HK)
+    _S("Defeat Minotaur & Werewolf"),
 #else
     _S("Defeat Minotaur and Werewolf"),
 #endif
     _S("Defeat Scylla"),
+#if defined(VERSION_EU) || defined(VERSION_HK)
+    _S("Defeat Slogra & Gaibon"),
+#else
     _S("Defeat Slogra and Gaibon"),
+#endif
     _S("Defeat Hippogryph"),
 #if defined(VERSION_USPROTO)
     _S("Defeat Beezelbub"),
@@ -114,7 +120,11 @@ const char* g_MenuStr[] = {
 #endif
     _S("Defeat Succubus"),
     _S("Defeat Karasuman"),
+#if defined(VERSION_EU) || defined(VERSION_HK)
+    _S("Defeat Trevor, Grant & Sypha"),
+#else
     _S("Defeat Ralph, Grant & Sypha"),
+#endif
     _S("Defeat Death"),
 #if defined(VERSION_USPROTO)
     _S("Defeat Cerberos"),

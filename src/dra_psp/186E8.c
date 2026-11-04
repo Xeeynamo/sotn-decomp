@@ -63,10 +63,6 @@ extern RelicDesc* D_psp_091CF814;
 
 extern s32 D_psp_091FC4A0;
 extern s32 D_psp_091CE1E8;
-extern s32 D_psp_091FC3F8;
-extern s32 D_psp_091FC400;
-extern s32 D_psp_091FC408;
-extern s32 D_psp_091FC410;
 extern s32 g_DebugEnabled2;
 
 // BSS
@@ -79,7 +75,7 @@ s32 g_DebugPalIdx;
 DebugColorChannel g_DebugColorChannel;
 u32 D_801362C8;
 OT_TYPE* g_CurrentOT;
-s32 D_psp_091CE2A0;
+s32 D_801362D4;
 s32 g_DebugIsRecordingVideo;
 GpuUsage g_GpuMaxUsage;
 s32 g_DebugWaitInfoTimer;
@@ -1560,7 +1556,7 @@ loop_5:
         RenderPrimitives();
         DrawSync(0);
         D_psp_091CE1E8 = 1;
-        D_psp_091CE2A0 = GsGetVcount();
+        D_801362D4 = GsGetVcount();
         GsClearVcount();
         func_psp_090F5520();
         InitVCount();
@@ -1609,10 +1605,10 @@ loop_5:
         }
 
         // Update game timer
-        D_psp_091CE2A0 = (D_psp_091CE2A0 + 0xFF) >> 8;
-        g_MapCursorTimer += D_psp_091CE2A0;
+        D_801362D4 = (D_801362D4 + 0xFF) >> 8;
+        g_MapCursorTimer += D_801362D4;
         if (D_800973EC == 0 && D_800974A4 == 0) {
-            g_Status.timerFrames += D_psp_091CE2A0;
+            g_Status.timerFrames += D_801362D4;
             if (g_Status.timerFrames >= 60) {
                 g_Status.timerFrames -= 60;
                 g_Status.timerSeconds++;
@@ -1631,18 +1627,18 @@ loop_5:
                 }
             }
             // PSP apparently has another timekeeping system?
-            D_psp_091FC3F8 += D_psp_091CE2A0;
-            if (D_psp_091FC3F8 >= 60) {
-                D_psp_091FC3F8 -= 60;
-                D_psp_091FC400++;
-                if (D_psp_091FC400 >= 60) {
-                    D_psp_091FC400 -= 60;
-                    D_psp_091FC408++;
-                    if (D_psp_091FC408 >= 60) {
-                        D_psp_091FC408 -= 60;
-                        D_psp_091FC410++;
-                        if (D_psp_091FC410 >= 12) {
-                            D_psp_091FC410 -= 12;
+            g_TimerCopyFrames += D_801362D4;
+            if (g_TimerCopyFrames >= 60) {
+                g_TimerCopyFrames -= 60;
+                g_TimerCopySeconds++;
+                if (g_TimerCopySeconds >= 60) {
+                    g_TimerCopySeconds -= 60;
+                    g_TimerCopyMinutes++;
+                    if (g_TimerCopyMinutes >= 60) {
+                        g_TimerCopyMinutes -= 60;
+                        g_TimerCopyHours++;
+                        if (g_TimerCopyHours >= 12) {
+                            g_TimerCopyHours -= 12;
                         }
                     }
                 }

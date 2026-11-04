@@ -3,7 +3,7 @@
 #include "dra_bss.h"
 #include "lba.h"
 
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
 #define PAD_RESETCOMBO ((PAD_START) | (PAD_SELECT))
 #elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) || \
     defined(VERSION_USPROTO)
@@ -30,7 +30,7 @@ static GpuUsage g_GpuMaxUsage;
 static s32 g_DebugWaitInfoTimer;
 static s32 g_DebugRecordVideoFid;
 static s16 D_80136308[128];
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
 static s32 g_softResetTimer;
 #endif
 
@@ -676,6 +676,9 @@ void func_800E34DC(s32 arg0) {
     SetGPUBuffRGBZero();
     g_GpuBuffers[0].draw.dtd = g_GpuBuffers[1].draw.dtd = 0;
     g_GpuBuffers[0].disp.isrgb24 = g_GpuBuffers[1].disp.isrgb24 = 0;
+#if defined(VERSION_EU)
+    g_GpuBuffers[0].disp.screen.y = g_GpuBuffers[1].disp.screen.y = 24;
+#endif
 }
 
 void SetStageDisplayBuffer(void) {
@@ -713,11 +716,12 @@ static void SetTitleDisplayBuffer(void) {
     g_GpuBuffers[1].draw.clip.h = DISP_TITLE_H;
     g_GpuBuffers[0].draw.clip.h = DISP_TITLE_H;
     g_GpuBuffers[0].draw.clip.y = 0;
-    g_GpuBuffers[1].draw.isbg = 1;
-    g_GpuBuffers[0].draw.isbg = 1;
+    g_GpuBuffers[0].draw.isbg = g_GpuBuffers[1].draw.isbg = 1;
     SetGPUBuffRGBZero();
-    g_GpuBuffers[1].disp.isrgb24 = 0;
-    g_GpuBuffers[0].disp.isrgb24 = 0;
+    g_GpuBuffers[0].disp.isrgb24 = g_GpuBuffers[1].disp.isrgb24 = 0;
+#if defined(VERSION_EU)
+    g_GpuBuffers[0].disp.screen.y = g_GpuBuffers[1].disp.screen.y = 24;
+#endif
 }
 
 void func_800E385C(OT_TYPE* ot) {
@@ -774,8 +778,10 @@ void MainGame(void) {
 #endif
     s32 i;
 
-#if defined(VERSION_US)
-    SetVideoMode(0);
+#if defined(VERSION_EU)
+    SetVideoMode(MODE_PAL);
+#elif defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
+    SetVideoMode(MODE_NTSC);
 #endif
     InitializePads();
     InitCARD(1);
@@ -800,8 +806,8 @@ void MainGame(void) {
     g_Settings.D_8003CB00 = 0;
     g_Settings.D_8003CB04 = 0;
     g_CurrentBuffer = &g_GpuBuffers[0];
-#if defined(VERSION_US) || defined(VERSION_USPROTO) ||                         \
-    defined(VERSION_JP10) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_USPROTO) || defined(VERSION_JP10) || defined(VERSION_JP11)
     SetCdPos(OFF_SD_XA_STR1);
 #elif defined(VERSION_HD)
     do {
@@ -827,8 +833,8 @@ void MainGame(void) {
     g_GpuMaxUsage.tile = 0;
     g_GpuMaxUsage.sp = 0;
     g_GpuMaxUsage.env = 0;
-#if defined(VERSION_US) || defined(VERSION_USPROTO) ||                         \
-    defined(VERSION_JP10) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_USPROTO) || defined(VERSION_JP10) || defined(VERSION_JP11)
     g_DebugPlayer = 0;
 #elif defined(VERSION_HD)
     g_DebugPlayer = 1;
@@ -866,7 +872,7 @@ loop_5:
     D_80097904 = 0;
     D_8006C3AC = 0;
     D_80097C98 = 0;
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
     g_softResetTimer = 0;
 #endif
     D_800978C4 = 1;
@@ -913,7 +919,7 @@ loop_5:
         GsClearVcount();
         LoadPendingGfx();
         ReadPads();
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
         if ((g_pads[0].pressed & PAD_RESETCOMBO) == PAD_RESETCOMBO) {
             if (g_pads[0].tapped & PAD_START) {
                 g_softResetTimer = 1;
@@ -926,7 +932,11 @@ loop_5:
         } else {
             g_softResetTimer = 0;
         }
+#if defined(VERSION_EU) || defined(VERSION_HK)
+        if (g_softResetTimer >= 0x80 && !g_IsUsingCd && D_800978C4 != 0) {
+#else
         if (g_softResetTimer >= 0x80) {
+#endif
             g_softResetTimer = 0;
 #elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) || \
     defined(VERSION_USPROTO)
@@ -993,8 +1003,13 @@ loop_5:
         g_MapCursorTimer += D_801362D4;
         if (D_800973EC == 0 && D_800974A4 == 0) {
             g_Status.timerFrames += D_801362D4;
+#if defined(VERSION_EU)
+            if (g_Status.timerFrames >= 50) {
+                g_Status.timerFrames -= 50;
+#else
             if (g_Status.timerFrames >= 60) {
                 g_Status.timerFrames -= 60;
+#endif
                 g_Status.timerSeconds++;
                 if (g_Status.timerSeconds >= 60) {
                     g_Status.timerSeconds -= 60;
@@ -1010,6 +1025,29 @@ loop_5:
                     }
                 }
             }
+#if defined(VERSION_EU) || defined(VERSION_HK)
+            g_TimerCopyFrames += D_801362D4;
+#if defined(VERSION_EU)
+            if (g_TimerCopyFrames >= 50) {
+                g_TimerCopyFrames -= 50;
+#else
+            if (g_TimerCopyFrames >= 60) {
+                g_TimerCopyFrames -= 60;
+#endif
+                g_TimerCopySeconds++;
+                if (g_TimerCopySeconds >= 60) {
+                    g_TimerCopySeconds -= 60;
+                    g_TimerCopyMinutes++;
+                    if (g_TimerCopyMinutes >= 60) {
+                        g_TimerCopyMinutes -= 60;
+                        g_TimerCopyHours++;
+                        if (g_TimerCopyHours >= 12) {
+                            g_TimerCopyHours -= 12;
+                        }
+                    }
+                }
+            }
+#endif
         }
         rand();
 #if defined(VERSION_HD)

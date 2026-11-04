@@ -24,6 +24,8 @@ void* ResetCallback(void);
 void StopCallback(void);
 long RestartCallback(void);
 int CheckCallback(void);
+#define MODE_NTSC 0
+#define MODE_PAL 1
 long SetVideoMode(long mode);
 void PadInit(int mode);
 u_long PadRead(int id);

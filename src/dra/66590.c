@@ -131,7 +131,7 @@ u16 g_CharBuffer[0x30];
 #endif
 
 u16 g_SjisPages[] = {
-#if !defined(VERSION_US)
+#if !defined(VERSION_US) && !defined(VERSION_EU) && !defined(VERSION_HK)
     '踪',   '眷', '翔', '彷', '徨', '苺', '獰', '賤', '贄',
 #endif
 
@@ -146,7 +146,7 @@ u16 g_SjisPages[] = {
 };
 
 u8 g_CustomGlyphs[][30] = {
-#if !defined(VERSION_US)
+#if !defined(VERSION_US) && !defined(VERSION_EU) && !defined(VERSION_HK)
     {
         0x00, 0x20, // □□□□□□□□□□■□□□□□
         0x7C, 0x20, // □■■■■■□□□□■□□□□□

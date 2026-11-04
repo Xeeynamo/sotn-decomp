@@ -104,10 +104,6 @@ char* g_AxeArmorCode = "axearmor";
 #if defined(VERSION_PSP)
 extern s32 D_psp_091CDC80;
 extern s32 D_psp_091CDC88;
-extern s32 D_psp_091FC3F8;
-extern s32 D_psp_091FC400;
-extern s32 D_psp_091FC408;
-extern s32 D_psp_091FC410;
 #endif
 
 // original name: status_work_init
@@ -287,8 +283,9 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         g_Status.timerMinutes = 0;
         g_Status.timerSeconds = 0;
         g_Status.timerFrames = 0;
-#if defined(VERSION_PSP)
-        D_psp_091FC3F8 = D_psp_091FC400 = D_psp_091FC408 = D_psp_091FC410 = 0;
+#if defined(VERSION_PSP) || defined(VERSION_EU) || defined(VERSION_HK)
+        g_TimerCopyFrames = g_TimerCopySeconds = g_TimerCopyMinutes =
+            g_TimerCopyHours = 0;
 #endif
         make_all();
         return;
@@ -472,7 +469,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         g_Status.heartsMax = 2000;
         g_Status.gold = 500000;
         g_Status.exp = 11000;
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
         g_Status.level = 20;
 #endif
 #if !defined(VERSION_HD) && !defined(VERSION_JP10)
@@ -501,7 +498,8 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         }
 #endif
 
-#if defined(VERSION_US) || defined(VERSION_USPROTO)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_USPROTO)
         g_Status.equipment[LEFT_HAND_SLOT] = ITEM_SHORT_SWORD;
         g_Status.equipment[RIGHT_HAND_SLOT] = ITEM_LEATHER_SHIELD;
         g_Status.equipment[HEAD_SLOT] = ITEM_EMPTY_HEAD;
@@ -513,6 +511,10 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         g_Status.timerMinutes = 0;
         g_Status.timerSeconds = 0;
         g_Status.timerFrames = 0;
+#if defined(VERSION_EU) || defined(VERSION_HK)
+        g_TimerCopyFrames = g_TimerCopySeconds = g_TimerCopyMinutes =
+            g_TimerCopyHours = 0;
+#endif
         g_Status.subWeapon = 0;
         g_Status.relics[RELIC_CUBE_OF_ZOE] = 3;
         g_Status.relics[RELIC_SPIRIT_ORB] = 3;
@@ -579,7 +581,8 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         g_Status.timerSeconds = 0;
         g_Status.timerFrames = 0;
 #ifdef VERSION_PSP
-        D_psp_091FC3F8 = D_psp_091FC400 = D_psp_091FC408 = D_psp_091FC410 = 0;
+        g_TimerCopyFrames = g_TimerCopySeconds = g_TimerCopyMinutes =
+            g_TimerCopyHours = 0;
 #endif
         g_Status.subWeapon = SUBWPN_STOPWATCH;
 

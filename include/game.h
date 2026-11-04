@@ -237,7 +237,11 @@ typedef enum {
 #else
 #define PAD_SHOULDERS (PAD_L1 | PAD_R1 | PAD_L2 | PAD_R2)
 #define BTN_WOLF PAD_R2
+#if defined(VERSION_EU) || defined(VERSION_HK)
+#define WOLF_CHARGE_ATK_BTN (PAD_SQUARE | PAD_CIRCLE)
+#else
 #define WOLF_CHARGE_ATK_BTN (PAD_SQUARE)
+#endif
 #define BTN_MIST PAD_L1
 #endif
 
@@ -504,7 +508,11 @@ typedef struct {
     /* 0x268 */ u8 blocks[BLOCK_PER_CARD];
 } MemcardInfo; /* size=0x278 */
 
-#if defined(VERSION_US)
+#if defined(VERSION_EU)
+#define MEMCARD_ID "BESLES-00524DRAX00"
+#elif defined(VERSION_HK)
+#define MEMCARD_ID "BISCPS-45196DRAX00"
+#elif defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
 #define MEMCARD_ID "BASLUS-00067DRAX00"
 #else
 #define MEMCARD_ID "BISLPM-86023DRAX00"
@@ -1052,7 +1060,7 @@ typedef struct {
 #define RELIC_FLAG_DISABLE 0
 #define RELIC_FLAG_FOUND 1
 #define RELIC_FLAG_ACTIVE 2
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
 #define NUM_AVAIL_RELICS (NUM_RELICS - 2)
 #else
 #define NUM_AVAIL_RELICS (NUM_RELICS)
@@ -1240,8 +1248,13 @@ typedef struct {
     /* 0x04 */ char Title[64];
     /* 0x44 */ u8 reserve[28];
     /* 0x60 */ u8 Clut[32];
+#if defined(VERSION_EU)
+    /* 0x80 */ u8 Icon[128];
+} MemcardHeader; /* size=0x100 */
+#else
     /* 0x80 */ u8 Icon[3 * 128];
 } MemcardHeader; /* size=0x200 */
+#endif
 
 typedef struct {
     /* 0x00 */ char name[12];
@@ -2110,7 +2123,7 @@ typedef struct {
     RECT D_800ACDD8;
     RECT D_800ACDE0;
     RECT D_800ACDE8;
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
     RECT D_800ACDF0;
 #endif
 } Vram;
@@ -2141,6 +2154,12 @@ extern s16 D_8003C710;
 extern s16 D_8003C712;
 extern s32 D_8003C728;
 extern s32 D_8003C730;
+#if defined(VERSION_PSP) || defined(VERSION_EU) || defined(VERSION_HK)
+extern s32 g_TimerCopyFrames;
+extern s32 g_TimerCopyHours;
+extern s32 g_TimerCopySeconds;
+extern s32 g_TimerCopyMinutes;
+#endif
 extern GameState g_GameState;
 extern s32 D_8003C738;
 extern s32 D_8003C73C;

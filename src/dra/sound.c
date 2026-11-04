@@ -50,7 +50,7 @@ static s16 D_800BD17C[][2] = {
 s32 g_DebugEnabled = 0;
 s32 D_800BD1C4 = 0;
 
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
 s32 g_VabAddrs[] = {0x00001010, 0x00042CC0, 0x00050E50,
                     0x00060A40, 0x00060A40, 0x00060A40};
 #else // VERSION_HD

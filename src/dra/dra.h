@@ -628,7 +628,7 @@ extern Point16 g_SensorsCeiling[];
 extern Point16 g_SensorsFloor[];
 extern Point16 g_SensorsWall[];
 
-#if !defined(VERSION_US)
+#if !defined(VERSION_US) && !defined(VERSION_EU) && !defined(VERSION_HK)
 extern s32 D_800ACEDC_hd;
 #define TRANSFORM_LOCKOUT_TIMER D_800ACEDC_hd
 #else

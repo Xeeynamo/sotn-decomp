@@ -2,7 +2,13 @@
 #ifndef LBA_H
 #define LBA_H
 
-#if defined(VERSION_US)
+#if defined(VERSION_EU)
+#include "lba_eu.h"
+
+#elif defined(VERSION_HK)
+#include "lba_hk.h"
+
+#elif defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
 #include "lba_us.h"
 
 #elif defined(VERSION_USPROTO)

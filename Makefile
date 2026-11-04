@@ -93,7 +93,7 @@ endif
 
 ##@ Variables
 ##@
-##@     VERSION              the game version to build (us, hd, jp10, jp11, usproto, pspeu, saturn, pc) (Default: us)
+##@     VERSION              the game version to build (us, hd, jp10, jp11, usproto, eu, hk, pspeu, saturn, pc) (Default: us)
 ##@
 ##@ Primary Targets
 ##@
@@ -118,12 +118,14 @@ extract_hd: extract_assets
 extract_jp10: extract_assets
 extract_jp11: extract_assets
 extract_usproto: extract_assets
+extract_eu: extract_assets
+extract_hk: extract_assets
 extract_pspeu: extract_assets
 
 .PHONY: build
 build: ##@ build game files
 build: build_$(VERSION)
-build_us build_hd build_jp10 build_jp11 build_usproto build_pspeu build_saturn:
+build_us build_hd build_jp10 build_jp11 build_usproto build_eu build_hk build_pspeu build_saturn:
 	@./sotn.sh build $(subst build_,,$@)
 .PHONY: build_all
 build_all:

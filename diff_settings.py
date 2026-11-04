@@ -37,7 +37,7 @@ def apply(config, args):
     name = re.sub(
         r"^(?:st|bos?s?)/?(?=[a-z])",
         "",
-        f"{args.overlay.upper() if version in ('us', 'jp10', 'jp11', 'usproto') else args.overlay.lower()}",
+        f"{args.overlay.upper() if version in ('us', 'jp10', 'jp11', 'usproto', 'eu', 'hk') else args.overlay.lower()}",
         flags=re.IGNORECASE,
     )
 
@@ -48,6 +48,8 @@ def apply(config, args):
         "jp10": "disks/jp10",
         "jp11": "disks/jp11",
         "usproto": "disks/usproto",
+        "eu": "disks/eu",
+        "hk": "disks/hk",
     }
     binaryExt = {
         "us": "BIN",
@@ -56,6 +58,8 @@ def apply(config, args):
         "jp10": "BIN",
         "jp11": "BIN",
         "usproto": "BIN",
+        "eu": "BIN",
+        "hk": "BIN",
     }
     path_prefix = ""
     name_prefix = ""

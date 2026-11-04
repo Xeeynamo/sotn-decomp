@@ -25,11 +25,11 @@ s16 D_800AC998[] = {
     0x340, 0x360, 0x380, 0x3A0, 0x380, 0x3A0, 0x3C0, 0x3E0, 0x3C0, 0x3E0,
 };
 
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
 CdFile g_LbaBinTitle = {0x63D6, 0, 0x80000, 0, 0, 0xFF, 0};
 CdFile g_LbaBinProlo = {0x62D6, 6, 0x80000, 0, 0, 0xFF, 0};
 CdFile g_LbaBinGame = {0x0000, 1, 0x42000, 0, 0, 0x13, 0};
-CdFile g_LbaStageChr = {0x7E5D, 2, 0x40000, 0, 0, 0xFF, 0};
+CdFile g_LbaStageChr = {ST_NO0_F_BIN_OFF, 2, 0x40000, 0, 0, 0xFF, 0};
 CdFile g_LbaSdAlkVh = {0x610D, 19, 0x01020, 1, 1, 0xFF, 7};
 CdFile g_LbaSdAlkVb = {0x6110, 17, 0x0E160, 1, 1, 0xFF, 0};
 CdFile g_LbaSdRihVh = {0x612D, 19, 0x01020, 1, 1, 0x16, 21};
@@ -746,7 +746,7 @@ void PlaySfx(s32);
 void SsVabClose(short);
 
 void UpdateCd(void) {
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
     const bool UseEuWarning = true;
 #elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) || \
     defined(VERSION_USPROTO)

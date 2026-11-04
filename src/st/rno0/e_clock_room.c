@@ -63,14 +63,10 @@ void UpdateBirdcages(Entity* self, u32 timerMinutes) {
 }
 
 #ifdef VERSION_PSP
-extern s32 D_91FC3F8;
-extern s32 D_91FC400;
-extern s32 D_91FC408;
-extern s32 D_91FC410;
-#define timer_frames D_91FC3F8
-#define timer_seconds D_91FC400
-#define timer_minutes D_91FC408
-#define timer_hours D_91FC410
+#define timer_frames g_TimerCopyFrames
+#define timer_seconds g_TimerCopySeconds
+#define timer_minutes g_TimerCopyMinutes
+#define timer_hours g_TimerCopyHours
 void UpdateClockHands(Entity* self) {
 #else
 #define timer_frames status->timerFrames

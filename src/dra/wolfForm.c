@@ -352,7 +352,8 @@ void WolfStepS_7(void) {
     } else if (!(g_Player.vram_flag & TOUCHING_GROUND)) {
         func_8012CFA8();
     } else {
-#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_USPROTO) || defined(VERSION_JP11)
         if (PLAYER.facingLeft) {
             if (g_Player.padPressed & PAD_LEFT) {
                 func_8012CB4C();
@@ -951,7 +952,7 @@ void WolfStepS_3(void) {
 void WolfStepS_0(void) {
     s32 i, j; // Not nested, just two iterators for two loops
     Entity* entity;
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
     if (g_Entities[16].entityId != 0x22) {
         if (CreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x23), 0) == NULL) {
@@ -1002,7 +1003,7 @@ void WolfStepS_0(void) {
     PLAYER.animSet = 0xF;
     PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
 
-#if !defined(VERSION_US)
+#if !defined(VERSION_US) && !defined(VERSION_EU) && !defined(VERSION_HK)
     if (g_Entities[16].entityId != 0x22) {
         CreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x23), 0);
@@ -1092,7 +1093,8 @@ void PlayerStepUnmorphWolf(void) {
         break;
     case 2:
         if (g_Player.unk66 == 3) {
-#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_USPROTO) || defined(VERSION_JP11)
             PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
 #endif
 
@@ -1160,7 +1162,8 @@ void PlayerStepMorphWolf(void) {
 
     PLAYER.palette = PAL_ALUCARD_WOLF;
     PLAYER.blendMode = BLEND_NO;
-#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_USPROTO) || defined(VERSION_JP11)
     PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter - 2;
 #endif
     if (WolfFormFinished()) {
@@ -1228,7 +1231,8 @@ void PlayerStepMorphWolf(void) {
     if (D_80138430 > 0xA00) {
         D_80138430 = 0xA00;
     }
-#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_USPROTO) || defined(VERSION_JP11)
     PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter - 2;
 #endif
 }
@@ -1289,7 +1293,8 @@ static void func_8012F178(Primitive* prim, s32 count, bool finishUp) {
                 DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
             s->helper->state++;
         case 1:
-#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_USPROTO) || defined(VERSION_JP11)
             s->prim->priority = PLAYER.zPriority - 6;
 #endif
             s->prim->drawMode |= DRAW_HIDE;
@@ -1315,7 +1320,8 @@ static void func_8012F178(Primitive* prim, s32 count, bool finishUp) {
                 s->prim->b1 = s->prim->g1 = s->prim->r2 = s->prim->b2 =
                     s->prim->g2 = s->prim->r3 = s->prim->b3 = s->prim->g3 =
                         0x80;
-#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_USPROTO) || defined(VERSION_JP11)
             s->prim->priority = PLAYER.zPriority - 6;
 #endif
             s->helper->timer = 0x20;
@@ -1349,7 +1355,8 @@ static void func_8012F178(Primitive* prim, s32 count, bool finishUp) {
                 s->prim->b2 = s->prim->g2;
             s->prim->r1 = s->prim->b1 = s->prim->g1 = s->prim->r3 =
                 s->prim->b3 = s->prim->g3;
-#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_USPROTO) || defined(VERSION_JP11)
             s->prim->priority = PLAYER.zPriority - 6;
 #endif
             if (--s->helper->timer == 0) {
@@ -1465,14 +1472,16 @@ void func_8012F894(Entity* self) {
         self->animSet = 0xF;
         self->unk5A = 0x7E;
         self->palette = PLAYER.palette;
-#if !defined(VERSION_US) && !defined(VERSION_USPROTO) && !defined(VERSION_JP11)
+#if !defined(VERSION_US) && !defined(VERSION_EU) && !defined(VERSION_HK) &&    \
+    !defined(VERSION_USPROTO) && !defined(VERSION_JP11)
         self->zPriority = PLAYER.zPriority - 2;
 #endif
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
                       FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->step++;
     }
-#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_USPROTO) || defined(VERSION_JP11)
     self->zPriority = PLAYER.zPriority - 2;
 #endif
     self->facingLeft = PLAYER.facingLeft;
@@ -1748,7 +1757,8 @@ void func_80130264(Entity* self) {
         self->animCurFrame = 1;
         self->unk5A = 0x7E;
         self->palette = PLAYER.palette;
-#if !defined(VERSION_US) && !defined(VERSION_USPROTO) && !defined(VERSION_JP11)
+#if !defined(VERSION_US) && !defined(VERSION_EU) && !defined(VERSION_HK) &&    \
+    !defined(VERSION_USPROTO) && !defined(VERSION_JP11)
         self->zPriority = PLAYER.zPriority;
 #endif
         self->flags =
@@ -1762,7 +1772,8 @@ void func_80130264(Entity* self) {
         self->hitboxHeight = 6;
         self->step++;
     }
-#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_USPROTO) || defined(VERSION_JP11)
     self->zPriority = PLAYER.zPriority;
 #endif
     self->facingLeft = PLAYER.facingLeft;
@@ -1860,7 +1871,8 @@ void func_80130618(Entity* self) {
         self->animCurFrame = 0x23;
         self->unk5A = 0x7E;
         self->palette = PLAYER.palette;
-#if !defined(VERSION_US) && !defined(VERSION_USPROTO) && !defined(VERSION_JP11)
+#if !defined(VERSION_US) && !defined(VERSION_EU) && !defined(VERSION_HK) &&    \
+    !defined(VERSION_USPROTO) && !defined(VERSION_JP11)
         self->zPriority = PLAYER.zPriority - 2;
 #endif
         self->flags =
@@ -1870,7 +1882,8 @@ void func_80130618(Entity* self) {
         self->rotPivotY = 8;
         self->step++;
     }
-#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_USPROTO) || defined(VERSION_JP11)
     self->zPriority = PLAYER.zPriority - 2;
 #endif
     self->facingLeft = PLAYER.facingLeft;
@@ -1982,7 +1995,8 @@ void func_801309B4(Entity* self) {
     if (!self->step) {
         self->animSet = ANIMSET_DRA(15);
         self->unk5A = 0x7E;
-#if !defined(VERSION_US) && !defined(VERSION_USPROTO) && !defined(VERSION_JP11)
+#if !defined(VERSION_US) && !defined(VERSION_EU) && !defined(VERSION_HK) &&    \
+    !defined(VERSION_USPROTO) && !defined(VERSION_JP11)
         self->zPriority = PLAYER.zPriority + 2;
 #endif
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_100000 |
@@ -1995,7 +2009,8 @@ void func_801309B4(Entity* self) {
         self->animCurFrame = 72;
         self->step++;
     }
-#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_USPROTO) || defined(VERSION_JP11)
     self->zPriority = PLAYER.zPriority + 2;
 #endif
     self->facingLeft = PLAYER.facingLeft;
@@ -2152,7 +2167,8 @@ void func_80130E94(Entity* self) {
         self->animCurFrame = D_800B0B0C[params];
         self->unk5A = 0x7E;
         self->palette = PLAYER.palette;
-#if !defined(VERSION_US) && !defined(VERSION_USPROTO) && !defined(VERSION_JP11)
+#if !defined(VERSION_US) && !defined(VERSION_EU) && !defined(VERSION_HK) &&    \
+    !defined(VERSION_USPROTO) && !defined(VERSION_JP11)
         self->zPriority = PLAYER.zPriority - 3;
 #endif
         self->flags =
@@ -2166,7 +2182,8 @@ void func_80130E94(Entity* self) {
     otherEnt--;
     var_s7 = 2;
     self->facingLeft = PLAYER.facingLeft;
-#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_USPROTO) || defined(VERSION_JP11)
     self->zPriority = PLAYER.zPriority - 3;
 #endif
     if (params == 0) {
@@ -2496,7 +2513,8 @@ static u8 D_800B0F94[][5] = {
     {0x50, 0x58, 0x18, 0x10, 0x0F}, {0x50, 0x58, 0x18, 0x10, 0x1F},
 };
 
-#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_USPROTO) || defined(VERSION_JP11)
 static u8 dirty_data1 = 0x20;
 static u8 dirty_data2 = 0x0D;
 #endif

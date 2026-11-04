@@ -6,7 +6,8 @@
 // data order is slightly different between US and HD
 // maybe this suggests a file split
 
-#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_USPROTO) || defined(VERSION_JP11)
 s32 D_800ACDF8 = 0;
 s32 D_800ACDFC = 0;
 s32 D_800ACE00[] = {
@@ -265,7 +266,8 @@ void AluInit() {
 #endif
     D_80137FB8 = 0;
 
-#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_USPROTO) || defined(VERSION_JP11)
     D_80137FBC = true;
 #endif
 
@@ -821,7 +823,8 @@ void EntityAlucard() {
 
     if (g_Player.demo_timer != 0) {
         g_Player.demo_timer--;
-#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_USPROTO) || defined(VERSION_JP11)
         if (g_Player.demo_timer == 0) {
             D_80137FBC = true;
         }
@@ -859,7 +862,8 @@ void EntityAlucard() {
                 g_Player.padPressed |= D_800ACE00[i];
             }
         }
-#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_USPROTO) || defined(VERSION_JP11)
         if (D_80137FBC) {
             D_80137FBC = false;
             g_Player.padHeld = g_Player.padPressed;
@@ -873,7 +877,7 @@ void EntityAlucard() {
         g_Player.padPressed &= ~(PAD_SQUARE | PAD_CIRCLE);
     }
     if ((g_DebugPlayer != 0) && (func_801119C4() != 0)) {
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
         FntPrint("step:%04x\n", PLAYER.step);
         FntPrint("bat_i_step:%04x\n", g_Player.unk66);
 #endif
@@ -885,7 +889,8 @@ void EntityAlucard() {
     }
 
 // US uses a different ordering than HD/PSP
-#if !defined(VERSION_US) && !defined(VERSION_USPROTO) && !defined(VERSION_JP11)
+#if !defined(VERSION_US) && !defined(VERSION_EU) && !defined(VERSION_HK) &&    \
+    !defined(VERSION_USPROTO) && !defined(VERSION_JP11)
     if (g_Player.timers[ALU_T_INVINCIBLE] |
         g_Player.timers[ALU_T_INVINCIBLE_CONSUMABLES]) {
         goto specialmove;
@@ -900,7 +905,8 @@ void EntityAlucard() {
         SetPlayerStep(Player_BossGrab);
         goto block_159;
     }
-#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_USPROTO) || defined(VERSION_JP11)
     if (g_Player.timers[ALU_T_INVINCIBLE] |
         g_Player.timers[ALU_T_INVINCIBLE_CONSUMABLES]) {
         goto specialmove;
@@ -1481,7 +1487,7 @@ block_159:
             sp3c = (AluFrame*)D_800CFE48[PLAYER.animCurFrame & 0x7FFF];
             sp3c->pivotY = D_8013AECC + D_800ACE20[PLAYER.animCurFrame];
         }
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
         FntPrint("step:%04x\n", PLAYER.step);
         FntPrint("bat_i_step:%04x\n", g_Player.unk66);
 #endif

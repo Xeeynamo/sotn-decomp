@@ -6,13 +6,6 @@ typedef enum Statues {
     /* 1 */ LEFT_STATUE,
 } Statues;
 
-#ifdef VERSION_PSP
-extern s32 D_91FC3F8;
-extern s32 D_91FC400;
-extern s32 D_91FC408;
-extern s32 D_91FC410;
-#endif
-
 static u16 g_Statues[2];
 #ifdef VERSION_PSP
 static u32 D_pspeu_092A1D08;
@@ -84,11 +77,12 @@ void UpdateBirdcages(Entity* self, u32 timerMinutes) {
 void UpdateClockHands(Entity* self) {
     // self + 5 is the minute hand
     self += 5;
-    self->ext.clockRoom.hand = D_91FC408 * 60;
+    self->ext.clockRoom.hand = g_TimerCopyMinutes * 60;
 
     // self + 6 is the hour hand
     self += 1;
-    self->ext.clockRoom.hand = ((D_91FC410 % 12) * 300) + (D_91FC408 * 5);
+    self->ext.clockRoom.hand =
+        ((g_TimerCopyHours % 12) * 300) + (g_TimerCopyMinutes * 5);
 }
 #else
 void UpdateClockHands(Entity* self, PlayerStatus* status) {
@@ -105,10 +99,10 @@ void UpdateClockHands(Entity* self, PlayerStatus* status) {
 
 void EntityClockRoomController(Entity* self) {
 #ifdef VERSION_PSP
-#define timer_frames D_91FC3F8
-#define timer_seconds D_91FC400
-#define timer_minutes D_91FC408
-#define timer_hours D_91FC410
+#define timer_frames g_TimerCopyFrames
+#define timer_seconds g_TimerCopySeconds
+#define timer_minutes g_TimerCopyMinutes
+#define timer_hours g_TimerCopyHours
 #else
     PlayerStatus* status = &g_Status;
 #define timer_frames status->timerFrames

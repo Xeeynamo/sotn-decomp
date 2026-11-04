@@ -7,7 +7,8 @@
 // 692E8.c
 s32 D_80137FB4;
 s32 D_80137FB8;
-#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_USPROTO) || defined(VERSION_JP11)
 s32 D_80137FBC;
 #endif
 
@@ -24,7 +25,8 @@ s32 g_WasFacingLeft6;
 s32 g_WasFacingLeft7;
 
 // 71830.c
-#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
+    defined(VERSION_USPROTO) || defined(VERSION_JP11)
 s32 D_80137FDC;
 #endif
 
