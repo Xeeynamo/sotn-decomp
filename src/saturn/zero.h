@@ -27,7 +27,6 @@ void func_06004E94(void);
 extern s32 DAT_060DC004[];
 extern s32 DAT_060DC008[];
 extern s32 DAT_060DC00C[];
-extern s32 DAT_0605D910[];
 typedef struct {
     u16 id;
     s16 index;
