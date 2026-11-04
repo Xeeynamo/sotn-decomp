@@ -29,7 +29,7 @@ void func_us_801A367C(Entity* self) {
         }
         player->posX.i.hi = 0x70;
         if (g_CutsceneFlags & 2) {
-            self->step += 1;
+            self->step++;
         }
         g_Player.padSim = 0;
         g_Player.demo_timer = 1;
@@ -67,7 +67,7 @@ void func_us_801A37B4(Entity* self) {
         }
         break;
     case 1:
-        self->step += 1;
+        self->step++;
         break;
     case 2:
         prim = &g_PrimBuf[self->primIndex];
@@ -108,7 +108,7 @@ void func_us_801A399C(Entity* self) {
             prim = &g_PrimBuf[self->primIndex];
             PCOL(prim) = 0xFF;
             prim->drawMode = 0x55;
-            self->step += 1;
+            self->step++;
         }
         break;
     case 2:
@@ -121,7 +121,98 @@ void func_us_801A399C(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/rbo6/nonmatchings/unk_2367C", func_us_801A3BE0);
+void func_us_801A3BE0(Entity* self) {
+    Primitive* prim;
+    s32 primIndex;
+
+    switch (self->step) {                              /* irregular */
+    case 0:
+        primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
+        if (primIndex != -1) {
+            InitializeEntity(&g_EInitInteractable);
+            self->flags |= 0x800000;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            prim->x0 = prim->x2 = 0x60;
+            prim->x1 = prim->x3 = 0xA0;
+            prim->y0 = prim->y1 = 0x40;
+            prim->y2 = prim->y3 = 0xC0;
+            PCOL(prim) = 0xFF;
+            prim->drawMode = 0x55;
+            prim->priority = 0x82;
+        }
+        break;
+    case 1:
+        prim = &g_PrimBuf[self->primIndex];
+        if (g_CutsceneFlags & 4) {
+            PCOL(prim) -= 1;
+            if (prim->r0 <= 0) {
+                PCOL(prim) = 0;
+                g_CutsceneFlags |= 0x200;
+                self->step++;
+            }
+        }
+        break;
+    case 2:
+        prim = &g_PrimBuf[self->primIndex];
+        if (g_CutsceneFlags & 0x80) {
+            PCOL(prim)++;
+            if (prim->r0 > 0xC0) {
+                g_CutsceneFlags |= 0x100;
+            }
+            if (prim->r0 > 0xFD) {
+                PCOL(prim) = 0;
+                prim->drawMode = 0;
+                SetStep(3);
+                g_api.PlaySfx(0x62F);
+            }
+        }
+        break;
+    case 3:
+        prim = &g_PrimBuf[self->primIndex];
+        prim->type = 3;
+        
+        prim->x0 = prim->x2 = 0;
+        prim->x1 = prim->x3 = 0x100;
+        prim->y0 = prim->y1 = 0x10;
+        prim->y2 = prim->y3 = 0xF0;
+        prim->priority = 0x7F;
+        prim->drawMode = 0;
+        if (self->poseTimer & 1) {
+            prim->r0 = 0x80;
+            prim->g0 = 0x80;
+            prim->b0 = 0x80;
+            prim->r1 = 0x80;
+            prim->g1 = 0x80;
+            prim->b1 = 0x80;
+            prim->r2 = 0x80;
+            prim->g2 = 0x80;
+            prim->b2 = 0x80;
+            prim->r3 = 0x80;
+            prim->g3 = 0x80;
+            prim->b3 = 0x80;
+        } else {
+            prim->r0 = 0;
+            prim->g0 = 0;
+            prim->b0 = 0;
+            prim->r1 = 0;
+            prim->g1 = 0;
+            prim->b1 = 0;
+            prim->r2 = 0;
+            prim->g2 = 0;
+            prim->b2 = 0;
+            prim->r3 = 0;
+            prim->g3 = 0;
+            prim->b3 = 0;
+        }
+        self->poseTimer++;
+        if (self->poseTimer > 8) {
+            DestroyEntity(self);
+            g_CutsceneFlags |= 0x20;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("boss/rbo6/nonmatchings/unk_2367C", func_us_801A4028);
 
