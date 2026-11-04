@@ -24,7 +24,7 @@
             "\t.ent\t" #NAME "\n" #NAME ":\n"                                  \
             "\t.type\t" #NAME ".NON_MATCHING, @object\n"                       \
             "\t" #NAME ".NON_MATCHING:\n"                                      \
-            ".include \"asm/" VERSION_STR "/" FOLDER "/" #NAME ".s\"\n"            \
+            ".include \"asm/" VERSION_STR "/" FOLDER "/" #NAME ".s\"\n"        \
             "\t.set reorder\n"                                                 \
             "\t.set at\n"                                                      \
             "\t.end\t" #NAME "\n"                                              \
@@ -46,7 +46,7 @@
 
 #define INCLUDE_RODATA(FOLDER, NAME)                                           \
     __asm__(".pushsection .rodata\n"                                           \
-            ".include \"asm/" VERSION_STR "/" FOLDER "/" #NAME ".s\"\n"            \
+            ".include \"asm/" VERSION_STR "/" FOLDER "/" #NAME ".s\"\n"        \
             ".popsection")
 
 #endif
