@@ -108,5 +108,5 @@ segments:
       - [0x349E0, .bss, rbo6/e_dracula]
       - [0x34A28, .bss, rbo6/d_prize_drops]
       - [0x34A30, .bss, rbo6_psp/e_cutscene_dialogue]
-      - [0x34FF0, bss, 34FF0]
+      - [0x35040, bss, 35040]
   - [0x35980]

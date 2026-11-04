@@ -25,6 +25,10 @@ extern Dialogue g_Dialogue;
 
 #include "../../st/cutscene_skip.h"
 
+// BSS block
+u32 g_CutsceneFlags; // not static
+static s32 g_SkipCutscene;
+static Dialogue g_Dialogue;
 static u8 D_pspeu_0926C668;
 static s32 D_pspeu_0926C648[8];
 static u8 cutsceneUnk3Unknown[0x380];
@@ -33,25 +37,7 @@ static u16 actor_names[0x100];
 static u8 D_801813CC[2];
 static s32 g_IsCutsceneDone;
 
-
-extern s32 g_SkipCutscene;
-extern u32 g_CutsceneFlags;
-extern s32 D_91FC480;
-
-extern u_long* D_893DD0C;
-extern u_long* D_pspeu_09263820;
-extern u_long* D_893EA8C;
-extern u_long* D_pspeu_092645A0;
-extern u_long* D_894058C;
-extern u_long* D_894208C;
-extern u_long* D_8942E0C;
-extern u_long* D_8943B8C;
-extern u_long* D_894490C;
-extern u_long* D_894568C;
-extern u_long* D_894130C;
-
-extern Dialogue g_Dialogue;
-
+// Data block
 static u8 D_pspeu_0926B8A8[2] = {0x00, 0x40};
 static u16 D_pspeu_0926B8B0[] = {0x210, 0x218};
 static u16 D_pspeu_0926B8B8[] = {0, 0x20};
@@ -68,10 +54,25 @@ static s16 D_pspeu_0926B8C8[] = {
 static u8 D_pspeu_0926B958[] = {3, 1};
 static u8 D_pspeu_0926B960[] = {3, 1};
 
+// Externs
 extern u8* cutscene_1;
 extern u8* cutscene_2;
 extern u8* cutscene_3;
 extern u8* cutscene_4;
+
+extern s32 D_91FC480;
+
+extern u_long* D_893DD0C;
+extern u_long* D_pspeu_09263820;
+extern u_long* D_893EA8C;
+extern u_long* D_pspeu_092645A0;
+extern u_long* D_894058C;
+extern u_long* D_894208C;
+extern u_long* D_8942E0C;
+extern u_long* D_8943B8C;
+extern u_long* D_894490C;
+extern u_long* D_894568C;
+extern u_long* D_894130C;
 
 void EntityCutscene(Entity* self) {
     s16 uCoord;      // sp4E
