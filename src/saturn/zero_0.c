@@ -1718,7 +1718,7 @@ void func_0600A088(void) {
             }
         }
     }
-    temp = 0x25C00000 + SPR_2LookupTblNoToVram(0) * 8;
+    temp = VRAM_ADDR + SPR_2LookupTblNoToVram(0) * 8;
     QueueVramTransfer(temp, DAT_06038DD0[0], 0x200);
     if (DAT_06038DBC != 0) {
         QueueVramTransfer(DAT_06038DBC, DAT_06038DD0[3], 0x20);
