@@ -54,7 +54,11 @@ RoomTeleport D_800A245C[] = {
     {752, 132, 0x0050, STAGE_NO3, STAGE_NZ0},
     {240, 132, 0x0018, STAGE_NO3, STAGE_WRP},
     {16, 180, 0x0000, STAGE_DRE, STAGE_DRE},
+#if defined(VERSION_USPROTO)
+    {16, 388, 0x0050, STAGE_CAT, STAGE_ST0},
+#else
     {16, 388, 0x0050, STAGE_CAT, STAGE_CHI},
+#endif
     {112, 644, 0x0000, STAGE_NO3, STAGE_NO3},
     {240, 132, 0x0088, STAGE_CHI, STAGE_CAT},
     {16, 132, 128, STAGE_CHI, STAGE_NO4},
@@ -110,7 +114,7 @@ RoomTeleport D_800A245C[] = {
     {752, 132, 0x0068, 0x0037, STAGE_NO2},
     {496, 132, 0x0000, 36, STAGE_MAR},
     {128, 388, 0x0000, 0x0038, STAGE_CEN},
-#if defined(VERSION_US) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
     {496, 132, 0x0000, 0x0001, STAGE_BO4},
 #else
     {128, 77, 0x0010, 0x0028, STAGE_BO6},
@@ -189,7 +193,7 @@ RoomBossTeleport g_RoomBossTeleports[] = {
     {0x14, 0x16, STAGE_ARE, TIMEATTACK_EVENT_MINOTAUR_WEREWOLF_DEFEAT, 0x73},
     {0x28, 0x27, STAGE_NO4, TIMEATTACK_EVENT_SCYLLA_DEFEAT, 0x6F},
     {0x39, 0x17, STAGE_NO1, TIMEATTACK_EVENT_DOPPLEGANGER_10_DEFEAT, 0x6C},
-#if defined(VERSION_US) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
     {0x3A, 0x17, STAGE_NO1, TIMEATTACK_EVENT_DOPPLEGANGER_10_DEFEAT, 0x48},
 #endif
     {0x17, 0x0D, STAGE_DAI, TIMEATTACK_EVENT_HYPPOGRYPH_DEFEAT, 0x68},
@@ -1162,9 +1166,7 @@ void DrawMapCursor(void) {
 }
 
 #if defined(VERSION_JP10)
-bool func_800F27F4(s32 arg0) {
-    return false;
-}
+bool func_800F27F4(s32 arg0) { return false; }
 #else
 bool func_800F27F4(s32 arg0) {
     if (arg0 == 0) {
@@ -1415,6 +1417,10 @@ void RunMainEngine(void) {
         g_GameTimer++;
 #if defined(VERSION_HD)
         func_800F1424();
+#elif defined(VERSION_USPROTO)
+        if (!g_CutsceneHasControl) {
+            DrawE3Banner();
+        }
 #endif
         func_800F2014();
         g_ScrollDeltaX = g_Tilemap.scrollX.i.hi - g_PrevScrollX;
@@ -1890,7 +1896,7 @@ void RunMainEngine(void) {
             if (D_80097C98 == 3) {
                 g_GameEngineStep = Engine_Normal;
             }
-#if defined(VERSION_US) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
             func_8011A9D8();
 #endif
             g_MenuStep++;

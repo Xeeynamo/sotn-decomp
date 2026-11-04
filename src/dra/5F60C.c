@@ -452,6 +452,17 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         g_Status.statsBase[STAT_CON] = 6;
         g_Status.statsBase[STAT_INT] = 6;
         g_Status.statsBase[STAT_LCK] = 6;
+#if defined(VERSION_USPROTO)
+        g_Status.hpMax = g_Status.hp = 200;
+        g_Status.hearts = 50;
+        g_Status.heartsMax = 80;
+        g_Status.mpMax = 30;
+        g_Status.mp = g_Status.mpMax;
+        g_Status.gold = 0;
+        for (i = 0; i < LEN(g_Status.relics); i++) {
+            g_Status.relics[i] = 0;
+        }
+#else
         g_Status.hp = g_Status.hpMax = 70;
         g_Status.hearts = 10;
         g_Status.heartsMax = 50;
@@ -488,8 +499,9 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         for (i = 0; i < 90; i++) {
             g_Status.equipBodyCount[i] = 1;
         }
+#endif
 
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_USPROTO)
         g_Status.equipment[LEFT_HAND_SLOT] = ITEM_SHORT_SWORD;
         g_Status.equipment[RIGHT_HAND_SLOT] = ITEM_LEATHER_SHIELD;
         g_Status.equipment[HEAD_SLOT] = ITEM_EMPTY_HEAD;

@@ -2566,7 +2566,8 @@ void ControlBatForm(void) {
             if (g_Player.unk66 == 0) {
                 newEntity = CreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x20), 0);
-#if !defined(VERSION_HD) && !defined(VERSION_JP10) && !defined(VERSION_JP11)
+#if !defined(VERSION_HD) && !defined(VERSION_JP10) &&                          \
+    !defined(VERSION_JP11) && !defined(VERSION_USPROTO)
                 if (newEntity == NULL) {
                     return;
                 }
@@ -3025,7 +3026,7 @@ bool MistFormFinished(void) {
     if (PLAYER.step_s == 0) {
         return 0;
     }
-#ifndef VERSION_PSP
+#if !defined(VERSION_PSP)
     if (g_unkGraphicsStruct.D_8009744C != 0 || g_Player.padTapped & BTN_MIST ||
 #else
     if (g_SecondaryMistTimer != 0) {

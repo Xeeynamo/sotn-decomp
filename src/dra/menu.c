@@ -4,7 +4,7 @@
 #include "menu.h"
 #include "servant.h" // for InitializeMode enum
 
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_USPROTO)
 #define ShowText(str, y) func_800F99B8(str, y, false);
 #elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
 #define ShowText(str, y) func_800F98AC(str, y);
@@ -50,7 +50,7 @@ static s32 g_ServantPrevious;
 extern s32 g_PrevEquippedWeapons[2];
 
 const char* D_800A2D48[] = {
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_USPROTO)
     "？？？？？",
     "Button set−up",
     "Select front／back of reversible cloak",
@@ -79,7 +79,7 @@ const char* D_800A2D48[] = {
 #define _S2_HD(x) (x)
 #endif
 
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_USPROTO)
 static const char* D_800A2D64 = "ＡＴＤＥＦ";
 
 static const char* D_800A2D68[] = {
@@ -390,7 +390,7 @@ void CalcDefense(void) {
         g_Status.elementsResist |= ELEMENT_HOLY;
     }
     if (g_StatBuffTimers[SBT_RESISTSTONE]) {
-#if defined(VERSION_US) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
         g_Status.elementsImmune |= ELEMENT_STONE;
 #else
         g_Status.elementsResist |= ELEMENT_STONE;
@@ -589,7 +589,8 @@ void MenuDrawImg(MenuContext* ctx, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
     } else {
         otIdx = 0x1FF;
     }
-#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
+#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) || \
+    defined(VERSION_USPROTO)
     if (ctx == NULL) {
         otIdx = 0x1FF;
     } else {
@@ -975,7 +976,7 @@ char g_ChRgb[] = {CH('R'), CH('G'), CH('B')};
 void MenuJosephsCloakDraw(MenuContext* ctx) {
     s32 i;
     MenuContext* menu = &g_Menus[MENU_DG_SETTINGS];
-#if defined(VERSION_US) || defined(VERSION_PSP)
+#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_PSP)
     s32 x_Start = 0xB0;
     s32 number_spacing = 0x28;
     s16 x_RGB = 0xF8;
@@ -1014,7 +1015,7 @@ void MenuJosephsCloakDraw(MenuContext* ctx) {
 
 void MenuWindowColorsDraw(MenuContext* ctx) {
     s32 i;
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_USPROTO)
     s32 x = 0xB0;
 #elif defined(VERSION_PSP)
     s32 x = 0xBC;
@@ -1104,7 +1105,7 @@ void MenuButtonConfigDraw(MenuContext* ctx) {
     s32 x;
     s32 buttonId;
 
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_USPROTO)
     const s32 startX = 0xC0;
     const s32 W = 0x54;
     s32 cursorX = 0x98;
@@ -1143,7 +1144,7 @@ void MenuButtonConfigDraw(MenuContext* ctx) {
 }
 
 void MenuReverseCloakDraw(MenuContext* ctx) {
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_USPROTO)
     const int StrX = 176;
     const int ImgW = 64;
 #elif defined(VERSION_PSP)
@@ -1161,7 +1162,7 @@ void MenuReverseCloakDraw(MenuContext* ctx) {
 }
 
 void MenuSoundConfigDraw(MenuContext* ctx) {
-#if defined(VERSION_US) || defined(VERSION_PSP)
+#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_PSP)
     const s32 ImgW = 53;
 #elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
     const s32 ImgW = 37;
@@ -1384,7 +1385,7 @@ void MenuDrawStats(s32 menuDialogue) {
         x = 32;
         y = 120;
     } else {
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_USPROTO)
         MenuDrawStr(g_MenuStr[g_MenuNavigation.cursorEquip + 85], 8, 40, ctx);
 #elif defined(VERSION_PSP)
         func_800F66BC(
@@ -1421,7 +1422,7 @@ void MenuSpellsDraw(MenuContext* ctx) {
     s32 colorIntensity;
     s32 yCoord;
     const u8* comboPointer;
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_USPROTO)
     s32 startXCoord = 176;
     MenuDrawStr(g_MenuStr[98], 104, 40, ctx);
 #elif defined(VERSION_PSP)
@@ -1515,7 +1516,8 @@ void MenuSpellsDraw(MenuContext* ctx) {
     // it a brighter or dimmer yellow.
     MenuDrawRect(ctx, 26, (g_MenuNavigation.cursorSpells * 0x10) + 0x3B, 300,
                  17, colorIntensity, colorIntensity, 0);
-#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
+#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) || \
+    defined(VERSION_USPROTO)
     func_800F5E68(
         ctx, g_MenuNavigation.cursorSpells, 0x1A, 0x3B, 0x12C, 0x11, -1, 1);
 #endif
@@ -1526,7 +1528,7 @@ void MenuFamiliarsDraw(MenuContext* ctx) {
     s32 x, y;
     s32 strId;
 
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_USPROTO)
     MenuDrawStr(g_MenuStr[97], 120, 40, ctx);
 #elif defined(VERSION_PSP)
     MenuDrawStr(D_800A2D68[26], 120, 40, ctx);
@@ -1604,7 +1606,7 @@ void func_800F82F4(void) {
 }
 
 void MenuSystemDraw(MenuContext* ctx) {
-#if defined(VERSION_US) || defined(VERSION_PSP)
+#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_PSP)
     const int Width = 128;
 #else
     const int Width = 80;
@@ -1634,8 +1636,14 @@ void MenuSystemDraw(MenuContext* ctx) {
     y += 0x10;
 #endif
 
+#if defined(VERSION_USPROTO)
+    do {
+        MenuDrawStr(g_MenuStr[19], 0x20, y, ctx);
+    } while (0);
+#else
     strIdx = g_GameClearFlag ? 36 : 19;
     MenuDrawStr(g_MenuStr[strIdx], 0x20, y, ctx);
+#endif
 }
 
 void func_800F84CC(void) {
@@ -1700,7 +1708,15 @@ void func_800F86E4(void) {
     FreePrimitives(D_801377FC[NUM_MENU + 1]);
 }
 
-#if defined(VERSION_US)
+#if defined(VERSION_USPROTO)
+void func_800F8754(MenuContext* ctx, s32 x, s32 y) {
+    MenuDrawStr(g_MenuStr[92], x + 18, y + 4, ctx);
+    MenuDrawStr(g_MenuStr[93], x + 14, y + 20, ctx);
+    MenuDrawStr(g_MenuStr[94], x + 14, y + 36, ctx);
+    MenuDrawStr(g_MenuStr[95], x + 14, y + 52, ctx);
+    MenuDrawStr(g_MenuStr[96], x + 2, y + 68, ctx);
+}
+#elif defined(VERSION_US)
 void func_800F8754(MenuContext* ctx, s32 x, s32 y) {
     if (D_801375DC == 0) {
         D_8013784C = 1;
@@ -1755,7 +1771,7 @@ void func_800F8754(MenuContext* ctx, s32 x, s32 y) {
 #endif
 
 void MenuEquipSortDraw(MenuContext* ctx) {
-#if defined(VERSION_US) || defined(VERSION_PSP)
+#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_PSP)
     const s32 UnkX = 72;
 #elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
     const s32 UnkX = 40;
@@ -1763,7 +1779,7 @@ void MenuEquipSortDraw(MenuContext* ctx) {
     s32 i;
 
     for (i = 0; i < ITEM_END; i++) {
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_USPROTO)
         MenuDrawStr(g_MenuStr[g_Settings.equipOrderTypes[i] + 99],
                     ctx->cursorX + 4, ctx->cursorY + 8 + (i * 16), ctx);
 #elif defined(VERSION_PSP)
@@ -2276,7 +2292,7 @@ void func_800F98AC(const char* str, u32 y) {
     }
 }
 
-#if defined(VERSION_US) || defined(VERSION_PSP)
+#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_PSP)
 void func_800F99B8(const char* str, u32 y, bool arg2) {
     // See src/st/blit_char.h
     const u16 DOUBLE_SPACE = 0x8140;
@@ -2410,14 +2426,18 @@ void func_800F9D40(const char* str, u32 y, bool arg2) {
     func_800F98AC(str, y);
 }
 
-#if defined(VERSION_US) || defined(VERSION_PSP)
+#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_PSP)
 void func_800F9D88(const char* str, u32 y, bool arg2) {
     if (arg2) {
         D_8013794C = g_Pix[2];
     }
     D_80137950 = 0;
     D_80137954 = 0x100;
+#if defined(VERSION_USPROTO)
+    func_800F99B8(str, y, true);
+#else
     func_800F99B8(str, y, false);
+#endif
 }
 #endif
 
@@ -2432,8 +2452,33 @@ void func_800F9DD0(const char* src, char* dst) {
     }
 }
 
-#if defined(VERSION_US) || defined(VERSION_PSP)
+#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_PSP)
 void func_psp_091040A0(u_long** gfxBank);
+#if defined(VERSION_USPROTO)
+void func_800F9E18(s32 arg0) {
+    const int ItemsPerRow = 2;
+    char buffer[38];
+    s32 nHalfScreenSize = arg0 * 5;
+    s32 nItems = nHalfScreenSize + 5;
+    s32 i;
+
+    for (i = nHalfScreenSize; i < nItems; i++) {
+        strcpy(buffer, g_RelicDefs[i * ItemsPerRow + 0].name);
+        if ((i & 1) == 0) {
+            func_800F99B8(buffer, (i / ItemsPerRow) + 0x80, true);
+        } else {
+            func_800F99B8(buffer, (i / ItemsPerRow) + 0x103, true);
+        }
+
+        strcpy(buffer, g_RelicDefs[i * ItemsPerRow + 1].name);
+        if ((i & 1) == 0) {
+            func_800F99B8(buffer, (i / ItemsPerRow) + 0x280, true);
+        } else {
+            func_800F99B8(buffer, (i / ItemsPerRow) + 0x303, true);
+        }
+    }
+}
+#else
 void func_800F9E18(s32 arg0) {
     const int ItemsPerRow = 2;
     char buffer[38];
@@ -2475,6 +2520,7 @@ void func_800F9E18(s32 arg0) {
         }
     }
 }
+#endif
 #elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
 void func_800F9E18(s32 arg0) {
     const int ItemsPerRow = 2;
@@ -3045,7 +3091,7 @@ s32 D_800A2DEC[] = {
 };
 
 MenuContextInit g_MenuInit[NUM_MENU] = {
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_USPROTO)
     {158, 100, 76, 80, 0x40},  // MENU_DG_MAIN
     {0, 24, 360, 200, 0x10},   // MENU_DG_BG
     {0, 24, 360, 97, 0x20},    // MENU_DG_EQUIP_OVERVIEW
@@ -3102,7 +3148,7 @@ MenuContextInit g_MenuInit[NUM_MENU] = {
 #endif
 };
 
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_USPROTO)
 #define PAD_MENU_SELECT_ALT (PAD_CROSS)
 #define PAD_MENU_SELECT (PAD_MENU_SELECT_ALT)
 #define PAD_MENU_BACK (PAD_TRIANGLE)
@@ -3296,7 +3342,8 @@ void func_800FB9BC(void) {
 #if defined(VERSION_US)
     const s32 VertScrollWindow = 120;
     const s32 YScrollPerElement = 14;
-#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) || defined(VERSION_PSP)
+#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) || \
+    defined(VERSION_USPROTO) || defined(VERSION_PSP)
     const s32 VertScrollWindow = 140;
     const s32 YScrollPerElement = 15;
 #endif
@@ -3448,7 +3495,7 @@ block_4:
             func_800F6A48();
             func_800F84CC();
             SetFadeMode(FADE_FROM_BLACK);
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_USPROTO)
             func_800F98AC(D_800A2D64, 0);
 #elif defined(VERSION_PSP)
             func_800F98AC(D_800A2D10, 0);
@@ -3747,6 +3794,11 @@ block_4:
         if (i == 6 && !g_GameClearFlag) {
             i = 0;
         }
+#if defined(VERSION_USPROTO)
+        if (i == 6) {
+            i = 0;
+        }
+#endif
         ShowText(D_800A2D48[i], 2);
         if (g_pads[0].tapped & PAD_MENU_BACK) {
             MenuShow(MENU_DG_MAIN);
@@ -3781,11 +3833,13 @@ block_4:
                 g_MenuStep = MENU_STEP_SYSTEM_SOUND;
                 break;
             case 5:
+#if !defined(VERSION_USPROTO)
                 if (g_GameClearFlag) {
                     SortTimeAttackEntries();
                     MenuShow(MENU_DG_TIME_ATTACK);
                     g_MenuStep = MENU_STEP_SYSTEM_TIME_ATTACK;
                 }
+#endif
                 break;
             }
             if (g_MenuStep != MENU_STEP_SYSTEM) {
@@ -3829,8 +3883,9 @@ block_4:
                     break;
                 }
                 ShowText(buttonAssignStr, 2);
-#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
-                ShowText("すべてのボタンを割り当ててください。", 2);
+#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) || \
+    defined(VERSION_USPROTO)
+                func_800F98AC("すべてのボタンを割り当ててください。", 2);
 #endif
                 PlaySfx(SFX_UI_ERROR);
             }
@@ -3907,7 +3962,8 @@ block_4:
 #if defined(VERSION_US)
         g_Menus[MENU_DG_RELICS].unk16 =
             ((g_MenuNavigation.cursorRelic / 2) * -120) / 14;
-#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) || defined(VERSION_PSP)
+#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) || \
+    defined(VERSION_PSP) || defined(VERSION_USPROTO)
         g_Menus[MENU_DG_RELICS].unk16 =
             ((g_MenuNavigation.cursorRelic / 2) * -140) / 15;
 #endif
@@ -3992,7 +4048,7 @@ block_4:
         MenuShow(MENU_DG_SPELLS);
         func_800F9808(2);
         func_800F9F40();
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_USPROTO)
         func_800F9808(2);
         id = g_Status.spells[g_MenuNavigation.cursorSpells];
         id ^= SPELL_FLAG_KNOWN;
@@ -4003,9 +4059,10 @@ block_4:
     case MENU_STEP_SPELL:
         var_s1 = g_MenuNavigation.cursorSpells;
         MenuHandleCursorInput(&g_MenuNavigation.cursorSpells, D_801375DC, 3);
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_USPROTO)
         if (var_s1 != g_MenuNavigation.cursorSpells) {
-#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) || defined(VERSION_PSP)
+#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) || \
+    defined(VERSION_PSP)
         if (1) {
 #endif
             func_800F9808(2);
@@ -4184,7 +4241,7 @@ block_4:
     }
 }
 
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_USPROTO)
 void func_800FD39C(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 pal, s32 _,
                    s32 blend, s32 color) {
     GpuBuffer* gpuBuffer;
@@ -4204,6 +4261,37 @@ void func_800FD39C(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 pal, s32 _,
     sprt->clut = g_ClutIds[pal];
     AddPrim(&gpuBuffer->ot[0x1FF], sprt);
     g_GpuUsage.sp++;
+}
+#endif
+
+#if defined(VERSION_USPROTO)
+static char e3_version_banner[] = _S("-E3 Version-");
+
+static void DrawE3BannerChar(char ch, s32 x, s32 y) {
+    func_800FD39C(
+        x, y, 8, 8, (ch & 0xF) * 8, (ch & 0xF0) >> 1, 0x196, 0x1E, 1, 0);
+}
+
+// Draws the "-E3 Version-" label on top of the screen
+void DrawE3Banner(void) {
+    const s32 ChWidth = 8;
+    const char* str = e3_version_banner;
+    s32 x = 140;
+    char ch;
+
+    while (true) {
+        ch = *str++;
+        if (ch == 0xFF) {
+            ch = *str++;
+            if (ch == 0) {
+                break;
+            }
+        }
+        DrawE3BannerChar(ch, x, 32);
+        x += ChWidth;
+    }
+    D_80137614 = 1;
+    func_800F53D4(0x1E, 0x1FF);
 }
 #endif
 

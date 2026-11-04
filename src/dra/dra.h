@@ -718,6 +718,9 @@ void resetMapTileOnCastleBlueprint(s32, s32);
 void paintMapTileOnCastleBlueprint(s32, s32, s32);
 void RevealSecretPassageOnMap(s32, s32, s32);
 void func_800F2120(void);
+#if defined(VERSION_USPROTO)
+void DrawE3Banner(void);
+#endif
 void CalcDefense(void);
 bool IsAlucart(void);
 void make_all(void);

@@ -89,6 +89,7 @@ enum {
 
     // us: includes US build
     // jp: includes HD and PSP builds
+    // usproto: same as us up to 0x357, then the jp content shifted by 2
     /* us:0x2FF, jp:0x2FF */ MU_NO_AUDIO = 0x2FF, // for cutscenes and bosses
     /* us:0x301, jp:0x301 */ MU_LOST_PAINTING = 0x301,
     /* us:0x302, jp:0x302 */ MU_LOST_PAINTING_LOOP_POINT,
@@ -128,7 +129,7 @@ enum {
     /* us:0x324, jp:0x324 */ MU_WANDERING_GHOSTS_LOOP_POINT,
     /* us:0x325, jp:0x325 */ MU_THE_DOOR_TO_THE_ABYSS,
     /* us:0x326, jp:0x326 */ MU_THE_DOOR_TO_THE_ABYSS_LOOP_POINT,
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_USPROTO)
     /* us:0x327           */ MU_METAMORPHOSIS,
     /* us:0x328           */ MU_METAMORPHOSIS_II,
     /* us:0x329           */ MU_METAMORPHOSIS_III,
@@ -157,7 +158,7 @@ enum {
     /* us:0x33F, jp:0x33C */ MU_NOCTURNE,
     /* us:0x340, jp:0x33D */ MU_MOONLIGHT_NOCTURNE,
 
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_USPROTO)
     // Japanese intro
     /* us:0x341           */ JP_VO_NARRATOR_KATSUTE, // "Katsute ..."
     /* us:0x342           */ JP_VO_NARRATOR_SOSHITE, // "Soshite 5 nen no
@@ -178,7 +179,7 @@ enum {
     /* us:0x34A, jp:0x348 */ JP_VO_YOKOYAMA_CHISA_MESSAGE,   // Yokoyama Chisa
     /* us:0x34B, jp:0x349 */ JP_VO_YANAMI_JYOUJI_MESSAGE,    // Yanami Jyouji
 
-#ifdef VERSION_US
+#if defined(VERSION_US) || defined(VERSION_USPROTO)
     // Various voice actors saying konami
     /* us:0x34C           */ JP_VO_KONAMI_1,  // woman says konami
     /* us:0x34D           */ JP_VO_KONAMI_2,  // woman says konami
@@ -192,7 +193,9 @@ enum {
     /* us:0x355           */ JP_VO_KONAMI_10, // woman says konami
     /* us:0x356           */ JP_VO_KONAMI_11, // man says konami
     /* us:0x357           */ JP_VO_KONAMI_12, // man says konami
+#endif
 
+#if defined(VERSION_US)
     // Prologue cutscene
     /* us:0x358,          */ NA_VO_RI_DIE_MONSTER, // Richter: "Die monster ..."
     /* us:0x359,          */ NA_VO_DR_IT_WAS_NOT,  // Dracula: "It was not by my
@@ -204,10 +207,12 @@ enum {
                                                          // set your soul
                                                          // wandering for
                                                          // eternity, demon.
+#elif defined(VERSION_USPROTO)
+    /*      usproto:0x393 */ VO_GAMEOVER_SUCCUBUS_TAUNT = 0x393,
 #else
     /*           jp:0x391 */ VO_GAMEOVER_SUCCUBUS_TAUNT = 0x391,
 #endif
-#ifdef VERSION_US
+#if defined(VERSION_US) || defined(VERSION_USPROTO)
     /* us:0x3A8, jp:0x3A6 */ UNK_3A8 = 0x3A8,
 #else
     /* us:0x3A8, jp:0x3A6 */ UNK_3A8 = 0x3A6,
@@ -224,15 +229,17 @@ enum {
     /* us:0x3B1, jp:0x3AF */ UNK_3B1,
     /* us:0x3B2, jp:0x3B0 */ NA_VO_ML_FAREWELL, // Master Librarian: "Farewell
                                                 // for now"
-#ifdef VERSION_US
+#if defined(VERSION_US)
     /* us:0x3CD,          */ UNK_3CD = 0x3CD,
     /* us:0x3CE,          */ NA_VO_MA_IF_YOU_WEAR, // Maria: If you wear these,
                                                    // you can see beyond evil
                                                    // illusions.
+#elif defined(VERSION_USPROTO)
+    /*      usproto:0x3D0 */ VO_GAMEOVER_MARIA = 0x3D0,
 #else
     /*           jp:0x3CE */ VO_GAMEOVER_MARIA = 0x3CE,
 #endif
-#ifdef VERSION_US
+#if defined(VERSION_US)
     /* us:0x3D9,          */ UNK_3D9 = 0x3D9,
     /* us:0x3DA,          */ NA_VO_RI_IMPRESSIVE_WHIP, // Richter: Impressive,
                                                        // you were able to avoid
@@ -244,12 +251,16 @@ enum {
     /* us:0x3DC,          */ NA_VO_RI_ONLY_THE_COUNT,    // Richter: Hah, I knew
                                                       // it. Only the count is a
                                                       // true match for me.
+#elif defined(VERSION_USPROTO)
+    /*      usproto:0x3DC */ VO_GAMEOVER_RICHTER_TAUNT_1 = 0x3DC,
+    /*      usproto:0x3DD */ VO_GAMEOVER_RICHTER_TAUNT_2,
+    /*      usproto:0x3DE */ VO_GAMEOVER_RICHTER_TAUNT_3,
 #else
     /*           jp:0x3DA */ VO_GAMEOVER_RICHTER_TAUNT_1 = 0x3DA,
     /*           jp:0x3DB */ VO_GAMEOVER_RICHTER_TAUNT_2,
     /*           jp:0x3DC */ VO_GAMEOVER_RICHTER_TAUNT_3,
 #endif
-#ifdef VERSION_US
+#if defined(VERSION_US) || defined(VERSION_USPROTO)
     /* us:0x45E, jp:0x45C */ NOSE_DEMON_INTRO_PREV_A = 0x45E,
 #else
     /* us:0x45E, jp:0x45C */ NOSE_DEMON_INTRO_PREV_A = 0x45C,
@@ -269,7 +280,7 @@ enum {
     /* us:0x46B, jp:0x469 */ UNK_46B,
     /* us:0x46C, jp:0x46A */ UNK_46C,
     /* us:0x46D, jp:0x46B */ UNK_46D,
-#ifdef VERSION_US
+#if defined(VERSION_US) || defined(VERSION_USPROTO)
     /* us:0x471, jp:0x46F */ UNK_471 = 0x471,
 #else
     /* us:0x471, jp:0x46F */ UNK_471 = 0x46F,
@@ -312,7 +323,7 @@ enum {
     /* us:0x491, jp:0x48E */ UNK_491,
     /* us:0x492, jp:0x48F */ FAERIE_DARKNESS_HINT, // "Some animals can live in
                                                    // complete darkness"
-#ifdef VERSION_US
+#if defined(VERSION_US) || defined(VERSION_USPROTO)
     /* us:0x4A1, jp:0x49F */ YOUSEI_INTRO = 0x4A1,
 #else
     /* us:0x4A1, jp:0x49F */ YOUSEI_INTRO = 0x49F,
@@ -368,7 +379,7 @@ enum {
     /* us:0x4D2, jp:0x4D0 */ UNK_4D2,
     /* us:0x4D3, jp:0x4D1 */ UNK_4D3,
     /* us:0x4D4, jp:0x4D2 */ YOUSEI_DARKNESS_HINT,
-#ifdef VERSION_US
+#if defined(VERSION_US) || defined(VERSION_USPROTO)
     /* us:0x4E6, jp:0x4E4 */ UNK_4E6 = 0x4E6,
 #else
     /* us:0x4E6, jp:0x4E4 */ UNK_4E6 = 0x4E4,
@@ -385,8 +396,12 @@ enum {
                                                 // press it and see?
     /* us:0x4EF, jp:0x4ED */ DEMON_SWITCH_2,    // Hmm, this switch hasn't been
                                                 // pressed yet
+#if defined(VERSION_USPROTO)
+    /*      usproto:0x52F */ UNK_52D = 0x52F,
+#else
     /* us:0x52D, jp:0x52D */ UNK_52D = 0x52D,
-#ifdef VERSION_US
+#endif
+#if defined(VERSION_US)
     /* us:0x52E,          */ JP_VO_SH_GROAN,      // Shaft groans
     /* us:0x52F,          */ JP_VO_SH_SCREAM,     // Shaft screams
     /* us:0x530,          */ JP_VO_SH_SONO_TEIDO, // Shaft: Sono teido no

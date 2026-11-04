@@ -2561,7 +2561,7 @@ void EntitySummonSpirit(Entity* self) {
         prim->y1 = prim->y0 = selfY - 0x20;
         prim->y2 = prim->y3 = selfY + 0x1F;
         D_80138424.x = prim->x0;
-#ifndef VERSION_PSP
+#if !defined(VERSION_PSP)
         if (g_CurrentBuffer->disp.disp.x == 0) {
             D_80138424.x += 0x100;
         }

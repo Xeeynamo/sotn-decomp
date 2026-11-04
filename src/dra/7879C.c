@@ -1718,7 +1718,7 @@ void UpdatePlayerEntities(void) {
     // Appears to be a temporary debugging block that was left in.
     if ((g_Player.status & (PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK80000)) ||
         (PLAYER.step == Player_Teleport && PLAYER.step_s == 0)) {
-#if defined(VERSION_US) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
         // Japanese for "without hit".
         FntPrint("atari nuki\n");
 #else
@@ -1784,7 +1784,7 @@ void func_8011A9D8(void) {
         if (!(entity->flags & FLAG_UNK_20000)) {
             DestroyEntity(entity);
         }
-#if defined(VERSION_US) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
         if (g_PlayableCharacter == PLAYER_ALUCARD && 0x36 < entity->entityId &&
             entity->entityId < 0x3D && entity->step != 0) {
             entity->pfnUpdate(entity);
@@ -2388,7 +2388,7 @@ static bool func_8011BD48(Entity* entity) {
 }
 
 // This is BSS on PSP.
-#ifndef VERSION_PSP
+#if !defined(VERSION_PSP)
 static s32 D_800AD630[] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,

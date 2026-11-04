@@ -321,7 +321,7 @@ s16 g_ButtonMask[] = {
 
 static u8 g_StageSelectOrder[] = {
     STAGE_MEMORYCARD, STAGE_ST0,     UPRIGHT_STAGES,
-#ifndef VERSION_PSP
+#if !defined(VERSION_PSP)
     REVERSE_STAGES,   DEBUG_STAGES,  BOSSES,
     REVERSE_BOSSES,   STAGE_TOP_ALT, STAGE_ENDING,
 #else
@@ -502,7 +502,7 @@ void HandlePlay(void) {
         if (D_80097C98 & 0x80000000) {
             func_800E4970();
             DemoInit(2);
-#ifndef VERSION_PSP
+#if !defined(VERSION_PSP)
             return;
 #else
             if (D_psp_08C630D4 != 0) {
@@ -612,7 +612,7 @@ void HandlePlay(void) {
                 g_LoadOvlIdx = STAGE_LIB;
             }
         }
-#ifndef VERSION_PSP
+#if !defined(VERSION_PSP)
         MoveImage(&g_Vram.D_800ACD80, 0, 0x100);
 #endif
 
@@ -830,8 +830,12 @@ void HandleGameOver(void) {
             SetTexturedPrimRect(prim, 0, 0x60, 0xFF, 0x20, 0, 0);
             func_801072BC(prim);
             prim->tpage = 8;
+#if defined(VERSION_USPROTO)
+            prim->drawMode = DRAW_HIDE;
+#else
             prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
                              DRAW_COLORS | DRAW_TRANSP;
+#endif
             prim->p1 = 0x60;
             prim = prim->next;
 
@@ -851,7 +855,7 @@ void HandleGameOver(void) {
 
             for (i = 0; i < 0x100; i++) {
                 SetTexturedPrimRect(prim, i, 0, 1, 0xF0, i & 0x3F, 0);
-#ifndef VERSION_PSP
+#if !defined(VERSION_PSP)
                 prim->tpage = (i / 0x40) + 0x10C;
 #else
                 prim->tpage = (i / 0x40) + 0x101;
@@ -918,7 +922,7 @@ void HandleGameOver(void) {
             if (LoadFileSim(11, SimFileType_System) < 0) {
                 break;
             }
-#ifndef VERSION_PSP
+#if !defined(VERSION_PSP)
         }
 #else
             func_psp_0891CEB8(0, 0xF0);
@@ -999,7 +1003,11 @@ void HandleGameOver(void) {
         if (temp != 0x80) {
             break;
         }
+#if defined(VERSION_USPROTO)
+        prim->drawMode = DRAW_HIDE;
+#else
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
+#endif
         prim->p1 = 4;
         g_GameStep++;
         break;
@@ -1013,7 +1021,11 @@ void HandleGameOver(void) {
         yScroll = prim->v0;
         if (yScroll == 0x60) {
             yScroll = 0x40;
+#if defined(VERSION_USPROTO)
+            prim->drawMode = DRAW_HIDE;
+#else
             prim->drawMode = DRAW_COLORS;
+#endif
             prim->p1 = 0;
             prim->next->p1 = 1;
             g_GameStep++;
@@ -1461,7 +1473,7 @@ void HandleNowLoading(void) {
         } else {
             if (g_StageId == STAGE_ST0 ||
                 g_PlayableCharacter != PLAYER_ALUCARD) {
-#ifndef VERSION_PSP
+#if !defined(VERSION_PSP)
                 if (0) { // to align curly braces
 #else
                 if (g_PlayableCharacter == PLAYER_MARIA) {
@@ -1920,10 +1932,10 @@ void HandleVideoPlayback(void) {
             prim = &g_PrimBuf[D_8013640C];
             temp = prim->r0 + 1;
             func_80107250(prim, temp);
-#ifndef VERSION_PSP
+#if !defined(VERSION_PSP)
             if (temp == 96) {
                 prim2 = prim->next;
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_USPROTO)
                 prim2->drawMode = DRAW_HIDE;
 #elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
                 prim2->drawMode = DRAW_DEFAULT;

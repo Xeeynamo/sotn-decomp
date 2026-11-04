@@ -5,7 +5,8 @@
 
 #if defined(VERSION_US)
 #define PAD_RESETCOMBO ((PAD_START) | (PAD_SELECT))
-#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
+#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) || \
+    defined(VERSION_USPROTO)
 #define PAD_RESETCOMBO                                                         \
     ((PAD_START) | (PAD_SELECT) | (PAD_L2) | (PAD_R2) | (PAD_L1) | (PAD_R1))
 #endif
@@ -799,7 +800,8 @@ void MainGame(void) {
     g_Settings.D_8003CB00 = 0;
     g_Settings.D_8003CB04 = 0;
     g_CurrentBuffer = &g_GpuBuffers[0];
-#if defined(VERSION_US) || defined(VERSION_JP10) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_USPROTO) ||                         \
+    defined(VERSION_JP10) || defined(VERSION_JP11)
     SetCdPos(OFF_SD_XA_STR1);
 #elif defined(VERSION_HD)
     do {
@@ -825,7 +827,8 @@ void MainGame(void) {
     g_GpuMaxUsage.tile = 0;
     g_GpuMaxUsage.sp = 0;
     g_GpuMaxUsage.env = 0;
-#if defined(VERSION_US) || defined(VERSION_JP10) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_USPROTO) ||                         \
+    defined(VERSION_JP10) || defined(VERSION_JP11)
     g_DebugPlayer = 0;
 #elif defined(VERSION_HD)
     g_DebugPlayer = 1;
@@ -925,10 +928,11 @@ loop_5:
         }
         if (g_softResetTimer >= 0x80) {
             g_softResetTimer = 0;
-#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
+#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) || \
+    defined(VERSION_USPROTO)
         if (g_pads[0].pressed == PAD_RESETCOMBO &&
             g_pads[0].tapped & PAD_START &&
-#if defined(VERSION_JP11)
+#if defined(VERSION_JP11) || defined(VERSION_USPROTO)
             !g_IsUsingCd &&
 #endif
             D_800978C4 != 0) {

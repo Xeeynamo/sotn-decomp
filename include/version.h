@@ -7,7 +7,7 @@
 // * `VERSION_TOKEN` - a macro that expands to a token representing the version
 //   (e.g `us`, `hd`, `psp`), useful for building symbol names
 // * One of `VERSION_US`, `VERSION_HD`, `VERSION_JP10`, `VERSION_JP11`,
-//   `VERSION_PSP`, or `VERSION_BETA`
+//   `VERSION_USPROTO`, `VERSION_PSP`, or `VERSION_BETA`
 // * `GEN_VERSION` - macro that can be used to build an `#include` path for
 //   generated files specific to the version
 #ifndef VERSION_H
@@ -25,6 +25,9 @@
 #elif defined(_internal_version_jp11)
 #define VERSION_JP11
 #define VERSION_TOKEN jp11
+#elif defined(_internal_version_usproto)
+#define VERSION_USPROTO
+#define VERSION_TOKEN usproto
 #elif defined(_internal_version_pspeu)
 #define VERSION_PSP
 // use this to flag code as only non-psp due to deadstripping.

@@ -2466,7 +2466,7 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.unk90 = 0xFF;
             var_s5 = true;
             self->step = Player_Unk20;
-#ifndef VERSION_PSP
+#if !defined(VERSION_PSP)
             PlaySfx(SFX_TELEPORT_SYNTH_DOWN);
 #endif
         } else {

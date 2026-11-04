@@ -2,8 +2,11 @@
 #ifndef LBA_H
 #define LBA_H
 
-#ifdef VERSION_US
+#if defined(VERSION_US)
 #include "lba_us.h"
+
+#elif defined(VERSION_USPROTO)
+#include "lba_usproto.h"
 
 #elif defined(VERSION_JP11)
 #include "lba_jp11.h"

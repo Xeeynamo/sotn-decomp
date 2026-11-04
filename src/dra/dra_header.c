@@ -69,7 +69,7 @@ u16* func_psp_0913FA28(u32 ch, u16 kind);
 u16 func_psp_0913F960(const char* str, u8* type);
 #endif
 
-#ifndef VERSION_PSP
+#if !defined(VERSION_PSP)
 typedef void (*Entrypoint)(void);
 void MainGame(void);
 Entrypoint g_MainGame = MainGame;

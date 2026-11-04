@@ -531,7 +531,7 @@ void RenderEntities(void) {
                     if (animFrameFlags & 0x100) {
                         polyX += 4;
                     }
-#ifdef VERSION_US
+#if defined(VERSION_US) || defined(VERSION_USPROTO)
                     setSemiTrans(poly, true);
                     poly->tpage += 0x20;
 #endif

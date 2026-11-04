@@ -131,7 +131,7 @@ u16 g_CharBuffer[0x30];
 #endif
 
 u16 g_SjisPages[] = {
-#ifndef VERSION_US
+#if !defined(VERSION_US)
     '踪',   '眷', '翔', '彷', '徨', '苺', '獰', '賤', '贄',
 #endif
 
@@ -140,13 +140,13 @@ u16 g_SjisPages[] = {
 #else
     '鬱', // copyright symbol
 #endif
-#if defined(VERSION_JP11)
+#if defined(VERSION_JP11) || defined(VERSION_USPROTO)
     '憑',
 #endif
 };
 
 u8 g_CustomGlyphs[][30] = {
-#ifndef VERSION_US
+#if !defined(VERSION_US)
     {
         0x00, 0x20, // □□□□□□□□□□■□□□□□
         0x7C, 0x20, // □■■■■■□□□□■□□□□□
@@ -318,7 +318,7 @@ u8 g_CustomGlyphs[][30] = {
         0x18, 0x30, // □□□■■□□□□□■■□□□□
         0x07, 0xC0, // □□□□□■■■■■□□□□□□
     },
-#if defined(VERSION_JP11)
+#if defined(VERSION_JP11) || defined(VERSION_USPROTO)
     {
         0x00, 0x00, // □□□□□□□□□□□□□□□□
         0x47, 0xFC, // □■□□□■■■■■■■■■□□

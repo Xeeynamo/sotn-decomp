@@ -6,7 +6,7 @@
 // data order is slightly different between US and HD
 // maybe this suggests a file split
 
-#if defined(VERSION_US) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
 s32 D_800ACDF8 = 0;
 s32 D_800ACDFC = 0;
 s32 D_800ACE00[] = {
@@ -17,7 +17,7 @@ s16 D_800ACE20[] = {
     0xFFD0, 0xFFD0, 0xFFD1, 0xFFD8, 0xFFD7, 0xFFE2, 0xFFE1, 0xFFE2, 0xFFD7,
     0xFFD7, 0xFFCF, 0xFFCD, 0xFFCD, 0xFFD6, 0xFFD7, 0xFFE3, 0xFFE3, 0x0000,
 };
-#if defined(VERSION_JP11)
+#if defined(VERSION_JP11) || defined(VERSION_USPROTO)
 s32 D_800ACEDC_hd = 0;
 #endif
 s32 D_800ACE44 = 0;
@@ -265,7 +265,7 @@ void AluInit() {
 #endif
     D_80137FB8 = 0;
 
-#if defined(VERSION_US) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
     D_80137FBC = true;
 #endif
 
@@ -603,7 +603,8 @@ static TeleportCheck GetTeleportToOtherCastle(void) {
     // Check for X/Y boundaries in RTOP
     if (g_StageId == STAGE_RTOP) {
         if (abs((g_Tilemap.left << 8) + g_PlayerX - 8384) < 4 &&
-#if defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
+#if defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) ||   \
+    defined(VERSION_USPROTO)
             (abs((g_Tilemap.top << 8) + g_PlayerY) - 14407) < 4) {
 #else
             abs((g_Tilemap.top << 8) + g_PlayerY - 14407) < 4) {
@@ -820,7 +821,7 @@ void EntityAlucard() {
 
     if (g_Player.demo_timer != 0) {
         g_Player.demo_timer--;
-#if defined(VERSION_US) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
         if (g_Player.demo_timer == 0) {
             D_80137FBC = true;
         }
@@ -858,7 +859,7 @@ void EntityAlucard() {
                 g_Player.padPressed |= D_800ACE00[i];
             }
         }
-#if defined(VERSION_US) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
         if (D_80137FBC) {
             D_80137FBC = false;
             g_Player.padHeld = g_Player.padPressed;
@@ -884,7 +885,7 @@ void EntityAlucard() {
     }
 
 // US uses a different ordering than HD/PSP
-#if !defined(VERSION_US) && !defined(VERSION_JP11)
+#if !defined(VERSION_US) && !defined(VERSION_USPROTO) && !defined(VERSION_JP11)
     if (g_Player.timers[ALU_T_INVINCIBLE] |
         g_Player.timers[ALU_T_INVINCIBLE_CONSUMABLES]) {
         goto specialmove;
@@ -899,7 +900,7 @@ void EntityAlucard() {
         SetPlayerStep(Player_BossGrab);
         goto block_159;
     }
-#if defined(VERSION_US) || defined(VERSION_JP11)
+#if defined(VERSION_US) || defined(VERSION_USPROTO) || defined(VERSION_JP11)
     if (g_Player.timers[ALU_T_INVINCIBLE] |
         g_Player.timers[ALU_T_INVINCIBLE_CONSUMABLES]) {
         goto specialmove;

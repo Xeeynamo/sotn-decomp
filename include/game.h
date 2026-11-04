@@ -494,7 +494,7 @@ typedef enum {
 #define CARD_BLOCK_SIZE (8192)
 
 typedef struct {
-#ifndef VERSION_PSP
+#if !defined(VERSION_PSP)
     /* 0x000 */ struct DIRENTRY entries[BLOCK_PER_CARD];
 #endif
     /* 0x258 */ u32 unk258;
@@ -2110,7 +2110,7 @@ typedef struct {
     RECT D_800ACDD8;
     RECT D_800ACDE0;
     RECT D_800ACDE8;
-#ifdef VERSION_US
+#if defined(VERSION_US)
     RECT D_800ACDF0;
 #endif
 } Vram;

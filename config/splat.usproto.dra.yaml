@@ -1,0 +1,170 @@
+options:
+  platform:     psx
+  basename:     dra
+  base_path:    ..
+  build_path:   build/usproto
+  target_path:  disks/usproto/DRA.BIN
+  asm_path:     asm/usproto/dra
+  asset_path:   assets/dra
+  src_path:     src/dra
+  ld_script_path: build/usproto/dra.ld
+  compiler:     GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.usproto.dra.txt
+  undefined_funcs_auto_path: build/usproto/config/undefined_funcs_auto.usproto.dra.txt
+  undefined_syms_auto_path:  build/usproto/config/undefined_syms_auto.usproto.dra.txt
+  find_file_boundaries: yes
+  use_legacy_include_asm: no
+  asm_jtbl_label_macro: jlabel
+  extensions_path: tools/splat_ext
+  disassemble_all: true
+  global_vram_start: 0x80010000
+  section_order:
+    - ".data"
+    - ".rodata"
+    - ".text"
+    - ".bss"
+    - ".sbss"
+  ld_generate_symbol_per_data_segment: true
+sha1: cdc6208ed14f04fdf7ea42359d80d4780172e7be
+segments:
+  - name: dra
+    type: code
+    start: 0x00000000
+    vram:  0x800A0000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, .data, dra_header]
+      - [0x144, .data, 42398]
+      - [0x160, .data, game_handlers]
+      - [0x248, .data, 47BB8]
+      - [0x510, .data, save_mgr]
+      - [0x2178, .data, 4B758]
+      - [0x23F8, .data, 4DA70]
+      - [0x23FC, .data, demo]
+      - [0x241C, .data, 5087C]
+      - [0x2D08, .data, menu]
+      - [0x2E88, .data, 5D5BC]
+      - [0x2EB0, .data, 5F60C]
+      - [0x30FC, .data, 624DC]
+      - [0x3178, .data, 62DEC]
+      - [0x37A0, .data, d_37d8]
+      - [0x3C14, .data, lba_stage]
+      - [0x49C8, .data, config_us]
+      - [0xC8D8, .data, 66590]
+      - [0xCA60, .data, cd]
+      - [0xCE88, .data, d_CD80]
+      - [0xCF00, .data, 692E8]
+      - [0xCF6C, .data, 6BF64]
+      - [0xD01C, .data, alu_anim]
+      - [0xD050, .data, 6E42C]
+      - [0xD070, .data, 70394]
+      - [0xD078, .data, 71830]
+      - [0xD0B8, .data, 7879C]
+      - [0xDBAC, .data, 7E4BC]
+      - [0xE3AC, .data, d_E294]
+      - [0x1072C, .data, 84B88]
+      - [0x10988, .data, 8BEF8]
+      - [0x109D0, .data, wolfForm]
+      - [0x11180, .data, sound]
+      - [0x1D2E4, .data, sound_data]
+      - [0x22280, .data, d_2217C]
+      - [0x24DF0, .data, d_24CEC]
+      - [0x2F428, .data, d_2F324]
+      - [0x2FF4C, .data, d_2FE48]
+      - [0x389D8, raw, g_PalEquipIcon]
+      - [0x3B1D8, .data, d_3B0D4]
+      - [0x3B4B8, .rodata, 42398]
+      - [0x3B634, .rodata, game_handlers]
+      - [0x3B974, .rodata, 47BB8]
+      - [0x3BE9C, .rodata, save_mgr]
+      - [0x3C158, .rodata, 4A538]
+      - [0x3C198, .rodata, 4AEA4]
+      - [0x3C1E8, .rodata, 4DA70]
+      - [0x3C240, .rodata, collider]
+      - [0x3C440, .rodata, demo]
+      - [0x3C4C4, .rodata, 5087C]
+      - [0x3C584, .rodata, menu]
+      - [0x3CB5C, .rodata, 5D5BC]
+      - [0x3CBA4, .rodata, 5F60C]
+      - [0x3CBBC, .rodata, 624DC]
+      - [0x3CC20, .rodata, 62DEC]
+      - [0x3CD3C, .rodata, lba_stage]
+      - [0x3D0E8, .rodata, config_us]
+      - [0x40C80, .rodata, cd]
+      - [0x40D70, .rodata, 692E8]
+      - [0x412B8, .rodata, 6E42C]
+      - [0x412BC, .rodata, 704D0]
+      - [0x412E8, .rodata, 71830]
+      - [0x4196C, .rodata, 7879C]
+      - [0x41BDC, .rodata, 7E4BC]
+      - [0x41D5C, .rodata, 84B88]
+      - [0x41DB8, .rodata, 8A0A4]
+      - [0x41DD8, .rodata, wolfForm]
+      - [0x41F5C, .rodata, sound]
+      - [0x422C0, c, 42398]
+      - [0x44008, c, game_handlers]
+      - [0x479C8, c, 47BB8]
+      - [0x48B34, c, pads]
+      - [0x48CF4, c, save_mgr]
+      - [0x4A368, c, 4A538]
+      - [0x4ACD4, c, 4AEA4]
+      - [0x4B588, c, 4B758]
+      - [0x4CC5C, c, 4CE2C]
+      - [0x4D8A0, c, 4DA70]
+      - [0x4F28C, c, collider]
+      - [0x4FA28, c, demo]
+      - [0x506AC, c, 5087C]
+      - [0x54648, c, menu]
+      - [0x5D218, c, timeattack]
+      - [0x5D314, c, 5D5BC]
+      - [0x5F364, c, 5F60C]
+      - [0x62174, c, 624DC]
+      - [0x62A84, c, 62DEC]
+      - [0x661E0, c, 66590]
+      - [0x67014, c, cd]
+      - [0x68F14, c, 692E8]
+      - [0x6BB64, c, 6BF64]
+      - [0x6D184, c, alu_anim]
+      - [0x6DB70, c, 6DF70]
+      - [0x6E02C, c, 6E42C]
+      - [0x6F9F8, c, 6FDF8]
+      - [0x6FF94, c, 70394]
+      - [0x700D0, c, 704D0]
+      - [0x71430, c, 71830]
+      - [0x78394, c, 7879C]
+      - [0x7E0B4, c, 7E4BC]
+      - [0x84780, c, 84B88]
+      - [0x89C9C, c, 8A0A4]
+      - [0x8BAF0, c, 8BEF8]
+      - [0x8C1F8, c, wolfForm]
+      - [0x91AAC, c, sound]
+      - [0x95E9C, .bss, 42398]
+      - [0x95FFC, .bss, game_handlers]
+      - [0x9603C, .bss, 47BB8]
+      - [0x97050, .bss, pads]
+      - [0x97060, .bss, save_mgr]
+      - [0x97068, .bss, 4AEA4]
+      - [0x97180, .bss, demo]
+      - [0x97188, .bss, 5087C]
+      - [0x971BC, .bss, menu]
+      - [0x97550, .bss, 5D5BC]
+      - [0x9755C, .bss, 5F60C]
+      - [0x9758C, .bss, 624DC]
+      - [0x975A8, .bss, 62DEC]
+      - [0x97AE8, .bss, 66590]
+      - [0x97B48, .bss, cd]
+      - [0x97BA4, .bss, bss]
+  - name: dra_data
+    type: data
+    start: 0x9B288
+    vram:  0x8013B290
+    subsegments:
+      - [0x9B288, raw, usproto_vb_0]
+      - [0xDCF38, raw, usproto_vb_1]
+      - [0xEB108, raw, usproto_vb_2]
+      - [0x105718]
+      - [0x1097A8, raw, usproto_vb_3]
+  - [0x115EF8]

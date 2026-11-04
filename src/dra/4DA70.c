@@ -614,7 +614,7 @@ void RenderPrimitives(void) {
                     env = *(DR_ENV**)&prim->r1;
                     if (prim->drawMode & DRAW_UNK_1000) {
                         drawOfs = g_CurrentBuffer->draw.ofs[0];
-#ifndef VERSION_PSP
+#if !defined(VERSION_PSP)
                         *(s16*)&env->code[2] = drawOfs;
                         *(s16*)&env->code[7] = drawOfs;
 #endif
@@ -629,7 +629,7 @@ void RenderPrimitives(void) {
                         SetDrawEnv(env, &drawEnv);
                     }
                     *r->env = *env;
-#ifndef VERSION_PSP
+#if !defined(VERSION_PSP)
                     if (prim->drawMode & DRAW_UNK_1000) {
                         env = r->env;
                         *(s16*)&env->code[0] += drawOfs;

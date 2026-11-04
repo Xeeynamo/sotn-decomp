@@ -1009,7 +1009,7 @@ with open(build_ninja, "w") as f:
     )
     actual_version = os.getenv("VERSION")
     if not actual_version:
-        actual_version = "us,hd,jp10,jp11,pspeu"
+        actual_version = "us,hd,jp10,jp11,usproto,pspeu"
     for version in actual_version.split(","):
         nw.build(
             rule="assets-extract",
