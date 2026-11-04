@@ -337,7 +337,7 @@ pc: ##@ build the port with PsyZ
 pc-test-demos: ##@ build the PC port and replay all supported demos
 pc-test-demos: $(DEMO_TARGETS)
 $(DEMO_TARGETS): demo_%: pc
-	@out=$$(SDL_AUDIODRIVER=dummy SDL_VIDEODRIVER=offscreen "$(PC_SOTN)" --demo $* --replay-fast --replay-and-exit 2>&1) && st=0 || st=$$?; \
+	@out=$$(SDL_AUDIODRIVER=dummy "$(PC_SOTN)" --demo $* --replay-fast --replay-and-exit 2>&1) && st=0 || st=$$?; \
 	    echo "::group::demo $* (exit code $$st)"; echo "$$out"; echo "::endgroup::"; exit $$st
 
 

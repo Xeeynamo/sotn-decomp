@@ -71,6 +71,8 @@ jobs:
           make pc PC_BUILD_TYPE=${{ matrix.build_type }}
       - name: Test demo playback
         timeout-minutes: 15
+        env:
+          SDL_VIDEODRIVER: "offscreen"
         run: make pc-test-demos -j
 
   build-macos:
@@ -107,6 +109,8 @@ jobs:
         run: make pc PC_BUILD_TYPE=${{ matrix.build_type }}
       - name: Test demo playback
         timeout-minutes: 15
+        env:
+          SDL_VIDEODRIVER: ""
         run: make pc-test-demos -j
 
   build-windows:
