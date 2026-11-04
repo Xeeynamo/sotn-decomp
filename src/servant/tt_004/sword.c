@@ -2225,3 +2225,19 @@ ServantEvent* g_EventQueue = g_Events;
 u32 g_CurrentServant = 0;
 s32 g_CurrentRoomX = 0;
 s32 g_CurrentRoomY = 0;
+
+#ifdef VERSION_PC
+#include "../servant_update_anim.h"
+#include "../../destroy_entity.h"
+#include "../accumulate_toward_zero.h"
+#include "../search_for_entity_in_range.h"
+#include "../calculate_angle_to_entity.h"
+#include "../step_angle_towards.h"
+#include "../calculate_distance.h"
+#include "../play_sfx.h"
+#include "../process_event.h"
+#include "../create_event_entity.h"
+#include "../is_movement_allowed.h"
+#include "../check_all_entities_valid.h"
+#include "../servant_unk0.h"
+#endif

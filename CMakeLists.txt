@@ -347,7 +347,6 @@ set(SOURCE_FILES_TT_003
 set(SOURCE_FILES_TT_004
     src/servant/tt_004/init.c
     src/servant/tt_004/sword.c
-    src/servant/tt_004/servant_common.c
     src/servant/tt_004/servant_clutdata.c
     src/pc/servants/servant_004.c
 )
