@@ -167,7 +167,7 @@ static WeaponAnimation D_169000_8017AD18[] = {
     {D_169000_8017ACBC, hitboxes, 0, SFX_WEAPON_SWISH_C, 0xD6, 4},
     {D_169000_8017ACA0, hitboxes, 0, SFX_WEAPON_SWISH_C, 0xD6, 4},
     {D_169000_8017ACA0, hitboxes, 0, SFX_WEAPON_SWISH_C, 0xD6, 4},
-#if true ||  HAND_ID == LEFT_HAND
+#if true || HAND_ID == LEFT_HAND
     {D_169000_8017ACA0, hitboxes, 0, SFX_WEAPON_SWISH_C, 0xD6, 4},
 #else
     {D_169000_8017ACA0, hitboxes, 0, SFX_WEAPON_SWISH_C, 0xA6, 4},

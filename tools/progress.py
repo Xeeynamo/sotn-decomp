@@ -226,9 +226,7 @@ class DecompProgressWeaponStats:
                 name = self.name
             else:
                 name = "weapon"
-            stats = DecompProgressStats(
-                name, f"weapon/w{hand_id}_{i:03d}", "weapon"
-            )
+            stats = DecompProgressStats(name, f"weapon/w{hand_id}_{i:03d}", "weapon")
             if stats.exists:
                 self.code_matching += stats.code_matching
                 self.code_total += stats.code_total
