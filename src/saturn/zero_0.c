@@ -590,8 +590,6 @@ u16 func_06007BE0(s16* colors, s32 arg1) {
     return tblNo;
 }
 
-extern s32 DAT_06038DBC;
-
 // original name: SprSetGourTbl
 u16 SprSetGourTbl(SprGourTbl* gourTbl) {
     u16 prev;
@@ -1653,13 +1651,105 @@ void func_0600A030(void) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A088, func_0600A088);
+void func_0600A088(void) {
+    u16* ptr;
+    s32 i, j;
+    u8 flag;
+    s32 temp;
+    u16 save;
+
+    ptr = DAT_06038DD0;
+    for (i = 0; i < 0x10; i++, ptr += 0x10) {
+        flag = DAT_06038DC0[i];
+        if (flag & 0x40) {
+            if (g_Timer % 4) {
+                continue;
+            }
+        }
+        if (flag & 0x80) {
+            continue;
+        }
+        flag %= 0x40;
+        if (flag == 1) {
+            save = ptr[14];
+            for (j = 14; j > 1; j--) {
+                ptr[j] = ptr[j - 1];
+            }
+            ptr[1] = save;
+        } else if (flag == 2) {
+            if (g_Timer % 8) {
+                continue;
+            }
+            if (DAT_06038FD0 > 2) {
+                for (j = 0; j < 8; j++) {
+                    ptr[8 + j] = ptr[j];
+                }
+            } else {
+                for (j = 15; j > 8; j--) {
+                    ptr[j] = ptr[j - 1];
+                }
+            }
+            DAT_06038FD0++;
+            if (DAT_06038FD0 > 4) {
+                DAT_06038FD0 = 0;
+            }
+        } else if (flag & 0x10) {
+            if (flag & 0x20) {
+                j = 1;
+                save = ptr[1];
+            } else {
+                j = 0;
+                save = ptr[0];
+            }
+
+            for (; j < 15; j++) {
+                ptr[j] = ptr[j + 1];
+            }
+            ptr[15] = save;
+        } else {
+            save = ptr[15];
+            for (j = 15; j > 0; j--) {
+                ptr[j] = ptr[j - 1];
+            }
+            if (flag & 0x20) {
+                ptr[1] = save;
+            } else {
+                ptr[0] = save;
+            }
+        }
+    }
+    temp = VRAM_ADDR + SPR_2LookupTblNoToVram(0) * 8;
+    QueueVramTransfer(temp, DAT_06038DD0[0], 0x200);
+    if (DAT_06038DBC != 0) {
+        QueueVramTransfer(DAT_06038DBC, DAT_06038DD0[3], 0x20);
+    }
+}
+
+typedef struct {
+    u16 unk0[5];
+    u16 unkA[5];
+} unkStruct;
+
+typedef struct {
+    s16 : 16;
+    s16 : 16;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    s32 unk10;
+    unkStruct unk14[6];
+    s32 unk8C[7]; // pad
+    s32 unkA8;
+    s32 unkAC[30]; // pad
+} UNK0605D910;     // size: 0x124
+
+extern UNK0605D910 DAT_0605D910[2];
 
 void func_0600A240(s32 arg0) {
     if (arg0 != 0) {
-        DAT_0605D910[0x4D] = 1;
+        DAT_0605D910[1].unk10 = 1;
     } else {
-        DAT_0605D910[4] = 1;
+        DAT_0605D910[0].unk10 = 1;
     }
 }
 
@@ -1675,11 +1765,11 @@ void func_0600A304(s32 gourTblNo, SprGourTbl* gourTbl) {
 }
 
 // original name: SetPlTransNonSeparateAura
-void SetPlTransNonSeparateAura(void) { DAT_0605D910[3] = 1; }
+void SetPlTransNonSeparateAura(void) { DAT_0605D910[0].unkC = 1; }
 
 void func_0600A330(void) {
     if (g_PlayableCharacter == 0) {
-        DAT_0605D910[3] = 0;
+        DAT_0605D910[0].unkC = 0;
     }
 }
 
@@ -1709,8 +1799,52 @@ void MapBytesThroughLut(u8* src, u8* dst, s32 count) {
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A650, func_0600A650);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A77C, func_0600A77C);
 
-// _UpdateMirage
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600AA18, func_0600AA18);
+// original name: UpdateMirage
+void func_0600AA18(s32 arg0) {
+    unkStruct* var_r3;
+    UNK0605D910* var_r7;
+    unkStruct* var_r5;
+    s32 var_r0;
+    s32 var_r0_2;
+    s32 var_r2_2;
+    s32 var_r6;
+    s16* temp_r4;
+    unkStruct* var_r6_2;
+
+    if ((arg0 == 0) || (arg0 == 2)) {
+        if (arg0 == 2) {
+            var_r3 = DAT_0605D910[1].unk14;
+        } else {
+            var_r3 = DAT_0605D910[0].unk14;
+        }
+        for (var_r6 = 0; var_r6 < 6; var_r6++) {
+            for (var_r0 = 0; var_r0 < 5; var_r0++) {
+                var_r3->unk0[var_r0] = -1;
+                var_r3->unkA[var_r0] = 0;
+            }
+            var_r3++;
+        }
+    } else {
+        if (arg0 == 3) {
+            var_r7 = &DAT_0605D910[1];
+        } else {
+            var_r7 = &DAT_0605D910[0];
+        }
+        temp_r4 = &var_r7->unkA8;
+        var_r5 = &var_r7->unk14[5];
+        var_r6_2 = &var_r7->unk14[4];
+        for (var_r0_2 = 5; var_r0_2 > 0; var_r0_2--) {
+            *var_r5-- = *var_r6_2--;
+        }
+        var_r7->unk14[0] = *((unkStruct*)&temp_r4[8]);
+        var_r2_2 = var_r7->unk8 + 1;
+        if (var_r2_2 > 6) {
+            var_r2_2 = 0;
+        }
+        var_r7->unk4 = var_r2_2;
+    }
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600AB60, func_0600AB60);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600AC30, func_0600AC30);
 
@@ -1904,7 +2038,7 @@ SprGourTbl* GetSpriteObjectGourTbl(SpriteObject* obj) {
 
 // original name: Odma
 void func_0600BD68(void) {
-    s32* var_r9;
+    UNK0605D910* var_r9;
     u8 var_r11;
     s32 i;
     SpriteObject* node;
@@ -1915,14 +2049,14 @@ void func_0600BD68(void) {
     var_r9 = DAT_0605D910;
     var_r11 = 4;
     for (i = 0; i < 2; i++) {
-        if (var_r9[4] != 0) {
-            var_r9[4] = 0;
+        if (var_r9->unk10 != 0) {
+            var_r9->unk10 = 0;
             func_0600A77C(0, var_r11, DAT_06064650[0]->images);
         }
         if (DAT_060579A4 == 0) {
             break;
         }
-        var_r9 += 0x49;
+        var_r9++;
         var_r11 |= 0x10;
     }
     while (node != NULL) {
