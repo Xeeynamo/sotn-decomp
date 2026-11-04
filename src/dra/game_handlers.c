@@ -1925,7 +1925,7 @@ void HandleVideoPlayback(void) {
                 prim2 = prim->next;
 #if defined(VERSION_US)
                 prim2->drawMode = DRAW_HIDE;
-#elif defined(VERSION_HD)
+#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
                 prim2->drawMode = DRAW_DEFAULT;
 #endif
             }

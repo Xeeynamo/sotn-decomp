@@ -110,7 +110,7 @@ RoomTeleport D_800A245C[] = {
     {752, 132, 0x0068, 0x0037, STAGE_NO2},
     {496, 132, 0x0000, 36, STAGE_MAR},
     {128, 388, 0x0000, 0x0038, STAGE_CEN},
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_JP11)
     {496, 132, 0x0000, 0x0001, STAGE_BO4},
 #else
     {128, 77, 0x0010, 0x0028, STAGE_BO6},
@@ -189,7 +189,7 @@ RoomBossTeleport g_RoomBossTeleports[] = {
     {0x14, 0x16, STAGE_ARE, TIMEATTACK_EVENT_MINOTAUR_WEREWOLF_DEFEAT, 0x73},
     {0x28, 0x27, STAGE_NO4, TIMEATTACK_EVENT_SCYLLA_DEFEAT, 0x6F},
     {0x39, 0x17, STAGE_NO1, TIMEATTACK_EVENT_DOPPLEGANGER_10_DEFEAT, 0x6C},
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_JP11)
     {0x3A, 0x17, STAGE_NO1, TIMEATTACK_EVENT_DOPPLEGANGER_10_DEFEAT, 0x48},
 #endif
     {0x17, 0x0D, STAGE_DAI, TIMEATTACK_EVENT_HYPPOGRYPH_DEFEAT, 0x68},
@@ -1413,7 +1413,7 @@ void RunMainEngine(void) {
         return;
     case Engine_Normal:
         g_GameTimer++;
-#if defined(VERSION_HD) && !defined(VERSION_JP10)
+#if defined(VERSION_HD)
         func_800F1424();
 #endif
         func_800F2014();
@@ -1439,7 +1439,7 @@ void RunMainEngine(void) {
         g_api.o.UpdateRoomPosition();
         g_api.o.Update();
 
-#if !defined(VERSION_HD)
+#if !defined(VERSION_HD) && !defined(VERSION_JP10)
         if (g_GameState == Game_Ending) {
             if (D_80097C98 == 6) {
                 D_80097C98 = 0;
@@ -1890,7 +1890,7 @@ void RunMainEngine(void) {
             if (D_80097C98 == 3) {
                 g_GameEngineStep = Engine_Normal;
             }
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_JP11)
             func_8011A9D8();
 #endif
             g_MenuStep++;

@@ -2057,7 +2057,7 @@ void EntityMist(Entity* self) {
         prim->y3 = yVar4;
         PGREY(prim, 0) = PGREY(prim, 1) = 0;
         PGREY(prim, 2) = PGREY(prim, 3) = D_80138398;
-#ifndef VERSION_HD
+#if !defined(VERSION_HD) && !defined(VERSION_JP10) && !defined(VERSION_JP11)
         if (D_80138398 < 0x10) {
             prim->drawMode |= DRAW_HIDE;
         } else {

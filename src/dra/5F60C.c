@@ -464,7 +464,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
 #if defined(VERSION_US)
         g_Status.level = 20;
 #endif
-#if !defined(VERSION_HD)
+#if !defined(VERSION_HD) && !defined(VERSION_JP10)
         if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
             g_Status.exp = 110000;
         }

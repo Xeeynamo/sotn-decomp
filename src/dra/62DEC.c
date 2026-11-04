@@ -199,7 +199,7 @@ static s32 HandleSaveMenu(s32 arg0) {
 #if defined(VERSION_US)
 #define CONFIRM PAD_CROSS
 #define EXIT PAD_TRIANGLE
-#elif defined(VERSION_HD)
+#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
 #define CONFIRM (PAD_START | PAD_SQUARE | PAD_CIRCLE)
 #define EXIT PAD_CROSS
 #elif defined(VERSION_PSP)
@@ -259,7 +259,7 @@ static s32 HandleSaveMenu(s32 arg0) {
             if (D_80137E4C == 6) {
 #if defined(VERSION_US)
                 func_800F9D88("Data saved．", 0, 1);
-#elif defined(VERSION_HD)
+#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
                 func_800F9D40("セーブしました　　　", 0, 1);
 #elif defined(VERSION_PSP)
                 func_800F9D88(D_psp_091CE238, 0, 1);
@@ -270,7 +270,7 @@ static s32 HandleSaveMenu(s32 arg0) {
 #if defined(VERSION_US)
                 func_800F9D88("Memory Card", 0, 1);
                 func_800F9D88("  not found．", 1, 0);
-#elif defined(VERSION_HD)
+#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
                 func_800F9D40("メモリーカードが　　", 0, 1);
                 func_800F9D40("ささっていません　　", 1, 0);
 #elif defined(VERSION_PSP)
@@ -283,7 +283,7 @@ static s32 HandleSaveMenu(s32 arg0) {
 #if defined(VERSION_US)
                 func_800F9D88("Memory Card", 0, 1);
                 func_800F9D88("is Defective．", 1, 0);
-#elif defined(VERSION_HD)
+#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
                 func_800F9D40("メモリーカードが　　", 0, 1);
                 func_800F9D40("　壊れています　　　", 1, 0);
 #elif defined(VERSION_PSP)
@@ -296,7 +296,7 @@ static s32 HandleSaveMenu(s32 arg0) {
 #if defined(VERSION_US)
                 func_800F9D88("Memory Card is", 0, 1);
                 func_800F9D88("not formatted．", 1, 0);
-#elif defined(VERSION_HD)
+#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
                 func_800F9D40("　メモリーカードが　", 0, 1);
                 func_800F9D40("初期化されていません", 1, 0);
 #elif defined(VERSION_PSP)
@@ -310,7 +310,7 @@ static s32 HandleSaveMenu(s32 arg0) {
 #if defined(VERSION_US)
                     func_800F9D88("Cannot", 0, 1);
                     func_800F9D88("overwrite file．", 1, 0);
-#elif defined(VERSION_HD)
+#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
                     func_800F9D40("　　上書き　　　　　", 0, 1);
                     func_800F9D40("　できません　　　　", 1, 0);
 #elif defined(VERSION_PSP)
@@ -321,7 +321,7 @@ static s32 HandleSaveMenu(s32 arg0) {
 #if defined(VERSION_US)
                     func_800F9D88("No game", 0, 1);
                     func_800F9D88("data found．", 1, 0);
-#elif defined(VERSION_HD)
+#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
                     func_800F9D40("データがないため　　", 0, 1);
                     func_800F9D40("上書きできません　　", 1, 0);
 #elif defined(VERSION_PSP)
@@ -332,7 +332,7 @@ static s32 HandleSaveMenu(s32 arg0) {
 #if defined(VERSION_US)
                     func_800F9D88("   ０ memory", 0, 1);
                     func_800F9D88("blocks available．", 1, 0);
-#elif defined(VERSION_HD)
+#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
                     func_800F9D40("空きブロックが　　　", 0, 1);
                     func_800F9D40("　足りません　　　　", 1, 0);
 #elif defined(VERSION_PSP)
@@ -346,7 +346,7 @@ static s32 HandleSaveMenu(s32 arg0) {
 #if defined(VERSION_US)
                 func_800F9D88("  Memory card", 0, 1);
                 func_800F9D88("  format error．", 1, 0);
-#elif defined(VERSION_HD)
+#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
                 func_800F9D40("　メモリーカードの　", 0, 1);
                 func_800F9D40("初期化に失敗しました　", 1, 0);
 #elif defined(VERSION_PSP)
@@ -426,7 +426,7 @@ static s32 HandleSaveMenu(s32 arg0) {
             func_800F9D88("  Select the slot．", 0, 1);
             func_800F9D88(" Slot １", 1, 0);
             func_800F9D88(" Slot ２", 2, 0);
-#elif defined(VERSION_HD)
+#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
             func_800F9D40("スロットを選んで下さい　", 0, 1);
             func_800F9D40("スロット１　", 1, 0);
             func_800F9D40("スロット２　", 2, 0);
@@ -504,7 +504,7 @@ static s32 HandleSaveMenu(s32 arg0) {
         if (arg0 == 2) {
 #if defined(VERSION_US)
             func_800F9D88(" Wish to format？", 0, 1);
-#elif defined(VERSION_HD)
+#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
             func_800F9D40("初期化してもいいですか　", 0, 1);
 #else
                 func_800F9D88("初期化してもいいですか　", 0, 1);
@@ -514,7 +514,7 @@ static s32 HandleSaveMenu(s32 arg0) {
         if (arg0 == 3) {
 #if defined(VERSION_US)
             func_800F9D88(" Overwrite data？", 0, 1);
-#elif defined(VERSION_HD)
+#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
             func_800F9D40("　　上書きしますか　　　", 0, 1);
 #else
                 func_800F9D88(D_psp_091CE240, 0, 1);
@@ -524,7 +524,7 @@ static s32 HandleSaveMenu(s32 arg0) {
         if (arg0 == 4) {
 #if defined(VERSION_US)
             func_800F9D88("   Wish to save？", 0, 1);
-#elif defined(VERSION_HD)
+#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
             func_800F9D40("　　セーブしますか　　　", 0, 1);
 #else
                 func_800F9D88(D_psp_091CE248, 0, 1);
@@ -534,7 +534,7 @@ static s32 HandleSaveMenu(s32 arg0) {
 #if defined(VERSION_US)
         func_800F9D88("Yes ", 1, 0);
         func_800F9D88("  No  ", 2, 0);
-#elif defined(VERSION_HD)
+#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
         func_800F9D40("はい　　", 1, 0);
         func_800F9D40("いいえ　", 2, 0);
 #else
@@ -1011,7 +1011,7 @@ void func_801042C4(s32 arg0) {
 }
 
 static void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_JP11)
     const s32 PRIORITY_SHIFT = 16;
 #else
     const s32 PRIORITY_SHIFT = 8;
@@ -1331,7 +1331,7 @@ static void func_80105408(void) {
 void func_80105428(void) {
 #if defined(VERSION_US)
     const s32 PAD_MASK = PAD_CROSS | PAD_TRIANGLE;
-#elif defined(VERSION_HD)
+#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
     const s32 PAD_MASK = PAD_START | PAD_SQUARE | PAD_CROSS | PAD_CIRCLE;
 #elif defined(VERSION_PSP)
 #define PAD_MASK (PAD_START | PAD_SQUARE | g_ConfirmButton | g_CancelButton)

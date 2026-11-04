@@ -5,7 +5,7 @@
 
 #if defined(VERSION_US)
 #define PAD_RESETCOMBO ((PAD_START) | (PAD_SELECT))
-#elif defined(VERSION_HD)
+#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
 #define PAD_RESETCOMBO                                                         \
     ((PAD_START) | (PAD_SELECT) | (PAD_L2) | (PAD_R2) | (PAD_L1) | (PAD_R1))
 #endif
@@ -364,7 +364,7 @@ void DebugEditColorChannel(s32 colorAdd) {
 }
 
 s32 DebugUpdate(void) {
-#if (defined(VERSION_HD) && !defined(VERSION_JP10)) || defined(VERSION_PC)
+#if defined(VERSION_HD) || defined(VERSION_PC)
     DebugCaptureScreen();
     DebugCaptureVideo();
     if (g_DebugEnabled) {
@@ -768,7 +768,7 @@ extern int g_TimeLimit;
 #endif
 
 void MainGame(void) {
-#if defined(VERSION_HD) && !defined(VERSION_JP10)
+#if defined(VERSION_HD)
     CdlFILE fp;
 #endif
     s32 i;
@@ -799,7 +799,7 @@ void MainGame(void) {
     g_Settings.D_8003CB00 = 0;
     g_Settings.D_8003CB04 = 0;
     g_CurrentBuffer = &g_GpuBuffers[0];
-#if defined(VERSION_US) || defined(VERSION_JP10)
+#if defined(VERSION_US) || defined(VERSION_JP10) || defined(VERSION_JP11)
     SetCdPos(OFF_SD_XA_STR1);
 #elif defined(VERSION_HD)
     do {
@@ -825,7 +825,7 @@ void MainGame(void) {
     g_GpuMaxUsage.tile = 0;
     g_GpuMaxUsage.sp = 0;
     g_GpuMaxUsage.env = 0;
-#if defined(VERSION_US) || defined(VERSION_JP10)
+#if defined(VERSION_US) || defined(VERSION_JP10) || defined(VERSION_JP11)
     g_DebugPlayer = 0;
 #elif defined(VERSION_HD)
     g_DebugPlayer = 1;
@@ -897,13 +897,13 @@ loop_5:
         }
         RenderPrimitives();
         UpdateCd();
-#if defined(VERSION_HD) && !defined(VERSION_JP10)
+#if defined(VERSION_HD)
         PrintGpuInfo();
 #endif
         func_800E385C(g_CurrentOT);
         DrawSync(0);
         D_801362D4 = GsGetVcount();
-#if defined(VERSION_HD) && !defined(VERSION_JP10)
+#if defined(VERSION_HD)
         PrintHBlankInfo();
 #endif
         VSync(D_8003C73C);
@@ -925,9 +925,13 @@ loop_5:
         }
         if (g_softResetTimer >= 0x80) {
             g_softResetTimer = 0;
-#elif defined(VERSION_HD)
+#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
         if (g_pads[0].pressed == PAD_RESETCOMBO &&
-            g_pads[0].tapped & PAD_START && D_800978C4 != 0) {
+            g_pads[0].tapped & PAD_START &&
+#if defined(VERSION_JP11)
+            !g_IsUsingCd &&
+#endif
+            D_800978C4 != 0) {
 #endif
             ClearBackbuffer();
             func_801073C0();
@@ -937,7 +941,7 @@ loop_5:
             VSync(D_8003C73C);
             MuteSound();
             SetGameState(Game_Title);
-#if defined(VERSION_HD) && !defined(VERSION_JP10)
+#if defined(VERSION_HD)
             FntFlush(-1);
 #endif
             goto loop_5;
@@ -1004,7 +1008,7 @@ loop_5:
             }
         }
         rand();
-#if defined(VERSION_HD) && !defined(VERSION_JP10)
+#if defined(VERSION_HD)
         FntFlush(-1);
 #endif
     }

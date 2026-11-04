@@ -92,7 +92,7 @@ u8* CutsceneAddrToPc(u32 psxAddr);
 #define SCRIPT_UNKNOWN_21() CSOP_SCRIPT_UNKNOWN_21
 #define SCRIPT_UNKNOWN_23() CSOP_SCRIPT_UNKNOWN_23
 #define WAIT_FOR_FLAG_RESET(x) CSOP_WAIT_FOR_FLAG_RESET, x
-#if defined(VERSION_PSP) || defined(VERSION_HD)
+#if defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) || defined(VERSION_PSP)
 #define CS_LINE_SPACING 16
 #define CS_LINE_MAX 3
 #else
@@ -138,7 +138,7 @@ typedef struct {
     /* 0x16 */ u8 nextCharTimer;      // timer to next character
     /* 0x17 */ u8 unk17;              // unknown
 // Of course, offsets beyond here won't be right in ST0_WEIRD_DIALOGUE.
-#if defined(VERSION_PSP) || defined(VERSION_HD)
+#if defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11) || defined(VERSION_PSP)
     /* 0x18 */ Primitive* prim[5]; // for dialogue graphics rendering
 #else
     /* 0x18 */ Primitive* prim[6]; // for dialogue graphics rendering

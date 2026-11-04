@@ -448,7 +448,7 @@ void CdSoundCommand4(void) {
     case 0:
         D_801390A0 = 1;
         g_CurrentXaConfigId = g_QueuedXaBgmId;
-#ifdef VERSION_HD
+#if defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
         if (g_QueuedXaBgmId < 0x3D) {
 #else
         if (g_QueuedXaBgmId < 0x40) {
@@ -1256,7 +1256,7 @@ void ExecSoundCommands(void) {
 
 #if defined(VERSION_PC)
         if (id > 0x300 && id < 0x535) {
-#elif defined(VERSION_HD)
+#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
         if (id > 0x300 && id < 0x531) {
 #elif defined(VERSION_PSP)
         if (id > 0x300 && id < 0x532) {

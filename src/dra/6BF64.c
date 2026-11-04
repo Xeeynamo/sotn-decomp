@@ -78,6 +78,11 @@ void func_8010BFFC(void) {
         ((g_PlayableCharacter != 0) && (PLAYER.step == 0x18))) {
         return;
     }
+#elif defined(VERSION_JP11)
+    if (g_Player.status &
+        (PLAYER_STATUS_TRANSFORM | PLAYER_STATUS_UNK40000000)) {
+        return;
+    }
 #else
     if (g_Player.status & PLAYER_STATUS_TRANSFORM)
         return;

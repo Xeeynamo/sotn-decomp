@@ -1718,7 +1718,7 @@ void UpdatePlayerEntities(void) {
     // Appears to be a temporary debugging block that was left in.
     if ((g_Player.status & (PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK80000)) ||
         (PLAYER.step == Player_Teleport && PLAYER.step_s == 0)) {
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_JP11)
         // Japanese for "without hit".
         FntPrint("atari nuki\n");
 #else
@@ -1784,7 +1784,7 @@ void func_8011A9D8(void) {
         if (!(entity->flags & FLAG_UNK_20000)) {
             DestroyEntity(entity);
         }
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_JP11)
         if (g_PlayableCharacter == PLAYER_ALUCARD && 0x36 < entity->entityId &&
             entity->entityId < 0x3D && entity->step != 0) {
             entity->pfnUpdate(entity);
@@ -2623,7 +2623,7 @@ block_748:
         }
         self->primIndex = AllocPrimitives(PRIM_GT4, 8);
         if (self->primIndex == -1) {
-#ifdef VERSION_HD
+#if defined(VERSION_HD) || defined(VERSION_JP10)
             DestroyEntity(self);
 #endif
             return;

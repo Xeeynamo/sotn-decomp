@@ -571,7 +571,7 @@ void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
         }
     }
 
-#if defined(VERSION_HD)
+#if defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
     // writes stage name
     strcat(h.Title, "　");
     strcat(h.Title, g_SaveAreaNames[g_StageId]);

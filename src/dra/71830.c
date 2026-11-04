@@ -25,7 +25,7 @@ void func_8011197C(void) {
     PLAYER.hitParams = 0;
 }
 
-#ifndef VERSION_HD
+#if !defined(VERSION_HD) && !defined(VERSION_JP10)
 extern s32 D_80137FDC;
 #endif
 int func_801119C4(void) {
@@ -78,7 +78,7 @@ int func_801119C4(void) {
             PLAYER.posY.val += FIX(16.0f);
         }
     }
-#ifndef VERSION_HD
+#if !defined(VERSION_HD) && !defined(VERSION_JP10)
     if (g_Player.padTapped & PAD_TRIANGLE) {
         if (D_80137FDC & 1) {
             PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
@@ -2516,7 +2516,7 @@ void ControlBatForm(void) {
     PLAYER.drawFlags = ENTITY_ROTATE;
     PLAYER.rotPivotY = 0;
 
-#if defined(VERSION_HD)
+#if defined(VERSION_HD) || defined(VERSION_JP10)
     if (PLAYER.step_s != 3) {
 #else
     // Just to make the curly brackets match at the end of this block
@@ -2532,7 +2532,7 @@ void ControlBatForm(void) {
                 g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x5c), 0);
             CreateEntFactoryFromEntity(g_CurrentEntity, BP_67, 0);
             g_WingSmashTimer = 0x40;
-#if !defined(VERSION_HD)
+#if !defined(VERSION_HD) && !defined(VERSION_JP10)
             g_WingSmashButtonCounter = 0;
 #endif
         } else if ((g_Player.padTapped & PAD_TRIANGLE) &&
@@ -2566,7 +2566,7 @@ void ControlBatForm(void) {
             if (g_Player.unk66 == 0) {
                 newEntity = CreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x20), 0);
-#if !defined(VERSION_HD)
+#if !defined(VERSION_HD) && !defined(VERSION_JP10) && !defined(VERSION_JP11)
                 if (newEntity == NULL) {
                     return;
                 }

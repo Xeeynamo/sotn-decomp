@@ -27,11 +27,11 @@ SubweaponDef g_SubwpnDefs[] = {
 };
 
 Equipment g_EquipDefs[] = {
-#include "gen/hd/equipment.h"
+#include GEN_VERSION(equipment.h)
 };
 
 Accessory g_AccessoryDefs[] = {
-#include "gen/hd/accessories.h"
+#include GEN_VERSION(accessories.h)
 };
 
 const char* g_MenuStr[] = {
@@ -187,7 +187,7 @@ RelicDesc g_RelicDefs[] = {
 };
 
 EnemyDef g_EnemyDefs[] = {
-#include "gen/hd/enemydefs.h"
+#include GEN_VERSION(enemydefs.h)
 };
 
 // clang-format on

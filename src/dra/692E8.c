@@ -6,7 +6,7 @@
 // data order is slightly different between US and HD
 // maybe this suggests a file split
 
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_JP11)
 s32 D_800ACDF8 = 0;
 s32 D_800ACDFC = 0;
 s32 D_800ACE00[] = {
@@ -17,6 +17,9 @@ s16 D_800ACE20[] = {
     0xFFD0, 0xFFD0, 0xFFD1, 0xFFD8, 0xFFD7, 0xFFE2, 0xFFE1, 0xFFE2, 0xFFD7,
     0xFFD7, 0xFFCF, 0xFFCD, 0xFFCD, 0xFFD6, 0xFFD7, 0xFFE3, 0xFFE3, 0x0000,
 };
+#if defined(VERSION_JP11)
+s32 D_800ACEDC_hd = 0;
+#endif
 s32 D_800ACE44 = 0;
 s32 D_800ACE48[] = {
     0x0000, 0x0000, 0x8000, 0x801F, 0x01FF, 0x81FF,
@@ -26,7 +29,7 @@ RECT D_800ACE60 = {0x0200, 0x01C0, 0x003F, 0x003F};
 // BSS
 extern bool D_80137FBC;
 
-#elif defined(VERSION_HD)
+#elif defined(VERSION_HD) || defined(VERSION_JP10)
 s16 D_800ACE20[] = {
     0xFFD0, 0xFFD0, 0xFFD1, 0xFFD8, 0xFFD7, 0xFFE2, 0xFFE1, 0xFFE2, 0xFFD7,
     0xFFD7, 0xFFCF, 0xFFCD, 0xFFCD, 0xFFD6, 0xFFD7, 0xFFE3, 0xFFE3, 0x0000,
@@ -255,14 +258,14 @@ void AluInit() {
     }
     func_801093C4();
 
-#if !defined(VERSION_HD)
+#if !defined(VERSION_HD) && !defined(VERSION_JP10)
     TRANSFORM_LOCKOUT_TIMER = 0x10;
     g_Player.padSim = 0;
     g_Player.demo_timer = 16;
 #endif
     D_80137FB8 = 0;
 
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_JP11)
     D_80137FBC = true;
 #endif
 
@@ -600,7 +603,7 @@ static TeleportCheck GetTeleportToOtherCastle(void) {
     // Check for X/Y boundaries in RTOP
     if (g_StageId == STAGE_RTOP) {
         if (abs((g_Tilemap.left << 8) + g_PlayerX - 8384) < 4 &&
-#ifdef VERSION_HD
+#if defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
             (abs((g_Tilemap.top << 8) + g_PlayerY) - 14407) < 4) {
 #else
             abs((g_Tilemap.top << 8) + g_PlayerY - 14407) < 4) {
@@ -817,7 +820,7 @@ void EntityAlucard() {
 
     if (g_Player.demo_timer != 0) {
         g_Player.demo_timer--;
-#ifdef VERSION_US
+#if defined(VERSION_US) || defined(VERSION_JP11)
         if (g_Player.demo_timer == 0) {
             D_80137FBC = true;
         }
@@ -855,7 +858,7 @@ void EntityAlucard() {
                 g_Player.padPressed |= D_800ACE00[i];
             }
         }
-#ifdef VERSION_US
+#if defined(VERSION_US) || defined(VERSION_JP11)
         if (D_80137FBC) {
             D_80137FBC = false;
             g_Player.padHeld = g_Player.padPressed;
@@ -869,7 +872,7 @@ void EntityAlucard() {
         g_Player.padPressed &= ~(PAD_SQUARE | PAD_CIRCLE);
     }
     if ((g_DebugPlayer != 0) && (func_801119C4() != 0)) {
-#ifdef VERSION_US
+#if defined(VERSION_US)
         FntPrint("step:%04x\n", PLAYER.step);
         FntPrint("bat_i_step:%04x\n", g_Player.unk66);
 #endif
@@ -881,7 +884,7 @@ void EntityAlucard() {
     }
 
 // US uses a different ordering than HD/PSP
-#if !defined(VERSION_US)
+#if !defined(VERSION_US) && !defined(VERSION_JP11)
     if (g_Player.timers[ALU_T_INVINCIBLE] |
         g_Player.timers[ALU_T_INVINCIBLE_CONSUMABLES]) {
         goto specialmove;
@@ -896,7 +899,7 @@ void EntityAlucard() {
         SetPlayerStep(Player_BossGrab);
         goto block_159;
     }
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_JP11)
     if (g_Player.timers[ALU_T_INVINCIBLE] |
         g_Player.timers[ALU_T_INVINCIBLE_CONSUMABLES]) {
         goto specialmove;
@@ -1477,7 +1480,7 @@ block_159:
             sp3c = (AluFrame*)D_800CFE48[PLAYER.animCurFrame & 0x7FFF];
             sp3c->pivotY = D_8013AECC + D_800ACE20[PLAYER.animCurFrame];
         }
-#ifdef VERSION_US
+#if defined(VERSION_US)
         FntPrint("step:%04x\n", PLAYER.step);
         FntPrint("bat_i_step:%04x\n", g_Player.unk66);
 #endif

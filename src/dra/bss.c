@@ -7,7 +7,7 @@
 // 692E8.c
 s32 D_80137FB4;
 s32 D_80137FB8;
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_JP11)
 s32 D_80137FBC;
 #endif
 
@@ -24,7 +24,7 @@ s32 g_WasFacingLeft6;
 s32 g_WasFacingLeft7;
 
 // 71830.c
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_JP11)
 s32 D_80137FDC;
 #endif
 
@@ -297,6 +297,6 @@ s32 D_8013B694;
 s16 g_volumeR;
 STATIC_PAD_BSS(2);
 s32 D_8013B69C;
-#if defined(VERSION_HD)
+#if defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_JP11)
 u32 D_8013B6A0; // TODO VAB from BSS, fake symbol
 #endif

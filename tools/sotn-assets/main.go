@@ -12,7 +12,7 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
 )
 
-var acceptedVersions = []string{"us", "hd", "jp10", "pspeu"}
+var acceptedVersions = []string{"us", "hd", "jp10", "jp11", "pspeu"}
 
 func getVersionFromArgs(args []string) (string, bool, error) {
 	firstArgIsVersion := false
