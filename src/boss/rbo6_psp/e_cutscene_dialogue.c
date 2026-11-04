@@ -25,11 +25,14 @@ extern Dialogue g_Dialogue;
 
 #include "../../st/cutscene_skip.h"
 
-extern s32 g_IsCutsceneDone;
+static u16 actor_names[0x100];
+static u8 D_801813CC[2];
+static s32 g_IsCutsceneDone;
+
+
 extern s32 g_SkipCutscene;
 extern u32 g_CutsceneFlags;
 extern s32 D_91FC480;
-extern u8 D_801813CC[2];
 
 extern u_long* D_893DD0C;
 extern u_long* D_pspeu_09263820;
@@ -47,7 +50,6 @@ extern Dialogue g_Dialogue;
 extern u8 D_pspeu_0926C668;
 extern s32 D_pspeu_0926C648[8];
 extern u8 cutsceneUnk3Unknown[0x380];
-extern u16 actor_names[0x100];
 
 static u8 D_pspeu_0926B8A8[2] = {0x00, 0x40};
 static u16 D_pspeu_0926B8B0[] = {0x210, 0x218};
