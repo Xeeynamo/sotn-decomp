@@ -20,7 +20,10 @@
 #elif defined(VERSION_JP11)
 #include "lba_jp11.h"
 
-#elif defined(VERSION_HD) || defined(VERSION_JP10) || defined(VERSION_PSP)
+#elif defined(VERSION_HD)
+#include "lba_hd.h"
+
+#elif defined(VERSION_JP10) || defined(VERSION_PSP)
 #include "lba_jp10.h"
 
 #endif

@@ -167,7 +167,7 @@ enum {
                                                      // tsukihi ga nagareta"
     /* us:0x343           */ JP_VO_NARRATOR_AKUMAJO, // "Akumajo Dracula X Gekka
                                                      // no Yasoukyoku"
-#elif defined(VERSION_PSP)
+#else
     __ALIGN_ID_341 = 0x341, // TODO check what this ID does on JP/HD/PSP
 #endif
 
@@ -180,6 +180,7 @@ enum {
     /* us:0x349, jp:0x347 */ JP_VO_WAKAMOTO_NORIO_MESSAGE,   // Wakamoto Norio
     /* us:0x34A, jp:0x348 */ JP_VO_YOKOYAMA_CHISA_MESSAGE,   // Yokoyama Chisa
     /* us:0x34B, jp:0x349 */ JP_VO_YANAMI_JYOUJI_MESSAGE,    // Yanami Jyouji
+    /* us:0x34B, jp:0x349 */ MU_ID_MAD = JP_VO_YANAMI_JYOUJI_MESSAGE,
 
 #if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK) ||       \
     defined(VERSION_USPROTO)
@@ -420,6 +421,7 @@ enum {
     /*           jp:0x530 */ VO_GAMEOVER_DEATH_TAUNT_3,
 #endif
 };
+
 
 // The VAB IDs appear in large chunks so all sounds proceeding
 // a vabid label comment will belong in that VAB group unless noted.

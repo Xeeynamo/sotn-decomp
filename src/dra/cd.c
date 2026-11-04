@@ -25,315 +25,70 @@ s16 D_800AC998[] = {
     0x340, 0x360, 0x380, 0x3A0, 0x380, 0x3A0, 0x3C0, 0x3E0, 0x3C0, 0x3E0,
 };
 
-#if defined(VERSION_US) || defined(VERSION_EU) || defined(VERSION_HK)
-CdFile g_LbaBinTitle = {0x63D6, 0, 0x80000, 0, 0, 0xFF, 0};
-CdFile g_LbaBinProlo = {0x62D6, 6, 0x80000, 0, 0, 0xFF, 0};
+CdFile g_LbaBinTitle = {OFF_BIN_FTITLE, 0, 0x80000, 0, 0, 0xFF, 0};
+CdFile g_LbaBinProlo = {OFF_BIN_FPROLO, 6, 0x80000, 0, 0, 0xFF, 0};
 CdFile g_LbaBinGame = {0x0000, 1, 0x42000, 0, 0, 0x13, 0};
 CdFile g_LbaStageChr = {ST_NO0_F_BIN_OFF, 2, 0x40000, 0, 0, 0xFF, 0};
-CdFile g_LbaSdAlkVh = {0x610D, 19, 0x01020, 1, 1, 0xFF, 7};
-CdFile g_LbaSdAlkVb = {0x6110, 17, 0x0E160, 1, 1, 0xFF, 0};
-CdFile g_LbaSdRihVh = {0x612D, 19, 0x01020, 1, 1, 0x16, 21};
-CdFile g_LbaSdRihVb = {0x6130, 17, 0x0E190, 1, 1, 0xFF, 0};
-CdFile g_LbaSdMarVh = {0x614D, 19, 0x00E20, 2, 2, 0xFF, 23};
-CdFile g_LbaSdMarVb = {0x614F, 17, 0x0CEA0, 2, 2, 0xFF, 0};
-CdFile g_LbaSdJ010_1_Vh = {0x6082, 19, 0x02A20, 0, 0, 0x0A, 9};
-CdFile g_LbaSdJ010_1_Vb = {0x6088, 17, 0x41CB0, 0, 0, 0xFF, 0};
-CdFile g_LbaSdJ010_2_Vh = {0x6082, 19, 0x41CB0, 4, 4, 0x0C, 11};
-CdFile g_LbaSdJ010_2_Vb = {0x6088, 17, 0x1A3A0, 4, 4, 0x0C, 0};
+CdFile g_LbaSdAlkVh = {OFF_SD_ALK_VH, 19, SD_ALK_VH_LEN, 1, 1, 0xFF, 7};
+CdFile g_LbaSdAlkVb = {OFF_SD_ALK_VB, 17, SD_ALK_VB_LEN, 1, 1, 0xFF, 0};
+CdFile g_LbaSdRihVh = {OFF_SD_RIH_VH, 19, SD_RIH_VH_LEN, 1, 1, 0x16, 21};
+CdFile g_LbaSdRihVb = {OFF_SD_RIH_VB, 17, SD_RIH_VB_LEN, 1, 1, 0xFF, 0};
+CdFile g_LbaSdMarVh = {OFF_SD_MAR_VH, 19, SD_MAR_VH_LEN, 2, 2, 0xFF, 23};
+CdFile g_LbaSdMarVb = {OFF_SD_MAR_VB, 17, SD_MAR_VB_LEN, 2, 2, 0xFF, 0};
+CdFile g_LbaSdJ010_1_Vh = {OFF_SD_J010_VH, 19, 0x02A20, 0, 0, 0x0A, 9};
+CdFile g_LbaSdJ010_1_Vb = {OFF_SD_J010_VB, 17, vab0Len, 0, 0, 0xFF, 0};
+CdFile g_LbaSdJ010_2_Vh = {OFF_SD_J010_VH, 19, vab0Len, 4, 4, 0x0C, 11};
+CdFile g_LbaSdJ010_2_Vb = {OFF_SD_J010_VB, 17, ST_NO0_VB_LEN, 4, 4, 0x0C, 0};
 CdFile g_LbaStageSeq = {0x0000, 18, 0x00000, 0, 6, 0xFF, 0};
 CdFile g_LbaStageVh = {0x0000, 19, 0x00000, 3, 3, 0xFF, 14};
 CdFile g_LbaStageVb = {0x0000, 17, 0x00000, 3, 3, 0xFF, 0};
-CdFile g_LbaSdJ010_3_Vh = {0x6082, 19, 0x02A20, 3, 3, 0xFF, 16};
-CdFile g_LbaSdJ010_3_Vb = {0x6088, 17, 0x41CB0, 3, 3, 0xFF, 0};
-CdFile g_LbaBinWeapon0 = {0x6582, 12, 0x04000, 0, 0, 0xFF, 0};
-CdFile g_LbaBinWeapon1 = {0x68BC, 13, 0x04000, 0, 0, 0xFF, 1};
-CdFile g_LbaBinMonster = {0x6BF6, 14, 0x05800, 0, 0, 0xFF, 0};
-CdFile g_LbaBinDemokey = {0x7415, 4, 0x02000, 0, 0, 0xFF, 0};
+CdFile g_LbaSdJ010_3_Vh = {OFF_SD_J010_VH, 19, 0x02A20, 3, 3, 0xFF, 16};
+CdFile g_LbaSdJ010_3_Vb = {OFF_SD_J010_VB, 17, vab0Len, 3, 3, 0xFF, 0};
+CdFile g_LbaBinWeapon0 = {OFF_BIN_WEAPON0, 12, 0x04000, 0, 0, 0xFF, 0};
+CdFile g_LbaBinWeapon1 = {OFF_BIN_WEAPON1, 13, 0x04000, 0, 0, 0xFF, 1};
+CdFile g_LbaBinMonster = {OFF_BIN_MONSTER, 14, 0x05800, 0, 0, 0xFF, 0};
+CdFile g_LbaBinDemokey = {OFF_BIN_DEMOKEY, 4, 0x02000, 0, 0, 0xFF, 0};
 
 // SERVANT/FT_xxx.BIN off
 s32 g_LbaServantChrOff[] = {
-    0x7248, 0x728B, 0x72CE, 0x7311, 0x7350, 0x7392, 0x73D5,
+    OFF_FT_000_BIN, OFF_FT_001_BIN, OFF_FT_002_BIN, OFF_FT_003_BIN,
+    OFF_FT_004_BIN, OFF_FT_005_BIN, OFF_FT_006_BIN,
 };
 
 // SERVANT/SD_xxx.VH off
 s32 g_LbaServantVhOff[] = {
-    0x7268, 0x72AB, 0x72EE, 0x7331, 0x7370, 0x73B2, 0x73F5,
+    OFF_SD_BAT_VH,   OFF_SD_GHOST_VH, OFF_SD_FAIRY_VH, OFF_SD_DEVIL_VH,
+    OFF_SD_SWORD_VH, OFF_SD_FAIR2_VH, OFF_SD_DEVI2_VH,
 };
 
 // SERVANT/SD_xxx.VH len
 s32 g_LbaServantVhLen[] = {
-    4128, 4128, 4128, 3616, 3104, 4128, 3616,
+    SD_TUKA2_VH_LEN, SD_MAR2_VH_LEN, SD_TUKA1_VH_LEN, SD_KOA1_VH_LEN,
+    SD_MAK_VH_LEN,   SD_FAIR2_VH_LEN, SD_KOA2_VH_LEN,
 };
 
 // SERVANT/SD_xxx.VB off
 s32 g_LbaServantVbOff[] = {
-    0x726B, 0x72AE, 0x72F1, 0x7333, 0x7372, 0x73B5, 0x73F7,
+    OFF_SD_BAT_VB,   OFF_SD_GHOST_VB, OFF_SD_FAIRY_VB, OFF_SD_DEVIL_VB,
+    OFF_SD_SWORD_VB, OFF_SD_FAIR2_VB, OFF_SD_DEVI2_VB,
 };
 
 // SERVANT/SD_xxx.VB len
 s32 g_LbaServantVbLen[] = {
-    63904, 63904, 63552, 59392, 64496, 63904, 60992,
+    SD_TUKA2_VB_LEN, SD_GHOST_VB_LEN, SD_TUKA1_VB_LEN, SD_KOA1_VB_LEN,
+    SD_MAK_VB_LEN,   SD_FAIR2_VB_LEN, SD_KOA2_VB_LEN,
 };
 
 CdFile g_LbaServantChr = {0x0000, 15, 0x06000, 0, 0, 0x1D, 0};
 CdFile g_LbaServantVh = {0x0000, 19, 0x00000, 2, 2, 0xFF, 30};
 CdFile g_LbaServantVb = {0x0000, 17, 0x00000, 2, 2, 0xFF, 0};
-CdFile g_LbaBinRichter = {0x64D6, 10, 0x39A58, 0, 0, 0x14, 0};
-CdFile g_LbaBinAlucard = {0x616A, 10, 0x31BEC, 0, 0, 0x04, 0};
-CdFile g_LbaOpnWsStr = {0x3631, 0, 0x00000, 0, 0, 0xFF, 0};
+CdFile g_LbaBinRichter = {OFF_BIN_RIC, 10, LEN_BIN_RIC, 0, 0, 0x14, 0};
+CdFile g_LbaBinAlucard = {OFF_BIN_ARC_F, 10, 0x31BEC, 0, 0, 0x04, 0};
+CdFile g_LbaOpnWsStr = {OFF_OPN_WS_STR, 0, 0x00000, 0, 0, 0xFF, 0};
 CdFile g_LbaStagePrg = {0x0000, 8, 0x00000, 0, 0, 0xFF, 0};
-CdFile g_LbaBinGo = {0x654A, 9, 0x1C000, 0, 0, 0xFF, 0};
-CdFile g_LbaBinEnd = {0x7489, 9, 0x16000, 0, 0, 0xFF, 0};
+CdFile g_LbaBinGo = {OFF_BIN_FGO, 9, 0x1C000, 0, 0, 0xFF, 0};
+CdFile g_LbaBinEnd = {OFF_BIN_FEND, 9, 0x16000, 0, 0, 0xFF, 0};
 CdFile D_800ACC64 = {0x0000, 3, 0x00000, 0, 0, 0xFF, 0};
-
-#elif defined(VERSION_USPROTO)
-CdFile g_LbaBinTitle = {0x6425, 0, 0x80000, 0, 0, 0xFF, 0};
-CdFile g_LbaBinProlo = {0x6325, 6, 0x80000, 0, 0, 0xFF, 0};
-CdFile g_LbaBinGame = {0x0000, 1, 0x42000, 0, 0, 0x13, 0};
-CdFile g_LbaStageChr = {0x7E9A, 2, 0x40000, 0, 0, 0xFF, 0};
-CdFile g_LbaSdAlkVh = {0x615C, 19, 0x01020, 1, 1, 0xFF, 7};
-CdFile g_LbaSdAlkVb = {0x615F, 17, 0x0E1D0, 1, 1, 0xFF, 0};
-CdFile g_LbaSdRihVh = {0x617C, 19, 0x01020, 1, 1, 0x16, 21};
-CdFile g_LbaSdRihVb = {0x617F, 17, 0x0CC20, 1, 1, 0xFF, 0};
-CdFile g_LbaSdMarVh = {0x6199, 19, 0x00E20, 2, 2, 0xFF, 23};
-CdFile g_LbaSdMarVb = {0x619B, 17, 0x0E290, 2, 2, 0xFF, 0};
-CdFile g_LbaSdJ010_1_Vh = {0x60D1, 19, 0x02A20, 0, 0, 0x0A, 9};
-CdFile g_LbaSdJ010_1_Vb = {0x60D7, 17, 0x41CB0, 0, 0, 0xFF, 0};
-CdFile g_LbaSdJ010_2_Vh = {0x60D1, 19, 0x41CB0, 4, 4, 0x0C, 11};
-CdFile g_LbaSdJ010_2_Vb = {0x60D7, 17, 0x1A510, 4, 4, 0x0C, 0};
-CdFile g_LbaStageSeq = {0x0000, 18, 0x00000, 0, 6, 0xFF, 0};
-CdFile g_LbaStageVh = {0x0000, 19, 0x00000, 3, 3, 0xFF, 14};
-CdFile g_LbaStageVb = {0x0000, 17, 0x00000, 3, 3, 0xFF, 0};
-CdFile g_LbaSdJ010_3_Vh = {0x60D1, 19, 0x02A20, 3, 3, 0xFF, 16};
-CdFile g_LbaSdJ010_3_Vb = {0x60D7, 17, 0x41CB0, 3, 3, 0xFF, 0};
-CdFile g_LbaBinWeapon0 = {0x65D1, 12, 0x04000, 0, 0, 0xFF, 0};
-CdFile g_LbaBinWeapon1 = {0x690B, 13, 0x04000, 0, 0, 0xFF, 1};
-CdFile g_LbaBinMonster = {0x6C45, 14, 0x05800, 0, 0, 0xFF, 0};
-CdFile g_LbaBinDemokey = {0x745E, 4, 0x02000, 0, 0, 0xFF, 0};
-
-// SERVANT/FT_xxx.BIN off
-s32 g_LbaServantChrOff[] = {
-    0x7297, 0x72DA, 0x731D, 0x7360, 0x73A0, 0x73DB, 0x741E,
-};
-
-// SERVANT/SD_xxx.VH off
-s32 g_LbaServantVhOff[] = {
-    0x72B7, 0x72FA, 0x733D, 0x7380, 0x73C0, 0x73FB, 0x743E,
-};
-
-// SERVANT/SD_xxx.VH len
-s32 g_LbaServantVhLen[] = {
-    4128, 4128, 4128, 3616, 3104, 4128, 3616,
-};
-
-// SERVANT/SD_xxx.VB off
-s32 g_LbaServantVbOff[] = {
-    0x72BA, 0x72FD, 0x7340, 0x7382, 0x73C2, 0x73FE, 0x7440,
-};
-
-// SERVANT/SD_xxx.VB len
-s32 g_LbaServantVbLen[] = {
-    63904, 63904, 65200, 59488, 51024, 63904, 60992,
-};
-
-CdFile g_LbaServantChr = {0x0000, 15, 0x06000, 0, 0, 0x1D, 0};
-CdFile g_LbaServantVh = {0x0000, 19, 0x00000, 2, 2, 0xFF, 30};
-CdFile g_LbaServantVb = {0x0000, 17, 0x00000, 2, 2, 0xFF, 0};
-CdFile g_LbaBinRichter = {0x6525, 10, 0x39A58, 0, 0, 0x14, 0};
-CdFile g_LbaBinAlucard = {0x61B9, 10, 0x31BEC, 0, 0, 0x04, 0};
-CdFile g_LbaOpnWsStr = {0x3629, 0, 0x00000, 0, 0, 0xFF, 0};
-CdFile g_LbaStagePrg = {0x0000, 8, 0x00000, 0, 0, 0xFF, 0};
-CdFile g_LbaBinGo = {0x6599, 9, 0x1C000, 0, 0, 0xFF, 0};
-CdFile g_LbaBinEnd = {0x74D2, 9, 0x16000, 0, 0, 0xFF, 0};
-CdFile D_800ACC64 = {0x0000, 3, 0x00000, 0, 0, 0xFF, 0};
-#elif defined(VERSION_JP12)
-CdFile g_LbaBinTitle = {0x64C7, 0, 0x80000, 0, 0, 0xFF, 0};
-CdFile g_LbaBinProlo = {0x63C7, 6, 0x80000, 0, 0, 0xFF, 0};
-CdFile g_LbaBinGame = {0x0000, 1, 0x42000, 0, 0, 0x13, 0};
-CdFile g_LbaStageChr = {0x7F3F, 2, 0x40000, 0, 0, 0xFF, 0};
-CdFile g_LbaSdAlkVh = {0x61FE, 19, 0x01020, 1, 1, 0xFF, 7};
-CdFile g_LbaSdAlkVb = {0x6201, 17, 0x0E1D0, 1, 1, 0xFF, 0};
-CdFile g_LbaSdRihVh = {0x621E, 19, 0x01020, 1, 1, 0x16, 21};
-CdFile g_LbaSdRihVb = {0x6221, 17, 0x0CC20, 1, 1, 0xFF, 0};
-CdFile g_LbaSdMarVh = {0x623B, 19, 0x00E20, 2, 2, 0xFF, 23};
-CdFile g_LbaSdMarVb = {0x623D, 17, 0x0E290, 2, 2, 0xFF, 0};
-CdFile g_LbaSdJ010_1_Vh = {0x6173, 19, 0x02A20, 0, 0, 0x0A, 9};
-CdFile g_LbaSdJ010_1_Vb = {0x6179, 17, 0x41CB0, 0, 0, 0xFF, 0};
-CdFile g_LbaSdJ010_2_Vh = {0x6173, 19, 0x41CB0, 4, 4, 0x0C, 11};
-CdFile g_LbaSdJ010_2_Vb = {0x6179, 17, 0x1A510, 4, 4, 0x0C, 0};
-CdFile g_LbaStageSeq = {0x0000, 18, 0x00000, 0, 6, 0xFF, 0};
-CdFile g_LbaStageVh = {0x0000, 19, 0x00000, 3, 3, 0xFF, 14};
-CdFile g_LbaStageVb = {0x0000, 17, 0x00000, 3, 3, 0xFF, 0};
-CdFile g_LbaSdJ010_3_Vh = {0x6173, 19, 0x02A20, 3, 3, 0xFF, 16};
-CdFile g_LbaSdJ010_3_Vb = {0x6179, 17, 0x41CB0, 3, 3, 0xFF, 0};
-CdFile g_LbaBinWeapon0 = {0x6673, 12, 0x04000, 0, 0, 0xFF, 0};
-CdFile g_LbaBinWeapon1 = {0x69AD, 13, 0x04000, 0, 0, 0xFF, 1};
-CdFile g_LbaBinMonster = {0x6CE7, 14, 0x05800, 0, 0, 0xFF, 0};
-CdFile g_LbaBinDemokey = {0x7500, 4, 0x02000, 0, 0, 0xFF, 0};
-
-// SERVANT/FT_xxx.BIN off
-s32 g_LbaServantChrOff[] = {
-    0x7339, 0x737C, 0x73BF, 0x7402, 0x7442, 0x747D, 0x74C0,
-};
-
-// SERVANT/SD_xxx.VH off
-s32 g_LbaServantVhOff[] = {
-    0x7359, 0x739C, 0x73DF, 0x7422, 0x7462, 0x749D, 0x74E0,
-};
-
-// SERVANT/SD_xxx.VH len
-s32 g_LbaServantVhLen[] = {
-    4128, 4128, 4128, 3616, 3104, 4128, 3616,
-};
-
-// SERVANT/SD_xxx.VB off
-s32 g_LbaServantVbOff[] = {
-    0x735C, 0x739F, 0x73E2, 0x7424, 0x7464, 0x74A0, 0x74E2,
-};
-
-// SERVANT/SD_xxx.VB len
-s32 g_LbaServantVbLen[] = {
-    63904, 63904, 65200, 59488, 51024, 63904, 60992,
-};
-
-CdFile g_LbaServantChr = {0x0000, 15, 0x06000, 0, 0, 0x1D, 0};
-CdFile g_LbaServantVh = {0x0000, 19, 0x00000, 2, 2, 0xFF, 30};
-CdFile g_LbaServantVb = {0x0000, 17, 0x00000, 2, 2, 0xFF, 0};
-CdFile g_LbaBinRichter = {0x65C7, 10, 0x39A68, 0, 0, 0x14, 0};
-CdFile g_LbaBinAlucard = {0x625B, 10, 0x31BEC, 0, 0, 0x04, 0};
-CdFile g_LbaOpnWsStr = {0x362A, 0, 0x00000, 0, 0, 0xFF, 0};
-CdFile g_LbaStagePrg = {0x0000, 8, 0x00000, 0, 0, 0xFF, 0};
-CdFile g_LbaBinGo = {0x663B, 9, 0x1C000, 0, 0, 0xFF, 0};
-CdFile g_LbaBinEnd = {0x7574, 9, 0x16000, 0, 0, 0xFF, 0};
-CdFile D_800ACC64 = {0x0000, 3, 0x00000, 0, 0, 0xFF, 0};
-
-#elif defined(VERSION_JP11)
-CdFile g_LbaBinTitle = {0x6425, 0, 0x80000, 0, 0, 0xFF, 0};
-CdFile g_LbaBinProlo = {0x6325, 6, 0x80000, 0, 0, 0xFF, 0};
-CdFile g_LbaBinGame = {0x0000, 1, 0x42000, 0, 0, 0x13, 0};
-CdFile g_LbaStageChr = {0x7E98, 2, 0x40000, 0, 0, 0xFF, 0};
-CdFile g_LbaSdAlkVh = {0x615C, 19, 0x01020, 1, 1, 0xFF, 7};
-CdFile g_LbaSdAlkVb = {0x615F, 17, 0x0E1D0, 1, 1, 0xFF, 0};
-CdFile g_LbaSdRihVh = {0x617C, 19, 0x01020, 1, 1, 0x16, 21};
-CdFile g_LbaSdRihVb = {0x617F, 17, 0x0CC20, 1, 1, 0xFF, 0};
-CdFile g_LbaSdMarVh = {0x6199, 19, 0x00E20, 2, 2, 0xFF, 23};
-CdFile g_LbaSdMarVb = {0x619B, 17, 0x0E290, 2, 2, 0xFF, 0};
-CdFile g_LbaSdJ010_1_Vh = {0x60D1, 19, 0x02A20, 0, 0, 0x0A, 9};
-CdFile g_LbaSdJ010_1_Vb = {0x60D7, 17, 0x41CB0, 0, 0, 0xFF, 0};
-CdFile g_LbaSdJ010_2_Vh = {0x60D1, 19, 0x41CB0, 4, 4, 0x0C, 11};
-CdFile g_LbaSdJ010_2_Vb = {0x60D7, 17, 0x1A510, 4, 4, 0x0C, 0};
-CdFile g_LbaStageSeq = {0x0000, 18, 0x00000, 0, 6, 0xFF, 0};
-CdFile g_LbaStageVh = {0x0000, 19, 0x00000, 3, 3, 0xFF, 14};
-CdFile g_LbaStageVb = {0x0000, 17, 0x00000, 3, 3, 0xFF, 0};
-CdFile g_LbaSdJ010_3_Vh = {0x60D1, 19, 0x02A20, 3, 3, 0xFF, 16};
-CdFile g_LbaSdJ010_3_Vb = {0x60D7, 17, 0x41CB0, 3, 3, 0xFF, 0};
-CdFile g_LbaBinWeapon0 = {0x65D1, 12, 0x04000, 0, 0, 0xFF, 0};
-CdFile g_LbaBinWeapon1 = {0x690B, 13, 0x04000, 0, 0, 0xFF, 1};
-CdFile g_LbaBinMonster = {0x6C45, 14, 0x05800, 0, 0, 0xFF, 0};
-CdFile g_LbaBinDemokey = {0x745E, 4, 0x02000, 0, 0, 0xFF, 0};
-
-// SERVANT/FT_xxx.BIN off
-s32 g_LbaServantChrOff[] = {
-    0x7297, 0x72DA, 0x731D, 0x7360, 0x73A0, 0x73DB, 0x741E,
-};
-
-// SERVANT/SD_xxx.VH off
-s32 g_LbaServantVhOff[] = {
-    0x72B7, 0x72FA, 0x733D, 0x7380, 0x73C0, 0x73FB, 0x743E,
-};
-
-// SERVANT/SD_xxx.VH len
-s32 g_LbaServantVhLen[] = {
-    4128, 4128, 4128, 3616, 3104, 4128, 3616,
-};
-
-// SERVANT/SD_xxx.VB off
-s32 g_LbaServantVbOff[] = {
-    0x72BA, 0x72FD, 0x7340, 0x7382, 0x73C2, 0x73FE, 0x7440,
-};
-
-// SERVANT/SD_xxx.VB len
-s32 g_LbaServantVbLen[] = {
-    63904, 63904, 65200, 59488, 51024, 63904, 60992,
-};
-
-CdFile g_LbaServantChr = {0x0000, 15, 0x06000, 0, 0, 0x1D, 0};
-CdFile g_LbaServantVh = {0x0000, 19, 0x00000, 2, 2, 0xFF, 30};
-CdFile g_LbaServantVb = {0x0000, 17, 0x00000, 2, 2, 0xFF, 0};
-CdFile g_LbaBinRichter = {0x6525, 10, 0x3998C, 0, 0, 0x14, 0};
-CdFile g_LbaBinAlucard = {0x61B9, 10, 0x31BEC, 0, 0, 0x04, 0};
-CdFile g_LbaOpnWsStr = {0x3629, 0, 0x00000, 0, 0, 0xFF, 0};
-CdFile g_LbaStagePrg = {0x0000, 8, 0x00000, 0, 0, 0xFF, 0};
-CdFile g_LbaBinGo = {0x6599, 9, 0x1C000, 0, 0, 0xFF, 0};
-CdFile g_LbaBinEnd = {0x74D2, 9, 0x16000, 0, 0, 0xFF, 0};
-CdFile D_800ACC64 = {0x0000, 3, 0x00000, 0, 0, 0xFF, 0};
-
-#elif defined(VERSION_HD) || defined(VERSION_JP10)
-CdFile g_LbaBinTitle = {0x6424, 0, 0x80000, 0, 0, 0xFF, 0};
-CdFile g_LbaBinProlo = {0x6324, 6, 0x80000, 0, 0, 0xFF, 0};
-CdFile g_LbaBinGame = {0x0000, 1, 0x42000, 0, 0, 0x13, 0};
-CdFile g_LbaStageChr = {0x7E97, 2, 0x40000, 0, 0, 0xFF, 0};
-CdFile g_LbaSdAlkVh = {0x615B, 19, 0x01020, 1, 1, 0xFF, 7};
-CdFile g_LbaSdAlkVb = {0x615E, 17, 0x0E1D0, 1, 1, 0xFF, 0};
-CdFile g_LbaSdRihVh = {0x617B, 19, 0x01020, 1, 1, 0x16, 21};
-CdFile g_LbaSdRihVb = {0x617E, 17, 0x0CC20, 1, 1, 0xFF, 0};
-CdFile g_LbaSdMarVh = {0x6198, 19, 0x00E20, 2, 2, 0xFF, 23};
-CdFile g_LbaSdMarVb = {0x619A, 17, 0x0E290, 2, 2, 0xFF, 0};
-CdFile g_LbaSdJ010_1_Vh = {0x60D0, 19, 0x02A20, 0, 0, 0x0A, 9};
-CdFile g_LbaSdJ010_1_Vb = {0x60D6, 17, 0x41CB0, 0, 0, 0xFF, 0};
-CdFile g_LbaSdJ010_2_Vh = {0x60D0, 19, 0x41CB0, 4, 4, 0x0C, 11};
-CdFile g_LbaSdJ010_2_Vb = {0x60D6, 17, 0x1A510, 4, 4, 0x0C, 0};
-CdFile g_LbaStageSeq = {0x0000, 18, 0x00000, 0, 6, 0xFF, 0};
-CdFile g_LbaStageVh = {0x0000, 19, 0x00000, 3, 3, 0xFF, 14};
-CdFile g_LbaStageVb = {0x0000, 17, 0x00000, 3, 3, 0xFF, 0};
-CdFile g_LbaSdJ010_3_Vh = {0x60D0, 19, 0x02A20, 3, 3, 0xFF, 16};
-CdFile g_LbaSdJ010_3_Vb = {0x60D6, 17, 0x41CB0, 3, 3, 0xFF, 0};
-CdFile g_LbaBinWeapon0 = {0x65D0, 12, 0x04000, 0, 0, 0xFF, 0};
-CdFile g_LbaBinWeapon1 = {0x690A, 13, 0x04000, 0, 0, 0xFF, 1};
-CdFile g_LbaBinMonster = {0x6C44, 14, 0x05800, 0, 0, 0xFF, 0};
-CdFile g_LbaBinDemokey = {0x745D, 4, 0x02000, 0, 0, 0xFF, 0};
-
-// SERVANT/FT_xxx.BIN off
-s32 g_LbaServantChrOff[] = {
-    0x7296, 0x72D9, 0x731C, 0x735F, 0x739F, 0x73DA, 0x741D,
-};
-
-// SERVANT/SD_xxx.VH off
-s32 g_LbaServantVhOff[] = {
-    0x72B6, 0x72F9, 0x733C, 0x737F, 0x73BF, 0x73FA, 0x743D,
-};
-
-// SERVANT/SD_xxx.VH len
-s32 g_LbaServantVhLen[] = {
-    4128, 4128, 4128, 3616, 3104, 4128, 3616,
-};
-
-// SERVANT/SD_xxx.VB off
-s32 g_LbaServantVbOff[] = {
-    0x72B9, 0x72FC, 0x733F, 0x7381, 0x73C1, 0x73FD, 0x743F,
-};
-
-// SERVANT/SD_xxx.VB len
-s32 g_LbaServantVbLen[] = {
-    63904, 63904, 65200, 59488, 51024, 63904, 60992,
-};
-
-CdFile g_LbaServantChr = {0x0000, 15, 0x06000, 0, 0, 0x1D, 0};
-CdFile g_LbaServantVh = {0x0000, 19, 0x00000, 2, 2, 0xFF, 30};
-CdFile g_LbaServantVb = {0x0000, 17, 0x00000, 2, 2, 0xFF, 0};
-#if defined(VERSION_JP10)
-CdFile g_LbaBinRichter = {0x6524, 10, 0x399AC, 0, 0, 0x14, 0};
-#else
-CdFile g_LbaBinRichter = {0x6524, 10, 0x3999C, 0, 0, 0x14, 0};
-#endif
-CdFile g_LbaBinAlucard = {0x61B8, 10, 0x31BEC, 0, 0, 0x04, 0};
-CdFile g_LbaOpnWsStr = {0x3628, 0, 0x00000, 0, 0, 0xFF, 0};
-CdFile g_LbaStagePrg = {0x0000, 8, 0x00000, 0, 0, 0xFF, 0};
-CdFile g_LbaBinGo = {0x6598, 9, 0x1C000, 0, 0, 0xFF, 0};
-CdFile g_LbaBinEnd = {0x74D1, 9, 0x16000, 0, 0, 0xFF, 0};
-CdFile D_800ACC64 = {0x0000, 3, 0x00000, 0, 0, 0xFF, 0};
-
-#endif
 
 CdFile* D_800ACC74[] = {
     &g_LbaBinTitle,    &g_LbaBinTitle,    &g_LbaBinGame,     &g_LbaStageChr,
