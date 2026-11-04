@@ -51,7 +51,7 @@ void func_us_801A37B4(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
         if (primIndex != -1) {
-            InitializeEntity(&g_EInitInteractable);
+            InitializeEntity(g_EInitInteractable);
             self->flags |= 0x800000;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
@@ -88,7 +88,7 @@ void func_us_801A399C(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
         if (primIndex != -1) {
-            InitializeEntity(&g_EInitInteractable);
+            InitializeEntity(g_EInitInteractable);
             self->flags |= 0x800000;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
@@ -129,7 +129,7 @@ void func_us_801A3BE0(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
         if (primIndex != -1) {
-            InitializeEntity(&g_EInitInteractable);
+            InitializeEntity(g_EInitInteractable);
             self->flags |= 0x800000;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
@@ -245,4 +245,99 @@ void func_us_801A4028(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/rbo6/nonmatchings/unk_2367C", func_us_801A9208_from_bo6);
+extern u32 g_RoomCount;
+void func_us_801A9208_from_bo6(Entity* self) {
+    Primitive* prim;
+    s32 primIndex;
+
+    switch (self->step) {
+    case 0:
+        primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
+        if (primIndex != -1) {
+            InitializeEntity(g_EInitInteractable);
+            g_PauseAllowed = false;
+            g_unkGraphicsStruct.pauseEnemies = true;
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            self->animSet = 0;
+
+            prim = &g_PrimBuf[primIndex];
+
+            prim->x0 = prim->x2 = 0;
+            prim->x1 = prim->x3 = 0x100;
+            prim->y0 = prim->y1 = 4;
+            prim->y2 = prim->y3 = 0xE8;
+
+            PCOL(prim) = 0x80;
+
+            prim->priority = 0x1F8;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+            self->ext.utimer.t = 0;
+            g_api.PlaySfx(SFX_WEAPON_APPEAR);
+        }
+        self->flags |= FLAG_UNK_10000;
+        break;
+    case 1:
+        prim = &g_PrimBuf[self->primIndex];
+        self->ext.utimer.t++;
+        if (self->ext.utimer.t > 8) {
+            #ifdef VERSION_PSP
+            g_unkGraphicsStruct.unk28 = 0xFF;
+            #endif
+            self->step++;
+            prim->drawMode = DRAW_HIDE;
+            #ifndef VERSION_PSP
+            DestroyEntity(self);
+            #endif            
+        } else if (self->ext.utimer.t & 1) {
+            prim->drawMode = DRAW_HIDE;
+        } else {
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        }
+        break;
+    case 2:
+        if (g_CutsceneFlags & 0x100) {
+            g_unkGraphicsStruct.unk28 = 0;
+            self->step++;
+            self->ext.utimer.t = 0;
+        }
+        break;
+    case 3:
+        prim = &g_PrimBuf[self->primIndex];
+        self->step++;
+        PCOL(prim) = 0;
+        prim->drawMode =
+            DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        
+        break;
+    case 4:
+        prim = &g_PrimBuf[self->primIndex];
+        PCOL(prim) += 1;
+
+        if (prim->r0 == 0xFF) {
+            prim->drawMode = DRAW_COLORS;
+            self->step++;
+        }
+        break;
+    case 5:
+        prim = &g_PrimBuf[self->primIndex];
+        PCOL(prim) -= 4;
+
+        if (prim->r0 < 5) {
+            g_PauseAllowed = true;
+            g_unkGraphicsStruct.pauseEnemies = false;
+            
+            if (g_RoomCount > 1846) {
+                D_800978B4 = 3;
+            } else {
+                D_800978B4 = 5;
+            }
+            g_GameState = Game_Ending;
+            g_GameStep = Play_Reset;
+            self->step++;
+        }
+        break;
+    }
+}
