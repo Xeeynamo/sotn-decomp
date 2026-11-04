@@ -52,7 +52,7 @@ typedef enum EntityID {
     E_RAINBOW_TRIANGLE,     // EntityRainbowTriangleAttack
     E_TRIANGLE_CORNER_GLOW, // EntityTriangleCornerGlow
     E_BLUE_ORB_SHADOW,      // EntityBlueOrbShadow
-    E_UNK_27,               // EntityUnk27
+    E_LAUNCH_CUTSCENE,               // EntityLaunchCutscene
     E_UNK_28,               // func_us_801A367C
     E_UNK_29,               // func_us_801A9208_from_bo6
     E_UNK_2A,               // func_us_801A37B4
