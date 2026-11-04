@@ -315,6 +315,31 @@ $(REPORTS_DIR)/duplicates.txt: prepare-reports
 progress-report:
 	./sotn.sh progress
 
+##@
+##@ PC Port Targets
+##@
+
+PC_DIR          ?= build/pc
+PC_BUILD_TYPE   ?= RelWithDebInfo
+PC_ASAN         ?= OFF
+PC_JOBS         ?= $(shell nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 4)
+PC_CMAKE_FLAGS  ?= # override with -DCMAKE_C_FLAGS=-m32 -DCMAKE_CXX_FLAGS=-m32 for 32-bit builds
+PC_SOTN         ?= $(firstword $(wildcard $(PC_DIR)/sotn $(PC_DIR)/sotn.exe $(PC_DIR)/*/sotn.exe))
+DEMOS           := 0 3 5 6 7 11 15 16 19
+DEMO_TARGETS    := $(addprefix demo_,$(DEMOS))
+
+.PHONY: pc
+pc: ##@ build the port with PsyZ
+	cmake -B $(PC_DIR) -GNinja -DCMAKE_BUILD_TYPE=$(PC_BUILD_TYPE) -DENABLE_ASAN=$(PC_ASAN) $(PC_CMAKE_FLAGS)
+	cmake --build $(PC_DIR) --config $(PC_BUILD_TYPE) --parallel $(PC_JOBS)
+
+.PHONY: pc-test-demos $(DEMO_TARGETS)
+pc-test-demos: ##@ build the PC port and replay all supported demos
+pc-test-demos: $(DEMO_TARGETS)
+$(DEMO_TARGETS): demo_%: pc
+	@out=$$(SDL_AUDIODRIVER=dummy SDL_VIDEODRIVER=offscreen "$(PC_SOTN)" --demo $* --replay-fast --replay-and-exit 2>&1) && st=0 || st=$$?; \
+	    echo "::group::demo $* (exit code $$st)"; echo "$$out"; echo "::endgroup::"; exit $$st
+
 
 ##@
 ##@ Disc Dumping Targets
