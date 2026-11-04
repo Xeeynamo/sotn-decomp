@@ -1,1 +1,1 @@
-w1_012_Load = 0x092F8450;
+WeaponLoad = 0x092F8450;
