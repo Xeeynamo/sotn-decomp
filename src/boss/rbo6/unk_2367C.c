@@ -214,6 +214,35 @@ void func_us_801A3BE0(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/rbo6/nonmatchings/unk_2367C", func_us_801A4028);
+void func_us_801A4028(Entity* self) {
+    switch (self->step) {                              /* irregular */
+    case 0:
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = 0x8001;
+        self->palette = 0x200;
+        self->unk5A = 0x48;
+        self->animCurFrame = 0x35;
+        self->drawFlags = 3;
+        self->scaleX = 0x100;
+        self->scaleY = 0x100;
+        self->zPriority = 0x81;
+        break;
+    case 1:
+        if (g_CutsceneFlags & 0x80) {
+            self->step++;
+            self->velocityY = 0x8000;
+        }
+        break;
+    case 2:
+        self->velocityY -= 0x180;
+        MoveEntity();
+        self->scaleX--;
+        self->scaleY--;
+        if (g_CutsceneFlags & 0x100) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("boss/rbo6/nonmatchings/unk_2367C", func_us_801A9208_from_bo6);
