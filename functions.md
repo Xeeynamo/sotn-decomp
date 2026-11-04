@@ -799,7 +799,7 @@
 | bo6        | func_maria_8015CC28               |       19 |          1 |        |       |     |
 | mar        | SetCutsceneEvents                 |       19 |          1 |        |       |     |
 | rbo2       | SetCutsceneEvents                 |       19 |          1 |        |       |     |
-| rbo6       | SetCutsceneEvents                 |       19 |          1 |        |       |     |
+| rbo6       | func_pspeu_0924D728               |       19 |          1 |        |       |     |
 | dra        | func_psp_090E8620                 |       19 |          1 |        |       |     |
 | dra        | func_psp_090F5230                 |       19 |          1 |        |       |     |
 | dra        | func_psp_090F5268                 |       19 |          1 |        |       |     |
@@ -1778,7 +1778,7 @@
 | bo6        | CutsceneUnk1                      |       29 |          1 |        |       |     |
 | mar        | CutsceneUnk1                      |       29 |          1 |        |       |     |
 | rbo2       | CutsceneUnk1                      |       29 |          1 |        |       |     |
-| rbo6       | CutsceneUnk1                      |       29 |          1 |        |       |     |
+| rbo6       | func_pspeu_0924D4B8               |       29 |          1 |        |       |     |
 | main       | sceGuJumpList                     |       29 |          1 |        |       |     |
 | main       | sceGuTexScale                     |       29 |          1 |        |       |     |
 | main       | sceGupTexMode                     |       29 |          1 |        |       |     |
@@ -1826,7 +1826,7 @@
 |            | func_pspeu_0924F0F8               |       29 |          5 |        |       |     |
 | bo7        | FindFirstUnkPrim                  |       29 |          5 |        |       |     |
 | rbo2       | FindFirstUnkPrim                  |       29 |          5 |        |       |     |
-| rbo6       | EntityUnk27                       |       29 |          5 |        |       |     |
+| rbo6       | func_pspeu_0924FC30               |       29 |          5 |        |       |     |
 |            | func_pspeu_09245A00               |       29 |          5 |        |       |     |
 | dra        | func_psp_09141878                 |       29 |          5 |        |       |     |
 | main       | func_psp_0891A064                 |       29 |          5 |        |       |     |
@@ -3811,7 +3811,7 @@
 | bo6        | CutsceneUnk4                      |       57 |          2 |        |       |     |
 | mar        | CutsceneUnk4                      |       57 |          2 |        |       |     |
 | rbo2       | CutsceneUnk4                      |       57 |          2 |        |       |     |
-| rbo6       | CutsceneUnk4                      |       57 |          2 |        |       |     |
+| rbo6       | func_pspeu_0924D3E8               |       57 |          2 |        |       |     |
 |            | func_pspeu_09263DA0               |       57 |          2 |        |       |     |
 | dai        | func_pspeu_09253EA8               |       57 |          2 |        |       |     |
 | dre        | func_pspeu_09245568               |       57 |          2 |        |       |     |
@@ -4432,7 +4432,7 @@
 | main       | sceGuDrawArrayN                   |       68 |          7 |        |       |     |
 | bo2        | CutsceneSkip                      |       68 |          8 |        |       |     |
 | bo6        | CutsceneSkip                      |       68 |          8 |        |       |     |
-| rbo6       | CutsceneSkip                      |       68 |          8 |        |       |     |
+| rbo6       | func_pspeu_0924DB20               |       68 |          8 |        |       |     |
 | dre        | func_pspeu_09245C90               |       68 |          8 |        |       |     |
 | lib        | func_psp_0925B380                 |       68 |          8 |        |       |     |
 | no3        | func_pspeu_09243748               |       68 |          8 |        |       |     |
@@ -6793,7 +6793,7 @@
 | bo6        | SetCutsceneScript                 |      139 |          5 |        |       |     |
 | mar        | SetCutsceneScript                 |      139 |          5 |        |       |     |
 | rbo2       | SetCutsceneScript                 |      139 |          5 |        |       |     |
-| rbo6       | SetCutsceneScript                 |      139 |          5 |        |       |     |
+| rbo6       | func_pspeu_0924D518               |      139 |          5 |        |       |     |
 |            | func_pspeu_09263ED0               |      139 |          5 |        |       |     |
 | dai        | func_pspeu_09253FD8               |      139 |          5 |        |       |     |
 | dre        | func_pspeu_09245698               |      139 |          5 |        |       |     |
@@ -7600,7 +7600,7 @@
 | bo6        | DrawCutsceneActorName             |      212 |         14 |        |       |     |
 | mar        | DrawCutsceneActorName             |      212 |         14 |        |       |     |
 | rbo2       | DrawCutsceneActorName             |      212 |         14 |        |       |     |
-| rbo6       | DrawCutsceneActorName             |      212 |         14 |        |       |     |
+| rbo6       | func_pspeu_0924D050               |      212 |         14 |        |       |     |
 |            | func_pspeu_09263A08               |      212 |         14 |        |       |     |
 | dai        | func_pspeu_09253B10               |      212 |         14 |        |       |     |
 | dre        | func_pspeu_092451D0               |      212 |         14 |        |       |     |
@@ -7893,7 +7893,7 @@
 | no3        | func_pspeu_09237F80               |      253 |          1 |        |       |     |
 | bo6        | RunCutsceneEvents                 |      253 |         18 |        |       |     |
 | rbo2       | RunCutsceneEvents                 |      253 |         18 |        |       |     |
-| rbo6       | RunCutsceneEvents                 |      253 |         18 |        |       |     |
+| rbo6       | func_pspeu_0924D760               |      253 |         18 |        |       |     |
 |            | func_pspeu_09264118               |      253 |         18 |        |       |     |
 | dai        | func_pspeu_09254220               |      253 |         18 |        |       |     |
 | rcen       | func_pspeu_09246350               |      253 |         18 |        |       |     |
@@ -10155,7 +10155,7 @@
 |            | func_pspeu_0924DCD8               |     2245 |        204 | Yes    |       |     |
 | rcen       | func_pspeu_09246800               |     2252 |        207 | Yes    |       |     |
 | mar        | EntityCutsceneDialogue            |     2254 |        203 | Yes    |       |     |
-| rbo6       | EntityCutscene                    |     2257 |        206 | Yes    |       |     |
+| rbo6       | func_pspeu_0924DC10               |     2257 |        206 | Yes    |       |     |
 | dre        | func_pspeu_09245D80               |     2261 |        214 | Yes    |       |     |
 | bo2        | EntityCutsceneDialogue            |     2279 |        214 | Yes    |       |     |
 | bo4        | EntityDopplegangerBlinkWhite      |     2282 |        193 | Yes    |       |     |
