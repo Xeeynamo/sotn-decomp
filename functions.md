@@ -1,6 +1,6 @@
 | Ovl        | Function                          |   Length |   Branches | Jtbl   | WIP   | %   |
 |------------|-----------------------------------|----------|------------|--------|-------|-----|
-| are        | D_pspeu_09297DD4                  |        6 |          0 |        |       |     |
+| are_psp    | D_pspeu_09297DD4                  |        6 |          0 |        |       |     |
 |            | unk_210A8.rodata                  |        7 |          0 |        |       |     |
 | main       | sce_stub                          |        7 |          0 |        |       |     |
 | main       | D_psp_0893C06C                    |        7 |          0 |        |       |     |
@@ -1223,7 +1223,7 @@
 | rbo8       | unk_EF80.rodata                   |       22 |          0 | Yes    |       |     |
 | main       | 1BCFC.rodata                      |       22 |          0 | Yes    |       |     |
 | are        | e_paranthropus.rodata             |       22 |          0 | Yes    |       |     |
-| are        | D_pspeu_09297D90                  |       22 |          0 |        |       |     |
+| are_psp    | D_pspeu_09297D90                  |       22 |          0 |        |       |     |
 | cat        | e_spike_room_light_switch.rodata  |       22 |          0 | Yes    |       |     |
 | chi        | en_breakable_wall.rodata          |       22 |          0 | Yes    |       |     |
 | no0        | e_diplocephalus_tail.rodata       |       22 |          0 | Yes    |       |     |
