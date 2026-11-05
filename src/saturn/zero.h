@@ -120,7 +120,7 @@ extern SaturnStageDataTables g_StageOverlayData;
 
 void func_06006FA8(void);
 
-extern s32 DAT_060476a0;
+extern u8* DAT_060476a0;
 extern s32 DAT_060476a4;
 extern s32 DAT_06038A44;
 
@@ -461,5 +461,9 @@ extern XyInt DAT_06057A08;
 extern XyInt DAT_06057A0C;
 bool CdSoundCommandQueueEmpty(void);
 /* End moved declarations */
+
+#ifdef SATZ
+#include "satz/prototypes.h"
+#endif
 
 #endif

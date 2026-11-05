@@ -6,7 +6,7 @@ u8 g_RichterMapRevealPattern[11] = {
 };
 u8 g_RichterMapRevealPatternPadding = 0;
 
-s32 g_RichterSavedMapVramBase = 0;
+u8* g_RichterSavedMapVramBase = 0;
 s32 g_RichterSavedMapPlaneConfig = 0;
 
 u8 g_RichterMapIconIndices[8] = {

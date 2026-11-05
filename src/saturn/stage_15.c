@@ -999,7 +999,11 @@ void func_060E9D38(Entity* self) {
             random_value = Random();
             index = (u8)(random_value % (8 - i));
             DAT_060FB0EC[i] = values[index];
+#ifdef SATZ
+            while (index < 7) {
+#else
             while (index <= 7) {
+#endif
                 values[index] = values[index + 1];
                 index++;
             }

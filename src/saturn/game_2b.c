@@ -55,7 +55,7 @@ void func_06078550_noInline(s32 arg0, u8 ch, Point16* pos) {
     cmd->charSize = 0x108;
     cmd->color = LookupTblNoToVram(0x30);
     cmd->charAddr = DAT_0605AEC0[iVar5->allocationIndex][0] + ch * 4;
-    LOW(cmd->ax) = (pos->x << 0x10) | (pos->y & 0xFFFF);
+    SET_LOW(cmd->ax, (pos->x << 0x10) | (pos->y & 0xFFFF));
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(arg0, cmd);
         DAT_0605AEAC++;
@@ -172,7 +172,7 @@ void func_06078920(s32 arg0, Point16* pos) {
     cmd->charSize = 0x910;
     cmd->color = LookupTblNoToVram(0x31);
     cmd->charAddr = ptr[2] + 0x480;
-    LOW(cmd->ax) = (pos->x << 0x10) | (pos->y & 0xFFFF);
+    SET_LOW(cmd->ax, (pos->x << 0x10) | (pos->y & 0xFFFF));
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(arg0, cmd);
         DAT_0605AEAC++;
@@ -195,7 +195,7 @@ void func_060789C4(s32 arg0, s32 arg1, Point16* pos) {
         ptr = DAT_0605AEC0[1];
         charBase = ptr[2];
         cmd->charAddr = arg1 * 0x90 + ptr[2];
-        LOW(cmd->ax) = (pos->x << 0x10) | (pos->y & 0xFFFF);
+        SET_LOW(cmd->ax, (pos->x << 0x10) | (pos->y & 0xFFFF));
         if (SpMstCmdPos < 0x278) {
             SPR_2Cmd(arg0, cmd);
             DAT_0605AEAC++;
@@ -223,7 +223,7 @@ void func_06078F58(s32 arg0, s32 arg1, Point16* pos) {
     ptr = DAT_0605AEC0[1];
     charBase = ptr[2];
     cmd->charAddr = (arg1 + 0xB) * 0x30 + ptr[2];
-    LOW(cmd->ax) = (pos->x << 0x10) | (u16)pos->y;
+    SET_LOW(cmd->ax, (pos->x << 0x10) | (u16)pos->y);
 
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(arg0, cmd);
@@ -246,7 +246,7 @@ void func_06079008(s32 arg0, s32 arg1, Point16* pos) {
     ptr = DAT_0605AEC0[1];
     charBase = ptr[2];
     cmd->charAddr = arg1 * 0x30 + ptr[2];
-    LOW(cmd->ax) = (pos->x << 0x10) | (pos->y & 0xFFFF);
+    SET_LOW(cmd->ax, (pos->x << 0x10) | (pos->y & 0xFFFF));
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(arg0, cmd);
         DAT_0605AEAC++;
@@ -270,7 +270,7 @@ void func_06079208(s32 arg0, Point16* pos) {
     cmd->charAddr += image->characterOffsetUnits;
     cmd->charSize =
         ((image->storedWidth / 4) << 8) | (image->storedHeight << 1);
-    LOW(cmd->ax) = (pos->x << 0x10) | ((u16)pos->y);
+    SET_LOW(cmd->ax, (pos->x << 0x10) | ((u16)pos->y));
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(arg0, cmd);
         DAT_0605AEAC++;
@@ -309,7 +309,7 @@ void func_06079424(s32 arg0, s32 arg1, s32 arg2, Point16* pos) {
         cmd->drawMode |= 4;
         cmd->grshAddr = SPR_2GourTblNoToVram(0x301);
     }
-    LOW(cmd->ax) = (pos->x << 0x10) | (pos->y & 0xFFFF);
+    SET_LOW(cmd->ax, (pos->x << 0x10) | (pos->y & 0xFFFF));
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(arg0, cmd);
         DAT_0605AEAC++;
@@ -321,7 +321,7 @@ void func_06079580(s32 arg0, s32 arg1, Point16* pos) {
 
     func_060784B8(cmd, DAT_06085E58[arg1][0], DAT_06085E58[arg1][1]);
 
-    LOW(cmd->ax) = (pos->x << 0x10) | (pos->y & 0xFFFF);
+    SET_LOW(cmd->ax, (pos->x << 0x10) | (pos->y & 0xFFFF));
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(arg0, cmd);
         DAT_0605AEAC++;
@@ -356,10 +356,10 @@ void func_0607973C(s32 arg0, Point16* pos) {
     cmd->drawMode = 0x4C0;
     cmd->color = RGB16_COLOR(shade, shade, 0);
 
-    LOW(cmd->ax) = (left << 0x10) | ((u16)top);
-    LOW(cmd->bx) = (right << 0x10) | ((u16)top);
-    LOW(cmd->cx) = (right << 0x10) | ((u16)bottom);
-    LOW(cmd->dx) = (left << 0x10) | ((u16)bottom);
+    SET_LOW(cmd->ax, (left << 0x10) | ((u16)top));
+    SET_LOW(cmd->bx, (right << 0x10) | ((u16)top));
+    SET_LOW(cmd->cx, (right << 0x10) | ((u16)bottom));
+    SET_LOW(cmd->dx, (left << 0x10) | ((u16)bottom));
 
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(arg0, cmd);
@@ -400,10 +400,10 @@ void func_06079A2C(s32 arg0, s32 arg1, Point16* pos) {
     cmd->control = 0x1004;
     cmd->drawMode = 0x4C0;
     cmd->color = RGB16_COLOR(shade, 0, 0);
-    LOW(cmd->ax) = (left << 0x10) | ((u16)top);
-    LOW(cmd->bx) = (right << 0x10) | ((u16)top);
-    LOW(cmd->cx) = (right << 0x10) | ((u16)bottom);
-    LOW(cmd->dx) = (left << 0x10) | ((u16)bottom);
+    SET_LOW(cmd->ax, (left << 0x10) | ((u16)top));
+    SET_LOW(cmd->bx, (right << 0x10) | ((u16)top));
+    SET_LOW(cmd->cx, (right << 0x10) | ((u16)bottom));
+    SET_LOW(cmd->dx, (left << 0x10) | ((u16)bottom));
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(arg0, cmd);
         DAT_0605AEAC++;

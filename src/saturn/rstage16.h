@@ -60,7 +60,7 @@ extern SaturnRoomGraphics g_RStage16RoomGraphics[];
 extern SaturnRoomLayerSetup g_RStage16LayerSetup[];
 extern SaturnLayerMapOffsets g_RStage16LayerMapOffsets[];
 extern SaturnLayerCompressedSizes g_RStage16LayerCompressedSizes[];
-extern SaturnRoomHeader g_RStage16Rooms[];
+extern u8 g_RStage16Rooms[];
 extern LayoutEntity* g_RStage16LayoutVertical[];
 extern LayoutEntity* g_RStage16LayoutHorizontal[];
 extern void* g_RStage16SpriteBanks[];
