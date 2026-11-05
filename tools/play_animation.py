@@ -61,7 +61,7 @@ def load_anims(src_file):
         file_lines = f.read().split("\n")
     loaded_anims = {}
     for i, line in enumerate(file_lines):
-        if line.startswith("static AnimateEntityFrame"):
+        if line.startswith("static AnimateEntityFrame "):
             print("Start of animation, line = ", line)
             # handle the potential of multi-line animations
             anim = ""
@@ -98,7 +98,11 @@ def load_anims(src_file):
 
 
 def load_init_from_ovl(ovl_name, init_name):
-    with open("src/st/" + ovl_name + "/e_init.c") as f:
+    if ovl_name.startswith("rbo") or ovl_name.startswith("bo"):
+        baseDir = "src/boss/"
+    else:
+        baseDir = "src/st/"
+    with open(baseDir + ovl_name + "/e_init.c") as f:
         initlines = f.readlines()
     for line in initlines:
         if init_name in line:
@@ -109,7 +113,7 @@ def load_init_from_ovl(ovl_name, init_name):
                     pal_value = "0"
                 else:
                     # now find that in the overlay .h file to pull it in
-                    with open(f"src/st/{ovl_name}/{ovl_name}.h") as hfile:
+                    with open(f"{baseDir}/{ovl_name}/{ovl_name}.h") as hfile:
                         for hline in hfile:
                             if pal_def := re.search(f"{pal_name} = ([^,]*)", hline):
                                 pal_value = pal_def.group(1)
@@ -171,13 +175,17 @@ class AnimationShower:
         # Need to load the animation's frames now.
         # Depends on if we're an ANIMSET_DRA or ANIMSET_OVL.
         if anim_num & 0x8000:
+            if overlay.startswith("rbo") or overlay.startswith("bo"):
+                baseDir = "src/boss/"
+            else:
+                baseDir = "src/st/"
             print("Overlay animation")
             assert overlay != "dra"
-            main_array_file = f"src/st/{overlay}/gen/sprite_banks.h"
+            main_array_file = f"{baseDir}/{overlay}/gen/sprite_banks.h"
             if not os.path.exists(main_array_file):
                 main_array_file = main_array_file.replace("gen", "gen/us")
             main_array = "spriteBanks"
-            animset_file = f"src/st/{overlay}/gen/sprites.c"
+            animset_file = f"{baseDir}/{overlay}/gen/sprites.c"
         else:
             main_array_file = "src/dra/d_37d8.c"
             main_array = "D_800A3B70"

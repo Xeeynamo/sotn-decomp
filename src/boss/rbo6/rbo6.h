@@ -9,6 +9,7 @@
 enum Palettes {
     PAL_NONE,
     PAL_DRACULA = 0x200,
+    PAL_DRACULA_WINGS = 0x201,
 };
 
 typedef enum EntityID {
@@ -35,23 +36,23 @@ typedef enum EntityID {
     E_EXPLOSION_VARIANTS,   // EntityExplosionVariants
     E_GREY_PUFF,            // EntityGreyPuff
     E_UNK_16,               // func_us_8019D330_from_rcen
-    E_UNK_17,               // func_us_8019DB9C
-    E_UNK_18,               // func_us_8019FBC0
-    E_UNK_19,               // func_us_8019FB04
-    E_UNK_1A,               // func_us_8019EADC
-    E_UNK_1B,               // func_us_8019EE30
-    E_UNK_1C,               // func_us_8019F1CC
-    E_UNK_1D,               // func_us_8019FA78
-    E_UNK_1E,               // func_us_8019FCB4
-    E_UNK_1F,               // func_us_801A01A4
-    E_UNK_20,               // func_us_801A0710
-    E_UNK_21,               // func_us_801A0860
-    E_UNK_22,               // func_us_801A0AB4
-    E_UNK_23,               // func_us_801A0DC0
-    E_UNK_24,               // func_us_801A11DC
-    E_UNK_25,               // func_us_801A1B38
-    E_UNK_26,               // func_us_801A1150
-    E_UNK_27,               // func_us_801A362C
+    E_BOSS_DRACULA,         // EntityBossDracula
+    E_DRACULA_SMALL_HAND,   // EntityDraculaSmallHand
+    E_DRACULA_DECOR,        // EntityDraculaDecoration
+    E_DRACULA_ARM,          // EntityDraculaArm
+    E_DRACULA_HAND,         // EntityDraculaHand
+    E_DRACULA_PUPPET_HEAD,  // EntityDraculaPuppetHead
+    E_DRACULA_VERTEBRA,     // EntityDraculaPuppetVertebra
+    E_DRACULA_WINGS,        // EntityDraculaWings
+    E_SUMMONING_LIGHTNING,  // EntitySummoningLightning
+    E_BOSS_PORTAL,          // EntityBossPortal
+    E_SUMMONED_BOSS,        // EntitySummonedBoss
+    E_SQUISH_BLOOD_BALLS,   // EntitySquishBloodBalls
+    E_BLUE_FLASH_ORB,       // EntityBlueFlashingOrb
+    E_RAINBOW_TRIANGLE,     // EntityRainbowTriangleAttack
+    E_TRIANGLE_CORNER_GLOW, // EntityTriangleCornerGlow
+    E_BLUE_ORB_SHADOW,      // EntityBlueOrbShadow
+    E_LAUNCH_CUTSCENE,      // EntityLaunchCutscene
     E_UNK_28,               // func_us_801A367C
     E_UNK_29,               // func_us_801A9208_from_bo6
     E_UNK_2A,               // func_us_801A37B4

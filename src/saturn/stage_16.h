@@ -9,16 +9,20 @@
 #include <saturn_sprite.h>
 #include "stage_data.h"
 
-extern s16 DAT_060EA4B0[];
-extern u16 DAT_060EA294[];
+typedef struct {
+    u16 indices[9];
+    u16 padding;
+} Stage16SubweaponIndices;
+extern Stage16SubweaponIndices g_Stage16AlucardSubweaponIndices;
+extern u16 g_Stage16AlucardSubweaponIds[];
 void PlaySfx(s32 sfxId);
 void SetStep(u8 step);
 void DestroyEntity(Entity* entity);
 void func_060E2BF0(s32 arg0, s32 arg1);
 void func_060E2DB0(s32 arg0, s32 arg1, s32 arg2);
-void func_060E2EFC(s32 arg0, s32 arg1, s32 arg2);
+void func_060E2EFC(Primitive* arg0, s32 arg1, s32 arg2);
 void func_060E323C(s32 scale, s32 unused);
-void func_060E330C(s32 arg0, s32 arg1, s32 arg2);
+void func_060E330C(Primitive* arg0, s32 arg1, s32 arg2);
 
 /* Declarations moved here by tools/saturn/move_declarations.py */
 extern char g_Stage16ObtainedText[];
@@ -157,18 +161,18 @@ extern u8 g_Stage16SpriteBankSkeletonBreeder[];
 extern u8 g_Stage16SpriteBankGargoyle[];
 extern u8 g_Stage16SpriteBankSpecter[];
 extern u8 g_Stage16SpriteBankSkeletonBeast[];
-extern u8 g_Stage16SpriteBank18[];
-extern u8 g_Stage16SpriteBank17[];
+extern SaturnSpriteResource g_Stage16SpriteBank18;
+extern SaturnSpriteResource g_Stage16SpriteBank17;
+extern SaturnSpriteResource g_Stage16SpriteBank19;
 void func_060DC9E0(Entity* self);
 void func_060DC894(Entity* self);
 void func_060DC60C(Entity* self);
 void func_060DC4C0(Entity* self);
 void func_060DC418(Entity* self);
 void func_060DC040(Entity* self);
-extern s32 DAT_060EF100;
-extern s32 DAT_060EF110;
+extern MthXyz DAT_060EF100;
+extern MthXyz DAT_060EF110;
 extern s32 g_Stage16Entity08ModelVertices14[14][3];
-extern MthMatrixTbl DAT_06061DF0;
 extern SaturnSpriteFrameHeader* g_Stage16SpriteBank16Frames[];
 extern LayoutEntity g_Stage16LayoutVertical02[];
 extern LayoutEntity g_Stage16LayoutVertical01[];
@@ -180,15 +184,15 @@ extern LayoutEntity g_Stage16LayoutVertical48[];
 extern LayoutEntity g_Stage16LayoutVertical49[];
 extern u8 g_Stage16Entity20Steps[8];
 extern u8 g_Stage16Entity20StepDelays[4];
-extern u8* DAT_060EB46C[];
-extern u16 DAT_060EB38C[];
-extern s32 DAT_060EB394[];
-extern s16 DAT_060EB47C[];
-extern s16 DAT_060EC690[];
+extern u8* g_Stage16Entity25WalkAnimations[];
+extern u16 g_Stage16Entity25WalkPoses[];
+extern s32 g_Stage16Entity25WalkAccel[];
+extern s16 g_Stage16Entity25WallSensors[];
+extern s16 g_Stage16BoneScimitarSensors[14];
 extern SaturnSpriteFrameHeader* g_Stage16SpriteBank21Frames[];
 extern SaturnSpriteFrameHeader* g_Stage16SpriteBank22Frames[];
 extern u8* g_Stage16SkeletonBeastAnimations[];
-s32 func_06079DEC(Entity* self, s16* sensors);
+s32 UnkCollisionFunc2(Entity* self, s16* sensors);
 void SyncSpriteObjectPosUnchecked(Entity* self, s16* offset);
 void func_060E401C(Entity* self);
 void func_060E411C(Entity* self, u8 arg1);
@@ -200,9 +204,8 @@ extern s16 g_Stage16Entity25PositionOffsets[][2];
 extern s16 g_Stage16Entity25HitboxSizes[][2];
 void PlaySfxPositional(s32 sfxId);
 extern s16 DAT_060ECF1C[];
-extern u32 g_Stage16SpriteBank24Frames[];
-void func_0600B004(SpriteObject* sprite, u32 imageIndex);
-extern s8 DAT_060EE27C[][4];
+extern SaturnSpriteFrameHeader* g_Stage16SpriteBank24Frames[];
+void func_0600B004(SpriteObject* sprite, void* frame);
 s32 GetSideToPlayer(Entity* self);
 s16 Random(void);
 /* End moved declarations */

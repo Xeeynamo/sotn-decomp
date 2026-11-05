@@ -144,9 +144,9 @@ void RunMainEngine(void) {
         } else {
             DAT_0605cd70.unk8++;
             if (D_80097C98 != 0) {
-                DAT_0605c110 = 1;
+                DAT_0605C110 = 1;
             } else {
-                DAT_0605c110 = 0;
+                DAT_0605C110 = 0;
             }
             goto LAB_06070f5a;
         }
@@ -240,7 +240,7 @@ void RunMainEngine(void) {
         break;
     case 5:
         if (DAT_0605cd70.unk0 == 5) {
-            DAT_0605c110 = 1;
+            DAT_0605C110 = 1;
         }
     LAB_06070f5a:
         g_GameTimer++;
@@ -340,9 +340,9 @@ void RunMainEngine(void) {
             DAT_0605cd70.unk0 = 0x70;
             PlaySfx(SET_PAUSE_SFX_SCRIPTS);
         } else {
-            iVar9 = func_800F0CD8(DAT_0605c110);
+            iVar9 = func_800F0CD8(DAT_0605C110);
             if (iVar9 != 0) {
-                DAT_0605c110 = 0;
+                DAT_0605C110 = 0;
                 DAT_0605D7F0 = true;
                 if (iVar9 > 1) {
                     D_8006C374 = iVar9 - 2;
@@ -862,7 +862,7 @@ void SetDefaultSCLPriority(s32 arg0) {
     u8* ptr;
 
     if (g_CurrentRoom.unk4 < 0x20) {
-        ptr = &DAT_060645b8[g_CurrentRoom.unk4 * 12];
+        ptr = &DAT_060645B8[g_CurrentRoom.unk4 * 12];
         SCL_SetPriority(0x4, ptr[0]);
         SCL_SetPriority(0x8, ptr[1]);
         SCL_SetPriority(0x10, ptr[2]);
@@ -1101,7 +1101,7 @@ LAB_06072d9e:
             PlaySfx(SET_KEY_ON_22_23);
         }
         DAT_0605C6E4 = 0;
-        DAT_0605c110 = 0;
+        DAT_0605C110 = 0;
         DAT_06086270 = 0;
         DAT_06057f68 = 0;
         DAT_0605c664 = 0;

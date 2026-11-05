@@ -23,23 +23,23 @@ void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
 void func_us_8019D330_from_rcen(Entity* self);
-void func_us_8019DB9C(Entity* self);
-void func_us_8019FBC0(Entity* self);
-void func_us_8019FB04(Entity* self);
-void func_us_8019EADC(Entity* self);
-void func_us_8019EE30(Entity* self);
-void func_us_8019F1CC(Entity* self);
-void func_us_8019FA78(Entity* self);
-void func_us_8019FCB4(Entity* self);
-void func_us_801A01A4(Entity* self);
-void func_us_801A0710(Entity* self);
-void func_us_801A0860(Entity* self);
-void func_us_801A0AB4(Entity* self);
-void func_us_801A0DC0(Entity* self);
-void func_us_801A11DC(Entity* self);
-void func_us_801A1B38(Entity* self);
-void func_us_801A1150(Entity* self);
-void func_us_801A362C(Entity* self);
+void EntityBossDracula(Entity* self);
+void EntityDraculaSmallHand(Entity* self);
+void EntityDraculaDecoration(Entity* self);
+void EntityDraculaArm(Entity* self);
+void EntityDraculaHand(Entity* self);
+void EntityDraculaPuppetHead(Entity* self);
+void EntityDraculaPuppetVertebra(Entity* self);
+void EntityDraculaWings(Entity* self);
+void EntitySummoningLightning(Entity* self);
+void EntityBossPortal(Entity* self);
+void EntitySummonedBoss(Entity* self);
+void EntitySquishBloodBalls(Entity* self);
+void EntityBlueFlashingOrb(Entity* self);
+void EntityRainbowTriangleAttack(Entity* self);
+void EntityTriangleCornerGlow(Entity* self);
+void EntityBlueOrbShadow(Entity* self);
+void EntityLaunchCutscene(Entity* self);
 void func_us_801A367C(Entity* self);
 void func_us_801A9208_from_bo6(Entity* self);
 void func_us_801A37B4(Entity* self);
@@ -75,23 +75,23 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityExplosionVariants,
     EntityGreyPuff,
     func_us_8019D330_from_rcen,
-    func_us_8019DB9C,
-    func_us_8019FBC0,
-    func_us_8019FB04,
-    func_us_8019EADC,
-    func_us_8019EE30,
-    func_us_8019F1CC,
-    func_us_8019FA78,
-    func_us_8019FCB4,
-    func_us_801A01A4,
-    func_us_801A0710,
-    func_us_801A0860,
-    func_us_801A0AB4,
-    func_us_801A0DC0,
-    func_us_801A11DC,
-    func_us_801A1B38,
-    func_us_801A1150,
-    func_us_801A362C,
+    EntityBossDracula,
+    EntityDraculaSmallHand,
+    EntityDraculaDecoration,
+    EntityDraculaArm,
+    EntityDraculaHand,
+    EntityDraculaPuppetHead,
+    EntityDraculaPuppetVertebra,
+    EntityDraculaWings,
+    EntitySummoningLightning,
+    EntityBossPortal,
+    EntitySummonedBoss,
+    EntitySquishBloodBalls,
+    EntityBlueFlashingOrb,
+    EntityRainbowTriangleAttack,
+    EntityTriangleCornerGlow,
+    EntityBlueOrbShadow,
+    EntityLaunchCutscene,
     func_us_801A367C,
     func_us_801A9208_from_bo6,
     func_us_801A37B4,
@@ -117,9 +117,9 @@ EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_OBTAINABL
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, ENEMY_COMMON};
 EInit g_EInitDraculaLvl98 = {ANIMSET_OVL(1), 0x00, 0x48, PAL_DRACULA, ENEMY_DRACULA_LV98};
-EInit D_us_80180540 = {ANIMSET_OVL(1), 0x00, 0x48, PAL_DRACULA, ENEMY_INTERACTABLE};
-EInit D_us_8018054C = {ANIMSET_OVL(1), 0x00, 0x48, PAL_DRACULA, ENEMY_DRACULA_LV98_UNK_17D};
-EInit D_us_80180558 = {ANIMSET_OVL(1), 0x00, 0x48, PAL_DRACULA, ENEMY_DRACULA_LV98_UNK_17C};
-EInit D_us_80180564 = {ANIMSET_OVL(1), 0x00, 0x48, PAL_DRACULA, ENEMY_DRACULA_LV98_UNK_17E};
-EInit D_us_80180570 = {ANIMSET_OVL(1), 0x00, 0x48, PAL_DRACULA, ENEMY_DRACULA_LV98_UNK_17F};
+EInit g_EInitDraculaMisc = {ANIMSET_OVL(1), 0x00, 0x48, PAL_DRACULA, ENEMY_INTERACTABLE};
+EInit g_EInitDraculaPuppetHead = {ANIMSET_OVL(1), 0x00, 0x48, PAL_DRACULA, ENEMY_DRACULA_PUPPET_HEAD};
+EInit g_EInitDraculaHand = {ANIMSET_OVL(1), 0x00, 0x48, PAL_DRACULA, ENEMY_DRACULA_HAND};
+EInit g_EInitDraculaOrbAttack = {ANIMSET_OVL(1), 0x00, 0x48, PAL_DRACULA, ENEMY_DRACULA_BLUE_ORB};
+EInit g_EInitDraculaTriangleAttack = {ANIMSET_OVL(1), 0x00, 0x48, PAL_DRACULA, ENEMY_DRACULA_TRIANGLE};
 // clang-format on

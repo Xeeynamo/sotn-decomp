@@ -1,12 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
+#include "zero/sound.h"
 
 u32 D_06041270[7] = {0};
-
-typedef struct {
-    char filename[16];
-    u8 bank;
-} SaturnSoundFile;
 
 SaturnSoundFile g_SaturnSoundFiles[57] = {
     {"SD_JO10.CRT", 0x10},  {"SD_ALK.CRT", 0x11},   {"SD_LIH.CRT", 0x11},
@@ -29,14 +25,6 @@ SaturnSoundFile g_SaturnSoundFiles[57] = {
     {"SD_MARI.CRT", 0x11},  {"SD_TEIX.CRT", 0x12},  {"SD_TEI.CRT", 0x12},
     {"SD_ROUG.CRT", 0x12},  {"SD_ROUGX.CRT", 0x12}, {"SD_HONE.CRT", 0x12},
 };
-
-typedef struct {
-    u8 unk0;
-    u8 unk1;
-    u8 unk2;
-    u8 unk3;
-    u8 unk4;
-} SaturnSoundConfig;
 
 SaturnSoundConfig g_SaturnSoundConfigs[791] = {
     {0x00, 0x00, 0x00, 0x00, 0x1E}, {0x00, 0x82, 0x00, 0x00, 0x1E},

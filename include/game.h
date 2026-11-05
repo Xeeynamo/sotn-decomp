@@ -134,7 +134,11 @@ typedef enum {
 #define OTSIZE 0x200
 #define MAX_ENV_COUNT 0x10
 #define MAX_DRAW_MODES 0x400
+#ifdef VERSION_PC
+#define MAX_POLY_GT4_COUNT 0x1400
+#else
 #define MAX_POLY_GT4_COUNT 0x300
+#endif
 #define MAX_POLY_G4_COUNT 0x100
 #define MAX_POLY_GT3_COUNT 0x30
 #define MAX_LINE_G2_COUNT 0x100
@@ -729,7 +733,7 @@ typedef enum {
     TIMEATTACK_EVENT_MEET_MASTER_LIBRARIAN,
     TIMEATTACK_EVENT_FIRST_MARIA_MEET,
     NUM_TIMEATTACK_EVENTS,
-    TIMEATTACK_EVENT_UNUSED_28,
+    TIMEATTACK_EVENT_FINALBOSS_DEFEAT,
     TIMEATTACK_EVENT_UNUSED_29,
     TIMEATTACK_EVENT_UNUSED_30,
     TIMEATTACK_EVENT_UNUSED_31,
@@ -1661,7 +1665,8 @@ typedef struct {
         s32 handId, Equipment* res, s32 equipId);
     /* 8003C7D4 */ s32 (*func_800EA5E4)(u32);
     /* 8003C7D8 */ void (*LoadGfxAsync)(s32 gfxId);
-    /* 8003C7DC */ void (*PlaySfx)(s32 sfxId);
+    // Should be (s32 sfxId) but bad call in RBO6 necessitates generic args
+    /* 8003C7DC */ void (*PlaySfx)();
     /* 8003C7E0 */ s16 (*func_800EDB58)(u8, s32);
     /* 8003C7E4 */ void (*func_800EA538)(s32 arg0);
     /* 8003C7E8 */ void (*func_800EA5AC)(u32 a, u32 r, u32 g, u32 b);
@@ -2127,6 +2132,9 @@ extern s32 g_GameClearFlag;
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C100;
 extern u16 g_ClutIds[]; // array of palette VRAM offsets
+#ifdef VERSION_PC
+extern bool (*g_PcStageLayerRenderer)(void);
+#endif
 extern s32 g_CutsceneHasControl;
 extern FgLayer D_8003C708;
 extern s16 D_8003C710;

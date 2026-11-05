@@ -73,8 +73,8 @@ typedef enum {
 
 /* Declarations moved here by tools/saturn/move_declarations.py */
 void func_0606F1C8(Entity* entity);
-void func_0606C594(void);
-void func_0606C774(void);
+void func_0606C594(s32 arg0);
+void func_0606C774(u16 layoutId);
 s32 func_06074470(void);
 void func_0606C064(void);
 void func_0606BEE4(void);
@@ -225,8 +225,8 @@ extern u8 DAT_0608FFF8[];
 extern s16 g_SineTable[];
 void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
 extern s32 DAT_06086390;
-extern SpritePart g_SpritePartPool[SPRITE_PART_MAX];       /* 0x0608D7F8 */
-extern SpriteObject g_SpriteObjectPool[SPRITE_OBJECT_MAX]; /* 0x0608AFF8 */
+extern SpritePart g_SpritePartPool[SPRITE_PART_MAX]; /* 0x0608D7F8 */
+extern SpriteObject g_SpriteObjectPool[SPRITE_OBJECT_MAX + 1];
 s32 func_0606F378(s32 arg0);
 
 extern s32 DAT_0605D7F4;

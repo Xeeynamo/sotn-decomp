@@ -96,10 +96,10 @@ typedef enum {
     /* 0x88 */ RNZ0_SECRET_WALL_OPEN = 136,
     /* 0x89 */ RNZ0_SECRET_CEILING_OPEN = 137,
     /* 0x90 */ TOP_STAGE_FLAG = 144,
-    /* 0x91 */ TOP_SECRET_WALL_1_BROKEN =
-        145, // Upper left of large room - behind power of mist
-    /* 0x92 */ TOP_SECRET_WALL_2_BROKEN =
-        146, // Lower left of large room - behind leap stone
+    /* 0x91 */ TOP_SECRET_WALL_1_BROKEN = 145, // Upper left of large room -
+                                               // behind power of mist
+    /* 0x92 */ TOP_SECRET_WALL_2_BROKEN = 146, // Lower left of large room -
+                                               // behind leap stone
     /* 0x93 */ TOP_LION_LIGHTS = 147,    // Different bits for each lion pair
     /* 0x94 */ TOP_SECRET_STAIRS = 148,  // The drop down stairs before Richter
     /* 0x95 */ SHAFT_ORB_DEFEATED = 149, // Set by defeating Shaft's orb
@@ -173,7 +173,9 @@ typedef enum {
     /* 0xD8 */ MET_MARIA_IN_CEN = 216,    // Holy Glasses cutscene in CEN
     /* 0xDC */ DEATH_FIGHT_CS = 220,      // Cutscene during fight with Death
     /* 0xE0 */ SHAFT_FIGHT_CS_UNK1 = 224, // Cutscene with Shaft
-    /* 0xE3 */ SHAFT_FIGHT_CS_UNK2 = 227, // Cutscene with Shaft, PSP only?
+    /* 0xE2 */ TOP_FIGHT_CS_UNK1 = 226,
+    /* 0xE3 */ TOP_FIGHT_CS_UNK2 = 227, // Set during TOP fight, read again in
+                                        // RCEN Shaft fight, PSP only?
     /* 0xE4 */ RCEN_OPEN = 228, // Have all 5 Vlad relics in R Clock Room
     /* 0x100 */ CASTLE_COLLECTIBLES_100 = 256,
     /* 10000000 */ // NO0_CLOCK_LIFE_VESSEL

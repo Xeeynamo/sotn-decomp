@@ -2,6 +2,7 @@
 #include "inc_asm.h"
 
 #include "bup.h"
+#include "machine.h"
 
 // SEGA_BUP.A
 const char* bup_version = "BUP Version 1.25 1997-06-20";
@@ -11,29 +12,6 @@ extern Sint32 DAT_06057F04;
 extern void* DAT_06065D50;
 extern void* DAT_06065D54;
 void func_06030580(void);
-
-static inline void set_sr(register Uint32 sr) {
-    __asm__ volatile("ldc	%0, sr" : : "r"(sr));
-}
-
-static inline Uint32 get_sr(void) {
-    Uint32 sr;
-    __asm__ volatile("stc	sr, %0" : "=r"(sr));
-    return sr;
-}
-
-static inline Uint32 get_imask(void) {
-    Uint32 imask = (get_sr() & 0x000000F0) >> 4;
-    return imask;
-}
-
-static inline void set_imask(register Uint32 imask) {
-    Uint32 sr = get_sr();
-
-    sr &= ~0x000000F0;
-    sr |= imask << 4;
-    set_sr(sr);
-}
 
 // 0x06030404
 void BUP_Init(Uint32* libaddr, Uint32* workbuff, BupConfig conf[]) {

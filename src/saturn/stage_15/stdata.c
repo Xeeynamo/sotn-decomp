@@ -52,10 +52,9 @@ typedef struct {
 } Entity68AnimationConfig;
 
 EntityEntry g_Stage15EntityEntry00 = {NULL, func_060DC040};
-u8 g_Stage15BreakableAnimation[8] = {
-    5, 0x26, 5, 0x27, 5, 0x28, 5, 0x29,
+u8 g_Stage15BreakableAnimation[10] = {
+    5, 0x26, 5, 0x27, 5, 0x28, 5, 0x29, 0, 0,
 };
-u16 g_Stage15BreakableAnimationPadding = 0;
 s16 g_Stage15BreakablePrimitiveOffsets[4][5] = {
     {-17, -34, 26, 0, 0},
     {-16, -33, 27, 0, 0},
@@ -177,12 +176,9 @@ Entity17Variant g_Stage15Entity17Variants[6] = {
 };
 
 EntityEntry g_Stage15EntityEntry16 = {NULL, func_060DC4B8};
-u8 g_Stage15Entity16Animation[8] = {
-    7, 0x77, 7, 0x78, 6, 0x48, 2, 0x14,
-};
-u16 g_Stage15Entity16Parameters[6] = {0, 0x1B9, 0x200, 7, 7, 0};
-s16 g_Stage15Entity16DirectionOffsets[7] = {0, 1, 2, 4, -1, -2, -4};
-u16 g_Stage15Entity16Padding = 0;
+s16 g_Stage15WaterSplashSfx[2] = {0x777, 0x778};
+s16 g_Stage15WaterRegions[1][8] = {{0x648, 0x214, 0, 0x1B9, 0x200, 7, 7, 0}};
+s16 g_Stage15WaterSlopes[8] = {0, 1, 2, 4, -1, -2, -4, 0};
 
 EntityEntry g_Stage15EntityEntry22 = {NULL, func_060DC838};
 EntityEntry g_Stage15EntityEntry23 = {&g_Stage15SpriteBank19, func_060DD37C};
@@ -211,12 +207,8 @@ s32 g_Stage15Entity23PartVelocities[8] = {
 
 EntityEntry g_Stage15EntityEntry20 = {NULL, func_060DE2F4};
 EntityEntry g_Stage15EntityEntry21 = {&g_Stage15SpriteBank22, func_060DE464};
-s16 g_Stage15Entity21SpawnConfigs[3][6] = {
-    {0, 0, 0, 128, 0, 1},
-    {0, 128, 0, 2, 0, 128},
-    {0, 0, 0, 128, 0, 3},
-};
-s16 g_Stage15Entity21InitOffset[2] = {0, 20};
+s32 g_Stage15Entity21Spans[5][2] = {
+    {0, 128}, {1, 128}, {2, 128}, {0, 128}, {3, 20}};
 u8 g_Stage15Entity21Animation[10] = {
     0xA, 0, 0xA, 4, 0xA, 8, 0xA, 4, 0, 0,
 };
@@ -270,12 +262,7 @@ Entity68AnimationConfig g_Stage15Entity68AnimationConfigs[4] = {
 EntityEntry g_Stage15EntityEntry69 = {NULL, func_060DECE0};
 EntityEntry g_Stage15EntityEntry29 = {NULL, func_060DF160};
 EntityEntry g_Stage15EntityEntry30 = {&g_Stage15SpriteBank16, func_060DF204};
-s16 g_Stage15Entity30SpawnPositions[4][2] = {
-    {0, 200},
-    {0, 280},
-    {0, 190},
-    {0, 240},
-};
+u32 g_Stage15Entity30SpawnPositions[4] = {200, 280, 190, 240};
 u8 g_Stage15Entity30Animation0[8] = {3, 1, 3, 2, 3, 3, 0, 0};
 u8 g_Stage15Entity30Animation1[12] = {
     3, 0x13, 3, 0x14, 3, 0x15, 3, 0x16, 3, 0x17, 0xFF, 0xFF,

@@ -81,7 +81,13 @@
 //   file: a token literal file to include
 //
 // Expands to: a gen directory namespaced by version
+#ifdef GEN_VERSION_ANGLE
+// clang-format off
+#define GEN_VERSION(file) <PATH_JOIN(gen, PATH_JOIN(VERSION_TOKEN, file))>
+// clang-format on
+#else
 #define GEN_VERSION(file)                                                      \
     CPP_STR(PATH_JOIN(gen, PATH_JOIN(VERSION_TOKEN, file)))
+#endif
 
 #endif // VERSION_H

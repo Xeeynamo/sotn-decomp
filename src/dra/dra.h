@@ -574,6 +574,13 @@ extern u32 D_800A04F8;
 extern s32 D_800A2438;
 
 extern RoomTeleport D_800A245C[];
+#if defined(VERSION_PC) && defined(ENABLE_SATURN_STAGES)
+#define RETAIL_ROOM_TELEPORT_COUNT 131
+RoomTeleport* PC_GetRoomTeleport(int id);
+#define ROOM_TELEPORT(id) PC_GetRoomTeleport(id)
+#else
+#define ROOM_TELEPORT(id) (&D_800A245C[id])
+#endif
 extern u32 D_800A2D24;
 extern const char* D_800A83AC[];
 
@@ -582,7 +589,7 @@ extern u16 g_JosephsCloakColors[4];
 extern GfxBank** g_GfxSharedBank[];
 extern s16** D_800A3B70[18];
 extern u_long* D_800A3BB8[];
-extern Lba g_StagesLba[80];
+extern Lba g_StagesLba[];
 
 extern SubweaponDef g_SubwpnDefs[13];
 // These are different on PSP since they have text that needs translating.

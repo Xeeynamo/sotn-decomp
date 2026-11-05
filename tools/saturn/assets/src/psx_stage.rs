@@ -1,4 +1,3 @@
-
 use crate::image::{self, Rgba};
 use crate::map::{self, Kind, Manifest, Stream, STAGE_LOAD_ADDRESS};
 use crate::{sprite, stage};
@@ -10,20 +9,23 @@ use std::path::Path;
 
 const PSX_TEXTURE_SIZE: usize = 0x40000;
 const MAX_TILEDEFS: usize = 0x1000;
+const LOADING_ROOM_LEFT: u8 = 0x40;
+const LOADING_ROOM_RIGHT: u8 = 0x41;
 const MAX_PALETTES: usize = 256;
+const NATIVE_ATLAS_COLUMNS: usize = 31;
+const NATIVE_PAGE_CHARACTERS: usize = NATIVE_ATLAS_COLUMNS * NATIVE_ATLAS_COLUMNS;
+const NATIVE_PAGE_BYTES: usize = 256 * 256 / 2;
 const GAME_LOAD_ADDRESS: u32 = 0x0606_6000;
 const COMMON_LOAD_TABLE: u32 = 0x0608_46D4;
 const COMMON_SAVE_TABLE: u32 = 0x0608_4734;
-const COMMON_LOAD_COLLISION_OFFSET: usize = 0x2999;
 const COMMON_LOAD_COLLISION_SIZE: usize = 20;
-const COMMON_SAVE_COLLISION_OFFSET: usize = 0x565B;
 const COMMON_SAVE_COLLISION_SIZE: usize = 52;
 const MASONRY_SPRITE_BANK: usize = 8;
 const MASONRY_IMAGE: usize = 0;
 const MASONRY_PALETTE_BANK: usize = 0;
 const CLUT_OFFSETS: [usize; 16] = [
-    0x5C00, 0x5C20, 0x7C00, 0x7C20, 0xDC00, 0xDC20, 0xFC00, 0xFC20, 0x15C00,
-    0x15C20, 0x17C00, 0x17C20, 0x1DC00, 0x1DC20, 0x1FC00, 0x1FC20,
+    0x5C00, 0x5C20, 0x7C00, 0x7C20, 0xDC00, 0xDC20, 0xFC00, 0xFC20, 0x15C00, 0x15C20, 0x17C00,
+    0x17C20, 0x1DC00, 0x1DC20, 0x1FC00, 0x1FC20,
 ];
 
 #[derive(Clone, Copy, Debug)]
@@ -86,10 +88,7 @@ pub fn read_rooms(prg: &[u8]) -> Result<Vec<RoomRecord>> {
                 layout: b[4] + 1,
             },
             0xFF => RoomKind::Loading { destination: b[4] },
-            room => RoomKind::Special {
-                params: b[4],
-                room,
-            },
+            room => RoomKind::Special { params: b[4], room },
         };
         rooms.push(RoomRecord {
             bounds: Bounds {
@@ -218,12 +217,7 @@ fn be_u32(data: &[u8], at: usize, what: &str) -> Result<u32> {
     Ok(u32::from_be_bytes([b[0], b[1], b[2], b[3]]))
 }
 
-fn stream<'a>(
-    manifest: &'a Manifest,
-    room: usize,
-    layer: usize,
-    kind: Kind,
-) -> Result<&'a Stream> {
+fn stream<'a>(manifest: &'a Manifest, room: usize, layer: usize, kind: Kind) -> Result<&'a Stream> {
     manifest
         .streams
         .iter()
@@ -249,28 +243,6 @@ fn decode_stream(map_data: &[u8], stream: &Stream) -> Result<Vec<u8>> {
     let mut decoded = crate::lzss::decompress(bytes);
     decoded.truncate(stream.decompressed_size);
     Ok(decoded)
-}
-
-fn read_bounds(prg: &[u8], count: usize) -> Result<Vec<Bounds>> {
-    let address = be_u32(prg, 0x10, "room-header pointer")?;
-    let start = address
-        .checked_sub(STAGE_LOAD_ADDRESS)
-        .ok_or_else(|| Error::Format("room-header pointer precedes the overlay".to_string()))?
-        as usize;
-    (0..count)
-        .map(|room| {
-            let at = start + room * 6;
-            let b = prg
-                .get(at..at + 4)
-                .ok_or_else(|| Error::Format("room-header table is truncated".to_string()))?;
-            Ok(Bounds {
-                left: b[0],
-                top: b[1],
-                right: b[2],
-                bottom: b[3],
-            })
-        })
-        .collect()
 }
 
 fn write_entity_layout(
@@ -319,10 +291,7 @@ pub fn render_layer(
     layer: usize,
     scale_model: ScaleModel,
 ) -> Result<Raster> {
-    let chars = decode_stream(
-        map_data,
-        stream(manifest, room, layer, Kind::Characters)?,
-    )?;
+    let chars = decode_stream(map_data, stream(manifest, room, layer, Kind::Characters)?)?;
     let palette = decode_stream(map_data, stream(manifest, room, layer, Kind::Palette)?)?;
     let tilemap = decode_stream(map_data, stream(manifest, room, layer, Kind::Tilemap)?)?;
     render_decoded_layer(
@@ -347,10 +316,7 @@ pub fn render_layer_raster_phase(
             "raster discard column {discarded_column} is outside 0..5"
         )));
     }
-    let chars = decode_stream(
-        map_data,
-        stream(manifest, room, layer, Kind::Characters)?,
-    )?;
+    let chars = decode_stream(map_data, stream(manifest, room, layer, Kind::Characters)?)?;
     let palette = decode_stream(map_data, stream(manifest, room, layer, Kind::Palette)?)?;
     let tilemap = decode_stream(map_data, stream(manifest, room, layer, Kind::Tilemap)?)?;
     render_decoded_layer(
@@ -395,22 +361,19 @@ fn render_decoded_layer(
                 for x in 0..8 {
                     let sx = if hflip { 7 - x } else { x };
                     let sy = if vflip { 7 - y } else { y };
-                    let packed = *chars
-                        .get(character * 32 + sy * 4 + sx / 2)
-                        .ok_or_else(|| {
-                            Error::Format(format!(
-                                "{label} references missing character {character}"
-                            ))
-                        })?;
-                    let index = if sx & 1 == 0 { packed >> 4 } else { packed & 0xF };
+                    let packed = *chars.get(character * 32 + sy * 4 + sx / 2).ok_or_else(|| {
+                        Error::Format(format!("{label} references missing character {character}"))
+                    })?;
+                    let index = if sx & 1 == 0 {
+                        packed >> 4
+                    } else {
+                        packed & 0xF
+                    };
                     if index == 0 {
                         continue;
                     }
-                    let colour = be_u16(
-                        &palette,
-                        (bank * 16 + index as usize) * 2,
-                        "palette",
-                    )? & 0x7FFF;
+                    let colour =
+                        be_u16(&palette, (bank * 16 + index as usize) * 2, "palette")? & 0x7FFF;
                     let at = (cell_y * 8 + y) * source.width + cell_x * 8 + x;
                     source.pixels[at] = Some(colour);
                     source.indices[at] = index;
@@ -447,11 +410,9 @@ fn render_decoded_layer(
                         let source_x = group * 40 + character * 8;
                         for x in 0..width {
                             output.pixels[y * output.width + output_x + x] =
-                                source.pixels
-                                    [y * source.width + source_x + x * 8 / width];
+                                source.pixels[y * source.width + source_x + x * 8 / width];
                             output.indices[y * output.width + output_x + x] =
-                                source.indices
-                                    [y * source.width + source_x + x * 8 / width];
+                                source.indices[y * source.width + source_x + x * 8 / width];
                         }
                         output_x += width;
                     }
@@ -462,14 +423,28 @@ fn render_decoded_layer(
     Ok(output)
 }
 
-fn common_layers(game: &[u8], load_map: &[u8], table_address: u32) -> Result<Vec<DecodedLayer>> {
+fn pc_teleport(destination: u8) -> Option<u16> {
+    match destination {
+        70 => Some(137),
+        74 => Some(138),
+        73 => Some(139),
+        _ => None,
+    }
+}
+
+fn common_layers(
+    game: &[u8],
+    load_map: &[u8],
+    table_address: u32,
+    variant: usize,
+) -> Result<Vec<DecodedLayer>> {
     let table = table_address
         .checked_sub(GAME_LOAD_ADDRESS)
         .ok_or_else(|| Error::Format("common-room table precedes GAME.PRG".to_string()))?
         as usize;
     let mut layers = Vec::with_capacity(2);
     for layer in 0..2 {
-        let record = table + layer * 24;
+        let record = table + variant * 48 + layer * 24;
         let mut decoded = Vec::with_capacity(3);
         for stream in 0..3 {
             let descriptor = record + stream * 8;
@@ -497,12 +472,24 @@ fn common_layers(game: &[u8], load_map: &[u8], table_address: u32) -> Result<Vec
     Ok(layers)
 }
 
-fn common_collision(load_map: &[u8], offset: usize, size: usize, name: &str) -> Result<Vec<u8>> {
-    let source = load_map.get(offset..offset + size).ok_or_else(|| {
-        Error::Format(format!(
-            "{name} collision stream 0x{offset:X}+0x{size:X} lies outside LOAD.MAP"
-        ))
-    })?;
+fn common_collision(
+    game: &[u8],
+    load_map: &[u8],
+    table_address: u32,
+    variant: usize,
+    size: usize,
+    name: &str,
+) -> Result<Vec<u8>> {
+    let last_stream = (table_address - GAME_LOAD_ADDRESS) as usize + variant * 48 + 40;
+    let offset = (be_u32(game, last_stream, "common-room stream offset")?
+        + be_u32(game, last_stream + 4, "common-room compressed size")?) as usize;
+    let source = load_map
+        .get(offset..(offset + size).min(load_map.len()))
+        .ok_or_else(|| {
+            Error::Format(format!(
+                "{name} collision stream 0x{offset:X}+0x{size:X} lies outside LOAD.MAP"
+            ))
+        })?;
     let mut collision = crate::lzss::decompress(source);
     if collision.len() < 16 * 16 {
         return Err(Error::Format(format!(
@@ -518,7 +505,11 @@ fn rgb(colour: u16) -> [u8; 3] {
     let r = (colour & 0x1F) as u32;
     let g = ((colour >> 5) & 0x1F) as u32;
     let b = ((colour >> 10) & 0x1F) as u32;
-    [(r * 255 / 31) as u8, (g * 255 / 31) as u8, (b * 255 / 31) as u8]
+    [
+        (r * 255 / 31) as u8,
+        (g * 255 / 31) as u8,
+        (b * 255 / 31) as u8,
+    ]
 }
 
 fn colour_distance(a: u16, b: u16) -> u32 {
@@ -659,8 +650,7 @@ impl PackedStage {
             palette = target.clone();
         }
         if !self.graphic_ids.contains_key(&pixels)
-            && self.graphics.len()
-                >= exact_graphic_limit + if preserve_exact { 100 } else { 0 }
+            && self.graphics.len() >= exact_graphic_limit + if preserve_exact { 100 } else { 0 }
         {
             let approximate_key = (pixels.clone(), palette.clone());
             if let Some(id) = self.approximate_tile_ids.get(&approximate_key) {
@@ -672,8 +662,7 @@ impl PackedStage {
                 .enumerate()
                 .filter(|(_, (_, _, _, hit))| *hit == 0)
                 .min_by_key(|(_, (index, page, clut, _))| {
-                    let candidate = &self.graphics
-                        [slot_for_page_index(*page as usize, *index)];
+                    let candidate = &self.graphics[slot_for_page_index(*page as usize, *index)];
                     let candidate_palette = &self.palettes[*clut as usize];
                     pixels
                         .iter()
@@ -682,10 +671,9 @@ impl PackedStage {
                         .map(|(&a, &b)| match (a, b) {
                             (0, 0) => 0,
                             (0, _) | (_, 0) => 0x100000,
-                            _ => colour_distance(
-                                palette[a as usize],
-                                candidate_palette[b as usize],
-                            ),
+                            _ => {
+                                colour_distance(palette[a as usize], candidate_palette[b as usize])
+                            }
                         })
                         .sum::<u32>()
                 })
@@ -795,7 +783,9 @@ fn write_packed_preview(
     for (cell, tile) in layout.chunks_exact(2).enumerate() {
         let tile_id = u16::from_le_bytes([tile[0], tile[1]]) as usize;
         let &(index, page, clut, _) = packed.tiledefs.get(tile_id).ok_or_else(|| {
-            Error::Format(format!("preview references missing tile definition {tile_id}"))
+            Error::Format(format!(
+                "preview references missing tile definition {tile_id}"
+            ))
         })?;
         let pixels = &packed.graphics[slot_for_page_index(page as usize, index)];
         let palette = &packed.palettes[clut as usize];
@@ -808,11 +798,7 @@ fn write_packed_preview(
                     continue;
                 }
                 let [r, g, b] = rgb(palette[pixel]);
-                preview.set(
-                    (tile_x + x) as u32,
-                    (tile_y + y) as u32,
-                    [r, g, b, 255],
-                );
+                preview.set((tile_x + x) as u32, (tile_y + y) as u32, [r, g, b, 255]);
             }
         }
     }
@@ -833,18 +819,9 @@ fn write_native_layer(
     room: usize,
     layer: usize,
 ) -> Result<()> {
-    let characters = decode_stream(
-        map_data,
-        stream(manifest, room, layer, Kind::Characters)?,
-    )?;
-    let palettes = decode_stream(
-        map_data,
-        stream(manifest, room, layer, Kind::Palette)?,
-    )?;
-    let tilemap = decode_stream(
-        map_data,
-        stream(manifest, room, layer, Kind::Tilemap)?,
-    )?;
+    let characters = decode_stream(map_data, stream(manifest, room, layer, Kind::Characters)?)?;
+    let palettes = decode_stream(map_data, stream(manifest, room, layer, Kind::Palette)?)?;
+    let tilemap = decode_stream(map_data, stream(manifest, room, layer, Kind::Tilemap)?)?;
     write_native_decoded_layer(
         output,
         room,
@@ -866,79 +843,75 @@ fn write_native_decoded_layer(
     let characters = &decoded.characters;
     let palettes = &decoded.palette;
     let tilemap = &decoded.tilemap;
-    if characters.len() > 1024 * 32 {
-        return Err(Error::Format(format!(
-            "room {room} layer {layer} has more than 1024 Saturn characters"
-        )));
-    }
-
-    let mut atlas = vec![0u8; 256 * 256 / 2];
-    for character in 0..characters.len() / 32 {
-        let atlas_x = (character % 32) * 8;
-        let atlas_y = (character / 32) * 8;
-        for y in 0..8 {
-            for pair in 0..4 {
-                let source = characters[character * 32 + y * 4 + pair];
-                let destination =
-                    (atlas_y + y) * 128 + atlas_x / 2 + pair;
-                atlas[destination] = (source >> 4) | (source << 4);
-            }
-        }
-    }
-
     let psx_palettes = native_psx_palettes(palettes);
 
     let width = be_u16(&tilemap, 0, "native tilemap width")?;
     let height = be_u16(&tilemap, 2, "native tilemap height")?;
+
+    let mut slots: HashMap<[u8; 32], usize> = HashMap::new();
+    let mut atlas = Vec::new();
     let mut psx_tilemap = Vec::with_capacity(tilemap.len());
     psx_tilemap.extend_from_slice(&width.to_le_bytes());
     psx_tilemap.extend_from_slice(&height.to_le_bytes());
     for entry in tilemap[4..].chunks_exact(2) {
         let entry = u16::from_be_bytes([entry[0], entry[1]]);
-        psx_tilemap.extend_from_slice(&entry.to_le_bytes());
+        let at = (entry & 0x03FF) as usize * 32;
+        let source = characters.get(at..at + 32).unwrap_or(&[0; 32]);
+        let mut baked = [0u8; 32];
+        for y in 0..8 {
+            for x in 0..8 {
+                let source_x = if entry & 0x0400 != 0 { 7 - x } else { x };
+                let source_y = if entry & 0x0800 != 0 { 7 - y } else { y };
+                let byte = source[source_y * 4 + source_x / 2];
+                let pixel = if source_x & 1 == 0 {
+                    byte >> 4
+                } else {
+                    byte & 0xF
+                };
+                baked[y * 4 + x / 2] |= if x & 1 == 0 { pixel } else { pixel << 4 };
+            }
+        }
+        let next_slot = slots.len();
+        let slot = *slots.entry(baked).or_insert(next_slot);
+        if slot > 0x0FFF {
+            return Err(Error::Format(format!(
+                "room {room} layer {layer} uses more than 4096 unique characters"
+            )));
+        }
+        if slot == next_slot {
+            let page = slot / NATIVE_PAGE_CHARACTERS;
+            let index = slot % NATIVE_PAGE_CHARACTERS;
+            atlas.resize((page + 1) * NATIVE_PAGE_BYTES, 0);
+            for y in 0..8 {
+                let row = (index / NATIVE_ATLAS_COLUMNS) * 8 + y;
+                let destination =
+                    page * NATIVE_PAGE_BYTES + row * 128 + (index % NATIVE_ATLAS_COLUMNS) * 4;
+                atlas[destination..destination + 4].copy_from_slice(&baked[y * 4..y * 4 + 4]);
+            }
+        }
+        let renumbered = (entry & 0xF000) | slot as u16;
+        psx_tilemap.extend_from_slice(&renumbered.to_le_bytes());
     }
 
     let stem = format!("native_room{room}_layer{layer}");
     std::fs::write(output.join(format!("{stem}.chars.bin")), &atlas)?;
-    std::fs::write(
-        output.join(format!("{stem}.pal.bin")),
-        &psx_palettes,
-    )?;
-    std::fs::write(
-        output.join(format!("{stem}.map.bin")),
-        &psx_tilemap,
-    )?;
+    std::fs::write(output.join(format!("{stem}.pal.bin")), &psx_palettes)?;
+    std::fs::write(output.join(format!("{stem}.map.bin")), &psx_tilemap)?;
 
-    let mut preview = Rgba::new(
-        (width as u32 * 32) / 5,
-        height as u32 * 8,
-        [0, 0, 0, 0],
-    );
+    let mut preview = Rgba::new(width as u32 * 8, height as u32 * 8, [0, 0, 0, 0]);
     for cell_y in 0..height as usize {
         for cell_x in 0..width as usize {
             let at = 4 + (cell_y * width as usize + cell_x) * 2;
-            let pnd = u16::from_le_bytes([
-                psx_tilemap[at],
-                psx_tilemap[at + 1],
-            ]);
-            let character = (pnd & 0x03FF) as usize;
+            let pnd = u16::from_le_bytes([psx_tilemap[at], psx_tilemap[at + 1]]);
+            let slot = (pnd & 0x0FFF) as usize;
             let bank = (pnd >> 12) as usize;
-            let hflip = pnd & 0x0400 != 0;
-            let vflip = pnd & 0x0800 != 0;
-            let x0 = cell_x * 32 / 5;
-            let x1 = (cell_x + 1) * 32 / 5;
-            for destination_y in 0..8 {
-                let source_y =
-                    if vflip { 7 - destination_y } else { destination_y };
-                for destination_x in x0..x1 {
-                    let mut source_x =
-                        (destination_x - x0) * 8 / (x1 - x0);
-                    if hflip {
-                        source_x = 7 - source_x;
-                    }
-                    let atlas_x = (character % 32) * 8 + source_x;
-                    let atlas_y = (character / 32) * 8 + source_y;
-                    let packed = atlas[atlas_y * 128 + atlas_x / 2];
+            let page = slot / NATIVE_PAGE_CHARACTERS;
+            let index = slot % NATIVE_PAGE_CHARACTERS;
+            for y in 0..8 {
+                for x in 0..8 {
+                    let atlas_x = (index % NATIVE_ATLAS_COLUMNS) * 8 + x;
+                    let atlas_y = (index / NATIVE_ATLAS_COLUMNS) * 8 + y;
+                    let packed = atlas[page * NATIVE_PAGE_BYTES + atlas_y * 128 + atlas_x / 2];
                     let pixel = if atlas_x & 1 == 0 {
                         packed & 0xF
                     } else {
@@ -957,18 +930,15 @@ fn write_native_decoded_layer(
                     ]);
                     let [r, g, b] = rgb(colour);
                     preview.set(
-                        destination_x as u32,
-                        (cell_y * 8 + destination_y) as u32,
+                        (cell_x * 8 + x) as u32,
+                        (cell_y * 8 + y) as u32,
                         [r, g, b, 255],
                     );
                 }
             }
         }
     }
-    image::write_rgba(
-        &output.join(format!("{stem}.preview.png")),
-        &preview,
-    )?;
+    image::write_rgba(&output.join(format!("{stem}.preview.png")), &preview)?;
     Ok(())
 }
 
@@ -992,8 +962,8 @@ fn native_psx_palettes(palettes: &[u8]) -> Vec<u8> {
     psx_palettes(palettes, true)
 }
 
-fn write_masonry_sprite(prg: &[u8], disc_dir: &Path, output: &Path) -> Result<()> {
-    let chr = std::fs::read(disc_dir.join("STAGE_15.CHR"))?;
+fn write_masonry_sprite(prg: &[u8], chr_path: &Path, disc_dir: &Path, output: &Path) -> Result<()> {
+    let chr = std::fs::read(chr_path)?;
     let zero = std::fs::read(disc_dir.join("0.BIN"))?;
     let overlay = stage::Overlay::new(prg, Some(&zero));
     let (resources, images) = stage::resources(&overlay, chr.len())?;
@@ -1001,20 +971,24 @@ fn write_masonry_sprite(prg: &[u8], disc_dir: &Path, output: &Path) -> Result<()
         .iter()
         .enumerate()
         .find(|(_, resource)| resource.banks.contains(&MASONRY_SPRITE_BANK))
-        .ok_or_else(|| Error::Format("Stage 15 has no shared sprite bank 8".to_string()))?;
+        .ok_or_else(|| Error::Format("Saturn stage has no shared sprite bank 8".to_string()))?;
     let image = images
         .iter()
         .find(|image| image.resource == resource_index && image.index == MASONRY_IMAGE)
-        .ok_or_else(|| Error::Format("Stage 15 shared sprite bank 8 has no image 0".to_string()))?;
+        .ok_or_else(|| {
+            Error::Format("Saturn stage shared sprite bank 8 has no image 0".to_string())
+        })?;
     if (image.pixel_width, image.pixel_height, image.byte_count) != (24, 16, 192) {
         return Err(Error::Format(format!(
-            "Stage 15 masonry image changed from 24x16/192 bytes to {}x{}/{} bytes",
+            "Saturn stage masonry image changed from 24x16/192 bytes to {}x{}/{} bytes",
             image.pixel_width, image.pixel_height, image.byte_count
         )));
     }
     let saturn_pixels = chr
         .get(image.file_offset..image.file_offset + image.byte_count)
-        .ok_or_else(|| Error::Format("Stage 15 masonry image lies outside its CHR".to_string()))?;
+        .ok_or_else(|| {
+            Error::Format("Saturn stage masonry image lies outside its CHR".to_string())
+        })?;
     let psx_pixels: Vec<u8> = saturn_pixels
         .iter()
         .map(|byte| byte.rotate_left(4))
@@ -1022,14 +996,15 @@ fn write_masonry_sprite(prg: &[u8], disc_dir: &Path, output: &Path) -> Result<()
 
     let (_, palette_data, palette_offset) = overlay
         .resolve(resource.palette_address)
-        .ok_or_else(|| Error::Format("Stage 15 masonry palette is unresolved".to_string()))?;
-    let saturn_palette =
-        sprite::palette_bank(palette_data, palette_offset, MASONRY_PALETTE_BANK)
-            .ok_or_else(|| Error::Format("Stage 15 masonry palette bank is missing".to_string()))?;
+        .ok_or_else(|| Error::Format("Saturn stage masonry palette is unresolved".to_string()))?;
+    let saturn_palette = sprite::palette_bank(palette_data, palette_offset, MASONRY_PALETTE_BANK)
+        .ok_or_else(|| {
+        Error::Format("Saturn stage masonry palette bank is missing".to_string())
+    })?;
     let psx_palette = psx_palettes(saturn_palette, false);
 
-    std::fs::write(output.join("stage15_masonry.chars.bin"), psx_pixels)?;
-    std::fs::write(output.join("stage15_masonry.pal.bin"), psx_palette)?;
+    std::fs::write(output.join("masonry.chars.bin"), psx_pixels)?;
+    std::fs::write(output.join("masonry.pal.bin"), psx_palette)?;
     Ok(())
 }
 
@@ -1059,6 +1034,9 @@ fn write_tiledefs(output: &Path, packed: &PackedStage) -> Result<()> {
 
 fn write_c_tables(
     output: &Path,
+    ordinary_rooms: &[Bounds],
+    special_rooms: &[(Bounds, bool)],
+    has_back_screen: bool,
     rooms: &[serde_json::Value],
     layers: &[serde_json::Value],
     entity_layouts: &[(usize, Vec<serde_json::Value>)],
@@ -1110,20 +1088,27 @@ fn write_c_tables(
             gfx_index.len()
         )));
     }
-    bytes(&mut out, "s_Stage15TileDefGfxPage", &gfx_page, 0x1000);
-    bytes(&mut out, "s_Stage15TileDefGfxIndex", &gfx_index, 0x1000);
-    bytes(&mut out, "s_Stage15TileDefClut", &clut, 0x1000);
-    bytes(&mut out, "s_Stage15TileDefCollision", &collision, 0x1000);
+    bytes(&mut out, "s_SaturnStageTileDefGfxPage", &gfx_page, 0x1000);
+    bytes(&mut out, "s_SaturnStageTileDefGfxIndex", &gfx_index, 0x1000);
+    bytes(&mut out, "s_SaturnStageTileDefClut", &clut, 0x1000);
+    bytes(
+        &mut out,
+        "s_SaturnStageTileDefCollision",
+        &collision,
+        0x1000,
+    );
     out.push_str(
-        "static TileDefinition s_Stage15TileDef = {\n    \
-         s_Stage15TileDefGfxPage,\n    s_Stage15TileDefGfxIndex,\n    \
-         s_Stage15TileDefClut,\n    s_Stage15TileDefCollision,\n};\n\n",
+        "static TileDefinition s_SaturnStageTileDef = {\n    \
+         s_SaturnStageTileDefGfxPage,\n    s_SaturnStageTileDefGfxIndex,\n    \
+         s_SaturnStageTileDefClut,\n    s_SaturnStageTileDefCollision,\n};\n\n",
     );
 
     let mut stems: Vec<String> = Vec::new();
     for room in layers {
         for role in ["bg", "fg"] {
-            let Some(layer) = room.get(role) else { continue };
+            let Some(layer) = room.get(role) else {
+                continue;
+            };
             let stem = layer
                 .get("data")
                 .and_then(|v| v.as_str())
@@ -1144,7 +1129,7 @@ fn write_c_tables(
         }
         writeln!(
             out,
-            "static u16 s_Stage15Layout_{stem}[{}] = {{",
+            "static u16 s_SaturnStageLayout_{stem}[{}] = {{",
             data.len() / 2
         )
         .ok();
@@ -1171,12 +1156,14 @@ fn write_c_tables(
     for (index, room) in layers.iter().enumerate() {
         let mut slot = [String::from("NULL"), String::from("NULL")];
         for (which, role) in ["fg", "bg"].iter().enumerate() {
-            let Some(layer) = room.get(role) else { continue };
+            let Some(layer) = room.get(role) else {
+                continue;
+            };
             let stem = layer.get("data").and_then(|v| v.as_str()).unwrap();
-            let name = format!("s_Stage15LayerDefs[{layer_count}]");
+            let name = format!("s_SaturnStageLayerDefs[{layer_count}]");
             writeln!(
                 layer_defs,
-                "    {{ s_Stage15Layout_{stem}, &s_Stage15TileDef,\n      \
+                "    {{ s_SaturnStageLayout_{stem}, &s_SaturnStageTileDef,\n      \
                  {{ {}, {}, {}, {}, {} }}, 0x{:X}, 0x{:X} }},",
                 field(layer, "left")?,
                 field(layer, "top")?,
@@ -1190,21 +1177,47 @@ fn write_c_tables(
             slot[which] = format!("&{name}");
             layer_count += 1;
         }
-        writeln!(
-            room_defs,
-            "    [{index}] = {{ {}, {} }},",
-            slot[0], slot[1]
-        )
-        .ok();
+        writeln!(room_defs, "    [{index}] = {{ {}, {} }},", slot[0], slot[1]).ok();
     }
-    writeln!(out, "static LayerDef s_Stage15LayerDefs[] = {{\n{layer_defs}}};\n").ok();
     writeln!(
         out,
-        "static RoomDef s_Stage15TileLayers[0x100] = {{\n{room_defs}}};\n"
+        "static LayerDef s_SaturnStageLayerDefs[] = {{\n{layer_defs}}};\n"
+    )
+    .ok();
+    writeln!(
+        out,
+        "static RoomDef s_SaturnStageTileLayers[0x100] = {{\n{room_defs}}};\n"
     )
     .ok();
 
-    out.push_str("static RoomHeader s_Stage15Rooms[] = {\n");
+    writeln!(
+        out,
+        "#define SATURN_STAGE_ORDINARY_ROOMS {}\n#define SATURN_STAGE_BACKDROP_LAYER {}\n\
+         #define SATURN_STAGE_HAS_BACK_SCREEN {}\n#define SATURN_STAGE_SAVE_ROOM {}\n",
+        ordinary_rooms.len(),
+        ordinary_rooms.len() + special_rooms.len(),
+        i32::from(has_back_screen),
+        ordinary_rooms.len()
+            + special_rooms
+                .iter()
+                .position(|room| room.1)
+                .ok_or_else(|| Error::Format("stage has no save room".to_string()))?
+    )
+    .ok();
+    out.push_str("static const u8 s_SaturnStageRoomBounds[][4] = {\n");
+    for room in ordinary_rooms
+        .iter()
+        .chain(special_rooms.iter().map(|room| &room.0))
+    {
+        writeln!(
+            out,
+            "    {{{}, {}, {}, {}}},",
+            room.left, room.top, room.right, room.bottom
+        )
+        .ok();
+    }
+    out.push_str("};\n\n");
+    out.push_str("static RoomHeader s_SaturnStageRooms[] = {\n");
     for room in rooms {
         writeln!(
             out,
@@ -1225,7 +1238,7 @@ fn write_c_tables(
     let mut highest = 0usize;
     for (id, entities) in entity_layouts {
         highest = highest.max(*id);
-        writeln!(out, "static LayoutEntity s_Stage15Layout{id}[] = {{").ok();
+        writeln!(out, "static LayoutEntity s_SaturnStageLayout{id}[] = {{").ok();
         for entity in entities {
             writeln!(
                 out,
@@ -1242,17 +1255,17 @@ fn write_c_tables(
     }
     writeln!(
         out,
-        "static LayoutEntity* s_Stage15ObjLayouts[{}] = {{",
+        "static LayoutEntity* s_SaturnStageObjLayouts[{}] = {{",
         highest + 1
     )
     .ok();
     for (id, _) in entity_layouts {
-        writeln!(out, "    [{id}] = s_Stage15Layout{id},").ok();
+        writeln!(out, "    [{id}] = s_SaturnStageLayout{id},").ok();
     }
     out.push_str("};\n\n");
     writeln!(
         out,
-        "static const size_t s_Stage15ObjLayoutCounts[{}] = {{",
+        "static const size_t s_SaturnStageObjLayoutCounts[{}] = {{",
         highest + 1
     )
     .ok();
@@ -1261,7 +1274,7 @@ fn write_c_tables(
     }
     out.push_str("};\n\n#endif\n");
 
-    std::fs::write(output.join("stage15_data.h"), out)?;
+    std::fs::write(output.join("saturn_stage_data.h"), out)?;
     Ok(())
 }
 
@@ -1292,11 +1305,10 @@ fn write_texture(output: &Path, packed: &PackedStage) -> Result<()> {
     for (id, palette) in packed.palettes.iter().enumerate() {
         let at = CLUT_OFFSETS[id % 16] + (id / 16) * 0x40;
         for (index, colour) in palette.iter().enumerate() {
-            texture[at + index * 2..at + index * 2 + 2]
-                .copy_from_slice(&colour.to_le_bytes());
+            texture[at + index * 2..at + index * 2 + 2].copy_from_slice(&colour.to_le_bytes());
         }
     }
-    std::fs::write(output.join("F_STAGE15.BIN"), texture)?;
+    std::fs::write(output.join("F_STAGE.BIN"), texture)?;
     Ok(())
 }
 
@@ -1350,51 +1362,90 @@ pub fn convert(
 ) -> Result<()> {
     let source_dir = output.join("saturn-source");
     let manifest = map::extract(prg_path, map_path, &source_dir)?;
-    if manifest.tables.rooms < 4 {
-        return Err(Error::Format("Stage 15 needs at least four rooms".to_string()));
-    }
+    let stem = prg_path
+        .file_stem()
+        .and_then(|stem| stem.to_str())
+        .ok_or_else(|| Error::Format("Saturn stage PRG has no file name".to_string()))?
+        .to_string();
+    let chr_path = prg_path.with_extension("CHR");
+    let reverse = stem.starts_with('R');
+    let common_variant = usize::from(reverse);
     let prg_path = map::overlay_for(prg_path, map_path);
     let prg = std::fs::read(&prg_path)?;
     let map_data = std::fs::read(map_path)?;
-    let disc_dir = map_path.parent().ok_or_else(|| {
-        Error::Format("Stage 15 MAP has no parent directory".to_string())
-    })?;
+    let disc_dir = map_path
+        .parent()
+        .ok_or_else(|| Error::Format("Saturn stage MAP has no parent directory".to_string()))?;
     let game = std::fs::read(disc_dir.join("GAME.PRG"))?;
-    let load_map = std::fs::read(disc_dir.join("LOAD.MAP"))?;
+    let load_map = std::fs::read(disc_dir.join(if reverse { "RLOAD.MAP" } else { "LOAD.MAP" }))?;
     std::fs::create_dir_all(output)?;
-    write_masonry_sprite(&prg, disc_dir, output)?;
-    let loading_room = common_layers(&game, &load_map, COMMON_LOAD_TABLE)?;
-    let save_room = common_layers(&game, &load_map, COMMON_SAVE_TABLE)?;
+    write_masonry_sprite(&prg, &chr_path, disc_dir, output)?;
+    let loading_room = common_layers(&game, &load_map, COMMON_LOAD_TABLE, common_variant)?;
+    let save_room = common_layers(&game, &load_map, COMMON_SAVE_TABLE, common_variant)?;
     let loading_collision = common_collision(
+        &game,
         &load_map,
-        COMMON_LOAD_COLLISION_OFFSET,
+        COMMON_LOAD_TABLE,
+        common_variant,
         COMMON_LOAD_COLLISION_SIZE,
         "loading-room",
     )?;
     let save_collision = common_collision(
+        &game,
         &load_map,
-        COMMON_SAVE_COLLISION_OFFSET,
+        COMMON_SAVE_TABLE,
+        common_variant,
         COMMON_SAVE_COLLISION_SIZE,
         "save-room",
     )?;
-    let bounds = read_bounds(&prg, 4)?;
-    let transitions = internal_transitions(&bounds);
-    let expected = [
-        (0, 1, "right"),
-        (1, 0, "left"),
-        (1, 3, "right"),
-        (2, 3, "left"),
-        (3, 1, "left"),
-        (3, 2, "right"),
-    ];
-    if transitions
+    let records = read_rooms(&prg)?;
+    let bounds: Vec<Bounds> = records
         .iter()
-        .map(|transition| (transition.from, transition.to, transition.edge))
-        .ne(expected)
-    {
-        return Err(Error::Format(format!(
-            "Stage 15 ordinary-room adjacency changed: {transitions:?}"
-        )));
+        .filter(|record| matches!(record.kind, RoomKind::Ordinary { .. }))
+        .map(|record| record.bounds)
+        .collect();
+    let transitions = internal_transitions(&bounds);
+    let mut special_rooms = Vec::new();
+    let mut trigger_rooms = Vec::new();
+    for record in &records {
+        let RoomKind::Special { params, room } = record.kind else {
+            continue;
+        };
+        let (fg_params, bg_params, fg_priority, is_save) = if params & 0x60 == 0x60 {
+            let save_params = 0x20 | ((params & 2) ^ if reverse { 2 } else { 0 });
+            (save_params, save_params, 0xA0u16, true)
+        } else {
+            let exit = records.iter().find_map(|other| {
+                let RoomKind::Loading { destination } = other.kind else {
+                    return None;
+                };
+                let id = pc_teleport(destination)?;
+                (other.bounds.top == record.bounds.top
+                    && (other.bounds.left + 1 == record.bounds.left
+                        || other.bounds.left == record.bounds.left + 1))
+                    .then_some((other.bounds, id))
+            });
+            match exit {
+                Some((trigger, id)) => {
+                    trigger_rooms.push((trigger, id));
+                    let params = if trigger.left < record.bounds.left {
+                        LOADING_ROOM_LEFT
+                    } else {
+                        LOADING_ROOM_RIGHT
+                    };
+                    (params, 0x10, id, false)
+                }
+                None => (0x10, 0x10, 0xA0, false),
+            }
+        };
+        special_rooms.push((
+            room as usize,
+            record.bounds,
+            fg_params,
+            bg_params,
+            fg_priority,
+            is_save,
+        ));
     }
     let mut packed = PackedStage::default();
     let mut collision_types = BTreeMap::new();
@@ -1409,11 +1460,6 @@ pub fn convert(
     packed.palette_ids.insert(vec![0; 16], 0);
     packed.tiledefs.push((0, 0, 0, 0));
     packed.tiledef_ids.insert((0, 0, 0, 0), 0);
-    for room in 0..bounds.len() {
-        for layer in 0..3 {
-            write_native_layer(&manifest, &map_data, output, room, layer)?;
-        }
-    }
     let blank_native = DecodedLayer {
         characters: vec![0; 32],
         palette: vec![0; 32],
@@ -1424,11 +1470,17 @@ pub fn convert(
             map
         },
     };
-    for (room, source) in [
-        (4usize, &loading_room),
-        (5usize, &loading_room),
-        (6usize, &save_room),
-    ] {
+    for room in 0..bounds.len() {
+        for layer in 0..3 {
+            if layer == 1 && stream(&manifest, room, layer, Kind::Characters).is_err() {
+                write_native_decoded_layer(output, room, layer, &blank_native)?;
+            } else {
+                write_native_layer(&manifest, &map_data, output, room, layer)?;
+            }
+        }
+    }
+    for &(room, _, _, _, _, is_save) in &special_rooms {
+        let source = if is_save { &save_room } else { &loading_room };
         write_native_decoded_layer(output, room, 0, &source[0])?;
         write_native_decoded_layer(output, room, 1, &blank_native)?;
         write_native_decoded_layer(output, room, 2, &source[1])?;
@@ -1474,30 +1526,27 @@ pub fn convert(
                     let (pixels, palette, tile_lossy) = quantize_tile(&colours);
                     lossy += usize::from(tile_lossy);
                     let hit = if layer == 0 {
-                        *collision
-                            .get(tile_y * tile_width + tile_x)
-                            .ok_or_else(|| {
-                                Error::Format(format!(
-                                    "room {room} collision is shorter than {tile_width}x{tile_height}"
-                                ))
-                            })?
+                        *collision.get(tile_y * tile_width + tile_x).ok_or_else(|| {
+                            Error::Format(format!(
+                                "room {room} collision is shorter than {tile_width}x{tile_height}"
+                            ))
+                        })?
                     } else {
                         0
                     };
                     *collision_types.entry(hit).or_insert(0) += 1;
-                    let exact_limit =
-                        if layer == 0 { 1984 } else { decorative_graphic_limit };
-                    let preserve_exact = room == 0
+                    let exact_limit = if layer == 0 {
+                        1984
+                    } else {
+                        decorative_graphic_limit
+                    };
+                    let preserve_exact = stem == "STAGE_15"
+                        && room == 0
                         && layer == 2
                         && (8..=14).contains(&tile_x)
                         && (20..=28).contains(&tile_y);
-                    let id = packed.intern_tile(
-                        pixels,
-                        palette,
-                        hit,
-                        exact_limit,
-                        preserve_exact,
-                    )?;
+                    let id =
+                        packed.intern_tile(pixels, palette, hit, exact_limit, preserve_exact)?;
                     layout.extend_from_slice(&id.to_le_bytes());
                 }
             }
@@ -1547,32 +1596,13 @@ pub fn convert(
         }));
     }
 
-    for (id, left, top, params, source, saturn_collision) in [
-        (
-            4usize,
-            3u8,
-            44u8,
-            0x10u8,
-            &loading_room,
-            &loading_collision,
-        ),
-        (
-            5usize,
-            3u8,
-            45u8,
-            0x10u8,
-            &loading_room,
-            &loading_collision,
-        ),
-        (
-            6usize,
-            13u8,
-            45u8,
-            0x22u8,
-            &save_room,
-            &save_collision,
-        ),
-    ] {
+    for &(id, room_bounds, fg_params, bg_params, fg_priority, is_save) in &special_rooms {
+        let (left, top) = (room_bounds.left, room_bounds.top);
+        let (source, saturn_collision) = if is_save {
+            (&save_room, &save_collision)
+        } else {
+            (&loading_room, &loading_collision)
+        };
         let mut layer_defs = Vec::new();
         for (plane, decoded) in source.iter().enumerate() {
             let raster = render_decoded_layer(
@@ -1604,8 +1634,7 @@ pub fn convert(
                         saturn_collision[tile_y * 16 + tile_x]
                     };
                     *collision_types.entry(hit).or_insert(0) += 1;
-                    let mut tile =
-                        packed.intern_tile(pixels, palette, 0, 1984, false)?;
+                    let mut tile = packed.intern_tile(pixels, palette, 0, 1984, false)?;
                     if hit != 0 {
                         tile = packed.with_collision(tile, hit)?;
                     }
@@ -1622,10 +1651,7 @@ pub fn convert(
                 &layout,
                 &packed,
             )?;
-            write_preview(
-                &output.join(format!("{stem}.preview.png")),
-                &raster,
-            )?;
+            write_preview(&output.join(format!("{stem}.preview.png")), &raster)?;
             layer_defs.push(json!({
                 "data": stem,
                 "tiledef": "D_stage15",
@@ -1633,8 +1659,8 @@ pub fn convert(
                 "top": top,
                 "right": left,
                 "bottom": top,
-                "params": params,
-                "zPriority": if plane == 0 { 0xA0 } else { 0x40 },
+                "params": if plane == 0 { fg_params } else { bg_params },
+                "zPriority": if plane == 0 { fg_priority } else { 0x40 },
                 "flags": 0x203
             }));
         }
@@ -1644,76 +1670,72 @@ pub fn convert(
         }));
     }
 
-    let mut backdrop = render_layer(&manifest, &map_data, 0, 1, scale_model)?;
-    const STAGE15_BACK_COLOR: u16 = 0x1406;
-    for pixel in &mut backdrop.pixels {
-        if pixel.is_none() {
-            *pixel = Some(STAGE15_BACK_COLOR);
-        }
-    }
-    if (backdrop.width, backdrop.height) != (256, 256) {
-        return Err(Error::Format(format!(
-            "Stage 15 shared backdrop is {}x{}, expected 256x256",
-            backdrop.width, backdrop.height
-        )));
-    }
-    let mut backdrop_layout = Vec::with_capacity(16 * 16 * 2);
-    let mut backdrop_lossy = 0;
-    for tile_y in 0..16 {
-        for tile_x in 0..16 {
-            let mut colours = Vec::with_capacity(256);
-            for y in 0..16 {
-                let at = (tile_y * 16 + y) * backdrop.width + tile_x * 16;
-                colours.extend_from_slice(&backdrop.pixels[at..at + 16]);
+    let has_back_screen = stream(&manifest, 0, 1, Kind::Characters).is_ok();
+    if has_back_screen {
+        let mut backdrop = render_layer(&manifest, &map_data, 0, 1, scale_model)?;
+        const STAGE15_BACK_COLOR: u16 = 0x1406;
+        for pixel in &mut backdrop.pixels {
+            if pixel.is_none() {
+                *pixel = Some(STAGE15_BACK_COLOR);
             }
-            let (pixels, palette, tile_lossy) = quantize_tile(&colours);
-            backdrop_lossy += usize::from(tile_lossy);
-            let id = packed.intern_tile(
-                pixels,
-                palette,
-                0,
-                decorative_graphic_limit,
-                false,
-            )?;
-            backdrop_layout.extend_from_slice(&id.to_le_bytes());
         }
+        if (backdrop.width, backdrop.height) != (256, 256) {
+            return Err(Error::Format(format!(
+                "Saturn stage shared backdrop is {}x{}, expected 256x256",
+                backdrop.width, backdrop.height
+            )));
+        }
+        let mut backdrop_layout = Vec::with_capacity(16 * 16 * 2);
+        let mut backdrop_lossy = 0;
+        for tile_y in 0..16 {
+            for tile_x in 0..16 {
+                let mut colours = Vec::with_capacity(256);
+                for y in 0..16 {
+                    let at = (tile_y * 16 + y) * backdrop.width + tile_x * 16;
+                    colours.extend_from_slice(&backdrop.pixels[at..at + 16]);
+                }
+                let (pixels, palette, tile_lossy) = quantize_tile(&colours);
+                backdrop_lossy += usize::from(tile_lossy);
+                let id = packed.intern_tile(pixels, palette, 0, decorative_graphic_limit, false)?;
+                backdrop_layout.extend_from_slice(&id.to_le_bytes());
+            }
+        }
+        std::fs::write(
+            output.join("shared_backdrop.tilelayout.bin"),
+            &backdrop_layout,
+        )?;
+        write_packed_preview(
+            &output.join("shared_backdrop.packed.png"),
+            backdrop.width,
+            backdrop.height,
+            &backdrop_layout,
+            &packed,
+        )?;
+        write_preview(&output.join("shared_backdrop.preview.png"), &backdrop)?;
+        layer_json.push(json!({
+            "bg": {
+                "data": "shared_backdrop",
+                "tiledef": "D_stage15",
+                "left": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "zPriority": 0x20,
+                "flags": 0x1001
+            }
+        }));
+        reports.push(LayerReport {
+            room: 0,
+            layer: 1,
+            source_width: backdrop.width * 5 / 4,
+            source_height: backdrop.height,
+            output_width: backdrop.width,
+            output_height: backdrop.height,
+            lossy_tiles: backdrop_lossy,
+        });
+    } else {
+        layer_json.push(json!({}));
     }
-    std::fs::write(
-        output.join("shared_backdrop.tilelayout.bin"),
-        &backdrop_layout,
-    )?;
-    write_packed_preview(
-        &output.join("shared_backdrop.packed.png"),
-        backdrop.width,
-        backdrop.height,
-        &backdrop_layout,
-        &packed,
-    )?;
-    write_preview(
-        &output.join("shared_backdrop.preview.png"),
-        &backdrop,
-    )?;
-    layer_json.push(json!({
-        "bg": {
-            "data": "shared_backdrop",
-            "tiledef": "D_stage15",
-            "left": 0,
-            "top": 0,
-            "right": 0,
-            "bottom": 0,
-            "zPriority": 0x20,
-            "flags": 0x1001
-        }
-    }));
-    reports.push(LayerReport {
-        room: 0,
-        layer: 1,
-        source_width: backdrop.width * 5 / 4,
-        source_height: backdrop.height,
-        output_width: backdrop.width,
-        output_height: backdrop.height,
-        lossy_tiles: backdrop_lossy,
-    });
 
     write_json(&output.join("rooms.layers.json"), &layer_json)?;
     let mut room_json: Vec<_> = bounds
@@ -1728,23 +1750,22 @@ pub fn convert(
             })
         })
         .collect();
-    room_json.extend([
-        json!({
-            "left": 3, "top": 44, "right": 3, "bottom": 44,
-            "tileLayoutId": 4, "tilesetId": 0,
-            "objGfxId": 0, "objLayoutId": 48
-        }),
-        json!({
-            "left": 3, "top": 45, "right": 3, "bottom": 45,
-            "tileLayoutId": 5, "tilesetId": 0,
-            "objGfxId": 0, "objLayoutId": 49
-        }),
-        json!({
-            "left": 13, "top": 45, "right": 13, "bottom": 45,
-            "tileLayoutId": 6, "tilesetId": 0,
-            "objGfxId": 0, "objLayoutId": 50
-        }),
-    ]);
+    for (index, &(id, room, _, _, _, _)) in special_rooms.iter().enumerate() {
+        room_json.push(json!({
+            "left": room.left, "top": room.top,
+            "right": room.right, "bottom": room.bottom,
+            "tileLayoutId": id, "tilesetId": 0,
+            "objGfxId": 0, "objLayoutId": 48 + index
+        }));
+    }
+    for (room, id) in &trigger_rooms {
+        room_json.push(json!({
+            "left": room.left, "top": room.top,
+            "right": room.right, "bottom": room.bottom,
+            "tileLayoutId": id, "tilesetId": 0xFF,
+            "objGfxId": 0, "objLayoutId": 0
+        }));
+    }
     while room_json.len() < 20 {
         room_json.push(json!({
             "left": 0x3F, "top": 0x3F, "right": 0, "bottom": 0,
@@ -1767,27 +1788,34 @@ pub fn convert(
     }));
     write_json(&output.join("rooms.roomdef.json"), &room_json)?;
     let mut entity_layouts = Vec::new();
-    for (layout_id, address) in [
-        (1, 0x060F10F8),
-        (2, 0x060F1328),
-        (3, 0x060F1418),
-        (4, 0x060F1468),
-        (48, 0x060F0F0E),
-        (49, 0x060F0EC8),
-        (50, 0x060F0F54),
-    ] {
+    let layout_table = read_layout_table(&prg)?;
+    let layout_ids = (1..=bounds.len()).chain(48..48 + special_rooms.len());
+    for layout_id in layout_ids {
+        let address = *layout_table.get(layout_id).ok_or_else(|| {
+            Error::Format(format!("entity layout {layout_id} is outside the table"))
+        })?;
         let entities = write_entity_layout(&prg, output, layout_id, address)?;
         entity_layouts.push((layout_id, entities));
     }
     write_tiledefs(output, &packed)?;
-    write_c_tables(output, &room_json, &layer_json, &entity_layouts, &packed)?;
+    write_c_tables(
+        output,
+        &bounds,
+        &special_rooms
+            .iter()
+            .map(|room| (room.1, room.5))
+            .collect::<Vec<_>>(),
+        has_back_screen,
+        &room_json,
+        &layer_json,
+        &entity_layouts,
+        &packed,
+    )?;
     write_texture(output, &packed)?;
     let report = Report {
         source: map_path.display().to_string(),
         scale: match scale_model {
-            ScaleModel::Raster => {
-                "raster: nearest-neighbor x'=floor(x*4/5)".to_string()
-            }
+            ScaleModel::Raster => "raster: nearest-neighbor x'=floor(x*4/5)".to_string(),
             ScaleModel::TileGroups => {
                 "tile-groups: five 8px characters -> widths 7/6/7/6/6".to_string()
             }
@@ -1799,7 +1827,7 @@ pub fn convert(
         tile_definitions: packed.tiledefs.len(),
         collision_types,
         internal_transitions: transitions,
-        cross_stage_records_omitted: true,
+        cross_stage_records_omitted: false,
     };
     write_json(&output.join("conversion-report.json"), &report)?;
     Ok(())
@@ -1808,8 +1836,7 @@ pub fn convert(
 #[cfg(test)]
 mod tests {
     use super::{
-        internal_transitions, native_psx_palettes, psx_palettes, Bounds,
-        TransitionReport,
+        internal_transitions, native_psx_palettes, psx_palettes, Bounds, TransitionReport,
     };
 
     #[test]

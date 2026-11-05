@@ -87,13 +87,19 @@ typedef enum {
 #define PLAYER g_Entities[PLAYER_CHARACTER]
 
 #define LOW(x) (*(s32*)&(x))
+
 #define ABS(x) ((x) < 0 ? -(x) : (x))
 
 typedef union {
     s32 val;
     struct {
+#ifdef SATZ
+        s16 lo;
+        s16 hi;
+#else
         s16 hi;
         s16 lo;
+#endif
     } i;
 } SotnFixed32;
 
@@ -561,7 +567,7 @@ typedef struct {
 } ET_060DDFB0;
 
 typedef struct {
-    /* 0x78 */ s32 : 32;
+    /* 0x78 */ Primitive* prim;
     /* 0x7C */ u8* path;
     /* 0x80 */ u32 spanX;
     /* 0x84 */ u32 spanY;
@@ -802,6 +808,7 @@ void (*func_06064580)();
 void (*func_0606458C)();
 void (*func_06064590)();
 void (*func_06064594)();
+void (*func_06064598)();
 void (*func_060645A0)();
 void (*func_060645A4)();
 void (*func_060645B0)();
@@ -809,7 +816,9 @@ void (*func_060645B4)();
 void (*func_060645BC)();
 void (*func_060645C0)();
 void (*func_060645C4)();
+void (*func_060645CC)();
 void (*func_8010E168)(s32, s32);
+s32 (*func_060645DC)();
 void (*func_060645E0)();
 void (*func_060645E8)();
 void (*func_060645FC)();
@@ -822,6 +831,7 @@ void (*func_0606461C)(s32);
 void (*func_06064620)();
 void (*func_06064624)(s32);
 void (*func_06064628)(s32);
+void (*func_0606462C)();
 void (*func_06064630)();
 void (*GetPlayerSensor)(Collider* col);
 void (*func_06064638)();
@@ -834,9 +844,10 @@ void (*func_0606465C)();
 void (*func_06064660)();
 void (*func_06064664)();
 void (*func_06064674)();
+void (*func_06064680)();
 void (*func_06064684)();
 void (*func_06064688)();
-void (*func_0606468c)();
+void (*func_0606468C)();
 s32 (*func_06064690)();
 void (*func_060CF01C)();
 
@@ -1069,7 +1080,10 @@ typedef struct {
     char pad440[0x2];
     /* 0x442 */ u16 healKind;   // 0 = none, 1 = potion, 2 = high potion
     /* 0x444 */ u16 healAmount; // hit points restored by func_060B0638
-    char pad446[0xC];
+    char pad446[6];
+    /* 0x44C */ s16 unk44C;
+    /* 0x44E */ s16 unk44E;
+    /* 0x450 */ s16 unk450;
     /* 0x452 */ s16 unk452;
     u16 unk454;
     char pad456[6];
@@ -1506,7 +1520,7 @@ typedef struct {
     /* 0x0E */ s16 unkE;
 } Unk0605DB60; /* size = 0x10 */
 
-extern u16 DAT_0605aec0[][2];
+extern u16 DAT_0605AEC0[][2];
 
 #define NUM_HORIZONTAL_SENSORS 4
 #define NUM_VERTICAL_SENSORS 7

@@ -8,11 +8,6 @@ typedef struct {
     u8 padding[2];
 } Stage16HeartPrizeValues;
 
-typedef struct {
-    u16 indices[9];
-    u16 padding;
-} Stage16SubweaponIndices;
-
 EntityEntry g_Stage16EntityEntry02 = {
     &g_SaturnSharedSpriteBank0Resource, func_060DCE98};
 EntityEntry g_Stage16EntityEntry09 = {
