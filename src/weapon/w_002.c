@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #2. Used by weapons:
 // Mace
-
 #include "weapon_private.h"
 #include "gen/w_002_1.h"
 #include "gen/w_002_2.h"
@@ -86,11 +85,10 @@ static u8* anim0[] = {
 static WeaponAnimation D_12000_8017ABC4[] = {
     anim0, hitboxes, 0, SFX_WEAPON_SCRAPE_ECHO, 0x48, 0x03, 0};
 static u16* g_WeaponCluts[] = {clut0};
-static s32 g_HandId = HAND_ID;
 
 #include "shared.h"
 
-static void EntityWeaponAttack(Entity* self) {
+void EntityWeaponAttack(Entity* self) {
     WeaponAnimation* anim;
     s8 animIndex;
 
@@ -141,28 +139,28 @@ static void EntityWeaponAttack(Entity* self) {
 
 s32 func_ptr_80170004(Entity* self) {}
 
-static void func_ptr_80170008(Entity* self) {}
+void func_ptr_80170008(Entity* self) {}
 
-static void func_ptr_8017000C(Entity* self) {}
+void func_ptr_8017000C(Entity* self) {}
 
-static s32 func_ptr_80170010(Entity* self) {}
+s32 func_ptr_80170010(Entity* self) {}
 
-static s32 func_ptr_80170014(Entity* self) {}
+s32 func_ptr_80170014(Entity* self) {}
 
-static int GetWeaponId(void) { return 2; }
+int GetWeaponId(void) { return 2; }
 
-static void EntityWeaponShieldSpell(Entity* self) {}
+void EntityWeaponShieldSpell(Entity* self) {}
 
-static void func_ptr_80170024(Entity* self) {}
+void func_ptr_80170024(Entity* self) {}
 
-static void func_ptr_80170028(Entity* self) {}
+void func_ptr_80170028(Entity* self) {}
 
-static void WeaponUnused2C(void) {}
+void WeaponUnused2C(void) {}
 
-static void WeaponUnused30(void) {}
+void WeaponUnused30(void) {}
 
-static void WeaponUnused34(void) {}
+void WeaponUnused34(void) {}
 
-static void WeaponUnused38(void) {}
+void WeaponUnused38(void) {}
 
-static void WeaponUnused3C(void) {}
+void WeaponUnused3C(void) {}
