@@ -2,6 +2,7 @@
 #include "demon.h"
 #include "../servant_private.h"
 
+static s32 g_PlaySfxStep;
 static s32 s_ServantId;
 static FamiliarStats s_DemonStats;
 static s16 D_us_801786A0[3][8];
@@ -16,6 +17,9 @@ static s32 s_LastTargetedEntityIndex;
 #ifdef VERSION_PSP
 extern s16 D_092F2810[];
 #define buggyPtr D_092F2810
+#elif defined(VERSION_PC)
+static s16* EventsAsS16(void);
+#define buggyPtr (EventsAsS16())
 #else
 extern ServantEvent g_Events[];
 #define buggyPtr ((s16*)g_Events)
@@ -1828,6 +1832,9 @@ s16 D_092F2810[4] = {0};
 #endif
 
 #include "../shared_events.h"
+#ifdef VERSION_PC
+static s16* EventsAsS16(void) { return (s16*)g_Events; }
+#endif
 #include "../shared_globals.h"
 #include "../servant_update_anim.h"
 #include "../../destroy_entity.h"
