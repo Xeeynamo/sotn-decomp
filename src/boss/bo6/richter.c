@@ -1193,14 +1193,15 @@ void RicStepStandInAir(void) {
 
 void RicStepEnableFlameWhip(void) {
     if ((RIC.animCurFrame == 0xB5) && (RIC.poseTimer == 1)) {
-        RicCreateEntFactoryFromEntity(g_CurrentEntity, 0x23, 0);
-        g_api_PlaySfx(SFX_WEAPON_APPEAR);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_35, 0);
+        g_api.PlaySfx(0x62F);
     }
     if (RIC.poseTimer < 0) {
         RicSetStand(0);
         g_Ric.unk46 = 0;
-        RicCreateEntFactoryFromEntity(g_CurrentEntity, 0x450021, 0);
-        g_Ric.timers[0] = 0x800;
+        RicCreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x45), 0);
+        g_Ric.timers[PL_T_POISON] = 0x800;
     }
 }
 
@@ -1254,12 +1255,12 @@ void func_us_801B8E80(s32 arg0) {
     }
     RIC.posY.i.hi -= 0x10;
     RIC.posX.i.hi = var_s0 + RIC.posX.i.hi;
-    RicCreateEntFactoryFromEntity(g_CurrentEntity, 0x10004, 0);
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_EMBERS, 1), 0);
     RIC.posY.i.hi += 0x10;
     RIC.posX.i.hi -= var_s0;
     if (arg0 & 1) {
-        g_api_ShakeCamera(3);
-        g_api_PlaySfx(SFX_WALL_DEBRIS_B);
+        g_api.ShakeCamera(SHAKE_Y_SMALL2);
+        g_api_PlaySfx(0x644);
     }
     if (arg0 & 2) {
         RIC.velocityX = 0;
