@@ -63,7 +63,6 @@ ASMDIFFER_APP	:= $(TOOLS_DIR)/asm-differ/diff.py
 M2CTX_APP       := $(TOOLS_DIR)/m2ctx.py
 M2C_APP         := $(TOOLS_DIR)/m2c/m2c.py
 PERMUTER_APP	:= $(TOOLS_DIR)/decomp-permuter
-MASPSX_APP      := $(TOOLS_DIR)/maspsx/maspsx.py
 PSPAS           := $(TOOLS_DIR)/pspas/target/release/pspas
 SOTNDISK        := bin/sotn-disk
 SOTNASSETS      := bin/sotn-assets
@@ -82,10 +81,8 @@ M2C_DIR         := $(TOOLS_DIR)/m2c
 M2C_APP         := $(M2C_DIR)/m2c.py
 M2C             := $(PYTHON) $(M2C_APP)
 M2C_ARGS        := -P 4
-MASPSX_DIR      := $(TOOLS_DIR)/maspsx
-MASPSX_APP      := $(MASPSX_DIR)/maspsx.py
 
-DEPENDENCIES	= $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(MIPSMATCH_APP) python-dependencies
+DEPENDENCIES	= $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MIPSMATCH_APP) python-dependencies
 
 SOTNDISK_SOURCES   := $(shell find tools/sotn-disk -name '*.go')
 SOTNASSETS_SOURCES := $(shell find tools/sotn-assets -name '*.go')
@@ -269,9 +266,6 @@ $(M2C_APP):
 	git submodule init $(M2C_DIR)
 	git submodule update $(M2C_DIR)
 	$(PYTHON) -m pip install --upgrade pycparser
-$(MASPSX_APP):
-	git submodule init $(MASPSX_DIR)
-	git submodule update $(MASPSX_DIR)
 
 $(MIPSMATCH_DIR)/target/release/mipsmatch: $(MIPSMATCH_DIR) $(shell find $(MIPSMATCH_DIR)/src $(MIPSMATCH_DIR)/Cargo.* -type f)
 	git submodule init $(MIPSMATCH_DIR)
@@ -386,7 +380,7 @@ PHONY_TARGETS += dump-disk $(addprefix dump-disk_,eu hk jp10 jp11 saturn us uspr
 PHONY_TARGETS += force-symbols $(addprefix FORCE_,$(FORCE_SYMBOLS)) force-extract context function-finder duplicates-report
 PHONY_TARGETS += git-submodules update-dependencies update-dependencies-all $(addprefix dependencies_,us pspeu hd saturn) requirements-python graphviz
 PHONY_TARGETS += help get-debug get-phony get-silent
-MUFFLED_TARGETS += $(PHONY_TARGETS) $(MASPSX_APP) $(EXTRACTED_DISK_DIR)
+MUFFLED_TARGETS += $(PHONY_TARGETS) $(EXTRACTED_DISK_DIR)
 MUFFLED_TARGETS += $(ASMDIFFER) $(dir $(M2C_APP)) $(M2C_APP) $(PERMUTER_APP) $(SOTNDISK) $(SOTNASSETS) $(VENV_DIR) $(VENV_DIR)/bin
 .PHONY: $(PHONY_TARGETS)
 # Specifying .SILENT in this manner allows us to set the DEBUG environment variable and display everything for debugging
