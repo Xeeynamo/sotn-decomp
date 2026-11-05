@@ -178,7 +178,7 @@ void func_06011CE4(void) {
     func_06014424();
     DAT_06063C0C = 0x25A78000;
     DAT_06063EBC = 0x25A78000;
-    DAT_06064480 = 0x25A76000;
+    DAT_06064480 = (u8*)0x25A76000;
     SND_INI_PRG_ADR(sys_ini) = g_SoundDriver68k;
     SND_INI_PRG_SZ(sys_ini) = 0x67F2;
     SND_INI_ARA_ADR(sys_ini) = DAT_0603AA40;
@@ -300,10 +300,10 @@ void func_060120D8(void) {
 }
 
 s32 func_06012108(void) {
-    s32 base;
+    u8* base;
 
     DAT_060641D0 = 0x11800;
-    base = (s32)DAT_00200000;
+    base = DAT_00200000;
     DAT_06062244 = base;
     DAT_06062378 = DAT_06062244 + 0x4000;
     DAT_06062270.unk0 = DAT_06062378 + 0x800;
@@ -1059,7 +1059,7 @@ void func_06014424(void) {
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601449C, func_0601449C);
 
-void func_06014504(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+void func_06014504(u8* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     while (UNCACHED_SOUND_REQUESTS[arg4].unk0 != 0) {
         SOUND_REQUEST_WAIT();
     }
@@ -1073,7 +1073,7 @@ void func_06014504(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     DAT_06063C30[arg4].unk0 = 1;
 }
 
-void func_0601454C(s32 arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4, s32 arg5) {
+void func_0601454C(u8* arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4, s32 arg5) {
     while (UNCACHED_SOUND_REQUESTS[arg5].unk0 != 0) {
         SOUND_REQUEST_WAIT();
     }
@@ -1088,7 +1088,7 @@ void func_0601454C(s32 arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4, s32 arg5) {
     DAT_06063C30[arg5].unk0 = 1;
 }
 
-void func_060145AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+void func_060145AC(u8* arg0, s32 arg1, s32 arg2, s32 arg3) {
     while (UNCACHED_SOUND_REQUESTS[arg3].unk0 != 0) {
         SOUND_REQUEST_WAIT();
     }
@@ -1101,7 +1101,7 @@ void func_060145AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     DAT_06063C30[arg3].unk0 = 1;
 }
 
-void func_060145F8(s32 arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4, s32 arg5) {
+void func_060145F8(u8* arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4, s32 arg5) {
     while (UNCACHED_SOUND_REQUESTS[arg5].unk0 != 0) {
         SOUND_REQUEST_WAIT();
     }
@@ -1116,7 +1116,7 @@ void func_060145F8(s32 arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4, s32 arg5) {
     DAT_06063C30[arg5].unk0 = 1;
 }
 
-void func_06014658(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+void func_06014658(u8* arg0, s32 arg1, s32 arg2, s32 arg3) {
     while (UNCACHED_SOUND_REQUESTS[arg3].unk0 != 0) {
         SOUND_REQUEST_WAIT();
     }
@@ -1129,7 +1129,7 @@ void func_06014658(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     DAT_06063C30[arg3].unk0 = 1;
 }
 
-void func_060146A4(s32 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4, s32 arg5,
+void func_060146A4(u8* arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4, s32 arg5,
                    s32 arg6, s32 arg7, s32 arg8) {
     while (UNCACHED_SOUND_REQUESTS[arg8].unk0 != 0) {
         SOUND_REQUEST_WAIT();
@@ -1148,7 +1148,7 @@ void func_060146A4(s32 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4, s32 arg5,
     DAT_06063C30[arg8].unk0 = 1;
 }
 
-void func_06014724(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+void func_06014724(u8* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     while (UNCACHED_SOUND_REQUESTS[arg4].unk0 != 0) {
         SOUND_REQUEST_WAIT();
     }
@@ -1184,7 +1184,7 @@ s32 func_06014C54(void) {
         DAT_06062280 = NULL;
     }
 
-    DAT_06062280 = ((s32(*)(s32, s32))PcmOpen)(0xF00000F0, 1);
+    DAT_06062280 = ((GfsHn(*)(s32, s32))PcmOpen)(0xF00000F0, 1);
     if (DAT_06062280 == NULL) {
         return -1;
     }
@@ -1200,7 +1200,7 @@ s32 func_06014CB8(s32 arg0) {
         DAT_06062290[arg0] = 0;
     }
 
-    DAT_06062290[arg0] = ((s32(*)(s32, s32))PcmOpen)(arg0 + 0xE0000000, 0);
+    DAT_06062290[arg0] = ((GfsHn(*)(s32, s32))PcmOpen)(arg0 + 0xE0000000, 0);
     if (DAT_06062290[arg0] == NULL)
         return -1;
     DAT_060623B0[0] &= ~2;
@@ -1233,7 +1233,7 @@ void func_06016614(void) {
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016644, func_06016644);
 
-s32 PcmOpen(s32 code) {
+GfsHn PcmOpen(s32 code) {
     u8 name[0x10];
     code2name(code, name);
     return func_06017F5C(name);
@@ -1244,11 +1244,11 @@ s32 PcmLseek(GfsHn gfs, Sint32 offset) {
     return GFS_Seek(gfs, sector - 1, GFS_SEEK_SET);
 }
 
-s32 func_06016B9C(GfsHn gfs, s32 arg1, s32 arg2) {
+s32 func_06016B9C(GfsHn gfs, void* arg1, s32 arg2) {
     return func_06017FA4(arg1, arg2, gfs);
 }
 
-void func_06016BBC(GfsHn gfs, s32 arg1, s32 arg2) {
+void func_06016BBC(GfsHn gfs, void* arg1, s32 arg2) {
     func_06017FA4(arg1, arg2, gfs);
 }
 
@@ -1399,7 +1399,7 @@ s32 func_06016FB8(void) {
         DAT_06064338 = NULL;
     }
 
-    DAT_06064338 = ((s32(*)(s32, s32))PcmOpen)(0xF00000F5, 2);
+    DAT_06064338 = ((GfsHn(*)(s32, s32))PcmOpen)(0xF00000F5, 2);
     if (DAT_06064338 == NULL)
         return -1;
 
@@ -1578,8 +1578,8 @@ s32 func_06017F28(void) {
     }
 }
 
-s32 func_06017F5C(char* fname) {
-    s32 handle;
+GfsHn func_06017F5C(char* fname) {
+    GfsHn handle;
 
     GFS_SetDir(&DAT_06063E90);
     handle = GFS_Open(GFS_NameToId(fname));

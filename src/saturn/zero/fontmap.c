@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "zero/fontmap.h"
 
-s32 DAT_060476a0 = 0;
+u8* DAT_060476a0 = NULL;
 s32 DAT_060476a4 = 0;
 
 SaturnFontGlyphMapping g_SaturnFontGlyphMappings[92] = {

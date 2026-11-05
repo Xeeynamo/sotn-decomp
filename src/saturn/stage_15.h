@@ -174,7 +174,7 @@ extern SaturnRoomGraphics g_Stage15RoomGraphics[];
 extern SaturnRoomLayerSetup g_Stage15LayerSetup[];
 extern SaturnLayerMapOffsets g_Stage15LayerMapOffsets[];
 extern SaturnLayerCompressedSizes g_Stage15LayerCompressedSizes[];
-extern SaturnRoomHeader g_Stage15Rooms[];
+extern u8 g_Stage15Rooms[];
 extern LayoutEntity* g_Stage15LayoutVertical[];
 extern LayoutEntity* g_Stage15LayoutHorizontal[];
 extern void* g_Stage15SpriteBanks[];

@@ -6,7 +6,7 @@ u8 g_MariaMapRevealPattern[11] = {
 };
 u8 g_MariaMapRevealPatternPadding = 0;
 
-s32 g_MariaSavedMapVramBase = 0;
+u8* g_MariaSavedMapVramBase = 0;
 s32 g_MariaSavedMapPlaneConfig = 0;
 
 u8 g_MariaMapIconIndices[8] = {

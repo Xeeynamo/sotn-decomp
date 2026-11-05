@@ -144,7 +144,7 @@ extern EntityEntry* g_Stage14EntityUpdates[];
 extern void* g_Stage14SpriteBanks[];
 extern LayoutEntity* g_Stage14LayoutHorizontal[];
 extern LayoutEntity* g_Stage14LayoutVertical[];
-extern SaturnRoomHeader g_Stage14Rooms[];
+extern u8 g_Stage14Rooms[];
 extern SaturnLayerCompressedSizes g_Stage14LayerCompressedSizes[];
 extern SaturnLayerMapOffsets g_Stage14LayerMapOffsets[];
 extern SaturnRoomLayerSetup g_Stage14LayerSetup[];
