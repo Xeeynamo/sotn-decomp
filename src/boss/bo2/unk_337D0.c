@@ -23,7 +23,7 @@ void func_us_801B37D0(void) {
         x -= 8;
 
         if (x < 0x50) {
-            g_CurrentEntity->posX.i.hi = 0x58 - (u16)g_Tilemap.scrollX.i.hi;
+            g_CurrentEntity->posX.i.hi = 0x58 - g_Tilemap.scrollX.i.hi;
         }
     }
 }
