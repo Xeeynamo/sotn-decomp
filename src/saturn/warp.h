@@ -104,7 +104,7 @@ void EntityWarpStageNamePopup(Entity* self);
 void InitSolidProp(Entity* self);
 void EntityWarpRedDoor(Entity* self);
 extern char g_WarpObtainedText[];
-extern s16 DAT_060E2218[];
+extern u32 g_WarpGoldPrizes[10];
 extern u16 g_WarpAlucardSubweaponIds[];
 void CheckCollision(s32 x, s32 y, Collider* res, u16 unk);
 void MoveEntity(Entity* self);

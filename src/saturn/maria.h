@@ -11,7 +11,6 @@
 #include <saturn_sprite.h>
 #include "shared_sprite_banks.h"
 
-extern SubweaponDef DAT_060C1B02[];
 extern const char* g_StatusMenuLabelPointers[];
 void func_0600B0B8(SpritePart* part, void* arg1, s32 arg2);
 
@@ -332,9 +331,7 @@ extern Unk0605DB60 d_0605DB60[];
 extern s32 DAT_060D2918;
 extern s32 DAT_060D2A94[]; // fastest clear time per stage
 extern s32 DAT_060D2B04[]; // stage id, sorted alongside DAT_060D2A94
-extern SaturnSpriteResource g_EntitySpriteBank09;
 extern SaturnSpriteResource g_SaturnSharedSpriteBank7Resource;
-extern u8 g_Stage02OpaquePuffFrameData1;
 extern MariaAttackDef g_MariaEntity87CombatConfig;
 extern AnimationFrame g_MariaEntity87Anim0;
 extern MariaAttackDef g_MariaEntity060BCFF4CombatConfig;
@@ -352,7 +349,6 @@ extern int MariaCheckInput(s32 checks);
 s32 func_060A926C();
 extern AnimationFrame g_MariaAnimWalkStopFacingBitSet[];
 extern AnimationFrame g_MariaAnimWalkStopFacingBitClear[];
-extern AnimationFrame DAT_060C2408;
 extern u8 g_MariaMapRevealPattern[11];
 extern u8 g_MariaMapIconIndices[8];
 extern Point16 g_MariaMapUiPositionsA[12];
@@ -374,6 +370,7 @@ extern AnimationFrame ric_anim_run[];
 extern AnimationFrame g_MariaAnim_060C2E4C;
 extern AnimationFrame g_MariaAnim_060C2F8C[];
 extern SubweaponDef g_MariaSubweaponDefs[];
+extern AnimationFrame g_MariaAnimRisingEmber[];
 extern u8 g_MariaPrimitiveSizeIndices[];
 s32 func_060AA948(void);
 /* End moved declarations */

@@ -35,9 +35,6 @@ void func_060195F0(void) {
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601960C, func_0601960C);
 
-extern u16 DAT_06064500[];
-extern u16 DAT_06064520[];
-
 #define ExtractBit(x)                                                          \
     x & 1;                                                                     \
     x >>= 1

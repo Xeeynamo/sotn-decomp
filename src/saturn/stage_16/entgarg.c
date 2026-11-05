@@ -11,7 +11,8 @@ s32 g_Stage16GargoyleAttackVelocities[3] = {FIX(2), FIX(2), 0};
 
 EntityEntry g_Stage16EntityEntry33 = {
     &g_Stage16SpriteBankGargoyle, func_060E6A6C};
-s32 g_Stage16GargoyleAttackEntityParams[2] = {2, 0};
+s32 g_Stage16GargoyleAttackEntityParams = 2;
+s16 DAT_060ECF1C[2] = {0, 0};
 
 EntityEntry g_Stage16EntityEntry34 = {
     &g_Stage16SpriteBankGargoyle, func_060E6C88};

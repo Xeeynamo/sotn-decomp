@@ -262,7 +262,7 @@ extern s16 g_Stage15HumanFaceTreeSensors[];
 extern s16 g_Stage15WaterLeaperInitOffset[];
 extern s16 g_Stage15VenusManTrapSyncOffset[];
 extern s16 g_Stage15GardenerSyncOffset[];
-extern s8 DAT_060FB0EC[];
+extern s8 DAT_060FB0EC[8];
 s16 Random(void);
 extern s16 DAT_060F6E1A[];
 /* End moved declarations */

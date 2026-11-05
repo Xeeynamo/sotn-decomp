@@ -820,6 +820,11 @@ typedef struct SpriteObject {
 
 SpriteObject* CreateSpriteObject(
     u16 charBase, u16 clutBase, SaturnSpriteImage* images, s32 maxParts);
+#ifdef SATZ
+#define BSS
+#else
+#define BSS __attribute__((section(".bss")))
+#endif
 
 #define SPRITE_OBJECT_MAX 255 /* 0x0FF */
 #define SPRITE_PART_MAX 640   /* 0x280 */
@@ -829,52 +834,52 @@ typedef struct {
         Entity* self, u32 flags, s32 arg2);
 } GameApi;
 
-void (*func_06064580)();
-void (*func_0606458C)();
-void (*func_06064590)();
-void (*func_06064594)();
-void (*func_06064598)();
-void (*func_060645A0)();
-void (*func_060645A4)();
-void (*func_060645B0)();
-void (*func_060645B4)();
-void (*func_060645BC)();
-void (*func_060645C0)();
-void (*func_060645C4)();
-void (*func_060645CC)();
-void (*func_8010E168)(s32, s32);
-s32 (*func_060645DC)();
-void (*func_060645E0)();
-void (*func_060645E8)();
-void (*func_060645FC)();
-void (*func_06064600)();
-void (*func_06064604)();
-void (*func_06064608)();
-void (*func_06064614)();
-void (*func_06064618)();
-void (*func_0606461C)(s32);
-void (*func_06064620)();
-void (*func_06064624)(s32);
-void (*func_06064628)(s32);
-void (*func_0606462C)();
-void (*func_06064630)();
-void (*GetPlayerSensor)(Collider* col);
-void (*func_06064638)();
-void (*func_0606463C)();
-void (*func_06064640)(s32);
-void (*func_06064644)();
-void (*func_0606464C)();
-void (*func_06064658)(s32);
-void (*func_0606465C)();
-void (*func_06064660)();
-void (*func_06064664)();
-void (*func_06064674)();
-void (*func_06064680)();
-void (*func_06064684)();
-void (*func_06064688)();
-void (*func_0606468C)();
-s32 (*func_06064690)();
-void (*func_060CF01C)();
+extern void (*func_06064580)();
+extern void (*func_0606458C)();
+extern void (*func_06064590)();
+extern void (*func_06064594)();
+extern void (*func_06064598)();
+extern void (*func_060645A0)();
+extern void (*func_060645A4)();
+extern void (*func_060645B0)();
+extern void (*func_060645B4)();
+extern void (*func_060645BC)();
+extern void (*func_060645C0)();
+extern void (*func_060645C4)();
+extern void (*func_060645CC)();
+extern void (*func_8010E168)(s32, s32);
+extern s32 (*func_060645DC)();
+extern void (*func_060645E0)();
+extern void (*func_060645E8)();
+extern void (*func_060645FC)();
+extern void (*func_06064600)();
+extern void (*func_06064604)();
+extern void (*func_06064608)();
+extern void (*func_06064614)();
+extern void (*func_06064618)();
+extern void (*func_0606461C)(s32);
+extern void (*func_06064620)();
+extern void (*func_06064624)(s32);
+extern void (*func_06064628)(s32);
+extern void (*func_0606462C)();
+extern void (*func_06064630)();
+extern void (*GetPlayerSensor)(Collider* col);
+extern void (*func_06064638)();
+extern void (*func_0606463C)();
+extern void (*func_06064640)(s32);
+extern void (*func_06064644)();
+extern void (*func_0606464C)();
+extern void (*func_06064658)(s32);
+extern void (*func_0606465C)();
+extern void (*func_06064660)();
+extern void (*func_06064664)();
+extern void (*func_06064674)();
+extern void (*func_06064680)();
+extern void (*func_06064684)();
+extern void (*func_06064688)();
+extern void (*func_0606468C)();
+extern s32 (*func_06064690)();
+extern void (*func_060CF01C)();
 
 typedef struct {
     // Either a legacy SpriteParts table or a Saturn sprite-resource descriptor.
@@ -1535,7 +1540,6 @@ s32 func_800F4D38(s32, s32);
 // the struct to the base address
 
 extern Entity g_Entities[TOTAL_ENTITY_COUNT]; // 0x060997F8
-extern UNK_060485C0 DAT_060485C0;
 // One entry of the VRAM transfer queue at d_0605DB60.
 typedef struct {
     /* 0x00 */ void* unk0;

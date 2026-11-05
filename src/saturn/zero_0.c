@@ -14,30 +14,32 @@ FileLoadEntry DAT_06038A4C = {{"", &g_PlayerOvl, -1, 0, -1, 0}, 0, 0};
 
 FileLoadEntry DAT_06038A6C = {{"", DAT_00232000, -1, 0, -1, 0}, 0, 0};
 
-FileLoadEntry DAT_06038A8C = {{"", g_FileLoadBuffer, -1, 0, 2, 1}, 1, 0};
+FileLoadEntry DAT_06038A8C = {{"", g_WorkBuffer.load.data, -1, 0, 2, 1}, 1, 0};
 
 FileLoadEntry DAT_06038AAC = {
     {"WEAPON0.PRG", g_Weapon0OvlArea, 0x3000, 0, -1, 0}, 0, 0};
 
 FileLoadEntry DAT_06038ACC = {
-    {"WEAPON0.CHR", g_FileLoadBuffer, 0x4000, 0, 2, 1}, 1, 0};
+    {"WEAPON0.CHR", g_WorkBuffer.load.data, 0x4000, 0, 2, 1}, 1, 0};
 
 FileLoadEntry DAT_06038AEC = {
-    {"WEAPON0.CHR", g_FileLoadBuffer, 0x4000, 0, -1, 0}, 0, 0};
+    {"WEAPON0.CHR", g_WorkBuffer.load.data, 0x4000, 0, -1, 0}, 0, 0};
 
 FileLoadEntry DAT_06038B0C = {
     {"DUMMY.DAT", &g_StageOverlayData, -1, 0, -1, 0}, 0, 0};
 
 FileLoadEntry DAT_06038B2C = {
-    {"DUMMY.DAT", g_FileLoadBuffer, -1, 0, 2, 1}, 1, 0};
+    {"DUMMY.DAT", g_WorkBuffer.load.data, -1, 0, 2, 1}, 1, 0};
 
 FileLoadEntry DAT_06038B4C = {{"DUMMY.DAT", DAT_00252000, -1, 0, -1, 0}, 0, 0};
 
 FileLoadEntry DAT_06038B6C = {{NULL, &g_BatServantDesc, -1, 0, -1, 0}, 0, 0};
 
-FileLoadEntry DAT_06038B8C = {{NULL, g_FileLoadBuffer, -1, 0, 2, 1}, 1, 0};
+FileLoadEntry DAT_06038B8C = {
+    {NULL, g_WorkBuffer.load.data, -1, 0, 2, 1}, 1, 0};
 
-FileLoadEntry DAT_06038BAC = {{NULL, g_FileLoadBuffer, -1, 0, -1, 0}, 0, 0};
+FileLoadEntry DAT_06038BAC = {
+    {NULL, g_WorkBuffer.load.data, -1, 0, -1, 0}, 0, 0};
 
 FileLoadEntry* DAT_06038BCC[] = {
     &DAT_06038A4C, &DAT_06038A6C, &DAT_06038A8C, &DAT_06038AAC, &DAT_06038ACC,
@@ -455,10 +457,6 @@ s32 DAT_06038C5C = 0;
 SPR_2DefineWork(sp2WorkArea, 0x280, 0x304, 0x200, 1, 0x200);
 
 static s32 DAT_060576AC;
-
-extern VramTransfer DAT_060576B0[16];
-extern XyInt DAT_0605AEA0[2];
-extern SprSpCmd* DAT_0605AEAC;
 
 // original name: InitVdp1
 void InitSpriteEngine(s32 arg0) {
@@ -906,12 +904,12 @@ void TransferBgLayer(s32 arg0) {
         return;
     }
     if (transfer->tileFlags & 1) {
-        cnt = DecompressLZSS(ptr->unkC, g_FileLoadBuffer, ptr->unk18);
-        DmaScroll((u16*)g_FileLoadBuffer, ptr->dst0, cnt);
+        cnt = DecompressLZSS(ptr->unkC, g_WorkBuffer.load.data, ptr->unk18);
+        DmaScroll((u16*)g_WorkBuffer.load.data, ptr->dst0, cnt);
     }
     if (transfer->tileFlags & 2) {
-        cnt = DecompressLZSS(ptr->unk10, g_FileLoadBuffer, ptr->unk1C);
-        DmaScroll((u16*)g_FileLoadBuffer, ptr->dst4, cnt);
+        cnt = DecompressLZSS(ptr->unk10, g_WorkBuffer.load.data, ptr->unk1C);
+        DmaScroll((u16*)g_WorkBuffer.load.data, ptr->dst4, cnt);
     }
     if (transfer->tileFlags & 4) {
         if (DAT_0605cd70.unk2 == 4) {
@@ -951,8 +949,6 @@ void DmaScroll(u16* src, u16* dest, u32 cnt) {
         }
     }
 }
-
-extern s16* DAT_0605C120[];
 
 void func_0600871C(Unk0605CD90* arg0, UNK_0605c680* arg1, s32 arg2) {
     s32 scrollX, scrollY;
@@ -1286,8 +1282,6 @@ void func_06009010(u8* rgb) {
         SCL_SetColOffset(SCL_OFFSET_A, 0x6F, 0, 0, 0);
     }
 }
-
-extern SclConfig DAT_0605BED0[];
 
 void func_06009058(u16 arg0) {
     SclConfig* scfg;
@@ -1723,26 +1717,6 @@ void func_0600A088(void) {
         QueueVramTransfer(DAT_06038DBC, DAT_06038DD0[3], 0x20);
     }
 }
-
-typedef struct {
-    u16 unk0[5];
-    u16 unkA[5];
-} unkStruct;
-
-typedef struct {
-    s16 : 16;
-    s16 : 16;
-    s32 unk4;
-    s32 unk8;
-    s32 unkC;
-    s32 unk10;
-    unkStruct unk14[6];
-    s32 unk8C[7]; // pad
-    s32 unkA8;
-    s32 unkAC[30]; // pad
-} UNK0605D910;     // size: 0x124
-
-extern UNK0605D910 DAT_0605D910[2];
 
 void func_0600A240(s32 arg0) {
     if (arg0 != 0) {
@@ -2560,8 +2534,8 @@ void InitBackupRam(void) {
     s8 i;
     s8 device;
 
-    DAT_060485C0.unk5 = -1;
-    DAT_060485C0.unk4 = 0;
+    g_WorkBuffer.save.unk5 = -1;
+    g_WorkBuffer.save.unk4 = 0;
     DAT_0605DD60 = 0;
 
     func_0600CC14();
@@ -2575,8 +2549,8 @@ void InitBackupRam(void) {
     for (device = 0; device < 2; device++) {
         for (i = 1; i < 6; i++) {
             if (func_0600D028(device, i) == 0) {
-                if (DAT_060485C0.unk100C != 0) {
-                    g_GameClearFlag = DAT_060485C0.unk100C;
+                if (g_WorkBuffer.save.unk100C != 0) {
+                    g_GameClearFlag = g_WorkBuffer.save.unk100C;
                 }
             }
         }
@@ -2628,8 +2602,6 @@ s32 func_0600CE1C(void) {
     return result;
 }
 
-extern BupDir DAT_0605DDA0;
-
 s32 func_0600CED0(u32 device, s8 arg1) {
     char filename[12];
     s32 status;
@@ -2642,7 +2614,6 @@ s32 func_0600CED0(u32 device, s8 arg1) {
     return 0;
 }
 
-extern char DAT_0605DD70[];
 extern char DAT_06038FE4[][4];
 
 char* func_0600CF40(u32 device, s8 arg1) {
@@ -2669,7 +2640,7 @@ s32 func_0600D028(u32 device, s8 arg1) {
 
     sprintf(filename, "%s%02d", DAT_06038FE0, arg1);
     func_0600CC14();
-    status = BUP_Read(device, filename, &DAT_060485C0);
+    status = BUP_Read(device, filename, &g_WorkBuffer.save);
     func_0600CBCC();
     return status;
 }
@@ -2695,7 +2666,7 @@ s8 func_0600D1A0(u32 device, s8 arg1) {
 
     sprintf(filename, "%s%02d", DAT_06038FE0, arg1);
     func_0600CC14();
-    status = BUP_Read(device, filename, &DAT_060485C0);
+    status = BUP_Read(device, filename, &g_WorkBuffer.save);
     func_0600CBCC();
     if (status == 0) {
         status = LoadGameState();
@@ -2713,17 +2684,17 @@ s8 func_0600D264(u32 device, s8 arg1) {
 
     if (arg1 != 0) {
         SaveGameState();
-        DAT_060485C0.unk4 = device;
-        DAT_060485C0.unk5 = arg1;
+        g_WorkBuffer.save.unk4 = device;
+        g_WorkBuffer.save.unk5 = arg1;
         sprintf(DAT_0605DDA0.filename, "%s%02d", DAT_06038FE0, arg1);
         sprintf(DAT_0605DDA0.comment, DAT_06039000);
         DAT_0605DDA0.language = 0;
         date = func_0600D0DC();
         DAT_0605DDA0.date = date;
-        DAT_060485C0.unk8 = date;
+        g_WorkBuffer.save.unk8 = date;
         DAT_0605DDA0.datasize = 0x1124;
         func_0600CC14();
-        status = BUP_Write(device, &DAT_0605DDA0, &DAT_060485C0, 0);
+        status = BUP_Write(device, &DAT_0605DDA0, &g_WorkBuffer.save, 0);
         func_0600CBCC();
         return status;
     }
@@ -2738,17 +2709,17 @@ s8 func_0600D370(u32 device, s8 arg1) {
 
     if (arg1 != 0) {
         func_0600D6C0();
-        DAT_060485C0.unk4 = device;
-        DAT_060485C0.unk5 = arg1;
+        g_WorkBuffer.save.unk4 = device;
+        g_WorkBuffer.save.unk5 = arg1;
         sprintf(DAT_0605DDA0.filename, "%s%02d", DAT_06038FE0, arg1);
         sprintf(DAT_0605DDA0.comment, DAT_06039000);
         DAT_0605DDA0.language = 0;
         date = func_0600D0DC();
         DAT_0605DDA0.date = date;
-        DAT_060485C0.unk8 = date;
+        g_WorkBuffer.save.unk8 = date;
         DAT_0605DDA0.datasize = 0x1124;
         func_0600CC14();
-        status = BUP_Write(device, &DAT_0605DDA0, &DAT_060485C0, 0);
+        status = BUP_Write(device, &DAT_0605DDA0, &g_WorkBuffer.save, 0);
         func_0600CBCC();
         return status;
     }
@@ -2759,7 +2730,7 @@ s8 func_0600D47C(u32 device, s8 arg1) {
     char filename[12];
 
     sprintf(filename, "%s%02d", DAT_06038FE0, arg1);
-    return BUP_Verify(device, filename, &DAT_060485C0);
+    return BUP_Verify(device, filename, &g_WorkBuffer.save);
 }
 
 s8 func_0600D4C4(u32 device, s8 arg1) {
@@ -2773,55 +2744,56 @@ s8 func_0600D4C4(u32 device, s8 arg1) {
 void SaveGameState(void) {
     u16 i;
 
-    DAT_060485C0.unk10 = g_Status;
-    DAT_060485C0.unk35C = g_MenuNavigation;
-    DAT_060485C0.unk3A8 = g_Settings;
-    DAT_060485C0.unk4B8 = g_CurrentRoom;
-    DAT_060485C0.unk4CC = g_Tilemap;
-    DAT_060485C0.unk504 = D_8003C708;
+    g_WorkBuffer.save.unk10 = g_Status;
+    g_WorkBuffer.save.unk35C = g_MenuNavigation;
+    g_WorkBuffer.save.unk3A8 = g_Settings;
+    g_WorkBuffer.save.unk4B8 = g_CurrentRoom;
+    g_WorkBuffer.save.unk4CC = g_Tilemap;
+    g_WorkBuffer.save.unk504 = D_8003C708;
     for (i = 0; i < 0x300; i++) {
-        DAT_060485C0.unk50C[i] = g_CastleFlags[i];
+        g_WorkBuffer.save.unk50C[i] = g_CastleFlags[i];
     }
     for (i = 0; i < 0x800; i++) {
-        DAT_060485C0.unk80C[i] = g_CastleMap[i];
+        g_WorkBuffer.save.unk80C[i] = g_CastleMap[i];
     }
-    DAT_060485C0.unk100C = g_GameClearFlag;
-    DAT_060485C0.unk1010 = g_Servant;
-    DAT_060485C0.unk1014 = g_PlayableCharacter;
-    DAT_060485C0.unk1018 = DAT_0605CEAC;
-    DAT_060485C0.unk101C = g_RoomCount;
-    DAT_060485C0.unk1020 = g_randomNext;
-    DAT_060485C0.unk0 = ((s32(*)())Crc32)(0x1120, &DAT_060485C0.unk4);
+    g_WorkBuffer.save.unk100C = g_GameClearFlag;
+    g_WorkBuffer.save.unk1010 = g_Servant;
+    g_WorkBuffer.save.unk1014 = g_PlayableCharacter;
+    g_WorkBuffer.save.unk1018 = DAT_0605CEAC;
+    g_WorkBuffer.save.unk101C = g_RoomCount;
+    g_WorkBuffer.save.unk1020 = g_randomNext;
+    g_WorkBuffer.save.unk0 = ((s32(*)())Crc32)(0x1120, &g_WorkBuffer.save.unk4);
 }
 
 // original name: ABup_ChechsumSet
 void func_0600D6C0(void) {
-    DAT_060485C0.unk0 = ((s32(*)())Crc32)(0x1120, &DAT_060485C0.unk4);
+    g_WorkBuffer.save.unk0 = ((s32(*)())Crc32)(0x1120, &g_WorkBuffer.save.unk4);
 }
 
 // 0x0600D6EC
 s32 LoadGameState(void) {
     u16 i;
 
-    if (DAT_060485C0.unk0 == ((s32(*)())Crc32)(0x1120, &DAT_060485C0.unk4)) {
-        g_Status = DAT_060485C0.unk10;
-        g_MenuNavigation = DAT_060485C0.unk35C;
-        g_Settings = DAT_060485C0.unk3A8;
-        g_CurrentRoom = DAT_060485C0.unk4B8;
-        g_Tilemap = DAT_060485C0.unk4CC;
-        D_8003C708 = DAT_060485C0.unk504;
+    if (g_WorkBuffer.save.unk0 ==
+        ((s32(*)())Crc32)(0x1120, &g_WorkBuffer.save.unk4)) {
+        g_Status = g_WorkBuffer.save.unk10;
+        g_MenuNavigation = g_WorkBuffer.save.unk35C;
+        g_Settings = g_WorkBuffer.save.unk3A8;
+        g_CurrentRoom = g_WorkBuffer.save.unk4B8;
+        g_Tilemap = g_WorkBuffer.save.unk4CC;
+        D_8003C708 = g_WorkBuffer.save.unk504;
         for (i = 0; i < 0x300; i++) {
-            g_CastleFlags[i] = DAT_060485C0.unk50C[i];
+            g_CastleFlags[i] = g_WorkBuffer.save.unk50C[i];
         }
         for (i = 0; i < 0x800; i++) {
-            g_CastleMap[i] = DAT_060485C0.unk80C[i];
+            g_CastleMap[i] = g_WorkBuffer.save.unk80C[i];
         }
-        g_GameClearFlag = DAT_060485C0.unk100C;
-        g_Servant = DAT_060485C0.unk1010;
-        g_PlayableCharacter = DAT_060485C0.unk1014;
-        DAT_0605CEAC = DAT_060485C0.unk1018;
-        g_RoomCount = DAT_060485C0.unk101C;
-        g_randomNext = DAT_060485C0.unk1020;
+        g_GameClearFlag = g_WorkBuffer.save.unk100C;
+        g_Servant = g_WorkBuffer.save.unk1010;
+        g_PlayableCharacter = g_WorkBuffer.save.unk1014;
+        DAT_0605CEAC = g_WorkBuffer.save.unk1018;
+        g_RoomCount = g_WorkBuffer.save.unk101C;
+        g_randomNext = g_WorkBuffer.save.unk1020;
         return 0;
     } else {
         return 8;
@@ -3645,8 +3617,6 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F914, SquareRoot0);
 #define R N - F
 // Encode string into position and length, if match_length is greater than this.
 #define THRESHOLD 2
-
-extern u8 text_buf[N_MIN_1 + F];
 
 s32 DecompressLZSS(u8* src, u8* dst, u32 srclen) {
     s32 r;

@@ -21,7 +21,40 @@ void sotn_satz_clear_range(uint32_t start, uint32_t size) {
     }
 }
 
-uint8_t g_FileLoadBuffer[0x10000] __attribute__((aligned(16)));
+extern uint8_t g_WorkBuffer[0x8020];
+
+uint32_t DAT_06002000[16 * 1024 / sizeof(uint32_t)];
+uint8_t DAT_00200000[0x00211800 - 0x00200000];
+uint8_t DAT_00211800[0x0022A000 - 0x00211800];
+uint8_t DAT_0022A000[0x00232000 - 0x0022A000];
+
+void* g_BatServantDesc[0x10];
+void* DAT_060A5000;
+void* DAT_060A5004;
+void* DAT_060A5008;
+void* func_060CF01C;
+void* g_BatResourceDescriptorList;
+void* DAT_060D6004;
+void* DAT_060D6008;
+void* DAT_060D600C;
+void* DAT_060D6010;
+void* DAT_060D6014;
+void* DAT_060D6018;
+void* DAT_060D601C;
+void* DAT_060D6020;
+void* DAT_060D6024;
+void* DAT_060D6028;
+void* DAT_060D602C;
+void* DAT_060D6030;
+void* DAT_060D6034;
+void* DAT_060D6038;
+void* DAT_060D603C;
+void* DAT_060D6040;
+void* DAT_060D6044;
+void* DAT_060D6048;
+void* DAT_060D9040;
+uint8_t g_Weapon0OvlArea[0x3000] __attribute__((aligned(16)));
+uint8_t g_Weapon1OvlArea[0x3000] __attribute__((aligned(16)));
 
 uint8_t g_StageOvlArea[0x6000] __attribute__((aligned(16)));
 
@@ -33,9 +66,8 @@ void* sotn_satz_retail_address(uint32_t address) {
     if (address >= 0x00252000 && address < 0x00300000) {
         return DAT_00252000 + (address - 0x00252000);
     }
-    if (address >= 0x060485E0 &&
-        address < 0x060485E0 + sizeof(g_FileLoadBuffer)) {
-        return g_FileLoadBuffer + (address - 0x060485E0);
+    if (address >= 0x060485C0 && address < 0x060485C0 + sizeof(g_WorkBuffer)) {
+        return g_WorkBuffer + (address - 0x060485C0);
     }
     for (s = sotn_fixed_symbols; s->name; s++) {
         if (address >= s->address && address < s->address + s->retail_size) {

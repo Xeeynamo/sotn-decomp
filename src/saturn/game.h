@@ -199,7 +199,7 @@ s32 func_0606FC80(SubweaponDef* subwpn, s16 subweaponId, s16 useHearts);
 // func_06078700 and GetMenuItemName
 void func_06078700(u8* dst, s8* text, s32 nChars);
 s8* func_06078748(s32 id);
-extern s8* DAT_06085DCC[];
+extern const char* g_StatusMenuLabelPointers[];
 extern Primitive g_PrimBuf[];
 extern PlayerHud g_PlayerHud;
 extern RelicDesc g_RelicDefs[];
