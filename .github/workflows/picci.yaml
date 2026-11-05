@@ -25,9 +25,6 @@ on:
       - '.github/workflows/picci.yaml'
   workflow_dispatch:
 
-env:
-  DEMOS: "0 3 5 6 7 11 15 16 19"
-
 jobs:
   build-linux:
     if: github.repository == 'Xeeynamo/sotn-decomp'
@@ -57,10 +54,23 @@ jobs:
           git submodule update --init tools/psyz
           cd tools/psyz
           git submodule update --init --recursive external/SDL
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: 'go.work'
+          cache: true
+          cache-dependency-path: "**/*.sum"
       - name: Get dependencies
         uses: ./.github/actions/get-dependencies
         with:
           token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
+      - name: Cache sotn_str
+        uses: actions/cache@v5
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            build/pc/sotn_str
+          key: sotn-str-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('tools/sotn_str/Cargo.lock') }}
       - name: Generate assets
         run: |
           make extract_assets
@@ -68,22 +78,15 @@ jobs:
       - name: Build
         run: |
           if [[ "${{ matrix.arch }}" == "i686" ]]; then
-            export PC_FLAGS="-DCMAKE_C_FLAGS=-m32 -DCMAKE_CXX_FLAGS=-m32"
+            export PC_CMAKE_FLAGS="-DCMAKE_C_FLAGS=-m32 -DCMAKE_CXX_FLAGS=-m32"
           fi
           export CC=${{ matrix.compiler }}
-          cmake -B ${{github.workspace}}/pc $PC_FLAGS -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DENABLE_ASAN=OFF
-          cmake --build ${{github.workspace}}/pc --config ${{ matrix.build_type }}
+          make pc PC_BUILD_TYPE=${{ matrix.build_type }}
       - name: Test demo playback
         timeout-minutes: 15
         env:
           SDL_VIDEODRIVER: "offscreen"
-          SDL_AUDIODRIVER: dummy
-        run: |
-          for demo in $DEMOS; do
-            echo "::group::demo $demo"
-            ${{github.workspace}}/pc/sotn --demo $demo --replay-fast --replay-and-exit
-            echo "::endgroup::"
-          done
+        run: make pc-test-demos -j
 
   build-macos:
     if: github.repository == 'Xeeynamo/sotn-decomp'
@@ -111,25 +114,25 @@ jobs:
         uses: ./.github/actions/get-dependencies
         with:
           token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
+      - name: Cache sotn_str
+        uses: actions/cache@v5
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            build/pc/sotn_str
+          key: sotn-str-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('tools/sotn_str/Cargo.lock') }}
       - name: Generate assets
         run: |
           make extract_assets
           make build_assets
       - name: Build
-        run: |
-          cmake -B ${{github.workspace}}/pc -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DENABLE_ASAN=OFF
-          cmake --build ${{github.workspace}}/pc --config ${{ matrix.build_type }}
+        run: make pc PC_BUILD_TYPE=${{ matrix.build_type }}
       - name: Test demo playback
         timeout-minutes: 15
         env:
           SDL_VIDEODRIVER: ""
-          SDL_AUDIODRIVER: dummy
-        run: |
-          for demo in $DEMOS; do
-            echo "::group::demo $demo"
-            ${{github.workspace}}/pc/sotn --demo $demo --replay-fast --replay-and-exit
-            echo "::endgroup::"
-          done
+        run: make pc-test-demos -j
 
   build-windows:
     if: github.repository == 'Xeeynamo/sotn-decomp'
@@ -154,27 +157,33 @@ jobs:
         token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
     - uses: actions/setup-go@v7
       with:
-        go-version: '^1.22.4'
+        go-version-file: 'go.work'
+        cache: true
+        cache-dependency-path: "**/*.sum"
+    - name: Cache sotn_str
+      uses: actions/cache@v5
+      with:
+        path: |
+          ~/.cargo/registry
+          ~/.cargo/git
+          build/pc/sotn_str
+        key: sotn-str-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('tools/sotn_str/Cargo.lock') }}
     - name: Generate assets
       run: |
         cd tools/sotn-assets; go install; cd -
         $SOTN_ASSETS = (Get-Command sotn-assets).Source
         make extract_assets
         & make build_assets SOTNASSETS=$SOTN_ASSETS
+    - name: Set up MSVC environment
+      uses: ./.github/actions/setup-msvc
     - name: Build
-      run: |
-        cmake -B ${{github.workspace}}/pc -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
-        cmake --build ${{github.workspace}}/pc --config ${{ matrix.build_type }}
+      env:
+        CC: cl
+        CXX: cl
+      run: make pc PC_BUILD_TYPE=${{ matrix.build_type }}
     - name: Test demo playback
       timeout-minutes: 15
       shell: bash
       env:
         SDL_VIDEODRIVER: offscreen
-        SDL_AUDIODRIVER: dummy
-      run: |
-        sotn_exe=$(find "${{github.workspace}}/pc" -maxdepth 2 -iname 'sotn.exe' -print -quit)
-        for demo in $DEMOS; do
-          echo "::group::demo $demo"
-          "$sotn_exe" --demo $demo --replay-fast --replay-and-exit
-          echo "::endgroup::"
-        done
+      run: make pc-test-demos -j

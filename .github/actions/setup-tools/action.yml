@@ -1,0 +1,29 @@
+name: 'Setup tools'
+description: 'Run make update-dependencies, reusing cached Rust build output between runs'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Initialize mipsmatch
+      id: mipsmatch
+      shell: bash
+      run: |
+        git submodule update --init tools/mipsmatch
+        echo "rev=$(git rev-parse HEAD:tools/mipsmatch)" >> "$GITHUB_OUTPUT"
+
+    - name: Restore tools cache
+      uses: actions/cache@v5
+      with:
+        path: |
+          ~/.cargo/registry
+          ~/.cargo/git
+          ~/.cache/pip
+          tools/mipsmatch/target
+          tools/sotn_str/target
+        key: tools-${{ runner.os }}-${{ steps.mipsmatch.outputs.rev }}-${{ hashFiles('tools/sotn_str/Cargo.lock', 'tools/requirements-python.txt') }}
+        restore-keys: |
+          tools-${{ runner.os }}-
+
+    - name: Update dependencies
+      shell: bash
+      run: make update-dependencies
