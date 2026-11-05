@@ -521,6 +521,10 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config, han
                 continue
             else:
                 raise Exception(f"unknown subsegment type {kind}")
+        if needs_w_init:
+            obj = add_c(nw, ver, f"{src_path}/w_init.c", ld_path, cpp_flags)
+            # w_init needs to come first because it's the header
+            objs.insert(0, obj)
         if sotn_progress_report:
             continue
         step_elf = build_path(ver, f"weapon/w{hand_id}_{weapon_id}.elf")
@@ -530,10 +534,6 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config, han
             f"-T {undefined_syms_auto_path}",
         ]
 
-        if needs_w_init:
-            obj = add_c(nw, ver, f"{src_path}/w_init.c", ld_path, cpp_flags)
-            # w_init needs to come first because it's the header
-            objs.insert(0, obj)
         nw.build(
             rule="psx-ld",
             outputs=step_elf,

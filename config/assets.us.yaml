@@ -2695,3 +2695,7 @@ files:
           - [0x19A040, spriteset, w_058_1]
           - [0x19A808, spriteset, w_058_2]
           - [0x19A808, skip]
+  - target: disks/us/BIN/WEAPON1.BIN
+    asset_path: assets/weapon1
+    src_path: src/weapon
+    splat_config_path: config/splat.us.weapon1.yaml
