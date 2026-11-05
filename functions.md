@@ -781,7 +781,6 @@
 | main       | abort                             |       18 |          2 |        |       |     |
 | main       | func_psp_08936AC8                 |       18 |          2 |        |       |     |
 | main       | sceGuLightColor                   |       18 |          2 |        |       |     |
-|            | func_pspeu_092F3498               |       18 |          2 |        |       |     |
 | main       | DisableAutoPowerOff               |       18 |          3 |        |       |     |
 | main       | SquareRoot12                      |       18 |          3 |        |       |     |
 | main       | SpuSetKey                         |       18 |          3 |        |       |     |
@@ -1957,6 +1956,7 @@
 | st0        | func_pspeu_09251A18               |       31 |          2 |        |       |     |
 | top        | func_pspeu_092480D8               |       31 |          2 |        |       |     |
 | wrp        | func_psp_09244628                 |       31 |          2 |        |       |     |
+|            | func_pspeu_092F3498               |       31 |          2 |        |       |     |
 |            | func_pspeu_092F7298               |       31 |          2 |        |       |     |
 |            | func_pspeu_0924DB58               |       31 |          3 |        |       |     |
 | rbo8       | func_801CE228                     |       31 |          3 |        |       |     |
@@ -3427,7 +3427,7 @@
 | st_init    | func_pspeu_09245C90               |       49 |          1 |        |       |     |
 | dai        | func_pspeu_09258810               |       49 |          1 |        |       |     |
 | rdai       | func_pspeu_09253C00               |       49 |          1 |        |       |     |
-| w1_012_psp | w1_012_Load                       |       49 |          2 |        |       |     |
+| w1_012_psp | WeaponLoad                        |       49 |          2 |        |       |     |
 | bo7        | func_us_80194338                  |       49 |          3 |        |       |     |
 | rbo0       | func_pspeu_092378D0               |       49 |          3 |        |       |     |
 | rbo0       | func_pspeu_09238118               |       49 |          3 |        |       |     |
