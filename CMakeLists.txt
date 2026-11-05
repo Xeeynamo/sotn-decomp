@@ -671,6 +671,53 @@ set(SOURCE_FILES_STAGE_DAI
     src/st/dai/e_winged_guard.c
 )
 
+set(SOURCE_FILES_STAGE_RDAI
+    src/pc/stages/stage_rdai.c
+    src/st/rdai/header.c
+    src/st/rdai/sprite_banks.c
+    src/st/rdai/pal_8C.c
+    src/st/rdai/palette_def.c
+    src/st/rdai/layers.c
+    src/st/rdai/graphics_banks.c
+    src/st/rdai/gen/e_laydef.c
+    src/st/rdai/e_init.c
+    src/st/rdai/e_room_bg.c
+    src/st/rdai/e_red_door_tiles.c
+    src/st/rdai/e_lock_camera.c
+    src/st/rdai/e_breakable.c
+    src/st/rdai/e_stained_glass.c
+    src/st/rdai/d_prize_drops.c
+    src/st/rdai/unk_33B94.c
+    src/st/rdai/e_spikes.c
+    src/st/rdai/st_update.c
+    src/st/rdai/st_collision.c
+    src/st/rdai/e_red_door.c
+    src/st/rdai/st_common.c
+    src/st/rdai/e_collect.c
+    src/st/rdai/e_misc.c
+    src/st/rdai/e_particles.c
+    src/st/rdai/e_room_fg.c
+    src/st/rdai/e_archer.c
+    src/st/rdai/e_spectral_sword.c
+    src/st/rdai/e_sniper_of_goth.c
+    src/st/rdai/e_imp.c
+    src/st/rdai/e_balloon_pod.c
+    src/st/rdai/e_black_panther.c
+    src/st/rdai/gen/rooms.c
+    src/st/rdai/e_clouds.c
+    src/st/rdai/gen/e_layout.c
+    src/st/rdai/stage_data.c
+    src/st/rdai/tilemaps.c
+    src/st/rdai/gen/us/sprites.c
+    src/st/rdai/e_tower_exit.c
+    src/st/rdai/e_stage_name.c
+    src/st/rdai/prim_helpers.c
+    src/st/rdai/e_room_fg_2.c
+    src/st/rdai/e_room_bg_2.c
+    src/st/rdai/create_entity.c
+    src/st/rdai/popup.c
+)
+
 set(SOURCE_FILES_STAGE_NP3
     src/pc/stages/stage_np3.c
     src/st/np3/header.c
@@ -2287,6 +2334,7 @@ add_overlay(cat ${SOURCE_FILES_STAGE_CAT})
 add_overlay(no2 ${SOURCE_FILES_STAGE_NO2})
 add_overlay(chi ${SOURCE_FILES_STAGE_CHI})
 add_overlay(dai ${SOURCE_FILES_STAGE_DAI})
+add_overlay(rdai ${SOURCE_FILES_STAGE_RDAI})
 add_overlay(np3 ${SOURCE_FILES_STAGE_NP3})
 add_overlay(cen ${SOURCE_FILES_STAGE_CEN})
 add_overlay(no4 ${SOURCE_FILES_STAGE_NO4})
