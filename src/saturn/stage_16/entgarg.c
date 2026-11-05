@@ -3,15 +3,18 @@
 #include <saturn_sprite.h>
 #include "stage_16.h"
 
-EntityEntry g_Stage16EntityGargoyle = {&g_Stage16SpriteBank24, func_060E63A8};
+EntityEntry g_Stage16EntityGargoyle = {
+    &g_Stage16SpriteBankGargoyle, func_060E63A8};
 
 /* Working velocities used while the gargoyle emits its attack entities. */
 s32 g_Stage16GargoyleAttackVelocities[3] = {FIX(2), FIX(2), 0};
 
-EntityEntry g_Stage16EntityEntry33 = {&g_Stage16SpriteBank24, func_060E6A6C};
+EntityEntry g_Stage16EntityEntry33 = {
+    &g_Stage16SpriteBankGargoyle, func_060E6A6C};
 s32 g_Stage16GargoyleAttackEntityParams[2] = {2, 0};
 
-EntityEntry g_Stage16EntityEntry34 = {&g_Stage16SpriteBank24, func_060E6C88};
+EntityEntry g_Stage16EntityEntry34 = {
+    &g_Stage16SpriteBankGargoyle, func_060E6C88};
 
 u8 g_Stage16GargoyleAnimationData[] = {
     0x62, 1,    0x62, 0x3A, 0x62, 0x3B, 0xFF, 0xFF, 3,    2,    1,    3,

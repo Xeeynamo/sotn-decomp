@@ -228,6 +228,7 @@ extern s32 DAT_06086390;
 extern SpritePart g_SpritePartPool[SPRITE_PART_MAX]; /* 0x0608D7F8 */
 extern SpriteObject g_SpriteObjectPool[SPRITE_OBJECT_MAX + 1];
 s32 func_0606F378(s32 arg0);
+u8* GetRoomLoadDefTable(u16 arg0);
 
 extern s32 DAT_0605D7F4;
 extern s32 DAT_0605D7FC;

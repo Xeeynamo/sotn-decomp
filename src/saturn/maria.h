@@ -290,12 +290,10 @@ extern AnimationFrame g_MariaAnim_060C2E64[];
 extern SaturnSpriteResource g_MariaSpriteResources[13];
 void func_060BF180(void);
 extern s16 g_MariaMapRevealRowIndices[7];
-void func_060BB9BC(s32*);
 extern s32 g_MariaSavedMapPlaneConfig;
 extern u8* g_MariaSavedMapVramBase;
 extern u8 g_MariaCastleMapBitmap[240][160];
 extern u32 g_MariaCastleMapState;
-void func_060BB330();
 extern u8 D_80174FB8;
 extern u8 D_80174FB4;
 extern u8 D_80174FB0;
@@ -324,12 +322,9 @@ typedef struct {
     /* 0x0E */ s16 entityRoomIndex;
 } MariaAttackDef; /* size = 0x10 */
 
-// PlaySfx, RicSetFall, RicSetStand, RicSetStep and RicSetAnimation
 // intentionally missing
 void func_060ABE94(Entity* entity);
 void func_060ABFF0(Entity* entity, MariaAttackDef* def);
-s32 func_060ABFF0NoInline(Entity* entity, MariaAttackDef* def) __asm__(
-    "_func_060ABFF0");
 void func_060BF3D0(void);
 s32 func_060A9474(void);
 u16 SPR_2LookupTblNoToVram(u16 tableNo);
@@ -345,7 +340,6 @@ extern AnimationFrame g_MariaEntity87Anim0;
 extern MariaAttackDef g_MariaEntity060BCFF4CombatConfig;
 extern MariaAttackDef g_MariaEntity060BD150CombatConfig;
 s32 func_060AAA2C(void);
-s32 func_060AAA2CNoInline(void) __asm__("_func_060AAA2C");
 extern AnimationFrame g_MariaAnimFall;
 extern AnimationFrame g_MariaAnim_060C2ADC;
 extern AnimationFrame g_MariaAnim_060C2B18;
@@ -381,7 +375,6 @@ extern AnimationFrame g_MariaAnim_060C2E4C;
 extern AnimationFrame g_MariaAnim_060C2F8C[];
 extern SubweaponDef g_MariaSubweaponDefs[];
 extern u8 g_MariaPrimitiveSizeIndices[];
-extern s16 DAT_060C6D7C;
 s32 func_060AA948(void);
 /* End moved declarations */
 

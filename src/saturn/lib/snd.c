@@ -317,7 +317,7 @@ SndRet SND_StartPcmTL(SndPcmStartPrm* sprm, SndPcmChgPrm* cprm) {
 }
 
 // func_06018D88
-SndRet SND_StopPcm2(SndPcmNum pcm_num) {
+SndRet SND_StopPcm(SndPcmNum pcm_num) {
     if (intrflag)
         return SND_RET_NSET;
     intrflag = 1;

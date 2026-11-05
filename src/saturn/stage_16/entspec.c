@@ -3,4 +3,5 @@
 #include <saturn_sprite.h>
 #include "stage_16.h"
 
-EntityEntry g_Stage16EntitySpecter = {&g_Stage16SpriteBank23, func_060E55B0};
+EntityEntry g_Stage16EntitySpecter = {
+    &g_Stage16SpriteBankSpecter, func_060E55B0};

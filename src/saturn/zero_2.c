@@ -42,6 +42,9 @@ extern u16 DAT_06064520[];
     x & 1;                                                                     \
     x >>= 1
 
+u16* func_060199F8();
+u16* func_0601992C();
+
 // very similar to func_80106A28
 u16* func_0601972C(u16 ch) {
     u16* srcPtr;

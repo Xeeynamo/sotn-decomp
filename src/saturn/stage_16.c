@@ -127,7 +127,7 @@ void func_060E01D4(Entity* self) {
         break;
     }
 }
-INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E02C0, func_060E02C0);
+INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E02C0, EntityDestructAnim);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E042C, func_060E042C);
 #define SPAWN_DESTRUCT_ANIM_ID 19
 #include "spawn_destruct_anim.h"
@@ -306,7 +306,7 @@ void func_060E323C(s32 scale, s32 unused) {
     s32 factor;
     s32 i;
 
-    base = DAT_060485E0;
+    base = (s32*)g_FileLoadBuffer;
     src = g_Stage16Entity08ModelVertices14[0];
     dst = base;
     factor = scale << 8;
@@ -437,8 +437,7 @@ void func_060E49F0(Entity* self) {
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E4AEC, func_060E4AEC);
 void func_060E4C74(Entity* self) {
     SaturnSpriteImage* images = g_Stage16SpriteBank22Images;
-    SaturnSpriteResource* bank =
-        (SaturnSpriteResource*)g_Stage16SpriteBankSkeletonBeast;
+    SaturnSpriteResource* bank = &g_Stage16SpriteBankSkeletonBeast;
 
     self->unk0 =
         CreateSpriteObject(bank->allocationIndex, bank->flags, images, 5);
@@ -477,8 +476,7 @@ INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E6A6C, func_060E6A6C);
 void func_060E6C88(Entity* self) {
     if (self->step == 0) {
         SaturnSpriteImage* images = g_Stage16SpriteBank24Images;
-        SaturnSpriteResource* bank =
-            (SaturnSpriteResource*)g_Stage16SpriteBankGargoyle;
+        SaturnSpriteResource* bank = &g_Stage16SpriteBankGargoyle;
 
         self->unk0 =
             CreateSpriteObject(bank->allocationIndex, bank->flags, images, 1);

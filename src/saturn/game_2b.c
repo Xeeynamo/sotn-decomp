@@ -10,9 +10,9 @@ void DestroyEntity(Entity* entity);
 
 void PlaySfx(s32 sfxId);
 
-extern s32 DAT_00292000;
+extern s32 DAT_00292000[];
 
-s32* func_060784A8(void) { return &DAT_00292000; }
+s32* func_060784A8(void) { return DAT_00292000; }
 
 u16 LocalLookupTblNoToVram(u16 tableNo);
 
@@ -46,7 +46,7 @@ extern SprSpCmd* DAT_0605AEAC;
 // original name: disp_char
 void func_06078550(s32 arg0, u8 ch, Point16* pos);
 
-void func_06078550_noInline(s32 arg0, u8 ch, Point16* pos) {
+void func_06078550(s32 arg0, u8 ch, Point16* pos) {
     SprSpCmd* cmd = &DAT_06086108;
     SaturnSpriteResource* iVar5 = DAT_060645EC[13];
 
@@ -94,7 +94,7 @@ void func_06078604(s32 arg0, u8* str, Point16* pos) {
         if (ch != 0) {
             point.x = drawX;
             point.y = drawY;
-            func_06078550(arg0, ch, &point);
+            ((void (*)(s32, u8, void*))func_06078550)(arg0, ch, &point);
             count++;
         }
 
@@ -110,7 +110,7 @@ void func_06078684(s32 arg0, s32 num, Point16* pos) {
     while (count < 10) {
         u8 ch = num % 10;
         point.x -= 7;
-        func_06078550(arg0, ch + 0x10, &point);
+        ((void (*)(s32, u8, void*))func_06078550)(arg0, ch + 0x10, &point);
         num /= 10;
         if (num == 0) {
             break;
@@ -2033,4 +2033,4 @@ s16 CalcWaveOffset(s32 arg0, s32 arg1, s32 angle) {
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607C0A0, func_0607C0A0);
 
 // MTH_GetRand
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607C0BC, func_0607C0BC);
+INCLUDE_ASM("asm/saturn/game/f_nonmat", f607C0BC, MTH_GetRand);

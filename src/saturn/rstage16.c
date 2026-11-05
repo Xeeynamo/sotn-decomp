@@ -165,7 +165,7 @@ void func_060DFB7C(Entity* self) {
         break;
     }
 }
-INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60DFC68, func_060DFC68);
+INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60DFC68, EntityDestructAnim);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60DFDD4, func_060DFDD4);
 #define SPAWN_DESTRUCT_ANIM_ID 19
 #include "spawn_destruct_anim.h"
@@ -294,7 +294,7 @@ void func_060E2300(s32 scale, s32 unused) {
     s32 factor;
     s32 i;
 
-    base = DAT_060485E0;
+    base = (s32*)g_FileLoadBuffer;
     src = (MthXyz*)g_RStage16Entity08ModelVertices14;
     dst = base;
     factor = scale << 8;

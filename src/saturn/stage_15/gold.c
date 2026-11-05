@@ -2,7 +2,7 @@
 #include "sattypes.h"
 #include "stage_15.h"
 
-char* g_Stage15GoldCollectTexts[10] = {
+const char* g_Stage15GoldCollectTexts[10] = {
     g_Stage15GoldText1,    g_Stage15GoldText25,   g_Stage15GoldText50,
     g_Stage15GoldText100,  g_Stage15GoldText250,  g_Stage15GoldText400,
     g_Stage15GoldText700,  g_Stage15GoldText1000, g_Stage15GoldText2000,

@@ -34,8 +34,11 @@ typedef struct {
     s16 offset;
 } ShakeState;
 extern ShakeState DAT_06057A10;
-extern s32 DAT_00252000;
+extern u8 DAT_00252000[];
 extern s32 DAT_00258000;
+extern u8 DAT_002B2000[];
+extern s16 DAT_002C7000[];
+extern s32 DAT_002F2000[];
 extern s32 DAT_060937F8;
 
 extern SaturnSpriteResource** DAT_060645D0;
@@ -43,12 +46,12 @@ extern SaturnSpriteResource** DAT_060645D0;
 extern Unk0605DB60 d_0605DB60[32];
 
 typedef struct {
-    s32 dst0;
-    s32 dst4;
+    u16* dst0;
+    u16* dst4;
     u16* unk8;
-    s32 unkC;
-    s32 unk10;
-    s32 unk14;
+    u8* unkC;
+    u8* unk10;
+    u8* unk14;
     s32 unk18;
     s32 unk1C;
     s32 unk20;
@@ -88,18 +91,18 @@ extern u8 DAT_00200000[];
 extern u8 DAT_00211800[];
 extern u8 DAT_0022A000[];
 extern u8 g_FileLoadBuffer[];
-extern s32 DAT_060485E0[];
 extern u8 g_Weapon0OvlArea[];
 extern u8 g_Weapon1OvlArea[];
 
 void func_0600871C(Unk0605CD90*, UNK_0605c680*, s32);
 
 void BuildSubDispTilemap(Unk0605CD90* arg0);
+s32 DecompressLZSS(u8*, u8*, u32);
 void DmaScroll(u16* src, u16* dest, u32 cnt);
 
 typedef struct {
     u32 tileFlags;
-    u32 src;
+    u16* src;
     u32 dest;
     u32 cnt;
 } BgTransfer;
@@ -107,8 +110,8 @@ typedef struct {
 extern Unk0605CD90 DAT_0605CD90[4];
 extern BgTransfer DAT_0605D6C0[8];
 
-extern s32 DAT_002E0000;
-#define DMA_SRC_ADDR ((u16*)&DAT_002E0000)
+extern u16 DAT_002E0000[];
+#define DMA_SRC_ADDR DAT_002E0000
 
 extern s16 DAT_06062224[];
 extern u16 DAT_06039210[];
@@ -170,7 +173,7 @@ extern u8 DAT_06057f68;
 extern u8* DAT_060645B8;
 void func_06009510(u16);
 void SetCanRevealMap(void);
-extern s32 DAT_0605D7DC;
+extern u8* DAT_0605D7DC;
 extern s32 DAT_0605ceb0;
 extern Unk0605cd70 DAT_0605cd70;
 extern s32 g_PlayerX;
@@ -190,7 +193,7 @@ extern s32 g_GameClearFlag;
 extern u8 g_CastleMap[0x800];
 extern u16 D_8003C730;
 extern s32 D_8013AEE4;
-extern s32 DAT_0606459C;
+extern u8* DAT_0606459C;
 extern u8 DAT_06038DC0[16];
 extern u16 DAT_06038DD0[][0x10];
 extern s32 DAT_06038FD0;
@@ -317,7 +320,7 @@ void func_0600456C();
 void ClearDebugPrintTilemap(void);
 extern s32 SpMstCmdPos;
 void CSH_Init(Uint16 sw);
-s32 ReadFileToAddr(char* path, s32 addr);
+s32 ReadFileToAddr(char* path, void* addr);
 extern s16 DAT_0605AEA8;
 extern u16 DAT_0605AEB0;
 extern Equipment* DAT_060645AC;
