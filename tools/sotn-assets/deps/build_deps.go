@@ -50,9 +50,6 @@ func EnsureBuildDeps(versions []string) error {
 
 func ensurePSXDeps(eg *errgroup.Group) {
 	eg.Go(func() error {
-		return GitSubmoduleInitAndUpdate("tools/maspsx", true)
-	})
-	eg.Go(func() error {
 		return downloadTarGzFromGithubIfNotExists(
 			"Xeeynamo/sotn-decomp", cc1Psx26Release,
 			"cc1-psx-26", "bin/cc1-psx-26",

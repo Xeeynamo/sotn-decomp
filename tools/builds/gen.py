@@ -16,6 +16,8 @@ import yaml
 entries = dict()
 linker_scripts = set()
 
+CMASPSX = "bin/cmaspsx"
+
 extra_cpp_defs = ""
 sotn_progress_report = "SOTN_PROGRESS_REPORT" in os.environ
 force_symbols = "FORCE_SYMBOLS" in os.environ
@@ -189,7 +191,7 @@ def add_c_psx(
         rule="psx-cc",
         outputs=output,
         inputs=file_name,
-        implicit=[ld_path],
+        implicit=[ld_path, CMASPSX],
         order_only=[f"src/.assets_build_done_{ver}"],
         variables={
             "version": ver,
@@ -858,6 +860,16 @@ with open(build_ninja, "w") as f:
     nw = ninja_syntax.Writer(f)
 
     nw.rule(
+        "host-cc",
+        command="cc -O2 -Wall -Werror -static -s -o $out $in",
+        description="host cc $in",
+    )
+    nw.build(
+        rule="host-cc",
+        outputs=CMASPSX,
+        inputs="tools/builds/cmaspsx.c",
+    )
+    nw.rule(
         "splat",
         # 'touch' circumnavigates a bug where splat would not update the
         # mtime of the linker script if it is already up-to-date.
@@ -876,7 +888,7 @@ with open(build_ninja, "w") as f:
         " | tools/sotn_str/target/release/sotn_str process"
         " | iconv --from-code=UTF-8 --to-code=Shift-JIS"
         " | bin/cc1-psx-26 -G0 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -g -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff $cc_flags"
-        " | python3 tools/maspsx/maspsx.py --expand-div --aspsx-version=$aspsx_ver"
+        f" | {CMASPSX} $aspsx_ver"
         " | mipsel-linux-gnu-as -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1 -G0 -o $out"
     )
     nw.rule(
