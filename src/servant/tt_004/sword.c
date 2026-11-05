@@ -5,10 +5,6 @@
 #include <scratchpad.h>
 #include <sfx.h>
 
-#if defined(VERSION_PC) && !defined(gte_stdp)
-void gte_stdp(s32* r0);
-#endif
-
 #define UNK_SWORD_PRIM_COUNT 96
 #define CLUT_INDEX_SERVANT_2 0x410
 

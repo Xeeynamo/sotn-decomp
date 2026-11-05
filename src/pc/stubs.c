@@ -139,8 +139,4 @@ void func_801073C0(void) { NOT_IMPLEMENTED; }
 
 void UpdateCd(void) { NOT_IMPLEMENTED; }
 
-#ifndef gte_stdp
-void gte_stdp(s32* r0) { NOT_IMPLEMENTED; }
-#endif
-
 void func_801083BC(void) { NOT_IMPLEMENTED; }
