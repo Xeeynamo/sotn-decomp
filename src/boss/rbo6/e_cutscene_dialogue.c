@@ -534,7 +534,7 @@ void EntityCutscene(Entity* self) {
     case 7:
         g_CutsceneHasControl = 0;
         if (self->params) {
-            g_CastleFlags[0xE1] = 1;
+            g_CastleFlags[DRAC_FIGHT_CS_UNK] = 1;
             g_Settings.D_8003CB04 |= 0x400000;
         } else {
             g_Settings.D_8003CB04 |= 0x200000;

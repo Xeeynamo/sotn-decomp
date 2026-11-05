@@ -43,6 +43,7 @@ void EntityUnkID28(Entity* self) {
     }
 }
 
+// Exists in the entity layout file
 void EntityUnkID2A(Entity* self) {
     Primitive* prim;
     s32 primIndex;
@@ -52,18 +53,19 @@ void EntityUnkID2A(Entity* self) {
         primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
         if (primIndex != -1) {
             InitializeEntity(g_EInitInteractable);
-            self->flags |= 0x800000;
+            self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            
+
             prim->x0 = prim->x2 = 0;
             prim->x1 = prim->x3 = 0x100;
             prim->y0 = prim->y1 = 0;
             prim->y2 = prim->y3 = 0xF0;
-            
+
             PCOL(prim) = 0xFF;
             prim->priority = 0x1F8;
-            prim->drawMode = 0x55;
+            prim->drawMode =
+                DRAW_UNK_40 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
         }
         break;
     case 1:
@@ -89,25 +91,26 @@ void EntityUnkID2B(Entity* self) {
         primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
         if (primIndex != -1) {
             InitializeEntity(g_EInitInteractable);
-            self->flags |= 0x800000;
+            self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            
+
             prim->x0 = prim->x2 = 0;
             prim->x1 = prim->x3 = 0x100;
             prim->y0 = prim->y1 = 0;
             prim->y2 = prim->y3 = 0xF0;
-            
+
             PCOL(prim) = 0;
             prim->priority = 0x80;
-            prim->drawMode = 0;
+            prim->drawMode = DRAW_DEFAULT;
         }
         break;
     case 1:
-        if(g_CutsceneFlags & 0x100){
+        if (g_CutsceneFlags & 0x100) {
             prim = &g_PrimBuf[self->primIndex];
             PCOL(prim) = 0xFF;
-            prim->drawMode = 0x55;
+            prim->drawMode =
+                DRAW_UNK_40 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             self->step++;
         }
         break;
@@ -125,12 +128,12 @@ void EntityUnkID2C(Entity* self) {
     Primitive* prim;
     s32 primIndex;
 
-    switch (self->step) {                              /* irregular */
+    switch (self->step) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
         if (primIndex != -1) {
             InitializeEntity(g_EInitInteractable);
-            self->flags |= 0x800000;
+            self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
             prim->x0 = prim->x2 = 0x60;
@@ -138,7 +141,8 @@ void EntityUnkID2C(Entity* self) {
             prim->y0 = prim->y1 = 0x40;
             prim->y2 = prim->y3 = 0xC0;
             PCOL(prim) = 0xFF;
-            prim->drawMode = 0x55;
+            prim->drawMode =
+                DRAW_UNK_40 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             prim->priority = 0x82;
         }
         break;
@@ -162,22 +166,22 @@ void EntityUnkID2C(Entity* self) {
             }
             if (prim->r0 > 0xFD) {
                 PCOL(prim) = 0;
-                prim->drawMode = 0;
+                prim->drawMode = DRAW_DEFAULT;
                 SetStep(3);
-                g_api.PlaySfx(0x62F);
+                g_api.PlaySfx(SFX_WEAPON_APPEAR);
             }
         }
         break;
     case 3:
         prim = &g_PrimBuf[self->primIndex];
-        prim->type = 3;
-        
+        prim->type = PRIM_G4;
+
         prim->x0 = prim->x2 = 0;
         prim->x1 = prim->x3 = 0x100;
         prim->y0 = prim->y1 = 0x10;
         prim->y2 = prim->y3 = 0xF0;
         prim->priority = 0x7F;
-        prim->drawMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         if (self->poseTimer & 1) {
             prim->r0 = 0x80;
             prim->g0 = 0x80;
@@ -214,15 +218,16 @@ void EntityUnkID2C(Entity* self) {
     }
 }
 
-void EntityUnkID2D(Entity* self) {
-    switch (self->step) {                              /* irregular */
+// Dracula sitting in his chair during the cutscene before the fight
+void EntityDraculaChair(Entity* self) {
+    switch (self->step) {
     case 0:
         InitializeEntity(g_EInitInteractable);
-        self->animSet = 0x8001;
-        self->palette = 0x200;
+        self->animSet = ANIMSET_OVL(1);
+        self->palette = PAL_DRACULA;
         self->unk5A = 0x48;
-        self->animCurFrame = 0x35;
-        self->drawFlags = 3;
+        self->animCurFrame = 53;
+        self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleX = 0x100;
         self->scaleY = 0x100;
         self->zPriority = 0x81;
@@ -230,7 +235,7 @@ void EntityUnkID2D(Entity* self) {
     case 1:
         if (g_CutsceneFlags & 0x80) {
             self->step++;
-            self->velocityY = 0x8000;
+            self->velocityY = FIX(0.5);
         }
         break;
     case 2:
@@ -282,14 +287,14 @@ void EntityUnkID29(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         self->ext.utimer.t++;
         if (self->ext.utimer.t > 8) {
-            #ifdef VERSION_PSP
+#ifdef VERSION_PSP
             g_unkGraphicsStruct.unk28 = 0xFF;
-            #endif
+#endif
             self->step++;
             prim->drawMode = DRAW_HIDE;
-            #ifndef VERSION_PSP
+#ifndef VERSION_PSP
             DestroyEntity(self);
-            #endif            
+#endif
         } else if (self->ext.utimer.t & 1) {
             prim->drawMode = DRAW_HIDE;
         } else {
@@ -308,14 +313,11 @@ void EntityUnkID29(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         self->step++;
         PCOL(prim) = 0;
-        prim->drawMode =
-            DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
-        
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
         break;
     case 4:
         prim = &g_PrimBuf[self->primIndex];
         PCOL(prim) += 1;
-
         if (prim->r0 == 0xFF) {
             prim->drawMode = DRAW_COLORS;
             self->step++;
@@ -328,7 +330,7 @@ void EntityUnkID29(Entity* self) {
         if (prim->r0 < 5) {
             g_PauseAllowed = true;
             g_unkGraphicsStruct.pauseEnemies = false;
-            
+
             if (g_RoomCount > 1846) {
                 D_800978B4 = 3;
             } else {

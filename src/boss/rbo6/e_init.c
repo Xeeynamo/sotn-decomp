@@ -45,7 +45,7 @@ void EntityUnkID29(Entity* self);
 void EntityUnkID2A(Entity* self);
 void EntityUnkID2B(Entity* self);
 void EntityUnkID2C(Entity* self);
-void EntityUnkID2D(Entity* self);
+void EntityDraculaChair(Entity* self);
 void EntityBackgroundVortex(Entity* self);
 void func_us_801B1738(Entity* self);
 void func_us_801B2864(Entity* self);
@@ -97,7 +97,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityUnkID2A,
     EntityUnkID2B,
     EntityUnkID2C,
-    EntityUnkID2D,
+    EntityDraculaChair,
     EntityBackgroundVortex,
     func_us_801B1738,
     func_us_801B2864,
