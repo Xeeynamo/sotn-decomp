@@ -212,8 +212,8 @@ class DecompProgressWeaponStats:
     code_matching_prev: int
     functions_prev: int
 
-    def __init__(self):
-        self.name = "weapon"
+    def __init__(self, hand_id: int):
+        self.name = f"weapon{hand_id}"
         self.exists = True
         self.code_matching = 0
         self.code_total = 0
@@ -222,7 +222,11 @@ class DecompProgressWeaponStats:
         self.data_imported = 0
         self.data_total = 0
         for i in range(0, 59):
-            stats = DecompProgressStats("weapon", f"weapon/w0_{i:03d}", "weapon")
+            if hand_id == 1:
+                name = self.name
+            else:
+                name = "weapon"
+            stats = DecompProgressStats(name, f"weapon/w{hand_id}_{i:03d}", "weapon")
             if stats.exists:
                 self.code_matching += stats.code_matching
                 self.code_total += stats.code_total
@@ -414,7 +418,8 @@ if __name__ == "__main__":
     progress = dict[str, DecompProgressStats]()
     progress["main"] = DecompProgressStats("main", "main")
     progress["dra"] = DecompProgressStats("dra", "dra")
-    progress["weapon"] = DecompProgressWeaponStats()
+    progress["weapon"] = DecompProgressWeaponStats(0)
+    progress["weapon1"] = DecompProgressWeaponStats(1)
     progress["ric"] = DecompProgressStats("ric", "ric")
     progress["maria"] = DecompProgressStats("maria", "maria")
     progress["stare"] = DecompProgressStats("stare", "st/are")

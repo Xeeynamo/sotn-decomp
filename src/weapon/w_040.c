@@ -74,7 +74,6 @@ static FrameProperty hitboxes[] = {
     {4, 1, 10, 4}, {0, 0, 3, 3},  {-63, -63, 0, 0}};
 static s32 speed_mod[] = {FIX(0.875), FIX(1), FIX(0.75), FIX(1.125)};
 static u16* g_WeaponCluts[] = {pal_0};
-static s32 g_HandId = HAND_ID;
 static s32 D_11C000_8017B540;
 
 #include "shared.h"
@@ -96,7 +95,7 @@ void func_11C000_8017AC14(void) {
     LoadImage(&rect, (u_long*)dst);
 }
 
-static void EntityWeaponAttack(Entity* self) {
+void EntityWeaponAttack(Entity* self) {
     Collider col;
     s32 var_a2;
     s16 xMod;
@@ -245,7 +244,7 @@ s32 func_ptr_80170004(Entity* self) {
     func_11C000_8017AC14();
 }
 
-static void func_ptr_80170008(Entity* self) {
+void func_ptr_80170008(Entity* self) {
     s32 var_a1;
 
     if (self->step == 0) {
@@ -282,7 +281,7 @@ static void func_ptr_80170008(Entity* self) {
     g_api.UpdateAnim(hitboxes, NULL);
 }
 
-static void func_ptr_8017000C(Entity* self) {
+void func_ptr_8017000C(Entity* self) {
     if (self->step == 0) {
         self->animSet = self->ext.weapon.parent->animSet;
         self->unk5A = self->ext.weapon.parent->unk5A;
@@ -298,24 +297,24 @@ static void func_ptr_8017000C(Entity* self) {
     }
 }
 
-static s32 func_ptr_80170010(Entity* self) {}
+s32 func_ptr_80170010(Entity* self) {}
 
-static s32 func_ptr_80170014(Entity* self) {}
+s32 func_ptr_80170014(Entity* self) {}
 
-static int GetWeaponId(void) { return 40; }
+int GetWeaponId(void) { return 40; }
 
-static void EntityWeaponShieldSpell(Entity* self) {}
+void EntityWeaponShieldSpell(Entity* self) {}
 
-static void func_ptr_80170024(Entity* self) {}
+void func_ptr_80170024(Entity* self) {}
 
-static void func_ptr_80170028(Entity* self) {}
+void func_ptr_80170028(Entity* self) {}
 
-static void WeaponUnused2C(void) {}
+void WeaponUnused2C(void) {}
 
-static void WeaponUnused30(void) {}
+void WeaponUnused30(void) {}
 
-static void WeaponUnused34(void) {}
+void WeaponUnused34(void) {}
 
-static void WeaponUnused38(void) {}
+void WeaponUnused38(void) {}
 
-static void WeaponUnused3C(void) {}
+void WeaponUnused3C(void) {}

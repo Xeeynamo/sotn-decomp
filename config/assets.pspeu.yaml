@@ -363,6 +363,65 @@ files:
         vram: 0x09237700
         assets:
           - [0x80, skip]
+          - [0x2BF00, cmpgfx, gfx_stage_name_jp_sm, 128, 128, 4] # unused
+          - [0x2C1D8, cmpgfx, gfx_stage_name_jp_lg, 128, 128, 4]
+          - [0x2C720, cmpgfx, gfx_cavern_door, 128, 128, 4, 0x41048]
+          - [0x2D518, cmpgfx, gfx_blade_master_1, 128, 128, 4, 0x41068]
+          - [0x2DE88, cmpgfx, gfx_blade_master_2, 128, 128, 4, 0x41068]
+          - [0x2E7A0, cmpgfx, gfx_blade_master_3, 128, 128, 4, 0x41068]
+          - [0x2EA50, cmpgfx, gfx_blade_soldier, 128, 128, 4, 0x410A8]
+          - [0x2F548, cmpgfx, gfx_bone_musket, 128, 128, 4, 0x410E8]
+          - [0x30088, cmpgfx, gfx_owl_knight_owl, 128, 128, 4, 0x41168]
+          - [0x31110, cmpgfx, gfx_owl_knight_1, 128, 128, 4, 0x41168]
+          - [0x31F88, cmpgfx, gfx_owl_knight_2, 128, 128, 4, 0x41168]
+          - [0x32CA0, cmpgfx, gfx_valhalla_knight_1, 128, 128, 4, 0x41248]
+          - [0x33AF0, cmpgfx, gfx_valhalla_knight_2, 128, 128, 4, 0x41248]
+          - [0x34CD8, cmpgfx, gfx_valhalla_knight_3, 128, 128, 4, 0x41248]
+          - [0x35AD8, cmpgfx, gfx_axe_knight_1, 128, 128, 4, 0x41428]
+          - [0x369C8, cmpgfx, gfx_axe_knight_2, 128, 128, 4, 0x41428]
+          - [0x375B8, cmpgfx, gfx_armor_lord_1, 128, 128, 4, 0x412A8]
+          - [0x384F0, cmpgfx, gfx_armor_lord_2, 128, 128, 4, 0x412A8]
+          - [0x39550, cmpgfx, gfx_armor_lord_3, 128, 128, 4, 0x412A8]
+          - [0x3A160, cmpgfx, gfx_armor_lord_4, 128, 128, 4, 0x412A8]
+          - [0x3AC20, cmpgfx, gfx_hunting_girl, 128, 128, 4, 0x414A8]
+          - [0x3B358, cmpgfx, gfx_paranthropus_1, 128, 128, 4, 0x41508]
+          - [0x3BC28, cmpgfx, gfx_paranthropus_2, 128, 128, 4, 0x41508]
+          - [0x3C2A0, cmpgfx, gfx_bone_scimitar, 128, 128, 4, 0x415C8]
+          - [0x3CE80, cmpgfx, e_explosion_unk_1, 128, 128, 4]
+          - [0x3DBB0, cmpgfx, e_explosion_unk_2, 128, 128, 4]
+          - [0x3ED58, cmpgfx, gfx_plate_lord, 128, 128, 4, 0x41628]
+          - [0x3F828, cmpgfx, gfx_grave_keeper, 128, 128, 4, 0x41688]
+          - [0x40490, cmpgfx, gfx_grave_keeper_tombstone, 128, 128, 4, 0x41688]
+          - [0x40D88, palette, pal_puff_opaque, 16] # 0x2E0
+          - [0x41048, palette, pal_cavern_door, 16] # 0x200
+          - [0x41068, palette, pal_blade_master, 16] # 0x201
+          - [0x410A8, palette, pal_blade_soldier, 16] # 0x203
+          - [0x410E8, palette, pal_bone_musket, 16] # 0x205
+          - [0x41168, palette, pal_owl_knight, 16] # 0x209
+          - [0x41248, palette, pal_valhalla_knight, 16] # 0x210
+          - [0x412A8, palette, pal_armor_lord, 16] # 0x216
+          - [0x41428, palette, pal_blue_axe_knight, 16] # 0x213
+          - [0x414A8, palette, pal_hunting_girl, 16] # 0x21C
+          - [0x41508, palette, pal_paranthropus, 16] # 0x21F
+          - [0x41568, palette, pal_flea_man_armor, 16] # 0x222
+          - [0x415C8, palette, pal_bone_scimitar, 16] # 0x225
+          - [0x41628, palette, pal_plate_lord, 16] # 0x226
+          - [0x41688, palette, pal_grave_keeper_tombstone, 16] # 0x229
+          - [0x416C8, skip]
+          - [0x4FAF8, skip]
+          - [0x4FB28, skip]
+          - [0x5CD98, sprite_banks, psp/sprite_banks]
+          - [0x5CE00, layers, layers]
+          - [0x5CFC0, palette, pal_90, 16]
+          - [0x5CFE0, palette, pal_B0, 16]
+          - [0x5D000, palette, pal_D0, 16]
+          - [0x5D020, palette, pal_F0, 16]
+          - [0x5D040, palette, pal_110, 16]
+          - [0x5D060, paldef, palette_def]
+          - [0x5D150, gfx_banks, psp/graphics_banks]
+          - [0x5D3E0, skip]
+          - [0x5D7C8, rooms, rooms]
+          - [0x5D870, skip]
           - [0x5E130, cmpgfx, stage_name_en, 128, 64, 4]
           - [0x5E2B8, cmpgfx, stage_name_it, 128, 64, 4]
           - [0x5E410, cmpgfx, stage_name_sp, 128, 64, 4]

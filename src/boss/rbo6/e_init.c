@@ -39,7 +39,7 @@ void EntityBlueFlashingOrb(Entity* self);
 void EntityRainbowTriangleAttack(Entity* self);
 void EntityTriangleCornerGlow(Entity* self);
 void EntityBlueOrbShadow(Entity* self);
-void EntityUnk27(Entity* self);
+void EntityLaunchCutscene(Entity* self);
 void func_us_801A367C(Entity* self);
 void func_us_801A9208_from_bo6(Entity* self);
 void func_us_801A37B4(Entity* self);
@@ -91,7 +91,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityRainbowTriangleAttack,
     EntityTriangleCornerGlow,
     EntityBlueOrbShadow,
-    EntityUnk27,
+    EntityLaunchCutscene,
     func_us_801A367C,
     func_us_801A9208_from_bo6,
     func_us_801A37B4,

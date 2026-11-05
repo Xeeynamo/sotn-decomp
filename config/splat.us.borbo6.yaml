@@ -53,7 +53,8 @@ segments:
       - [0x65C, .data, d_prize_drops] # empty array, but needs a splat entry
       - [0x65C, .data, unk_1D7C4]
       - [0x6E4, .data, e_dracula]
-      - [0x864, data]
+      - [0x864, .data, e_cutscene_dialogue]
+      - [0x914, data]
       - [0x924, .data, st_update]
       - [0x970, data]
       - [0x970, .data, collision]
@@ -87,7 +88,6 @@ segments:
       - [0x1D7C4, c, unk_1D7C4]
       - [0x1DB9C, c, e_dracula]
       - [0x21BE0, c, e_cutscene_dialogue]
-      - [0x2362C, c, unk_2362C]
       - [0x2367C, c, unk_2367C]
       - [0x24530, c, unk_24530]
       - [0x254BC, c, st_update]

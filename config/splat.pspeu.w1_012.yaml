@@ -43,7 +43,8 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, w1_012]
-      - [0x1900, data]
+      - [0x1900, data, right_hand]
+      - [0x1908, data, w1_012]
       # - [0x23D8, .rodata, w1_012]
       - {start: 0x2480, type: bss, vram: 0x92F9080}
   - [0x2480]

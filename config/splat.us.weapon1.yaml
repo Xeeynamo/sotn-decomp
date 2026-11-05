@@ -1,0 +1,1015 @@
+options:
+  platform:     psx
+  basename:     weapon1
+  base_path:    ..
+  build_path:   build/us
+  target_path:  disks/us/BIN/WEAPON1.BIN
+  asm_path:     asm/us/weapon1
+  asset_path:   assets/weapon1
+  src_path:     src/weapon
+  ld_script_path: build/us/weapon1.ld
+  compiler:     GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.weapon1.txt
+    - config/symbols.us.weapon1.txt.in
+  undefined_funcs_auto_path: build/us/config/undefined_funcs_auto.us.weapon1.txt
+  undefined_syms_auto_path:  build/us/config/undefined_syms_auto.us.weapon1.txt
+  find_file_boundaries: yes
+  use_legacy_include_asm: no
+  extensions_path: tools/splat_ext
+  symbol_name_format: $SEG_$VRAM
+  disassemble_all: true
+  disasm_unknown: true
+  global_vram_start: 0x80010000
+  section_order:
+    - ".data"
+    - ".rodata"
+    - ".text"
+    - ".bss"
+  ld_generate_symbol_per_data_segment: true
+sha1: 8370dceda3aaca4320a677f3cb291b661b50f876
+segments:
+  - name: f1_000
+    type: grey4
+    start: 0x00000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon1
+    start: 0x04000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x04000, .data, w_init]
+      - [0x04040, .data, w_000]
+      - [0x050D0, .data, right_hand]
+      - [0x050D4, c, w_000]
+  - name: f1_001
+    type: grey4
+    start: 0x07000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x0B000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0B000, .data, w_init]
+      - [0x0B040, data, w_001_c]
+      - [0x0BA44, data, w_001]
+      - [0x0BFF4, data, right_hand_001]
+      - [0x0BFF8, data, w_001_ro]
+      - [0x0C014, asm, w_001_c]
+  - name: f1_002
+    type: grey4
+    start: 0x0E000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x12000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x12000, .data, w_init]
+      - [0x12040, .data, w_002]
+      - [0x12BD8, .data, right_hand]
+      - [0x12BDC, c, w_002]
+  - name: f1_003
+    type: grey4
+    start: 0x15000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x19000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x19000, .data, w_init]
+      - [0x19040, data, w1_003]
+      - [0x19C40, asm, w_003]
+  - name: f1_004
+    type: grey4
+    start: 0x1C000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x20000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x20000, .data, w_init]
+      - [0x20040, data, w1_004]
+      - [0x2131C, asm, w_004]
+  - name: f1_005
+    type: grey4
+    start: 0x23000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x27000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x27000, .data, w_init]
+      - [0x27040, data, w1_005]
+      - [0x28318, data, left_hand_005]
+      - [0x2831C, asm, w_005]
+  - name: f1_006
+    type: grey4
+    start: 0x2A000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x2E000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x2E000, .data, w_init]
+      - [0x2E040, data, w1_006]
+      - [0x2EC3C, data, left_hand_006]
+      - [0x2EC40, data, w_006_ro]
+      - [0x2EC54, asm, w_006]
+  - name: f1_007
+    type: grey4
+    start: 0x31000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x35000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x35000, .data, w_init]
+      - [0x35040, .data, w_007]
+      - [0x35C9C, .data, right_hand]
+      - [0x35CA0, c, w_007]
+  - name: f1_008
+    type: grey4
+    start: 0x38000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x3C000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x3C000, .data, w_init]
+      - [0x3C040, .data, w_008]
+      - [0x3CAC0, .data, right_hand]
+      - [0x3CAC4, .rodata, w_008]
+      - [0x3CB4C, c, w_008]
+  - name: f1_009
+    type: grey4
+    start: 0x3F000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x43000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x43000, .data, w_init]
+      - [0x43040, data, w1_009]
+      # - [0x43B4C, asm, w_009]
+  - name: f1_010
+    type: grey4
+    start: 0x46000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x4A000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x4A000, .data, w_init]
+      - [0x4A040, data, w1_010]
+      # - [0x4ACC0, asm, w_010]
+  - name: f1_011
+    type: grey4
+    start: 0x4D000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x51000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x51000, .data, w_init]
+      - [0x51040, data, w_011_c]
+      - [0x51958, data, w_011]
+      - [0x51C3C, data, right_hand_011]
+      - [0x51C40, data, w_011_ro]
+      #- [0x51CDC, asm, w_011]
+  - name: f1_012
+    type: grey4
+    start: 0x54000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x58000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x58000, .data, w_init]
+      - [0x58040, .data, w_012]
+      - [0x58AC8, .data, right_hand]
+      - [0x58ACC, c, w_012]
+      - [0x59B28, .bss, w_012]
+  - name: f1_013
+    type: grey4
+    start: 0x5B000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x5F000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x5F000, .data, w_init]
+      - [0x5F040, data, w1_013]
+      # - [0x5F62C, asm, w_013]
+  - name: f1_014
+    type: grey4
+    start: 0x62000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x66000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x66000, .data, w_init]
+      - [0x66040, data, w1_014]
+      - [0x665BC, asm, w_014]
+  - name: f1_015
+    type: grey4
+    start: 0x69000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x6D000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x6D000, .data, w_init]
+      - [0x6D040, data, w1_015]
+      - [0x6D7E4, asm, w_015]
+  - name: f1_016
+    type: grey4
+    start: 0x70000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x74000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x74000, .data, w_init]
+      - [0x74040, data, w1_016]
+      - [0x7460C, asm, w_016]
+  - name: f1_017
+    type: grey4
+    start: 0x77000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x7B000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x7B000, .data, w_init]
+      - [0x7B040, data, w1_017]
+      - [0x7B3A8, data, right_hand]
+      - [0x7B3AC, data, w1_017_c]
+  - name: f1_018
+    type: grey4
+    start: 0x7E000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x82000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x82000, .data, w_init]
+      - [0x82040, data, w1_018]
+      - [0x82740, asm, w_018]
+  - name: f1_019
+    type: grey4
+    start: 0x85000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x89000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x89000, .data, w_init]
+      - [0x89040, data, w1_019]
+      - [0x89554, asm, w_019]
+  - name: f1_020
+    type: grey4
+    start: 0x8C000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x90000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x90000, .data, w_init]
+      - [0x90040, data, w1_020]
+      - [0x90BC8, asm, w_020]
+  - name: f1_021
+    type: grey4
+    start: 0x93000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x97000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x97000, .data, w_init]
+      - [0x97040, data, w1_021]
+      - [0x977B4, asm, w_021]
+  - name: f1_022
+    type: grey4
+    start: 0x9A000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x9E000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x9E000, .data, w_init]
+      - [0x9E040, data, w1_022]
+      - [0x9E814, asm, w_022]
+  - name: f1_023
+    type: grey4
+    start: 0xA1000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0xA5000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0xA5000, .data, w_init]
+      - [0xA5040, data, w1_023]
+      - [0xA5D80, asm, w_023]
+  - name: f1_024
+    type: grey4
+    start: 0xA8000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0xAC000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0xAC000, .data, w_init]
+      - [0xAC040, data, w1_024]
+      - [0xACDE0, asm, w_024]
+  - name: f1_025
+    type: grey4
+    start: 0xAF000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0xB3000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0xB3000, .data, w_init]
+      - [0xB3040, data, w1_025]
+      # - [0xB3B74, asm, w_025]
+  - name: f1_026
+    type: grey4
+    start: 0xB6000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0xBA000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0xBA000, .data, w_init]
+      - [0xBA040, data, w1_026]
+      # - [0xBAB9C, asm, w_026]
+  - name: f1_027
+    type: grey4
+    start: 0xBD000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0xC1000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0xC1000, .data, w_init]
+      - [0xC1040, data, w1_027]
+      - [0xC1D54, asm, w_027]
+  - name: f1_028
+    type: grey4
+    start: 0xC4000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0xC8000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0xC8000, .data, w_init]
+      - [0xC8040, data, w1_028]
+      # - [0xC8BF4, asm, w_028]
+  - name: f1_029
+    type: grey4
+    start: 0xCB000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0xCF000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0xCF000, .data, w_init]
+      - [0xCF040, data, w1_029]
+      - [0xCFDD8, asm, w_029]
+  - name: f1_030
+    type: grey4
+    start: 0xD2000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0xD6000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0xD6000, .data, w_init]
+      - [0xD6040, data, w1_030]
+      - [0xD66DC, asm, w_030]
+  - name: f1_031
+    type: grey4
+    start: 0xD9000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0xDD000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0xDD000, .data, w_init]
+      - [0xDD040, data, w1_031]
+      - [0xDD918, asm, w_031]
+  - name: f1_032
+    type: grey4
+    start: 0xE0000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0xE4000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0xE4000, .data, w_init]
+      - [0xE4040, data, w1_032]
+      - [0xE4924, asm, w_032]
+  - name: f1_033
+    type: grey4
+    start: 0xE7000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0xEB000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0xEB000, .data, w_init]
+      - [0xEB040, data, w1_033]
+      - [0xEBC58, asm, w_033]
+  - name: f1_034
+    type: grey4
+    start: 0xEE000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0xF2000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0xF2000, .data, w_init]
+      - [0xF2040, .data, w_034]
+      - [0xF294C, .data, right_hand]
+      - [0xF2950, c, w_034]
+  - name: f1_035
+    type: grey4
+    start: 0xF5000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0xF9000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0xF9000, .data, w_init]
+      - [0xF9040, .data, w_035]
+      - [0xF9548, .data, right_hand]
+      - [0xF954C, c, w_035]
+  - name: f1_036
+    type: grey4
+    start: 0xFC000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x100000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x100000, .data, w_init]
+      - [0x100040, data, w1_036]
+      - [0x10055C, asm, w_036]
+  - name: f1_037
+    type: grey4
+    start: 0x103000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x107000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x107000, .data, w_init]
+      - [0x107040, .data, w_037]
+      - [0x1077C0, .data, right_hand]
+      - [0x1077C4, c, w_037]
+  - name: f1_038
+    type: grey4
+    start: 0x10A000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x10E000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x10E000, data, w_init]
+      - [0x10E040, data, w1_038]
+      - [0x10EDEC, asm, w_038]
+  - name: f1_039
+    type: grey4
+    start: 0x111000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x115000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x115000, .data, w_init]
+      - [0x115040, data, w1_039]
+      - [0x115DEC, asm, w_039]
+  - name: f1_040
+    type: grey4
+    start: 0x118000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x11C000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x11C000, .data, w_init]
+      - [0x11C040, .data, w_040]
+      - [0x11C870, .data, right_hand]
+      - [0x11C874, c, w_040]
+      - [0x11D540, .bss, w_040]
+  - name: f1_041
+    type: grey4
+    start: 0x11F000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x123000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x123000, .data, w_init]
+      - [0x123040, .data, w_041]
+      - [0x12355C, .data, right_hand]
+      - [0x123560, .rodata, w_041]
+      - [0x123574, c, w_041]
+      - [0x124200, .bss, w_041]
+  - name: f1_042
+    type: grey4
+    start: 0x126000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x12A000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x12A000, .data, w_init]
+      - [0x12A040, data, w1_042]
+      - [0x12A764, asm, w_042]
+  - name: f1_043
+    type: grey4
+    start: 0x12D000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x131000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x131000, .data, w_init]
+      - [0x131040, .data, w_043]
+      - [0x132058, .data, right_hand]
+      - [0x13205C, c, w_043]
+  - name: f1_044
+    type: grey4
+    start: 0x134000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x138000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x138000, .data, w_init]
+      - [0x138040, .data, w_044]
+      - [0x1382A4, .data, right_hand]
+      - [0x1382A8, .rodata, w_044]
+      - [0x1382C0, c, w_044]
+  - name: f1_045
+    type: grey4
+    start: 0x13B000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x13F000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x13F000, .data, w_init]
+      - [0x13F040, .data, w_045]
+      - [0x13F374, .data, right_hand]
+      - [0x13F378, c, w_045]
+      - [0x1403B8, .bss, w_045]
+  - name: f1_046
+    type: grey4
+    start: 0x142000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x146000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x146000, .data, w_init]
+      - [0x146040, .data, w_046]
+      - [0x146C60, .data, right_hand]
+      - [0x146C64, c, w_046]
+  - name: f1_047
+    type: grey4
+    start: 0x149000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x14D000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x14D000, .data, w_init]
+      - [0x14D040, data, w1_047]
+      - [0x14D568, asm, w_047]
+  - name: f1_048
+    type: grey4
+    start: 0x150000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x154000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x154000, .data, w_init]
+      - [0x154040, data, w1_048]
+      - [0x155050, asm, w_048]
+  - name: f1_049
+    type: grey4
+    start: 0x157000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x15B000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x15B000, .data, w_init]
+      - [0x15B040, data, w1_049]
+      - [0x15C14C, asm, w_049]
+  - name: f1_050
+    type: grey4
+    start: 0x15E000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x162000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x162000, .data, w_init]
+      - [0x162040, .data, w_050]
+      - [0x16307C, .data, right_hand]
+      - [0x163080, c, w_050]
+      - [0x164bf8, .bss, w_050]
+  - name: f1_051
+    type: grey4
+    start: 0x165000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x169000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      # identical to weapon0 except for 1 byte
+      - [0x169000, .data, w_init]
+      - [0x169040, data, w1_051]
+      - [0x169ED4, asm, w_051]
+  - name: f1_052
+    type: grey4
+    start: 0x16C000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x170000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x170000, .data, w_init]
+      - [0x170040, .data, w_052]
+      - [0x170C20, .data, right_hand]
+      - [0x170C24, .rodata, w_052]
+      - [0x170CB0, c, w_052]
+      - [0x172B84, .bss, w_052]
+  - name: f1_053
+    type: grey4
+    start: 0x173000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x177000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x177000, .data, w_init]
+      - [0x177040, data, w1_053]
+      - [0x178280, asm, w_053]
+  - name: f1_054
+    type: grey4
+    start: 0x17A000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x17E000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x17E000, .data, w_init]
+      - [0x17E040, data, w1_054]
+      - [0x17EF0C, asm, w_054]
+  - name: f1_055
+    type: grey4
+    start: 0x181000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x185000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x185000, .data, w_init]
+      - [0x185040, data, w1_055]
+      - [0x1861A0, asm, w_055]
+  - name: f1_056
+    type: grey4
+    start: 0x188000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x18C000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x18C000, .data, w_init]
+      - [0x18C040, data, w1_056]
+      - [0x18D060, asm, w_056]
+  - name: f1_057
+    type: grey4
+    start: 0x18F000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x193000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x193000, .data, w_init]
+      - [0x193040, data, w1_057]
+      - [0x1940B4, asm, w_057]
+  - name: f1_058
+    type: grey4
+    start: 0x196000
+    vram: 0
+    width: 256
+    height: 128
+  - type: code
+    exclusive_ram_id: weapon
+    start: 0x19A000
+    vram: 0x8017D000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x19A000, .data, w_init]
+      - [0x19A040, data, w1_058]
+      # - [0x19AC50, asm, w_058]
+  - [0x19D000]
+

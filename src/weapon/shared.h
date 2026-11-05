@@ -3,7 +3,7 @@
 
 #include "../destroy_entity.h"
 
-static void LoadWeaponPalette(s32 clutIndex) {
+void LoadWeaponPalette(s32 clutIndex) {
     RECT dstRect;
     u16* src;
     u16* dst;

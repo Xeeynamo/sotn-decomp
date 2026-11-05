@@ -8,20 +8,6 @@
 #include "weapon_private.h"
 
 #ifdef VERSION_PSP
-// when HAND_ID is zero, MetroWerks puts this in BSS. this may
-// have been in a separate file because it is located at the
-// front of .data (when HAND_ID = 1) on PSP/mwcc, but at the end
-// of .data (regardless of value) on PSX/gcc.
-static s32 g_HandId = HAND_ID;
-#endif
-
-// PSP keeps a separate copy of the generated animsets per hand.
-// clang-format off
-#define inner_path(hand, n) CPP_STR(PATH_JOIN(gen/w##hand, n))
-// clang-format on
-#define path(hand, n) inner_path(hand, n)
-
-#ifdef VERSION_PSP
 #include path(HAND_ID, w_000_1.h)
 #include path(HAND_ID, w_000_2.h)
 #else
@@ -202,13 +188,9 @@ static u16* g_WeaponCluts[] = {
     (u16*)g_Clut1, (u16*)g_Clut0, (u16*)g_Clut2, (u16*)g_Clut3, (u16*)g_Clut4,
 };
 
-#ifndef VERSION_PSP
-static s32 g_HandId = HAND_ID;
-#endif
-
 #include "shared.h"
 
-static void EntityWeaponAttack(Entity* self) {
+void EntityWeaponAttack(Entity* self) {
     WeaponAnimation* anim;
     s32 mask;
     s16 subType;
@@ -260,83 +242,30 @@ static void EntityWeaponAttack(Entity* self) {
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
-#ifdef VERSION_PSP
-static void func_ptr_80170004(void) {}
+void func_ptr_80170004(void) {}
 
-static void func_ptr_80170008(void) {}
+void func_ptr_80170008(void) {}
 
-static void func_ptr_8017000C(void) {}
+void func_ptr_8017000C(void) {}
 
-static void func_ptr_80170010(void) {}
+void func_ptr_80170010(void) {}
 
-static void func_ptr_80170014(void) {}
-#else
-static s32 func_ptr_80170004(Entity* self) {}
+void func_ptr_80170014(void) {}
 
-static void func_ptr_80170008(Entity* self) {}
+int GetWeaponId(void) { return 0; }
 
-static void func_ptr_8017000C(Entity* self) {}
+void EntityWeaponShieldSpell(void) {}
 
-static s32 func_ptr_80170010(Entity* self) {}
+void func_ptr_80170024(void) {}
 
-static s32 func_ptr_80170014(Entity* self) {}
-#endif
+void func_ptr_80170028(void) {}
 
-static int GetWeaponId(void) { return 0; }
+void WeaponUnused2C(void) {}
 
-#ifdef VERSION_PSP
-static void EntityWeaponShieldSpell(void) {}
+void WeaponUnused30(void) {}
 
-static void func_ptr_80170024(void) {}
+void WeaponUnused34(void) {}
 
-static void func_ptr_80170028(void) {}
-#else
-static void EntityWeaponShieldSpell(Entity* self) {}
+void WeaponUnused38(void) {}
 
-static void func_ptr_80170024(Entity* self) {}
-
-static void func_ptr_80170028(Entity* self) {}
-#endif
-
-static void WeaponUnused2C(void) {}
-
-static void WeaponUnused30(void) {}
-
-static void WeaponUnused34(void) {}
-
-static void WeaponUnused38(void) {}
-
-static void WeaponUnused3C(void) {}
-
-#ifdef VERSION_PSP
-// TODO: this should be WEAPON0_PTR
-#ifdef WEAPON0
-extern void D_8017A000[];
-#define WEAPON_PTR D_8017A000
-#else
-extern void D_8017D000[];
-#define WEAPON_PTR D_8017D000
-#endif
-extern Weapon w0_000_Overlay;
-
-void w0_000_Load(void) { memcpy(&WEAPON_PTR, &w0_000_Overlay, sizeof(Weapon)); }
-
-Weapon w0_000_Overlay = {
-    EntityWeaponAttack,
-    (void (*)(Entity*))func_ptr_80170004,
-    (void (*)(Entity*))func_ptr_80170008,
-    (void (*)(Entity*))func_ptr_8017000C,
-    func_ptr_80170010,
-    (void (*)(Entity*))func_ptr_80170014,
-    GetWeaponId,
-    LoadWeaponPalette,
-    (void (*)(Entity*))EntityWeaponShieldSpell,
-    (void (*)(Entity*))func_ptr_80170024,
-    (void (*)(Entity*))func_ptr_80170028,
-    WeaponUnused2C,
-    WeaponUnused30,
-    WeaponUnused34,
-    WeaponUnused38,
-    WeaponUnused3C,
-};
-#endif
+void WeaponUnused3C(void) {}
