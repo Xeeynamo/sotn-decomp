@@ -213,7 +213,8 @@ class DecompProgressWeaponStats:
     functions_prev: int
 
     def __init__(self, hand_id: int):
-        self.name = f"weapon{hand_id}"
+        # Keep weapon0.bin reporting to "weapon" on Frogress so history and the previous-measure lookup work
+        self.name = "weapon" if hand_id == 0 else f"weapon{hand_id}"
         self.exists = True
         self.code_matching = 0
         self.code_total = 0
@@ -222,11 +223,9 @@ class DecompProgressWeaponStats:
         self.data_imported = 0
         self.data_total = 0
         for i in range(0, 59):
-            if hand_id == 1:
-                name = self.name
-            else:
-                name = "weapon"
-            stats = DecompProgressStats(name, f"weapon/w{hand_id}_{i:03d}", "weapon")
+            stats = DecompProgressStats(
+                self.name, f"weapon/w{hand_id}_{i:03d}", "weapon"
+            )
             if stats.exists:
                 self.code_matching += stats.code_matching
                 self.code_total += stats.code_total
@@ -274,9 +273,11 @@ def hydrate_previous_metrics(progresses: dict[str, DecompProgressStats], version
         else:
             last_measures = {}
 
+        # Look up by name so that measures that don't match their key (eg. weapon0 -> weapon) work correctly
         for ovl in progress:
-            if ovl in last_measures:
-                last_measure = last_measures[ovl]
+            measure_name = progress[ovl].name
+            if measure_name in last_measures:
+                last_measure = last_measures[measure_name]
                 if last_measure != None:
                     callback(ovl, last_measure)
             else:
