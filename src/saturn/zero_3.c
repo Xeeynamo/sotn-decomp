@@ -70,7 +70,7 @@ void func_0601AE2C(s32 arg0) {
     }
 }
 
-s32 func_0601AE5C(s32 arg0, s32 arg1) {
+s32 func_0601AE5C(s32 arg0) {
     OverlayHandler* handler;
     s32 i;
 
@@ -107,7 +107,7 @@ void InitServant() {
 
 void func_0601AEF4(void) {
     func_06064688 = DAT_060A5000;
-    func_0606468c = DAT_060A5004;
+    func_0606468C = DAT_060A5004;
     func_06064614 = DAT_060A5008;
 }
 
@@ -186,11 +186,11 @@ void func_0601B1CC(void) {
     DAT_060645AC = DAT_06066000;
     func_0606463C = DAT_06066004;
     func_0606465C = DAT_06066008;
-    DAT_06064680 = DAT_0606600C;
-    DAT_0606462C = DAT_06066010;
-    DAT_060645DC = DAT_06066014;
-    DAT_06064598 = DAT_06066018;
-    DAT_060645CC = DAT_0606601C;
+    func_06064680 = DAT_0606600C;
+    func_0606462C = DAT_06066010;
+    func_060645DC = DAT_06066014;
+    func_06064598 = DAT_06066018;
+    func_060645CC = DAT_0606601C;
     func_060645C4 = DAT_06066020;
     func_0606461C = DAT_06066024;
     func_06064624 = DAT_06066028;

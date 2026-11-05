@@ -63,7 +63,7 @@ static AnimateEntityFrame anim_flurry_orb[] = {
 // Handles movement for the Sniper's cloth which dangles below it
 // The cloth is made up of 11 segmeents which are connected and can sway with
 // movement
-static UpdateCloth(s32 sway) {
+static void UpdateCloth(s32 sway) {
     Primitive* prim;
     s32 x;
     s32 y;

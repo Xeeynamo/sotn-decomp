@@ -132,7 +132,6 @@ static s16 D_162000_8017B030[] = {
     24, -14, 64, 0,   24, -14, 64, 0,   20, 2, 64, 0, 18, 14,
     48, 34,  24, -16, 64, 0,   24, -14, 64, 0, 24, 4, 48, 34};
 static u16* g_WeaponCluts[] = {pal1, pal4, pal0, pal2, pal3};
-static s32 g_HandId = HAND_ID;
 
 static s32 prev_player_pose;
 static Point16 D_162000_8017CBFC[80];
@@ -713,22 +712,22 @@ s32 func_ptr_80170010(Entity* self) {
     }
 }
 
-static s32 func_ptr_80170014(Entity* self) {}
+s32 func_ptr_80170014(Entity* self) {}
 
-static int GetWeaponId(void) { return 50; }
+int GetWeaponId(void) { return 50; }
 
-static void EntityWeaponShieldSpell(Entity* self) {}
+void EntityWeaponShieldSpell(Entity* self) {}
 
-static void func_ptr_80170024(Entity* self) {}
+void func_ptr_80170024(Entity* self) {}
 
-static void func_ptr_80170028(Entity* self) {}
+void func_ptr_80170028(Entity* self) {}
 
-static void WeaponUnused2C(void) {}
+void WeaponUnused2C(void) {}
 
-static void WeaponUnused30(void) {}
+void WeaponUnused30(void) {}
 
-static void WeaponUnused34(void) {}
+void WeaponUnused34(void) {}
 
-static void WeaponUnused38(void) {}
+void WeaponUnused38(void) {}
 
-static void WeaponUnused3C(void) {}
+void WeaponUnused3C(void) {}

@@ -3,6 +3,7 @@
 
 #define _SPR2_
 #include "spr.h"
+#include "../machine.h"
 
 extern Uint16 SpEraseLTPoint;
 extern Uint16 SpEraseRBPoint;
@@ -14,29 +15,6 @@ extern Uint16 EraseBotY;
 extern Uint16 BitWidth;
 
 extern XyInt scrSize[8];
-
-static inline void set_sr(register Uint32 sr) {
-    __asm__ volatile("ldc	%0, sr" : : "r"(sr));
-}
-
-static inline Uint32 get_sr(void) {
-    Uint32 sr;
-    __asm__ volatile("stc	sr, %0" : "=r"(sr));
-    return sr;
-}
-
-static inline Uint32 get_imask(void) {
-    Uint32 imask = (get_sr() & 0x000000F0) >> 4;
-    return imask;
-}
-
-static inline void set_imask(register Uint32 imask) {
-    Uint32 sr = get_sr();
-
-    sr &= ~0x000000F0;
-    sr |= imask << 4;
-    set_sr(sr);
-}
 
 // func_060217EC
 void SPR_Initial(Uint8** VRAM) {

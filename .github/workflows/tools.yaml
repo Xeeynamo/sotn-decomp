@@ -28,10 +28,8 @@ jobs:
         with:
           ref: ${{ github.ref }}
           submodules: true
-      - name: Install tools requirements
-        run: |
-          make update-dependencies
-          .venv/bin/python3 -m pip install -r tools/requirements-python.txt
+      - name: Setup tools
+        uses: ./.github/actions/setup-tools
       - name: Get dependencies
         uses: ./.github/actions/get-dependencies
         with:

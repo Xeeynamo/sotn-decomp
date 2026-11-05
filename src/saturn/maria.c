@@ -1025,7 +1025,7 @@ s32 func_060AC148(Primitive* prim, s16 posX, s16 posY) {
     prim->y2 = posY + offset;
 
     texture =
-        DAT_0605aec0[(u16)DAT_060C6D7C + g_MariaPrimitiveSizeIndices[frame]];
+        DAT_0605AEC0[(u16)DAT_060C6D7C + g_MariaPrimitiveSizeIndices[frame]];
     prim->unk8 = texture[0];
     prim->unkA = texture[1];
 
@@ -1691,7 +1691,7 @@ void func_060BE308(s32* src) {
     Unk0605DB60* entry;
     s32 i;
 
-    dst = (s32*)((DAT_0605aec0[0][0] * 8) + 0x25C00000);
+    dst = (s32*)((DAT_0605AEC0[0][0] * 8) + 0x25C00000);
     DMA_CpuMemCopy2(dst, src, 0x8400);
     while (DMA_CpuResult() == 2) {
     }
@@ -1776,7 +1776,7 @@ void func_060BE440(void) {
         i++;
     } while (i <= 1);
 
-    table_base = (u8*)DAT_0605aec0;
+    table_base = (u8*)DAT_0605AEC0;
     table_offset = 8;
     dma_offset = *(u16*)(table_base + table_offset);
     dma_offset *= 8U;
@@ -1806,7 +1806,7 @@ void func_060BE54C(void) {
     func_06078700(text, DAT_06085DCC[2], 6);
 
     slot = 2;
-    dst = (s32*)((DAT_0605aec0[slot][0] * 8) + 0x25C00000);
+    dst = (s32*)((DAT_0605AEC0[slot][0] * 8) + 0x25C00000);
     DMA_CpuMemCopy2(dst, base + 0x4501, 0x1320);
     while (DMA_CpuResult() == 2) {
     }
@@ -1830,7 +1830,7 @@ void func_060BE618(void) {
     }
 
     slot = 2;
-    dst = (s32*)((DAT_0605aec0[slot][0] * 8) + 0x25C00000);
+    dst = (s32*)((DAT_0605AEC0[slot][0] * 8) + 0x25C00000);
     DMA_CpuMemCopy2(dst, base + 0x4501, 0x4800);
     while (DMA_CpuResult() == 2) {
     }

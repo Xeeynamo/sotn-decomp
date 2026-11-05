@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #7. Used by weapons:
 // Shield rod, Unknown#173
-#define FUNC_04_VOID
 #include "weapon_private.h"
 #include "gen/w_007_1.h"
 #include "gen/w_007_2.h"
@@ -190,7 +189,6 @@ static u8 D_35000_8017AC64[6][8] = {
     {0x70, 0x38, 0x78, 0x38, 0x77, 0x40, 0x78, 0x40}};
 
 static u16* g_WeaponCluts[] = {D_35000_8017A884, D_35000_8017A884};
-static s32 g_HandId = HAND_ID;
 
 #include "shared.h"
 
@@ -247,7 +245,7 @@ void EntityWeaponAttack(Entity* self) {
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
-static void func_ptr_80170004(Entity* self) {
+void func_ptr_80170004(Entity* self) {
     Entity* parent;
     s32 index;
     u16 offsetX, offsetY;
@@ -385,7 +383,7 @@ static s32 func_35000_8017B604(Primitive* prim, s32 x, s32 y) {
     return 0;
 }
 
-static void func_ptr_80170008(Entity* self) {
+void func_ptr_80170008(Entity* self) {
     Primitive* prim;
     s32 velocityX;
     s32 range;
@@ -426,26 +424,26 @@ static void func_ptr_80170008(Entity* self) {
         DestroyEntity(self);
     }
 }
-static void func_ptr_8017000C(Entity* self) {}
+void func_ptr_8017000C(Entity* self) {}
 
-static s32 func_ptr_80170010(Entity* self) {}
+s32 func_ptr_80170010(Entity* self) {}
 
-static s32 func_ptr_80170014(Entity* self) {}
+s32 func_ptr_80170014(Entity* self) {}
 
-static int GetWeaponId(void) { return 7; }
+int GetWeaponId(void) { return 7; }
 
-static void EntityWeaponShieldSpell(Entity* self) {}
+void EntityWeaponShieldSpell(Entity* self) {}
 
-static void func_ptr_80170024(Entity* self) {}
+void func_ptr_80170024(Entity* self) {}
 
-static void func_ptr_80170028(Entity* self) {}
+void func_ptr_80170028(Entity* self) {}
 
-static void WeaponUnused2C(void) {}
+void WeaponUnused2C(void) {}
 
-static void WeaponUnused30(void) {}
+void WeaponUnused30(void) {}
 
-static void WeaponUnused34(void) {}
+void WeaponUnused34(void) {}
 
-static void WeaponUnused38(void) {}
+void WeaponUnused38(void) {}
 
-static void WeaponUnused3C(void) {}
+void WeaponUnused3C(void) {}

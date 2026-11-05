@@ -984,7 +984,7 @@ s32 func_8015FDB0(RicPrimitive* prim, s16 posX, s16 posY) {
     prim->x1 = posX + xOffset;
     prim->y1 = posY + offset;
 
-    ptr = DAT_0605aec0[g_RichterSpritePackage3AllocationIndex +
+    ptr = DAT_0605AEC0[g_RichterSpritePackage3AllocationIndex +
                        D_060BF1A4[frame]];
     prim->uv0 = ptr[0];
     prim->uv1 = ptr[1];
@@ -1782,7 +1782,7 @@ void func_060BB9BC(s32* src) {
     Unk0605DB60* entry;
     s32 i;
 
-    dst = (s32*)((DAT_0605aec0[0][0] * 8) + 0x25C00000);
+    dst = (s32*)((DAT_0605AEC0[0][0] * 8) + 0x25C00000);
     DMA_CpuMemCopy2(dst, src, 0x8400);
     while (DMA_CpuResult() == 2) {
     }
@@ -1859,7 +1859,7 @@ void func_060BBAF4(void) {
         dst += 0x180;
     }
 
-    dma_base = (u8*)DAT_0605aec0;
+    dma_base = (u8*)DAT_0605AEC0;
     dma_offset = 8;
     dma_value = *(u16*)(dma_base + dma_offset);
     dma_dest = (s32*)(0x25C00000 + dma_value * 8);
@@ -1887,7 +1887,7 @@ void func_060BBC00(void) {
     func_06078700(text, DAT_06085DCC[2], 6);
 
     slot = 2;
-    dst = (s32*)((DAT_0605aec0[slot][0] * 8) + 0x25C00000);
+    dst = (s32*)((DAT_0605AEC0[slot][0] * 8) + 0x25C00000);
     DMA_CpuMemCopy2(dst, base + 0x4501, 0x1320);
     while (DMA_CpuResult() == 2) {
     }
@@ -1912,7 +1912,7 @@ void func_060BBCCC(void) {
     }
 
     slot = 2;
-    dst = (s32*)((DAT_0605aec0[slot][0] * 8) + 0x25C00000);
+    dst = (s32*)((DAT_0605AEC0[slot][0] * 8) + 0x25C00000);
     DMA_CpuMemCopy2(dst, base + 0x4501, 0x4800);
     while (DMA_CpuResult() == 2) {
     }

@@ -25,7 +25,14 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606B760, func_0606B760);
 
 extern char DAT_0606BB34[];
 extern char DAT_0606BB40[];
-extern char* g_StageAlternateMapNames[];
+extern char* DAT_06048178[];
+extern char* DAT_06048180[];
+extern char* DAT_06048188[];
+extern char* DAT_06048194[];
+extern char* DAT_0604819C[];
+extern char* DAT_060481A4[];
+extern char* DAT_060481AC[];
+extern char* DAT_060481B8[];
 
 s32 func_0606BB4C(void) {
     bool bVar1;
@@ -77,28 +84,28 @@ s32 func_0606BB4C(void) {
     DAT_0605D7DC = iVar3 + (s32)&DAT_00252000;
     switch (g_CurrentRoom.stageID) {
     case 0x6:
-        ptr = g_StageAlternateMapNames[g_CurrentRoom.unk8 + 0];
+        ptr = DAT_06048178[g_CurrentRoom.unk8];
         break;
     case 0x26:
-        ptr = g_StageAlternateMapNames[g_CurrentRoom.unk8 + 9];
+        ptr = DAT_0604819C[g_CurrentRoom.unk8];
         break;
     case 0x9:
-        ptr = g_StageAlternateMapNames[g_CurrentRoom.unk8 + 4];
+        ptr = DAT_06048188[g_CurrentRoom.unk8];
         break;
     case 0x29:
-        ptr = g_StageAlternateMapNames[g_CurrentRoom.unk8 + 13];
+        ptr = DAT_060481AC[g_CurrentRoom.unk8];
         break;
     case 0xB:
-        ptr = g_StageAlternateMapNames[g_CurrentRoom.unk8 + 2];
+        ptr = DAT_06048180[g_CurrentRoom.unk8];
         break;
     case 0x2B:
-        ptr = g_StageAlternateMapNames[g_CurrentRoom.unk8 + 11];
+        ptr = DAT_060481A4[g_CurrentRoom.unk8];
         break;
     case 0x3:
-        ptr = g_StageAlternateMapNames[g_CurrentRoom.unk8 + 7];
+        ptr = DAT_06048194[g_CurrentRoom.unk8];
         break;
     case 0x23:
-        ptr = g_StageAlternateMapNames[g_CurrentRoom.unk8 + 16];
+        ptr = DAT_060481B8[g_CurrentRoom.unk8];
         break;
     default:
         ptr = g_StageFileRecords[g_CurrentRoom.stageID].map;
@@ -147,28 +154,28 @@ void func_0606BEE4(void) {
     DAT_0605D7DC = (s32)&DAT_00252000;
     switch (g_CurrentRoom.stageID) {
     case 0x6:
-        ptr = g_StageAlternateMapNames[idx + 0];
+        ptr = DAT_06048178[idx];
         break;
     case 0xB:
-        ptr = g_StageAlternateMapNames[idx + 2];
+        ptr = DAT_06048180[idx];
         break;
     case 0x9:
-        ptr = g_StageAlternateMapNames[idx + 4];
+        ptr = DAT_06048188[idx];
         break;
     case 0x3:
-        ptr = g_StageAlternateMapNames[idx + 7];
+        ptr = DAT_06048194[idx];
         break;
     case 0x26:
-        ptr = g_StageAlternateMapNames[idx + 9];
+        ptr = DAT_0604819C[idx];
         break;
     case 0x2B:
-        ptr = g_StageAlternateMapNames[idx + 11];
+        ptr = DAT_060481A4[idx];
         break;
     case 0x29:
-        ptr = g_StageAlternateMapNames[idx + 13];
+        ptr = DAT_060481AC[idx];
         break;
     case 0x23:
-        ptr = g_StageAlternateMapNames[idx + 16];
+        ptr = DAT_060481B8[idx];
         break;
     default:
         ptr = NULL;
@@ -727,7 +734,7 @@ void func_0606D554(s32 arg0) {
                 g_CurrentRoom.stageID ^= 0x20;
             }
         }
-        D_801375BC.def = DAT_0606459c + ptr->roomId + 4;
+        D_801375BC.def = DAT_0606459C + ptr->roomId + 4;
         g_CurrentRoom.unk4 = D_801375BC.def->tileLayoutId;
     }
 }
@@ -826,7 +833,7 @@ void func_0606D798(void) {
 s32 GetRoomLoadDefTable(u16 arg0) {
     s32 ret;
 
-    ret = DAT_0606459c;
+    ret = DAT_0606459C;
 
     switch (arg0) {
     case 6:

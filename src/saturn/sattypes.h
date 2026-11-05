@@ -808,6 +808,7 @@ void (*func_06064580)();
 void (*func_0606458C)();
 void (*func_06064590)();
 void (*func_06064594)();
+void (*func_06064598)();
 void (*func_060645A0)();
 void (*func_060645A4)();
 void (*func_060645B0)();
@@ -815,7 +816,9 @@ void (*func_060645B4)();
 void (*func_060645BC)();
 void (*func_060645C0)();
 void (*func_060645C4)();
+void (*func_060645CC)();
 void (*func_8010E168)(s32, s32);
+s32 (*func_060645DC)();
 void (*func_060645E0)();
 void (*func_060645E8)();
 void (*func_060645FC)();
@@ -828,6 +831,7 @@ void (*func_0606461C)(s32);
 void (*func_06064620)();
 void (*func_06064624)(s32);
 void (*func_06064628)(s32);
+void (*func_0606462C)();
 void (*func_06064630)();
 void (*GetPlayerSensor)(Collider* col);
 void (*func_06064638)();
@@ -840,9 +844,10 @@ void (*func_0606465C)();
 void (*func_06064660)();
 void (*func_06064664)();
 void (*func_06064674)();
+void (*func_06064680)();
 void (*func_06064684)();
 void (*func_06064688)();
-void (*func_0606468c)();
+void (*func_0606468C)();
 s32 (*func_06064690)();
 void (*func_060CF01C)();
 
@@ -1515,7 +1520,7 @@ typedef struct {
     /* 0x0E */ s16 unkE;
 } Unk0605DB60; /* size = 0x10 */
 
-extern u16 DAT_0605aec0[][2];
+extern u16 DAT_0605AEC0[][2];
 
 #define NUM_HORIZONTAL_SENSORS 4
 #define NUM_VERTICAL_SENSORS 7

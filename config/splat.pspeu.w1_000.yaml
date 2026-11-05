@@ -44,6 +44,8 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, w_000]
-      - [0x700, .data, w_000]
-      - {start: 0x1980, type: bss, vram: 0x92F8580}
+      - [0x698, c, w_init]
+      - [0x700, .data, right_hand]
+      - [0x708, .data, w_000]
+      - [0x1910, .data, w_init]
   - [0x1980]

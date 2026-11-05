@@ -1187,6 +1187,49 @@ files:
     asset_path: assets/st/rare
     src_path: src/st/rare
     splat_config_path: config/splat.us.strare.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x2C, sprite_banks, us/sprite_banks]
+          - [0x8C, paldef, palette_def]
+          - [0xE0, layers, layers]
+          - [0x2B0, gfx_banks, us/graphics_banks]
+          - [0x4BC, layout, entity_layouts]
+          - [0x664, skip]
+          - [0x1C58, rooms, rooms]
+          - [0x1CFC, skip]
+          - [0x2AB8, cmpgfx, D_80182AB8, 128, 128, 4] # guessed: unreferenced, inflates to 0x2000
+          - [0x2DFC, cmpgfx, D_80182DFC, 128, 128, 4]
+          - [0x3AEC, cmpgfx, D_80183AEC, 128, 128, 4]
+          - [0x4B18, cmpgfx, D_80184B18, 128, 128, 4]
+          - [0x5AF8, cmpgfx, D_80185AF8, 128, 128, 4]
+          - [0x6B98, cmpgfx, D_80186B98, 128, 128, 4]
+          - [0x7CE4, cmpgfx, D_80187CE4, 128, 128, 4]
+          - [0x8BF4, cmpgfx, D_80188BF4, 128, 128, 4]
+          - [0x9704, cmpgfx, D_80189704, 128, 128, 4]
+          - [0xA67C, cmpgfx, D_8018A67C, 128, 128, 4]
+          - [0xB5A8, cmpgfx, D_8018B5A8, 128, 128, 4]
+          - [0xC5B8, cmpgfx, D_8018C5B8, 128, 128, 4]
+          - [0xD520, cmpgfx, D_8018D520, 128, 128, 4]
+          - [0xE2EC, cmpgfx, D_8018E2EC, 128, 128, 4]
+          - [0xE564, cmpgfx, D_8018E564, 128, 128, 4]
+          - [0xF348, cmpgfx, D_8018F348, 128, 128, 4]
+          - [0xFC10, cmpgfx, D_8018FC10, 128, 128, 4]
+          - [0xFF84, cmpgfx, D_8018FF84, 128, 128, 4]
+          - [0x103B0, cmpgfx, D_801903B0, 128, 128, 4]
+          - [0x10C08, cmpgfx, D_80190C08, 128, 128, 4]
+          - [0x1194C, cmpgfx, D_8019194C, 128, 128, 4]
+          - [0x125F4, palette, D_801925F4, 16] # 0x2E0
+          - [0x127F4, palette, D_801927F4, 16] # guessed: unused, no palette def refers to it
+          - [0x128B4, palette, D_801928B4, 16] # 0x200
+          - [0x129B4, palette, D_801929B4, 16] # guessed: unused, no palette def refers to it
+          - [0x12A34, palette, D_80192A34, 16] # 0x229
+          - [0x12B74, palette, D_80192B74, 16] # 0x211
+          - [0x12C34, palette, D_80192C34, 16] # 0x217
+          - [0x12C54, palette, D_80192C54, 16] # 0x228
+          - [0x12C74, skip] # tilemaps and tiledefs, from layers
+          - [0x210A4, skip] # sprites, from sprite_banks
   - target: disks/us/ST/RCAT/RCAT.BIN
     asset_path: assets/st/rcat
     src_path: src/st/rcat
@@ -2695,3 +2738,7 @@ files:
           - [0x19A040, spriteset, w_058_1]
           - [0x19A808, spriteset, w_058_2]
           - [0x19A808, skip]
+  - target: disks/us/BIN/WEAPON1.BIN
+    asset_path: assets/weapon1
+    src_path: src/weapon
+    splat_config_path: config/splat.us.weapon1.yaml

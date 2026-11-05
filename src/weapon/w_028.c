@@ -3,7 +3,6 @@
 // Skull shield, Unknown#212
 #include "weapon_private.h"
 extern u16* g_WeaponCluts[];
-extern s32 g_HandId;
 #include "shared.h"
 #include "gen/w_028_1.h"
 #include "gen/w_028_2.h"
@@ -15,7 +14,7 @@ extern s8 D_C8000_8017AA98[];
 extern s32 D_C8000_8017AAE0[];
 extern s32 D_C8000_8017AB1C[];
 
-static void EntityWeaponAttack(Entity* self) {
+void EntityWeaponAttack(Entity* self) {
     s32 anim = 0;
     bool crouchCheck = false;
     s32 attackButton;
@@ -149,15 +148,15 @@ static void EntityWeaponAttack(Entity* self) {
 
 s32 func_ptr_80170004(Entity* self) {}
 
-static void func_ptr_80170008(Entity* self) {}
+void func_ptr_80170008(Entity* self) {}
 
-static void func_ptr_8017000C(Entity* self) {}
+void func_ptr_8017000C(Entity* self) {}
 
-static s32 func_ptr_80170010(Entity* self) {}
+s32 func_ptr_80170010(Entity* self) {}
 
-static s32 func_ptr_80170014(Entity* self) {}
+s32 func_ptr_80170014(Entity* self) {}
 
-static int GetWeaponId(void) { return 28; }
+int GetWeaponId(void) { return 28; }
 
 extern s16 D_C8000_8017AB18;
 extern s16 D_C8000_8017AB1A;
@@ -190,7 +189,7 @@ void func_C8000_8017B3D4(void) {
     LoadImage(&rect, &g_Clut[1][0x100]);
 }
 
-static void EntityWeaponShieldSpell(Entity* self) {
+void EntityWeaponShieldSpell(Entity* self) {
     s32 i;
     s16 left;
     s16 right;
@@ -515,7 +514,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
     func_C8000_8017B3D4();
 }
 
-static void func_ptr_80170024(Entity* self) {
+void func_ptr_80170024(Entity* self) {
     Primitive* prim;
     s32 xShift;
     s16 selfPosX;
@@ -659,14 +658,14 @@ static void func_ptr_80170024(Entity* self) {
     return;
 }
 
-static void func_ptr_80170028(Entity* self) {}
+void func_ptr_80170028(Entity* self) {}
 
-static void WeaponUnused2C(void) {}
+void WeaponUnused2C(void) {}
 
-static void WeaponUnused30(void) {}
+void WeaponUnused30(void) {}
 
-static void WeaponUnused34(void) {}
+void WeaponUnused34(void) {}
 
-static void WeaponUnused38(void) {}
+void WeaponUnused38(void) {}
 
-static void WeaponUnused3C(void) {}
+void WeaponUnused3C(void) {}

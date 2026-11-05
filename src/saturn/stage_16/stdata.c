@@ -4,7 +4,6 @@
 #include "stage_16.h"
 
 extern SaturnSpriteResource g_Stage16SpriteBank16;
-extern SaturnSpriteResource g_Stage16SpriteBank19;
 
 typedef struct {
     SaturnSpriteResource* resource;
@@ -35,9 +34,8 @@ typedef struct {
 
 EntityEntry g_Stage16EntityEntry00 = {NULL, func_060DC040};
 
-u8 g_Stage16BreakableAnimation0[8] = {5, 1, 5, 2, 5, 3, 5, 4};
-u8 g_Stage16BreakableAnimation1[12] = {
-    0, 0, 5, 6, 5, 7, 5, 8, 5, 9, 0, 0,
+u8 g_Stage16BreakableAnimations[20] = {
+    5, 1, 5, 2, 5, 3, 5, 4, 0, 0, 5, 6, 5, 7, 5, 8, 5, 9, 0, 0,
 };
 u8 g_Stage16BreakableAnimation2[4] = {0x10, 0xC, 0xFF, 0xFF};
 s16 g_Stage16BreakablePrimitiveOffsets[8][5] = {
@@ -50,7 +48,7 @@ BreakableConfig g_Stage16BreakableConfigs[3] = {
         &g_Stage16SpriteBank16,
         g_Stage16SpriteBank16Frames,
         g_Stage16BreakablePrimitiveOffsets[0],
-        &g_Stage16BreakableAnimation1[2],
+        &g_Stage16BreakableAnimations[10],
         0,
         8,
         0x70,
@@ -62,7 +60,7 @@ BreakableConfig g_Stage16BreakableConfigs[3] = {
         &g_Stage16SpriteBank16,
         g_Stage16SpriteBank16Frames,
         g_Stage16BreakablePrimitiveOffsets[4],
-        g_Stage16BreakableAnimation0,
+        &g_Stage16BreakableAnimations[0],
         0,
         8,
         0x70,

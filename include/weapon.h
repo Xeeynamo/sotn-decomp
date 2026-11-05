@@ -5,6 +5,10 @@
 #include <game.h>
 #include <sfx.h>
 
+// these are macros instead of an enum to support preprocessor expansion.
+#define LEFT_HAND 0
+#define RIGHT_HAND 1
+
 typedef struct {
     /* 0x00 */ void (*EntityWeaponAttack)(Entity* self);
     /* 0x04 */ void (*func_ptr_80170004)(Entity* self);
