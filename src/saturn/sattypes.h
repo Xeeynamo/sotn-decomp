@@ -86,7 +86,19 @@ typedef enum {
 
 #define PLAYER g_Entities[PLAYER_CHARACTER]
 
+#ifdef SATZ
+#define LOW(x)                                                                 \
+    ((s32)((u32)(u16)((const s16*)&(x))[0] << 16 | (u16)((const s16*)&(x))[1]))
+#define SET_LOW(x, v)                                                          \
+    do {                                                                       \
+        s32 low_ = (v);                                                        \
+        ((s16*)&(x))[0] = (s16)(low_ >> 16);                                   \
+        ((s16*)&(x))[1] = (s16)low_;                                           \
+    } while (0)
+#else
 #define LOW(x) (*(s32*)&(x))
+#define SET_LOW(x, v) (LOW(x) = (v))
+#endif
 
 #define ABS(x) ((x) < 0 ? -(x) : (x))
 

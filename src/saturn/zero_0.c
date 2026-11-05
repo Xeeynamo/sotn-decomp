@@ -625,22 +625,22 @@ void func_06007D54(void) {
     SPR_2OpenCommand(1);
 
     cmd.control = 0x1009;
-    LOW(cmd.cx) = LOW(DAT_0605BEC0);
+    SET_LOW(cmd.cx, LOW(DAT_0605BEC0));
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(0, &cmd);
         DAT_0605AEAC++;
     }
 
     cmd.control = 0x1008;
-    LOW(cmd.ax) = LOW(DAT_0605AEA0[0]);
-    LOW(cmd.cx) = LOW(DAT_0605AEA0[1]);
+    SET_LOW(cmd.ax, LOW(DAT_0605AEA0[0]));
+    SET_LOW(cmd.cx, LOW(DAT_0605AEA0[1]));
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(0, &cmd);
         DAT_0605AEAC++;
     }
 
     cmd.control = 0x100A;
-    LOW(cmd.ax) = LOW(DAT_0600E23C);
+    SET_LOW(cmd.ax, LOW(DAT_0600E23C));
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(0, &cmd);
         DAT_0605AEAC++;
