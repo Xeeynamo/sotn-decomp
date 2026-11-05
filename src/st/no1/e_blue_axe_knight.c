@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-#define SPRITE_BANK sprites_3
+#define SPRITE_BANK sprites_no1_2
 
 #include "../e_blue_axe_knight.h"
 
