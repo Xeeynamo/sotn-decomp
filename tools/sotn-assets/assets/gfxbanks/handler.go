@@ -42,7 +42,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 		}
 		actualStart = actualStart.Sum(4)
 	}
-	banks, _, err := ReadGraphics(r, e.RamBase, actualStart, e.Symbol)
+	banks, _, err := ReadGraphics(r, e.RamBase, actualStart, e.RamBase.Sum(e.End), e.Symbol)
 	if err != nil {
 		return fmt.Errorf("failed to read graphics banks: %w", err)
 	}
@@ -117,7 +117,7 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 		return assets.InfoResult{}, err
 	}
 	boundaries := header.Graphics.Boundaries()
-	gfx, headerDataRange, err := ReadGraphics(r, boundaries.StageBegin, header.Graphics, func(addr psx.Addr) string {
+	gfx, headerDataRange, err := ReadGraphics(r, boundaries.StageBegin, header.Graphics, psx.RamNull, func(addr psx.Addr) string {
 		return ""
 	})
 	if err != nil {

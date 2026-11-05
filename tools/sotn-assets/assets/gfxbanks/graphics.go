@@ -3,12 +3,13 @@ package gfxbanks
 import (
 	"encoding/binary"
 	"fmt"
+	"io"
+	"path/filepath"
+
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
-	"io"
-	"path/filepath"
 )
 
 type GfxKind uint32
@@ -60,16 +61,24 @@ type GfxBanks struct {
 	Indices []int     `json:"indices"`
 }
 
-func ReadGraphics(r io.ReadSeeker, ramBase, addr psx.Addr, symbol func(addr psx.Addr) string) (GfxBanks, datarange.DataRange, error) {
+func ReadGraphics(r io.ReadSeeker, ramBase, addr, end psx.Addr, symbol func(addr psx.Addr) string) (GfxBanks, datarange.DataRange, error) {
 	if err := addr.MoveFile(r, ramBase); err != nil {
 		return GfxBanks{}, datarange.DataRange{}, err
 	}
 	var addrGfxBanks []psx.Addr
+	cur := addr
 	for {
+		// Stop at the asset boundary - if gfxBanks[] backs directly onto another pointer array
+		// we could otherwise continue incorrectly reading into those as pointers to graphics
+		// eg. DAI PSP backs onto e_init's EntityUpdates[]
+		if end != psx.RamNull && cur >= end {
+			break
+		}
 		var addrGfxBankEntry psx.Addr
 		if err := binary.Read(r, binary.LittleEndian, &addrGfxBankEntry); err != nil {
 			return GfxBanks{}, datarange.DataRange{}, err
 		}
+		cur = cur.Sum(4)
 		// exception for ST0, where one of the bank offsets can point to NULL
 		if addrGfxBankEntry == psx.RamNull {
 			addrGfxBanks = append(addrGfxBanks, psx.RamNull)
@@ -82,9 +91,9 @@ func ReadGraphics(r io.ReadSeeker, ramBase, addr psx.Addr, symbol func(addr psx.
 		addrGfxBanks = append(addrGfxBanks, addrGfxBankEntry)
 	}
 	// On PSP, the last element might just be padding out to the 8-align. Eliminate that if found.
-	lastBank := addrGfxBanks[len(addrGfxBanks) - 1]
-	if (lastBank == psx.RamNull){
-		addrGfxBanks = addrGfxBanks[:len(addrGfxBanks) - 1]
+	lastBank := addrGfxBanks[len(addrGfxBanks)-1]
+	if lastBank == psx.RamNull {
+		addrGfxBanks = addrGfxBanks[:len(addrGfxBanks)-1]
 	}
 
 	headerRange := datarange.FromAddr(addr, len(addrGfxBanks)*4)
