@@ -1,10 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #6. Used by weapons:
 // Moon rod, Unknown#172
-#define FUNC_04_VOID
 #include "weapon_private.h"
 extern u16* g_WeaponCluts[];
-extern s32 g_HandId;
 #include "shared.h"
 #include "gen/w_006_1.h"
 #include "gen/w_006_2.h"
@@ -16,7 +14,7 @@ extern u16 D_2E000_8017ABD4[];
 extern s32 D_2E000_8017ABF0[];
 
 extern WeaponAnimation D_2E000_8017ABC4[];
-static void EntityWeaponAttack(Entity* self) {
+void EntityWeaponAttack(Entity* self) {
     WeaponAnimation* anim;
     s8 animIndex;
 
@@ -67,7 +65,7 @@ static void EntityWeaponAttack(Entity* self) {
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
-static void func_ptr_80170004(Entity* self) {
+void func_ptr_80170004(Entity* self) {
     s32 hitboxSize;
     u16 data;
 
@@ -227,7 +225,7 @@ static s32 func_2E000_8017B6A0(Primitive* prim, s32 x, s32 y) {
     return 0;
 }
 
-static void func_ptr_80170008(Entity* self) {
+void func_ptr_80170008(Entity* self) {
     Primitive* prim;
     s32 posX, posY;
     s32 range;
@@ -267,26 +265,26 @@ static void func_ptr_80170008(Entity* self) {
     }
 }
 
-static void func_ptr_8017000C(Entity* self) {}
+void func_ptr_8017000C(Entity* self) {}
 
-static s32 func_ptr_80170010(Entity* self) {}
+s32 func_ptr_80170010(Entity* self) {}
 
-static s32 func_ptr_80170014(Entity* self) {}
+s32 func_ptr_80170014(Entity* self) {}
 
-static int GetWeaponId(void) { return 6; }
+int GetWeaponId(void) { return 6; }
 
-static void EntityWeaponShieldSpell(Entity* self) {}
+void EntityWeaponShieldSpell(Entity* self) {}
 
-static void func_ptr_80170024(Entity* self) {}
+void func_ptr_80170024(Entity* self) {}
 
-static void func_ptr_80170028(Entity* self) {}
+void func_ptr_80170028(Entity* self) {}
 
-static void WeaponUnused2C(void) {}
+void WeaponUnused2C(void) {}
 
-static void WeaponUnused30(void) {}
+void WeaponUnused30(void) {}
 
-static void WeaponUnused34(void) {}
+void WeaponUnused34(void) {}
 
-static void WeaponUnused38(void) {}
+void WeaponUnused38(void) {}
 
-static void WeaponUnused3C(void) {}
+void WeaponUnused3C(void) {}

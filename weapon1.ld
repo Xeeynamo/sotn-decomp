@@ -4,6 +4,7 @@ SECTIONS {
         *(.data)
         *(.rodata)
         *(.text)
+        *(.bss)
     }
 
     end = .;

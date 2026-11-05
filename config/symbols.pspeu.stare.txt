@@ -1,6 +1,1 @@
-sprites_are_7 = 0x0928D548;
-spriteBanks = 0x09294418;
-rooms_layers = 0x092945B0;
-cluts = 0x092947C8;
-gfxBanks = 0x09294A08;
-rooms = 0x09294E48;
+

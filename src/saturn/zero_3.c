@@ -7,9 +7,15 @@
 // original name: SET_STAGE_OVERLAYADDR
 void SetStageOverlayAddress(void) {
     PfnEntityUpdates[0] = g_StageOverlayData.entityEntries;
+#ifdef SATZ
+    DAT_060645EC = (SaturnSpriteResource**)g_StageOverlayData.spriteBanks;
+    DAT_060645E4 = g_StageOverlayData.layoutHorizontal;
+    DAT_060645F8 = g_StageOverlayData.layoutVertical;
+#else
     DAT_060645EC = *(SaturnSpriteResource***)DAT_060DC004;
     DAT_060645E4 = *(LayoutEntity***)DAT_060DC008;
     DAT_060645F8 = *(LayoutEntity***)DAT_060DC00C;
+#endif
 }
 
 // _SET_SCL_OVERLAYADDR
@@ -17,6 +23,25 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601AC48, func_0601AC48);
 
 // original name: SET_PLAYER_OVERLAYADDR
 void func_0601AD14(void) {
+#ifdef SATZ
+    DAT_06064610 = (s32*)g_PlayerOvl.init;
+    func_06064604 = g_PlayerOvl.main;
+    func_06064664 = g_PlayerOvl.updatePlayerEntities;
+    func_060645E8 = g_PlayerOvl.reserved0C;
+    func_06064684 = g_PlayerOvl.reserved10;
+    GetPlayerSensor = g_PlayerOvl.getPlayerSensor;
+    DAT_06064588 = g_PlayerOvl.disableAfterImage;
+    func_8010E168 = (void (*)(s32, s32))g_PlayerOvl.setInvincibilityFrames;
+    func_0606458C = g_PlayerOvl.reserved20;
+    func_06064658 = (void (*)(s32))g_PlayerOvl.reserved24;
+    g_api.CreateEntFactoryFromEntity = g_PlayerOvl.createEntFactoryFromEntity;
+    func_06064608 = g_PlayerOvl.reserved2C;
+    DAT_060645F0 = g_PlayerOvl.assignEnemyId;
+    func_060645A4 = g_PlayerOvl.reserved34;
+    func_06064660 = g_PlayerOvl.reserved38;
+    DAT_06064650 = (SaturnSpriteResource**)g_PlayerOvl.data3C;
+    DAT_06064668 = g_PlayerOvl.graphicsRecords;
+#else
     DAT_06064610 = DAT_060A5000;
     func_06064604 = DAT_060A5004;
     func_06064664 = DAT_060A5008;
@@ -34,6 +59,7 @@ void func_0601AD14(void) {
     func_06064660 = DAT_060A5038;
     DAT_06064650 = DAT_060A503C;
     DAT_06064668 = DAT_060A5040;
+#endif
 }
 
 void func_0601AE2C(s32 arg0) {
@@ -81,7 +107,7 @@ void InitServant() {
 
 void func_0601AEF4(void) {
     func_06064688 = DAT_060A5000;
-    func_0606468c = DAT_060A5004;
+    func_0606468C = DAT_060A5004;
     func_06064614 = DAT_060A5008;
 }
 
@@ -143,16 +169,31 @@ void func_0601B1B4(void) { func_06064690 = DAT_06066000; }
 
 // original name: SET_GAME_OVERLAYADDR
 void func_0601B1CC(void) {
+#ifdef SATZ
+    DAT_060645AC = g_GameOvl.equipDefs;
+    func_0606463C = g_GameOvl.unk04;
+    func_0606465C = g_GameOvl.destroyStageEntities;
+    DAT_06064680 = g_GameOvl.unk0C;
+    DAT_0606462C = g_GameOvl.unk10;
+    DAT_060645DC = g_GameOvl.unk14;
+    DAT_06064598 = g_GameOvl.unk18;
+    DAT_060645CC = g_GameOvl.unk1C;
+    func_060645C4 = g_GameOvl.unk20;
+    func_0606461C = g_GameOvl.unk24;
+    func_06064624 = g_GameOvl.unk28;
+    func_06064640 = g_GameOvl.unk2C;
+#else
     DAT_060645AC = DAT_06066000;
     func_0606463C = DAT_06066004;
     func_0606465C = DAT_06066008;
-    DAT_06064680 = DAT_0606600C;
-    DAT_0606462C = DAT_06066010;
-    DAT_060645DC = DAT_06066014;
-    DAT_06064598 = DAT_06066018;
-    DAT_060645CC = DAT_0606601C;
+    func_06064680 = DAT_0606600C;
+    func_0606462C = DAT_06066010;
+    func_060645DC = DAT_06066014;
+    func_06064598 = DAT_06066018;
+    func_060645CC = DAT_0606601C;
     func_060645C4 = DAT_06066020;
     func_0606461C = DAT_06066024;
     func_06064624 = DAT_06066028;
     func_06064640 = DAT_0606602C;
+#endif
 }

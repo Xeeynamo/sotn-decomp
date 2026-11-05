@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #8. Used by weapons:
 // Leather shield, Unknown#203
-#define SHIELDSPELL_S32
 #include "weapon_private.h"
 #include "gen/w_008_1.h"
 #include "gen/w_008_2.h"
@@ -74,11 +73,10 @@ static s32 shieldAngles[] = {
     0x1000, 0x1200, 0x1400, 0x1600, 0x1800, 0x1A00, 0x1C00, 0x1E00};
 
 static u16* g_WeaponCluts[] = {(u16*)pal_0, (u16*)pal_0};
-static s32 g_HandId = HAND_ID;
 
 #include "shared.h"
 
-static void EntityWeaponAttack(Entity* self) {
+void EntityWeaponAttack(Entity* self) {
     s32 anim1;
     s32 anim2;
     s32 attackButton;
@@ -214,17 +212,17 @@ static void EntityWeaponAttack(Entity* self) {
 
 s32 func_ptr_80170004(Entity* self) {}
 
-static void func_ptr_80170008(Entity* self) {}
+void func_ptr_80170008(Entity* self) {}
 
-static void func_ptr_8017000C(Entity* self) {}
+void func_ptr_8017000C(Entity* self) {}
 
-static s32 func_ptr_80170010(Entity* self) {}
+s32 func_ptr_80170010(Entity* self) {}
 
-static s32 func_ptr_80170014(Entity* self) {}
+s32 func_ptr_80170014(Entity* self) {}
 
-static int GetWeaponId(void) { return 8; }
+int GetWeaponId(void) { return 8; }
 
-static s32 EntityWeaponShieldSpell(Entity* self) {
+s32 EntityWeaponShieldSpell(Entity* self) {
     s16 back;
     s16 front;
     s16 top;
@@ -481,16 +479,16 @@ static s32 EntityWeaponShieldSpell(Entity* self) {
     }
 }
 
-static void func_ptr_80170024(Entity* self) {}
+void func_ptr_80170024(Entity* self) {}
 
-static void func_ptr_80170028(Entity* self) {}
+void func_ptr_80170028(Entity* self) {}
 
-static void WeaponUnused2C(void) {}
+void WeaponUnused2C(void) {}
 
-static void WeaponUnused30(void) {}
+void WeaponUnused30(void) {}
 
-static void WeaponUnused34(void) {}
+void WeaponUnused34(void) {}
 
-static void WeaponUnused38(void) {}
+void WeaponUnused38(void) {}
 
-static void WeaponUnused3C(void) {}
+void WeaponUnused3C(void) {}

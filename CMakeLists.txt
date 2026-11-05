@@ -337,6 +337,36 @@ set(SOURCE_FILES_TT_002
     src/pc/servants/servant_002.c
 )
 
+set(SOURCE_FILES_TT_003
+    src/servant/tt_003/init.c
+    src/servant/tt_003/demon.c
+    src/servant/tt_003/demon_spriteparts.c
+    src/pc/servants/servant_003.c
+)
+
+set(SOURCE_FILES_TT_004
+    src/servant/tt_004/init.c
+    src/servant/tt_004/sword.c
+    src/servant/tt_004/servant_clutdata.c
+    src/pc/servants/servant_004.c
+)
+
+set(SOURCE_FILES_TT_005
+    src/servant/tt_005/init.c
+    src/servant/tt_005/sprite.c
+    src/servant/tt_005/sprite_clutdata.c
+    src/servant/tt_005/sprite_spriteparts.c
+    src/pc/servants/servant_005.c
+)
+
+set(SOURCE_FILES_TT_006
+    src/servant/tt_006/init.c
+    src/servant/tt_006/nosedevil.c
+    src/servant/tt_006/nosedevil_spriteparts.c
+    src/servant/tt_006/servant_clutdata.c
+    src/pc/servants/servant_006.c
+)
+
 set(SOURCE_FILES_STAGE_SEL
     src/pc/stages/stage_sel.c
     src/st/sel/bss.c
@@ -669,6 +699,97 @@ set(SOURCE_FILES_STAGE_DAI
     src/st/dai/e_stained_glass.c
     src/st/dai/e_tower_exit.c
     src/st/dai/e_winged_guard.c
+)
+
+set(SOURCE_FILES_STAGE_RDAI
+    src/pc/stages/stage_rdai.c
+    src/st/rdai/header.c
+    src/st/rdai/sprite_banks.c
+    src/st/rdai/pal_8C.c
+    src/st/rdai/palette_def.c
+    src/st/rdai/layers.c
+    src/st/rdai/graphics_banks.c
+    src/st/rdai/gen/e_laydef.c
+    src/st/rdai/e_init.c
+    src/st/rdai/e_room_bg.c
+    src/st/rdai/e_red_door_tiles.c
+    src/st/rdai/e_lock_camera.c
+    src/st/rdai/e_breakable.c
+    src/st/rdai/e_stained_glass.c
+    src/st/rdai/d_prize_drops.c
+    src/st/rdai/unk_33B94.c
+    src/st/rdai/e_spikes.c
+    src/st/rdai/st_update.c
+    src/st/rdai/st_collision.c
+    src/st/rdai/e_red_door.c
+    src/st/rdai/st_common.c
+    src/st/rdai/e_collect.c
+    src/st/rdai/e_misc.c
+    src/st/rdai/e_particles.c
+    src/st/rdai/e_room_fg.c
+    src/st/rdai/e_archer.c
+    src/st/rdai/e_spectral_sword.c
+    src/st/rdai/e_sniper_of_goth.c
+    src/st/rdai/e_imp.c
+    src/st/rdai/e_balloon_pod.c
+    src/st/rdai/e_black_panther.c
+    src/st/rdai/gen/rooms.c
+    src/st/rdai/e_clouds.c
+    src/st/rdai/gen/e_layout.c
+    src/st/rdai/stage_data.c
+    src/st/rdai/tilemaps.c
+    src/st/rdai/gen/us/sprites.c
+    src/st/rdai/e_tower_exit.c
+    src/st/rdai/e_stage_name.c
+    src/st/rdai/prim_helpers.c
+    src/st/rdai/e_room_fg_2.c
+    src/st/rdai/e_room_bg_2.c
+    src/st/rdai/create_entity.c
+    src/st/rdai/popup.c
+)
+
+set(SOURCE_FILES_STAGE_RARE
+    src/pc/stages/stage_rare.c
+    src/st/rare/header.c
+    src/st/rare/sprite_banks.c
+    src/st/rare/palette_def.c
+    src/st/rare/layers.c
+    src/st/rare/graphics_banks.c
+    src/st/rare/gen/e_laydef.c
+    src/st/rare/e_init.c
+    src/st/rare/background_block_init.c
+    src/st/rare/e_red_door_tiles.c
+    src/st/rare/e_lock_camera.c
+    src/st/rare/e_breakable.c
+    src/st/rare/d_prize_drops.c
+    src/st/rare/e_secrets.c
+    src/st/rare/e_background_door_rubble.c
+    src/st/rare/e_boss_torch.c
+    src/st/rare/st_update.c
+    src/st/rare/collision.c
+    src/st/rare/e_red_door.c
+    src/st/rare/st_common.c
+    src/st/rare/e_collect.c
+    src/st/rare/e_misc.c
+    src/st/rare/e_particles.c
+    src/st/rare/e_room_fg.c
+    src/st/rare/e_minotaur.c
+    src/st/rare/e_azaghal.c
+    src/st/rare/e_white_dragon.c
+    src/st/rare/e_stone_skull.c
+    src/st/rare/gen/rooms.c
+    src/st/rare/e_werewolf.c
+    src/st/rare/gen/e_layout.c
+    src/st/rare/stage_data.c
+    src/st/rare/tilemaps.c
+    src/st/rare/gen/us/sprites.c
+    src/st/rare/e_boss_doors.c
+    src/st/rare/e_stage_name.c
+    src/st/rare/prim_helpers.c
+    src/st/rare/e_room_bg.c
+    src/st/rare/e_fountain_water.c
+    src/st/rare/create_entity.c
+    src/st/rare/popup.c
 )
 
 set(SOURCE_FILES_STAGE_NP3
@@ -2287,10 +2408,12 @@ add_overlay(cat ${SOURCE_FILES_STAGE_CAT})
 add_overlay(no2 ${SOURCE_FILES_STAGE_NO2})
 add_overlay(chi ${SOURCE_FILES_STAGE_CHI})
 add_overlay(dai ${SOURCE_FILES_STAGE_DAI})
+add_overlay(rdai ${SOURCE_FILES_STAGE_RDAI})
 add_overlay(np3 ${SOURCE_FILES_STAGE_NP3})
 add_overlay(cen ${SOURCE_FILES_STAGE_CEN})
 add_overlay(no4 ${SOURCE_FILES_STAGE_NO4})
 add_overlay(are ${SOURCE_FILES_STAGE_ARE})
+add_overlay(rare ${SOURCE_FILES_STAGE_RARE})
 add_overlay(top ${SOURCE_FILES_STAGE_TOP})
 add_overlay(nz0 ${SOURCE_FILES_STAGE_NZ0})
 add_overlay(nz1 ${SOURCE_FILES_STAGE_NZ1})
@@ -2426,15 +2549,19 @@ if(ENABLE_SATURN_STAGES)
 endif()
 
 foreach(id 000 002 007 008 010 012 034 035 037 040 041 043 045 046 050 051 052)
-    add_overlay(w0_${id} src/weapon/w_${id}.c)
+    add_overlay(w0_${id} src/weapon/w_init.c src/weapon/right_hand.c src/weapon/w_${id}.c)
     target_compile_definitions(${w0_${id}_COMPILE_TARGET} PRIVATE WEAPON0)
-    add_overlay(w1_${id} src/weapon/w_${id}.c)
+    add_overlay(w1_${id} src/weapon/w_init.c src/weapon/left_hand.c src/weapon/w_${id}.c)
     target_compile_definitions(${w1_${id}_COMPILE_TARGET} PRIVATE WEAPON1)
 endforeach()
 
 add_overlay(tt_000 ${SOURCE_FILES_TT_000})
 add_overlay(tt_001 ${SOURCE_FILES_TT_001})
 add_overlay(tt_002 ${SOURCE_FILES_TT_002})
+add_overlay(tt_003 ${SOURCE_FILES_TT_003})
+add_overlay(tt_004 ${SOURCE_FILES_TT_004})
+add_overlay(tt_005 ${SOURCE_FILES_TT_005})
+add_overlay(tt_006 ${SOURCE_FILES_TT_006})
 
 if(ENABLE_SATURN_STAGES)
     include(cmake/saturn_stages.cmake)

@@ -2,6 +2,7 @@
 #include "nosedevil.h"
 #include "../servant_private.h"
 
+static s32 g_PlaySfxStep;
 static s32 s_ServantId;
 static FamiliarStats s_NosedevilStats;
 static s16 D_us_80178474[3][8];

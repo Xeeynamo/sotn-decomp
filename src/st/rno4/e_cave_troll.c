@@ -1,7 +1,62 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno4.h"
 
-INCLUDE_ASM("st/rno4/nonmatchings/e_cave_troll", StepTowards);
+extern Primitive* FindFirstUnkPrim(Primitive*);
+
+extern EInit D_us_80180B6C;
+extern EInit g_EInitCaveTroll;
+extern EInit D_us_80180B78;
+
+static s16 D_us_80182344[] = {
+    0x0000, 0x0019, 0x0000, 0x0004, 0x0008, 0xFFFC, 0xFFF0, 0x0000};
+
+static s16 unused[] = {
+    0x0000, 0x0019, 0x000C, 0x0000, 0x0206, 0x0306, 0x0440, 0x00FF};
+
+static AnimateEntityFrame D_us_80182364[] = {
+    {0x04, 0x05}, {0x06, 0x01}, {0x04, 0x06}, {0xFF, 0x00}};
+static AnimateEntityFrame D_us_8018236C[] = {
+    {0x06, 0x07}, {0x08, 0x08}, {0x06, 0x09}, {0xFF, 0x00}};
+static AnimateEntityFrame D_us_80182374[] = {
+    {0x10, 0x01}, {0x02, 0x0A}, {0x02, 0x0B}, {0x14, 0x0A},
+    {0x01, 0x12}, {0x01, 0x11}, {0x01, 0x10}, {0xFF, 0x00}};
+static AnimateEntityFrame D_us_80182384[] = {
+    {0x01, 0x0D}, {0x01, 0x0E}, {0x00, 0x00}, {0x00, 0x00}};
+static AnimateEntityFrame D_us_8018238C[] = {
+    {0x08, 0x01}, {0x16, 0x0C}, {0x01, 0x0E}, {0x01, 0x0D},
+    {0x01, 0x0F}, {0x01, 0x11}, {0x01, 0x12}, {0xFF, 0x00}};
+static AnimateEntityFrame D_us_8018239C[] = {
+    {0x01, 0x15}, {0x01, 0x16}, {0x01, 0x17}, {0x01, 0x18}, {0x01, 0x19},
+    {0x01, 0x1A}, {0x01, 0x1B}, {0x01, 0x1C}, {0x01, 0x00}, {0xFF, 0x00},
+};
+static AnimateEntityFrame D_us_801823B0[] = {
+    {0x02, 0x1D}, {0x02, 0x1E}, {0x02, 0x1F}, {0x02, 0x20},
+    {0x02, 0x21}, {0x02, 0x22}, {0x00, 0x00}, {0x00, 0x00}};
+static s8 D_us_801823C0[][4] = {
+    {0x00, 0x00, 0x00, 0x00}, {0x01, 0x07, 0x04, 0x12},
+    {0x01, 0x03, 0x07, 0x0E}, {0x04, 0x00, 0x04, 0x18},
+    {0x00, 0x05, 0x05, 0x14},
+};
+static u8 D_us_801823D4[] = {
+    0x00, 0x01, 0x02, 0x02, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x03, 0x03,
+    0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x02, 0x00, 0x00, 0x00};
+
+static bool StepTowards(s16* val, s32 target, s32 step) {
+    if (abs(*val - target) < step) {
+        *val = target;
+        return true;
+    }
+
+    if (*val > target) {
+        *val -= step;
+    }
+
+    if (*val < target) {
+        *val += step;
+    }
+
+    return false;
+}
 
 void func_us_801D5DC8(Primitive* prim) {
     s32 yPos;
@@ -26,16 +81,6 @@ void func_us_801D5DC8(Primitive* prim) {
         return;
     }
 }
-
-extern EInit g_EInitCaveTroll;
-extern s16 D_us_80182344[];
-extern u8 D_us_80182364[];
-extern u8 D_us_8018236C[];
-extern u8 D_us_80182374[];
-extern u8 D_us_80182384[];
-extern u8 D_us_8018238C[];
-extern s8 D_us_801823C0[][4];
-extern u8 D_us_801823D4[];
 
 void func_us_801D5E90(Entity* self) {
     Collider collider;
@@ -77,7 +122,7 @@ void func_us_801D5E90(Entity* self) {
         self->primIndex = primIndex;
 
         prim = &g_PrimBuf[primIndex];
-        self->ext.et_801D5E90.prim7C = prim;
+        self->ext.et_caveTroll.prim7C = prim;
 
         while (prim) {
             prim->u0 = (prim->v0 = 1);
@@ -230,19 +275,19 @@ void func_us_801D5E90(Entity* self) {
                 SetSubStep(8);
                 break;
             } else {
-                self->ext.et_801D5E90.unk8C = angle;
+                self->ext.et_caveTroll.unk8C = angle;
                 self->animCurFrame = 0x14;
                 self->velocityY = 0;
                 self->rotate = 0;
                 self->drawFlags |= ENTITY_ROTATE;
-                self->ext.et_801D5E90.unk91 = 1;
+                self->ext.et_caveTroll.unk91 = 1;
                 self->step_s++;
             }
 
         case 5:
-            FntPrint("angle %x\n", self->ext.et_801D5E90.unk8C);
+            FntPrint("angle %x\n", self->ext.et_caveTroll.unk8C);
 
-            angle = self->ext.et_801D5E90.unk8C;
+            angle = self->ext.et_caveTroll.unk8C;
             angle -= 0x380;
             if (StepTowards(&self->rotate, angle, 0x28)) {
                 self->step_s += 1;
@@ -254,7 +299,7 @@ void func_us_801D5E90(Entity* self) {
             if (explosion) {
                 CreateEntityFromEntity(E_UNK_41, self, explosion);
                 explosion->facingLeft = self->facingLeft;
-                angle = self->ext.et_801D5E90.unk8C;
+                angle = self->ext.et_caveTroll.unk8C;
 
                 if (self->facingLeft) {
                     explosion->posX.i.hi += (rsin(angle) * 9) >> 12;
@@ -263,20 +308,20 @@ void func_us_801D5E90(Entity* self) {
                 }
 
                 explosion->posY.i.hi += (9 * rcos(angle)) >> 0xc;
-                explosion->ext.et_801D5E90.unk8C = angle;
-                explosion->ext.et_801D5E90.ent9C = self;
+                explosion->ext.et_caveTroll.unk8C = angle;
+                explosion->ext.et_caveTroll.ent9C = self;
             }
 
-            self->ext.et_801D5E90.unk80 = 0x40;
+            self->ext.et_caveTroll.unk80 = 0x40;
             PlaySfxPositional(SFX_GUARD_TINK);
             self->step_s += 1;
 
             break;
 
         case 7:
-            if (!(self->ext.et_801D5E90.unk80 -= 1)) {
+            if (!(self->ext.et_caveTroll.unk80 -= 1)) {
                 self->animCurFrame = 0x13;
-                self->ext.et_801D5E90.unk91 = 0;
+                self->ext.et_caveTroll.unk91 = 0;
                 self->step_s += 1;
             }
             break;
@@ -304,7 +349,7 @@ void func_us_801D5E90(Entity* self) {
     case 0x5:
         switch (self->step_s) {
         case 0:
-            self->ext.et_801D5E90.unk90 = 0;
+            self->ext.et_caveTroll.unk90 = 0;
             genericInt = (GetSideToPlayer() & 0x1) ^ 0x1;
 
             if (self->facingLeft == genericInt) {
@@ -327,7 +372,7 @@ void func_us_801D5E90(Entity* self) {
                 CreateEntityFromEntity(E_UNK_42, self, explosion);
                 explosion->facingLeft = self->facingLeft;
                 explosion->zPriority = self->zPriority + 1;
-                explosion->ext.et_801D5E90.ent9C = self;
+                explosion->ext.et_caveTroll.ent9C = self;
                 SetSubStep(3);
             } else {
                 SetStep(3);
@@ -336,14 +381,14 @@ void func_us_801D5E90(Entity* self) {
 
         case 3:
             if (!AnimateEntity(D_us_80182374, self)) {
-                self->ext.et_801D5E90.unk90 = 1U;
+                self->ext.et_caveTroll.unk90 = 1U;
                 SetSubStep(4);
             }
             break;
 
         case 4:
             AnimateEntity(D_us_80182384, self);
-            if (!self->ext.et_801D5E90.unk90) {
+            if (!self->ext.et_caveTroll.unk90) {
                 SetStep(3);
             }
             break;
@@ -382,8 +427,8 @@ void func_us_801D5E90(Entity* self) {
     self->hitboxWidth = *(frameParts++);
     self->hitboxHeight = *(frameParts++);
 
-    if (self->ext.et_801D5E90.unk91) {
-        prim = self->ext.et_801D5E90.prim7C;
+    if (self->ext.et_caveTroll.unk91) {
+        prim = self->ext.et_caveTroll.prim7C;
         prim = FindFirstUnkPrim(prim);
         if (prim) {
             posX = self->posX.i.hi;
@@ -399,7 +444,7 @@ void func_us_801D5E90(Entity* self) {
         }
     }
 
-    prim = self->ext.et_801D5E90.prim7C;
+    prim = self->ext.et_caveTroll.prim7C;
     while (prim) {
         if (prim->p3) {
             func_us_801D5DC8(prim);
@@ -419,8 +464,6 @@ void func_us_801D5E90(Entity* self) {
         prim = (Primitive*)genericInt;
     }
 }
-
-extern EInit D_us_80180B6C;
 
 void func_us_801D68E0(Entity* self) {
     Primitive* prim;
@@ -448,7 +491,7 @@ void func_us_801D68E0(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.et_801D68E0.unk7C = prim;
+        self->ext.et_caveTroll.prim7C = prim;
 
         prim->x0 = (prim->x1 = self->posX.i.hi);
         prim->y0 = (prim->y1 = self->posY.i.hi);
@@ -462,7 +505,7 @@ void func_us_801D68E0(Entity* self) {
         prim->drawMode =
             DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
 
-        angle = self->ext.et_801D68E0.unk8C;
+        angle = self->ext.et_caveTroll.unk8C;
 
         if (self->facingLeft) {
             angle = -angle;
@@ -470,16 +513,16 @@ void func_us_801D68E0(Entity* self) {
 
         self->velocityX = rsin(angle) * (-0x80);
         self->velocityY = rcos(angle) << 7;
-        self->ext.et_801D68E0.unk80 = 0x20;
+        self->ext.et_caveTroll.unk80 = 0x20;
 
     case 1:
         MoveEntity();
 
-        prim = self->ext.et_801D68E0.unk7C;
+        prim = self->ext.et_caveTroll.prim7C;
         xPosition = (prim->x0 = self->posX.i.hi);
         yPosition = (prim->y0 = self->posY.i.hi);
 
-        if (!(self->ext.et_801D68E0.unk80 -= 1)) {
+        if (!(self->ext.et_caveTroll.unk80 -= 1)) {
             self->step = 2;
         }
 
@@ -493,11 +536,11 @@ void func_us_801D68E0(Entity* self) {
     case 3:
         MoveEntity();
 
-        prim = self->ext.et_801D68E0.unk7C;
+        prim = self->ext.et_caveTroll.prim7C;
         xPosition = (prim->x0 = self->posX.i.hi);
         yPosition = (prim->y0 = self->posY.i.hi);
 
-        prim = self->ext.et_801D68E0.unk7C;
+        prim = self->ext.et_caveTroll.prim7C;
         xPosition -= prim->x1;
         yPosition -= prim->y1;
 
@@ -506,7 +549,7 @@ void func_us_801D68E0(Entity* self) {
         }
     }
 
-    ent = self->ext.et_801D68E0.unk9C;
+    ent = self->ext.et_caveTroll.ent9C;
 #if defined(VERSION_PSP) || defined(FIX_UB)
     // Non-PSX versions fix a null pointer here
     if (ent != NULL) {
@@ -519,4 +562,80 @@ void func_us_801D68E0(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno4/nonmatchings/e_cave_troll", func_us_801D6B8C);
+void func_us_801D6B8C(Entity* self) {
+    Entity* ent;
+    s32 dx;
+    s32 dy;
+    s16 angle;
+    s32 distance;
+    s32 size;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180B78);
+        self->animCurFrame = 0;
+        break;
+
+    case 1:
+        ent = self->ext.et_caveTroll.ent9C;
+        if (ent->pose == 4) {
+            self->step++;
+        }
+        break;
+
+    case 2:
+        AnimateEntity(D_us_8018239C, self);
+        ent = self->ext.et_caveTroll.ent9C;
+        if (ent->ext.et_caveTrollUnk.unk90) {
+            self->facingLeft = 0;
+            self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
+            self->scaleX = (self->scaleY = 0x180);
+            self->ext.et_caveTroll.unk80 = 0x60;
+            self->zPriority = ent->zPriority - 1;
+            SetStep(3);
+        }
+        break;
+
+    case 3:
+        AnimateEntity(D_us_801823B0, self);
+        if (self->scaleX < 0x200) {
+            self->scaleX = (self->scaleY += 0x20);
+        } else if (!(self->ext.et_caveTroll.unk80 -= 1)) {
+            SetStep(4);
+        }
+
+    case 4:
+        AnimateEntity(D_us_801823B0, self);
+        if (self->scaleX) {
+            self->scaleX = (self->scaleY -= 4);
+        } else {
+            ent = self->ext.et_caveTroll.ent9C;
+            ent->ext.et_caveTrollUnk.unk90 = 0;
+            DestroyEntity(self);
+            return;
+        }
+        ent = g_Entities;
+        angle = GetAngleBetweenEntities(self, ent);
+        size = (self->scaleX * 30) >> 8;
+        dx = GetDistanceToPlayerX();
+        dy = GetDistanceToPlayerX();
+        distance = SquareRoot0(SQ(dx) + SQ(dy));
+        distance -= 4;
+        if (distance < size) {
+            size = distance;
+        }
+        self->hitboxOffX = (size * rcos(angle)) >> 0xC;
+        self->hitboxOffY = (size * rsin(angle)) >> 0xC;
+    }
+
+    if (g_Timer & 1) {
+        self->palette = PAL_FLAG(PAL_CC_CRITICAL_EFFECT);
+    } else {
+        self->palette = PAL_FLAG(PAL_UNK_19C);
+    }
+    ent = self->ext.et_caveTroll.ent9C;
+    if (ent->entityId != E_UNK_40) {
+        DestroyEntity(self);
+    }
+    return;
+}
