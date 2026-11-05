@@ -27,7 +27,6 @@ void func_06004E94(void);
 extern s32 DAT_060DC004[];
 extern s32 DAT_060DC008[];
 extern s32 DAT_060DC00C[];
-extern s32 DAT_0605D910[];
 typedef struct {
     u16 id;
     s16 index;
@@ -73,8 +72,16 @@ typedef struct {
 typedef struct {
     Unk0600654C req;
     s32 unk18;
-    s32 unk1C;
+    s32* unk1C;
 } FileLoadEntry;
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    FileLoadEntry* unk8;
+} Unk0605AE90;
+
+extern Unk0605AE90 DAT_0605AE90;
 
 extern u8 DAT_00232000[];
 extern u8 DAT_00200000[];
@@ -130,7 +137,7 @@ s32 func_0600D028(u32 device, s8 arg1);
 s8 func_0600D264(u32 device, s8 arg1);
 s8 func_0600D47C(u32 device, s8 arg1);
 void InitSystem();
-void func_060040d8();
+void func_060040D8(void);
 
 s32 func_0600DCF0(Primitive* prim);
 s32 func_0600DD38(Primitive* prim);
@@ -160,7 +167,7 @@ extern u16 DAT_0605BEC8;
 extern u16 DAT_0605BECA;
 extern u16 DAT_0605BECC;
 extern u8 DAT_06057f68;
-extern u8* DAT_060645b8;
+extern u8* DAT_060645B8;
 void func_06009510(u16);
 void SetCanRevealMap(void);
 extern s32 DAT_0605D7DC;
@@ -183,9 +190,9 @@ extern s32 g_GameClearFlag;
 extern u8 g_CastleMap[0x800];
 extern u16 D_8003C730;
 extern s32 D_8013AEE4;
-extern s32 DAT_0606459c;
+extern s32 DAT_0606459C;
 extern u8 DAT_06038DC0[16];
-extern u16 DAT_06038DD0[];
+extern u16 DAT_06038DD0[][0x10];
 extern s32 DAT_06038FD0;
 extern s32 DAT_06038DBC;
 extern s32 DAT_060579A0;
@@ -194,7 +201,6 @@ u16 func_0600A650(u8* record, u16 frame, s32 bank, s32 second);
 u16 func_0600A350(u8* record, u16 frame, s32 flag, u16* data);
 u16 func_0600A490(u8* record, u16 frame, s32 flag, s32 playableCharacter);
 void func_0600B4C4(SpriteObject* obj);
-void func_0600A088(void);
 extern SaturnLayerCompressedSizes* DAT_060645F4;
 extern SaturnLayerMapOffsets* DAT_06064654;
 extern SaturnRoomLayerSetup* DAT_0606466C;
@@ -394,7 +400,6 @@ typedef struct {
     u32 dst;
     s32 size;
 } VramTransfer;
-extern VramTransfer DAT_060576B0[16];
 extern s32 DAT_06057770;
 extern s16 DAT_06057774[];
 extern s16 DAT_06057780[];
@@ -409,6 +414,7 @@ void SetCurrentMatrixBinAngle(MthXyz* rot, MthXyz* pos);
 void TransformAndProjectPoints(MthXyz* src, XyInt* dst, s32 count);
 void func_0600DE38(void);
 void func_0600E164(void);
+Equipment* func_060076D0(s32 arg0);
 void func_06008B20(void);
 void func_06008EE8(void);
 void SignalSlaveSh2(void);

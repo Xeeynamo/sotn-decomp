@@ -18,7 +18,7 @@ extern s32 E_ID(BLUE_FLASH_ORB);
 extern s32 E_ID(RAINBOW_TRIANGLE);
 extern s32 E_ID(TRIANGLE_CORNER_GLOW);
 extern s32 E_ID(BLUE_ORB_SHADOW);
-extern s32 E_ID(UNK_27);
+extern s32 E_ID(LAUNCH_CUTSCENE);
 #endif
 
 // BSS vars
@@ -275,7 +275,7 @@ void EntityBossDracula(Entity* self) {
             break;
         case 1:
             other = &g_Entities[200];
-            CreateEntityFromCurrentEntity(E_ID(UNK_27), other);
+            CreateEntityFromCurrentEntity(E_ID(LAUNCH_CUTSCENE), other);
             other->flags |= FLAG_UNK_10000;
             other->params = 1;
             g_unkGraphicsStruct.unk28 = 0xFF;

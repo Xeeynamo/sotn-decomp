@@ -45,4 +45,4 @@ void func_pspeu_092F8440(void) {}
 
 void func_pspeu_092F8448(void) {}
 
-INCLUDE_ASM("weapon/w1_012_psp/nonmatchings/w1_012", w1_012_Load);
+INCLUDE_ASM("weapon/w1_012_psp/nonmatchings/w1_012", WeaponLoad);

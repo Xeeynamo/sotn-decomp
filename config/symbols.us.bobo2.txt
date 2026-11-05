@@ -24,7 +24,6 @@ actor_names = 0x80180C20;
 rooms = 0x801817E0;
 werewolf_attack_hitboxes = 0x80181A3C;
 werewolf_attack_hitbox_indices = 0x80181A88;
-EntityBossTorch = 0x801A4D4C;
 CutsceneUnk1 = 0x801A5460;
 SetCutsceneScript = 0x801A54B4;
 CutsceneUnk4 = 0x801A56D4;

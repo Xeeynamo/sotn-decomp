@@ -3,7 +3,6 @@
 // Shaman shield, Unknown#210
 #include "weapon_private.h"
 extern u16* g_WeaponCluts[];
-extern s32 g_HandId;
 #include "gen/w_026_1.h"
 #include "gen/w_026_2.h"
 #define g_Animset w_026_1
@@ -20,7 +19,7 @@ extern u8 D_BA000_8017AADC[];
 
 extern s32 D_BA000_8017CC3C;
 
-static void EntityWeaponAttack(Entity* self) {
+void EntityWeaponAttack(Entity* self) {
     s32 anim1;
     s32 anim2;
     s32 attackButton;
@@ -156,15 +155,15 @@ static void EntityWeaponAttack(Entity* self) {
 
 s32 func_ptr_80170004(Entity* self) {}
 
-static void func_ptr_80170008(Entity* self) {}
+void func_ptr_80170008(Entity* self) {}
 
-static void func_ptr_8017000C(Entity* self) {}
+void func_ptr_8017000C(Entity* self) {}
 
-static s32 func_ptr_80170010(Entity* self) {}
+s32 func_ptr_80170010(Entity* self) {}
 
-static s32 func_ptr_80170014(Entity* self) {}
+s32 func_ptr_80170014(Entity* self) {}
 
-static int GetWeaponId(void) { return 26; }
+int GetWeaponId(void) { return 26; }
 
 void func_BA000_8017B37C(void) {
     RECT rect;
@@ -194,7 +193,7 @@ void func_BA000_8017B37C(void) {
     LoadImage(&rect, &g_Clut[1][0x100]);
 }
 
-static void EntityWeaponShieldSpell(Entity* self) {
+void EntityWeaponShieldSpell(Entity* self) {
     s16 back;
     s16 front;
     s16 top;
@@ -498,7 +497,7 @@ const SVECTOR D_BA000_8017AB94 = {56, 28, 0};
 
 // When casting the Shaman Shield spell with the Shield Rod, an animation plays
 // where several stars rotate in 3D around Alucard. This handles that rotation.
-static void func_ptr_80170024(Entity* self) {
+void func_ptr_80170024(Entity* self) {
     SVECTOR rotation_axis;
     VECTOR transfer_vector;
     MATRIX m;
@@ -693,14 +692,14 @@ static void func_ptr_80170024(Entity* self) {
     }
 }
 
-static void func_ptr_80170028(Entity* self) {}
+void func_ptr_80170028(Entity* self) {}
 
-static void WeaponUnused2C(void) {}
+void WeaponUnused2C(void) {}
 
-static void WeaponUnused30(void) {}
+void WeaponUnused30(void) {}
 
-static void WeaponUnused34(void) {}
+void WeaponUnused34(void) {}
 
-static void WeaponUnused38(void) {}
+void WeaponUnused38(void) {}
 
-static void WeaponUnused3C(void) {}
+void WeaponUnused3C(void) {}

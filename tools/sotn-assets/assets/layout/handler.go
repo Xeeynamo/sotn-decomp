@@ -131,7 +131,7 @@ func layoutOffset(r io.ReadSeeker, baseAddr psx.Addr) (psx.Addr, error) {
 	// ⚠️ assumption
 	// some overlays have this field nulled, we have to find the offset ourselves
 	// it should be usually be right after header.Graphics
-	_, graphicsRange, err := gfxbanks.ReadGraphics(r, baseAddr, header.Graphics, func(addr psx.Addr) string {
+	_, graphicsRange, err := gfxbanks.ReadGraphics(r, baseAddr, header.Graphics, psx.RamNull, func(addr psx.Addr) string {
 		return ""
 	})
 	if err != nil {

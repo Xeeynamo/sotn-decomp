@@ -1,0 +1,697 @@
+diff -ruN a/bc-emit.c b/bc-emit.c
+--- a/bc-emit.c	1994-11-04 21:10:21.000000000 +0000
++++ b/bc-emit.c	2026-11-05 00:49:40.487307405 +0000
+@@ -22,7 +22,7 @@
+ #ifdef __STDC__
+ #include <stdarg.h>
+ #else
+-#include <varargs.h>
++#include <stdarg.h>
+ #endif
+ #include "machmode.h"
+ #include "rtl.h"
+diff -ruN a/calls.c b/calls.c
+--- a/calls.c	1994-11-15 00:18:34.000000000 +0000
++++ b/calls.c	2026-11-05 00:49:40.487961199 +0000
+@@ -25,7 +25,7 @@
+ #ifdef __STDC__
+ #include <stdarg.h>
+ #else
+-#include <varargs.h>
++#include <stdarg.h>
+ #endif
+ #include "insn-flags.h"
+ 
+diff -ruN a/c-decl.c b/c-decl.c
+--- a/c-decl.c	1994-11-11 22:52:25.000000000 +0000
++++ b/c-decl.c	2026-11-05 00:49:40.518404036 +0000
+@@ -356,6 +356,13 @@
+        not including any forward-decls in the parmlist.
+        This is so we can put the parms in proper order for assign_parms.  */
+     tree parm_order;
++
++    /* The decls of `names' that had an incomplete type when pushed, in the same order.
++       finish_struct walks this instead of every decl of the level.  */
++    tree incomplete;
++
++    /* Nonzero once `names' was replaced, so `incomplete' no longer follows it.  */
++    char incomplete_stale;
+   };
+ 
+ #define NULL_BINDING_LEVEL (struct binding_level *) NULL
+@@ -378,7 +385,7 @@
+ 
+ static struct binding_level clear_binding_level
+   = {NULL, NULL, NULL, NULL, NULL, NULL_BINDING_LEVEL, 0, 0, 0, 0, 0, 0,
+-     NULL};
++     NULL, NULL, 0};
+ 
+ /* Nonzero means unconditionally make a BLOCK for the next level pushed.  */
+ 
+@@ -2228,7 +2235,12 @@
+ 
+       /* Keep count of variables in this level with incomplete type.  */
+       if (TYPE_SIZE (TREE_TYPE (x)) == 0)
+-	++b->n_incomplete;
++	{
++	  ++b->n_incomplete;
++	  b->incomplete = (b == global_binding_level
++			   ? perm_tree_cons (NULL_TREE, x, b->incomplete)
++			   : tree_cons (NULL_TREE, x, b->incomplete));
++	}
+     }
+ 
+   /* Put decls on list in reverse order.
+@@ -2531,6 +2543,7 @@
+      tree decls;
+ {
+   current_binding_level->names = decls;
++  current_binding_level->incomplete_stale = 1;
+ }
+ 
+ /* Similarly, store the list of tags of the current level.  */
+@@ -5284,7 +5297,9 @@
+ field_decl_cmp (x, y)
+      tree *x, *y;
+ {
+-  return (long)DECL_NAME (*x) - (long)DECL_NAME (*y);
++  if (DECL_NAME (*x) == DECL_NAME (*y))
++    return 0;
++  return DECL_NAME (*x) < DECL_NAME (*y) ? -1 : 1;
+ }
+ 
+ /* Fill in the fields of a RECORD_TYPE or UNION_TYPE node, T.
+@@ -5451,30 +5466,48 @@
+ 
+   /* Now DECL_INITIAL is null on all members.  */
+ 
+-  /* Delete all duplicate fields from the fieldlist */
+-  for (x = fieldlist; x && TREE_CHAIN (x);)
+-    /* Anonymous fields aren't duplicates.  */
+-    if (DECL_NAME (TREE_CHAIN (x)) == 0)
+-      x = TREE_CHAIN (x);
+-    else
++  /* Delete all duplicate fields from the fieldlist.
++     The names seen so far go in a hash set, so this is linear in the number of fields.  */
++  {
++    int size = 16, n = 0, i;
++    tree *seen;
++
++    for (x = fieldlist; x; x = TREE_CHAIN (x))
++      n++;
++    while (size < 2 * n)
++      size <<= 1;
++    seen = (tree *) xmalloc (size * sizeof (tree));
++    bzero ((char *) seen, size * sizeof (tree));
++#define FIELD_HASH(name) (((unsigned long) (name) >> 3) & (size - 1))
++    if (fieldlist && DECL_NAME (fieldlist))
++      seen[FIELD_HASH (DECL_NAME (fieldlist))] = DECL_NAME (fieldlist);
++    for (x = fieldlist; x && TREE_CHAIN (x);)
+       {
+-	register tree y = fieldlist;
+-	  
+-	while (1)
++	tree name = DECL_NAME (TREE_CHAIN (x));
++
++	/* Anonymous fields aren't duplicates.  */
++	if (name == 0)
+ 	  {
+-	    if (DECL_NAME (y) == DECL_NAME (TREE_CHAIN (x)))
+-	      break;
+-	    if (y == x)
+-	      break;
+-	    y = TREE_CHAIN (y);
++	    x = TREE_CHAIN (x);
++	    continue;
+ 	  }
+-	if (DECL_NAME (y) == DECL_NAME (TREE_CHAIN (x)))
++	for (i = FIELD_HASH (name); seen[i] && seen[i] != name;
++	     i = (i + 1) & (size - 1))
++	  ;
++	if (seen[i])
+ 	  {
+ 	    error_with_decl (TREE_CHAIN (x), "duplicate member `%s'");
+ 	    TREE_CHAIN (x) = TREE_CHAIN (TREE_CHAIN (x));
+ 	  }
+-	else x = TREE_CHAIN (x);
++	else
++	  {
++	    seen[i] = name;
++	    x = TREE_CHAIN (x);
++	  }
+       }
++#undef FIELD_HASH
++    free (seen);
++  }
+ 
+   /* Now we have the nearly final fieldlist.  Record it,
+      then lay out the structure or union (including the fields).  */
+@@ -5570,8 +5603,17 @@
+ 
+   if (current_binding_level->n_incomplete != 0)
+     {
+-      tree decl;
+-      for (decl = current_binding_level->names; decl; decl = TREE_CHAIN (decl))
++      tree decl, link = 0;
++      int stale = current_binding_level->incomplete_stale;
++
++
++      if (stale)
++	decl = current_binding_level->names;
++      else if ((link = current_binding_level->incomplete) != 0)
++	decl = TREE_VALUE (link);
++      else
++	decl = 0;
++      while (decl)
+ 	{
+ 	  if (TREE_TYPE (decl) == t
+ 	      && TREE_CODE (decl) != TYPE_DECL)
+@@ -5593,6 +5635,12 @@
+ 	      if (element == t)
+ 		layout_array_type (TREE_TYPE (decl));
+ 	    }
++	  if (stale)
++	    decl = TREE_CHAIN (decl);
++	  else if ((link = TREE_CHAIN (link)) != 0)
++	    decl = TREE_VALUE (link);
++	  else
++	    decl = 0;
+ 	}
+     }
+ 
+@@ -6080,6 +6128,7 @@
+ 	       link; link = TREE_CHAIN (link))
+ 	    IDENTIFIER_LOCAL_VALUE (TREE_PURPOSE (link)) = TREE_VALUE (link);
+ 	  current_binding_level->names = 0;
++	  current_binding_level->incomplete_stale = 1;
+ 	  current_binding_level->shadowed = 0;
+ 	}
+ 
+diff -ruN a/combine.c b/combine.c
+--- a/combine.c	1994-12-01 00:13:30.000000000 +0000
++++ b/combine.c	2026-11-05 00:49:40.490961175 +0000
+@@ -77,7 +77,7 @@
+ #ifdef __STDC__
+ #include <stdarg.h>
+ #else
+-#include <varargs.h>
++#include <stdarg.h>
+ #endif
+ 
+ /* Must precede rtl.h for FFS.  */
+diff -ruN a/config/mips/mips.h b/config/mips/mips.h
+--- a/config/mips/mips.h	1994-10-18 21:14:34.000000000 +0100
++++ b/config/mips/mips.h	2026-11-05 00:49:40.517960965 +0000
+@@ -24,7 +24,7 @@
+ 
+ /* Make Saber happier on obstack.[ch].  */
+ #if defined(__mips__) || defined(mips)
+-#define __PTR_TO_INT(P) ((int)(P))
++#define __PTR_TO_INT(P) ((long)(P))
+ #define __INT_TO_PTR(P) ((char *)(P))
+ #endif
+ 
+diff -ruN a/config/mips/psx.h b/config/mips/psx.h
+--- a/config/mips/psx.h	1970-01-01 01:00:00.000000000 +0100
++++ b/config/mips/psx.h	2026-11-05 00:49:40.515924124 +0000
+@@ -0,0 +1,108 @@
++/* Definitions of target machine for GNU compiler.  Iris version.
++   Copyright (C) 1991, 1993, 1995, 1996 Free Software Foundation, Inc.
++
++This file is part of GNU CC.
++
++GNU CC is free software; you can redistribute it and/or modify
++it under the terms of the GNU General Public License as published by
++the Free Software Foundation; either version 2, or (at your option)
++any later version.
++
++GNU CC is distributed in the hope that it will be useful,
++but WITHOUT ANY WARRANTY; without even the implied warranty of
++MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++GNU General Public License for more details.
++
++You should have received a copy of the GNU General Public License
++along with GNU CC; see the file COPYING.  If not, write to
++the Free Software Foundation, 59 Temple Place - Suite 330,
++Boston, MA 02111-1307, USA.  */
++
++
++/* Definitions by GIL for PSX */
++
++#define TARGET_DEFAULT (MASK_GAS+MASK_SOFT_FLOAT)
++
++#define CPP_PREDEFINES	"-Dmips -DMIPSEL"
++
++#define STARTFILE_SPEC  "%{pg:gcrt1.o%s}%{!pg:%{p:mcrt1.o%s}%{!p:crt1.o%s}}"
++
++#define CPP_SPEC "\
++%{!ansi:-D__EXTENSIONS__} -D_MIPSEL \
++%{.S:	-D_LANGUAGE_ASSEMBLY %{!ansi:-DLANGUAGE_ASSEMBLY}} \
++%{.s:	-D_LANGUAGE_ASSEMBLY %{!ansi:-DLANGUAGE_ASSEMBLY}} \
++%{.cc:	-D_LANGUAGE_C_PLUS_PLUS} \
++%{.cxx:	-D_LANGUAGE_C_PLUS_PLUS} \
++%{.C:	-D_LANGUAGE_C_PLUS_PLUS} \
++%{.m:	-D_LANGUAGE_OBJECTIVE_C} \
++%{!.S: %{!.s: %{!.cc: %{!.cxx: %{!.C: %{!.m: -D_LANGUAGE_C %{!ansi:-DLANGUAGE_C}}}}}}} \
++%{mlong64:-D__SIZE_TYPE__=long\\ unsigned\\ int -D__PTRDIFF_TYPE__=long\\ int} \
++%{!mlong64:-D__SIZE_TYPE__=unsigned\\ int -D__PTRDIFF_TYPE__=int} \
++%{mips3:-U__mips -D__mips=3}"
++
++#define LIB_SPEC	\
++	"%{!p:%{!pg:%{!static:%{!g*:-lc_s}} -lc}}%{p:-lc_p}%{pg:-lc_p} crtn.o%s"
++
++#define MACHINE_TYPE	"Sony Playstation"
++
++#define TARGET_ENDIAN_DEFAULT 0
++
++/* A C statement to output something to the assembler file to switch to section
++   NAME for object DECL which is either a FUNCTION_DECL, a VAR_DECL or
++   NULL_TREE.  Some target formats do not support arbitrary sections.  Do not
++   define this macro in such cases.  */
++
++#define ASM_OUTPUT_SECTION_NAME(FILE, NAME) \
++  fprintf (FILE, "\t.section %s,\"aw\",@progbits\n", (NAME))
++
++/* GIL: R3000 machine supports ISA 1 */
++#define MIPS_ISA_DEFAULT 1
++/* GIL: set to r3000 */
++#define MIPS_CPU_STRING_DEFAULT "R3000"
++
++/* End of GIL for PSX */
++
++
++#define SGI_TARGET 1		/* inform other mips files this is SGI */
++
++/* Always use 1 for .file number.  I [meissner@osf.org] wonder why
++   IRIS needs this.  */
++
++#define SET_FILE_NUMBER() ++num_source_filenames
++
++/* Put out a label after a .loc.  I [meissner@osf.org] wonder why
++   IRIS needs this.  */
++
++#define LABEL_AFTER_LOC(STREAM) fprintf (STREAM, "LM%d:\n", ++sym_lineno)
++
++#define STACK_ARGS_ADJUST(SIZE)                                         \
++{                                                                       \
++  SIZE.constant += 4;                                                   \
++  if (SIZE.constant < 32)						\
++    SIZE.constant = 32;                                                 \
++}
++
++/* Do not allow `$' in identifiers.  */
++
++#define DOLLARS_IN_IDENTIFIERS 0
++
++/* Tell G++ not to create constructors or destructors with $'s in them.  */
++
++#define NO_DOLLAR_IN_LABEL 1
++
++/* Specify wchar_t type.  */
++#define WCHAR_TYPE	"unsigned char"
++#define WCHAR_TYPE_SIZE BITS_PER_UNIT
++
++/* Generate calls to memcpy, etc., not bcopy, etc.  */
++#define TARGET_MEM_FUNCTIONS
++
++/* Xeeynamo: force to use little-endian */
++#define MIPSEL
++#define BYTES_BIG_ENDIAN 0
++#define WORDS_BIG_ENDIAN 0
++
++/* Plain char is unsigned in the SGI compiler.  */
++#define DEFAULT_SIGNED_CHAR 0
++
++#include "mips/mips.h"
+diff -ruN a/config/mips/xm-psx.h b/config/mips/xm-psx.h
+--- a/config/mips/xm-psx.h	1970-01-01 01:00:00.000000000 +0100
++++ b/config/mips/xm-psx.h	2026-11-05 00:49:40.515958854 +0000
+@@ -0,0 +1,12 @@
++#define USG
++
++#include "mips/xm-mips.h"
++
++#define USG
++#define HAVE_VPRINTF
++
++/*
++#define bcopy(a,b,c) memcpy (b,a,c)
++#define bzero(a,b) memset (a,0,b)
++#define bcmp(a,b,c) memcmp (a,b,c)
++*/
+\ No newline at end of file
+diff -ruN a/config.sub b/config.sub
+--- a/config.sub	1994-10-26 18:23:05.000000000 +0000
++++ b/config.sub	2026-11-05 00:49:40.516032243 +0000
+@@ -418,6 +418,10 @@
+ 	ps2)
+ 		basic_machine=i386-ibm
+ 		;;
++	psx)
++		basic_machine=mips-sony
++		os=-psx
++		;;
+ 	rtpc | rtpc-*)
+ 		basic_machine=romp-ibm
+ 		;;
+@@ -634,6 +638,9 @@
+ 	-xenix)
+ 		os=-xenix
+ 		;;
++	-psx)
++		os=-psx
++		;;
+ 	-none)
+ 		;;
+ 	*)
+diff -ruN a/configure b/configure
+--- a/configure	1994-11-23 22:26:27.000000000 +0000
++++ b/configure	2026-11-05 00:49:40.516145632 +0000
+@@ -1469,6 +1469,24 @@
+ 		fi
+ 		xmake_file=mips/x-sony
+ 		;;
++	mips-sony-psx*)		# Sony Playstation
++		tm_file=mips/psx.h
++		xm_file=mips/xm-psx.h
++		elf=yes
++		gnu_ld=yes
++		gas=yes
++		DEFS=-Dpsx -D__psx__ -D__psx
++		if [ x$gas = xyes ]
++		then
++			tmake_file=mips/t-mips-gas
++		else
++			extra_passes="mips-tfile mips-tdump"
++		fi
++		if [ x$gnu_ld != xyes ]
++		then
++			use_collect2=yes
++		fi
++		;;
+ 	mips-sony-sysv*)		# Sony NEWS 3800 with NEWSOS5.0.
+ 					# That is based on svr4.
+ 		# t-svr4 is not right because this system doesn't use ELF.
+diff -ruN a/cp/g++.c b/cp/g++.c
+--- a/cp/g++.c	1994-10-29 11:17:44.000000000 +0000
++++ b/cp/g++.c	2026-11-05 00:49:40.515355258 +0000
+@@ -83,12 +83,16 @@
+ extern int errno;
+ #endif
+ 
++#ifndef HAVE_STRERROR
+ extern int sys_nerr;
+ #if defined(bsd4_4) || defined(__NetBSD__)
+ extern const char *const sys_errlist[];
+ #else
+ extern char *sys_errlist[];
+ #endif
++#else /* HAVE_STERRROR */
++char *strerror ();
++#endif
+ 
+ /* Name with which this program was invoked.  */
+ static char *programname;
+@@ -209,10 +213,14 @@
+ {
+   char *s;
+ 
++#ifndef HAVE_STRERROR
+   if (errno < sys_nerr)
+     s = concat ("%s: ", sys_errlist[errno], "");
+   else
+     s = "cannot open %s";
++#else
++  s = strerror (errno);
++#endif
+   fatal (s, name);
+ }
+ 
+@@ -281,11 +289,14 @@
+ {
+   char *s;
+ 
++#ifndef HAVE_STRERROR
+   if (errno < sys_nerr)
+-    s = concat ("installation problem, cannot exec %s: ",
+-		sys_errlist[errno], "");
++    s = concat ("installation problem, cannot exec %s: ", sys_errlist[errno], "");
+   else
+     s = "installation problem, cannot exec %s";
++#else
++  s = strerror (errno);
++#endif
+   error (s, name);
+ }
+ 
+diff -ruN a/c-typeck.c b/c-typeck.c
+--- a/c-typeck.c	1994-10-28 23:22:15.000000000 +0000
++++ b/c-typeck.c	2026-11-05 00:49:40.518754753 +0000
+@@ -1164,7 +1164,8 @@
+ 	      continue;
+ 	    }
+ 
+-	  cmp = (HOST_WIDE_INT) DECL_NAME (field) - (HOST_WIDE_INT) component;
++	  cmp = (DECL_NAME (field) == component ? 0
++		 : DECL_NAME (field) < component ? -1 : 1);
+ 	  if (cmp == 0)
+ 	    break;
+ 	  if (cmp < 0)
+diff -ruN a/emit-rtl.c b/emit-rtl.c
+--- a/emit-rtl.c	1994-11-22 22:43:29.000000000 +0000
++++ b/emit-rtl.c	2026-11-05 00:49:40.494283604 +0000
+@@ -37,7 +37,7 @@
+ #ifdef __STDC__
+ #include <stdarg.h>
+ #else
+-#include <varargs.h>
++#include <stdarg.h>
+ #endif
+ #include "rtl.h"
+ #include "tree.h"
+diff -ruN a/expr.c b/expr.c
+--- a/expr.c	1994-12-01 00:08:49.000000000 +0000
++++ b/expr.c	2026-11-05 00:49:40.519389448 +0000
+@@ -29,6 +29,10 @@
+ #include "insn-flags.h"
+ #include "insn-codes.h"
+ #include "expr.h"
++
++/* Without these, a 64-bit host truncates the returned pointers to int.  */
++extern tree truthvalue_conversion ();
++extern char *bc_xstrdup ();
+ #include "insn-config.h"
+ #include "recog.h"
+ #include "output.h"
+diff -ruN a/final.c b/final.c
+--- a/final.c	1994-09-21 01:05:03.000000000 +0100
++++ b/final.c	2026-11-05 00:49:40.496158760 +0000
+@@ -47,7 +47,7 @@
+ #ifdef __STDC__
+ #include <stdarg.h>
+ #else
+-#include <varargs.h>
++#include <stdarg.h>
+ #endif
+ #include <stdio.h>
+ #include <ctype.h>
+diff -ruN a/function.c b/function.c
+--- a/function.c	1994-11-11 23:54:39.000000000 +0000
++++ b/function.c	2026-11-05 00:49:40.519785185 +0000
+@@ -47,6 +47,9 @@
+ #include "function.h"
+ #include "insn-flags.h"
+ #include "expr.h"
++
++/* Without this, a 64-bit host truncates the returned pointer to int.  */
++extern char *bc_xstrdup ();
+ #include "insn-codes.h"
+ #include "regs.h"
+ #include "hard-reg-set.h"
+diff -ruN a/gcc.c b/gcc.c
+--- a/gcc.c	1994-11-07 16:01:43.000000000 +0000
++++ b/gcc.c	2026-11-05 00:49:40.520661419 +0000
+@@ -47,7 +47,7 @@
+ #ifdef __STDC__
+ #include <stdarg.h>
+ #else
+-#include <varargs.h>
++#include <stdarg.h>
+ #endif
+ #include <stdio.h>
+ 
+@@ -165,12 +165,7 @@
+ extern int errno;
+ #endif
+ 
+-extern int sys_nerr;
+-#if defined(bsd4_4) || defined(__NetBSD__)
+-extern const char *const sys_errlist[];
+-#else
+-extern char *sys_errlist[];
+-#endif
++#include <string.h>
+ 
+ extern int execv (), execvp ();
+ 
+@@ -4668,8 +4663,8 @@
+ {
+   char *s;
+ 
+-  if (errno < sys_nerr)
+-    s = concat ("%s: ", sys_errlist[errno]);
++  if (1)
++    s = concat ("%s: ", strerror (errno));
+   else
+     s = "cannot open %s";
+   fatal (s, name);
+@@ -4681,8 +4676,8 @@
+ {
+   char *s;
+ 
+-  if (errno < sys_nerr)
+-    s = concat ("%s: ", sys_errlist[errno]);
++  if (1)
++    s = concat ("%s: ", strerror (errno));
+   else
+     s = "cannot open %s";
+   error (s, name);
+@@ -4694,8 +4689,8 @@
+ {
+   char *s;
+ 
+-  if (errno < sys_nerr)
+-    s = concat ("installation problem, cannot exec %s: ", sys_errlist[errno]);
++  if (1)
++    s = concat ("installation problem, cannot exec %s: ", strerror (errno));
+   else
+     s = "installation problem, cannot exec %s";
+   error (s, name);
+diff -ruN a/genattrtab.c b/genattrtab.c
+--- a/genattrtab.c	1994-10-13 15:44:20.000000000 +0100
++++ b/genattrtab.c	2026-11-05 00:49:40.498961113 +0000
+@@ -99,7 +99,7 @@
+ #ifdef __STDC__
+ #include <stdarg.h>
+ #else
+-#include <varargs.h>
++#include <stdarg.h>
+ #endif
+ #include "rtl.h"
+ #include "insn-config.h"	/* For REGISTER_CONSTRAINTS */
+diff -ruN a/mips-tfile.c b/mips-tfile.c
+--- a/mips-tfile.c	1994-04-11 10:49:27.000000000 +0100
++++ b/mips-tfile.c	2026-11-05 00:49:40.502012907 +0000
+@@ -601,7 +601,7 @@
+ #ifdef __STDC__
+ #include <stdarg.h>
+ #else
+-#include <varargs.h>
++#include <stdarg.h>
+ #endif
+ #include "config.h"
+ #include <stdio.h>
+diff -ruN a/obstack.h b/obstack.h
+--- a/obstack.h	1994-11-14 23:17:37.000000000 +0000
++++ b/obstack.h	2026-11-05 00:49:40.514048537 +0000
+@@ -338,7 +338,10 @@
+    if (__o->next_free + sizeof (void *) > __o->chunk_limit)		\
+      _obstack_newchunk (__o, sizeof (void *));				\
+    if (!__o->alloc_failed)						\
+-     *((void **)__o->next_free)++ = ((void *)datum);			\
++   { \
++     *((void **)__o->next_free) = ((void *)datum);			\
++     __o->next_free += sizeof (void *);			\
++   } \
+    (void) 0; })
+ 
+ #define obstack_int_grow(OBSTACK,datum)					\
+diff -ruN a/protoize.c b/protoize.c
+--- a/protoize.c	1994-11-08 02:27:44.000000000 +0000
++++ b/protoize.c	2026-11-05 00:49:40.504084641 +0000
+@@ -56,7 +56,7 @@
+ #define _POSIX_SOURCE
+ #endif
+ 
+-#include <varargs.h>
++#include <stdarg.h>
+ /* On some systems stdio.h includes stdarg.h;
+    we must bring in varargs.h first.  */
+ #include <stdio.h>
+diff -ruN a/reorg.c b/reorg.c
+--- a/reorg.c	1994-11-16 00:34:05.000000000 +0000
++++ b/reorg.c	2026-11-05 00:49:40.518960957 +0000
+@@ -126,6 +126,9 @@
+ #include "recog.h"
+ #include "flags.h"
+ #include "output.h"
++
++/* Without these, a 64-bit host truncates the returned pointers to int.  */
++extern rtx negate_rtx ();
+ #include "obstack.h"
+ #include "insn-attr.h"
+ 
+diff -ruN a/sdbout.c b/sdbout.c
+--- a/sdbout.c	1994-09-30 22:23:57.000000000 +0100
++++ b/sdbout.c	2026-11-05 00:49:40.514679103 +0000
+@@ -53,7 +53,7 @@
+ 
+ /* Mips systems use the SDB functions to dump out symbols, but
+    do not supply usable syms.h include files.  */
+-#if defined(USG) && !defined(MIPS) && !defined (hpux) && !defined(WINNT)
++#if defined(USG) && !defined(MIPS) && !defined (hpux) && !defined(_WIN32) && !defined(__linux__)
+ #include <syms.h>
+ /* Use T_INT if we don't have T_VOID.  */
+ #ifndef T_VOID
+diff -ruN a/stor-layout.c b/stor-layout.c
+--- a/stor-layout.c	1994-10-20 14:41:02.000000000 +0100
++++ b/stor-layout.c	2026-11-05 00:49:40.519971574 +0000
+@@ -24,6 +24,9 @@
+ #include "tree.h"
+ #include "function.h"
+ 
++/* Without this, a 64-bit host truncates the returned pointer to int.  */
++extern struct rtx_def *expand_expr ();
++
+ #define CEIL(x,y) (((x) + (y) - 1) / (y))
+ 
+ /* Data type for the expressions representing sizes of data types.
+diff -ruN a/toplev.c b/toplev.c
+--- a/toplev.c	1994-10-25 20:09:12.000000000 +0000
++++ b/toplev.c	2026-11-05 00:49:40.508577118 +0000
+@@ -27,7 +27,7 @@
+ #ifdef __STDC__
+ #include <stdarg.h>
+ #else
+-#include <varargs.h>
++#include <stdarg.h>
+ #endif
+ #include <stdio.h>
+ #include <signal.h>
+diff -ruN a/tree.c b/tree.c
+--- a/tree.c	1994-11-16 00:28:59.000000000 +0000
++++ b/tree.c	2026-11-05 00:49:40.517232104 +0000
+@@ -41,7 +41,7 @@
+ #ifdef __STDC__
+ #include <stdarg.h>
+ #else
+-#include <varargs.h>
++#include <stdarg.h>
+ #endif
+ #include <stdio.h>
+ 
+@@ -1651,14 +1651,10 @@
+   if (op1)
+     {
+       register tree t1;
+-      register tree t2;
+ 
+       for (t1 = op1; TREE_CHAIN (t1); t1 = TREE_CHAIN (t1))
+ 	;
+       TREE_CHAIN (t1) = op2;
+-      for (t2 = op2; t2; t2 = TREE_CHAIN (t2))
+-        if (t2 == t1)
+-          abort ();  /* Circularity created.  */
+       return op1;
+     }
+   else return op2;
