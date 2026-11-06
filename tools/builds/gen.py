@@ -892,7 +892,7 @@ with open(build_ninja, "w") as f:
     cpp_defs = f"-Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C -DNO_LOGS -DHACKS -DUSE_INCLUDE_ASM -D_internal_version_$version -DSOTN_STR"
     cc_command = (
         "VERSION=$version"
-        f" mipsel-linux-gnu-cpp $cpp_flags -MMD -MF $out.d -lang-c -Iinclude -Iinclude/psxsdk -undef -Wall -fno-builtin {cpp_defs} {extra_cpp_defs} $in"
+        f" cpp -nostdinc $cpp_flags -MMD -MF $out.d -lang-c -Iinclude -Iinclude/psxsdk -undef -Wall -fno-builtin {cpp_defs} {extra_cpp_defs} $in"
         " | tools/sotn_str/target/release/sotn_str process --sjis"
         " | bin/cc1-psx-26 -G0 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -g -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff $cc_flags"
         f" | {CMASPSX} $aspsx_ver"
