@@ -23,6 +23,8 @@ var saturnSplitterYAMLs = []string{
 	"config/saturn/rstage16.prg.yaml",
 	"config/saturn/stage_16.prg.yaml",
 	"config/saturn/stage_14.prg.yaml",
+	"config/saturn/t_fairy2.prg.yaml",
+	"config/saturn/sub.prg.yaml",
 }
 
 func buildSaturn() error {
@@ -65,6 +67,8 @@ var saturnExtractSentinels = []string{
 	"config/saturn/stage_15.ld",
 	"config/saturn/stage_16.ld",
 	"config/saturn/t_bat.ld",
+	"config/saturn/t_fairy2.ld",
+	"config/saturn/sub.ld",
 	"config/saturn/warp.ld",
 	"config/saturn/zero.ld",
 	"config/saturn/zero_syms.txt",
