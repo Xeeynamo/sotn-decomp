@@ -98,6 +98,8 @@
 #define VERSION_TOKEN beta
 #else
 #warning "Version not specified. Falling back to the US version."
+#define VERSION VER_US
+#define REGION REGION_US
 #define VERSION_TOKEN us
 #endif
 
