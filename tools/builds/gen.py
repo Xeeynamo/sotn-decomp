@@ -1009,7 +1009,12 @@ with open(build_ninja, "w") as f:
     )
     actual_version = os.getenv("VERSION")
     if not actual_version:
-        actual_version = "us,hd,jp10,jp11,jp12,usproto,eu,hk,pspeu"
+        optional = {"jp10", "jp11", "jp12", "usproto", "eu", "hk"}
+        actual_version = ",".join(
+            v
+            for v in "us,hd,jp10,jp11,jp12,usproto,eu,hk,pspeu".split(",")
+            if v not in optional or os.path.isdir(f"disks/{v}")
+        )
     for version in actual_version.split(","):
         nw.build(
             rule="assets-extract",

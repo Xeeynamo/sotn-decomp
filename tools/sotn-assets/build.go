@@ -17,6 +17,23 @@ var allVersions = []string{"us", "hd", "jp10", "jp11", "jp12", "usproto", "eu", 
 // buildableVersions are all versions accepted by the build command.
 var buildableVersions = []string{"us", "hd", "jp10", "jp11", "jp12", "usproto", "eu", "hk", "pspeu", "saturn"}
 
+// optionalVersions are skipped from allVersions when their disks/<version> directory is missing.
+var optionalVersions = []string{"jp10", "jp11", "jp12", "usproto", "eu", "hk"}
+
+func defaultVersions() []string {
+	var versions []string
+	for _, v := range allVersions {
+		if slices.Contains(optionalVersions, v) {
+			if info, err := os.Stat(filepath.Join("disks", v)); err != nil || !info.IsDir() {
+				fmt.Fprintf(os.Stderr, "skipping %s: disks/%s not found\n", v, v)
+				continue
+			}
+		}
+		versions = append(versions, v)
+	}
+	return versions
+}
+
 func buildVersions(versions []string) error {
 	if err := deps.EnsureBuildDeps(versions); err != nil {
 		return fmt.Errorf("ensuring build dependencies: %w", err)
@@ -120,12 +137,12 @@ func copyBuildToExpectedFolder(version string) error {
 
 func parseBuildArgs(args []string) ([]string, error) {
 	if len(args) == 0 {
-		return allVersions, nil
+		return defaultVersions(), nil
 	}
 	var versions []string
 	for _, arg := range args {
 		if arg == "all" {
-			return allVersions, nil
+			return defaultVersions(), nil
 		}
 		if !slices.Contains(buildableVersions, arg) {
 			return nil, fmt.Errorf("unknown version %q; valid values: %v", arg, buildableVersions)
