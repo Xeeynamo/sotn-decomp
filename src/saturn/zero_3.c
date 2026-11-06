@@ -99,9 +99,9 @@ void SetServantResourceList(void) {
 
 // call familiar update function
 // func_0601AECC
-void InitServant() {
+void InitServant(s32 mode) {
     if (g_Servant != 0) {
-        g_BatServantDesc.Init();
+        g_BatServantDesc.Init(mode);
     }
 }
 

@@ -159,7 +159,7 @@ void func_060B7994(void) {
     do {
         *entry->unk4 = zero;
         entry++;
-    } while ((s32)entry <= (s32)DAT_060CEA70);
+    } while ((long)entry <= (long)&DAT_060CE980[15]);
 }
 s32 func_060B79B8(s16 arg0) {
     s32 sp[4];
@@ -440,7 +440,7 @@ s32 func_060BA604(Primitive* prim, s16 posX, s16 posY) {
     prim->x2 = posX + xOffset;
     prim->y2 = posY + offset;
 
-    texture = DAT_0605AEC0[(u16)DAT_060CBE3C +
+    texture = DAT_0605AEC0[AlucardSpriteResources[5].allocationIndex +
                            g_AlucardFactoryAnimationLookup[frame]];
     prim->unk8 = texture[0];
     prim->unkA = texture[1];
@@ -598,8 +598,8 @@ void func_060BD5A4(void) {
 
     if (g_Entities->animSet == 13 || g_Entities->animSet <= 13 ||
         g_Entities->animSet != 15) {
-        destination = &DAT_060C8574;
-        tableNo = (u16)DAT_060CBE02;
+        destination = (u8*)g_AlucardPaletteVariants[3];
+        tableNo = AlucardSpriteResources[0].flags;
     } else {
         flags = &AlucardSpriteResources[2].flags;
         tableNo = *flags;

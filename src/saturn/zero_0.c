@@ -1055,12 +1055,16 @@ void BuildSubDispTilemap(Unk0605CD90* arg0) {
     dst = arg0->unk8 + j * 0x20;
     for (j = 0; j < 32; j++) {
         for (i = 0; i < 32; i++) {
-            *dst++ = *src++ + tileBase;
+            HW_STORE(dst, *src + tileBase);
+            dst++;
+            src++;
         }
         dst = 0x400 + arg0->unk8 + j * 0x20;
 
         for (i = 0; i < 10; i++) {
-            *dst++ = *src++ + tileBase;
+            HW_STORE(dst, *src + tileBase);
+            dst++;
+            src++;
         }
         dst = arg0->unk8 + (j + 1) * 0x20;
     }
@@ -1498,7 +1502,17 @@ void func_06009570(s32 arg0) {
     SCL_Close();
     DAT_0605C120[3] = DAT_002C7000;
     src = DAT_0605C120[3];
+#ifdef SATZ
+    {
+        s32 k, size = DecompressLZSS(ptr->unk14, (u8*)src, ptr->unk20);
+
+        for (k = 0; k < size / 2; k++) {
+            src[k] = (s16)(((u16)src[k] >> 8) | ((u16)src[k] << 8));
+        }
+    }
+#else
     DecompressLZSS(ptr->unk14, src, ptr->unk20);
+#endif
     ptr->width = src[0];
     ptr->height = src[1];
     DAT_0605D6C0[3].tileFlags = 7;
@@ -1888,6 +1902,13 @@ void func_0600B234(void) {
 // _ClearOdma
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B254, func_0600B254);
 
+#ifdef SATZ
+#define RESET_PART_TRANSFORM(node)                                             \
+    ((node)->rotate = 0, (node)->scaleX = 0x40, (node)->scaleY = 0x40)
+#else
+#define RESET_PART_TRANSFORM(node) (*(s32*)&(node)->rotate = 0x00004040)
+#endif
+
 static SpritePart* AllocSpriteParts(s32 maxParts) {
     SpritePart* head;
     SpritePart* node;
@@ -1900,12 +1921,12 @@ static SpritePart* AllocSpriteParts(s32 maxParts) {
     g_SpritePartsInUse += maxParts;
     for (; maxParts > 1; maxParts--) {
         node->attributes = 0;
-        *(s32*)&node->rotate = 0x00004040;
+        RESET_PART_TRANSFORM(node);
         node = node->next;
     }
     g_SpritePartFreeList = node->next;
     node->attributes = 0;
-    *(s32*)&node->rotate = 0x00004040;
+    RESET_PART_TRANSFORM(node);
     node->next = NULL;
     return head;
 }

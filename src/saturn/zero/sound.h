@@ -32,6 +32,7 @@ extern volatile SoundRequest DAT_06063C30[];
 extern SoundMemoryLayout DAT_06062270;
 
 #ifdef SATZ
+void satz_idle(void);
 #define UNCACHED_SOUND_REQUESTS DAT_06063C30
 #define SOUND_REQUEST_WAIT() satz_idle()
 #else

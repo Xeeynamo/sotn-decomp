@@ -2,6 +2,7 @@
 #include "inc_asm.h"
 #include "sattypes.h"
 #include "game.h"
+#include "saturn_hw.h"
 
 void PlaySfx(s32 sfxId);
 
@@ -81,11 +82,11 @@ void UpdateCameraShake();
 s32 func_800F0CD8(u16);
 void func_0606D554(s32);
 void Update();
-void func_06066854();
+void UpdateRoomPosition();
 void InitRoom();
 void func_0600A030();
 void ScrollEntitiesWithCamera(s32, s32, s32, s32);
-void func_06070988();
+void func_800F2860();
 void HitDetection();
 void func_06009CCC();
 void func_0600FC04();
@@ -255,7 +256,7 @@ void RunMainEngine(void) {
         }
         func_06064604();
         func_06064664();
-        func_06066854();
+        UpdateRoomPosition();
     LAB_06070fd2:
         Update();
         if (DAT_0605cd70.unk0 == 3) {
@@ -269,7 +270,7 @@ void RunMainEngine(void) {
             }
             return;
         }
-        func_06070988();
+        func_800F2860();
         if (DAT_0605C6D4 == 3) {
             DAT_0605C6D4 = 0;
             D_80097C98 = 0x8000000;
@@ -1386,7 +1387,7 @@ void func_06073E58(s32 arg0) {
         var_r8 = &g_MenuNavigation.cursorEquipType[D_801375D4];
     }
 
-    temp_r3 = func_0606F378(D_801375CC);
+    temp_r3 = func_800FD6C4(D_801375CC);
 
     if (arg0 != 0) {
         if (g_pads[0].repeat & PAD_L1) {
@@ -1561,12 +1562,14 @@ void func_060745A0(Point16u* arg0, u16 arg1, s32 arg2) {
     dst = dst + (arg0->y >> 3) * 64 + x;
     src = src + (arg2 / 0x20) * 128 + (arg2 & 0x1F) * 2;
 
-    *dst++ = *src++;
-    *dst = *src;
+    HW_STORE(dst, HW_LOAD(src));
+    dst++;
+    src++;
+    HW_STORE(dst, HW_LOAD(src));
     src += 63;
     dst += 63;
-    dst[0] = src[0];
-    dst[1] = src[1];
+    HW_STORE(&dst[0], HW_LOAD(&src[0]));
+    HW_STORE(&dst[1], HW_LOAD(&src[1]));
 }
 
 // TODO: inline this once this file is split
@@ -1585,7 +1588,8 @@ void ClearVdp2CharRamA1(void) {
 
     char_ram = (u32*)SCL_VDP2_VRAM_A1;
     for (i = 0; i < 0x800; i++) {
-        *char_ram++ = 0;
+        HW_STORE(char_ram, 0);
+        char_ram++;
     }
 }
 

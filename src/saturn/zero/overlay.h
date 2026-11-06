@@ -7,10 +7,25 @@
 #include "stage_data.h"
 
 typedef struct {
-    void (*Init)(void);
-} BatServantHeader;
+    void (*Init)(s32 mode);
+    PfnEntityUpdate Update;
+    PfnEntityUpdate Unk08;
+    PfnEntityUpdate Unk0C;
+    PfnEntityUpdate Unk10;
+    PfnEntityUpdate Unk14;
+    PfnEntityUpdate Unk18;
+    PfnEntityUpdate Unk1C;
+    PfnEntityUpdate Unk20;
+    PfnEntityUpdate Unk24;
+    PfnEntityUpdate Unk28;
+    PfnEntityUpdate Unk2C;
+    PfnEntityUpdate Unk30;
+    PfnEntityUpdate Unk34;
+    PfnEntityUpdate Unk38;
+    PfnEntityUpdate Unk3C;
+} BatServantDesc;
 
-extern BatServantHeader g_BatServantDesc;
+extern BatServantDesc g_BatServantDesc;
 
 typedef struct {
     void* equipDefs;
@@ -116,8 +131,13 @@ extern void* DAT_060D9040;
 
 typedef s32 (*OverlayHandler)(void);
 
+#ifdef SATZ
+#define PLAYER_SERVANT_HANDLERS ((OverlayHandler*)g_Weapon1OvlArea)
+#define MARIA_SERVANT_HANDLERS ((OverlayHandler*)g_Weapon0OvlArea)
+#else
 #define PLAYER_SERVANT_HANDLERS ((OverlayHandler*)0x060D9000)
 #define MARIA_SERVANT_HANDLERS ((OverlayHandler*)0x060D6000)
+#endif
 
 s32 func_0601AE9C(void);
 s32 func_0601AEA8(void);

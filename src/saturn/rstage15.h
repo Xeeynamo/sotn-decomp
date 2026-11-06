@@ -221,7 +221,7 @@ void SyncSpriteObjectPosUnchecked(Entity* self, s16* offset);
 void SetVdp2BackgroundColorRgb(s32 r, s32 g, s32 b);
 void PlaySfx(s32 sfxId);
 void SetStep(u8 step);
-void func_0600B004(SpriteObject* sprite, void* frame);
+void func_0600B004(SpriteObject* sprite, SaturnSpriteFrameHeader* frame);
 void SyncSpriteObjectPos(Entity* self);
 void func_060DDA34(Entity* self);
 void func_060DDB98(Entity* self);

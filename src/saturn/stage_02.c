@@ -85,7 +85,7 @@ void func_060DD690(Entity* self) {
         }
         break;
     }
-    func_06079BB4(self);
+    SyncSpriteObjectPos(self);
 }
 
 // EntityCannonWall
@@ -317,7 +317,7 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E21B8, func_060E21B8);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E22FC, func_060E22FC);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E2420, func_060E2420);
 void CheckCollision(s32 x, s32 y, Collider* res, u16 unk);
-void func_06079BE4(Entity* self);
+void FallEntity(Entity* self);
 
 void func_060E2898(u16 arg0) {
     Entity* self = g_CurrentEntity;
@@ -335,7 +335,7 @@ void func_060E2898(u16 arg0) {
     if (arg0 != 0) {
         if (!(col.effects & EFFECT_NOTHROUGH)) {
             MoveEntity(self);
-            func_06079BE4(self);
+            FallEntity(self);
             return;
         }
 
@@ -1303,22 +1303,22 @@ void func_060EB8D0(Entity* self) {
 extern s16 DAT_060F42D0[];
 extern s16 DAT_060F42D8[];
 
-extern void func_06079BCC(Entity* self);
-extern s32 func_06079DEC(Entity* self, s16* sensors);
-extern s32 func_06079F60(Entity* self, s16* sensors, s16 count);
+extern void SyncPosFromSpriteObject(Entity* self);
+extern s32 UnkCollisionFunc2(Entity* self, s16* sensors);
+extern s32 UnkCollisionFunc(Entity* self, s16* sensors, s16 count);
 extern void func_0607AA40(Entity* self, s32 arg1, s32 arg2, s32 arg3);
 
 void func_060EB950(Entity* self) {
     u8 result;
     u16 flags;
 
-    func_06079BCC(self);
-    result = func_06079DEC(self, DAT_060F42D0);
+    SyncPosFromSpriteObject(self);
+    result = UnkCollisionFunc2(self, DAT_060F42D0);
     if (result == 0x60) {
         self->posX.val -= self->velocityX;
     }
 
-    flags = func_06079F60(self, DAT_060F42D8, 3);
+    flags = UnkCollisionFunc(self, DAT_060F42D8, 3);
     if (result == 0x80 || (flags & 2)) {
         func_0607AA40(self, 5, 4, 0);
         self->ext.bloodyZombie.unk84 = 10;

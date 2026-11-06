@@ -352,7 +352,7 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A6688, func_060A6688);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A66FC, func_060A66FC);
 // func_8010EDB8 on PSX
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A67B8, func_060A67B8);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A6A94, func_060A6A94);
+INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A69F4, func_060A69F4);
 // func_8010FAF4 on PSX
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A7D3C, func_060A7D3C);
 // func_8010DFF0 on PSX
@@ -1014,7 +1014,7 @@ s16 func_060B0584(void) {
     xLeft = PLAYER.posX.val - FIX(4);
 
     for (i = 0; i < 4; i++) {
-        yvar = PLAYER.posY.val + DAT_060C85C4[i];
+        yvar = PLAYER.posY.val + g_AlucardCollisionProbeYOffsets[i];
         collisions = 0;
         CheckCollision(xCenter, yvar, &collider, 0);
         if ((collider.effects & filter) == EFFECT_SOLID) {

@@ -39,6 +39,11 @@ u16 g_AlucardPaletteVariants[][16] = {
 
 u16 g_AlucardPaletteWork[6] = {0, 0, 0, 0, 0, 0};
 
-s32 g_AlucardCollisionProbeYOffsets[] = {
-    -0x01000000, 0, -0x00080000, -0x00100000, -0x00160000,
+s32 D_060C85C0 = -0x01000000;
+
+s32 g_AlucardCollisionProbeYOffsets[4] = {
+    0,
+    -0x00080000,
+    -0x00100000,
+    -0x00160000,
 };

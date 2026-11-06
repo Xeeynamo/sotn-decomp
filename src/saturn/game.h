@@ -191,14 +191,14 @@ void UpdateEquipStatBonuses(void);
 extern void SyncSpriteObjectPos(Entity* self);
 extern u32* d_06086250;
 extern u32* d_06086234;
-s32 func_0606F21C(s32 eventId, s32 action);
-extern s32 func_0606F328(s32 arg0);
+s32 TimeAttackController(s32 eventId, s32 action);
+extern s32 func_800FD664(s32 arg0);
 // GetSpellDef / func_800FE3C4
 s32 func_0606F59C(SpellDef* spell, s32 id);
 s32 func_0606FC80(SubweaponDef* subwpn, s16 subweaponId, s16 useHearts);
 // func_06078700 and GetMenuItemName
 void func_06078700(u8* dst, s8* text, s32 nChars);
-s8* func_06078748(s32 id);
+char* GetMenuItemName(s32 id);
 extern const char* g_StatusMenuLabelPointers[];
 extern Primitive g_PrimBuf[];
 extern PlayerHud g_PlayerHud;
@@ -216,7 +216,6 @@ extern s32 D_80137960;
 extern Accessory g_AccessoryDefs[];
 extern SpellDef g_SpellDefs[];
 extern Equipment g_EquipDefs[];
-extern void func_06079BB4(Entity* self);
 extern s32 DAT_06086134;
 extern s32 DAT_06086130;
 extern s32 DAT_0608612C;
@@ -227,8 +226,8 @@ void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
 extern s32 DAT_06086390;
 extern SpritePart g_SpritePartPool[SPRITE_PART_MAX]; /* 0x0608D7F8 */
 extern SpriteObject g_SpriteObjectPool[SPRITE_OBJECT_MAX + 1];
-s32 func_0606F378(s32 arg0);
 u8* GetRoomLoadDefTable(u16 arg0);
+s32 func_800FD6C4(EquipKind equipTypeFilter);
 
 extern s32 DAT_0605D7F4;
 extern s32 DAT_0605D7FC;

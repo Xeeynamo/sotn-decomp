@@ -31,11 +31,7 @@ void SetPlTransNonSeparateAura(void);
 extern s16 DAT_060CE4B2;
 extern s16 DAT_060CE4B4;
 extern s16 DAT_060CE972;
-extern s32 DAT_060C85C4[];
-extern s16 DAT_060CBE3C;
 extern u8 g_AlucardFactoryAnimationLookup[];
-extern u8 DAT_060C8574;
-extern s16 DAT_060CBE02;
 extern SaturnSpriteResource AlucardSpriteResources[13];
 void LookupTblNoToVramAddr(u16 tableNo, u8* destination);
 s32 func_060B9610(s16 arg0, s16 arg1);
@@ -45,8 +41,8 @@ s32 func_060B9610Internal(s32 amount, s32 kind) __asm__("_func_060B9610");
 /* Declarations moved here by tools/saturn/move_declarations.py */
 extern const SaturnAnimationFrame g_AlucardAnimationData[];
 extern SaturnPlayerGraphicsRecord g_AlucardPlayerGraphicsRecords[];
-extern u8 AlucardSpriteResourceTable[];
-void func_060AF654(void);
+extern SaturnSpriteResource* AlucardSpriteResourceTable[];
+void func_060AF654(s32 reset);
 void func_060AF4A0(void);
 void func_060B9340(Entity* entity);
 void func_060B2E40(void);
@@ -122,7 +118,7 @@ typedef struct {
     u32 unk0;
     s16* unk4;
     AnimationFrame* unk8;
-    u32 unkC;
+    void* unkC;
 } EntryS060CE980;
 
 typedef struct {
@@ -135,12 +131,13 @@ typedef struct {
 extern Point32 g_AlucardSensorsWall[];
 extern Point32 g_AlucardSensorsFloor[];
 extern Point32 g_AlucardSensorsCeiling[];
-extern EntryS060CE980 DAT_060CE980[];
-extern EntryS060CE980 DAT_060CEA70[];
-extern EntryS060CE980 DAT_060CEA80[];
+extern EntryS060CE980 DAT_060CE980[16];
+extern EntryS060CE980 DAT_060CEA80[6];
 extern AnimationFrame AlucardFrames[];
 extern s8 DAT_060CC9BC;
-extern Rec060CC9BD DAT_060CC9BD[];
+extern Rec060CC9BD DAT_060CC9BD[14];
+extern u16 g_AlucardPaletteVariants[][16];
+extern s32 g_AlucardCollisionProbeYOffsets[4];
 extern s32 DAT_060CE4F0[];
 extern s8 DAT_060CE51C;
 extern s8 DAT_060CE51D;
