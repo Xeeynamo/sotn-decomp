@@ -207,7 +207,7 @@ void func_060E2134(Entity* self) {
         break;
     }
 }
-INCLUDE_ASM("asm/saturn/stage_14/f_nonmat", f60E2220, func_060E2220);
+INCLUDE_ASM("asm/saturn/stage_14/f_nonmat", f60E2220, EntityDestructAnim);
 INCLUDE_ASM("asm/saturn/stage_14/f_nonmat", f60E238C, func_060E238C);
 #define SPAWN_DESTRUCT_ANIM_ID 20
 #include "spawn_destruct_anim.h"
@@ -244,7 +244,7 @@ void func_060E2E80(Entity* self) {
         TekiInit(self, 3);
 
         self->step++;
-        frame = DAT_06046CD0;
+        frame = g_SaturnSharedSpriteBank8Frames;
         if (frameType != 0) {
             frame += 2;
         } else {

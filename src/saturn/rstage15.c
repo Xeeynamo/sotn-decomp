@@ -434,7 +434,7 @@ void func_060E1C20(Entity* self) {
         break;
     }
 }
-INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E1D0C, func_060E1D0C);
+INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E1D0C, EntityDestructAnim);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E1E78, func_060E1E78);
 #define SPAWN_DESTRUCT_ANIM_ID 19
 #include "spawn_destruct_anim.h"
@@ -493,7 +493,7 @@ void func_060E43A4(s32 scale, s32 unused) {
     s32 factor;
     s32 i;
 
-    base = DAT_060485E0;
+    base = g_WorkBuffer.model.vertices;
     src = g_RStage15Entity08ModelVertices14[0];
     dst = base;
     factor = scale << 8;

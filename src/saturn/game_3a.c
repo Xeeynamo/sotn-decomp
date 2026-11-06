@@ -5,17 +5,20 @@
 
 #define _SPR2_
 #include "lib/spr/spr.h"
+#ifdef SATZ
+u8 func_06012D88(void);
+#endif
 
 void DestroyEntity(Entity* entity);
 
 // func_0606B6F8
 void LoadSubDisplayFiles(void) {
-    ReadFileToAddr("SUB.PRG", 0x060D6000);
+    ReadFileToAddr("SUB.PRG", (void*)(0x060D6000));
     if (g_FileLoadEnabled != 0) {
         func_0601AF5C();
     }
-    ReadFileToAddr("KANJI.FON", (s32)&DAT_00252000);
-    ReadFileToAddr("SUB_DISP.MAP", 0x002B2000);
+    ReadFileToAddr("KANJI.FON", DAT_00252000);
+    ReadFileToAddr("SUB_DISP.MAP", DAT_002B2000);
 }
 
 const char DAT_0606B754[] = "OYAJI.CHR";
@@ -70,10 +73,10 @@ s32 func_0606BB4C(void) {
     }
     SetStageOverlayAddress();
     ReadFileToAddr(g_StageFileRecords[g_CurrentRoom.stageID].chr,
-                   VRAM_ADDR + DAT_0605BEC4);
+                   (void*)(VRAM_ADDR + DAT_0605BEC4));
     func_0600C114();
     if (g_CurrentRoom.stageID == 0x40) {
-        ReadFileToAddr(DAT_0606B754, 0x262000);
+        ReadFileToAddr(DAT_0606B754, DAT_00252000 + 0x10000);
         g_CurrentRoom.unk8 = 0;
     }
     iVar3 = 0;
@@ -81,7 +84,7 @@ s32 func_0606BB4C(void) {
         (g_CurrentRoom.stageID == 0x39)) {
         iVar3 = GetEnemyPlayerCharaAddr();
     }
-    DAT_0605D7DC = iVar3 + (s32)&DAT_00252000;
+    DAT_0605D7DC = DAT_00252000 + iVar3;
     switch (g_CurrentRoom.stageID) {
     case 0x6:
         ptr = DAT_06048178[g_CurrentRoom.unk8];
@@ -112,7 +115,7 @@ s32 func_0606BB4C(void) {
         break;
     }
     DAT_0605D7DC += ReadFileToAddr(ptr, DAT_0605D7DC);
-    if (DAT_0605D7DC & 1) {
+    if ((uptr)DAT_0605D7DC & 1) {
         DAT_0605D7DC++;
     }
     func_0601AC48();
@@ -126,8 +129,10 @@ s32 func_0606BB4C(void) {
         ReadFileToAddr(DAT_0606BB40, &DAT_060937F8);
     }
     if (func_0600607C(g_CurrentRoom.stageID)) {
-        ReadFileToAddr(func_06005E3C(0, g_CurrentRoom.stageID), 0x25E22000);
-        ReadFileToAddr(func_06005E3C(1, g_CurrentRoom.stageID), 0x25E60000);
+        ReadFileToAddr(
+            func_06005E3C(0, g_CurrentRoom.stageID), (void*)(0x25E22000));
+        ReadFileToAddr(
+            func_06005E3C(1, g_CurrentRoom.stageID), (void*)(0x25E60000));
         func_06074470();
     }
     if (D_80097C98 == 0) {
@@ -151,7 +156,7 @@ void func_0606BEE4(void) {
     func_0600C2EC();
     func_0600C114();
     func_060645A4();
-    DAT_0605D7DC = (s32)&DAT_00252000;
+    DAT_0605D7DC = DAT_00252000;
     switch (g_CurrentRoom.stageID) {
     case 0x6:
         ptr = DAT_06048178[idx];
@@ -181,14 +186,14 @@ void func_0606BEE4(void) {
         ptr = NULL;
         break;
     }
-    DAT_0605D7DC += ReadFileToAddr(ptr, (s32)&DAT_00252000);
-    if (DAT_0605D7DC & 1) {
+    DAT_0605D7DC += ReadFileToAddr(ptr, DAT_00252000);
+    if ((uptr)DAT_0605D7DC & 1) {
         DAT_0605D7DC++;
     }
     func_0601AC48();
 }
 
-void func_0606C064(void) { ReadFileToAddr("GAMEOVER.MAP", (s32)&DAT_00252000); }
+void func_0606C064(void) { ReadFileToAddr("GAMEOVER.MAP", DAT_00252000); }
 
 s32 func_0606C088(u16 arg0) {
     switch (DAT_0605D770.unk8) {
@@ -238,6 +243,10 @@ s32 func_0606C088(u16 arg0) {
 extern u16 g_ItemIconSlots[];
 extern u16 UNK_Invincibility0[];
 
+#ifdef SATZ
+extern unsigned sotn_satz_updates;
+#endif
+
 void Update(void) {
     s16 x, y;
     Entity* entity;
@@ -245,6 +254,9 @@ void Update(void) {
     s32 flags;
     s16 iFramePalette;
     s32 i;
+#ifdef SATZ
+    sotn_satz_updates++;
+#endif
 
     s16 temp = (g_Tilemap.vSize << 8) - (g_Tilemap.scrollY.i.hi - 0x80);
 
@@ -734,7 +746,7 @@ void func_0606D554(s32 arg0) {
                 g_CurrentRoom.stageID ^= 0x20;
             }
         }
-        D_801375BC.def = DAT_0606459C + ptr->roomId + 4;
+        D_801375BC.def = (RoomLoadDef*)(DAT_0606459C + ptr->roomId + 4);
         g_CurrentRoom.unk4 = D_801375BC.def->tileLayoutId;
     }
 }
@@ -830,8 +842,8 @@ void func_0606D798(void) {
 }
 
 // func_0606D804
-s32 GetRoomLoadDefTable(u16 arg0) {
-    s32 ret;
+u8* GetRoomLoadDefTable(u16 arg0) {
+    u8* ret;
 
     ret = DAT_0606459C;
 

@@ -6,8 +6,6 @@
 void PlaySfx(s32 sfxId);
 void make_all(void);
 
-extern s32 DAT_060486A0[];
-
 extern SaturnSpriteResource** DAT_060645EC;
 
 extern u8 g_PrimitiveUvOffsetByType[8];
@@ -56,8 +54,8 @@ void HitDetection(void) {
     u16 miscVar3;
     u16* ptr;
 
-    spHitboxState = &DAT_060485E0[0];
-    spHitbox = &DAT_060486A0[0];
+    spHitboxState = &g_WorkBuffer.hit.state[0];
+    spHitbox = &g_WorkBuffer.hit.box[0];
     for (entity = &g_Entities[0]; entity < &g_Entities[0x30]; spHitboxState++,
         entity++) {
         *spHitboxState = entity->hitboxState;
@@ -109,8 +107,8 @@ void HitDetection(void) {
         hitboxWidth = entity->hitboxWidth - 1;
         hitboxHeight = entity->hitboxHeight - 1;
         if (miscVar3) {
-            spHitboxState = &DAT_060485E0[1];
-            spHitbox = &DAT_060486A0[4];
+            spHitboxState = &g_WorkBuffer.hit.state[1];
+            spHitbox = &g_WorkBuffer.hit.box[4];
             for (iterEnt = &g_Entities[1]; iterEnt < &g_Entities[0x30];
                  iterEnt++) {
                 if ((*spHitboxState & miscVar3) &&
@@ -171,8 +169,8 @@ void HitDetection(void) {
 
         if ((miscVar1 & 1) && !miscVar2) {
             iterEnt = &g_Entities[0];
-            spHitboxState = &DAT_060485E0[0];
-            spHitbox = &DAT_060486A0[0];
+            spHitboxState = &g_WorkBuffer.hit.state[0];
+            spHitbox = &g_WorkBuffer.hit.box[0];
             if (!entity->unk6D[iterEnt->enemyId] && (*spHitboxState & 1)) {
                 hitboxCheck2 = *spHitbox++ - x;
                 hitboxCheck1 = hitboxWidth + *spHitbox++;

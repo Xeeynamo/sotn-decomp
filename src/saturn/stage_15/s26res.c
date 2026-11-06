@@ -3,7 +3,7 @@
 #include <saturn_sprite.h>
 #include "stage_15.h"
 
-SaturnSpriteResource g_Stage15SpriteBank26 = {
+SaturnSpriteResource g_Stage15SpriteBankHumanFaceTree = {
     g_Stage15SpriteBank26Images,
     g_Stage15SpriteBank26Palette,
     -1,

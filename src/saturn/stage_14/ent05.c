@@ -9,7 +9,7 @@ EntityEntry g_Stage14EntityEntry05 = {
     &g_SaturnSharedSpriteBank5Resource, func_060E1FCC};
 EntityEntry g_Stage14EntityEntry18 = {NULL, func_060E2134};
 EntityEntry g_Stage14EntityEntry19 = {
-    &g_SaturnSharedSpriteBank1Resource, func_060E2220};
+    &g_SaturnSharedSpriteBank1Resource, EntityDestructAnim};
 EntityEntry g_Stage14EntityEntry20 = {
     &g_SaturnSharedSpriteBank5Resource, func_060E238C};
 

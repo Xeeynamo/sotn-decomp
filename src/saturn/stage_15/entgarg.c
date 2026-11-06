@@ -4,15 +4,17 @@
 #include "stage_15.h"
 
 EntityEntry g_Stage15EntityRedGargoyle = {
-    &g_Stage15SpriteBank24, func_060E6EA0};
+    &g_Stage15SpriteBankRedGargoyle, func_060E6EA0};
 
 /* Working velocities used while the gargoyle emits its attack entities. */
 s32 g_Stage15RedGargoyleAttackVelocities[3] = {FIX(2), FIX(2), 0};
 
-EntityEntry g_Stage15EntityEntry35 = {&g_Stage15SpriteBank24, func_060E7564};
+EntityEntry g_Stage15EntityEntry35 = {
+    &g_Stage15SpriteBankRedGargoyle, func_060E7564};
 s32 g_Stage15RedGargoyleAttackEntityParams[2] = {2, 0};
 
-EntityEntry g_Stage15EntityEntry36 = {&g_Stage15SpriteBank24, func_060E7780};
+EntityEntry g_Stage15EntityEntry36 = {
+    &g_Stage15SpriteBankRedGargoyle, func_060E7780};
 
 u8 g_Stage15RedGargoyleAnimationData[] = {
     /* Idle */

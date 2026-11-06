@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/deps"
 )
@@ -76,12 +77,31 @@ func extractSaturn() error {
 			return runSaturnSplitter()
 		}
 	}
+	weapons, _ := filepath.Glob("config/saturn/weapon/w_*.prg.yaml")
+	for _, yaml := range weapons {
+		ld := strings.TrimSuffix(yaml, ".prg.yaml") + ".ld"
+		if _, err := os.Stat(ld); err != nil {
+			return runSaturnSplitter()
+		}
+	}
 	return nil
 }
 
 func runSaturnSplitter() error {
 	const splitter = "tools/saturn-splitter/rust-dis/target/release/rust-dis"
 	for _, yaml := range saturnSplitterYAMLs {
+		if err := deps.RunApp(splitter, yaml); err != nil {
+			return fmt.Errorf("split %s: %w", filepath.Base(yaml), err)
+		}
+	}
+	if err := deps.SaturnWeaponSlices(); err != nil {
+		return fmt.Errorf("slice WEAPON0.PRG: %w", err)
+	}
+	weapons, err := filepath.Glob("config/saturn/weapon/w_*.prg.yaml")
+	if err != nil {
+		return err
+	}
+	for _, yaml := range weapons {
 		if err := deps.RunApp(splitter, yaml); err != nil {
 			return fmt.Errorf("split %s: %w", filepath.Base(yaml), err)
 		}

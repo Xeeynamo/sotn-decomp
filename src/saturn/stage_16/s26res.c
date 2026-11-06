@@ -3,7 +3,7 @@
 #include <saturn_sprite.h>
 #include "stage_16.h"
 
-SaturnSpriteResource g_Stage16SpriteBank26 = {
+SaturnSpriteResource g_Stage16SpriteBankWillOWisp = {
     g_Stage16SpriteBank26Images,
     g_Stage16SpriteBank26Palette,
     -1,

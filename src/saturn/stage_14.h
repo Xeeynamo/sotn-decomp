@@ -43,7 +43,7 @@ void func_060E1790(Entity* self);
 void func_060E1E64(Entity* self);
 void func_060E1FCC(Entity* self);
 void func_060E2134(Entity* self);
-void func_060E2220(Entity* self);
+void EntityDestructAnim(Entity* self);
 void func_060E238C(Entity* self);
 void func_060E26BC(Entity* self);
 void func_060E29A8(Entity* self);

@@ -214,3 +214,4 @@ segments:
         type: .data
         file: stage_16/s26gfx
         end: 0x130F4
+      - [0x130F4, .bss, stage_16/bss]

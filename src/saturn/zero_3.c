@@ -94,7 +94,7 @@ s32 func_0601AEA8(void) { return 0xFF; }
 
 // func_0601AEB4
 void SetServantResourceList(void) {
-    DAT_060645D0 = (s32)g_BatResourceDescriptorList;
+    DAT_060645D0 = (SaturnSpriteResource**)g_BatResourceDescriptorList;
 }
 
 // call familiar update function
@@ -106,17 +106,45 @@ void InitServant() {
 }
 
 void func_0601AEF4(void) {
-    func_06064688 = DAT_060A5000;
+    func_06064688 = (void (*)())g_PlayerOvl.init;
     func_0606468C = DAT_060A5004;
     func_06064614 = DAT_060A5008;
 }
 
-void func_0601AF2C(void) { func_06064674 = DAT_060A5000; }
+void func_0601AF2C(void) { func_06064674 = (void (*)())g_PlayerOvl.init; }
 
-void func_0601AF44(void) { func_06064580 = DAT_060A5000; }
+void func_0601AF44(void) { func_06064580 = (void (*)())g_PlayerOvl.init; }
+
+#ifdef SATZ
+extern void (*g_MariaMapMenuFunctions[19])(void);
+#endif
 
 void func_0601AF5C(void) {
     if (g_PlayableCharacter != 0) {
+#ifdef SATZ
+        void (**t)(void) = g_MariaMapMenuFunctions;
+
+        func_060645B4 = t[0];
+        func_06064594 = t[1];
+        func_06064628 = (void*)t[2];
+        DAT_06064584 = (void*)t[3];
+        DAT_0606460C = (void*)t[4];
+        func_06064638 = (void*)t[5];
+        func_060645FC = (void*)t[6];
+        func_060645BC = (void*)t[7];
+        func_06064620 = (void*)t[8];
+        func_06064600 = (void*)t[9];
+        func_0606464C = (void*)t[10];
+        func_060645A0 = (void*)t[11];
+        func_06064630 = (void*)t[12];
+        func_06064590 = (void*)t[13];
+        DAT_0606467C = (void*)t[14];
+        func_06064618 = (void*)t[15];
+        DAT_06064678 = (void*)t[16];
+        func_060645C0 = (void*)t[17];
+        func_060645B0 = (void*)t[18];
+        return;
+#endif
         func_060645B4 = DAT_060D4000;
         func_06064594 = DAT_060D4004;
         func_06064628 = DAT_060D4008;
@@ -137,7 +165,7 @@ void func_0601AF5C(void) {
         func_060645C0 = DAT_060D4044;
         func_060645B0 = DAT_060D4048;
     } else {
-        func_060645B4 = DAT_060D6000;
+        func_060645B4 = *(void**)g_Weapon0OvlArea;
         func_06064594 = DAT_060D6004;
         func_06064628 = DAT_060D6008;
         DAT_06064584 = DAT_060D600C;
@@ -159,13 +187,13 @@ void func_0601AF5C(void) {
     }
 }
 
-void func_0601B184(void) { func_060645E0 = DAT_060A5000; }
+void func_0601B184(void) { func_060645E0 = (void (*)())g_PlayerOvl.init; }
 
 void func_0601B19C(void) {
     func_06064644 = (void (*)())g_StageOverlayData.entityEntries;
 }
 
-void func_0601B1B4(void) { func_06064690 = DAT_06066000; }
+void func_0601B1B4(void) { func_06064690 = (s32(*)())g_GameOvl.equipDefs; }
 
 // original name: SET_GAME_OVERLAYADDR
 void func_0601B1CC(void) {
@@ -173,11 +201,11 @@ void func_0601B1CC(void) {
     DAT_060645AC = g_GameOvl.equipDefs;
     func_0606463C = g_GameOvl.unk04;
     func_0606465C = g_GameOvl.destroyStageEntities;
-    DAT_06064680 = g_GameOvl.unk0C;
-    DAT_0606462C = g_GameOvl.unk10;
-    DAT_060645DC = g_GameOvl.unk14;
-    DAT_06064598 = g_GameOvl.unk18;
-    DAT_060645CC = g_GameOvl.unk1C;
+    func_06064680 = g_GameOvl.unk0C;
+    func_0606462C = g_GameOvl.unk10;
+    func_060645DC = g_GameOvl.unk14;
+    func_06064598 = g_GameOvl.unk18;
+    func_060645CC = g_GameOvl.unk1C;
     func_060645C4 = g_GameOvl.unk20;
     func_0606461C = g_GameOvl.unk24;
     func_06064624 = g_GameOvl.unk28;
