@@ -280,7 +280,7 @@ s32 func_06067090(Entity* self) {
             prim0->y0 = temp2;
             prim2->y0 = prim2->y1 = prim1->y0 = prim1->y1 = temp2 - 3;
             prim2->y2 = prim2->y3 = prim1->y2 = prim1->y3 = temp2 + 3;
-            func_06066FE0(i, prim1, DAT_060485C0.unk4);
+            func_06066FE0(i, prim1, g_WorkBuffer.save.unk4);
         }
         func_06067A04();
     } else {
@@ -305,27 +305,27 @@ s32 func_06067090(Entity* self) {
                 prim2->y0 = prim2->y1 = prim1->y0 = prim1->y1 = prim0->y0 - 3;
                 prim2->drawMode = prim1->drawMode = prim0->drawMode =
                     DRAW_DEFAULT;
-                func_06066FE0(i, prim1, DAT_060485C0.unk4);
+                func_06066FE0(i, prim1, g_WorkBuffer.save.unk4);
             }
         } else {
             if (g_pads[0].tapped & PAD_LEFT) {
-                if (DAT_060485C0.unk4 != 0) {
+                if (g_WorkBuffer.save.unk4 != 0) {
                     PlaySfx(SFX_UI_SUBWEAPON_TINK);
                 }
-                DAT_060485C0.unk4 = 0;
+                g_WorkBuffer.save.unk4 = 0;
             }
             if (g_pads[0].tapped & PAD_RIGHT) {
-                if (DAT_060485C0.unk4 == 0) {
+                if (g_WorkBuffer.save.unk4 == 0) {
                     PlaySfx(SFX_UI_SUBWEAPON_TINK);
                 }
-                DAT_060485C0.unk4 = 1;
+                g_WorkBuffer.save.unk4 = 1;
             }
             for (i = 0; i < 2; i++) {
                 prim1 = prim1->next;
-                func_06066FE0(i, prim1, DAT_060485C0.unk4);
+                func_06066FE0(i, prim1, g_WorkBuffer.save.unk4);
             }
             if (g_pads[0].tapped & PAD_CROSS) {
-                DAT_060485C0.unk4 = self->ext.save.unk28;
+                g_WorkBuffer.save.unk4 = self->ext.save.unk28;
                 for (i = 0; i < 9; i++) {
                     prim0->drawMode = DRAW_HIDE;
                     prim0 = prim0->next;
@@ -334,7 +334,7 @@ s32 func_06067090(Entity* self) {
             }
             if (g_pads[0].tapped & 0x600) {
                 PlaySfx(SFX_UI_CONFIRM);
-                DAT_060485C0.unk5 = 0;
+                g_WorkBuffer.save.unk5 = 0;
                 for (i = 0; i < 9; i++) {
                     prim0->drawMode = DRAW_HIDE;
                     prim0 = prim0->next;
@@ -491,7 +491,7 @@ s32 func_060674B8(Entity* self, s32 arg1) {
     return 0;
 }
 
-void func_06067958(void) { memset(DAT_0604E5E0, 0, 0x1800); }
+void func_06067958(void) { memset(g_WorkBuffer.stage.vram, 0, 0x1800); }
 
 void func_0606797C(char* str, s16* arg1, s32 arg2) {
     s32 temp_r0;
@@ -499,7 +499,7 @@ void func_0606797C(char* str, s16* arg1, s32 arg2) {
     u8* dst;
     s16 sp[2];
 
-    dst = &DAT_0604E5E0[0];
+    dst = &g_WorkBuffer.stage.vram[0];
     sp[0] = 0xC0;
     sp[1] = 0x40;
     temp_r2 = arg2 & 0xF;
@@ -509,7 +509,7 @@ void func_0606797C(char* str, s16* arg1, s32 arg2) {
             sp[1] = 0x20;
         } else {
             sp[1] = 0x10;
-            dst = &DAT_0604E5E0[(temp_r2 + 1) * 0x600];
+            dst = &g_WorkBuffer.stage.vram[(temp_r2 + 1) * 0x600];
         }
     } else if (temp_r0 == 2) {
         if (temp_r2 == 0) {
@@ -517,7 +517,7 @@ void func_0606797C(char* str, s16* arg1, s32 arg2) {
         } else {
             sp[0] = 0x60;
             sp[1] = 0x10;
-            dst = &DAT_0604E5E0[(temp_r2 + 5) * 0x300];
+            dst = &g_WorkBuffer.stage.vram[(temp_r2 + 5) * 0x300];
         }
     }
     func_0601960C(str, dst, sp, arg1, 1);
@@ -527,5 +527,5 @@ void func_06067A04(void) {
     s32 temp = 1;
     s32 temp2 = (DAT_0605AEC0[temp][0] * 8) + VRAM_ADDR;
 
-    QueueVramTransfer(temp2, DAT_0604E5E0, 0x1800);
+    QueueVramTransfer(temp2, g_WorkBuffer.stage.vram, 0x1800);
 }

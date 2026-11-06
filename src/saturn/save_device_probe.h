@@ -18,13 +18,13 @@ void SaveDeviceProbe(Entity* self) {
         }
         return;
     } else {
-        value = DAT_060485C0.unk4;
+        value = g_WorkBuffer.save.unk4;
         index = 1;
         do {
             status = func_0600D028(value, index);
             if (status != 0 && status != BUP_BROKEN) {
-                DAT_060485C0.unk5 = index;
-                DAT_060485C0.unk4 = value;
+                g_WorkBuffer.save.unk5 = index;
+                g_WorkBuffer.save.unk4 = value;
                 self->ext.save.unk4 = 30;
                 break;
             }
@@ -39,8 +39,8 @@ void SaveDeviceProbe(Entity* self) {
     }
 
 state30:
-    value = DAT_060485C0.unk4;
-    index = DAT_060485C0.unk5;
+    value = g_WorkBuffer.save.unk4;
+    index = g_WorkBuffer.save.unk5;
     status = BUP_Stat(value, 70, &sttb);
     if (status == BUP_UNFORMAT) {
         *statusp = 43;

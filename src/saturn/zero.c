@@ -356,8 +356,6 @@ void func_06004924(void) {
     func_06004A10();
 }
 
-extern s8 DAT_06057F50[PER_WORK_SIZE(1, 2)];
-
 void func_06004A10(void) {
     s32 i;
     s8* ptr;
@@ -798,8 +796,6 @@ void func_06005470(void) {
         DAT_0605D7DC++;
     }
 }
-
-extern s16* DAT_0605C120[];
 
 void func_06005508(void) {
     ReadFileToAddr("TITLE.PRG", (void*)(0x060A5000));

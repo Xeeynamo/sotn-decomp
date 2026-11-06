@@ -202,3 +202,4 @@ segments:
         type: .data
         file: rstage16/s23gfx
         end: 0x13CBC
+      - [0x13CBC, .bss, rstage16/bss]

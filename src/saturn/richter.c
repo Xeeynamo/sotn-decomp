@@ -1204,10 +1204,11 @@ void func_060ADA34(Entity* self) {
     switch (self->step) {
     case 0:
         self->unk0 = CreateSpriteObject(
-            g_EntitySpriteBank01.allocationIndex, g_EntitySpriteBank01.flags,
-            g_EntitySpriteBank01.images, 5);
+            g_SaturnSharedSpriteBank1Resource.allocationIndex,
+            g_SaturnSharedSpriteBank1Resource.flags,
+            g_SaturnSharedSpriteBank1Resource.images, 5);
         if (self->unk0 != NULL) {
-            self->ext.spriteEntity.frames = DAT_06045E14;
+            self->ext.spriteEntity.frames = g_SaturnSharedSpriteBank1Frames;
             self->unk0->zPriority = g_Entities->zPriority + 4;
             self->animSet = 2;
             self->anim = anim_80154E38;
@@ -1855,7 +1856,7 @@ void func_060BBAF4(void) {
     }
 
     for (i = 0; i < 2; i++) {
-        func_06078700(dst, DAT_06085DCC[i], 4);
+        func_06078700(dst, (s8*)g_StatusMenuLabelPointers[i], 4);
         dst += 0x180;
     }
 
@@ -1884,7 +1885,7 @@ void func_060BBC00(void) {
         func_06078700(text, func_06078748(i), 12);
         text += 0x480;
     }
-    func_06078700(text, DAT_06085DCC[2], 6);
+    func_06078700(text, (s8*)g_StatusMenuLabelPointers[2], 6);
 
     slot = 2;
     dst = (s32*)((DAT_0605AEC0[slot][0] * 8) + 0x25C00000);

@@ -165,7 +165,7 @@ void func_060E0F20(Entity* self) {
         self->unk0 = sprite;
         TekiInit(self, 3);
 
-        frame = DAT_06046CD0;
+        frame = g_SaturnSharedSpriteBank8Frames;
         self->step++;
         if (frameType != 0) {
             frame += 2;
@@ -222,12 +222,12 @@ void func_060E25F4(Entity* self) {
     goto cleanup;
 
 state10:
-    save_id = DAT_060485C0.unk4;
+    save_id = g_WorkBuffer.save.unk4;
     for (i = 1; i <= 5; i++) {
         status = func_0600D028(save_id, i);
         if (status != 0 && status != BUP_BROKEN) {
-            DAT_060485C0.unk5 = i;
-            DAT_060485C0.unk4 = save_id;
+            g_WorkBuffer.save.unk5 = i;
+            g_WorkBuffer.save.unk4 = save_id;
             self->ext.save.unk4 = 30;
             break;
         }
@@ -239,8 +239,8 @@ state10:
     goto cleanup;
 
 state30:
-    save_id = DAT_060485C0.unk4;
-    i = DAT_060485C0.unk5;
+    save_id = g_WorkBuffer.save.unk4;
+    i = g_WorkBuffer.save.unk5;
     status = BUP_Stat(save_id, 70, &sttb);
     if (status == BUP_UNFORMAT) {
         self->ext.save.unk4 = 43;
@@ -306,7 +306,7 @@ void func_060E323C(s32 scale, s32 unused) {
     s32 factor;
     s32 i;
 
-    base = (s32*)g_FileLoadBuffer;
+    base = g_WorkBuffer.model.vertices;
     src = g_Stage16Entity08ModelVertices14[0];
     dst = base;
     factor = scale << 8;

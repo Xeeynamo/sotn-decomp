@@ -281,7 +281,9 @@ segments:
 
       - start: 0x44540
         type: .data
-        file: lib/sys_bss
+        file: zero/workbuf
         end: 0x4C560
 
+      - [0x4C560, .bss, zero/bss_0]
       - [0x4C5F4, .bss, zero_0]
+      - [0x53630, .bss, zero/bss]

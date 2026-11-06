@@ -198,13 +198,13 @@ void func_060E16B8(void* arg0) {
     return;
 
 L_case10_success:
-    DAT_060485C0.unk5 = count;
-    DAT_060485C0.unk4 = item;
+    g_WorkBuffer.save.unk5 = count;
+    g_WorkBuffer.save.unk4 = item;
     self->ext.save.unk4 = 30;
     goto L_case10_after;
 
 L_case10:
-    item = DAT_060485C0.unk4;
+    item = g_WorkBuffer.save.unk4;
     count = 1;
 
     for (;;) {
@@ -226,8 +226,8 @@ L_case10_after:
     return;
 
 L_case30:
-    item = DAT_060485C0.unk4;
-    count = DAT_060485C0.unk5;
+    item = g_WorkBuffer.save.unk4;
+    count = g_WorkBuffer.save.unk5;
 
     status = BUP_Stat(item, 70, &sttb);
     if (status == BUP_UNFORMAT) {
@@ -294,7 +294,7 @@ void func_060E2300(s32 scale, s32 unused) {
     s32 factor;
     s32 i;
 
-    base = (s32*)g_FileLoadBuffer;
+    base = g_WorkBuffer.model.vertices;
     src = (MthXyz*)g_RStage16Entity08ModelVertices14;
     dst = base;
     factor = scale << 8;

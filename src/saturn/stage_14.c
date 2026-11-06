@@ -244,7 +244,7 @@ void func_060E2E80(Entity* self) {
         TekiInit(self, 3);
 
         self->step++;
-        frame = DAT_06046CD0;
+        frame = g_SaturnSharedSpriteBank8Frames;
         if (frameType != 0) {
             frame += 2;
         } else {

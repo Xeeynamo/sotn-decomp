@@ -2,7 +2,10 @@
 #include "sattypes.h"
 #include "zero/sound.h"
 
-u32 D_06041270[7] = {0};
+u32 D_06041270[4] = {0};
+s32 DAT_06041280 = 0;
+s32 DAT_06041284 = 0;
+u32 D_06041288 = 0;
 
 SaturnSoundFile g_SaturnSoundFiles[57] = {
     {"SD_JO10.CRT", 0x10},  {"SD_ALK.CRT", 0x11},   {"SD_LIH.CRT", 0x11},

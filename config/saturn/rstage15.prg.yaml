@@ -221,3 +221,4 @@ segments:
         type: .data
         file: rstage15/s28gfx
         end: 0x174D0
+      - [0x174D0, .bss, rstage15/bss]

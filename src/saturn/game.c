@@ -62,8 +62,6 @@ void func_800F2860(void) {
     }
 }
 
-extern s32 DAT_0605C6D4;
-extern s32 stopMusicFlag;
 extern s32 DAT_06085508;
 extern s32 DAT_0608550C;
 extern s32 DAT_06085520;
