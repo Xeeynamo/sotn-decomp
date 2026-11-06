@@ -1,0 +1,87 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#define _SPR2_
+#include "sattypes.h"
+#include "zero.h"
+#include "game.h"
+#include "lib/spr/spr.h"
+
+u16* g_LayoutObjHorizontal BSS = {0};
+u16* g_LayoutObjVertical BSS = {0};
+u8 g_LayoutObjPosHorizontal BSS = {0};
+u8 g_LayoutObjPosVertical BSS = {0};
+u16 D_0608609A_pad BSS = 0;
+s32 DAT_0608609c BSS = {0};
+s32 D_80137960 BSS = {0};
+s32 D_80137964 BSS = {0};
+s32 D_80137968 BSS = {0};
+u16 DAT_060860AC BSS = {0};
+u16 D_060860AE_pad BSS = 0;
+u8 D_060860B0_pad[0x4] BSS = {0};
+s32 D_801375AC BSS = {0};
+s32 D_801375B0 BSS = {0};
+s32 D_801375B4 BSS = {0};
+s32 D_801375B8 BSS = {0};
+u8 D_060860C4_pad[0x4] BSS = {0};
+s32 prevMusicId BSS = {0};
+u8 D_060860CC_pad[0xC] BSS = {0};
+PlayerHud g_PlayerHud BSS = {0};
+struct SprSpCmd DAT_06086108 BSS = {0};
+s32 DAT_06086128 BSS = {0};
+s32 DAT_0608612C BSS = {0};
+s32 DAT_06086130 BSS = {0};
+s32 DAT_06086134 BSS = {0};
+u8 D_06086138_pad[0x8] BSS = {0};
+u16 g_ItemIconSlots[32] BSS = {0};
+s32 D_801375A8 BSS = {0};
+s32 D_801375A0 BSS = {0};
+u8 D_06086188_pad[0x8] BSS = {0};
+RoomLoadDefHolder D_801375BC BSS = {0};
+s32 D_8013759C BSS = {0};
+s32 D_801375A4 BSS = {0};
+u8 D_060861A4_pad[0xC] BSS = {0};
+s32 g_StatBuffTimers[15] BSS = {0};
+u8 D_060861EC_pad[0x24] BSS = {0};
+s32 DAT_06086210 BSS = {0};
+u8 D_06086214_pad[0xC] BSS = {0};
+s16 DAT_06086220[10] BSS = {0};
+u32* d_06086234 BSS = {0};
+s32 D_801375CC BSS = {0};
+u8 D_0608623C_pad[0x4] BSS = {0};
+s32 g_NewPlayerStatsTotal[4] BSS = {0};
+u32* d_06086250 BSS = {0};
+s32 g_EquipOrderType BSS = {0};
+s32 DAT_06086258 BSS = {0};
+u8 D_0608625C_pad[0x4] BSS = {0};
+s32* D_801375D8 BSS = {0};
+u8 D_06086264_pad[0xC] BSS = {0};
+s32 DAT_06086270 BSS = {0};
+u8 D_06086274_pad[0xC] BSS = {0};
+s32 D_801375D4 BSS = {0};
+s32 g_NewAttackLeftHand BSS = {0};
+s32 DAT_06086288 BSS = {0};
+u8 D_0608628C_pad[0xC] BSS = {0};
+s32 DAT_06086298 BSS = {0};
+s32 DAT_0608629c BSS = {0};
+u8 D_060862A0_pad[0x4] BSS = {0};
+s16 DAT_060862A4 BSS = {0};
+u16 D_060862A6_pad BSS = 0;
+u8 D_060862A8_pad[0xD0] BSS = {0};
+s32 g_NewAttackRightHand BSS = {0};
+s32 g_NewDefenseEquip BSS = {0};
+s32 D_8013B5E8 BSS = {0};
+s32 D_801397FC BSS = {0};
+SaturnSpriteResource* DAT_06086388 BSS = {0};
+s32 D_80139008 BSS = {0};
+s32 DAT_06086390 BSS = {0};
+u8 D_06086394_pad[0x464] BSS = {0};
+Primitive g_PrimBuf[1] BSS = {0};
+u8 D_0608681C_pad[0x47DC] BSS = {0};
+SpriteObject g_SpriteObjectPool[SPRITE_OBJECT_MAX + 1] BSS = {0};
+SpritePart g_SpritePartPool[SPRITE_PART_MAX] BSS = {0};
+u8 DAT_0608FFF8[86] BSS = {0};
+u16 D_0609004E_pad BSS = 0;
+u8 D_06090050_pad[0x37A8] BSS = {0};
+s32 DAT_060937F8 BSS = {0};
+u8 D_060937FC_pad[0x5FFC] BSS = {0};
+Entity g_Entities[TOTAL_ENTITY_COUNT] BSS = {0};
+u8 D_060A4FF8_pad[0x8] BSS = {0};

@@ -947,7 +947,7 @@ void func_8015FA5C(s32 arg0) {
 void MariaSetSubweaponParams(Entity* self) {
     SubweaponDef* subweaponDef;
 
-    subweaponDef = &DAT_060C1B02[self->ext.subweapon.subweaponId];
+    subweaponDef = &g_MariaSubweaponDefs[self->ext.subweapon.subweaponId];
     if (g_Player.timers[13] != 0) {
         self->attack = subweaponDef->attack * 2;
     } else {
@@ -1133,13 +1133,14 @@ void func_060AE2C8(Entity* self) {
     switch (self->step) {
     case 0:
         self->unk0 = CreateSpriteObject(
-            g_EntitySpriteBank01.allocationIndex, g_EntitySpriteBank01.flags,
-            g_EntitySpriteBank01.images, 5);
+            g_SaturnSharedSpriteBank1Resource.allocationIndex,
+            g_SaturnSharedSpriteBank1Resource.flags,
+            g_SaturnSharedSpriteBank1Resource.images, 5);
         if (self->unk0 != NULL) {
-            self->ext.spriteEntity.frames = DAT_06045E14;
+            self->ext.spriteEntity.frames = g_SaturnSharedSpriteBank1Frames;
             self->unk0->zPriority = g_Entities->zPriority + 4;
             self->animSet = 2;
-            self->anim = &DAT_060C2408;
+            self->anim = g_MariaAnimRisingEmber;
             self->flags = 0x00170000;
             self->velocityY = (MTH_GetRand() & 0x3FFF) - FIX(1);
             self->step++;
@@ -1214,12 +1215,12 @@ void func_060B18C8(Entity* entity) {
 
     if (entity->step == 0) {
         sprite = CreateSpriteObject(
-            g_EntitySpriteBank09.allocationIndex,
+            g_SaturnSharedSpriteBank9Resource.allocationIndex,
             (u16)(g_SaturnSharedSpriteBank7Resource.flags + 0x1C),
-            g_EntitySpriteBank09.images, 1);
+            g_SaturnSharedSpriteBank9Resource.images, 1);
         entity->unk0 = sprite;
         if (sprite != NULL) {
-            entity->ext.spriteEntity.frames = &g_Stage02OpaquePuffFrameData1;
+            entity->ext.spriteEntity.frames = g_SaturnSharedOpaquePuffFrames1;
             entity->unk0->zPriority = PLAYER.zPriority + 2;
             entity->anim = &g_MariaEntity87Anim0;
             entity->flags = 0x08100000;
@@ -1775,7 +1776,7 @@ void func_060BE440(void) {
 
     i = 0;
     do {
-        func_06078700(dst, DAT_06085DCC[i], 4);
+        func_06078700(dst, (s8*)g_StatusMenuLabelPointers[i], 4);
         dst += 0x180;
         i++;
     } while (i <= 1);
@@ -1807,7 +1808,7 @@ void func_060BE54C(void) {
         func_06078700(text, func_06078748(i), 12);
         text += 0x480;
     }
-    func_06078700(text, DAT_06085DCC[2], 6);
+    func_06078700(text, (s8*)g_StatusMenuLabelPointers[2], 6);
 
     slot = 2;
     dst = (s32*)((DAT_0605AEC0[slot][0] * 8) + 0x25C00000ul);

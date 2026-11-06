@@ -63,6 +63,11 @@ int sotn_satz_install_overlay(const char* name, void* dst, s32* size) {
             }
             memcpy(
                 s_Overlays[i].area, s_Overlays[i].header, s_Overlays[i].size);
+            if (s_Overlays[i].area == &g_PlayerOvl) {
+                DAT_060A5000 = (void (*)())g_PlayerOvl.init;
+                DAT_060A5004 = g_PlayerOvl.main;
+                DAT_060A5008 = g_PlayerOvl.updatePlayerEntities;
+            }
             *size = s_Overlays[i].size;
             return 1;
         }

@@ -110,4 +110,8 @@ segments:
       - [0x1FC30, .data, game/capetbl]
       - [0x1FC88, .data, game/capepal]
       - [0x1FC90, .data, game/miscend]
-      - [0x1FE86, .data, game/sinetbl]
+      - start: 0x1FE86
+        type: .data
+        file: game/sinetbl
+        end: 0x2008B
+      - [0x20090, .bss, game/bss]

@@ -493,7 +493,7 @@ void func_060E43A4(s32 scale, s32 unused) {
     s32 factor;
     s32 i;
 
-    base = (s32*)g_FileLoadBuffer;
+    base = g_WorkBuffer.model.vertices;
     src = g_RStage15Entity08ModelVertices14[0];
     dst = base;
     factor = scale << 8;

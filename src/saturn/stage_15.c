@@ -641,7 +641,7 @@ void func_060E3F58(Entity* self) {
         TekiInit(self, 3);
 
         self->step++;
-        frame = DAT_06046CD0;
+        frame = g_SaturnSharedSpriteBank8Frames;
         if (frameType != 0) {
             frame += 2;
         } else {
@@ -775,7 +775,7 @@ void func_060E6310(s32 scale, s32 unused) {
     s32 factor;
     s32 i;
 
-    base = (s32*)g_FileLoadBuffer;
+    base = g_WorkBuffer.model.vertices;
     src = g_Stage15Entity08ModelVertices14[0];
     dst = base;
     factor = scale << 8;

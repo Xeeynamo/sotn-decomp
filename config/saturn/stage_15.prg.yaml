@@ -251,3 +251,4 @@ segments:
         type: .data
         file: stage_15/s31gfx
         end: 0x1F0D0
+      - [0x1F0D0, .bss, stage_15/bss]

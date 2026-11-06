@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "batbss.h"
 
-#define BSS __attribute__((section(".bss")))
-
 u32 g_CurrentServant BSS = 0;
 s32 g_CurrentRoomX BSS = 0;
 s32 g_CurrentRoomY BSS = 0;
