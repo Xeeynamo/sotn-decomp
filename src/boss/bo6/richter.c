@@ -1191,7 +1191,19 @@ void RicStepStandInAir(void) {
     }
 }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepEnableFlameWhip);
+void RicStepEnableFlameWhip(void) {
+    if ((RIC.animCurFrame == 0xB5) && (RIC.poseTimer == 1)) {
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_35, 0);
+        g_api.PlaySfx(SFX_WEAPON_APPEAR);
+    }
+    if (RIC.poseTimer < 0) {
+        RicSetStand(0);
+        g_Ric.unk46 = 0;
+        RicCreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x45), 0);
+        g_Ric.timers[PL_T_POISON] = 0x800;
+    }
+}
 
 void RicStepHydrostorm(void) {
     if (RIC.poseTimer < 0) {
@@ -1234,6 +1246,26 @@ void RicStepBladeDash(void) {
     }
 }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", func_us_801B8E80);
+void func_us_801B8E80(s32 arg0) {
+    s32 var_s0;
+
+    var_s0 = 3;
+    if (RIC.facingLeft != 0) {
+        var_s0 = -3;
+    }
+    RIC.posY.i.hi -= 0x10;
+    RIC.posX.i.hi = var_s0 + RIC.posX.i.hi;
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_EMBERS, 1), 0);
+    RIC.posY.i.hi += 0x10;
+    RIC.posX.i.hi -= var_s0;
+    if (arg0 & 1) {
+        g_api.ShakeCamera(SHAKE_Y_SMALL2);
+        g_api.PlaySfx(SFX_WALL_DEBRIS_B);
+    }
+    if (arg0 & 2) {
+        RIC.velocityX = 0;
+        RIC.velocityY = 0;
+    }
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepHighJump);
