@@ -2,6 +2,7 @@
 #define SFX_H
 
 #include "types.h"
+#include "version.h"
 
 /**
  * File: sfx.h

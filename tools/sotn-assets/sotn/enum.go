@@ -126,7 +126,7 @@ func fetchEnumUncached(header, enumName string, min int) enumResult {
 	}
 
 	cmd := exec.Command(cpp,
-		fmt.Sprintf("-DVERSION=%s", GetVersion()),
+		fmt.Sprintf("-D_internal_version_%s", GetVersion()),
 		"-lang-c",
 		"-Iinclude",
 		"-Iinclude/psxsdk",
