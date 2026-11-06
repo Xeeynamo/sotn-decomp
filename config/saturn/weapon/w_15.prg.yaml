@@ -1,0 +1,50 @@
+options:
+  target_path:  build/saturn/weapon/W0_15.PRG
+  asm_path:     asm/saturn/weapon/w_15
+  src_path:     src/saturn/weapon
+  obj_path:     build/saturn/weapon
+  ld_scripts_path: config/saturn/weapon
+  syms_path: config/saturn/weapon
+  decomp_empty_funcs: false
+  symbol_files:
+    - ../game_user_syms.txt
+    - ../zero_user_syms.txt
+    - ../game_syms.gen.txt
+    - ../zero_syms.gen.txt
+segments:
+  - name: w_15
+    type: code
+    start: 0x00000000
+    vram:  0x060D6000
+    subalign: 2
+    subsegments:
+      - start: 0x0
+        type: .rodata
+        file: w_15
+        end: 0x60
+      - start: 0x60
+        type: c
+        file: w_15
+        end: 0x1200
+        function_ranges:
+          - [0x60, 0x60]
+          - [0x128, 0x128]
+          - [0x420, 0x420]
+          - [0x534, 0x534]
+          - [0x670, 0x670]
+          - [0xc70, 0xc70]
+          - [0xf28, 0xf28]
+          - [0x111c, 0x111c]
+          - [0x1128, 0x1128]
+          - [0x1140, 0x1140]
+          - [0x1158, 0x1158]
+          - [0x1170, 0x1170]
+          - [0x1188, 0x1188]
+          - [0x11a0, 0x11a0]
+          - [0x11b8, 0x11b8]
+          - [0x11d0, 0x11d0]
+          - [0x11e8, 0x11e8]
+      - start: 0x1200
+        type: .data
+        file: w_15
+        end: 0x15f0
