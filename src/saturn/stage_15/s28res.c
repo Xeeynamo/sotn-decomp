@@ -3,7 +3,7 @@
 #include <saturn_sprite.h>
 #include "stage_15.h"
 
-SaturnSpriteResource g_Stage15SpriteBank28 = {
+SaturnSpriteResource g_Stage15SpriteBankVenusManTrap = {
     g_Stage15SpriteBank28Images,
     g_Stage15SpriteBank28Palette,
     -1,

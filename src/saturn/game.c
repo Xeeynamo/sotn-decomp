@@ -692,7 +692,7 @@ void RunMainEngine(void) {
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6071C3C, func_06071C3C);
 
-extern s32 DAT_0605C120;
+extern s16* DAT_0605C120[];
 
 // original name: INIT_ROOM
 void InitRoom(void) {
@@ -731,7 +731,7 @@ void InitRoom(void) {
         g_CurrentRoom.unkA != g_CurrentRoom.unk8) {
         g_CurrentRoom.unkA = g_CurrentRoom.unk8;
     } else {
-        DAT_0605D7DC = DAT_0605C120;
+        DAT_0605D7DC = (u8*)DAT_0605C120[0];
     }
     func_06009510(g_CurrentRoom.unk4);
     PLAYER.posX.i.hi = PLAYER.posX.i.hi % 0x140;
@@ -1449,7 +1449,7 @@ void func_800FAF44(bool isAccessory) {
     s32 i;
     s32* ptr;
 
-    D_801375D8 = (s32*)0x002F2000;
+    D_801375D8 = DAT_002F2000;
     ptr = D_801375D8;
 
     if (!isAccessory) {
@@ -1527,7 +1527,7 @@ void func_060744F8(s32 arg0) {
         size = *glyphData;
     }
 
-    source = (s32*)(offset + 0x25E22000);
+    source = (s32*)(offset + 0x25E22000ul);
     DMA_CpuMemCopy2((s32*)0x25E20000, source, size >> 1);
     while (DMA_CpuResult() == 2) {
     }

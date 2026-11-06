@@ -7,6 +7,9 @@
 #define _SPR2_
 #include "lib/spr/spr.h"
 #include "game.h"
+#ifdef SATZ
+u8 func_06012D88(void);
+#endif
 
 // func_06004080
 void entrypoint(void) {
@@ -414,7 +417,14 @@ void func_06004A74(void) {
     }
 }
 
+#ifdef SATZ
+void sotn_satz_poll(void);
+#endif
+
 void UpdatePads(void) {
+#ifdef SATZ
+    sotn_satz_poll();
+#endif
     g_pads[0].previous = g_pads[0].pressed;
     g_pads[0].pressed = ~DAT_060505F8->buttons;
     g_pads[0].tapped =
@@ -778,13 +788,13 @@ here:
 void func_0600544C(void) {}
 
 void func_06005470(void) {
-    ReadFileToAddr("LOGO.PRG", 0x060A5000);
+    ReadFileToAddr("LOGO.PRG", (void*)(0x060A5000));
     if (g_FileLoadEnabled != 0) {
         func_0601B184();
     }
-    DAT_0605D7DC = (s32)&DAT_00252000;
+    DAT_0605D7DC = DAT_00252000;
     DAT_0605D7DC += ReadFileToAddr("KCEN.MAP", DAT_0605D7DC);
-    if (DAT_0605D7DC & 1) {
+    if ((uptr)DAT_0605D7DC & 1) {
         DAT_0605D7DC++;
     }
 }
@@ -792,17 +802,17 @@ void func_06005470(void) {
 extern s16* DAT_0605C120[];
 
 void func_06005508(void) {
-    ReadFileToAddr("TITLE.PRG", 0x060A5000);
+    ReadFileToAddr("TITLE.PRG", (void*)(0x060A5000));
     if (g_FileLoadEnabled != 0) {
         func_0601AEF4();
     }
-    ReadFileToAddr("TITLE.CHR", VRAM_ADDR + 0x13980);
-    ReadFileToAddr("ASCII.FON", (s32)&DAT_00252000);
+    ReadFileToAddr("TITLE.CHR", (void*)(VRAM_ADDR + 0x13980));
+    ReadFileToAddr("ASCII.FON", DAT_00252000);
     func_060100DC();
 
-    DAT_0605D7DC = 0x00256000;
+    DAT_0605D7DC = DAT_00252000 + 0x4000;
     DAT_0605D7DC += ReadFileToAddr("TITLE.MAP", DAT_0605D7DC);
-    if (DAT_0605D7DC & 1) {
+    if ((uptr)DAT_0605D7DC & 1) {
         DAT_0605D7DC++;
     }
     DAT_0605C120[0] = (s16*)DAT_0605D7DC;
@@ -893,9 +903,9 @@ s32 func_060055C8(void) {
     case 13:
         if (func_0600607C(g_CurrentRoom.stageID)) {
             ReadFileToAddr(func_06005E3C(0, g_CurrentRoom.stageID),
-                           SCL_VDP2_VRAM_A1 + 0x2000);
-            ReadFileToAddr(
-                func_06005E3C(1, g_CurrentRoom.stageID), SCL_VDP2_VRAM_B1);
+                           (void*)(SCL_VDP2_VRAM_A1 + 0x2000));
+            ReadFileToAddr(func_06005E3C(1, g_CurrentRoom.stageID),
+                           (void*)(SCL_VDP2_VRAM_B1));
             func_060645C4();
         }
 
@@ -910,7 +920,7 @@ s32 func_060055C8(void) {
             g_CurrentRoom.stageID == 0x39) {
             iVar4 = GetEnemyPlayerCharaAddr();
         }
-        DAT_0605D7DC = iVar4 + (s32)&DAT_00252000;
+        DAT_0605D7DC = DAT_00252000 + iVar4;
         DAT_0605D770.unk8 = 10;
         break;
 
@@ -923,32 +933,32 @@ s32 func_060055C8(void) {
 }
 
 void func_0600583C(void) {
-    ReadFileToAddr("OPEN.PRG", 0x060A5000);
+    ReadFileToAddr("OPEN.PRG", (void*)(0x060A5000));
     if (g_FileLoadEnabled != 0) {
         func_0601AF2C();
     }
-    ReadFileToAddr("OPENNING.CHR", VRAM_ADDR + 0x13980);
-    DAT_0605D7DC = 0x254000;
+    ReadFileToAddr("OPENNING.CHR", (void*)(VRAM_ADDR + 0x13980));
+    DAT_0605D7DC = DAT_00252000 + 0x2000;
     DAT_0605D7DC += ReadFileToAddr("OPENNING.MAP", DAT_0605D7DC);
-    if (DAT_0605D7DC & 1) {
+    if ((uptr)DAT_0605D7DC & 1) {
         DAT_0605D7DC++;
     }
 }
 
 void func_060058D0(void) {
-    ReadFileToAddr("STAFF.PRG", 0x060A5000);
+    ReadFileToAddr("STAFF.PRG", (void*)(0x060A5000));
     if (g_FileLoadEnabled != 0) {
         func_0601AF44();
     }
-    DAT_0605D7DC = 0x254000;
+    DAT_0605D7DC = DAT_00252000 + 0x2000;
     DAT_0605D7DC += ReadFileToAddr("STAFROLL.MAP", DAT_0605D7DC);
-    if (DAT_0605D7DC & 1) {
+    if ((uptr)DAT_0605D7DC & 1) {
         DAT_0605D7DC++;
     }
 }
 
 void func_06005944(void) {
-    ReadFileToAddr("MOVIE.PRG", 0x06066000);
+    ReadFileToAddr("MOVIE.PRG", (void*)(0x06066000));
     if (g_FileLoadEnabled != 0) {
         func_0601B1B4();
     }
@@ -971,15 +981,16 @@ const char DAT_060059C4[] = "S400.PTN";
 const char DAT_060059D0[] = "S400.CHR";
 
 void func_060059F4(void) {
-    ReadFileToAddr("ENDING.PRG", (s32)&g_StageOverlayData);
+    ReadFileToAddr("ENDING.PRG", &g_StageOverlayData);
     if (g_FileLoadEnabled != 0) {
         func_0601B19C();
     }
-    ReadFileToAddr("ENDING.CHR", VRAM_ADDR + 0x2A980);
+    ReadFileToAddr("ENDING.CHR", (void*)(VRAM_ADDR + 0x2A980));
     if (DAT_0605D7FC != 4 && DAT_0605D7FC != 6) {
+        ReadFileToAddr(DAT_06038A14[DAT_0605D7FC - 1][0],
+                       (void*)(SCL_VDP2_VRAM_A1 + 0x2000));
         ReadFileToAddr(
-            DAT_06038A14[DAT_0605D7FC - 1][0], SCL_VDP2_VRAM_A1 + 0x2000);
-        ReadFileToAddr(DAT_06038A14[DAT_0605D7FC - 1][1], SCL_VDP2_VRAM_B1);
+            DAT_06038A14[DAT_0605D7FC - 1][1], (void*)(SCL_VDP2_VRAM_B1));
     }
     func_060645C4();
 }
@@ -1281,10 +1292,10 @@ void func_0600652C(void) {
 }
 
 // func_0600654C
-s32 ReadFileToAddr(char* path, s32 addr) {
+s32 ReadFileToAddr(char* path, void* addr) {
     Unk0600654C unk;
     unk.unk0 = path;
-    unk.unk4 = (void*)addr;
+    unk.unk4 = addr;
     unk.unk8 = -1;
     unk.unkA = 0;
     return func_06006574(&unk);
@@ -1294,10 +1305,10 @@ s32 ReadFileToAddr(char* path, s32 addr) {
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006574, func_06006574);
 
 // func_060066F0
-void ReadFileToAddrAsync(char* arg0, u32 arg1, u32 arg2, u32 arg3) {
+void ReadFileToAddrAsync(char* arg0, void* arg1, u32 arg2, u32 arg3) {
     Unk0600654C unk;
     unk.unk0 = arg0;
-    unk.unk4 = (void*)arg1;
+    unk.unk4 = arg1;
     unk.unk8 = -1;
     unk.unkA = 0;
     unk.unkC = arg2;

@@ -10,6 +10,14 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
 typedef unsigned long long u64;
+typedef unsigned long uptr;
+
+#ifdef SATZ
+void* sotn_satz_retail_address(u32 address);
+#define RETAIL_ADDRESS(address) sotn_satz_retail_address(address)
+#else
+#define RETAIL_ADDRESS(address) ((void*)(address))
+#endif
 
 #define true 1
 #define false 0
@@ -305,7 +313,9 @@ typedef struct {
     /* 0x84 */ s32 : 32;
     /* 0x88 */ s32 : 32;
     /* 0x8C */ struct Entity* parent;
+#ifndef SATZ
     /* 0x90 */ s32 : 32;
+#endif
     /* 0x94 */ s32 : 32;
     /* 0x98 */ s32 : 32;
     /* 0x9C */ s32 : 32;
@@ -808,6 +818,9 @@ typedef struct SpriteObject {
     /* 0x24 */ struct SpriteObject* next;
 } SpriteObject; /* size = 0x28 */
 
+SpriteObject* CreateSpriteObject(
+    u16 charBase, u16 clutBase, SaturnSpriteImage* images, s32 maxParts);
+
 #define SPRITE_OBJECT_MAX 255 /* 0x0FF */
 #define SPRITE_PART_MAX 640   /* 0x280 */
 
@@ -1290,7 +1303,8 @@ typedef struct {
     /* 0x2 */ s16 y;
 } Point16; // size = 0x4
 
-#define CASTLE_MAP_BITMAP ((u8*)0x002B2000)
+extern u8 DAT_002B2000[];
+#define CASTLE_MAP_BITMAP DAT_002B2000
 #define CASTLE_MAP_BITMAP_PITCH 0xA0
 #define CASTLE_MAP_BITMAP_SIZE 0x9600
 #define CASTLE_MAP_CELL_WIDTH 0x0A
@@ -1524,8 +1538,8 @@ extern Entity g_Entities[TOTAL_ENTITY_COUNT]; // 0x060997F8
 extern UNK_060485C0 DAT_060485C0;
 // One entry of the VRAM transfer queue at d_0605DB60.
 typedef struct {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ s32 unk4;
+    /* 0x00 */ void* unk0;
+    /* 0x04 */ void* unk4;
     /* 0x08 */ s16 unk8;
     /* 0x0A */ s16 unkA;
     /* 0x0C */ s16 unkC;

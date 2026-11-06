@@ -1133,7 +1133,7 @@ void func_060E8E1C(s32 scale, s32 unused) {
     s32 factor;
     s32 i;
 
-    base = DAT_060485E0;
+    base = (s32*)g_FileLoadBuffer;
     src = g_Stage02Entity08ModelVertices14;
     dst = base;
     factor = scale << 8;

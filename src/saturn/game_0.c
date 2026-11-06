@@ -305,9 +305,9 @@ void InitRoomEntities(s32 arg0) {
             }
             ptrH += 2;
         }
-        g_LayoutObjHorizontal = (u16*)(ptrH[1] * 0x10000 + ptrH[0]);
+        g_LayoutObjHorizontal = RETAIL_ADDRESS(ptrH[1] * 0x10000 + ptrH[0]);
         ptrV += i * 2 + 2;
-        g_LayoutObjVertical = (u16*)(ptrV[1] * 0x10000 + ptrV[0]);
+        g_LayoutObjVertical = RETAIL_ADDRESS(ptrV[1] * 0x10000 + ptrV[0]);
     }
     tilemap = &g_Tilemap;
     temp = tilemap->scrollX.i.hi;

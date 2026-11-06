@@ -11,7 +11,7 @@ typedef struct {
 } Stage16SkeletonBreederHitbox;
 
 EntityEntry g_Stage16EntitySkeletonBreeder = {
-    &g_Stage16SpriteBank25, func_060E6DDC};
+    &g_Stage16SpriteBankSkeletonBreeder, func_060E6DDC};
 EntityEntry g_Stage16EntityEntry36 = {NULL, func_060E72FC};
 EntityEntry g_Stage16EntityEntry37 = {NULL, func_060E73FC};
 EntityEntry g_Stage16EntityEntry38 = {NULL, func_060E7C60};
