@@ -1260,7 +1260,7 @@ void func_us_801B8E80(s32 arg0) {
     RIC.posX.i.hi -= var_s0;
     if (arg0 & 1) {
         g_api.ShakeCamera(SHAKE_Y_SMALL2);
-        g_api_PlaySfx(SFX_WALL_DEBRIS_B);
+        g_api.PlaySfx(SFX_WALL_DEBRIS_B);
     }
     if (arg0 & 2) {
         RIC.velocityX = 0;
