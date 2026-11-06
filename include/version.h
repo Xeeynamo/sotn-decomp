@@ -26,18 +26,18 @@
 #define VERSION_H
 
 // Build dates as YYYYMMDD. A day of 00 means the exact date is unknown.
-#define VER_BETA_TEK 19970000U // found in PSP_GAME/USRDIR/res/ps/hdbin/tek.bin
-#define VER_BETA_MAD 19970100U // found in ST/MAD/MAD.bin
-#define VER_BETA_HD 19970200U  // found in PSP_GAME/USRDIR/res/ps/hdbin/dra.bin
-#define VER_JP10 19970220U     // http://redump.org/disc/4687/
-#define VER_JP11 19970306U     // http://redump.org/disc/4128/
-#define VER_USPROTO 19970617U  // Also known as E3 Version
-#define VER_US 19970901U       // http://redump.org/disc/3379/
-#define VER_EU 19970929U       // http://redump.org/disc/1130/
-#define VER_HK 19971112U       // http://redump.org/disc/63544/
-#define VER_JP12 19980122U     // http://redump.org/disc/4684/
-#define VER_PSP 20080215U      // http://redump.org/disc/4528/
-#define VER_NEXT 20270101U     // Community patches from SOTN Decomp
+#define VER_BETA_TEK 19970000U /* PSP_GAME/USRDIR/res/ps/hdbin/tek.bin */
+#define VER_BETA_MAD 19970100U /* ST/MAD/MAD.bin */
+#define VER_BETA_HD 19970200U  /* PSP_GAME/USRDIR/res/ps/hdbin/dra.bin */
+#define VER_JP10 19970220U     /* http://redump.org/disc/4687/ */
+#define VER_JP11 19970306U     /* http://redump.org/disc/4128/ */
+#define VER_USPROTO 19970617U  /* Also known as E3 Version */
+#define VER_US 19970901U       /* http://redump.org/disc/3379/ */
+#define VER_EU 19970929U       /* http://redump.org/disc/1130/ */
+#define VER_HK 19971112U       /* http://redump.org/disc/63544/ */
+#define VER_JP12 19980122U     /* http://redump.org/disc/4684/ */
+#define VER_PSP 20080215U      /* http://redump.org/disc/4528/ */
+#define VER_NEXT 20270101U     /* Community patches from SOTN Decomp */
 
 #define REGION_JP 1
 #define REGION_US 2

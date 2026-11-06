@@ -156,7 +156,8 @@ typedef enum {
 // Width in pixel of how wide is the horizontal camera during normal game play
 #define STAGE_WIDTH 256
 
-#if TARGET == TARGET_PSP // PSP does not need a double buffer
+#if TARGET == TARGET_PSP
+// PSP does not need a double buffer
 #define DISP_STAGE_NEXT_X 0
 #else
 #define DISP_STAGE_NEXT_X DISP_STAGE_W
