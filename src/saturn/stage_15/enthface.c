@@ -4,21 +4,26 @@
 #include "stage_15.h"
 
 EntityEntry g_Stage15EntityHumanFaceTree = {
-    &g_Stage15SpriteBank26, func_060E9E44};
-EntityEntry g_Stage15EntityEntry46 = {&g_Stage15SpriteBank26, func_060EAAA8};
-EntityEntry g_Stage15EntityEntry47 = {&g_Stage15SpriteBank26, func_060EACDC};
-EntityEntry g_Stage15EntityEntry48 = {&g_Stage15SpriteBank26, func_060EB2B8};
+    &g_Stage15SpriteBankHumanFaceTree, func_060E9E44};
+EntityEntry g_Stage15EntityEntry46 = {
+    &g_Stage15SpriteBankHumanFaceTree, func_060EAAA8};
+EntityEntry g_Stage15EntityEntry47 = {
+    &g_Stage15SpriteBankHumanFaceTree, func_060EACDC};
+EntityEntry g_Stage15EntityEntry48 = {
+    &g_Stage15SpriteBankHumanFaceTree, func_060EB2B8};
 
 s16 g_Stage15HumanFaceTreeBranchOffsets[8][2] = {
     {47, 4}, {47, 4}, {47, 4}, {47, 4}, {47, 4}, {35, 7}, {35, 7}, {35, 7},
 };
 
-EntityEntry g_Stage15EntityEntry49 = {&g_Stage15SpriteBank26, func_060EB824};
+EntityEntry g_Stage15EntityEntry49 = {
+    &g_Stage15SpriteBankHumanFaceTree, func_060EB824};
 s16 g_Stage15Entity49PartOffsets[13][2] = {
     {8, 0}, {14, 0}, {6, 0}, {9, 0},  {12, 0}, {15, 0}, {5, 0},
     {9, 0}, {8, 0},  {9, 0}, {10, 0}, {11, 0}, {12, 0},
 };
-EntityEntry g_Stage15EntityEntry50 = {&g_Stage15SpriteBank26, func_060EBA00};
+EntityEntry g_Stage15EntityEntry50 = {
+    &g_Stage15SpriteBankHumanFaceTree, func_060EBA00};
 
 u8 g_Stage15HumanFaceTreeAnimationData[] = {
     /* Animation 0 */

@@ -199,7 +199,7 @@ s32 func_0606FC80(SubweaponDef* subwpn, s16 subweaponId, s16 useHearts);
 // func_06078700 and GetMenuItemName
 void func_06078700(u8* dst, s8* text, s32 nChars);
 s8* func_06078748(s32 id);
-extern s8* DAT_06085DCC[];
+extern const char* g_StatusMenuLabelPointers[];
 extern Primitive g_PrimBuf[];
 extern PlayerHud g_PlayerHud;
 extern RelicDesc g_RelicDefs[];
@@ -228,6 +228,7 @@ extern s32 DAT_06086390;
 extern SpritePart g_SpritePartPool[SPRITE_PART_MAX]; /* 0x0608D7F8 */
 extern SpriteObject g_SpriteObjectPool[SPRITE_OBJECT_MAX + 1];
 s32 func_0606F378(s32 arg0);
+u8* GetRoomLoadDefTable(u16 arg0);
 
 extern s32 DAT_0605D7F4;
 extern s32 DAT_0605D7FC;

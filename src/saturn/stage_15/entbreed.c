@@ -4,7 +4,7 @@
 #include "stage_15.h"
 
 EntityEntry g_Stage15EntitySkeletonBreeder = {
-    &g_Stage15SpriteBank25, func_060E78B8};
+    &g_Stage15SpriteBankSkeletonBreeder, func_060E78B8};
 EntityEntry g_Stage15EntityEntry38 = {NULL, func_060E8A7C};
 EntityEntry g_Stage15EntityEntry39 = {NULL, func_060E8BBC};
 EntityEntry g_Stage15EntityEntry40 = {NULL, func_060E8D50};
@@ -48,6 +48,8 @@ s16 g_Stage15SkeletonBreederCollisionSensors[4][2] = {
     {-8, 0},
 };
 
-EntityEntry g_Stage15EntityEntry43 = {&g_Stage15SpriteBank25, func_060E94A0};
+EntityEntry g_Stage15EntityEntry43 = {
+    &g_Stage15SpriteBankSkeletonBreeder, func_060E94A0};
 s16 g_Stage15Entity43InitOffset[2] = {0, 0};
-EntityEntry g_Stage15EntityEntry44 = {&g_Stage15SpriteBank25, func_060E95E8};
+EntityEntry g_Stage15EntityEntry44 = {
+    &g_Stage15SpriteBankSkeletonBreeder, func_060E95E8};

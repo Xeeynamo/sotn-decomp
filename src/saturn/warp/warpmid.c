@@ -4,9 +4,9 @@
 
 #include "warp.h"
 
-INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60DDD80, func_060DDD80);
+INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60DDD80, EntityWarpRelicOrb);
 INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60DE574, func_060DE574);
-void func_060DE8B4(Entity* self) {
+void EntityWarpHeartDrop(Entity* self) {
     PfnEntityUpdate update;
     s16 savedParams;
     u16 param;
@@ -38,8 +38,8 @@ void func_060DE8B4(Entity* self) {
     }
     update(self);
 }
-INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60DE9A4, func_060DE9A4);
-INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60DEEB8, func_060DEEB8);
+INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60DE9A4, EntityWarpMessageBox);
+INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60DEEB8, EntityWarpRedDoor);
 INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60DF528, func_060DF528);
 INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60DF580, func_060DF580);
 void func_060DF938(Entity* self) {
@@ -70,10 +70,10 @@ void func_060DF938(Entity* self) {
 }
 
 const u16 pad_060DF9BC[] = {0xCCCC, 0xCCCD};
-INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60DF9C0, func_060DF9C0);
-INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60E0094, func_060E0094);
-INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60E01FC, func_060E01FC);
-void func_060E0364(Entity* self) {
+INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60DF9C0, EntityWarpDamageDisplay);
+INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60E0094, EntityWarpExplosion);
+INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60E01FC, EntityWarpIntenseExplosion);
+void EntityWarpUnkId13(Entity* self) {
     Entity* entity;
 
     switch (self->step) {
@@ -103,15 +103,15 @@ void func_060E0364(Entity* self) {
         break;
     }
 }
-INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60E0450, func_060E0450);
-INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60E05BC, func_060E05BC);
+INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60E0450, EntityDestructAnim);
+INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60E05BC, EntityWarpGreyPuff);
 #define SPAWN_DESTRUCT_ANIM_ID 20
 #include "../spawn_destruct_anim.h"
 INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60E080C, func_060E080C);
-INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60E08EC, func_060E08EC);
-INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60E0BD8, func_060E0BD8);
+INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60E08EC, EntityWarpSoulStealOrb);
+INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60E0BD8, EntityWarpEnemyBlood);
 #include "../init_solid_prop.h"
-void func_060E11BC(Entity* self) { DestroyEntity(self); }
+void EntityWarpStageNamePopup(Entity* self) { DestroyEntity(self); }
 
 const u8 pad_060E11D4[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,

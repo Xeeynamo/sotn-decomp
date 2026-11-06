@@ -14,30 +14,32 @@ FileLoadEntry DAT_06038A4C = {{"", &g_PlayerOvl, -1, 0, -1, 0}, 0, 0};
 
 FileLoadEntry DAT_06038A6C = {{"", DAT_00232000, -1, 0, -1, 0}, 0, 0};
 
-FileLoadEntry DAT_06038A8C = {{"", g_FileLoadBuffer, -1, 0, 2, 1}, 1, 0};
+FileLoadEntry DAT_06038A8C = {{"", g_WorkBuffer.load.data, -1, 0, 2, 1}, 1, 0};
 
 FileLoadEntry DAT_06038AAC = {
     {"WEAPON0.PRG", g_Weapon0OvlArea, 0x3000, 0, -1, 0}, 0, 0};
 
 FileLoadEntry DAT_06038ACC = {
-    {"WEAPON0.CHR", g_FileLoadBuffer, 0x4000, 0, 2, 1}, 1, 0};
+    {"WEAPON0.CHR", g_WorkBuffer.load.data, 0x4000, 0, 2, 1}, 1, 0};
 
 FileLoadEntry DAT_06038AEC = {
-    {"WEAPON0.CHR", g_FileLoadBuffer, 0x4000, 0, -1, 0}, 0, 0};
+    {"WEAPON0.CHR", g_WorkBuffer.load.data, 0x4000, 0, -1, 0}, 0, 0};
 
 FileLoadEntry DAT_06038B0C = {
     {"DUMMY.DAT", &g_StageOverlayData, -1, 0, -1, 0}, 0, 0};
 
 FileLoadEntry DAT_06038B2C = {
-    {"DUMMY.DAT", g_FileLoadBuffer, -1, 0, 2, 1}, 1, 0};
+    {"DUMMY.DAT", g_WorkBuffer.load.data, -1, 0, 2, 1}, 1, 0};
 
-FileLoadEntry DAT_06038B4C = {{"DUMMY.DAT", &DAT_00252000, -1, 0, -1, 0}, 0, 0};
+FileLoadEntry DAT_06038B4C = {{"DUMMY.DAT", DAT_00252000, -1, 0, -1, 0}, 0, 0};
 
 FileLoadEntry DAT_06038B6C = {{NULL, &g_BatServantDesc, -1, 0, -1, 0}, 0, 0};
 
-FileLoadEntry DAT_06038B8C = {{NULL, g_FileLoadBuffer, -1, 0, 2, 1}, 1, 0};
+FileLoadEntry DAT_06038B8C = {
+    {NULL, g_WorkBuffer.load.data, -1, 0, 2, 1}, 1, 0};
 
-FileLoadEntry DAT_06038BAC = {{NULL, g_FileLoadBuffer, -1, 0, -1, 0}, 0, 0};
+FileLoadEntry DAT_06038BAC = {
+    {NULL, g_WorkBuffer.load.data, -1, 0, -1, 0}, 0, 0};
 
 FileLoadEntry* DAT_06038BCC[] = {
     &DAT_06038A4C, &DAT_06038A6C, &DAT_06038A8C, &DAT_06038AAC, &DAT_06038ACC,
@@ -139,7 +141,7 @@ s32 func_060071C8(void) {
     case 3:
         DAT_0605AE90.unk8 = DAT_06038BCC[2];
         DAT_0605AE90.unk4 = 0;
-        DAT_0605AE90.unk8->unk1C = VRAM_ADDR + DAT_0605BEC4;
+        DAT_0605AE90.unk8->unk1C = (s32*)(VRAM_ADDR + DAT_0605BEC4);
         if ((DAT_0605CEAC != 0) && (g_PlayableCharacter == 1)) {
             DAT_0605AE90.unk8->req.unk0 = DAT_06038BF4[3][2];
         } else {
@@ -171,7 +173,7 @@ s32 func_060071C8(void) {
         DAT_06038ACC.req.unkA = id * 8;
         DAT_0605AE90.unk8 = DAT_06038BCC[4];
         DAT_0605AE90.unk4 = 0;
-        DAT_0605AE90.unk8->unk1C = VRAM_ADDR + 0x1D980;
+        DAT_0605AE90.unk8->unk1C = (s32*)(VRAM_ADDR + 0x1D980);
         temp_r5 = true;
         break;
 
@@ -199,7 +201,7 @@ s32 func_060071C8(void) {
         DAT_06038ACC.req.unkA = id * 8;
         DAT_0605AE90.unk8 = DAT_06038BCC[4];
         DAT_0605AE90.unk4 = 0;
-        DAT_0605AE90.unk8->unk1C = VRAM_ADDR + 0x21980;
+        DAT_0605AE90.unk8->unk1C = (s32*)(VRAM_ADDR + 0x21980);
         temp_r5 = true;
         break;
 
@@ -216,7 +218,7 @@ s32 func_060071C8(void) {
         DAT_0605AE90.unk8->req.unk0 =
             g_StageFileRecords[g_CurrentRoom.stageID].chr;
         DAT_0605AE90.unk4 = 0;
-        DAT_0605AE90.unk8->unk1C = VRAM_ADDR + DAT_0605BEC4;
+        DAT_0605AE90.unk8->unk1C = (s32*)(VRAM_ADDR + DAT_0605BEC4);
         break;
 
     case 10:
@@ -312,7 +314,7 @@ s32 func_060071C8(void) {
             return 0;
         }
         DAT_06038B8C.req.unk0 = DAT_06038C24[g_Servant - 1][1];
-        DAT_06038B8C.unk1C = VRAM_ADDR + 0x25980;
+        DAT_06038B8C.unk1C = (s32*)(VRAM_ADDR + 0x25980);
         DAT_0605AE90.unk8 = DAT_06038BCC[9];
         DAT_0605AE90.unk4 = 0;
         break;
@@ -328,7 +330,7 @@ s32 func_060071C8(void) {
     func_06006720(DAT_0605AE90.unk8, 3, 0);
     if (DAT_0605D770.unk8 == 0xA) {
         DAT_0605D7DC += DAT_0605AE8C[2];
-        if (DAT_0605D7DC & 1) {
+        if ((uptr)DAT_0605D7DC & 1) {
             DAT_0605D7DC++;
         }
     }
@@ -358,9 +360,8 @@ s32 func_06007714(void) {
 
     case 2:
         ret = func_0600C3A8(
-            (u16*)&DAT_00252000, (u16*)((u8*)&DAT_00252000 + 0xA000),
-            (u16*)((u8*)&DAT_00252000 + 0xC800),
-            (u16*)((u8*)&DAT_00252000 + 0xED80));
+            (u16*)DAT_00252000, (u16*)(DAT_00252000 + 0xA000),
+            (u16*)(DAT_00252000 + 0xC800), (u16*)(DAT_00252000 + 0xED80));
         break;
 
     case 3:
@@ -457,10 +458,6 @@ SPR_2DefineWork(sp2WorkArea, 0x280, 0x304, 0x200, 1, 0x200);
 
 static s32 DAT_060576AC;
 
-extern VramTransfer DAT_060576B0[16];
-extern XyInt DAT_0605AEA0[2];
-extern SprSpCmd* DAT_0605AEAC;
-
 // original name: InitVdp1
 void InitSpriteEngine(s32 arg0) {
     SPR_2Initial(&sp2WorkArea);
@@ -503,13 +500,13 @@ u16 AllocSpriteCharVram(u16 arg0, s32 arg1, s16* size, void* src) {
         ptr[1] = (((u16)size[0] / 8) << 8) | size[1];
         if (src != NULL) {
             dst = VRAM_ADDR + DAT_0605BEC4;
-            temp_r2 = (u32)src & 0x0FF00000;
+            temp_r2 = (uptr)src & 0x0FF00000;
             if (temp_r2 == 0x00200000) {
-                DMA_CpuMemCopy2(dst, src, var_r8 / 2);
+                DMA_CpuMemCopy2((void*)(uptr)dst, src, var_r8 / 2);
                 while (DMA_CpuResult() == 2) {
                 }
             } else if (temp_r2 == 0x06000000) {
-                DMA_ScuMemCopy(dst, src, var_r8);
+                DMA_ScuMemCopy((void*)(uptr)dst, src, var_r8);
                 while (DMA_ScuResult() == 2) {
                 }
             }
@@ -864,7 +861,7 @@ void func_06008488(void) {
     }
 }
 
-s32 func_06008524(u32 dest, u32 src, u32 cnt) {
+s32 func_06008524(u32 dest, void* src, u32 cnt) {
     u32 first;
     u32 i;
     BgTransfer* transfer;
@@ -907,12 +904,12 @@ void TransferBgLayer(s32 arg0) {
         return;
     }
     if (transfer->tileFlags & 1) {
-        cnt = DecompressLZSS(ptr->unkC, (s32)g_FileLoadBuffer, ptr->unk18);
-        DmaScroll((u16*)g_FileLoadBuffer, ptr->dst0, cnt);
+        cnt = DecompressLZSS(ptr->unkC, g_WorkBuffer.load.data, ptr->unk18);
+        DmaScroll((u16*)g_WorkBuffer.load.data, ptr->dst0, cnt);
     }
     if (transfer->tileFlags & 2) {
-        cnt = DecompressLZSS(ptr->unk10, (s32)g_FileLoadBuffer, ptr->unk1C);
-        DmaScroll((u16*)g_FileLoadBuffer, ptr->dst4, cnt);
+        cnt = DecompressLZSS(ptr->unk10, g_WorkBuffer.load.data, ptr->unk1C);
+        DmaScroll((u16*)g_WorkBuffer.load.data, ptr->dst4, cnt);
     }
     if (transfer->tileFlags & 4) {
         if (DAT_0605cd70.unk2 == 4) {
@@ -922,13 +919,13 @@ void TransferBgLayer(s32 arg0) {
         }
     }
     if (transfer->tileFlags & 8) {
-        DmaScroll(transfer->src, transfer->dest, transfer->cnt);
+        DmaScroll(transfer->src, (u16*)(uptr)transfer->dest, transfer->cnt);
     }
     if (transfer->tileFlags & 0x10) {
-        DmaScroll(transfer->src, transfer->dest, transfer->cnt);
+        DmaScroll(transfer->src, (u16*)(uptr)transfer->dest, transfer->cnt);
     }
     if (transfer->tileFlags & 0x20) {
-        DmaScroll(transfer->src, transfer->dest, transfer->cnt);
+        DmaScroll(transfer->src, (u16*)(uptr)transfer->dest, transfer->cnt);
     }
     if (transfer->tileFlags & 0x40) {
         cnt = DecompressLZSS(ptr->unkC, DMA_SRC_ADDR, ptr->unk18);
@@ -952,8 +949,6 @@ void DmaScroll(u16* src, u16* dest, u32 cnt) {
         }
     }
 }
-
-extern s16* DAT_0605C120[];
 
 void func_0600871C(Unk0605CD90* arg0, UNK_0605c680* arg1, s32 arg2) {
     s32 scrollX, scrollY;
@@ -1288,8 +1283,6 @@ void func_06009010(u8* rgb) {
     }
 }
 
-extern SclConfig DAT_0605BED0[];
-
 void func_06009058(u16 arg0) {
     SclConfig* scfg;
     Unk0605CD90* ptr;
@@ -1300,9 +1293,9 @@ void func_06009058(u16 arg0) {
     scfg = &DAT_0605BED0[0];
     switch (arg0) {
     case 6:
-        ptr->dst0 = SCL_VDP2_VRAM_A0;
-        ptr->unk8 = SCL_VDP2_VRAM_B0;
-        ptr->dst4 = SCL_COLRAM_ADDR;
+        ptr->dst0 = (u16*)(SCL_VDP2_VRAM_A0);
+        ptr->unk8 = (u16*)(SCL_VDP2_VRAM_B0);
+        ptr->dst4 = (u16*)(SCL_COLRAM_ADDR);
         ptr->unk24 = 0;
         SCL_InitConfigTb(scfg);
         scfg->charsize = SCL_CHAR_SIZE_1X1;
@@ -1313,7 +1306,7 @@ void func_06009058(u16 arg0) {
         scfg->mapover = SCL_OVER_0;
         scfg->flip = SCL_PN_12BIT;
         scfg->plate_addr[0] = scfg->plate_addr[1] = scfg->plate_addr[2] =
-            scfg->plate_addr[3] = ptr->unk8;
+            scfg->plate_addr[3] = (uptr)ptr->unk8;
         scfg->patnamecontrl = 0;
         SCL_SetConfig(SCL_NBG0, scfg);
         SCL_SetCycleTable(DAT_06038D30);
@@ -1322,9 +1315,9 @@ void func_06009058(u16 arg0) {
     case 4:
     case 8:
         for (i = 0; i < 2; i++, ptr++, scfg++) {
-            ptr->dst0 = SCL_VDP2_VRAM_A0 + i * 0x8000;
-            ptr->unk8 = SCL_VDP2_VRAM_B0 + i * 0x8000;
-            ptr->dst4 = SCL_COLRAM_ADDR + i * 0x200;
+            ptr->dst0 = (u16*)(SCL_VDP2_VRAM_A0 + i * 0x8000);
+            ptr->unk8 = (u16*)(SCL_VDP2_VRAM_B0 + i * 0x8000);
+            ptr->dst4 = (u16*)(SCL_COLRAM_ADDR + i * 0x200);
             ptr->unk24 = i;
             SCL_InitConfigTb(scfg);
             scfg->charsize = SCL_CHAR_SIZE_1X1;
@@ -1335,7 +1328,7 @@ void func_06009058(u16 arg0) {
             scfg->mapover = SCL_OVER_0;
             scfg->flip = SCL_PN_10BIT;
             scfg->plate_addr[0] = scfg->plate_addr[1] = scfg->plate_addr[2] =
-                scfg->plate_addr[3] = ptr->unk8;
+                scfg->plate_addr[3] = (uptr)ptr->unk8;
             scfg->patnamecontrl = 0;
             if (i != 0) {
                 scfg->patnamecontrl = 0x21;
@@ -1347,9 +1340,9 @@ void func_06009058(u16 arg0) {
 
     case 2:
         for (i = 0; i < 2; i++, ptr++, scfg++) {
-            ptr->dst0 = SCL_VDP2_VRAM_A0 + (1 - i) * 0x18000;
-            ptr->unk8 = SCL_VDP2_VRAM_B0 + i * 0x8000;
-            ptr->dst4 = SCL_COLRAM_ADDR + i * 0x200;
+            ptr->dst0 = (u16*)(SCL_VDP2_VRAM_A0 + (1 - i) * 0x18000);
+            ptr->unk8 = (u16*)(SCL_VDP2_VRAM_B0 + i * 0x8000);
+            ptr->dst4 = (u16*)(SCL_COLRAM_ADDR + i * 0x200);
             ptr->unk24 = i;
             SCL_InitConfigTb(scfg);
             scfg->charsize = SCL_CHAR_SIZE_1X1;
@@ -1360,7 +1353,7 @@ void func_06009058(u16 arg0) {
             scfg->mapover = SCL_OVER_0;
             scfg->flip = SCL_PN_10BIT;
             scfg->plate_addr[0] = scfg->plate_addr[1] = scfg->plate_addr[2] =
-                scfg->plate_addr[3] = ptr->unk8;
+                scfg->plate_addr[3] = (uptr)ptr->unk8;
             scfg->patnamecontrl = 0x43;
             if (i != 0) {
                 scfg->flip = SCL_PN_12BIT;
@@ -1374,9 +1367,9 @@ void func_06009058(u16 arg0) {
     case 3:
     case 7:
         for (i = 0; i < 2; i++, ptr++, scfg++) {
-            ptr->dst0 = SCL_VDP2_VRAM_A0 + i * 0x20000;
-            ptr->unk8 = SCL_VDP2_VRAM_B0 + i * 0x8000;
-            ptr->dst4 = SCL_COLRAM_ADDR + i * 0x200;
+            ptr->dst0 = (u16*)(SCL_VDP2_VRAM_A0 + i * 0x20000);
+            ptr->unk8 = (u16*)(SCL_VDP2_VRAM_B0 + i * 0x8000);
+            ptr->dst4 = (u16*)(SCL_COLRAM_ADDR + i * 0x200);
             ptr->unk24 = i;
             SCL_InitConfigTb(scfg);
             scfg->charsize = SCL_CHAR_SIZE_1X1;
@@ -1387,13 +1380,13 @@ void func_06009058(u16 arg0) {
             scfg->mapover = SCL_OVER_0;
             scfg->flip = SCL_PN_12BIT;
             scfg->plate_addr[0] = scfg->plate_addr[1] = scfg->plate_addr[2] =
-                scfg->plate_addr[3] = ptr->unk8;
+                scfg->plate_addr[3] = (uptr)ptr->unk8;
             scfg->patnamecontrl = i * 4;
             SCL_SetConfig(SCL_NBG1 << i, scfg);
         }
-        ptr->dst0 = SCL_VDP2_VRAM_A0 + 0x10000;
-        ptr->unk8 = SCL_VDP2_VRAM_B0 + 0x10000;
-        ptr->dst4 = SCL_COLRAM_ADDR + 0x400;
+        ptr->dst0 = (u16*)(SCL_VDP2_VRAM_A0 + 0x10000);
+        ptr->unk8 = (u16*)(SCL_VDP2_VRAM_B0 + 0x10000);
+        ptr->dst4 = (u16*)(SCL_COLRAM_ADDR + 0x400);
         ptr->unk24 = 0x20;
         SCL_InitConfigTb(scfg);
         scfg->charsize = SCL_CHAR_SIZE_1X1;
@@ -1403,10 +1396,10 @@ void func_06009058(u16 arg0) {
         scfg->datatype = SCL_CELL;
         scfg->mapover = SCL_OVER_0;
         scfg->flip = SCL_PN_10BIT;
-        scfg->plate_addr[0] = ptr->unk8;
-        scfg->plate_addr[1] = ptr->unk8 + 0x1000;
-        scfg->plate_addr[2] = ptr->unk8 + 0x2000;
-        scfg->plate_addr[3] = ptr->unk8 + 0x3000;
+        scfg->plate_addr[0] = (uptr)ptr->unk8;
+        scfg->plate_addr[1] = (uptr)(ptr->unk8 + 0x1000);
+        scfg->plate_addr[2] = (uptr)(ptr->unk8 + 0x2000);
+        scfg->plate_addr[3] = (uptr)(ptr->unk8 + 0x3000);
         scfg->patnamecontrl = 0x42;
         SCL_SetConfig(SCL_NBG3, scfg);
         SCL_SetCycleTable(DAT_06038D60);
@@ -1416,9 +1409,9 @@ void func_06009058(u16 arg0) {
     case 16:
     case 17:
         for (i = 0; i < 3; i++, ptr++, scfg++) {
-            ptr->dst0 = SCL_VDP2_VRAM_A0 + i * 0x8000;
-            ptr->unk8 = SCL_VDP2_VRAM_B0 + i * 0x8000;
-            ptr->dst4 = SCL_COLRAM_ADDR + i * 0x200;
+            ptr->dst0 = (u16*)(SCL_VDP2_VRAM_A0 + i * 0x8000);
+            ptr->unk8 = (u16*)(SCL_VDP2_VRAM_B0 + i * 0x8000);
+            ptr->dst4 = (u16*)(SCL_COLRAM_ADDR + i * 0x200);
             ptr->unk24 = i * 0x10;
             SCL_InitConfigTb(scfg);
             scfg->charsize = SCL_CHAR_SIZE_1X1;
@@ -1429,7 +1422,7 @@ void func_06009058(u16 arg0) {
             scfg->mapover = SCL_OVER_0;
             scfg->flip = SCL_PN_10BIT;
             scfg->plate_addr[0] = scfg->plate_addr[1] = scfg->plate_addr[2] =
-                scfg->plate_addr[3] = ptr->unk8;
+                scfg->plate_addr[3] = (uptr)ptr->unk8;
             scfg->patnamecontrl = DAT_06038C84[i];
             SCL_SetConfig(SCL_NBG1 << i, scfg);
         }
@@ -1488,22 +1481,22 @@ void func_06009570(s32 arg0) {
     SCL_SetConfig(SCL_NBG0, &scfg);
     ptr = &DAT_0605CD90[3];
     temp_r1 = DAT_06038CA0[arg0];
-    ptr->unk8 = SCL_VDP2_VRAM_B0 + 0x18000;
-    ptr->dst0 = SCL_VDP2_VRAM_A1;
-    ptr->dst4 = SCL_COLRAM_ADDR + 0x600;
+    ptr->unk8 = (u16*)(SCL_VDP2_VRAM_B0 + 0x18000);
+    ptr->dst0 = (u16*)(SCL_VDP2_VRAM_A1);
+    ptr->dst4 = (u16*)(SCL_COLRAM_ADDR + 0x600);
     ptr->unk24 = 0x30;
-    ptr->unkC = *temp_r1++ + (s32)&DAT_00252000;
+    ptr->unkC = *temp_r1++ + DAT_00252000;
     ptr->unk18 = *temp_r1++;
-    ptr->unk10 = *temp_r1++ + (s32)&DAT_00252000;
+    ptr->unk10 = *temp_r1++ + DAT_00252000;
     ptr->unk1C = *temp_r1++;
-    ptr->unk14 = *temp_r1++ + (s32)&DAT_00252000;
+    ptr->unk14 = *temp_r1++ + DAT_00252000;
     ptr->unk20 = *temp_r1++;
     ptr->divisorX = ptr->divisorY = 1;
     ptr->flags = 0;
     SCL_Open(SCL_NBG0);
     SCL_MoveTo(FIXED(8), FIXED(8), FIXED(0));
     SCL_Close();
-    DAT_0605C120[3] = 0x2C7000;
+    DAT_0605C120[3] = DAT_002C7000;
     src = DAT_0605C120[3];
     DecompressLZSS(ptr->unk14, src, ptr->unk20);
     ptr->width = src[0];
@@ -1725,26 +1718,6 @@ void func_0600A088(void) {
     }
 }
 
-typedef struct {
-    u16 unk0[5];
-    u16 unkA[5];
-} unkStruct;
-
-typedef struct {
-    s16 : 16;
-    s16 : 16;
-    s32 unk4;
-    s32 unk8;
-    s32 unkC;
-    s32 unk10;
-    unkStruct unk14[6];
-    s32 unk8C[7]; // pad
-    s32 unkA8;
-    s32 unkAC[30]; // pad
-} UNK0605D910;     // size: 0x124
-
-extern UNK0605D910 DAT_0605D910[2];
-
 void func_0600A240(s32 arg0) {
     if (arg0 != 0) {
         DAT_0605D910[1].unk10 = 1;
@@ -1850,7 +1823,11 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600AC30, func_0600AC30);
 
 // func_0600AD80
 s32 GetEnemyPlayerCharaAddr(void) {
-    return -(s32)&DAT_00252000 + (s32)&DAT_00258000;
+#ifdef SATZ
+    return 0x00258000 - 0x00252000;
+#else
+    return -(uptr)DAT_00252000 + (uptr)&DAT_00258000;
+#endif
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600AD98, InitPaletteRemapLuts);
@@ -1969,7 +1946,7 @@ SpriteObject* CreateSpriteObject(
     return obj;
 }
 
-void func_0600B428(SpriteObject* obj) {
+void DestroySpriteObject(SpriteObject* obj) {
     SpriteObject* prev;
     SpritePart* firstPart;
     SpritePart* lastPart;
@@ -2504,7 +2481,7 @@ void ClearFrameBuffer(u16 clearColor) {
 }
 
 u16* func_0600CB04(s32 col, s32 row) {
-    u16* base = FBUF_ADDR;
+    u16* base = (u16*)FBUF_ADDR;
 
     return &base[0x200 * row + col];
 }
@@ -2522,7 +2499,7 @@ u16* func_0600CB20(s32 offset) {
 const char DAT_0600CB68[] = "DRACULAX_";
 
 s32 Crc32(s32 len, u8* data);
-s32 Crc32_noInline(s32 len, u8* data) {
+s32 Crc32(s32 len, u8* data) {
     u16 i;
     u16 bit;
     u32 crc;
@@ -2557,8 +2534,8 @@ void InitBackupRam(void) {
     s8 i;
     s8 device;
 
-    DAT_060485C0.unk5 = -1;
-    DAT_060485C0.unk4 = 0;
+    g_WorkBuffer.save.unk5 = -1;
+    g_WorkBuffer.save.unk4 = 0;
     DAT_0605DD60 = 0;
 
     func_0600CC14();
@@ -2572,8 +2549,8 @@ void InitBackupRam(void) {
     for (device = 0; device < 2; device++) {
         for (i = 1; i < 6; i++) {
             if (func_0600D028(device, i) == 0) {
-                if (DAT_060485C0.unk100C != 0) {
-                    g_GameClearFlag = DAT_060485C0.unk100C;
+                if (g_WorkBuffer.save.unk100C != 0) {
+                    g_GameClearFlag = g_WorkBuffer.save.unk100C;
                 }
             }
         }
@@ -2625,8 +2602,6 @@ s32 func_0600CE1C(void) {
     return result;
 }
 
-extern BupDir DAT_0605DDA0;
-
 s32 func_0600CED0(u32 device, s8 arg1) {
     char filename[12];
     s32 status;
@@ -2639,7 +2614,6 @@ s32 func_0600CED0(u32 device, s8 arg1) {
     return 0;
 }
 
-extern char DAT_0605DD70[];
 extern char DAT_06038FE4[][4];
 
 char* func_0600CF40(u32 device, s8 arg1) {
@@ -2666,7 +2640,7 @@ s32 func_0600D028(u32 device, s8 arg1) {
 
     sprintf(filename, "%s%02d", DAT_06038FE0, arg1);
     func_0600CC14();
-    status = BUP_Read(device, filename, &DAT_060485C0);
+    status = BUP_Read(device, filename, &g_WorkBuffer.save);
     func_0600CBCC();
     return status;
 }
@@ -2692,7 +2666,7 @@ s8 func_0600D1A0(u32 device, s8 arg1) {
 
     sprintf(filename, "%s%02d", DAT_06038FE0, arg1);
     func_0600CC14();
-    status = BUP_Read(device, filename, &DAT_060485C0);
+    status = BUP_Read(device, filename, &g_WorkBuffer.save);
     func_0600CBCC();
     if (status == 0) {
         status = LoadGameState();
@@ -2710,17 +2684,17 @@ s8 func_0600D264(u32 device, s8 arg1) {
 
     if (arg1 != 0) {
         SaveGameState();
-        DAT_060485C0.unk4 = device;
-        DAT_060485C0.unk5 = arg1;
+        g_WorkBuffer.save.unk4 = device;
+        g_WorkBuffer.save.unk5 = arg1;
         sprintf(DAT_0605DDA0.filename, "%s%02d", DAT_06038FE0, arg1);
         sprintf(DAT_0605DDA0.comment, DAT_06039000);
         DAT_0605DDA0.language = 0;
         date = func_0600D0DC();
         DAT_0605DDA0.date = date;
-        DAT_060485C0.unk8 = date;
+        g_WorkBuffer.save.unk8 = date;
         DAT_0605DDA0.datasize = 0x1124;
         func_0600CC14();
-        status = BUP_Write(device, &DAT_0605DDA0, &DAT_060485C0, 0);
+        status = BUP_Write(device, &DAT_0605DDA0, &g_WorkBuffer.save, 0);
         func_0600CBCC();
         return status;
     }
@@ -2735,17 +2709,17 @@ s8 func_0600D370(u32 device, s8 arg1) {
 
     if (arg1 != 0) {
         func_0600D6C0();
-        DAT_060485C0.unk4 = device;
-        DAT_060485C0.unk5 = arg1;
+        g_WorkBuffer.save.unk4 = device;
+        g_WorkBuffer.save.unk5 = arg1;
         sprintf(DAT_0605DDA0.filename, "%s%02d", DAT_06038FE0, arg1);
         sprintf(DAT_0605DDA0.comment, DAT_06039000);
         DAT_0605DDA0.language = 0;
         date = func_0600D0DC();
         DAT_0605DDA0.date = date;
-        DAT_060485C0.unk8 = date;
+        g_WorkBuffer.save.unk8 = date;
         DAT_0605DDA0.datasize = 0x1124;
         func_0600CC14();
-        status = BUP_Write(device, &DAT_0605DDA0, &DAT_060485C0, 0);
+        status = BUP_Write(device, &DAT_0605DDA0, &g_WorkBuffer.save, 0);
         func_0600CBCC();
         return status;
     }
@@ -2756,7 +2730,7 @@ s8 func_0600D47C(u32 device, s8 arg1) {
     char filename[12];
 
     sprintf(filename, "%s%02d", DAT_06038FE0, arg1);
-    return BUP_Verify(device, filename, &DAT_060485C0);
+    return BUP_Verify(device, filename, &g_WorkBuffer.save);
 }
 
 s8 func_0600D4C4(u32 device, s8 arg1) {
@@ -2770,60 +2744,65 @@ s8 func_0600D4C4(u32 device, s8 arg1) {
 void SaveGameState(void) {
     u16 i;
 
-    DAT_060485C0.unk10 = g_Status;
-    DAT_060485C0.unk35C = g_MenuNavigation;
-    DAT_060485C0.unk3A8 = g_Settings;
-    DAT_060485C0.unk4B8 = g_CurrentRoom;
-    DAT_060485C0.unk4CC = g_Tilemap;
-    DAT_060485C0.unk504 = D_8003C708;
+    g_WorkBuffer.save.unk10 = g_Status;
+    g_WorkBuffer.save.unk35C = g_MenuNavigation;
+    g_WorkBuffer.save.unk3A8 = g_Settings;
+    g_WorkBuffer.save.unk4B8 = g_CurrentRoom;
+    g_WorkBuffer.save.unk4CC = g_Tilemap;
+    g_WorkBuffer.save.unk504 = D_8003C708;
     for (i = 0; i < 0x300; i++) {
-        DAT_060485C0.unk50C[i] = g_CastleFlags[i];
+        g_WorkBuffer.save.unk50C[i] = g_CastleFlags[i];
     }
     for (i = 0; i < 0x800; i++) {
-        DAT_060485C0.unk80C[i] = g_CastleMap[i];
+        g_WorkBuffer.save.unk80C[i] = g_CastleMap[i];
     }
-    DAT_060485C0.unk100C = g_GameClearFlag;
-    DAT_060485C0.unk1010 = g_Servant;
-    DAT_060485C0.unk1014 = g_PlayableCharacter;
-    DAT_060485C0.unk1018 = DAT_0605CEAC;
-    DAT_060485C0.unk101C = g_RoomCount;
-    DAT_060485C0.unk1020 = g_randomNext;
-    DAT_060485C0.unk0 = Crc32(0x1120, &DAT_060485C0.unk4);
+    g_WorkBuffer.save.unk100C = g_GameClearFlag;
+    g_WorkBuffer.save.unk1010 = g_Servant;
+    g_WorkBuffer.save.unk1014 = g_PlayableCharacter;
+    g_WorkBuffer.save.unk1018 = DAT_0605CEAC;
+    g_WorkBuffer.save.unk101C = g_RoomCount;
+    g_WorkBuffer.save.unk1020 = g_randomNext;
+    g_WorkBuffer.save.unk0 = ((s32(*)())Crc32)(0x1120, &g_WorkBuffer.save.unk4);
 }
 
 // original name: ABup_ChechsumSet
 void func_0600D6C0(void) {
-    DAT_060485C0.unk0 = Crc32(0x1120, &DAT_060485C0.unk4);
+    g_WorkBuffer.save.unk0 = ((s32(*)())Crc32)(0x1120, &g_WorkBuffer.save.unk4);
 }
 
 // 0x0600D6EC
 s32 LoadGameState(void) {
     u16 i;
 
-    if (DAT_060485C0.unk0 == Crc32(0x1120, &DAT_060485C0.unk4)) {
-        g_Status = DAT_060485C0.unk10;
-        g_MenuNavigation = DAT_060485C0.unk35C;
-        g_Settings = DAT_060485C0.unk3A8;
-        g_CurrentRoom = DAT_060485C0.unk4B8;
-        g_Tilemap = DAT_060485C0.unk4CC;
-        D_8003C708 = DAT_060485C0.unk504;
+    if (g_WorkBuffer.save.unk0 ==
+        ((s32(*)())Crc32)(0x1120, &g_WorkBuffer.save.unk4)) {
+        g_Status = g_WorkBuffer.save.unk10;
+        g_MenuNavigation = g_WorkBuffer.save.unk35C;
+        g_Settings = g_WorkBuffer.save.unk3A8;
+        g_CurrentRoom = g_WorkBuffer.save.unk4B8;
+        g_Tilemap = g_WorkBuffer.save.unk4CC;
+        D_8003C708 = g_WorkBuffer.save.unk504;
         for (i = 0; i < 0x300; i++) {
-            g_CastleFlags[i] = DAT_060485C0.unk50C[i];
+            g_CastleFlags[i] = g_WorkBuffer.save.unk50C[i];
         }
         for (i = 0; i < 0x800; i++) {
-            g_CastleMap[i] = DAT_060485C0.unk80C[i];
+            g_CastleMap[i] = g_WorkBuffer.save.unk80C[i];
         }
-        g_GameClearFlag = DAT_060485C0.unk100C;
-        g_Servant = DAT_060485C0.unk1010;
-        g_PlayableCharacter = DAT_060485C0.unk1014;
-        DAT_0605CEAC = DAT_060485C0.unk1018;
-        g_RoomCount = DAT_060485C0.unk101C;
-        g_randomNext = DAT_060485C0.unk1020;
+        g_GameClearFlag = g_WorkBuffer.save.unk100C;
+        g_Servant = g_WorkBuffer.save.unk1010;
+        g_PlayableCharacter = g_WorkBuffer.save.unk1014;
+        DAT_0605CEAC = g_WorkBuffer.save.unk1018;
+        g_RoomCount = g_WorkBuffer.save.unk101C;
+        g_randomNext = g_WorkBuffer.save.unk1020;
         return 0;
     } else {
         return 8;
     }
 }
+
+#ifdef SATZ
+void sotn_satz_boot_override(void);
+#endif
 
 void func_0600D8BC(void) {
     switch (DAT_0605cea0.unk0) {
@@ -2835,7 +2814,7 @@ void func_0600D8BC(void) {
 
     case 1:
         MoviePRGClear();
-        ReadFileToAddr("GAME.PRG", (s32)&g_GameOvl);
+        ReadFileToAddr("GAME.PRG", &g_GameOvl);
         func_0601B1CC();
         DAT_0605cea0.unk0++;
         /* fallthrough */
@@ -2918,6 +2897,7 @@ void func_0600D8BC(void) {
 
 // original name: MOVIE_PRG_CLEAR
 #ifdef SATZ
+void sotn_satz_clear_range(u32 start, u32 size);
 void MoviePRGClear(void) { sotn_satz_clear_range(0x06066000, 0x9A000); }
 #else
 void MoviePRGClear(void) { memset(0x06066000, 0, 0x9A000); }
@@ -3025,7 +3005,7 @@ s32 AllocPrimitives(s32 type, s32 count) {
 }
 
 // original name: free_effect
-void func_0600DCA4(s32 arg0) {
+void FreePrimitives(s32 arg0) {
     Primitive* prim;
 
     prim = &g_PrimBuf[arg0];
@@ -3638,8 +3618,6 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F914, SquareRoot0);
 // Encode string into position and length, if match_length is greater than this.
 #define THRESHOLD 2
 
-extern u8 text_buf[N_MIN_1 + F];
-
 s32 DecompressLZSS(u8* src, u8* dst, u32 srclen) {
     s32 r;
     s32 dstCount;
@@ -3702,7 +3680,7 @@ s32 DecompressLZSS(u8* src, u8* dst, u32 srclen) {
 }
 
 // original name: PSX_SHAKE_MAIN
-void func_0600FA4C(void) {
+void UpdateCameraShake(void) {
     DAT_0605CD5C = DAT_0605C100;
     DAT_0605C65C = DAT_0605CD80;
     switch (DAT_06057A10.id) {
@@ -3904,7 +3882,7 @@ void SetCanRevealMap(void) {
     }
 }
 
-void func_0600FF64(s16 arg0) {
+void DestroyEntitiesFrom(s16 arg0) {
     s32 i;
     Entity* entity;
 
@@ -3914,12 +3892,12 @@ void func_0600FF64(s16 arg0) {
     }
 }
 
-void func_0600FFB8(Entity* self) {
+void DestroyEntity(Entity* self) {
     if (self->unk0 != NULL) {
-        DestroySpriteObject(self->unk0);
+        ((void (*)())DestroySpriteObject)(self->unk0);
     }
     if (self->flags & FLAG_HAS_PRIMS) {
-        FreePrimitives(self->primIndex);
+        ((s32(*)())FreePrimitives)(self->primIndex);
     }
     memset(self, 0, sizeof(Entity));
 }
@@ -3947,7 +3925,7 @@ void InitDebugPrint(void) {
     scfg.plate_addr[3] = SCL_VDP2_VRAM_B0 + 0x18000;
     SCL_SetConfig(SCL_NBG0, &scfg);
     DAT_0605D6C0[3].tileFlags = 0x10;
-    DAT_0605D6C0[3].src = (u32)&DAT_06039210[2];
+    DAT_0605D6C0[3].src = &DAT_06039210[2];
     DAT_0605D6C0[3].dest = SCL_COLRAM_ADDR + 0x600;
     DAT_0605D6C0[3].cnt = 0x80;
 }
@@ -3959,7 +3937,7 @@ void ClearDebugPrintTilemap(void) {
     u16 i;
     u16* ptr;
 
-    ptr = SCL_VDP2_VRAM_B0 + 0x18000;
+    ptr = (u16*)(SCL_VDP2_VRAM_B0 + 0x18000);
     for (i = 0; i < 0x1000; i++) {
         HW_STORE(ptr++, 0);
     }

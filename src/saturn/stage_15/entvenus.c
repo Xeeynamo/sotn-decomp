@@ -4,15 +4,19 @@
 #include "stage_15.h"
 
 EntityEntry g_Stage15EntityVenusManTrap = {
-    &g_Stage15SpriteBank28, func_060ECE0C};
+    &g_Stage15SpriteBankVenusManTrap, func_060ECE0C};
 s16 g_Stage15VenusManTrapInitOffset[2] = {0, 0};
-EntityEntry g_Stage15EntityEntry54 = {&g_Stage15SpriteBank28, func_060ED1C0};
+EntityEntry g_Stage15EntityEntry54 = {
+    &g_Stage15SpriteBankVenusManTrap, func_060ED1C0};
 s16 g_Stage15VenusManTrapFlowerInitOffset[2] = {0, 0};
-EntityEntry g_Stage15EntityEntry56 = {&g_Stage15SpriteBank28, func_060ED848};
+EntityEntry g_Stage15EntityEntry56 = {
+    &g_Stage15SpriteBankVenusManTrap, func_060ED848};
 s16 g_Stage15VenusManTrapTendrilInitOffset[2] = {0, 0};
-EntityEntry g_Stage15EntityEntry57 = {&g_Stage15SpriteBank28, func_060EDA88};
+EntityEntry g_Stage15EntityEntry57 = {
+    &g_Stage15SpriteBankVenusManTrap, func_060EDA88};
 s16 g_Stage15VenusManTrapDartInitOffset[2] = {0, 0};
-EntityEntry g_Stage15EntityEntry55 = {&g_Stage15SpriteBank28, func_060EDD10};
+EntityEntry g_Stage15EntityEntry55 = {
+    &g_Stage15SpriteBankVenusManTrap, func_060EDD10};
 
 u8 g_Stage15VenusManTrapAnimationData[] = {
     /* Animation 0 */

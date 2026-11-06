@@ -61,10 +61,11 @@ void func_060DD690(Entity* self) {
         TekiInit(self, 5);
         self->step++;
         self->unk0 = CreateSpriteObject(
-            g_EntitySpriteBank01.allocationIndex, g_EntitySpriteBank01.flags,
-            g_EntitySpriteBank01.images, 1);
+            g_SaturnSharedSpriteBank1Resource.allocationIndex,
+            g_SaturnSharedSpriteBank1Resource.flags,
+            g_SaturnSharedSpriteBank1Resource.images, 1);
         sprite = self->unk0;
-        func_0600AFA8(sprite, DAT_06045E14[1]);
+        func_0600AFA8(sprite, g_SaturnSharedSpriteBank1Frames[1]);
         sprite->zPriority = 0x6F;
         self->velocityX = -FIX(10);
         /* fall through */
@@ -555,12 +556,13 @@ void func_060E6B00(Entity* self) {
         }
 
         sprite = CreateSpriteObject(
-            g_EntitySpriteBank08.allocationIndex, g_EntitySpriteBank08.flags,
-            g_EntitySpriteBank08.images, maxParts);
+            g_SaturnSharedSpriteBank8Resource.allocationIndex,
+            g_SaturnSharedSpriteBank8Resource.flags,
+            g_SaturnSharedSpriteBank8Resource.images, maxParts);
         self->unk0 = sprite;
         TekiInit(self, 3);
         self->step++;
-        frame = DAT_06046CD0;
+        frame = g_SaturnSharedSpriteBank8Frames;
         if (flags & 2) {
             frame += 2;
         } else {
@@ -668,8 +670,8 @@ void func_060E7508(Entity* self) {
         func_060E8780(self->ext.save.unk8, 0, uVar13, 0);
         self->ext.save.unk24 = uVar13;
         if (func_060E82EC(0x78, 0xC8) != 0) {
-            self->ext.save.unk28 = DAT_060485C0.unk4;
-            self->ext.save.unk2C = DAT_060485C0.unk5;
+            self->ext.save.unk28 = g_WorkBuffer.save.unk4;
+            self->ext.save.unk2C = g_WorkBuffer.save.unk5;
             DAT_0605C668 = 0;
             if (DAT_060F1D90 == 0) {
                 DAT_0605C658 = 0;
@@ -702,17 +704,18 @@ void func_060E7508(Entity* self) {
                 (g_CurrentRoom.stageID >> 1 & 0x10) + 8) {
                 func_060e8330();
                 self->ext.save.unk34 = 8;
-                if ((DAT_060485C0.unk4 >= 0) && (DAT_060485C0.unk5 != 0)) {
+                if ((g_WorkBuffer.save.unk4 >= 0) &&
+                    (g_WorkBuffer.save.unk5 != 0)) {
                     func_060E8350(self);
                     self->ext.save.unk0 = 0x80;
-                    if (DAT_060485C0.unk5 < 0) {
+                    if (g_WorkBuffer.save.unk5 < 0) {
                         self->ext.save.unk2C = 0;
                         self->ext.save.unk38 = 1;
                         self->ext.save.unk0 = 2;
                         self->ext.save.unk4 = 10;
                     }
                 } else {
-                    DAT_060485C0.unk4 = 0;
+                    g_WorkBuffer.save.unk4 = 0;
                     func_060E8350(self);
                     self->ext.save.unk0 = 0x81;
                 }
@@ -744,12 +747,12 @@ void func_060E7508(Entity* self) {
         func_060E8780(self->ext.save.unk8, 0, self->ext.save.unk24, 0);
         if (func_06066B30(self, 4) != 0) {
             if (self->ext.save.unk1C == 0) {
-                DAT_060485C0.unk4 = 0;
+                g_WorkBuffer.save.unk4 = 0;
                 func_060E8350(self);
                 self->ext.save.unk0 = 0x100;
             } else {
-                DAT_060485C0.unk4 = self->ext.save.unk28;
-                DAT_060485C0.unk5 = self->ext.save.unk2C;
+                g_WorkBuffer.save.unk4 = self->ext.save.unk28;
+                g_WorkBuffer.save.unk5 = self->ext.save.unk2C;
                 self->ext.save.unk0 = 0x101;
             }
         }
@@ -782,8 +785,8 @@ void func_060E7508(Entity* self) {
         DAT_060F5088[1] += self->ext.save.unk34;
         func_060E8780(self->ext.save.unk8, 0, self->ext.save.unk24, 0);
         if (g_pads[0].pressed & 0x700) {
-            DAT_060485C0.unk4 = self->ext.save.unk28;
-            DAT_060485C0.unk5 = self->ext.save.unk2C;
+            g_WorkBuffer.save.unk4 = self->ext.save.unk28;
+            g_WorkBuffer.save.unk5 = self->ext.save.unk2C;
             g_Player.padSim = 0;
             g_Player.demo_timer = 1;
         } else {
@@ -907,7 +910,7 @@ void func_060E7508(Entity* self) {
         func_060e8330();
         if (func_06066B30(self, 2) != 0) {
             if (self->ext.save.unk1C == 0) {
-                DAT_060485C0.unk5 = 0;
+                g_WorkBuffer.save.unk5 = 0;
                 PlaySfx(SFX_UI_CONFIRM);
                 self->ext.save.unk0++;
             } else {
@@ -919,7 +922,7 @@ void func_060E7508(Entity* self) {
 
     case 0x201:
         func_060e8330();
-        if (BUP_Format(DAT_060485C0.unk4) == 0) {
+        if (BUP_Format(g_WorkBuffer.save.unk4) == 0) {
             self->ext.save.unk0 = 0x30;
             self->ext.save.unk20 = 0x60;
         } else {
@@ -1051,8 +1054,8 @@ void func_060E7508(Entity* self) {
                 self->ext.save.unk4 = 0;
                 self->ext.save.unk0 = 1;
             } else {
-                DAT_060485C0.unk4 = self->ext.save.unk28;
-                DAT_060485C0.unk5 = self->ext.save.unk2C;
+                g_WorkBuffer.save.unk4 = self->ext.save.unk28;
+                g_WorkBuffer.save.unk5 = self->ext.save.unk2C;
                 self->ext.save.unk38 = 0;
                 self->ext.save.unk4 = 0;
                 self->ext.save.unk0 = 0;
@@ -1133,7 +1136,7 @@ void func_060E8E1C(s32 scale, s32 unused) {
     s32 factor;
     s32 i;
 
-    base = DAT_060485E0;
+    base = g_WorkBuffer.model.vertices;
     src = g_Stage02Entity08ModelVertices14;
     dst = base;
     factor = scale << 8;

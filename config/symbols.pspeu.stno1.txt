@@ -1,4 +1,4 @@
-sprites_3 = 0x09268800;
+sprites_no1_2 = 0x09268800;
 spriteBanks = 0x09274C38;
 rooms_layers = 0x09274DD0;
 cluts = 0x09274F80;

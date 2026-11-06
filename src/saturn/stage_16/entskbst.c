@@ -4,7 +4,7 @@
 #include "stage_16.h"
 
 EntityEntry g_Stage16EntitySkeletonBeast = {
-    &g_Stage16SpriteBank22, func_060E4CF4};
+    &g_Stage16SpriteBankSkeletonBeast, func_060E4CF4};
 EntityEntry g_Stage16EntityEntry30 = {NULL, func_060E5258};
 s16 g_Stage16SkeletonBeastRiderInitOffsets[4][2] = {0};
 EntityEntry g_Stage16EntityEntry29 = {NULL, func_060E53E0};

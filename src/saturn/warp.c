@@ -75,7 +75,7 @@ void func_060DCF5C(u16 arg0) {
     PlaySfx(0x67C);
     player = g_Entities;
     params = g_Status.subWeapon;
-    subweapon = DAT_060E2218[arg0];
+    subweapon = ((s16*)&g_WarpGoldPrizes[3])[arg0];
     g_Status.subWeapon = subweapon;
     if (params == subweapon) {
         params = 1;

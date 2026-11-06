@@ -377,7 +377,6 @@ typedef struct {
 } SprGourTbl;
 
 extern SprGourTbl* SpGourTbl;
-extern u32 D_8003C744;
 extern s16 g_StatusHudPrimitiveLayout[];
 extern s16 g_StatusHudSpriteOffsets[][2];
 
