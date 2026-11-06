@@ -5,6 +5,7 @@ bsdmainutils
 rustup
 clang-format
 coreutils
+cpp
 curl
 gcc-mipsel-linux-gnu
 git
