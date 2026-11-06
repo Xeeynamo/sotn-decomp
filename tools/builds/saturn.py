@@ -105,6 +105,8 @@ for target, config_name, binary_name in [
     ('t_fairy2', 't_fairy2.prg.yaml', 'T_FAIRY2.PRG'),
     ('sub', 'sub.prg.yaml', 'SUB.PRG'),
     ('warp', 'warp.prg.yaml', 'WARP.PRG'),
+    ('title', 'title.prg.yaml', 'TITLE.PRG'),
+    ('logo', 'logo.prg.yaml', 'LOGO.PRG'),
 ]:
     symbol_ownership_inputs.extend([
         f'config/saturn/{target}_user_syms.txt',
@@ -956,6 +958,12 @@ snd_srcs = [
     'src/saturn/sub.c',
     'src/saturn/sub/header.c',
     'src/saturn/sub/data.c',
+    'src/saturn/logo.c',
+    'src/saturn/logo/header.c',
+    'src/saturn/logo/data.c',
+    'src/saturn/title.c',
+    'src/saturn/title/header.c',
+    'src/saturn/title/data.c',
     'src/saturn/warp.c',
     'src/saturn/warp/obtain.c',
     'src/saturn/warp/warpmid.c',
@@ -1729,6 +1737,14 @@ multi_objs = {
         'build/saturn/game/sinetbl.o',
         'build/saturn/game/bss.o',
     ],
+    'build/saturn/logo.o' : [
+        'build/saturn/logo/header.o',
+        'build/saturn/logo/data.o',
+    ],
+    'build/saturn/title.o' : [
+        'build/saturn/title/header.o',
+        'build/saturn/title/data.o',
+    ],
     'build/saturn/warp.o' : [
         'build/saturn/warp/obtain.o',
         'build/saturn/warp/warpmid.o',
@@ -1851,6 +1867,8 @@ prgs = {
     'stage_16.elf': 'STAGE_16.PRG',
     'stage_14.elf': 'STAGE_14.PRG',
     'warp.elf': 'WARP.PRG',
+    'title.elf': 'TITLE.PRG',
+    'logo.elf': 'LOGO.PRG',
     't_bat.elf': 'T_BAT.PRG',
     't_fairy2.elf': 'T_FAIRY2.PRG',
     'sub.elf': 'SUB.PRG',

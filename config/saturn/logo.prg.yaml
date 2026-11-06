@@ -1,0 +1,34 @@
+options:
+  target_path:  disks/saturn/LOGO.PRG
+  asm_path:     asm/saturn/logo
+  src_path:     src/saturn
+  obj_path:     build/saturn
+  ld_scripts_path: config/saturn
+  syms_path: config/saturn
+  decomp_empty_funcs: true
+  symbol_files:
+    - game_user_syms.txt
+    - zero_user_syms.txt
+    - game_syms.gen.txt
+    - zero_syms.gen.txt
+segments:
+  - name: logo
+    type: code
+    start: 0x00000000
+    vram:  0x060A5000
+    subalign: 2
+    subsegments:
+      - start: 0x0
+        type: .data
+        file: logo/header
+        end: 0x1F
+      - start: 0x20
+        type: c
+        file: logo
+        end: 0x313
+        function_ranges:
+          - [0x20, 0x20]
+      - start: 0x314
+        type: .data
+        file: logo/data
+        end: 0x34F
