@@ -1538,6 +1538,7 @@
 | maria/f_nonmat/f60BA4BC.s       | func_060BA4BC   |      317 |         48 |       |     |
 | weapon/w_50/f_nonmat/f60D6128.s | func_060D6128   |      318 |         25 |       |     |
 | weapon/w_49/f_nonmat/f60D6128.s | func_060D6128   |      318 |         27 |       |     |
+| alucard/f_nonmat/f60A67B8.s     | func_060A67B8   |      318 |         30 |       |     |
 | stage_14/f_nonmat/f60DD708.s    | func_060DD708   |      319 |         13 |       |     |
 | stage_02/f_nonmat/f60E0B7C.s    | func_060E0B7C   |      320 |         35 |       |     |
 | weapon/w_40/f_nonmat/f60D6134.s | func_060D6134   |      321 |         28 |       |     |
@@ -1633,7 +1634,6 @@
 | stage_02/f_nonmat/f60DCCD4.s    | func_060DCCD4   |      393 |         23 |       |     |
 | alucard/f_nonmat/f60AF1BC.s     | func_060AF1BC   |      393 |         32 |       |     |
 | stage_16/f_nonmat/f60E3D00.s    | func_060E3D00   |      394 |         35 |       |     |
-| alucard/f_nonmat/f60A67B8.s     | func_060A67B8   |      398 |         30 |       |     |
 | weapon/w_16/f_nonmat/f60D6128.s | func_060D6128   |      399 |         29 |       |     |
 | stage_15/f_nonmat/f60DF354.s    | func_060DF354   |      400 |         38 |       |     |
 | maria/f_nonmat/f60B96C0.s       | func_060B96C0   |      401 |         26 |       |     |
@@ -2063,5 +2063,5 @@
 | stage_15/f_nonmat/f60EBC24.s    | func_060EBC24   |     2165 |        236 |       |     |
 | rstage16/f_nonmat/f60E3608.s    | func_060E3608   |     2295 |        251 |       |     |
 | stage_15/f_nonmat/f60E78B8.s    | func_060E78B8   |     2459 |        259 |       |     |
-| alucard/f_nonmat/f60A6A94.s     | func_060A6A94   |     2650 |        230 |       |     |
+| alucard/f_nonmat/f60A69F4.s     | func_060A69F4   |     2740 |        243 |       |     |
 | stage_14/f_nonmat/f60E32AC.s    | func_060E32AC   |     4361 |        593 |       |     |
