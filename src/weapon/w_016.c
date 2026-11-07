@@ -51,11 +51,11 @@ void EntityWeaponAttack(Entity* self) {
         if (self->facingLeft) {
             fakePrim->velocityX.val = FIX(-3.5);
         }
-        self->ext.weapon.unk82 = -0x100;
-        self->ext.weapon.unk80 = 0x800;
+        self->ext.weapon.angSpd = -0x100;
+        self->ext.weapon.angle = 0x800;
         if (self->facingLeft != 0) {
-            self->ext.weapon.unk82 = -self->ext.weapon.unk82;
-            self->ext.weapon.unk80 += 0x800;
+            self->ext.weapon.angSpd = -self->ext.weapon.angSpd;
+            self->ext.weapon.angle += 0x800;
         }
         self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY - 8;
         if (PLAYER.step != Player_Crouch) {
@@ -78,8 +78,8 @@ void EntityWeaponAttack(Entity* self) {
             self->ext.weapon.unk7E += 8;
         }
         fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
-        self->rotate += abs(self->ext.weapon.unk82);
-        self->ext.weapon.unk80 += self->ext.weapon.unk82;
+        self->rotate += abs(self->ext.weapon.angSpd);
+        self->ext.weapon.angle += self->ext.weapon.angSpd;
         fakePrim->posX.i.hi = fakePrim->x0;
         fakePrim->posY.i.hi = fakePrim->y0;
         fakePrim->posX.val += fakePrim->velocityX.val;
@@ -88,7 +88,7 @@ void EntityWeaponAttack(Entity* self) {
         break;
     }
     fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
-    angle = self->ext.weapon.unk80;
+    angle = self->ext.weapon.angle;
     cosine = rcos(angle) * self->ext.weapon.unk7E;
     sine = -rsin(angle) * self->ext.weapon.unk7E;
     self->posX.val = cosine + fakePrim->posX.val;

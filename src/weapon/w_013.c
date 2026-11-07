@@ -439,7 +439,7 @@ void func_ptr_8017000C(Entity* self) {
         self->ext.weapon.childPalette =
             self->ext.weapon.parent->ext.weapon.childPalette;
         self->ext.weapon.unk8A = self->ext.weapon.parent->ext.weapon.unk8A;
-        self->ext.weapon.unk80 = (rand() & 0x1F) + 1;
+        self->ext.weapon.angle = (rand() & 0x1F) + 1;
         self->step++;
         break;
     case 1:
@@ -448,7 +448,7 @@ void func_ptr_8017000C(Entity* self) {
         }
         break;
     case 2:
-        if (--self->ext.weapon.unk80 == 0) {
+        if (--self->ext.weapon.angle == 0) {
             self->rotate = 0;
             angle = ratan2(-(self->ext.weapon.unk8A - self->posY.i.hi),
                            self->ext.weapon.childPalette - self->posX.i.hi);

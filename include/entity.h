@@ -136,8 +136,8 @@ typedef struct {
 typedef struct {
     /* 0x7C */ s16 lifetime;
     /* 0x7E */ s16 unk7E;
-    /* 0x80 */ s16 unk80; // Y?
-    /* 0x82 */ s16 unk82; // X?
+    /* 0x80 */ s16 angle;
+    /* 0x82 */ s16 angSpd;
     /* 0x84 */ struct Entity* some_ent;
     /* 0x88 */ s16 childPalette;
     /* 0x8A */ s16 unk8A;
