@@ -462,7 +462,7 @@ void MarMain(void) {
     draw = &g_PlayerDraw[0];
     if (g_Player.unk78) {
         // this is new to the maria overlay
-        g_Player.unk7A = 0;
+        g_Player.runDisable = 0;
         g_Player.unk5C = 0;
         g_Player.unk78 = 0;
     }

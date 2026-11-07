@@ -1082,7 +1082,7 @@ void func_060E7508(Entity* self) {
 u16 func_060E82EC(s32 minX, s32 maxX) {
     u16 standing;
 
-    g_Player.unk7A = 1;
+    g_Player.runDisable = 1;
     if (PLAYER.step != 0 || (standing = PLAYER.step_s) != 1 ||
         PLAYER.posX.i.hi < minX || PLAYER.posX.i.hi > maxX) {
         standing = 0;

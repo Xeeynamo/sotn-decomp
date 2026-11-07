@@ -274,7 +274,7 @@ static s32 MarDoSubweapon(void) {
     s16 chainLimit;
     s16 unused = 0;
 
-    if (!g_Maria.unk68 && g_Maria.unk7A) {
+    if (!g_Maria.unk68 && g_Maria.runDisable) {
         return 1;
     }
 
@@ -325,12 +325,12 @@ static s32 MarDoSubweapon(void) {
     case PL_S_WALK:
     case PL_S_CROUCH:
         if (subweaponId == PL_W_CARDINAL) {
-            g_Maria.unk7A = 2;
+            g_Maria.runDisable = 2;
             g_Maria.unk66 = 2;
             MarSetAnimation(D_pspeu_092C0878);
             MARIA.step = PL_S_CARDINAL_ATTACK;
         } else {
-            g_Maria.unk7A = 2;
+            g_Maria.runDisable = 2;
             MarSetAnimation(mar_80155588);
             MARIA.step = PL_S_STAND;
         }

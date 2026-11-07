@@ -468,7 +468,7 @@ void MarMain(void) {
 
     if (g_Maria.unk78) {
         // this is new to the maria overlay
-        g_Maria.unk7A = 0;
+        g_Maria.runDisable = 0;
         g_Maria.unk5C = 0;
         g_Maria.unk78 = 0;
     }

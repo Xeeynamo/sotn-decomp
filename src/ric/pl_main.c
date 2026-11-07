@@ -27,7 +27,7 @@ static TeleportCheck GetTeleportToOtherCastle(void) {
     // Check for X/Y boundaries in RTOP
     if (g_StageId == STAGE_RTOP) {
         if (abs((g_Tilemap.left << 8) + g_PlayerX - 8384) < 4 &&
-#if TARGET == TARGET_PSP
+#if VERSION >= VER_EU || TARGET == TARGET_PSP
             abs((g_Tilemap.top << 8) + g_PlayerY - 14407) < 4) {
 #else
             abs((g_Tilemap.top << 8) + g_PlayerY) - 14407 < 4) {
@@ -415,9 +415,9 @@ void RicMain(void) {
     g_Player.unk72 = func_80156DE4();
 #if TARGET != TARGET_PSP
     FntPrint("pl_head_f:%02x\n", g_Player.unk72);
-#if VERSION < VER_JP10
-    FntPrint("run_disable_f:%02x\n", g_Player.unk7A);
 #endif
+#if VERSION <= VER_JP10
+    FntPrint("run_disable_f:%02x\n", g_Player.runDisable);
 #endif
 
 #if TARGET == TARGET_PSP || defined(FIX_UB)
@@ -523,7 +523,8 @@ void RicMain(void) {
                 return;
             }
             if (
-#if VERSION < VER_JP10 || TARGET == TARGET_PSP
+#if VERSION <= VER_JP10 || TARGET == TARGET_PSP
+                // bug: while Richter is invincible, it can't be grabbed
                 !(g_Player.timers[PL_T_INVINCIBLE_SCENE] |
                   g_Player.timers[PL_T_INVINCIBLE]) &&
 #endif
@@ -532,11 +533,12 @@ void RicMain(void) {
                     playerStep = PLAYER.step;
                     playerStepS = PLAYER.step_s;
                     RicSetStep(PL_S_BOSS_GRAB);
-#if VERSION < VER_JP10 || TARGET == TARGET_PSP
+#if VERSION <= VER_JP10 || TARGET == TARGET_PSP
+                    // you can escape a grab with a Blade Dash!
                     goto check_input_combo;
 #endif
                 } else if (
-#if VERSION == VER_US
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
                     !(g_Player.timers[PL_T_INVINCIBLE_SCENE] |
                       g_Player.timers[PL_T_INVINCIBLE]) &&
 #endif
@@ -546,6 +548,9 @@ void RicMain(void) {
                     damage.effects = PLAYER.hitParams & ~0x1F;
                     damage.damageKind = PLAYER.hitParams & 0x1F;
 #if TARGET == TARGET_PSP
+                    // PSP has a different bugfix than JP 1.1: Richter can still
+                    // be grabbed while invincible, but the damage received will
+                    // be reduced to zero.
                     if (g_InvincibleFlag) {
                         PLAYER.hitPoints = 0;
                     }
@@ -673,7 +678,8 @@ void RicMain(void) {
         break;
     case PL_S_BOSS_GRAB:
         newStatus =
-#if VERSION == VER_US
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
+            // bugfix: no after-image while Richter is grabbed by a boss
             NO_AFTERIMAGE |
 #endif
             PLAYER_STATUS_UNK100000 | PLAYER_STATUS_UNK10000 |
@@ -749,7 +755,7 @@ void RicMain(void) {
     PLAYER.hitboxState = 1;
     PLAYER.hitParams = 0;
     PLAYER.hitPoints = 0;
-    g_Player.unk7A = 0;
+    g_Player.runDisable = 0;
     if (PLAYER.anim == D_801556C4) {
         PLAYER.palette = D_80154574[PLAYER.pose];
     }
@@ -760,7 +766,8 @@ void RicMain(void) {
         if (PLAYER.poseTimer < 0) {
             PLAYER.animCurFrame |= ANIM_FRAME_LOAD;
         }
-#if VERSION < VER_JP10 || TARGET == TARGET_PSP
+#if VERSION <= VER_JP10 || TARGET == TARGET_PSP
+        // bug: while dead, it will clip through walls
         PLAYER.posX.val += PLAYER.velocityX;
         PLAYER.posY.val += PLAYER.velocityY;
         return;

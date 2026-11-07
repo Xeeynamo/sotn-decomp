@@ -295,7 +295,7 @@ void EntityMariaCatAttack(Entity* self) {
         self->ext.mariaCat.unkB0 = 0;
         MarSetWeaponParams(self, 15, ELEMENT_HOLY, 2, 16, 16, 1, 0);
         self->ext.mariaCat.timer = 0;
-        g_Player.unk7A = 1;
+        g_Player.runDisable = 1;
         self->ext.mariaCat.nBounce = 3;
         self->step = 2;
         self->ext.mariaCat.opacity = 128;
@@ -392,7 +392,7 @@ void EntityMariaCatAttack(Entity* self) {
         }
         break;
     case 5:
-        g_Player.unk7A = 0;
+        g_Player.runDisable = 0;
         DestroyEntity(self);
         break;
     }
@@ -561,7 +561,7 @@ void EntityMariaDragonAttack(Entity* self) {
         self->hitboxOffY = 0;
         self->ext.mariaDragon.unkB0 = 0;
         MarSetWeaponParams(self, 42, ELEMENT_HOLY, 2, 16, 16, 1, 0);
-        g_Player.unk7A = 1;
+        g_Player.runDisable = 1;
         self->ext.mariaDragon.timer = 0;
         self->step = 2;
         // fallthrough
@@ -593,7 +593,7 @@ void EntityMariaDragonAttack(Entity* self) {
         }
         break;
     case 3:
-        g_Player.unk7A = 0;
+        g_Player.runDisable = 0;
         DestroyEntity(self);
         break;
     }
@@ -1071,7 +1071,7 @@ void EntityMariaCardinalAttack(Entity* self) {
         MarSetWeaponParams(
             self, 32, ELEMENT_HOLY | ELEMENT_FIRE, 2, 32, 16, 1, 0);
         g_api.PlaySfx(SFX_FIREBALL_SHOT_B);
-        g_Player.unk7A = 1;
+        g_Player.runDisable = 1;
         self->ext.mariaCardinal.timer = 0;
         self->step++;
         break;
@@ -1096,7 +1096,7 @@ void EntityMariaCardinalAttack(Entity* self) {
         }
         break;
     case 3:
-        g_Player.unk7A = 0;
+        g_Player.runDisable = 0;
         DestroyEntity(self);
         break;
     }
@@ -1571,7 +1571,7 @@ void EntityMariaTurtleAttack(Entity* self) {
         self->stunFrames = 0;
         self->hitEffect = 1;
         self->entityRoomIndex = 1;
-        g_Player.unk7A = 1;
+        g_Player.runDisable = 1;
         self->ext.mariaTurtleAttack.timer = 0;
         self->step++;
         break;
@@ -1584,7 +1584,7 @@ void EntityMariaTurtleAttack(Entity* self) {
         }
         break;
     case 2:
-        g_Player.unk7A = 0;
+        g_Player.runDisable = 0;
         DestroyEntity(self);
         break;
     }

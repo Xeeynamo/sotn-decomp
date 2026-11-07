@@ -448,7 +448,7 @@ INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E2A90, func_060E2A90);
 u16 func_060E3874(s32 minX, s32 maxX) {
     u16 result;
 
-    g_Player.unk7A = 1;
+    g_Player.runDisable = 1;
     if (PLAYER.step != 0 || (result = PLAYER.step_s, result != 1) ||
         PLAYER.posX.i.hi < minX || PLAYER.posX.i.hi > maxX) {
         result = 0;

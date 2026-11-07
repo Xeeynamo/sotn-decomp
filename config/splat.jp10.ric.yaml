@@ -1,0 +1,98 @@
+options:
+  platform: psx
+  basename: ric
+  base_path: ..
+  build_path: build/jp10
+  target_path: disks/jp10/BIN/RIC.BIN
+  asm_path: asm/jp10/ric
+  asset_path: assets/ric
+  src_path: src/ric
+  ld_script_path: build/jp10/ric.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.jp10.txt
+    - config/symbols.jp10.ric.txt
+  undefined_funcs_auto_path: build/jp10/config/undefined_funcs_auto.jp10.ric.txt
+  undefined_syms_auto_path: build/jp10/config/undefined_syms_auto.jp10.ric.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  extensions_path: tools/splat_ext
+  symbol_name_format: jp10_$VRAM
+  disassemble_all: true
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  ld_generate_symbol_per_data_segment: true
+sha1: 1dcd6b881e2c0906854c3d53839dfb4ae0d359d6
+segments:
+  - name: ric
+    type: code
+    start: 0
+    vram:  0x8013C000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, .data, pl_header]
+      - [0x170AC, .data, spritebanks]
+      - [0x18568, .data, d_18568]
+      - [0x1859C, .data, d_1859C]
+      - [0x18674, .data, pl_blueprints]
+      - [0x18688, .data, pl_blueprints] # subweapons
+      - [0x188F4, .data, pl_blueprints]
+      - [0x1895C, .data, pl_blueprints] # entity table
+      - [0x18A6C, .data, pl_blueprints] # blueprints
+      - [0x18C40, .data, pl_blueprints]
+      - [0x18F7C, .data, pl_blueprints]
+      - [0x1938C, .data, pl_anims]
+      - [0x199AC, .data, pl_whip]
+      - [0x19D64, .data, pl_subweapon_holywater]
+      - [0x19DDC, .data, pl_subweapon_cross]
+      - [0x19E70, .data, pl_subweapons]
+      - [0x19E98, .data, 2F8E8]
+      - [0x19EE0, .data, 319C4]
+      - [0x19EFC, .data, pl_crash_cross]
+      - [0x1A444, .rodata, pl_main]
+      - [0x1A5F8, .rodata, pl_debug]
+      - [0x1A608, .rodata, pl_steps]
+      - [0x1A7C0, .rodata, pl_steps]
+      - [0x1A7D8, .rodata, pl_setstep]
+      - [0x1A8D0, .rodata, pl_collision]
+      - [0x1A8D4, .rodata, pl_blueprints]
+      - [0x1AA6C, .rodata, pl_whip]
+      - [0x1AA88, .rodata, pl_subweapon_holywater]
+      - [0x1AAA0, .rodata, pl_subweapon_cross]
+      - [0x1AAF0, .rodata, 2F8E8]
+      - [0x1AB04, .rodata, 319C4]
+      - [0x1AC1C, .rodata, pl_crash_cross]
+      - [0x1AC2C, c, pl_main]
+      - [0x1C7E4, c, pl_debug]
+      - [0x1CB28, c, pl_steps]
+      - [0x202B0, c, pl_utils]
+      - [0x20BE4, c, pl_setstep]
+      - [0x21B00, c, pl_collision]
+      - [0x23834, c, pl_blueprints]
+      - [0x2A6C0, c, pl_whip]
+      - [0x2B994, c, pl_subweapon_dummy]
+      - [0x2B9A4, c, pl_subweapon_holywater]
+      - [0x2CF80, c, pl_subweapon_cross]
+      - [0x2E1C0, c, pl_subweapons]
+      - [0x2F83C, c, 2F8E8]
+      - [0x31918, c, 319C4]
+      - [0x371E0, c, pl_crash_cross]
+      - [0x37AB8, .bss, pl_steps]
+      - [0x38ED0, .bss, pl_collision]
+      - [0x38ED4, .bss, pl_blueprints]
+      - [0x38FD4, .bss, pl_whip]
+      - [0x38FDC, .bss, pl_subweapon_cross]
+      - [0x397E0, .bss, pl_subweapons]
+      - [0x397E4, .bss, 2F8E8]
+      - [0x397E8, .bss, 319C4]
+      - [0x39834, .bss, bss]
+  - [0x399AC]

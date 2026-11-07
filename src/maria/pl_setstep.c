@@ -251,7 +251,7 @@ s32 MarDoSubweapon(void) {
     s16 unused;
 
     unused = 0;
-    if (g_Player.unk7A) {
+    if (g_Player.runDisable) {
         return 1;
     }
     if (PLAYER.step != PL_S_STAND && PLAYER.step != PL_S_WALK &&
@@ -293,11 +293,11 @@ s32 MarDoSubweapon(void) {
     case PL_S_WALK:
     case PL_S_CROUCH:
         if (subweaponId == PL_W_CARDINAL) {
-            g_Player.unk7A = 2;
+            g_Player.runDisable = 2;
             MarSetAnimation(D_pspeu_092C0878);
             PLAYER.step = PL_S_CARDINAL_ATTACK;
         } else {
-            g_Player.unk7A = 3;
+            g_Player.runDisable = 3;
             MarSetAnimation(mar_80155588);
             PLAYER.step = PL_S_STAND;
         }

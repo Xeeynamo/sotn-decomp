@@ -147,7 +147,7 @@ void MariaStepWalk(void) {
 void func_060A6A94(void) {
     s32 velocityX;
 
-    if (g_Player.unk7A != 0) {
+    if (g_Player.runDisable != 0) {
         func_060A926C(0);
         return;
     }
@@ -516,7 +516,7 @@ void MariaSetStand(s32 velocityX) {
 }
 
 void MariaSetWalk(s32 arg0) {
-    if (g_Player.timers[MARIA_PL_T_8] && !g_Player.unk7A) {
+    if (g_Player.timers[MARIA_PL_T_8] && !g_Player.runDisable) {
         func_060A9304();
         return;
     }
@@ -532,7 +532,7 @@ void MariaSetWalk(s32 arg0) {
     PLAYER.velocityY = 0;
 }
 void func_060A9304(void) {
-    if (g_Player.unk7A) {
+    if (g_Player.runDisable) {
         MariaSetWalk(0);
         return;
     }

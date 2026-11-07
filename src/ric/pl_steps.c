@@ -131,8 +131,9 @@ void RicStepWalk(void) {
 }
 
 void RicStepRun(void) {
-#if VERSION == VER_US
-    if (g_Player.unk7A != 0) {
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
+    // bugfix: force walk when running is disabled
+    if (g_Player.runDisable != 0) {
         RicSetWalk(0);
         return;
     }
@@ -1531,7 +1532,7 @@ void RicStepBladeDash(void) {
 void RicStepHighJump(void) {
     bool loadAnim;
 
-#if VERSION == VER_US
+#if VERSION >= VER_USPROTO && TARGET != TARGET_PSP
     FntPrint("pl_vram_flag:%04x\n", g_Player.vram_flag);
     FntPrint("pl_high_jump_timer:%04x\n", g_Player.high_jump_timer);
     FntPrint("pl_step_s:%02x\n", PLAYER.step_s);

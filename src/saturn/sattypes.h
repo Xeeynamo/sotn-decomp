@@ -1129,7 +1129,7 @@ typedef struct {
     /* 0x45E */ u16 unk72;
     /* 0x460 */ u32 unk74;
     /* 0x464 */ u16 unk78;
-    /* 0x466 */ u16 unk7A;
+    /* 0x466 */ u16 runDisable;
     /* 0x468 */ u16 unk7C;
     /* 0x46A */ u16 unk7E;
 } PlayerState;
@@ -1581,7 +1581,7 @@ enum RicSubweapons {
     PL_W_CRASH_CROSS,
     PL_W_CRASH_CROSS_BEAM,
     PL_W_WHIP,
-    PL_W_15,
+    PL_W_FLAMEWHIP,
     PL_W_HYDROSTORM,
     PL_W_BIBLE_BEAM,
     PL_W_KICK,

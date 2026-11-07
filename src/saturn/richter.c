@@ -159,7 +159,7 @@ void RicStepWalk(void) {
 
 // RicStepRun
 void RicStepRun(void) {
-    if (g_Player.unk7A != 0) {
+    if (g_Player.runDisable != 0) {
         RicSetWalk(0);
         return;
     }
@@ -508,7 +508,7 @@ void RicSetStand(s32 velocityX) {
 extern AnimationFrame ric_anim_walk[];
 // func_060A8FD0
 void RicSetWalk(s32 arg0) {
-    if (g_Player.timers[PL_T_8] && !g_Player.unk7A) {
+    if (g_Player.timers[PL_T_8] && !g_Player.runDisable) {
         RicSetRun();
         return;
     }
@@ -527,7 +527,7 @@ void RicSetWalk(s32 arg0) {
 // RicSetRun
 extern AnimationFrame ric_anim_run[];
 void RicSetRun(void) {
-    if (g_Player.unk7A) {
+    if (g_Player.runDisable) {
         RicSetWalk(0);
         return;
     }

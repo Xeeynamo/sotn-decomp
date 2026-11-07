@@ -94,5 +94,5 @@ segments:
       - [0x397E0, .bss, pl_subweapons]
       - [0x397E4, .bss, 2F8E8]
       - [0x397E8, .bss, 319C4]
-      - [0x39834, bss]
+      - [0x39834, .bss, bss]
   - [0x399AC]

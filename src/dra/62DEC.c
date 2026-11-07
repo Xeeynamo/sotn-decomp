@@ -1384,7 +1384,7 @@ void func_80105428(void) {
     }
     temp_s3 = D_801379C8.vy;
 #if VERSION >= VER_USPROTO && TARGET != TARGET_PSP
-    g_Player.unk7A = 1;
+    g_Player.runDisable = 1;
 #endif
     switch (temp_s0 = D_801379BC) {
     case 0x0:

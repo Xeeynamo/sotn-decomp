@@ -62,8 +62,11 @@ bool RicCheckInput(s32 checks) {
                         g_CurrentEntity, BP_SKID_SMOKE, 0);
                 } else if (g_Player.padPressed & (PAD_LEFT | PAD_RIGHT)) {
                     if (g_Player.unk44 & 0x10
-#if VERSION == VER_US
-                        && !g_Player.unk7A
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
+                        // bugfix: when running is disabled, touching the floor
+                        // while pressing left or right will not set Richter in
+                        // a state where it can run.
+                        && !g_Player.runDisable
 #endif
                     ) {
                         RicSetRun();
