@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[2]
 SRC = ROOT / 'src/saturn'
 CONFIG = ROOT / 'config/saturn'
 PROGRAM_WARNINGS = ['-Wno-implicit-function-declaration', '-Wno-incompatible-pointer-types', '-Wno-discarded-qualifiers',
-                    '-Wno-format-security']
+                    '-Wno-format-security', '-Wno-return-mismatch']
 MODULES = ['zero.bin.yaml', 'game.prg.yaml', 'warp.prg.yaml']
 STAGES = {
     'stage_15': ('STAGE_15.PRG', 'g_Stage15Data', 0x42, ''),
@@ -150,8 +150,9 @@ def generate_headers(sources):
     missing = [path for path in wanted if not (ROOT / path).exists()]
     if not missing:
         return
-    if not (ROOT / 'build.ninja').exists():
-        subprocess.run([sys.executable, str(ROOT / 'tools/builds/saturn.py')], cwd=ROOT, check=True)
+    stamp = ROOT / 'build.ninja.version'
+    if not (ROOT / 'build.ninja').exists() or not stamp.exists() or not stamp.read_text().startswith('saturn'):
+        sys.exit('satz: build.ninja is not the Saturn one (or is missing); run ./sotn.sh build saturn first')
     subprocess.run(['ninja', *missing], cwd=ROOT, check=True)
 
 
@@ -319,7 +320,7 @@ def write_ninja(satz, args, output, core, fixed):
                description='sotn_str $in')
         n.rule('sotn_cc', f'{satz.GCC} $flags -fcommon -x cpp-output -c $in -o $out', description='gcc $in')
 
-        program_flags = [f for f in build.saturn_common if f != '-w'] + PROGRAM_WARNINGS
+        program_flags = [f for f in build.saturn_common if f != '-w'] + ['-std=gnu99'] + PROGRAM_WARNINGS
         sources = []
         for module in MODULES:
             data_only = args.player == 'null' and module == PLAYERS['null'][3]
