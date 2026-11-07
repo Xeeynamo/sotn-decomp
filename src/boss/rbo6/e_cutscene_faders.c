@@ -287,12 +287,12 @@ void EntityUnkID29(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         self->ext.utimer.t++;
         if (self->ext.utimer.t > 8) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             g_unkGraphicsStruct.unk28 = 0xFF;
 #endif
             self->step++;
             prim->drawMode = DRAW_HIDE;
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
             DestroyEntity(self);
 #endif
         } else if (self->ext.utimer.t & 1) {
