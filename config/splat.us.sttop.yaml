@@ -27,7 +27,7 @@ options:
     - .sbss
   ld_bss_is_noload: false
   disasm_unknown: true
-  disassemble_all: false
+  disassemble_all: true
   global_vram_start: 0x80010000
 sha1: 47bb15117558c88f516cf4fc72fb8c91445d135e
 segments:
