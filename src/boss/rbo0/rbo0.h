@@ -105,3 +105,17 @@ extern s32 E_ID(RESURRECT);
 extern EInit g_EInitInteractable;
 extern s32 g_BossMgrState;
 extern s32 D_us_801806B4; // boss state flag (how many defeated?)
+
+// the fake trio reads unk8C from their own coffin
+struct EntityCoffin {
+    ENTITY_SHARED;
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ s16 unk88;
+    /* 0x8A */ s16 unk8A;
+    /* 0x8C */ s32 unk8C;
+};
+SYNC_STRUCT(EntityCoffin);

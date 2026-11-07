@@ -1,6 +1,40 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo1.h"
 
+struct EntityGranfaloon {
+    ENTITY_SHARED;
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 angle;
+    /* 0x84 */ u8 activeParts;
+    /* 0x85 */ u8 partIndex;
+    /* 0x86 */ u8 hitTimer;
+    /* 0x87 */ u8 unk87;
+    /* 0x88 */ s16 hitX;
+    /* 0x8A */ s16 hitY;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u8 palIndex;
+    /* 0x99 */ u8 palMask;
+    /* 0x9A */ u16 : 16;
+    /* 0x9C */ struct Entity* owner;
+    /* 0xA0 */ u8 hasHit;
+    /* 0xA1 */ u8 : 8;
+    /* 0xA2 */ u16 : 16;
+    /* 0xA4 */ s32 length;
+};
+SYNC_STRUCT(EntityGranfaloon);
+
+struct EntityHomingLaser {
+    ENTITY_SHARED;
+    /* 0x7C */ Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 angle;
+    /* 0x84 */ Point16 trail[13];
+};
+SYNC_STRUCT(EntityHomingLaser);
+
 enum {
     BOSS_STATUS_DEFEATED = 0x01,
     BOSS_UNK_2 = 0x02,
@@ -78,7 +112,7 @@ extern s32 E_ID(UNK_23);
 
 #include "../../st/approach_s16.h"
 
-void EntityGranfaloon(Entity* self) {
+void EntityGranfaloon(struct EntityGranfaloon* self) {
     // the actual entity is the core of Granfaloon, which internally spawns 9
     // entities that will act like an armor.
     enum Step {
@@ -122,20 +156,21 @@ void EntityGranfaloon(Entity* self) {
         D_us_80180CE0 = 0;
         self->posX.i.hi = 0x100 - g_Tilemap.scrollX.i.hi;
         self->posY.i.hi = 0x240 - g_Tilemap.scrollY.i.hi;
-        ent = self + 10;
+        ent = (Entity*)self + 10;
         for (i = 0; i < 8; i++, ent += 5) {
-            CreateEntityFromEntity(E_ID(GRANFALOON_TENTACLE), self, ent);
+            CreateEntityFromEntity(
+                E_ID(GRANFALOON_TENTACLE), (Entity*)self, ent);
             ent->zPriority = self->zPriority + 1;
             ent->params = i;
         }
-        ent = self + 1;
+        ent = (Entity*)self + 1;
         for (i = 0; i < 9; i++, ent++) {
-            CreateEntityFromEntity(E_ID(BODY_PART_SHELL), self, ent);
-            ent->ext.granfaloon.parent = self;
+            CreateEntityFromEntity(E_ID(BODY_PART_SHELL), (Entity*)self, ent);
+            ((struct EntityGranfaloon*)ent)->owner = (Entity*)self;
             ent->params = i;
         }
-        self->ext.granfaloon.palMask = 7;
-        self->ext.granfaloon.hitTimer = 0;
+        self->palMask = 7;
+        self->hitTimer = 0;
         SetStep(READY_TO_SPAWN);
     case READY_TO_SPAWN:
         if (GetDistanceToPlayerX() < 0x80) {
@@ -167,7 +202,7 @@ void EntityGranfaloon(Entity* self) {
                 SetStep(FLOAT_IDLE);
             }
             if (y < 0x1C0) {
-                self->ext.granfaloon.hitTimer = 0x7F;
+                self->hitTimer = 0x7F;
             }
             y += 0x70;
             y -= 0x1B0;
@@ -179,7 +214,7 @@ void EntityGranfaloon(Entity* self) {
             y = 0x1B0 - g_Tilemap.scrollY.i.hi;
             ent = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (ent != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, ent);
+                CreateEntityFromEntity(E_EXPLOSION, (Entity*)self, ent);
                 ent->zPriority = 0x70;
                 ent->posX.i.hi = baseX + offsetX;
                 ent->posY.i.hi = y;
@@ -190,16 +225,16 @@ void EntityGranfaloon(Entity* self) {
         break;
     case FLOAT_IDLE:
         if (!self->step_s) {
-            self->ext.granfaloon.palMask = 0xF;
-            self->ext.granfaloon.hitTimer = 0xFF;
-            self->ext.granfaloon.timer = 0x180;
-            self->ext.granfaloon.activeParts = 0;
+            self->palMask = 0xF;
+            self->hitTimer = 0xFF;
+            self->timer = 0x180;
+            self->activeParts = 0;
             self->step_s++;
         }
         MoveEntity();
         x = 0x100 - g_Tilemap.scrollX.i.hi;
         y = 0x120 - g_Tilemap.scrollY.i.hi;
-        angle = self->ext.granfaloon.angle += 0x10;
+        angle = self->angle += 0x10;
         angle &= 0xFFF;
         x += (rcos(angle) * 5) << 4 >> 12;
         y += (rsin(angle) * 5) << 4 >> 12;
@@ -208,7 +243,7 @@ void EntityGranfaloon(Entity* self) {
         angle = ratan2(y, x);
         self->velocityX = (rcos(angle) * 3) << 13 >> 12;
         self->velocityY = (rsin(angle) * 3) << 13 >> 12;
-        if (!--self->ext.granfaloon.timer) {
+        if (!--self->timer) {
             SetStep(SCREAMS_IDLE);
             if (D_us_80180CE0 > 2) {
                 ent = g_Entities;
@@ -220,7 +255,7 @@ void EntityGranfaloon(Entity* self) {
                 angle >>= 9;
                 offsetX = D_us_80180D14[angle];
                 if (D_us_80180CD8 & (1 << offsetX)) {
-                    self->ext.granfaloon.partIndex = offsetX;
+                    self->partIndex = offsetX;
                     SetStep(UNK_6);
                 }
             }
@@ -232,16 +267,16 @@ void EntityGranfaloon(Entity* self) {
     case SCREAMS_IDLE:
         switch (self->step_s) {
         case 0:
-            self->ext.granfaloon.timer = 0x40;
-            self->ext.granfaloon.palMask = 3;
-            self->ext.granfaloon.hitTimer = 0;
+            self->timer = 0x40;
+            self->palMask = 3;
+            self->hitTimer = 0;
             g_api.PlaySfx(SFX_GRANFALOON_BODIES_FALL);
             self->step_s++;
         case 1:
-            if (!--self->ext.granfaloon.timer) {
-                self->ext.granfaloon.timer = 0x100;
-                self->ext.granfaloon.palMask = 3;
-                self->ext.granfaloon.hitTimer = 0x1F;
+            if (!--self->timer) {
+                self->timer = 0x100;
+                self->palMask = 3;
+                self->hitTimer = 0x1F;
                 self->step_s++;
                 if (Random() & 1) {
                     g_api.PlaySfx(SFX_GRANFALOON_SCREAMS_A);
@@ -251,7 +286,7 @@ void EntityGranfaloon(Entity* self) {
             }
             break;
         case 2:
-            if (!--self->ext.granfaloon.timer) {
+            if (!--self->timer) {
                 SetStep(FLOAT_IDLE);
             }
             break;
@@ -260,13 +295,12 @@ void EntityGranfaloon(Entity* self) {
     case UNK_6:
         switch (self->step_s) {
         case 0:
-            self->ext.granfaloon.palMask = 7;
-            self->ext.granfaloon.hitTimer = 0;
+            self->palMask = 7;
+            self->hitTimer = 0;
             self->velocityX = 0;
             self->velocityY = 0;
             D_us_80180CDC = 0;
-            self->ext.granfaloon.activeParts =
-                1 << self->ext.granfaloon.partIndex;
+            self->activeParts = 1 << self->partIndex;
             self->step_s++;
         case 1:
             if (D_us_80180CDC) {
@@ -274,19 +308,19 @@ void EntityGranfaloon(Entity* self) {
             }
             break;
         case 2:
-            angle = D_us_80180D00[self->ext.granfaloon.partIndex];
+            angle = D_us_80180D00[self->partIndex];
             angle += 0x800;
             self->velocityX = rcos(angle) << 17 >> 12;
             self->velocityY = rsin(angle) << 17 >> 12;
-            self->ext.granfaloon.palMask = 0xFF;
-            self->ext.granfaloon.hitTimer = 0;
+            self->palMask = 0xFF;
+            self->hitTimer = 0;
             self->step_s++;
         case 3:
             MoveEntity();
             self->velocityX -= self->velocityX >> 4;
             self->velocityY -= self->velocityY >> 4;
             if (D_us_80180CDC == 0) {
-                self->ext.granfaloon.activeParts = 0;
+                self->activeParts = 0;
                 SetStep(FLOAT_IDLE);
                 if (D_us_80180CE0 > 8) {
                     SetStep(SHOOT_LASERS);
@@ -297,21 +331,22 @@ void EntityGranfaloon(Entity* self) {
         break;
     case SHOOT_LASERS:
         if (!self->step_s) {
-            self->ext.granfaloon.timer = 0x80;
-            self->ext.granfaloon.activeParts = 0;
-            self->ext.granfaloon.angle = Random() << 4;
+            self->timer = 0x80;
+            self->activeParts = 0;
+            self->angle = Random() << 4;
             self->step_s++;
         }
-        if (!(self->ext.granfaloon.timer & 0x1F)) {
+        if (!(self->timer & 0x1F)) {
             PlaySfxPositional(SFX_BAT_ECHO_A);
             ent = g_Entities;
-            angle = GetAngleBetweenEntities(self, ent);
+            angle = GetAngleBetweenEntities((Entity*)self, ent);
             angle -= 0x800;
             angle -= 0x300;
             for (i = 0; i < 4; i++) {
                 ent = AllocEntity(&g_Entities[144], &g_Entities[192]);
                 if (ent != NULL) {
-                    CreateEntityFromEntity(E_ID(HOMING_LASER), self, ent);
+                    CreateEntityFromEntity(
+                        E_ID(HOMING_LASER), (Entity*)self, ent);
                     ent->rotate = angle;
                 }
                 angle += 0x200;
@@ -320,7 +355,7 @@ void EntityGranfaloon(Entity* self) {
         MoveEntity();
         x = 0x100 - g_Tilemap.scrollX.i.hi;
         y = 0x120 - g_Tilemap.scrollY.i.hi;
-        angle = self->ext.granfaloon.angle += 0x20;
+        angle = self->angle += 0x20;
         angle &= 0xFFF;
         x += rcos(angle) << 6 >> 12;
         y += rsin(angle) << 6 >> 12;
@@ -329,7 +364,7 @@ void EntityGranfaloon(Entity* self) {
         angle = ratan2(y, x);
         self->velocityX = rcos(angle) << 16 >> 12;
         self->velocityY = rsin(angle) << 16 >> 12;
-        if (!--self->ext.granfaloon.timer) {
+        if (!--self->timer) {
             ent = g_Entities;
             x = ent->posX.i.hi - self->posX.i.hi;
             y = ent->posY.i.hi - self->posY.i.hi;
@@ -338,7 +373,7 @@ void EntityGranfaloon(Entity* self) {
             angle &= 0xFFF;
             angle >>= 9;
             offsetX = D_us_80180D14[angle];
-            self->ext.granfaloon.partIndex = offsetX;
+            self->partIndex = offsetX;
             SetStep(UNK_6);
         }
         break;
@@ -360,7 +395,7 @@ void EntityGranfaloon(Entity* self) {
             if (self->velocityY > 0) {
                 boss_status |= BOSS_STATUS_DECAYING;
                 self->drawFlags = ENTITY_ROTATE;
-                self->ext.granfaloon.timer = 0x80;
+                self->timer = 0x80;
                 self->drawFlags |= ENTITY_OPACITY;
                 self->opacity = 0x80;
                 self->step_s++;
@@ -370,13 +405,13 @@ void EntityGranfaloon(Entity* self) {
             MoveEntity();
             self->velocityY = FIX(0.5);
             self->rotate -= ROT(5.625);
-            if (!(self->ext.granfaloon.timer & 3)) {
+            if (!(self->timer & 3)) {
                 self->opacity -= 1;
             }
-            if (!(self->ext.granfaloon.timer & 7)) {
+            if (!(self->timer & 7)) {
                 PlaySfxPositional(SFX_FIREBALL_SHOT_B);
             }
-            if (!--self->ext.granfaloon.timer) {
+            if (!--self->timer) {
                 boss_status |= BOSS_STATUS_DEAD;
                 self->step_s++;
             }
@@ -396,15 +431,16 @@ void EntityGranfaloon(Entity* self) {
             for (i = 0; i < 2; i++) {
                 ent = AllocEntity(&g_Entities[64], &g_Entities[256]);
                 if (ent != NULL) {
-                    CreateEntityFromEntity(E_ID(EXPLOSION_FLAME), self, ent);
+                    CreateEntityFromEntity(
+                        E_ID(EXPLOSION_FLAME), (Entity*)self, ent);
                     ent->params = 6;
                     ent->scaleX = self->scaleX;
                     ent->zPriority = self->zPriority;
                 }
             }
-            self->ext.granfaloon.timer++;
+            self->timer++;
             self->scaleX--;
-            if (!(self->ext.granfaloon.timer & 0x1F)) {
+            if (!(self->timer & 0x1F)) {
                 PlaySfxPositional(SFX_BOSS_LARGE_FLAMES);
             }
             if (!self->scaleX) {
@@ -414,7 +450,7 @@ void EntityGranfaloon(Entity* self) {
         case 5:
             ent = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (ent != NULL) {
-                CreateEntityFromEntity(E_ID(LIFE_UP_SPAWN), self, ent);
+                CreateEntityFromEntity(E_ID(LIFE_UP_SPAWN), (Entity*)self, ent);
                 ent->posX.i.hi = 0x100 - g_Tilemap.scrollX.i.hi;
                 ent->posY.i.hi = 0x150 - g_Tilemap.scrollY.i.hi;
                 ent->params = 1;
@@ -468,10 +504,10 @@ void EntityGranfaloon(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         return;
     }
-    g_ClutIds[0x201] = g_ClutIds[self->ext.granfaloon.palIndex + 0x202];
-    if (!(g_Timer & self->ext.granfaloon.palMask)) {
-        self->ext.granfaloon.palIndex++;
-        self->ext.granfaloon.palIndex &= 3;
+    g_ClutIds[0x201] = g_ClutIds[self->palIndex + 0x202];
+    if (!(g_Timer & self->palMask)) {
+        self->palIndex++;
+        self->palIndex &= 3;
     }
     if (self->velocityX > 0) {
         x = 0x160 - g_Tilemap.scrollX.i.hi;
@@ -521,7 +557,7 @@ static u8 hitbox_lookup[] = {
     0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 31, 32, 33, 34, 35, 36, 37, 38, 0,
     0,  39, 0,  39, 0,  40, 0,  0,  0,  0, 0,  0,  0,  0,
 };
-void EntityBodyPartShell(Entity* self) {
+void EntityBodyPartShell(struct EntityGranfaloon* self) {
     enum Step {
         INIT,
         WAIT_SPAWN,
@@ -559,9 +595,9 @@ void EntityBodyPartShell(Entity* self) {
         if (row[4]) {
             newEntity = AllocEntity(&g_Entities[208], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_ID(UNK_1E), self, newEntity);
+                CreateEntityFromEntity(E_ID(UNK_1E), (Entity*)self, newEntity);
                 newEntity->params = self->params;
-                newEntity->ext.granfaloon.parent = self;
+                ((struct EntityGranfaloon*)newEntity)->owner = (Entity*)self;
             }
         }
     case WAIT_SPAWN:
@@ -572,13 +608,13 @@ void EntityBodyPartShell(Entity* self) {
         }
         break;
     case IDLE:
-        newEntity = self->ext.granfaloon.parent;
+        newEntity = self->owner;
         self->posX.i.hi = newEntity->posX.i.hi;
         self->posY.i.hi = newEntity->posY.i.hi;
-        if (!newEntity->ext.granfaloon.hitTimer) {
+        if (!((struct EntityGranfaloon*)newEntity)->hitTimer) {
             break;
         }
-        if (Random() & newEntity->ext.granfaloon.hitTimer) {
+        if (Random() & ((struct EntityGranfaloon*)newEntity)->hitTimer) {
             break;
         }
         posX = self->posX.i.hi;
@@ -613,7 +649,7 @@ void EntityBodyPartShell(Entity* self) {
                 newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(
-                        E_ID(BODY_PART_DEAD_PIECE), self, newEntity);
+                        E_ID(BODY_PART_DEAD_PIECE), (Entity*)self, newEntity);
                     newEntity->params = self->params + (i << 8);
                     newEntity->zPriority = 0x48;
                 }
@@ -673,12 +709,12 @@ void EntityBodyPartDeadPiece(Entity* self) {
     }
 }
 
-void func_us_801A2CC4(Entity* self) {
+void func_us_801A2CC4(struct EntityGranfaloon* self) {
     s16* row;
     Entity* parent;
 
     if (boss_status & BOSS_STATUS_DEFEATED) {
-        DestroyEntity(self);
+        DestroyEntity((Entity*)self);
         return;
     }
     switch (self->step) {
@@ -688,17 +724,17 @@ void func_us_801A2CC4(Entity* self) {
         row = D_us_80180D34[self->params];
         self->animCurFrame = row[4];
     case 1:
-        parent = self->ext.granfaloon.parent;
+        parent = self->owner;
         self->posX.i.hi = parent->posX.i.hi;
         self->posY.i.hi = parent->posY.i.hi;
         if (D_us_80180CD8 & (1 << self->params)) {
-            DestroyEntity(self);
+            DestroyEntity((Entity*)self);
         }
         break;
     }
 }
 
-void func_us_801A2D90(Entity* self) {
+void func_us_801A2D90(struct EntityGranfaloon* self) {
     s32 var_s0;
     s16 angle;
     s32 posY;
@@ -721,7 +757,7 @@ void func_us_801A2D90(Entity* self) {
         }
         self->posX.val += self->velocityX << 4;
         self->posY.val += self->velocityY << 4;
-        self->ext.granfaloon.timer = (Random() & 0x1F) + 0x10;
+        self->timer = (Random() & 0x1F) + 0x10;
     case 1:
         MoveEntity();
         self->rotate += ROT(5.625);
@@ -732,11 +768,11 @@ void func_us_801A2D90(Entity* self) {
     }
     posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
     if (posY > 0x1C8) {
-        DestroyEntity(self);
+        DestroyEntity((Entity*)self);
     }
 }
 
-void EntityGranfaloonTentacle(Entity* self) {
+void EntityGranfaloonTentacle(struct EntityGranfaloon* self) {
     enum Step {
         INIT,
         UNK_1,
@@ -757,25 +793,25 @@ void EntityGranfaloonTentacle(Entity* self) {
         self->opacity = D_us_80180DD0[self->params];
         self->rotate = 0;
         self->drawFlags |= ENTITY_ROTATE;
-        parent = self + 1;
-        CreateEntityFromEntity(E_ID(TENTACLE_HEAD), self, parent);
+        parent = (Entity*)self + 1;
+        CreateEntityFromEntity(E_ID(TENTACLE_HEAD), (Entity*)self, parent);
         parent->zPriority = self->zPriority + 1;
         parent->params = self->params;
     case UNK_1:
         index = self->params;
-        parent = self - 10 - index * 5;
+        parent = (Entity*)self - 10 - index * 5;
         self->posX.i.hi = parent->posX.i.hi + D_us_80180D90[index][0];
         self->posY.i.hi = parent->posY.i.hi + D_us_80180D90[index][1];
-        self->ext.granfaloon.activeParts =
-            parent->ext.granfaloon.activeParts & (1 << index);
-        AnimateEntity(D_us_80180DF4, self);
+        self->activeParts =
+            ((struct EntityGranfaloon*)parent)->activeParts & (1 << index);
+        AnimateEntity(D_us_80180DF4, (Entity*)self);
         self->animCurFrame += index * 7;
         if (D_us_80180CD8 & (1 << index)) {
-            if (!self->ext.granfaloon.activeParts) {
+            if (!self->activeParts) {
                 self->drawFlags |= ENTITY_ROTATE;
-                angle = (rcos(self->ext.granfaloon.angle) * 128) >> 12;
+                angle = (rcos(self->angle) * 128) >> 12;
                 func_801CDC80(&self->rotate, angle, 0x10);
-                self->ext.granfaloon.angle += 0x30;
+                self->angle += 0x30;
             } else {
                 player = &PLAYER;
                 angle = GetAngleBetweenEntities(parent, player);
@@ -792,25 +828,26 @@ void EntityGranfaloonTentacle(Entity* self) {
         break;
     case DEAD:
         index = self->params;
-        parent = self - 10 - index * 5;
+        parent = (Entity*)self - 10 - index * 5;
         self->posX.i.hi = parent->posX.i.hi + D_us_80180D90[index][0];
         self->posY.i.hi = parent->posY.i.hi + D_us_80180D90[index][1];
-        angle = (rcos(self->ext.granfaloon.angle) * 160) >> 12;
+        angle = (rcos(self->angle) * 160) >> 12;
         func_801CDC80(&self->rotate, angle, 0x40);
-        self->ext.granfaloon.angle += 0x70;
+        self->angle += 0x70;
         switch (self->step_s) {
         case 0:
             self->hitboxState = 0;
-            self->ext.granfaloon.timer = self->params;
+            self->timer = self->params;
             self->step_s++;
             break;
         case 1:
-            self->ext.granfaloon.timer++;
-            if (!(self->ext.granfaloon.timer & 0xF)) {
+            self->timer++;
+            if (!(self->timer & 0xF)) {
                 PlaySfxPositional(SFX_B07_STOMP);
                 parent = AllocEntity(&g_Entities[64], &g_Entities[256]);
                 if (parent != NULL) {
-                    CreateEntityFromEntity(E_ID(EXPLOSION_FLAME), self, parent);
+                    CreateEntityFromEntity(
+                        E_ID(EXPLOSION_FLAME), (Entity*)self, parent);
                     parent->params = 4;
                     parent->rotate = D_us_80180D00[self->params];
                     parent->zPriority = 0x70;
@@ -823,18 +860,19 @@ void EntityGranfaloonTentacle(Entity* self) {
             break;
         case 2:
             self->animCurFrame = 0;
-            self->ext.granfaloon.timer++;
+            self->timer++;
             index = self->params;
-            parent = self - 10 - index * 5;
+            parent = (Entity*)self - 10 - index * 5;
             self->posX.i.hi = parent->posX.i.hi;
             self->posY.i.hi = parent->posY.i.hi;
             angle = D_us_80180D00[index] + parent->rotate;
             self->posX.i.hi += (rcos(angle) * 24) >> 12;
             self->posY.i.hi += (rsin(angle) * 24) >> 12;
-            if (!(self->ext.granfaloon.timer & 3)) {
+            if (!(self->timer & 3)) {
                 parent = AllocEntity(&g_Entities[64], &g_Entities[256]);
                 if (parent != NULL) {
-                    CreateEntityFromEntity(E_ID(EXPLOSION_FLAME), self, parent);
+                    CreateEntityFromEntity(
+                        E_ID(EXPLOSION_FLAME), (Entity*)self, parent);
                     parent->params = 5;
                     parent->rotate = angle + 0x200;
                     parent->zPriority = 0x70;
@@ -845,14 +883,14 @@ void EntityGranfaloonTentacle(Entity* self) {
             }
             break;
         case 3:
-            DestroyEntity(self);
+            DestroyEntity((Entity*)self);
             break;
         }
         break;
     }
 }
 
-void EntityTentacleHead(Entity* self) {
+void EntityTentacleHead(struct EntityGranfaloon* self) {
     enum Step {
         INIT,
         IDLE,
@@ -876,20 +914,20 @@ void EntityTentacleHead(Entity* self) {
         self->rotate = D_us_80180D00[self->params] - 0x400;
     case IDLE:
         index = self->params;
-        parent = self - 1;
+        parent = (Entity*)self - 1;
         angle = D_us_80180D00[index] + parent->rotate;
         self->rotate = angle - 0x400;
         self->posX.i.hi = parent->posX.i.hi;
         self->posY.i.hi = parent->posY.i.hi;
         self->posX.i.hi += ((rcos(angle) * 40) >> 12);
         self->posY.i.hi += ((rsin(angle) * 40) >> 12);
-        if (parent->ext.granfaloon.activeParts) {
+        if (((struct EntityGranfaloon*)parent)->activeParts) {
             SetStep(ATTACK);
         }
         break;
     case ATTACK:
         index = self->params;
-        parent = self - 1;
+        parent = (Entity*)self - 1;
         angle = D_us_80180D00[index] + parent->rotate;
         self->rotate = angle - 0x400;
         self->posX.i.hi = parent->posX.i.hi;
@@ -898,27 +936,27 @@ void EntityTentacleHead(Entity* self) {
         self->posY.i.hi += ((rsin(angle) * 40) >> 12);
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(D_us_80180E10, self)) {
+            if (!AnimateEntity(D_us_80180E10, (Entity*)self)) {
                 SetSubStep(1);
             }
             break;
         case 1:
-            parent = self + 1;
-            CreateEntityFromEntity(E_ID(TENTACLE_LASER), self, parent);
+            parent = (Entity*)self + 1;
+            CreateEntityFromEntity(E_ID(TENTACLE_LASER), (Entity*)self, parent);
             parent->rotate = self->rotate;
             parent->zPriority = self->zPriority + 1;
-            parent->ext.granfaloon.parent = self;
-            self->ext.granfaloon.timer = 0x100;
+            ((struct EntityGranfaloon*)parent)->owner = (Entity*)self;
+            self->timer = 0x100;
             self->step_s++;
 
         case 2:
-            parent = self + 1;
+            parent = (Entity*)self + 1;
             if (parent->entityId != E_ID(TENTACLE_LASER)) {
                 self->step_s++;
             }
             break;
         case 3:
-            if (!AnimateEntity(D_us_80180E18, self)) {
+            if (!AnimateEntity(D_us_80180E18, (Entity*)self)) {
                 SetStep(IDLE);
             }
             break;
@@ -926,7 +964,7 @@ void EntityTentacleHead(Entity* self) {
         break;
     case DEAD:
         index = self->params;
-        parent = self - 1;
+        parent = (Entity*)self - 1;
         angle = D_us_80180D00[index] + parent->rotate;
         self->rotate = angle - 0x400;
         self->posX.i.hi = parent->posX.i.hi;
@@ -936,15 +974,16 @@ void EntityTentacleHead(Entity* self) {
         switch (self->step_s) {
         case 0:
             self->hitboxState = 0;
-            self->ext.granfaloon.timer = self->params;
+            self->timer = self->params;
             self->step_s++;
             break;
         case 1:
-            self->ext.granfaloon.timer++;
-            if (!(self->ext.granfaloon.timer & 7)) {
+            self->timer++;
+            if (!(self->timer & 7)) {
                 parent = AllocEntity(&g_Entities[64], &g_Entities[256]);
                 if (parent != NULL) {
-                    CreateEntityFromEntity(E_ID(EXPLOSION_FLAME), self, parent);
+                    CreateEntityFromEntity(
+                        E_ID(EXPLOSION_FLAME), (Entity*)self, parent);
                     parent->params = 3;
                     parent->zPriority = 0x70;
                 }
@@ -955,14 +994,14 @@ void EntityTentacleHead(Entity* self) {
             break;
         case 2:
             self->animCurFrame = 0;
-            DestroyEntity(self);
+            DestroyEntity((Entity*)self);
             break;
         }
         break;
     }
 }
 
-void EntityTentacleLaser(Entity* self) {
+void EntityTentacleLaser(struct EntityGranfaloon* self) {
     Entity* ent;
     Primitive* prim;
     s16 angle;
@@ -972,7 +1011,7 @@ void EntityTentacleLaser(Entity* self) {
     Collider collider;
 
     if (boss_status & BOSS_STATUS_DEFEATED) {
-        DestroyEntity(self);
+        DestroyEntity((Entity*)self);
         return;
     }
     switch (self->step) {
@@ -994,25 +1033,25 @@ void EntityTentacleLaser(Entity* self) {
         ent = AllocEntity(&g_Entities[208], &g_Entities[256]);
         angle = self->rotate + 0x400;
         if (ent != NULL) {
-            CreateEntityFromEntity(E_ID(TENTACLE_LASER), self, ent);
+            CreateEntityFromEntity(E_ID(TENTACLE_LASER), (Entity*)self, ent);
             ent->params = 0x100;
             ent->rotate = self->rotate;
             ent->posX.i.hi += (rcos(angle) * 24) >> 12;
             ent->posY.i.hi += (rsin(angle) * 24) >> 12;
             ent->zPriority = self->zPriority;
-            ent->ext.granfaloon.parent = self->ext.granfaloon.parent;
+            ((struct EntityGranfaloon*)ent)->owner = self->owner;
         }
         self->posX.i.hi += (rcos(angle) * 36) >> 12;
         self->posY.i.hi += (rsin(angle) * 36) >> 12;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
-            DestroyEntity(self);
+            DestroyEntity((Entity*)self);
             return;
         }
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.granfaloon.prim = prim;
+        self->prim = prim;
         prim->tpage = 0x12;
         prim->clut = PAL_BASE;
         prim->u0 = prim->u2 = 0xB8;
@@ -1022,69 +1061,67 @@ void EntityTentacleLaser(Entity* self) {
         prim->priority = self->zPriority - 1;
         prim->drawMode = DRAW_HIDE;
     case 1:
-        ent = self->ext.granfaloon.parent;
+        ent = self->owner;
         self->rotate = ent->rotate;
         angle = self->rotate + 0x400;
         self->posX.i.hi = ent->posX.i.hi;
         self->posY.i.hi = ent->posY.i.hi;
         self->posX.i.hi += (rcos(angle) * 36) >> 12;
         self->posY.i.hi += (rsin(angle) * 36) >> 12;
-        if (!AnimateEntity(D_us_80180E2C, self)) {
+        if (!AnimateEntity(D_us_80180E2C, (Entity*)self)) {
             SetStep(2);
         }
         break;
     case 2:
-        ent = self->ext.granfaloon.parent;
+        ent = self->owner;
         self->rotate = ent->rotate;
         angle = self->rotate + 0x400;
         self->posX.i.hi = ent->posX.i.hi;
         self->posY.i.hi = ent->posY.i.hi;
         self->posX.i.hi += (rcos(angle) * 36) >> 12;
         self->posY.i.hi += (rsin(angle) * 36) >> 12;
-        ent = self + 1;
-        CreateEntityFromEntity(E_ID(TENTACLE_LASER), self, ent);
+        ent = (Entity*)self + 1;
+        CreateEntityFromEntity(E_ID(TENTACLE_LASER), (Entity*)self, ent);
         ent->params = 1;
         ent->rotate = self->rotate;
-        ent->ext.granfaloon.parent = self;
+        ((struct EntityGranfaloon*)ent)->owner = (Entity*)self;
         angle = self->rotate + 0x400;
         self->posX.i.hi += (rcos(angle) * 40) >> 12;
         self->posY.i.hi += (rsin(angle) * 40) >> 12;
-        self->ext.granfaloon.length = FIX(0x4C);
+        self->length = FIX(0x4C);
         self->animCurFrame = 0x66;
-        prim = self->ext.granfaloon.prim;
+        prim = self->prim;
         prim->drawMode = DRAW_UNK02;
         D_us_80180CDC = 1;
         PlaySfxPositional(SFX_GRANFALOON_LASER_ATTACK);
         self->step++;
     case 3:
-        ent = self->ext.granfaloon.parent;
-        self->ext.granfaloon.length += FIX(8);
+        ent = self->owner;
+        self->length += FIX(8);
         self->rotate = ent->rotate;
         angle = self->rotate + 0x400;
         self->posX.i.hi = ent->posX.i.hi;
         self->posY.i.hi = ent->posY.i.hi;
-        self->posX.val += (self->ext.granfaloon.length >> 12) * rcos(angle);
-        self->posY.val += (self->ext.granfaloon.length >> 12) * rsin(angle);
-        if (!self->ext.granfaloon.hasHit) {
+        self->posX.val += (self->length >> 12) * rcos(angle);
+        self->posY.val += (self->length >> 12) * rsin(angle);
+        if (!self->hasHit) {
             offX = self->posX.i.hi;
             offY = self->posY.i.hi;
             g_api.CheckCollision(offX, offY, &collider, 0);
             if (collider.effects & EFFECT_SOLID) {
-                self->ext.granfaloon.hasHit = 1;
-                self->ext.granfaloon.hitX = offX + g_Tilemap.scrollX.i.hi;
-                self->ext.granfaloon.hitY = offY + g_Tilemap.scrollY.i.hi;
-                if (self->ext.granfaloon.hitY > 0x1B0) {
-                    self->ext.granfaloon.hitY = 0x1B0;
+                self->hasHit = 1;
+                self->hitX = offX + g_Tilemap.scrollX.i.hi;
+                self->hitY = offY + g_Tilemap.scrollY.i.hi;
+                if (self->hitY > 0x1B0) {
+                    self->hitY = 0x1B0;
                 }
             }
         } else {
             ent = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (ent != NULL) {
                 CreateEntityFromCurrentEntity(E_ID(EXPLOSION_FLAME), ent);
-                ent->posX.i.hi =
-                    self->ext.granfaloon.hitX - g_Tilemap.scrollX.i.hi;
-                ent->posY.i.hi =
-                    self->ext.granfaloon.hitY - g_Tilemap.scrollY.i.hi;
+                ent->posX.i.hi = self->hitX - g_Tilemap.scrollX.i.hi;
+                ent->posY.i.hi = self->hitY - g_Tilemap.scrollY.i.hi;
                 ent->posX.i.hi += Random() & 0xF;
                 ent->posY.i.hi += Random() & 0xF;
                 ent->zPriority = 0x70;
@@ -1099,12 +1136,12 @@ void EntityTentacleLaser(Entity* self) {
         angle = self->rotate + 0x400;
         offX = -((rsin(angle) * 12) >> 12);
         offY = (rcos(angle) * 12) >> 12;
-        prim = self->ext.granfaloon.prim;
+        prim = self->prim;
         prim->x0 = self->posX.i.hi + offX;
         prim->x1 = self->posX.i.hi - offX;
         prim->y0 = self->posY.i.hi + offY;
         prim->y1 = self->posY.i.hi - offY;
-        ent = self + 1;
+        ent = (Entity*)self + 1;
         prim->x2 = ent->posX.i.hi + offX;
         prim->x3 = ent->posX.i.hi - offX;
         prim->y2 = ent->posY.i.hi + offY;
@@ -1115,17 +1152,17 @@ void EntityTentacleLaser(Entity* self) {
         self->scaleX = 0x100;
         self->step++;
     case 5:
-        ent = self->ext.granfaloon.parent;
+        ent = self->owner;
         self->rotate = ent->rotate;
         angle = self->rotate + 0x400;
         self->posX.i.hi = ent->posX.i.hi;
         self->posY.i.hi = ent->posY.i.hi;
-        self->posX.val += (self->ext.granfaloon.length >> 12) * rcos(angle);
-        self->posY.val += (self->ext.granfaloon.length >> 12) * rsin(angle);
+        self->posX.val += (self->length >> 12) * rcos(angle);
+        self->posY.val += (self->length >> 12) * rsin(angle);
         self->scaleX -= 4;
         if (!self->scaleX) {
             D_us_80180CDC = 0;
-            DestroyEntity(self);
+            DestroyEntity((Entity*)self);
             return;
         }
         angle = self->rotate + 0x400;
@@ -1133,19 +1170,19 @@ void EntityTentacleLaser(Entity* self) {
         offY = (rcos(angle) * 12) >> 12;
         offX = (offX * self->scaleX) >> 8;
         offY = (offY * self->scaleX) >> 8;
-        prim = self->ext.granfaloon.prim;
+        prim = self->prim;
         prim->x0 = self->posX.i.hi + offX;
         prim->x1 = self->posX.i.hi - offX;
         prim->y0 = self->posY.i.hi + offY;
         prim->y1 = self->posY.i.hi - offY;
-        ent = self + 1;
+        ent = (Entity*)self + 1;
         prim->x2 = ent->posX.i.hi + offX;
         prim->x3 = ent->posX.i.hi - offX;
         prim->y2 = ent->posY.i.hi + offY;
         prim->y3 = ent->posY.i.hi - offY;
         break;
     case 0x10:
-        ent = self->ext.granfaloon.parent;
+        ent = self->owner;
         ent--;
         self->rotate = ent->rotate;
         angle = self->rotate + 0x400;
@@ -1153,28 +1190,28 @@ void EntityTentacleLaser(Entity* self) {
         self->posY.i.hi = ent->posY.i.hi;
         self->posX.i.hi += (rcos(angle) * 36) >> 12;
         self->posY.i.hi += (rsin(angle) * 36) >> 12;
-        ent = self->ext.granfaloon.parent;
+        ent = self->owner;
         self->drawFlags = ent->drawFlags;
         self->scaleX = ent->scaleX;
         if (ent->entityId != E_ID(TENTACLE_LASER)) {
-            DestroyEntity(self);
+            DestroyEntity((Entity*)self);
             return;
         }
-        self->ext.granfaloon.timer++;
+        self->timer++;
         if (self->scaleX) {
             break;
         }
-        if (self->ext.granfaloon.timer & 3) {
+        if (self->timer & 3) {
             break;
         }
         ent = AllocEntity(&g_Entities[128], &g_Entities[192]);
         if (ent != NULL) {
-            CreateEntityFromEntity(E_ID(UNK_23), self, ent);
+            CreateEntityFromEntity(E_ID(UNK_23), (Entity*)self, ent);
             ent->rotate = self->rotate + 0x400;
         }
         break;
     case 0x20:
-        ent = self->ext.granfaloon.parent;
+        ent = self->owner;
         self->rotate = ent->rotate;
         angle = self->rotate + 0x400;
         self->posX.i.hi = ent->posX.i.hi;
@@ -1183,8 +1220,8 @@ void EntityTentacleLaser(Entity* self) {
         self->posY.i.hi += (rsin(angle) * 24) >> 12;
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(D_us_80180E20, self)) {
-                self->ext.granfaloon.timer = 0x40;
+            if (!AnimateEntity(D_us_80180E20, (Entity*)self)) {
+                self->timer = 0x40;
                 self->drawFlags |= ENTITY_SCALEX;
                 self->scaleX = 0x100;
                 self->step_s++;
@@ -1196,9 +1233,9 @@ void EntityTentacleLaser(Entity* self) {
             } else {
                 self->animCurFrame = 0x60;
             }
-            self->scaleX = (self->ext.granfaloon.timer & 7) * 3 + 0x100;
-            if (!--self->ext.granfaloon.timer) {
-                DestroyEntity(self);
+            self->scaleX = (self->timer & 7) * 3 + 0x100;
+            if (!--self->timer) {
+                DestroyEntity((Entity*)self);
             }
             break;
         }
@@ -1206,7 +1243,7 @@ void EntityTentacleLaser(Entity* self) {
     }
 }
 
-void EntityZombieFalling(Entity* self) {
+void EntityZombieFalling(struct EntityGranfaloon* self) {
     Entity* newEntity;
     s16 angle;
     s32 frame;
@@ -1239,7 +1276,7 @@ void EntityZombieFalling(Entity* self) {
             self->velocityY = 0;
             self->hitboxState = 0;
             self->animCurFrame++;
-            self->ext.granfaloon.timer = 0x40;
+            self->timer = 0x40;
             PlaySfxPositional(SFX_SMALL_FLAME_IGNITE);
             self->step++;
         }
@@ -1247,28 +1284,29 @@ void EntityZombieFalling(Entity* self) {
     case 2:
         MoveEntity();
         self->velocityY += FIX(0.03125);
-        if (!(self->ext.granfaloon.timer & 7)) {
+        if (!(self->timer & 7)) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_ID(EXPLOSION_FLAME), self, newEntity);
+                CreateEntityFromEntity(
+                    E_ID(EXPLOSION_FLAME), (Entity*)self, newEntity);
                 newEntity->params = 0;
                 newEntity->zPriority = self->zPriority - 1;
                 newEntity->posY.i.hi += 0x14;
             }
         }
-        if (!--self->ext.granfaloon.timer) {
-            DestroyEntity(self);
+        if (!--self->timer) {
+            DestroyEntity((Entity*)self);
             return;
         }
         break;
     }
     posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
     if (posY > 0x1C8) {
-        DestroyEntity(self);
+        DestroyEntity((Entity*)self);
     }
 }
 
-void EntityZombieEnemy(Entity* self) {
+void EntityZombieEnemy(struct EntityGranfaloon* self) {
     Collider collider;
     Entity* newEntity;
     s32 res;
@@ -1311,10 +1349,10 @@ void EntityZombieEnemy(Entity* self) {
             } else {
                 self->velocityX = FIX(-0.375);
             }
-            AnimateEntity(D_us_80180DE0, self);
+            AnimateEntity(D_us_80180DE0, (Entity*)self);
             res = UnkCollisionFunc2(D_us_80180CE8);
             if (res & 0x80) {
-                DestroyEntity(self);
+                DestroyEntity((Entity*)self);
             }
             break;
         }
@@ -1323,39 +1361,39 @@ void EntityZombieEnemy(Entity* self) {
         switch (self->step_s) {
         case 0:
             self->hitboxState = 0;
-            self->ext.granfaloon.timer = (Random() & 0xF) + 0x10;
+            self->timer = (Random() & 0xF) + 0x10;
             self->animCurFrame = 0x71;
             PlaySfxPositional(SFX_SMALL_FLAME_IGNITE);
             self->step_s++;
         case 1:
-            if (!(self->ext.granfaloon.timer & 0xF)) {
+            if (!(self->timer & 0xF)) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(
-                        E_ID(EXPLOSION_FLAME), self, newEntity);
+                        E_ID(EXPLOSION_FLAME), (Entity*)self, newEntity);
                     newEntity->posY.i.hi += 0x18;
                     newEntity->zPriority = self->zPriority + 1;
                     newEntity->params = 1;
                 }
             }
-            if (!--self->ext.granfaloon.timer) {
-                self->ext.granfaloon.timer = 0x10;
+            if (!--self->timer) {
+                self->timer = 0x10;
                 self->animCurFrame = 0x72;
                 self->step_s++;
             }
             break;
         case 2:
-            if (!(self->ext.granfaloon.timer & 7)) {
+            if (!(self->timer & 7)) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(
-                        E_ID(EXPLOSION_FLAME), self, newEntity);
+                        E_ID(EXPLOSION_FLAME), (Entity*)self, newEntity);
                     newEntity->posY.i.hi += 0x18;
                     newEntity->zPriority = self->zPriority - 1;
                 }
             }
-            if (!--self->ext.granfaloon.timer) {
-                DestroyEntity(self);
+            if (!--self->timer) {
+                DestroyEntity((Entity*)self);
             }
             break;
         }
@@ -1363,7 +1401,7 @@ void EntityZombieEnemy(Entity* self) {
     }
 }
 
-void func_us_801A493C(Entity* self) {
+void func_us_801A493C(struct EntityGranfaloon* self) {
     Collider collider;
     Entity* newEntity;
     s32 posX;
@@ -1371,7 +1409,7 @@ void func_us_801A493C(Entity* self) {
     s16 angle;
 
     if (boss_status & BOSS_STATUS_DEFEATED) {
-        DestroyEntity(self);
+        DestroyEntity((Entity*)self);
         return;
     }
     switch (self->step) {
@@ -1386,12 +1424,12 @@ void func_us_801A493C(Entity* self) {
         MoveEntity();
         posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
         posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
-        if (!self->ext.granfaloon.hasHit) {
+        if (!self->hasHit) {
             posX = self->posX.i.hi;
             posY = self->posY.i.hi;
             g_api.CheckCollision(posX, posY, &collider, 0);
             if (collider.effects & EFFECT_SOLID) {
-                self->ext.granfaloon.hasHit = 1;
+                self->hasHit = 1;
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromCurrentEntity(
@@ -1404,13 +1442,13 @@ void func_us_801A493C(Entity* self) {
             }
         }
         if (posX < 0 || posY < 0 || posX > 0x200 || posY > 0x200) {
-            DestroyEntity(self);
+            DestroyEntity((Entity*)self);
         }
         break;
     }
 }
 
-void EntityHomingLaser(Entity* self) {
+void EntityHomingLaser(struct EntityHomingLaser* self) {
     Primitive* prim;
     Point16* pt;
     s16 angle;
@@ -1423,7 +1461,7 @@ void EntityHomingLaser(Entity* self) {
     s32 baseY;
 
     if (boss_status & BOSS_STATUS_DEFEATED) {
-        DestroyEntity(self);
+        DestroyEntity((Entity*)self);
         return;
     }
     switch (self->step) {
@@ -1433,13 +1471,13 @@ void EntityHomingLaser(Entity* self) {
         self->zPriority = 0x38;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 13);
         if (primIndex == -1) {
-            DestroyEntity(self);
+            DestroyEntity((Entity*)self);
             return;
         }
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.granfaloonLaser.prim = prim;
+        self->prim = prim;
         prim->tpage = 0x14;
         prim->clut = PAL_BASE;
         prim->u0 = prim->u2 = 0x38;
@@ -1482,7 +1520,7 @@ void EntityHomingLaser(Entity* self) {
         prim->priority = 0x38;
         prim->drawMode =
             DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
-        pt = self->ext.granfaloonLaser.trail;
+        pt = self->trail;
         for (i = 0; i < 0xE; i++) {
             pt->x = self->posX.i.hi;
             pt->y = self->posY.i.hi;
@@ -1491,17 +1529,17 @@ void EntityHomingLaser(Entity* self) {
         angle = self->rotate;
         self->velocityX = rcos(angle) << 7;
         self->velocityY = rsin(angle) << 7;
-        self->ext.granfaloonLaser.angle = angle;
-        self->ext.granfaloonLaser.timer = 12;
+        self->angle = angle;
+        self->timer = 12;
     case 1:
         MoveEntity();
         player = &g_Entities[0];
-        angle = GetAngleBetweenEntities(self, player);
-        angle = LimitAngleChange(0x80, self->ext.granfaloonLaser.angle, angle);
+        angle = GetAngleBetweenEntities((Entity*)self, player);
+        angle = LimitAngleChange(0x80, self->angle, angle);
         self->velocityX = rcos(angle) << 7;
         self->velocityY = rsin(angle) << 7;
-        self->ext.granfaloonLaser.angle = angle;
-        if (!--self->ext.granfaloonLaser.timer) {
+        self->angle = angle;
+        if (!--self->timer) {
             self->zPriority = 0x50;
             self->step++;
         }
@@ -1511,25 +1549,25 @@ void EntityHomingLaser(Entity* self) {
         offX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
         offY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
         if (offX < -0x40 || offY < -0x40 || offX > 0x240 || offY > 0x200) {
-            DestroyEntity(self);
+            DestroyEntity((Entity*)self);
             return;
         }
         break;
     }
-    pt = &self->ext.granfaloonLaser.trail[13];
+    pt = &self->trail[13];
     for (i = 0; i < 0xD; i++) {
         pt->x = pt[-1].x - g_ScrollDeltaX;
         pt->y = pt[-1].y - g_ScrollDeltaY;
         pt--;
     }
-    pt = self->ext.granfaloonLaser.trail;
+    pt = self->trail;
     pt->x = self->posX.i.hi;
     pt->y = self->posY.i.hi;
-    pt = self->ext.granfaloonLaser.trail;
-    prim = self->ext.granfaloonLaser.prim;
+    pt = self->trail;
+    prim = self->prim;
     baseX = pt->x;
     baseY = pt->y;
-    prim = self->ext.granfaloonLaser.prim;
+    prim = self->prim;
     offX = pt[1].x - baseX;
     offY = pt[1].y - baseY;
     angle = ratan2(offY, offX);

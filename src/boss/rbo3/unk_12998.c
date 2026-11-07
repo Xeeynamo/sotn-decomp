@@ -4,6 +4,15 @@
 
 extern EInit g_EInitParticle;
 
+struct func_us_80192998 {
+    ENTITY_SHARED;
+    /* 0x7C */ char pad_7C[0x4];
+    /* 0x80 */ u8* animData;
+    /* 0x84 */ char pad_84[0x8];
+    /* 0x8C */ s32 accelY;
+};
+SYNC_STRUCT(func_us_80192998);
+
 static u8 D_us_801806C4[] = {
     3, 1, 3, 2, 3, 3,  3, 4,  3, 5,  3, 6,  3,   7,
     3, 8, 3, 9, 3, 10, 3, 11, 3, 12, 3, 13, 255, 0,
@@ -21,7 +30,7 @@ static EntityConfig D_us_8018071C[] = {
 };
 
 // Entity ID 0x1B
-void func_us_80192998(Entity* self) {
+void func_us_80192998(struct func_us_80192998* self) {
     s32 params;
     EntityConfig* obj;
 
@@ -34,7 +43,7 @@ void func_us_80192998(Entity* self) {
         self->blendMode = obj->blendMode;
         self->animSet = obj->animSet;
         self->unk5A = obj->unk5A;
-        self->ext.e_80192998.anim = obj->animData;
+        self->animData = obj->animData;
         self->step = params + 1;
         if (self->params & 0xFF00) {
             self->zPriority = (self->params & 0xFF00) >> 8;
@@ -54,14 +63,14 @@ void func_us_80192998(Entity* self) {
             self->facingLeft = Random() & 1;
             self->velocityX = (Random() << 8) - FIX(1.0 / 2.0);
             self->velocityY = FIX(-0.75);
-            self->ext.e_80192998.accelY = -(Random() * 16) - FIX(1.0 / 4.0);
+            self->accelY = -(Random() * 16) - FIX(1.0 / 4.0);
             self->step_s++;
         }
         MoveEntity();
-        self->velocityY += (s32)self->ext.e_80192998.accelY;
+        self->velocityY += (s32)self->accelY;
         self->opacity -= 1;
-        if (!AnimateEntity(self->ext.e_80192998.anim, self)) {
-            DestroyEntity(self);
+        if (!AnimateEntity(self->animData, (Entity*)self)) {
+            DestroyEntity((Entity*)self);
         }
         break;
     }

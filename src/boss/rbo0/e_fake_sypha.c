@@ -1,6 +1,33 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo0.h"
 
+struct EntityFakeSypha {
+    ENTITY_SHARED;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 timer;
+};
+SYNC_STRUCT(EntityFakeSypha);
+
+struct EntityHolyLightning {
+    ENTITY_SHARED;
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 angle;
+    /* 0x84 */ Point16 trail[14];
+};
+SYNC_STRUCT(EntityHolyLightning);
+
+struct EntitySummonAttack {
+    ENTITY_SHARED;
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s16 red;
+    /* 0x86 */ s16 green;
+    /* 0x88 */ s16 blue;
+};
+SYNC_STRUCT(EntitySummonAttack);
+
 extern EInit D_us_801804C4;
 extern s8 D_us_801806B8[];
 extern u8 D_us_80180718[];
@@ -83,7 +110,7 @@ static AnimateEntityFrame D_us_80180D28[] = {
     POSE_LOOP(0),     {0, 0},
 };
 
-void EntityFakeSypha(Entity* self) {
+void EntityFakeSypha(struct EntityFakeSypha* self) {
     Entity* entity;
     s32 i;
     s32 facingLeft;
@@ -103,7 +130,7 @@ void EntityFakeSypha(Entity* self) {
     case 0:
         InitializeEntity(D_us_801804C4);
         self->hitboxState = 0;
-        entity = self - 1;
+        entity = (Entity*)self - 1;
         CreateEntityFromCurrentEntity(E_ID(COFFIN), entity);
         entity->posY.i.hi = 0xBA - g_Tilemap.scrollY.i.hi;
         SetStep(1);
@@ -117,16 +144,16 @@ void EntityFakeSypha(Entity* self) {
         break;
 
     case 2:
-        entity = self - 1;
+        entity = (Entity*)self - 1;
         switch (self->step_s) {
         case 0:
-            if (entity->ext.sypha.unk8C) {
+            if (((struct EntityCoffin*)entity)->unk8C) {
                 self->animCurFrame = 0;
                 self->step_s++;
             }
             break;
         case 1:
-            if (!entity->ext.sypha.unk8C) {
+            if (!((struct EntityCoffin*)entity)->unk8C) {
                 self->animCurFrame = 6;
                 self->step_s++;
             }
@@ -151,7 +178,7 @@ void EntityFakeSypha(Entity* self) {
             // fallthrough
         case 1:
             MoveEntity();
-            AnimateEntity(D_us_80180CCC, self);
+            AnimateEntity(D_us_80180CCC, (Entity*)self);
             posY = 0x80 - g_Tilemap.scrollY.i.hi;
             posY -= self->posY.i.hi;
             if (posY > 0) {
@@ -166,20 +193,19 @@ void EntityFakeSypha(Entity* self) {
             self->velocityY = 0;
             self->step_s++;
         }
-        AnimateEntity(D_us_80180C7C, self);
+        AnimateEntity(D_us_80180C7C, (Entity*)self);
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         break;
     case 5:
         switch (self->step_s) {
         case 0:
             self->velocityY = 0;
-            self->ext.sypha.timer =
-                (Random() & 0x1F) + (3 - D_us_801806B4) * 0x10;
+            self->timer = (Random() & 0x1F) + (3 - D_us_801806B4) * 0x10;
             self->step_s++;
             // fallthrough
         case 1:
             MoveEntity();
-            AnimateEntity(D_us_80180C7C, self);
+            AnimateEntity(D_us_80180C7C, (Entity*)self);
             posY = 0x80 - self->posY.i.hi;
             if (posY < -4) {
                 self->velocityY -= FIX(1.0 / 128.0);
@@ -210,7 +236,7 @@ void EntityFakeSypha(Entity* self) {
                 SetSubStep(2);
             }
 
-            if (!--self->ext.sypha.timer) {
+            if (!--self->timer) {
                 SetSubStep(3);
             }
             break;
@@ -218,7 +244,7 @@ void EntityFakeSypha(Entity* self) {
             MoveEntity();
             self->velocityX -= self->velocityX >> 5;
             self->velocityY -= self->velocityY >> 5;
-            if (AnimateEntity(D_us_80180CBC, self) == 0) {
+            if (AnimateEntity(D_us_80180CBC, (Entity*)self) == 0) {
                 self->facingLeft ^= 1;
                 self->animCurFrame = 0xBB;
                 SetSubStep(1);
@@ -226,7 +252,7 @@ void EntityFakeSypha(Entity* self) {
             break;
         case 3:
             MoveEntity();
-            AnimateEntity(D_us_80180C7C, self);
+            AnimateEntity(D_us_80180C7C, (Entity*)self);
             self->velocityX -= self->velocityX / 16;
             self->velocityY -= self->velocityY / 16;
             if (abs(self->velocityX) < FIX(0.125)) {
@@ -239,7 +265,7 @@ void EntityFakeSypha(Entity* self) {
         MoveEntity();
         self->velocityX -= self->velocityX >> 5;
         self->velocityY -= self->velocityY >> 5;
-        if (AnimateEntity(D_us_80180CBC, self) == 0) {
+        if (AnimateEntity(D_us_80180CBC, (Entity*)self) == 0) {
             self->facingLeft ^= 1;
             self->animCurFrame = 0xBB;
             SetStep(5);
@@ -257,14 +283,14 @@ void EntityFakeSypha(Entity* self) {
             }
             // fallthrough
         case 1:
-            if (AnimateEntity(D_us_80180CBC, self) == 0) {
+            if (AnimateEntity(D_us_80180CBC, (Entity*)self) == 0) {
                 self->facingLeft ^= 1;
                 self->animCurFrame = 0xBB;
                 SetSubStep(2);
             }
             break;
         case 2:
-            if (AnimateEntity(D_us_80180C8C, self) == 0) {
+            if (AnimateEntity(D_us_80180C8C, (Entity*)self) == 0) {
                 SetStep(11);
                 if (D_us_801806B4 >= 1) {
                     sideToPlayer = GetSideToPlayer();
@@ -293,7 +319,8 @@ void EntityFakeSypha(Entity* self) {
         case 0:
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_ID(DEATH_FLAMES), self, entity);
+                CreateEntityFromEntity(
+                    E_ID(DEATH_FLAMES), (Entity*)self, entity);
                 if (self->facingLeft) {
                     entity->posX.i.hi += 0xA;
                 } else {
@@ -304,43 +331,44 @@ void EntityFakeSypha(Entity* self) {
                 entity->zPriority = self->zPriority + 1;
                 entity->params = 3;
             }
-            self->ext.sypha.timer = 0x20;
+            self->timer = 0x20;
             PlaySfxPositional(SFX_EXPLODE_SMALL);
             self->step_s++;
             // fallthrough
         case 1:
-            AnimateEntity(D_us_80180C9C, self);
-            if (!--self->ext.sypha.timer) {
+            AnimateEntity(D_us_80180C9C, (Entity*)self);
+            if (!--self->timer) {
                 self->step_s++;
             }
             break;
 
         case 2:
-            self->ext.sypha.timer = 0x80;
+            self->timer = 0x80;
 
             PlaySfxPositional(SFX_DRACULA_FLY_IN);
             self->step_s++;
             // fallthrough
 
         case 3:
-            if (!(self->ext.sypha.timer & 3)) {
+            if (!(self->timer & 3)) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID(HOLY_FLAME), self, entity);
+                    CreateEntityFromEntity(
+                        E_ID(HOLY_FLAME), (Entity*)self, entity);
                     if (self->facingLeft) {
                         entity->posX.i.hi += 0xA;
                     } else {
                         entity->posX.i.hi -= 0xA;
                     }
                     entity->posY.i.hi -= 4;
-                    entity->params = (self->ext.sypha.timer & 4) >> 2;
+                    entity->params = (self->timer & 4) >> 2;
                     entity->facingLeft = self->facingLeft;
                     entity->zPriority = self->zPriority + 1;
                 }
             }
 
-            AnimateEntity(D_us_80180C9C, self);
-            if (!--self->ext.sypha.timer) {
+            AnimateEntity(D_us_80180C9C, (Entity*)self);
+            if (!--self->timer) {
                 SetStep(7);
             }
             break;
@@ -351,7 +379,8 @@ void EntityFakeSypha(Entity* self) {
         case 0:
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_ID(DEATH_FLAMES), self, entity);
+                CreateEntityFromEntity(
+                    E_ID(DEATH_FLAMES), (Entity*)self, entity);
                 if (self->facingLeft) {
                     entity->posX.i.hi += 0xA;
                 } else {
@@ -362,24 +391,25 @@ void EntityFakeSypha(Entity* self) {
                 entity->zPriority = self->zPriority + 1;
                 entity->params = 4;
             }
-            self->ext.sypha.timer = 0x20;
+            self->timer = 0x20;
             self->step_s++;
             // fallthrough
         case 1:
-            AnimateEntity(D_us_80180C9C, self);
-            if (!--self->ext.sypha.timer) {
+            AnimateEntity(D_us_80180C9C, (Entity*)self);
+            if (!--self->timer) {
                 self->step_s++;
             }
             break;
         case 2:
-            self->ext.sypha.timer = 0x50;
+            self->timer = 0x50;
             PlaySfxPositional(SFX_FAKE_SYPHA_ATTACK);
             self->step_s++;
             // fallthrough
         case 3:
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_ID(PETRIFY_CLOUD), self, entity);
+                CreateEntityFromEntity(
+                    E_ID(PETRIFY_CLOUD), (Entity*)self, entity);
                 if (self->facingLeft) {
                     entity->posX.i.hi += 8;
                 } else {
@@ -389,11 +419,11 @@ void EntityFakeSypha(Entity* self) {
                 entity->facingLeft = self->facingLeft;
                 entity->zPriority = self->zPriority + 1;
             }
-            if (!(self->ext.sypha.timer & 7)) {
+            if (!(self->timer & 7)) {
                 PlaySfxPositional(SFX_NOISE_SWEEP_DOWN_A);
             }
-            AnimateEntity(D_us_80180C9C, self);
-            if (!--self->ext.sypha.timer) {
+            AnimateEntity(D_us_80180C9C, (Entity*)self);
+            if (!--self->timer) {
                 SetStep(7);
             }
             break;
@@ -404,7 +434,8 @@ void EntityFakeSypha(Entity* self) {
         case 0:
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_ID(DEATH_FLAMES), self, entity);
+                CreateEntityFromEntity(
+                    E_ID(DEATH_FLAMES), (Entity*)self, entity);
                 if (self->facingLeft) {
                     entity->posX.i.hi += 10;
                 } else {
@@ -415,13 +446,13 @@ void EntityFakeSypha(Entity* self) {
                 entity->zPriority = self->zPriority + 1;
                 entity->params = 5;
             }
-            self->ext.sypha.timer = 0x20;
+            self->timer = 0x20;
             PlaySfxPositional(SFX_SMALL_FLAME_IGNITE);
             self->step_s++;
             // fallthrough
         case 1:
-            AnimateEntity(D_us_80180C9C, self);
-            if (!--self->ext.sypha.timer) {
+            AnimateEntity(D_us_80180C9C, (Entity*)self);
+            if (!--self->timer) {
                 self->step_s++;
             }
             break;
@@ -429,7 +460,8 @@ void EntityFakeSypha(Entity* self) {
             for (i = 0; i < 3; i++) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID(HOLY_LIGHTNING), self, entity);
+                    CreateEntityFromEntity(
+                        E_ID(HOLY_LIGHTNING), (Entity*)self, entity);
                     if (self->facingLeft) {
                         entity->posX.i.hi += 8;
                     } else {
@@ -445,12 +477,12 @@ void EntityFakeSypha(Entity* self) {
                 }
             }
             PlaySfxPositional(SFX_OUIJA_TABLE_DEATH);
-            self->ext.sypha.timer = 0x40;
+            self->timer = 0x40;
             self->step_s++;
             // fallthrough
         case 3:
-            AnimateEntity(D_us_80180C9C, self);
-            if (!--self->ext.sypha.timer) {
+            AnimateEntity(D_us_80180C9C, (Entity*)self);
+            if (!--self->timer) {
                 SetStep(7);
             }
             break;
@@ -459,39 +491,40 @@ void EntityFakeSypha(Entity* self) {
     case 13:
         switch (self->step_s) {
         case 0:
-            self->ext.sypha.timer = 0x20;
+            self->timer = 0x20;
             PlaySfxPositional(SFX_NOISE_SWEEP_DOWN_A);
             self->step_s++;
             // fallthrough
         case 1:
-            if (!(self->ext.sypha.timer & 3)) {
+            if (!(self->timer & 3)) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID(DEATH_FLAMES), self, entity);
+                    CreateEntityFromEntity(
+                        E_ID(DEATH_FLAMES), (Entity*)self, entity);
                     entity->posY.i.hi += (Random() & 0x1F);
                     entity->zPriority = self->zPriority - 1;
                     entity->params = 6;
                 }
             }
-            AnimateEntity(D_us_80180C9C, self);
-            if (!--self->ext.sypha.timer) {
+            AnimateEntity(D_us_80180C9C, (Entity*)self);
+            if (!--self->timer) {
                 self->step_s++;
             }
             break;
         case 2:
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_ID(RESURRECT), self, entity);
+                CreateEntityFromEntity(E_ID(RESURRECT), (Entity*)self, entity);
                 entity->posX.i.hi = self->posX.i.hi;
                 entity->posY.i.hi = 0xC8 - g_Tilemap.scrollY.i.hi;
             }
 
-            self->ext.sypha.timer = 0x80;
+            self->timer = 0x80;
             self->step_s++;
             // fallthrough
         case 3:
-            AnimateEntity(D_us_80180C9C, self);
-            if (!--self->ext.sypha.timer) {
+            AnimateEntity(D_us_80180C9C, (Entity*)self);
+            if (!--self->timer) {
                 SetStep(7);
             }
             break;
@@ -506,15 +539,15 @@ void EntityFakeSypha(Entity* self) {
                 self->velocityX = FIX(-2.0);
             }
             self->velocityY = FIX(-2.5);
-            self->ext.sypha.timer = 0x10;
+            self->timer = 0x10;
             self->step_s++;
         }
-        AnimateEntity(D_us_80180CC4, self);
+        AnimateEntity(D_us_80180CC4, (Entity*)self);
         MoveEntity();
         self->velocityX -= self->velocityX >> 5;
         self->velocityY += FIX(0.09375);
         func_us_80194338(D_us_80180C6C);
-        if (!--self->ext.sypha.timer) {
+        if (!--self->timer) {
             SetStep(9);
         }
         break;
@@ -525,17 +558,17 @@ void EntityFakeSypha(Entity* self) {
             self->hitboxState = 0;
             self->velocityX = 0;
             self->velocityY = FIX(-2.5);
-            self->ext.sypha.timer = 0x20;
+            self->timer = 0x20;
             PlaySfxPositional(SFX_FAKE_SYPHA_DEATH);
             self->step_s++;
             // fallthrough
         case 1:
-            AnimateEntity(D_us_80180CC4, self);
+            AnimateEntity(D_us_80180CC4, (Entity*)self);
             MoveEntity();
             self->velocityY -= self->velocityY >> 4;
-            if (!--self->ext.sypha.timer) {
+            if (!--self->timer) {
                 PlaySfxPositional(SFX_DRACULA_FLY_IN);
-                self->ext.sypha.timer = 0x40;
+                self->timer = 0x40;
                 self->step_s++;
             }
             break;
@@ -545,14 +578,15 @@ void EntityFakeSypha(Entity* self) {
             if (!(g_Timer & 3)) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID(DEATH_FLAMES), self, entity);
+                    CreateEntityFromEntity(
+                        E_ID(DEATH_FLAMES), (Entity*)self, entity);
                     entity->zPriority = self->zPriority + 1;
                     entity->params = 9;
                     entity->posY.i.hi += 12;
                 }
             }
             func_us_80194338(D_us_80180C6C);
-            if (!--self->ext.sypha.timer) {
+            if (!--self->timer) {
                 self->step_s++;
             }
             break;
@@ -563,7 +597,7 @@ void EntityFakeSypha(Entity* self) {
         break;
 
     case 7:
-        if (AnimateEntity(D_us_80180CAC, self) == 0) {
+        if (AnimateEntity(D_us_80180CAC, (Entity*)self) == 0) {
             SetStep(5);
         }
         break;
@@ -717,7 +751,7 @@ void EntityPetrifyCloud(Entity* self) {
 
 extern EInit D_us_80180548;
 
-void EntityHolyLightning(Entity* self) {
+void EntityHolyLightning(struct EntityHolyLightning* self) {
     s32 i;
     Primitive* prim;
     Entity* player;
@@ -731,7 +765,7 @@ void EntityHolyLightning(Entity* self) {
     s32 offsetY;
 
     if (g_BossMgrState & BOSS_MGR_TERMINATED) {
-        DestroyEntity(self);
+        DestroyEntity((Entity*)self);
         return;
     }
 
@@ -745,13 +779,13 @@ void EntityHolyLightning(Entity* self) {
         self->blendMode = BLEND_ADD | BLEND_TRANSP;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 13);
         if (primIndex == -1) {
-            DestroyEntity(self);
+            DestroyEntity((Entity*)self);
             return;
         }
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.sypha.prim = prim;
+        self->prim = prim;
         for (i = 0; i < 13; i++) {
             prim->tpage = 0x1A;
             prim->clut = self->palette;
@@ -768,7 +802,7 @@ void EntityHolyLightning(Entity* self) {
                              DRAW_UNK02 | DRAW_TRANSP;
             prim = prim->next;
         }
-        var_s1 = (Point16*)&self->ext.sypha.red;
+        var_s1 = self->trail;
         for (i = 0; i < 14; i++) {
             var_s1->x = self->posX.i.hi;
             var_s1->y = self->posY.i.hi;
@@ -777,50 +811,50 @@ void EntityHolyLightning(Entity* self) {
         angle = self->rotate;
         self->velocityX = rcos(angle) << 6;
         self->velocityY = rsin(angle) << 6;
-        self->ext.sypha.angle = angle;
-        self->ext.sypha.timer = 64;
+        self->angle = angle;
+        self->timer = 64;
 
         // fallthrough
     case 1:
         MoveEntity();
-        AnimateEntity(D_us_80180D10, self);
+        AnimateEntity(D_us_80180D10, (Entity*)self);
         player = &PLAYER;
-        angle = GetAngleBetweenEntities(self, player);
-        angle = LimitAngleChange(0x10, self->ext.sypha.angle, angle);
+        angle = GetAngleBetweenEntities((Entity*)self, player);
+        angle = LimitAngleChange(0x10, self->angle, angle);
         self->velocityX = rcos(angle) << 6;
         self->velocityY = rsin(angle) << 6;
-        self->ext.sypha.angle = angle;
-        if (!--self->ext.sypha.timer) {
+        self->angle = angle;
+        if (!--self->timer) {
             self->step++;
         }
         break;
     case 2:
         MoveEntity();
-        AnimateEntity(D_us_80180D10, self);
+        AnimateEntity(D_us_80180D10, (Entity*)self);
         offsetX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
         offsetY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
         if (offsetX < -0x40 || offsetY < -0x40 || offsetX > 0x240 ||
             offsetY > 0x140) {
-            DestroyEntity(self);
+            DestroyEntity((Entity*)self);
             return;
         }
         break;
     }
 
-    var_s1 = (Point16*)&self->unkB8;
+    var_s1 = &self->trail[13];
     for (i = 0; i < 13; i++) {
         var_s1->x = (var_s1 - 1)->x - g_ScrollDeltaX;
         var_s1->y = (var_s1 - 1)->y - g_ScrollDeltaY;
         var_s1--;
     }
-    var_s1 = (Point16*)&self->ext.sypha.red;
+    var_s1 = self->trail;
     var_s1->x = self->posX.i.hi;
     var_s1->y = self->posY.i.hi;
-    var_s1 = (Point16*)&self->ext.sypha.red;
-    prim = self->ext.sypha.prim;
+    var_s1 = self->trail;
+    prim = self->prim;
     posX = var_s1->x;
     posY = var_s1->y;
-    prim = self->ext.sypha.prim;
+    prim = self->prim;
     offsetX = var_s1[1].x - posX;
     offsetY = var_s1[1].y - posY;
     angle = ratan2(offsetY, offsetX);
@@ -866,7 +900,7 @@ void EntityHolyLightning(Entity* self) {
         prim->drawMode = DRAW_HIDE;
         prim = prim->next;
     }
-    prim = self->ext.sypha.prim;
+    prim = self->prim;
     while (prim != NULL) {
         if (g_Timer & 1) {
             prim->u0 = prim->u2 = 0xC0;
@@ -883,7 +917,7 @@ void EntityHolyLightning(Entity* self) {
 extern EInit D_us_80180554;
 extern s32 D_us_80180C60;
 
-void EntitySummonAttack(Entity* self) {
+void EntitySummonAttack(struct EntitySummonAttack* self) {
     Entity* entity;  // s7
     Primitive* prim; // s0
     s32 posX;        // s4
@@ -902,11 +936,11 @@ void EntitySummonAttack(Entity* self) {
         D_us_80180C60 = 0;
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            CreateEntityFromEntity(E_EXPLOSION, (Entity*)self, entity);
             entity->params = 3;
         }
         PlaySfxPositional(SFX_QUICK_STUTTER_EXPLODE_A);
-        DestroyEntity(self);
+        DestroyEntity((Entity*)self);
         return;
     }
 
@@ -920,13 +954,13 @@ void EntitySummonAttack(Entity* self) {
         self->hitboxOffY = 3;
         primIndex = g_api.AllocPrimitives(PRIM_G4, 0x10);
         if (primIndex == -1) {
-            DestroyEntity(self);
+            DestroyEntity((Entity*)self);
             return;
         }
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.sypha.prim = prim;
+        self->prim = prim;
         posX = self->posX.i.hi - 0x10;
         posY = 0xE0 - g_Tilemap.scrollY.i.hi;
         while (prim != NULL) {
@@ -947,23 +981,23 @@ void EntitySummonAttack(Entity* self) {
     case 1:
         switch (self->step_s) {
         case 0:
-            self->ext.sypha.timer = 48;
+            self->timer = 48;
             PlaySfxPositional(SFX_TELEPORT_BANG_B);
             self->step_s++;
             // fallthrough
         case 1:
-            prim = self->ext.sypha.prim;
+            prim = self->prim;
             brightness = 0;
             while (prim != NULL) {
                 prim->y0 = prim->y1 -= 4;
                 prim = prim->next;
             }
 
-            if (!--self->ext.sypha.timer) {
+            if (!--self->timer) {
                 self->step_s++;
             }
 
-            prim = self->ext.sypha.prim;
+            prim = self->prim;
             while (prim != NULL) {
                 if (Random() & 1) {
                     prim->y0 = prim->y1 += 4;
@@ -973,10 +1007,10 @@ void EntitySummonAttack(Entity* self) {
                 prim = prim->next;
             }
 
-            prim = self->ext.sypha.prim;
-            red = self->ext.sypha.red += 0x70;
-            green = self->ext.sypha.green += 0x40;
-            blue = self->ext.sypha.blue += 0x10;
+            prim = self->prim;
+            red = self->red += 0x70;
+            green = self->green += 0x40;
+            blue = self->blue += 0x10;
 
             while (prim != NULL) {
                 prim->r2 = ((rcos(red) << 6) >> 0xC) + 0xA0;
@@ -994,11 +1028,11 @@ void EntitySummonAttack(Entity* self) {
         case 2:
             self->animCurFrame = 0x5C;
             self->facingLeft = GetSideToPlayer() & 1;
-            self->ext.sypha.timer = 32;
+            self->timer = 32;
             self->step_s++;
             // fallthrough
         case 3:
-            prim = self->ext.sypha.prim;
+            prim = self->prim;
             while (prim != NULL) {
                 if (Random() & 1) {
                     prim->y0 = prim->y1 += 4;
@@ -1008,13 +1042,13 @@ void EntitySummonAttack(Entity* self) {
                 prim = prim->next;
             }
 
-            if (!--self->ext.sypha.timer) {
+            if (!--self->timer) {
                 self->step_s++;
             }
-            prim = self->ext.sypha.prim;
-            red = self->ext.sypha.red += 0x70;
-            green = self->ext.sypha.green += 0x40;
-            blue = self->ext.sypha.blue += 0x10;
+            prim = self->prim;
+            red = self->red += 0x70;
+            green = self->green += 0x40;
+            blue = self->blue += 0x10;
             while (prim != NULL) {
                 prim->r2 = ((rcos(red) << 6) >> 0xC) + 0xA0;
                 prim->g2 = ((rsin(green) << 6) >> 0xC) + 0xA0;
@@ -1029,7 +1063,7 @@ void EntitySummonAttack(Entity* self) {
             }
             break;
         case 4:
-            prim = self->ext.sypha.prim;
+            prim = self->prim;
             brightness = 0;
             while (prim != NULL) {
                 brightness = PrimDecreaseBrightness(prim, 10);
@@ -1045,7 +1079,7 @@ void EntitySummonAttack(Entity* self) {
         }
         break;
     case 2:
-        if (AnimateEntity(D_us_80180D28, self) == 0) {
+        if (AnimateEntity(D_us_80180D28, (Entity*)self) == 0) {
             self->facingLeft = GetSideToPlayer() & 1;
         }
         if (self->facingLeft) {

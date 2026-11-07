@@ -3,6 +3,17 @@
 
 extern EInit g_EInitParticle;
 
+struct EntityTheCreatureFlames {
+    ENTITY_SHARED;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ u8* animData;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 accelY;
+    /* 0x90 */ s32 accel;
+};
+SYNC_STRUCT(EntityTheCreatureFlames);
+
 static AnimateEntityFrame anim_flame[] = {
     POSE(3, 1, 0),  POSE(3, 2, 0),  POSE(3, 3, 0),  POSE(3, 4, 0),
     POSE(3, 5, 0),  POSE(3, 6, 0),  POSE(3, 7, 0),  POSE(3, 8, 0),
@@ -30,7 +41,7 @@ static EntityConfig flames_config[] = {
 
 // params 0: rising flame from the body, 1: flame on the fallen head, 2: flame
 // burst in a random direction
-void EntityTheCreatureFlames(Entity* self) {
+void EntityTheCreatureFlames(struct EntityTheCreatureFlames* self) {
     EntityConfig* config;
     s32 params;
     s16 angle;
@@ -44,7 +55,7 @@ void EntityTheCreatureFlames(Entity* self) {
         self->blendMode = config->blendMode;
         self->animSet = config->animSet;
         self->unk5A = config->unk5A;
-        self->ext.theCreatureFlames.anim = config->animData;
+        self->animData = config->animData;
         self->step = params + 1;
         if (self->params & 0xFF00) {
             self->zPriority = (self->params & 0xFF00) >> 8;
@@ -62,14 +73,14 @@ void EntityTheCreatureFlames(Entity* self) {
             self->facingLeft = Random() & 1;
             self->velocityX = (Random() << 8) - FIX(0.5);
             self->velocityY = FIX(-0.75);
-            self->ext.theCreatureFlames.accelY = -(Random() * 16) - FIX(0.25);
+            self->accelY = -(Random() * 16) - FIX(0.25);
             self->step_s++;
         }
         MoveEntity();
-        self->velocityY += (s32)self->ext.theCreatureFlames.accelY;
+        self->velocityY += (s32)self->accelY;
         self->opacity -= 1;
-        if (!AnimateEntity(self->ext.theCreatureFlames.anim, self)) {
-            DestroyEntity(self);
+        if (!AnimateEntity(self->animData, (Entity*)self)) {
+            DestroyEntity((Entity*)self);
         }
         break;
     case 2:
@@ -78,8 +89,8 @@ void EntityTheCreatureFlames(Entity* self) {
             self->step_s++;
         }
         MoveEntity();
-        if (!AnimateEntity(self->ext.theCreatureFlames.anim, self)) {
-            DestroyEntity(self);
+        if (!AnimateEntity(self->animData, (Entity*)self)) {
+            DestroyEntity((Entity*)self);
         }
         break;
     case 3:
@@ -95,7 +106,7 @@ void EntityTheCreatureFlames(Entity* self) {
             }
             self->velocityX = rsin(angle) * 40;
             self->velocityY = rcos(angle) * -40;
-            self->ext.theCreatureFlames.accel = (Random() * 16) + 0x1000;
+            self->accel = (Random() * 16) + 0x1000;
             self->step_s++;
         }
         MoveEntity();
@@ -104,12 +115,10 @@ void EntityTheCreatureFlames(Entity* self) {
         if (self->facingLeft) {
             angle = -angle;
         }
-        self->velocityX +=
-            (self->ext.theCreatureFlames.accel * rsin(angle)) >> 12;
-        self->velocityY +=
-            (-self->ext.theCreatureFlames.accel * rcos(angle)) >> 12;
-        if (!AnimateEntity(self->ext.theCreatureFlames.anim, self)) {
-            DestroyEntity(self);
+        self->velocityX += (self->accel * rsin(angle)) >> 12;
+        self->velocityY += (-self->accel * rcos(angle)) >> 12;
+        if (!AnimateEntity(self->animData, (Entity*)self)) {
+            DestroyEntity((Entity*)self);
         }
         break;
     }
