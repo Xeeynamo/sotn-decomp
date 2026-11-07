@@ -40,12 +40,12 @@ void EntityRainbowTriangleAttack(Entity* self);
 void EntityTriangleCornerGlow(Entity* self);
 void EntityBlueOrbShadow(Entity* self);
 void EntityLaunchCutscene(Entity* self);
-void func_us_801A367C(Entity* self);
-void func_us_801A9208_from_bo6(Entity* self);
-void func_us_801A37B4(Entity* self);
-void func_us_801A399C(Entity* self);
-void func_us_801A3BE0(Entity* self);
-void func_us_801A4028(Entity* self);
+void EntityUnkID28(Entity* self);
+void EntityUnkID29(Entity* self);
+void EntityUnkID2A(Entity* self);
+void EntityUnkID2B(Entity* self);
+void EntityUnkID2C(Entity* self);
+void EntityDraculaChair(Entity* self);
 void EntityBackgroundVortex(Entity* self);
 void func_us_801B1738(Entity* self);
 void func_us_801B2864(Entity* self);
@@ -92,12 +92,12 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityTriangleCornerGlow,
     EntityBlueOrbShadow,
     EntityLaunchCutscene,
-    func_us_801A367C,
-    func_us_801A9208_from_bo6,
-    func_us_801A37B4,
-    func_us_801A399C,
-    func_us_801A3BE0,
-    func_us_801A4028,
+    EntityUnkID28,
+    EntityUnkID29,
+    EntityUnkID2A,
+    EntityUnkID2B,
+    EntityUnkID2C,
+    EntityDraculaChair,
     EntityBackgroundVortex,
     func_us_801B1738,
     func_us_801B2864,
