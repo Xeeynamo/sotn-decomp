@@ -965,7 +965,7 @@ void WolfStepS_0(void) {
     s32 i, j; // Not nested, just two iterators for two loops
     Entity* entity;
 #if VERSION >= VER_US && TARGET != TARGET_PSP
-    if (g_Entities[16].entityId != 0x22) {
+    if (g_Entities[16].entityId != E_MIST) {
         if (CreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x23), 0) == NULL) {
             return;
@@ -983,22 +983,22 @@ void WolfStepS_0(void) {
     D_801396E0 = PLAYER.animSet;
     func_8010E168(1, 4);
     DestroyEntity(&g_Entities[17]);
-    g_Entities[17].entityId = 0x38;
+    g_Entities[17].entityId = E_UNK_56;
     DestroyEntity(&g_Entities[18]);
-    g_Entities[18].entityId = 0x37;
+    g_Entities[18].entityId = E_UNK_55;
     DestroyEntity(&g_Entities[19]);
-    g_Entities[19].entityId = 0x39;
+    g_Entities[19].entityId = E_UNK_57;
     DestroyEntity(&g_Entities[20]);
-    g_Entities[20].entityId = 0x3A;
+    g_Entities[20].entityId = E_UNK_58;
 
     for (entity = &g_Entities[21], j = 0; j < 9; j++, entity++) {
         DestroyEntity(entity);
-        entity->entityId = 0x3B;
+        entity->entityId = E_UNK_59;
         entity->params = j;
     }
     // We create entity #60, which is func_8013136C
     DestroyEntity(&g_Entities[30]);
-    g_Entities[30].entityId = 60;
+    g_Entities[30].entityId = E_UNK_60;
 
     func_8012CED4();
     PLAYER.pose = 4;
