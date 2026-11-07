@@ -1409,7 +1409,7 @@ block_159:
         PLAYER.hitPoints = 0;
     }
     g_Player.unk14 = 0;
-    g_Player.unk7A = 0;
+    g_Player.runDisable = 0;
     func_801093C4();
     if (!(g_Player.status & (PLAYER_STATUS_UNK10 | PLAYER_STATUS_UNK40))) {
         if ((CheckEquipmentItemCount(ITEM_SECRET_BOOTS, EQUIP_ACCESSORY) !=

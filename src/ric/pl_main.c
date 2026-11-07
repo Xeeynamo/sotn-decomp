@@ -417,7 +417,7 @@ void RicMain(void) {
     FntPrint("pl_head_f:%02x\n", g_Player.unk72);
 #endif
 #if VERSION <= VER_JP10
-    FntPrint("run_disable_f:%02x\n", g_Player.unk7A);
+    FntPrint("run_disable_f:%02x\n", g_Player.runDisable);
 #endif
 
 #if TARGET == TARGET_PSP || defined(FIX_UB)
@@ -755,7 +755,7 @@ void RicMain(void) {
     PLAYER.hitboxState = 1;
     PLAYER.hitParams = 0;
     PLAYER.hitPoints = 0;
-    g_Player.unk7A = 0;
+    g_Player.runDisable = 0;
     if (PLAYER.anim == D_801556C4) {
         PLAYER.palette = D_80154574[PLAYER.pose];
     }

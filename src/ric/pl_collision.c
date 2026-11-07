@@ -66,7 +66,7 @@ bool RicCheckInput(s32 checks) {
                         // bugfix: when running is disabled, touching the floor
                         // while pressing left or right will not set Richter in
                         // a state where it can run.
-                        && !g_Player.unk7A
+                        && !g_Player.runDisable
 #endif
                     ) {
                         RicSetRun();

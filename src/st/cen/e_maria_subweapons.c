@@ -146,7 +146,7 @@ void EntityMariaCatAttack(Entity* self) {
         self->ext.mariaCat.unkB0 = 0;
         MarSetWeaponParams(self, 36, ELEMENT_HOLY, 8, 16, 16, 1, 0);
         self->ext.mariaCat.timer = 0;
-        g_Maria.unk7A = 1;
+        g_Maria.runDisable = 1;
         self->ext.mariaCat.nBounce = 3;
         self->step = 2;
         self->ext.mariaCat.opacity = 128;
@@ -255,7 +255,7 @@ void EntityMariaCatAttack(Entity* self) {
         }
         break;
     case 5:
-        g_Maria.unk7A = 0;
+        g_Maria.runDisable = 0;
         DestroyEntity(self);
         break;
     }
@@ -561,7 +561,7 @@ void EntityMariaTurtleAttack(Entity* self) {
         self->stunFrames = 0;
         self->hitEffect = 1;
         self->entityRoomIndex = 1;
-        g_Maria.unk7A = 1;
+        g_Maria.runDisable = 1;
         self->ext.mariaTurtleAttack.timer = 0;
         self->step++;
         break;
@@ -574,7 +574,7 @@ void EntityMariaTurtleAttack(Entity* self) {
         }
         break;
     case 2:
-        g_Maria.unk7A = 0;
+        g_Maria.runDisable = 0;
         DestroyEntity(self);
         break;
     }

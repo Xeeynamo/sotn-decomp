@@ -514,7 +514,7 @@ void func_060A96A0(void) {
     void (*fn)(s32);
     s32 arg;
 
-    if (g_Player.unk7A != 0) {
+    if (g_Player.runDisable != 0) {
         fn = func_060A59E0;
         arg = 0;
         goto call;

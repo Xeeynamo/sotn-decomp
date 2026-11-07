@@ -57,7 +57,7 @@ void RicSetRun(void) {
 #endif
 
 void RicSetWalk(s32 arg0) {
-    if (g_Player.timers[PL_T_8] && !g_Player.unk7A) {
+    if (g_Player.timers[PL_T_8] && !g_Player.runDisable) {
         RicSetRun();
         return;
     }
@@ -76,7 +76,7 @@ void RicSetWalk(s32 arg0) {
 #if VERSION >= VER_JP11 && TARGET != TARGET_PSP
 // bugfix: force walking when running is disabled
 void RicSetRun(void) {
-    if (g_Player.unk7A) {
+    if (g_Player.runDisable) {
         RicSetWalk(0);
     } else {
         g_Player.unk44 = 0;

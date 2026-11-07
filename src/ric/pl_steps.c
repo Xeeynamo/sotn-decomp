@@ -133,7 +133,7 @@ void RicStepWalk(void) {
 void RicStepRun(void) {
 #if VERSION >= VER_JP11 && TARGET != TARGET_PSP
     // bugfix: force walk when running is disabled
-    if (g_Player.unk7A != 0) {
+    if (g_Player.runDisable != 0) {
         RicSetWalk(0);
         return;
     }

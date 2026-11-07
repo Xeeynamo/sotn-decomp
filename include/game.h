@@ -2029,7 +2029,7 @@ typedef struct {
     /* 0x3C2 80072F92 */ u16 unk72;
     /* 0x3C4 80072F94 */ u32 unk74;
     /* 0x3C8 80072F98 */ u16 unk78;
-    /* 0x3CA 80072F9A */ u16 unk7A;
+    /* 0x3CA 80072F9A */ u16 runDisable;
     /* 0x3CC 80072F9C */ u16 unk7C;
     /* 0x3CE 80072F9E */ u16 unk7E;
 } PlayerState; /* size = 0x3D0 */
