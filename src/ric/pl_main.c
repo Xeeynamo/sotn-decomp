@@ -547,7 +547,7 @@ void RicMain(void) {
                     playerStepS = PLAYER.step_s;
                     damage.effects = PLAYER.hitParams & ~0x1F;
                     damage.damageKind = PLAYER.hitParams & 0x1F;
-#if VERSION >= VER_NEXT && TARGET == TARGET_PSP
+#if TARGET == TARGET_PSP
                     // PSP has a different bugfix than JP 1.1: Richter can still
                     // be grabbed while invincible, but the damage received will
                     // be reduced to zero.
