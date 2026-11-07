@@ -75,6 +75,9 @@ static void sotn_satz_warp(void) {
     unsigned x, y, room;
 
     if (!warp) {
+        warp = SATZ_STAGE_START;
+    }
+    if (!*warp) {
         return;
     }
     if (sscanf(warp, "%i %i %i", &x, &y, &room) != 3) {
@@ -87,12 +90,16 @@ static void sotn_satz_warp(void) {
 
 void sotn_satz_boot_override(void) {
     sotn_satz_cram_init();
-    g_CurrentRoom.stageID = 0x42;
-    g_PlayableCharacter = 2;
+    g_CurrentRoom.stageID = SATZ_STAGE_ID;
+    g_PlayableCharacter = SATZ_PLAYER_ID;
     D_8006C374 = 0x48;
     DAT_06061dd0 = 1;
     sotn_satz_warp();
 }
+
+unsigned sotn_satz_updates;
+int sotn_satz_voice = -1;
+void sotn_satz_poll(void) {}
 
 static uint64_t s_Frame;
 
