@@ -293,8 +293,12 @@ typedef struct {
 typedef struct {
     /* 0x78 */ u8 pad78[0x10];
     /* 0x88 */ struct Entity* parent;
-    /* 0x8C */ u8 pad8C[0x10];
+    /* 0x8C */ u8 pad8C[0x2];
+    /* 0x8E */ s16 unk8E;
+    /* 0x90 */ u8 pad90[0xC];
     /* 0x9C */ u16 paramsBase;
+    /* 0x9E */ u8 pad9E[0x6];
+    /* 0xA4 */ u16 unkA4;
 } ET_Factory;
 
 typedef struct {
@@ -563,7 +567,9 @@ typedef struct {
 } ET_HPNumberMove;
 
 typedef struct {
-    /* 0x78 */ u8 padding[0x32];
+    /* 0x78 */ u8 padding[0x10];
+    /* 0x88 */ struct Entity* parent;
+    /* 0x8C */ u8 pad8C[0x1E];
     /* 0xAA */ s16 equipId;
 } ET_Weapon;
 
@@ -1096,7 +1102,9 @@ typedef struct {
     char pad2[8];
     /* 0x3F8 */ u32 status;
     /* 0x3FC */ u32 unk3FC;
-    char pad400[0x2C];
+    char pad400[8];
+    /* 0x408 */ s32 warp_flag;
+    char pad40C[0x20];
     u16 unk42C;
     /* 0x42E */ u16 high_jump_timer;
     /* 0x430 */ u16 unk44;

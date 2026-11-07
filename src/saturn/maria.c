@@ -959,7 +959,7 @@ void MariaSetSubweaponParams(Entity* self) {
     self->stunFrames = subweaponDef->stunFrames;
     self->hitEffect = subweaponDef->hitEffect;
     self->entityRoomIndex = subweaponDef->entityRoomIndex;
-    self->attack = func_0606F328(self->attack);
+    self->attack = func_800FD664(self->attack);
     func_060ABE94(self);
 }
 
@@ -975,7 +975,7 @@ void func_060ABFF0(Entity* entity, MariaAttackDef* def) {
     entity->stunFrames = def->stunFrames;
     entity->hitEffect = def->hitEffect;
     entity->entityRoomIndex = def->entityRoomIndex;
-    entity->attack = func_0606F328(entity->attack);
+    entity->attack = func_800FD664(entity->attack);
     func_060ABE94(entity);
 }
 s32 func_060AC09C(
@@ -1805,7 +1805,7 @@ void func_060BE54C(void) {
 
     text = (u8*)(base + 0x4501);
     for (i = 0; i <= 7; i++) {
-        func_06078700(text, func_06078748(i), 12);
+        func_06078700(text, GetMenuItemName(i), 12);
         text += 0x480;
     }
     func_06078700(text, (s8*)g_StatusMenuLabelPointers[2], 6);
@@ -1830,7 +1830,7 @@ void func_060BE618(void) {
 
     text = (u8*)(base + 0x4501);
     for (i = 0; i <= 0x1F; i++) {
-        func_06078700(text, func_06078748(i), 12);
+        func_06078700(text, GetMenuItemName(i), 12);
         text += 0x480;
     }
 
@@ -2027,7 +2027,7 @@ void func_060BFE38(void) {
     s32 stageId;
 
     for (i = 0; i < 28; i++) {
-        DAT_060D2A94[i] = func_0606F21C(i, 0);
+        DAT_060D2A94[i] = TimeAttackController(i, 0);
         if (DAT_060D2A94[i] == 0) {
             DAT_060D2A94[i] = 1000000;
         }

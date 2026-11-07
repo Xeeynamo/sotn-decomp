@@ -942,7 +942,7 @@ void func_060ABA98(Entity* entity) {
     entity->stunFrames = subwpn->stunFrames;
     entity->hitEffect = subwpn->hitEffect;
     entity->entityRoomIndex = subwpn->entityRoomIndex;
-    entity->attack = func_0606F328(entity->attack);
+    entity->attack = func_800FD664(entity->attack);
     func_8015F9F0(entity);
 }
 
@@ -1882,7 +1882,7 @@ void func_060BBC00(void) {
 
     text = (u8*)(base + 0x4501);
     for (i = 0; i < 8; i++) {
-        func_06078700(text, func_06078748(i), 12);
+        func_06078700(text, GetMenuItemName(i), 12);
         text += 0x480;
     }
     func_06078700(text, (s8*)g_StatusMenuLabelPointers[2], 6);
@@ -1908,7 +1908,7 @@ void func_060BBCCC(void) {
 
     text = (u8*)(base + 0x4501);
     for (i = 0; i < 0x20; i++) {
-        func_06078700(text, func_06078748(i), 12);
+        func_06078700(text, GetMenuItemName(i), 12);
         text += 0x480;
     }
 
@@ -2103,7 +2103,7 @@ void func_060BD4EC(void) {
     s32 swapName;
 
     for (i = 0; i < 28; i++) {
-        D_060CEE6C[i] = func_0606F21C(i, 0);
+        D_060CEE6C[i] = TimeAttackController(i, 0);
         if (D_060CEE6C[i] == 0) {
             D_060CEE6C[i] = 1000000;
         }

@@ -331,6 +331,7 @@ extern Unk0605DB60 d_0605DB60[];
 extern s32 DAT_060D2918;
 extern s32 DAT_060D2A94[]; // fastest clear time per stage
 extern s32 DAT_060D2B04[]; // stage id, sorted alongside DAT_060D2A94
+extern SaturnSpriteResource g_SaturnSharedSpriteBank9Resource;
 extern SaturnSpriteResource g_SaturnSharedSpriteBank7Resource;
 extern MariaAttackDef g_MariaEntity87CombatConfig;
 extern AnimationFrame g_MariaEntity87Anim0;
