@@ -3195,3 +3195,187 @@ void func_0601AC48(void) {
 void func_06030DF0(void) {}
 
 #include <stdarg.h>
+
+void LookupTblNoToVramAddr(u16 tableNo, u8* src) {
+    u32 dst;
+
+    if ((tableNo >> 14) & 1) {
+        dst = 0x25F00800 + (tableNo & 0xBFFF) * 32;
+    } else {
+        dst = 0x25C00000 + (u16)SPR_2LookupTblNoToVram(tableNo & 0xFFF) * 8;
+    }
+    QueueVramTransfer(dst, sotn_satz_be16_copy(src, 32), 32);
+}
+
+#define R16(p, o) (*(u16*)((u8*)(p) + (o)))
+#define R32(p, o) (*(s32*)((u8*)(p) + (o)))
+extern u8 DAT_0604B5E0[];
+
+static u16 StreamSlotPatterns(
+    u8* slot, u32 vram, u8* src, s32 size, u16 frame) {
+    u16 chr;
+
+    vram += R32(slot, 8);
+    QueueVramTransfer(vram, src, size);
+    chr = (u16)(vram >> 3);
+    R16(slot, 0xE) = 1;
+    R16(slot, 0x10 + R16(slot, 0xC) * 2) = frame;
+    R16(slot, 0x1A + R16(slot, 0xC) * 2) = chr;
+    R32(slot, 8) += size;
+    R16(slot, 0xC)++;
+    return chr;
+}
+
+u16 func_0600A490(u8* record, u16 frame, s32 flag, s32 playableCharacter) {
+    SaturnPlayerGraphicsRecord* gfx;
+    u8* slot = record + 0xA8;
+    u8* src;
+    u8* dst2;
+    s32 size;
+    u16 chr0, chr1;
+
+    if (playableCharacter == 1 || playableCharacter == 2) {
+        gfx = &DAT_06064668[frame];
+    } else {
+        gfx = &DAT_06064668[frame + 3];
+    }
+    src = g_WorkBuffer.load.data + R32(slot, 8);
+    dst2 = DAT_0604B5E0 + R32(slot, 8);
+    size = DecompressLZSS(
+        sotn_satz_retail_address(gfx->sourceOffset), src, gfx->byteCount);
+    if (R32(record, 0xC) != 0) {
+        MapBytesThroughLut(src, dst2, size);
+    } else {
+        func_0600A5FC(src, src, dst2, size);
+    }
+    chr0 = StreamSlotPatterns(
+        slot, R32(record, 0x8C + R32(record, 8) * 4), src, size, frame);
+    chr1 = StreamSlotPatterns(
+        record + 0xCC, R32(record + 0xCC, 4), dst2, size, frame);
+    return flag ? chr1 : chr0;
+}
+
+void func_0600B12C(SpriteObject* dst, SpriteObject* src) {
+    SpritePart* d = dst->parts;
+    SpritePart* s = src->parts;
+    s32 count = (src->flags >> 8) & 0x3F;
+
+    while (d != NULL && s != NULL) {
+        d->attributes = s->attributes;
+        d->offsetX = s->offsetX;
+        d->offsetY = s->offsetY;
+        d->imageIndex = s->imageIndex;
+        d->rotate = s->rotate;
+        d->scaleX = s->scaleX;
+        d->scaleY = s->scaleY;
+        d = d->next;
+        s = s->next;
+        if (--count <= 0) {
+            break;
+        }
+    }
+    dst->flags = src->flags;
+    dst->slotAndStreamId =
+        (dst->slotAndStreamId & 0xFF00) | (src->slotAndStreamId & 0xFF);
+    dst->charBase = src->charBase;
+    dst->clutBase = src->clutBase;
+    dst->rotate = src->rotate;
+    dst->scaleX = src->scaleX;
+    dst->scaleY = src->scaleY;
+    dst->unk0C = src->unk0C;
+    dst->unk0D = src->unk0D;
+    dst->zPriority = src->zPriority;
+    dst->subPixelX = src->subPixelX;
+    dst->subPixelY = src->subPixelY;
+    dst->posX = src->posX;
+    dst->posY = src->posY;
+}
+
+s32 func_0600BA24(
+    SprSpCmd* cmd, SpriteObject* obj, SpritePart* part, s32* pos) {
+    u16 flags = obj->flags;
+    u16 attributes = part->attributes;
+    SaturnSpriteImage image = obj->images[part->imageIndex];
+    s32 x = pos[0];
+    s32 y = pos[1];
+    s32 m[4];
+    MthXy offset;
+    s32 scale, rotate, angle, base;
+    s16 ax, bx, cx, dx, lo, hi;
+
+    m[1] = 0;
+    m[2] = 0;
+    scale = (flags & 0x40) ? obj->scaleX : 0x40;
+    if (scale == 0x40) {
+        m[0] = image.storedWidth << 16;
+        offset.x = part->offsetX << 16;
+    } else {
+        m[0] = (image.storedWidth * scale) << 10;
+        offset.x = (part->offsetX * scale) << 10;
+    }
+    scale = (flags & 0x40) ? obj->scaleY : 0x40;
+    if (scale == 0x40) {
+        m[3] = image.storedHeight << 16;
+        offset.y = part->offsetY << 16;
+    } else {
+        m[3] = (image.storedHeight * scale) << 10;
+        offset.y = (part->offsetY * scale) << 10;
+    }
+    rotate = (flags & 0x40) ? obj->rotate : 0;
+    angle = (s16)(part->rotate + rotate);
+    if (rotate != 0) {
+        RotateVec2(&offset, rotate);
+    }
+    if (angle != 0) {
+        func_0600BCE0(m, angle);
+    }
+    if (flags & 0x10) {
+        m[0] = -m[0];
+        m[2] = -m[2];
+        x -= offset.x;
+    } else {
+        x += offset.x;
+    }
+    if (flags & 0x20) {
+        m[1] = -m[1];
+        m[3] = -m[3];
+        y -= offset.y;
+    } else {
+        y += offset.y;
+    }
+
+    base = x - m[2] + 0x8000;
+    cmd->ax = ax = (u32)(base - m[0]) >> 16;
+    cmd->bx = bx = (u32)(base + m[0]) >> 16;
+    base = x + m[2] + 0x8000;
+    cmd->cx = cx = (u32)(base + m[0]) >> 16;
+    cmd->dx = dx = (u32)(base - m[0]) >> 16;
+    if (m[2] > 0) {
+        lo = ax < bx ? ax : bx;
+        hi = cx >= dx ? cx : dx;
+    } else {
+        lo = cx < dx ? cx : dx;
+        hi = ax >= bx ? ax : bx;
+    }
+    if (hi < 0 || lo > 319) {
+        return 0;
+    }
+    base = y - m[3] + 0x8000;
+    cmd->ay = ax = (u32)(base - m[1]) >> 16;
+    cmd->by = bx = (u32)(base + m[1]) >> 16;
+    base = y + m[3] + 0x8000;
+    cmd->cy = cx = (u32)(base + m[1]) >> 16;
+    cmd->dy = dx = (u32)(base - m[1]) >> 16;
+    if (m[3] > 0) {
+        lo = ax < bx ? ax : bx;
+        hi = cx >= dx ? cx : dx;
+    } else {
+        lo = cx < dx ? cx : dx;
+        hi = ax >= bx ? ax : bx;
+    }
+    if (hi < 0 || lo > 239) {
+        return 0;
+    }
+    cmd->control = (attributes & 0x30) | 0x1002;
+    return 1;
+}

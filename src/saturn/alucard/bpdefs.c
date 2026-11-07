@@ -1,14 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
-
-typedef struct {
-    u8 childId;
-    u8 amount;
-    u8 packedCount;
-    u8 timerCycle;
-    u8 packedOrigin;
-    u8 timerDelay;
-} AlucardFactoryBlueprint;
+#include "alucard.h"
 
 #define B_MAKE(entityId, amount, nPerCycle, isNonCritical, incParamsKind,      \
                timerCycle, kind, origin, timerDelay)                           \

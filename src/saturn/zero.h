@@ -296,6 +296,7 @@ void func_0600C18C();
 void func_0600BF08();
 void func_0600BEA8();
 SpriteObject* AllocSpriteObject(void);
+struct SprGourTbl* GetSpriteObjectGourTbl(SpriteObject* obj);
 extern s32 g_SpritePartsInUse;               /* 0x06038DB8 */
 extern s32 g_SpriteObjectsInUse;             /* 0x06038DB4 */
 extern s32 g_SpriteListCount;                /* 0x06038DB0 */

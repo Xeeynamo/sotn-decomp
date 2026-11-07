@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# python3 tools/saturn_satz/build.py [--window] && build/satz_null_warp/sotn --output OUT --cue DISC.cue --bios sega_101.bin [--window]
+# python3 tools/saturn_satz/build.py [--window] && build/satz_alucard_warp/sotn --output OUT --cue DISC.cue --bios sega_101.bin [--window]
 import argparse
 import os
 from pathlib import Path
@@ -24,7 +24,8 @@ STAGES = {
     'warp': ('WARP.PRG', 'g_WarpStageData', 0x0E, '0xa0 0x88 6'),
 }
 PLAYERS = {
-    'null': ('MARIA.PRG', 'g_NullPlayer', 2, 'maria.prg.yaml'),
+    'alucard': ('ALUCARD.PRG', 'ALUCARD_player', 0, 'alucard.prg.yaml', 32),
+    'null': ('MARIA.PRG', 'g_NullPlayer', 2, 'maria.prg.yaml', None),
 }
 SATZ_LIBRARIES = re.compile(r'^lib/(?!sound_driver$)')
 SDK_HEADERS = {'XPT_H': 'sega_xpt.h', 'SYS_H': 'sega_sys.h', 'PER_H': 'sega_per.h'}
@@ -72,7 +73,9 @@ def module_of(path):
 
 def nonmatching_sources():
     built = {module.split('.')[0] for module in MODULES}
-    return sorted(path for path in (SRC / 'satz/nonmatching').glob('*.c') if module_of(path) in built | {None})
+    weapons = [SRC / 'satz/nonmatching' / f'{name}.c' for name in sorted(built) if name.startswith('weapon/')]
+    return sorted(path for path in (SRC / 'satz/nonmatching').glob('*.c') if module_of(path) in built | {None}) + [
+        path for path in weapons if path.exists()]
 
 
 def ported_functions():
@@ -109,7 +112,7 @@ def write_stubs(sources, path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--stage', choices=sorted(STAGES), default='warp', help='the stage overlay to build')
-    parser.add_argument('--player', choices=sorted(PLAYERS), default='null', help='the player overlay to build')
+    parser.add_argument('--player', choices=sorted(PLAYERS), default='alucard', help='the player overlay to build')
     parser.add_argument('--output', type=Path, help='default build/satz_PLAYER_STAGE')
     parser.add_argument('--satz', type=Path, default=Path(os.environ.get('SATZ', ROOT / 'tools/saturn/satz')))
     parser.add_argument('--window', action='store_true', help='link the SDL window')
@@ -120,7 +123,8 @@ def main():
     parser.add_argument('--no-sanitize', dest='sanitize', action='store_false',
                         help='build without AddressSanitizer and UndefinedBehaviorSanitizer')
     args = parser.parse_args()
-    MODULES[2:] = [PLAYERS[args.player][3], f'{args.stage}.prg.yaml']
+    weapon = PLAYERS[args.player][4]
+    MODULES[2:] = [PLAYERS[args.player][3], f'{args.stage}.prg.yaml'] + ([f'weapon/w_{weapon:02}.prg.yaml'] if weapon is not None else [])
     if args.output is None:
         args.output = ROOT / f'build/satz_{args.player}_{args.stage}'
     sys.path.insert(0, str(args.satz.resolve()))
@@ -304,7 +308,7 @@ def write_ninja(satz, args, output, core, fixed):
             f'-DSYM_PREFIX="{SYM_PREFIX}"', '-I' + str(SRC), '-I' + str(SRC / 'lib'),
             '-I' + str(ROOT / 'include'), '-DSATZ_SOTN=1', '-DSKIP_ASM=1']
         prg, header, stage_id, start = STAGES[args.stage]
-        player_prg, player_header, player_id, _ = PLAYERS[args.player]
+        player_prg, player_header, player_id, _, weapon = PLAYERS[args.player]
         if sys.platform == 'darwin':
             cflags.append('-DSCL_DisplayFrame=__wrap_SCL_DisplayFrame')
         cflags += [f'-DSATZ_STAGE_PRG="{prg}"', f'-DSATZ_STAGE_DATA={header}', f'-DSATZ_STAGE_ID=0x{stage_id:02X}', f'-DSATZ_STAGE_START="{start}"',
@@ -323,9 +327,15 @@ def write_ninja(satz, args, output, core, fixed):
         program_flags = [f for f in build.saturn_common if f != '-w'] + ['-std=gnu99'] + PROGRAM_WARNINGS
         sources = []
         for module in MODULES:
+            if module.startswith('weapon/'):
+                continue
             data_only = args.player == 'null' and module == PLAYERS['null'][3]
             sources += [SRC / f'{name}.c' for name in module_sources(CONFIG / module, data_only)]
-        sources += sorted((SRC / 'satz').glob('*.c')) + nonmatching_sources()
+        if weapon is not None:
+            sources.append(SRC / 'weapon' / f'w_{weapon:02}.c')
+            cflags.append(f'-DSATZ_WEAPON_SLOT={weapon}')
+        sources += [path for path in sorted((SRC / 'satz').glob('*.c'))
+                    if args.player == 'null' or path.name != 'null_player.c'] + nonmatching_sources()
         generate_headers(sources)
         stubs = output / 'stubs.c'
         labels = write_stubs(sources, stubs)

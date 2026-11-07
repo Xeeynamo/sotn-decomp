@@ -82,7 +82,7 @@ extern SaturnSpriteImage AlucardFx2Images[];
 extern SaturnSpriteImage AlucardFxImages[];
 extern SaturnSpriteImage AlucardSubImages[];
 extern SaturnSpriteImage AlucardImages[];
-extern s8 D_060B24B0[];
+extern const FrameProperty g_AlucardFrameProperties[];
 extern u16* g_AlucardEffectAnimTable[];
 void func_060AF1BC(int);
 void SetPlayerStep(PlayerSteps step);
@@ -149,7 +149,29 @@ extern s32 DAT_060CE494;
 extern s32 DAT_060CE4B8;
 extern s32 DAT_060CE4BC;
 extern s32 DAT_060CE4C0;
-extern s16 DAT_060CC98E[];
+extern s16 g_SfxPainGrunts[];
+
+typedef struct {
+    u16 padding;
+    u8 ranges[10][2];
+} AlucardEntityRanges;
+extern AlucardEntityRanges g_AlucardEntityRanges;
+extern u16 g_AlucardEffectAnim0[];
+
+typedef struct {
+    u8 childId;
+    u8 amount;
+    u8 packedCount;
+    u8 timerCycle;
+    u8 packedOrigin;
+    u8 timerDelay;
+} AlucardFactoryBlueprint;
+extern AlucardFactoryBlueprint g_AlucardFactoryBlueprints[];
+
+extern s32 D_060C84E0, D_060C84E4, D_060C84F0, D_060C84F4, D_060C84F8,
+    D_060C84FC;
+extern s32 D_060C8500, D_060C8504, D_060C8508, D_060C850C, D_060C8510;
+extern ButtonComboState DAT_060CE7A0[16];
 s32 func_0607003C(void* arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_060B8B40(void* arg0, s16 arg1, s16 arg2);
 extern s16 DAT_060CE4B0;
