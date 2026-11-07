@@ -491,8 +491,8 @@ void func_801B2700(s32 tpage, s32 otIdx) {
     g_GpuUsage.drawModes++;
 }
 
-void func_801B27A8(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 clut,
-                   s32 tpage, s32 tge, s32 c) {
+void DrawGlyph(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 clut, s32 tpage,
+               s32 tge, s32 c) {
     OT_TYPE* ot = g_CurrentBuffer->ot;
     SPRT* sprite = &g_CurrentBuffer->sprite[g_GpuUsage.sp];
     s32 otIdx = 0x20;
@@ -514,7 +514,7 @@ void func_801B27A8(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 clut,
     func_801B2700(tpage, otIdx);
 }
 
-void func_801B28D4(u8* str, s32 x, s32 y, s32 tge) {
+void DrawString12x16(u8* str, s32 x, s32 y, s32 tge) {
     const int w = 12;
     const int h = 16;
     u8 ch;
@@ -524,8 +524,7 @@ void func_801B28D4(u8* str, s32 x, s32 y, s32 tge) {
         if (ch == 0xFF) {
             break;
         }
-        func_801B27A8(
-            x, y, w, h, (ch & 0x0F) * w, (ch & 0xF0), 0x1A1, 6, tge, 0x40);
+        DrawGlyph(x, y, w, h, (ch & 0x0F) * w, ch & 0xF0, 0x1A1, 6, tge, 0x40);
         x += w;
     }
 }
@@ -554,8 +553,8 @@ void DrawString16x16(char* str, s32 x, s32 y, s32 tge) {
         }
         if (ch != ' ') {
             uvIndex = func_801B2984(ch);
-            func_801B27A8(x, y, W, H, D_8018046C[uvIndex * 3 + 1],
-                          D_8018046C[uvIndex * 3 + 2], 0x200, 12, tge, 0x40);
+            DrawGlyph(x, y, W, H, D_8018046C[uvIndex * 3 + 1],
+                      D_8018046C[uvIndex * 3 + 2], 0x200, 12, tge, 0x40);
         }
         x += W;
     }
@@ -574,47 +573,47 @@ void func_psp_09240618(char* str, s32 x, s32 y, s32 tge, s32 c) {
         }
         if (ch != ' ') {
             uvIndex = func_801B2984(ch);
-            func_801B27A8(x, y, W, H, D_8018046C[uvIndex * 3 + 1],
-                          D_8018046C[uvIndex * 3 + 2], 0x200, 12, tge, c);
+            DrawGlyph(x, y, W, H, D_8018046C[uvIndex * 3 + 1],
+                      D_8018046C[uvIndex * 3 + 2], 0x200, 12, tge, c);
         }
         x += W;
     }
 }
 
-void func_801B2A9C(s32 img, s32 x, s32 y, s32 tge) {
-    func_801B27A8(
+void DrawGlyph8x8(s32 img, s32 x, s32 y, s32 tge) {
+    DrawGlyph(
         x, y, 8, 8, (img & 0xF) * 8, (img & 0xF0) / 2, 0x196, 0x1D, tge, 0x80);
 }
 
-void DrawImages8x8(u8* imgs, s32 x, s32 y, s32 tge) {
+void DrawString8x8(u8* imgs, s32 x, s32 y, s32 tge) {
     while (true) {
         if (*imgs == 0xFF)
             break;
-        func_801B2A9C(*imgs, x, y, tge);
+        DrawGlyph8x8(*imgs, x, y, tge);
         x += 8;
         imgs++;
     }
 }
 
-void func_801B2B78(s32 icon, s32 x, s32 y, s32 tge) {
-    func_801B27A8(x, y, 8, 8, icon * 8 + 176, 120, 0x200, 0xC, tge, 0x40);
+void DrawDigit8x8(s32 icon, s32 x, s32 y, s32 tge) {
+    DrawGlyph(x, y, 8, 8, icon * 8 + 176, 120, 0x200, 0xC, tge, 0x40);
 }
 
-void func_801B2BD4(s32 num, s32 x, s32 y, s32 tge) {
+void DrawNumber8x8(s32 num, s32 x, s32 y, s32 tge) {
     do {
         s32 digit = num % 10;
-        func_801B2B78(digit, x, y, tge);
+        DrawDigit8x8(digit, x, y, tge);
         x -= 8;
         num /= 10;
     } while (num != 0);
 }
 
-void func_801B2C70(s32 num, s32 x, s32 y, s32 tge) {
+void DrawTwoDigitsNumber8x8(s32 num, s32 x, s32 y, s32 tge) {
     s32 digit = num % 10;
-    func_801B2B78(digit, x, y, tge);
+    DrawDigit8x8(digit, x, y, tge);
     x -= 8;
     num /= 10;
-    func_801B2B78(num, x, y, tge);
+    DrawDigit8x8(num, x, y, tge);
 }
 
 void func_801B2CF8(Primitive* prim) {

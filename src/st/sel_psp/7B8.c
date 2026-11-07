@@ -506,8 +506,8 @@ void func_psp_092391A0(void) {
 #define STR_ERROR D_801803A8[8]
 
 void PrintFileSelectPlaceName(s32 port, s32 slot, s32 y) {
-    DrawImages8x8(g_SaveAreaNames[g_SaveSummary[port].stage[slot]], 0xA0, y, 1);
-    DrawImages8x8(g_SaveAreaNamesSecondPart[g_SaveSummary[port].stage[slot]],
+    DrawString8x8(g_SaveAreaNames[g_SaveSummary[port].stage[slot]], 0xA0, y, 1);
+    DrawString8x8(g_SaveAreaNamesSecondPart[g_SaveSummary[port].stage[slot]],
                   0xA0, y + 8, 1);
 }
 
@@ -555,13 +555,13 @@ void func_psp_09239530(SaveData* save) {
 }
 
 void func_801AD1D0(void) {
-    DrawImages8x8(STR_YES, 0x30, 0xC4, 1);
-    DrawImages8x8(STR_NO, 0x30, 0xD4, 1);
+    DrawString8x8(STR_YES, 0x30, 0xC4, 1);
+    DrawString8x8(STR_NO, 0x30, 0xD4, 1);
 }
 
 void func_801AD218(void) {
-    DrawImages8x8(STR_NO, 0x30, 0xC4, 1);
-    DrawImages8x8(STR_YES, 0x30, 0xD4, 1);
+    DrawString8x8(STR_NO, 0x30, 0xC4, 1);
+    DrawString8x8(STR_YES, 0x30, 0xD4, 1);
 }
 
 void func_psp_09239640(s32 gfxId, s16 x, s16 y) {
@@ -643,7 +643,7 @@ void DrawNavigationTips(NavigationTips mode) {
     case Tips_Confirm:
         func_psp_092396D8(GFX_UNK_6, 0x18, y + 0xC0);
         y += 0x10;
-        DrawImages8x8(STR_CONFIRM, 0x28, 0xC4, 1);
+        DrawString8x8(STR_CONFIRM, 0x28, 0xC4, 1);
         break;
 
     case Tips_MenuNavigation:
@@ -667,8 +667,8 @@ void func_801AD490(void) {
     s32 i;
 
     DrawNavigationTips(Tips_MenuNavigation);
-    DrawImages8x8(STR_SELECT, 0x30, 0xBC, 1);
-    DrawImages8x8(STR_DECIDE, 0x30, 0xCC, 1);
+    DrawString8x8(STR_SELECT, 0x30, 0xBC, 1);
+    DrawString8x8(STR_DECIDE, 0x30, 0xCC, 1);
     func_psp_09240618(D_psp_091CE210, 0xF0, 0x20, 0, 0x50);
     func_psp_09240618(D_psp_091CE208, 0x100, 0x30, 0, 0x50);
     func_psp_09240618(D_psp_091CE200, 0xE8, 0x40, 0, 0x50);
@@ -761,10 +761,10 @@ void func_801AD66C(void) {
 void func_801AD78C(void) {
     Primitive* prim;
 
-    DrawImages8x8(STR_SELECT, 0x130, 0x24, 1);
-    DrawImages8x8(STR_INPUT, 0x130, 0x34, 1);
-    DrawImages8x8(STR_CANCEL, 0x130, 0x44, 1);
-    DrawImages8x8(STR_DECIDE, 0x130, 0x54, 1);
+    DrawString8x8(STR_SELECT, 0x130, 0x24, 1);
+    DrawString8x8(STR_INPUT, 0x130, 0x34, 1);
+    DrawString8x8(STR_CANCEL, 0x130, 0x44, 1);
+    DrawString8x8(STR_DECIDE, 0x130, 0x54, 1);
     DrawString16x16("a b c d e f g h", 0x48, 0x70, 1);
     DrawString16x16("i j k l m n o p", 0x48, 0x88, 1);
     DrawString16x16("q r s t u v w x", 0x48, 0xA0, 1);
@@ -917,19 +917,18 @@ void func_801ADF94(s32 flags, s32 yOffset) {
             prim->y0 = y + 0x60;
             func_psp_09239530(save);
             PrintFileSelectPlaceName(port, slot, y + 0x70);
-            func_801B2BD4(save->info.level, 0x94, y + 0x90, 1);
-            func_801B2BD4(save->info.playHours, 0xC8, y + 0x90, 1);
-            func_801B2C70(save->info.playMinutes, 0xE0, y + 0x90, 1);
-            func_801B2C70(save->info.playSeconds, 0xF8, y + 0x90, 1);
-            func_801B2BD4(save->info.gold, 0xB4, y + 0x98, 1);
+            DrawNumber8x8(save->info.level, 0x94, y + 0x90, 1);
+            DrawNumber8x8(save->info.playHours, 0xC8, y + 0x90, 1);
+            DrawTwoDigitsNumber8x8(save->info.playMinutes, 0xE0, y + 0x90, 1);
+            DrawTwoDigitsNumber8x8(save->info.playSeconds, 0xF8, y + 0x90, 1);
+            DrawNumber8x8(save->info.gold, 0xB4, y + 0x98, 1);
             percHi = save->info.nRoomsExplored;
             percHi = (percHi * 1000) / 942;
             percLo = percHi % 10;
             percHi = percHi / 10;
-            func_801B2BD4(percHi, 0xE8, y + 0x98, 1);
-            func_801B27A8(
-                0xF0, y + 0x9C, 8, 4, 0xE0, 0x8C, 0x200, 0xC, 1, 0x80);
-            func_801B2BD4(percLo, 0xF8, y + 0x98, 1);
+            DrawNumber8x8(percHi, 0xE8, y + 0x98, 1);
+            DrawGlyph(0xF0, y + 0x9C, 8, 4, 0xE0, 0x8C, 0x200, 0xC, 1, 0x80);
+            DrawNumber8x8(percLo, 0xF8, y + 0x98, 1);
         } else {
             icon = g_SaveSummary[port].icon[slot];
             if (icon >= 0 && g_SaveSummary[port].padding != -3) {
@@ -940,24 +939,24 @@ void func_801ADF94(s32 flags, s32 yOffset) {
                 prim->y0 = y + 0x60;
                 func_801ACFBC(port, slot, 6);
                 PrintFileSelectPlaceName(port, slot, y + 0x70);
-                func_801B2BD4(
+                DrawNumber8x8(
                     g_SaveSummary[port].level[slot], 0x94, y + 0x90, 1);
-                func_801B2BD4(
+                DrawNumber8x8(
                     g_SaveSummary[port].playHours[slot], 0xC8, y + 0x90, 1);
-                func_801B2C70(
+                DrawTwoDigitsNumber8x8(
                     g_SaveSummary[port].playMinutes[slot], 0xE0, y + 0x90, 1);
-                func_801B2C70(
+                DrawTwoDigitsNumber8x8(
                     g_SaveSummary[port].playSeconds[slot], 0xF8, y + 0x90, 1);
-                func_801B2BD4(
+                DrawNumber8x8(
                     g_SaveSummary[port].gold[slot], 0xB4, y + 0x98, 1);
                 percHi = g_SaveSummary[port].nRoomsExplored[slot];
                 percHi = (percHi * 1000) / 942;
                 percLo = percHi % 10;
                 percHi = percHi / 10;
-                func_801B2BD4(percHi, 0xE8, y + 0x98, 1);
-                func_801B27A8(
+                DrawNumber8x8(percHi, 0xE8, y + 0x98, 1);
+                DrawGlyph(
                     0xF0, y + 0x9C, 8, 4, 0xE0, 0x8C, 0x200, 0xC, 1, 0x80);
-                func_801B2BD4(percLo, 0xF8, y + 0x98, 1);
+                DrawNumber8x8(percLo, 0xF8, y + 0x98, 1);
             } else {
                 func_801ACBE4(GFX_UNK_12, 8);
                 func_801ACBE4(GFX_UNK_16, 8);
@@ -975,9 +974,9 @@ void func_801ADF94(s32 flags, s32 yOffset) {
     }
 
     if (!hideButtons) {
-        DrawImages8x8(STR_SELECT, 0x30, 0xB4, 1);
-        DrawImages8x8(STR_DECIDE, 0x30, 0xC4, 1);
-        DrawImages8x8(STR_CANCEL, 0x30, 0xD4, 1);
+        DrawString8x8(STR_SELECT, 0x30, 0xB4, 1);
+        DrawString8x8(STR_DECIDE, 0x30, 0xC4, 1);
+        DrawString8x8(STR_CANCEL, 0x30, 0xD4, 1);
     }
 
     for (port = 0; port < PORT_COUNT; port++) {
@@ -985,10 +984,10 @@ void func_801ADF94(s32 flags, s32 yOffset) {
         case -1:
             break;
         case -2:
-            DrawImages8x8(STR_NOTFOR, (port * 0x100) + 0x28, 0x6C, 1);
+            DrawString8x8(STR_NOTFOR, (port * 0x100) + 0x28, 0x6C, 1);
             break;
         case -3:
-            DrawImages8x8(STR_ERROR, (port * 0x100) + 0x32, 0x6C, 1);
+            DrawString8x8(STR_ERROR, (port * 0x100) + 0x32, 0x6C, 1);
             break;
         default:
             for (i = 0; i < BLOCK_PER_CARD; i++) {
@@ -1012,18 +1011,18 @@ void func_801ADF94(s32 flags, s32 yOffset) {
                     color = 0x40;
                 }
                 if (icon == -3) {
-                    func_801B27A8(
+                    DrawGlyph(
                         x, y, 0x10, 0x10, 0x80, 0x80, 0x200, 0xC, tge, color);
                 }
                 if (icon >= 0) {
                     if (g_SaveSummary[i / 15].slot[i % 15] ==
                         GetQuickSaveDataSlot()) {
-                        func_801B27A8(x, y, 0x10, 0x10, 0x90, 0x80, 0x200, 0x17,
-                                      tge, color);
+                        DrawGlyph(x, y, 0x10, 0x10, 0x90, 0x80, 0x200, 0x17,
+                                  tge, color);
                     }
-                    func_801B27A8(
-                        x, y, 0x10, 0x10, icon * 0x10, (D_801BAF08 % 3) * 0x10,
-                        icon + 0x220, 0x16, tge, color);
+                    DrawGlyph(x, y, 0x10, 0x10, icon * 0x10,
+                              (D_801BAF08 % 3) * 0x10, icon + 0x220, 0x16, tge,
+                              color);
                 }
             }
             break;
@@ -1052,18 +1051,20 @@ void func_801AE6D0(void) {
     func_801ACBE4(GFX_UNK_20, 0);
     func_801ACFBC(port, slot, 0xA);
     PrintFileSelectPlaceName(port, slot, 0x48);
-    func_801B2BD4(g_SaveSummary[port].level[slot], 0x94, 0x68, 1);
-    func_801B2BD4(g_SaveSummary[port].playHours[slot], 0xC8, 0x68, 1);
-    func_801B2C70(g_SaveSummary[port].playMinutes[slot], 0xE0, 0x68, 1);
-    func_801B2C70(g_SaveSummary[port].playSeconds[slot], 0xF8, 0x68, 1);
-    func_801B2BD4(g_SaveSummary[port].gold[slot], 0xB4, 0x70, 1);
+    DrawNumber8x8(g_SaveSummary[port].level[slot], 0x94, 0x68, 1);
+    DrawNumber8x8(g_SaveSummary[port].playHours[slot], 0xC8, 0x68, 1);
+    DrawTwoDigitsNumber8x8(
+        g_SaveSummary[port].playMinutes[slot], 0xE0, 0x68, 1);
+    DrawTwoDigitsNumber8x8(
+        g_SaveSummary[port].playSeconds[slot], 0xF8, 0x68, 1);
+    DrawNumber8x8(g_SaveSummary[port].gold[slot], 0xB4, 0x70, 1);
     percHi = g_SaveSummary[port].nRoomsExplored[slot];
     percHi = (percHi * 1000) / 942;
     percLo = percHi % 10;
     percHi = percHi / 10;
-    func_801B2BD4(percHi, 0xE8, 0x70, 1);
-    func_801B27A8(0xF0, 0x74, 8, 4, 0xE0, 0x8C, 0x200, 0xC, 1, 0x80);
-    func_801B2BD4(percLo, 0xF8, 0x70, 1);
+    DrawNumber8x8(percHi, 0xE8, 0x70, 1);
+    DrawGlyph(0xF0, 0x74, 8, 4, 0xE0, 0x8C, 0x200, 0xC, 1, 0x80);
+    DrawNumber8x8(percLo, 0xF8, 0x70, 1);
 }
 
 void func_801AE9A8(void) {

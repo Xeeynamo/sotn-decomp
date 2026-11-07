@@ -46,7 +46,8 @@ static u_long* D_8018063C[] = {
     PAL_BULK(0x2580, D_8018D5B4),  PAL_TERMINATE(),
 };
 
-static u_long* D_8018068C[] = {
+// palette of the 8x8 ASCII font
+static u_long* pal_font8x8[] = {
     MAKE_PAL_OP(PAL_BULK_COPY, 0),
     PAL_BULK(0x1960, D_801805FC),
     PAL_TERMINATE(),
@@ -84,10 +85,10 @@ static u_long* D_801806F8[] = {
 };
 
 u_long* g_Cluts[] = {
-    (u_long*)D_8018061C, (u_long*)D_801806A0, (u_long*)D_801806C0,
-    (u_long*)D_801806D8, (u_long*)D_801806F8, (u_long*)D_8018063C,
+    (u_long*)D_8018061C,  (u_long*)D_801806A0, (u_long*)D_801806C0,
+    (u_long*)D_801806D8,  (u_long*)D_801806F8, (u_long*)D_8018063C,
 #if TARGET != TARGET_PSP
-    (u_long*)D_8018068C,
+    (u_long*)pal_font8x8, // loaded by Update as ANIMSET_OVL(6)
 #endif
 };
 
