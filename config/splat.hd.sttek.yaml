@@ -19,7 +19,7 @@ options:
   migrate_rodata_to_functions: yes
   asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
-  disassemble_all: false
+  disassemble_all: true
   section_order:
     - ".data"
     - ".rodata"
