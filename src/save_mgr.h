@@ -676,7 +676,7 @@ s32 ApplySaveData(SaveData* save) {
     g_Tilemap.top = savePtr->info.roomY;
 
     g_Status = *srcStatus;
-#if VERSION >= VER_EU
+#ifdef CLOCK_BUGFIX
     g_TimerCopyHours = g_Status.timerHours;
     g_TimerCopyMinutes = g_Status.timerMinutes;
     g_TimerCopySeconds = g_Status.timerSeconds;

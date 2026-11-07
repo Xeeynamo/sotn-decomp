@@ -29,7 +29,7 @@ static char* alucard_mist_label; // bss
 static char* maria_mist_label;   // bss
 static char* richter_mist_label; // bss
 
-#elif VERSION < VER_JP10
+#elif REGION == REGION_JP
 static char alucard_mist_label[] = "\x9C\x0Eこの壁は霧で抜けられそうだ";
 static char richter_mist_label[] = "\x90\x0Eこの壁は俺には関係無いな";
 #else

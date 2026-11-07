@@ -7,7 +7,7 @@
 #define CUTSCENE_UNK3_RECT_Y 384
 #endif
 
-#if VERSION < VER_JP10
+#if VERSION <= VER_JP10
 #define CUTSCENE_UNK3_RECT_H 16
 #else
 #define CUTSCENE_UNK3_RECT_H 12

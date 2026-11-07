@@ -39,8 +39,8 @@
 #define VER_PSP 20080215U      /* http://redump.org/disc/4528/ */
 #define VER_NEXT 20270101U     /* Community patches from SOTN Decomp */
 
-#define REGION_JP 1
-#define REGION_US 2
+#define REGION_JP 1 /* used in TEK, MAD, HD, JP10, JP11, JP12 */
+#define REGION_US 2 /* used in USPROTO, US */
 #define REGION_EU 3
 #define REGION_HK 4
 

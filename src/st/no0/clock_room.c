@@ -73,7 +73,7 @@ void UpdateBirdcages(Entity* self, u32 timerMinutes) {
     }
 }
 
-#if TARGET == TARGET_PSP
+#ifdef CLOCK_BUGFIX
 void UpdateClockHands(Entity* self) {
     // self + 5 is the minute hand
     self += 5;
@@ -98,7 +98,7 @@ void UpdateClockHands(Entity* self, PlayerStatus* status) {
 #endif
 
 void EntityClockRoomController(Entity* self) {
-#if TARGET == TARGET_PSP
+#ifdef CLOCK_BUGFIX
 #define timer_frames g_TimerCopyFrames
 #define timer_seconds g_TimerCopySeconds
 #define timer_minutes g_TimerCopyMinutes
@@ -151,7 +151,7 @@ void EntityClockRoomController(Entity* self) {
 
     switch (self->step) {
     case 0:
-        if ((g_Timer % 60) == 0) {
+        if ((g_Timer % REFRESH_RATE) == 0) {
             g_api.PlaySfx(SFX_CLOCK_ROOM_TICK);
         }
 
@@ -159,7 +159,7 @@ void EntityClockRoomController(Entity* self) {
         if (primIndex == -1) {
             return;
         }
-#if TARGET != TARGET_PSP
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
         InitializeEntity(g_EInitCommon);
 #endif
         self->flags |= FLAG_HAS_PRIMS;
@@ -173,7 +173,7 @@ void EntityClockRoomController(Entity* self) {
         LOW(prim->r3) = LOW(prim->r0);
         prim->priority = 0x1F0;
         prim->drawMode = DRAW_HIDE;
-#if TARGET == TARGET_PSP
+#if VERSION <= VER_JP10 || TARGET == TARGET_PSP
         InitializeEntity(g_EInitCommon);
 #endif
 
@@ -202,7 +202,7 @@ void EntityClockRoomController(Entity* self) {
             CreateEntityFromCurrentEntity(E_CLOCK_HANDS, entity);
             entity->params = i;
         }
-#if TARGET == TARGET_PSP
+#ifdef CLOCK_BUGFIX
         UpdateClockHands(self);
 #else
         UpdateClockHands(self, status);
@@ -254,7 +254,7 @@ void EntityClockRoomController(Entity* self) {
             g_api.PlaySfx(SFX_CLOCK_ROOM_TICK);
         }
 
-#if TARGET == TARGET_PSP
+#ifdef CLOCK_BUGFIX
         UpdateClockHands(self);
 #else
         UpdateClockHands(self, status);
@@ -280,6 +280,10 @@ void EntityClockRoomController(Entity* self) {
                 if (i == ITEM_GOLD_RING || i == ITEM_SILVER_RING) {
                     i = g_Status.equipment[ACCESSORY_2_SLOT];
                     if (i == ITEM_GOLD_RING || i == ITEM_SILVER_RING) {
+#if VERSION >= VER_EU && TARGET != TARGET_PSP
+                        g_PauseAllowed = false;
+                        g_unkGraphicsStruct.pauseEnemies = true;
+#endif
                         SetStep(2);
                     }
                 }
@@ -299,7 +303,30 @@ void EntityClockRoomController(Entity* self) {
 #endif
         switch (self->step_s) {
         case 0:
-#if TARGET != TARGET_PSP
+#if VERSION <= VER_JP10
+            if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
+                g_Player.padSim = PAD_R1;
+            } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
+                g_Player.padSim = PAD_L1;
+            } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
+                g_Player.padSim = PAD_R2;
+            }
+            self->ext.clockRoom.unk88 = 0;
+            self->step_s++;
+#elif TARGET == TARGET_PSP
+            // same as JP 1.0, but accounts for the lack of R2 on PSP
+            if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
+                g_Player.padSim = PAD_R1;
+            } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
+                g_Player.padSim = PAD_NONE;
+            } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
+                g_Player.padSim = PAD_L1;
+            }
+            self->ext.clockRoom.unk88 = 0;
+            self->step_s++;
+#else
+            // bugfix: wait for Alucard to fully lose its transformation state
+            // before starting the clock room sequence
             primIndex = g_Player.status; // FAKE
             if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
                 if (g_Timer & 1) {
@@ -315,24 +342,17 @@ void EntityClockRoomController(Entity* self) {
                 self->ext.clockRoom.unk88 = 0;
                 self->step_s++;
             }
-#else
-            if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
-                g_Player.padSim = PAD_R1;
-            } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
-                g_Player.padSim = PAD_NONE;
-            } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
-                g_Player.padSim = PAD_L1;
-            }
-
-            self->ext.clockRoom.unk88 = 0;
-            self->step_s++;
 #endif
             break;
 
         case 1:
             if (g_Player.vram_flag & TOUCHING_GROUND) {
                 self->step_s++;
+#if VERSION >= VER_EU && TARGET != TARGET_PSP
+                if (posX < 73 || posX >= 184) {
+#else
                 if (posX < 73 && posX >= 184) {
+#endif
                     self->step_s++;
                 }
             }
@@ -343,9 +363,26 @@ void EntityClockRoomController(Entity* self) {
                 g_Player.padSim = PAD_LEFT | PAD_CROSS;
             } else if (posX >= 128 && posX < 192) {
                 g_Player.padSim = PAD_RIGHT | PAD_CROSS;
+#if VERSION >= VER_EU && TARGET != TARGET_PSP
+            } else {
+                g_Player.padSim = 0;
+            }
+            if (g_Player.vram_flag & TOUCHING_GROUND &&
+                !(g_Player.unk04 & TOUCHING_GROUND)) {
+                if (g_Player.padSim) {
+                    self->step_s--;
+                } else {
+                    self->step_s++;
+                }
+            }
+            if (PLAYER.step >= 40) {
+                self->step_s = 10;
+            }
+#else
             } else if (g_Player.vram_flag & TOUCHING_GROUND) {
                 self->step_s++;
             }
+#endif
 
 #if TARGET == TARGET_PSP
             if (D_pspeu_092A1D00 == PLAYER.posX.i.hi &&
@@ -361,7 +398,11 @@ void EntityClockRoomController(Entity* self) {
             break;
 
         case 3:
+#if VERSION >= VER_EU && TARGET != TARGET_PSP
+            if (posX < 128) {
+#else
             if (posX < 73) {
+#endif
                 if (entity->facingLeft) {
                     g_Player.padSim = PAD_RIGHT;
                 }
@@ -442,9 +483,97 @@ void EntityClockRoomController(Entity* self) {
             if (!--self->ext.clockRoom.unk88) {
                 g_CastleFlags[CEN_OPEN] = 1;
                 g_api.RevealSecretPassageAtPlayerPositionOnMap(CEN_OPEN);
+#if VERSION >= VER_EU && TARGET != TARGET_PSP
+                self->step_s = 15;
+                self->ext.clockRoom.unk88 = 0x50;
+#else
                 SetStep(3);
                 self->ext.clockRoom.unk88 = 0x140;
+#endif
             }
+            break;
+#if VERSION >= VER_EU && TARGET != TARGET_PSP
+
+        // the cases below recover from a missed jump into the opened floor
+        case 10:
+            if (posX < 128) {
+                g_Player.padSim = PAD_LEFT;
+                if (posX >= 80) {
+                    break;
+                }
+            } else {
+                g_Player.padSim = PAD_RIGHT;
+                if (posX < 177) {
+                    break;
+                }
+            }
+            if (g_Player.vram_flag & TOUCHING_GROUND) {
+                self->step_s++;
+            }
+            break;
+
+        case 11:
+            if (posX < 128) {
+                if (posX < 64) {
+                    self->step_s = 3;
+                    break;
+                }
+                g_Player.padSim = PAD_LEFT | PAD_CROSS;
+            } else {
+                if (posX > 192) {
+                    self->step_s = 3;
+                    break;
+                }
+                g_Player.padSim = PAD_RIGHT | PAD_CROSS;
+            }
+            break;
+
+        case 12:
+            if (PLAYER.step == 42) {
+                self->step_s++;
+                if (posX < 128) {
+                    g_Player.padSim = PAD_LEFT | PAD_CROSS;
+                } else {
+                    g_Player.padSim = PAD_RIGHT | PAD_CROSS;
+                }
+            } else {
+                self->step_s--;
+            }
+            break;
+
+        case 13:
+            if (posX < 128) {
+                g_Player.padSim = PAD_LEFT | PAD_CROSS;
+                if (posX >= 64) {
+                    break;
+                }
+            } else {
+                g_Player.padSim = PAD_RIGHT | PAD_CROSS;
+                if (posX < 193) {
+                    break;
+                }
+            }
+            self->step++;
+            break;
+
+        case 14:
+            if (g_Player.vram_flag & TOUCHING_GROUND &&
+                !(g_Player.unk04 & TOUCHING_GROUND)) {
+                self->step_s = 3;
+            }
+            break;
+
+        case 15:
+            if (!--self->ext.clockRoom.unk88) {
+                g_PauseAllowed = true;
+                if (g_unkGraphicsStruct.pauseEnemies) {
+                    g_unkGraphicsStruct.pauseEnemies = false;
+                }
+                SetStep(3);
+                self->ext.clockRoom.unk88 = 0xF0;
+            }
+            break;
+#endif
         }
         break;
 
@@ -454,6 +583,16 @@ void EntityClockRoomController(Entity* self) {
         switch (self->step_s) {
         case 0:
             if (!--self->ext.clockRoom.unk88) {
+#if VERSION >= VER_EU && TARGET != TARGET_PSP
+                LOW((self + 5)->ext.clockRoom.unk80) =
+                    (self + 5)->ext.clockRoom.hand;
+                posX = ((timer_hours % 12) * 300) + (timer_minutes * 5);
+                LOW((self + 6)->ext.clockRoom.bellTimer) = 5400 - posX;
+                posX = timer_minutes * 60;
+                LOW((self + 5)->ext.clockRoom.bellTimer) = posX + 1800;
+                LOW((self + 6)->ext.clockRoom.unk80) =
+                    (self + 6)->ext.clockRoom.hand;
+#else
                 // Minute hand
                 entity = self + 5;
                 LOW(entity->ext.clockRoom.unk80) = entity->ext.clockRoom.hand;
@@ -463,12 +602,13 @@ void EntityClockRoomController(Entity* self) {
                 // Hour hand
                 entity++;
                 LOW(entity->ext.clockRoom.unk80) = entity->ext.clockRoom.hand;
-#if TARGET == TARGET_PSP
+#ifdef CLOCK_BUGFIX
                 posX = ((timer_hours % 12) * 300) + (timer_minutes * 5);
 #else
                 posX = (timer_hours * 300) + (timer_minutes * 5);
 #endif
                 LOW(entity->ext.clockRoom.bellTimer) = 5400 - posX;
+#endif
 
                 self->ext.clockRoom.unk88 = 0;
                 self->step_s++;

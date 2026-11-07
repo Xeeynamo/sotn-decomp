@@ -3,7 +3,7 @@
 
 #define STAGE_FLAG NO0_STAGE_FLAG
 
-#if VERSION == VER_US
+#if IS_VER_INTL
 #include "../e_stage_name_us.h"
 #endif
 
@@ -25,5 +25,9 @@ static u8 stage_name_fr[] = {
 };
 
 #define STAGE_NAME_LOAD_GFX
+#include "../e_stage_name_jp.h"
+#endif
+
+#if !IS_VER_INTL && TARGET != TARGET_PSP
 #include "../e_stage_name_jp.h"
 #endif

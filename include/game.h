@@ -226,6 +226,12 @@ typedef enum {
 // Convenience macros
 #define PAD_SHAPES (PAD_SQUARE | PAD_CROSS | PAD_CIRCLE | PAD_TRIANGLE)
 
+#if REGION == REGION_EU
+#define REFRESH_RATE 50
+#else
+#define REFRESH_RATE 60
+#endif
+
 // PSP's wolf controls are slightly different.
 #if TARGET == TARGET_PSP
 #define PAD_SHOULDERS (PAD_L1 | PAD_R1)
@@ -838,6 +844,11 @@ typedef struct {
     /* 0x4 */ u16 tapped;
     /* 0x6 */ u16 repeat;
 } Pad; // size = 0x8
+
+#if VERSION >= VER_EU || TARGET == TARGET_PSP
+// bugfix: clock at the center of the castle to work after 99:59:59 play time
+#define CLOCK_BUGFIX
+#endif
 
 #define POSE(duration, frameNo, hitboxNo)                                      \
     {(duration), (((frameNo) & 0x1FF) | (((hitboxNo) & 0x7F) << 9))}
@@ -2161,8 +2172,7 @@ extern s16 D_8003C710;
 extern s16 D_8003C712;
 extern s32 D_8003C728;
 extern s32 D_8003C730;
-#if VERSION >= VER_EU
-// related to a bugfix in the NO0 clock room at 99:59:59 gameplay time
+#ifdef CLOCK_BUGFIX
 extern s32 g_TimerCopyFrames;
 extern s32 g_TimerCopyHours;
 extern s32 g_TimerCopySeconds;

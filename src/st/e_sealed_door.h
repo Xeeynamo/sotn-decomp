@@ -36,6 +36,8 @@ static char sealed_door_DE[] = "\x98\x10Magisch versiegelt.";
 static char* sealed_door_label;
 
 #include "../get_lang.h"
+#elif REGION == REGION_JP
+static char sealed_door_label[] = "\x78\x0E魔法で施錠されている";
 #else
 static char sealed_door_label[] = "\x7C\x0EMagically sealed．";
 // NZ0 has an extra .word in data vs NO0

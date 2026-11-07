@@ -62,7 +62,7 @@ void UpdateBirdcages(Entity* self, u32 timerMinutes) {
     }
 }
 
-#if TARGET == TARGET_PSP
+#ifdef CLOCK_BUGFIX
 #define timer_frames g_TimerCopyFrames
 #define timer_seconds g_TimerCopySeconds
 #define timer_minutes g_TimerCopyMinutes

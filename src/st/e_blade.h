@@ -751,7 +751,8 @@ void EntityBladeWeapon(Entity* self) {
         self->hitboxHeight = 6;
         primIndex = g_api.AllocPrimitives(PRIM_G4, 6);
         if (primIndex == -1) {
-#if VERSION < VER_JP10 || TARGET == TARGET_PSP
+#if VERSION <= VER_JP10 || TARGET == TARGET_PSP
+            // bugfix: destroy entity if primitive heap is exhausted
             DestroyEntity(self);
 #else
             self->ext.GH_Props.prim = NULL;
@@ -807,7 +808,7 @@ void EntityBladeWeapon(Entity* self) {
     self->hitboxOffY = (rcos(angle) * 13) >> 12;
 
     prim = self->ext.GH_Props.prim;
-#if VERSION >= VER_JP10 && TARGET != TARGET_PSP
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
     if (prim != NULL) {
 #else
     if (1) {

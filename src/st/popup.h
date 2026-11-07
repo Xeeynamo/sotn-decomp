@@ -32,7 +32,7 @@ void BottomCornerText(u8* str, u8 leftAlign) {
             }
         }
         *chIdx++ = ch;
-#if VERSION == VER_US
+#if REGION != REGION_JP
         if (ch) {
             xPos++;
         }
@@ -87,7 +87,7 @@ void BottomCornerText(u8* str, u8 leftAlign) {
         prim->g0 = prim->g1 = 0x5F;
     }
 
-#if VERSION != VER_US
+#if REGION == REGION_JP
     textWidth <<= 3;
 #endif
 
@@ -166,7 +166,7 @@ void BottomCornerText(u8* str, u8 leftAlign) {
             prim->y0 = 0xD4;
             prim = prim->next;
         }
-#if VERSION == VER_US
+#if REGION != REGION_JP
         if (ch) {
             xPos2 += 8;
         } else {

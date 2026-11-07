@@ -283,7 +283,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         g_Status.timerMinutes = 0;
         g_Status.timerSeconds = 0;
         g_Status.timerFrames = 0;
-#if VERSION >= VER_EU
+#ifdef CLOCK_BUGFIX
         g_TimerCopyFrames = g_TimerCopySeconds = g_TimerCopyMinutes =
             g_TimerCopyHours = 0;
 #endif
