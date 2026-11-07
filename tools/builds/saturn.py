@@ -1076,6 +1076,7 @@ add_srcs(lib_srcs, build_base_path, "O0")
 
 add_srcs(o2_srcs, build_base_path, "O2")
 
+WEAPON_OPT = "O3"
 add_srcs(snd_srcs, build_base_path, "O3")
 
 def elf_srcs(srcs, output_dir):
@@ -1905,5 +1906,36 @@ def make_prgs(prgs, output_dir):
             implicit=checks)
 
 make_prgs(prgs, 'build/saturn')
+
+ninja.rule('pad_slot',
+           command='sh-elf-objcopy -O binary $in $out && truncate -s $size $out',
+           description='Padding $out')
+ninja.rule('concat', command='cat $in > $out', description='Joining $out')
+weapon_slots = []
+for n in range(64):
+    name = f'w_{n:02}'
+    config = f'config/saturn/weapon/{name}.prg.yaml'
+    if not os.path.exists(config):
+        continue
+    with open(config) as f:
+        subs = yaml.safe_load(f)['segments'][0]['subsegments']
+    files = list(dict.fromkeys(s['file'] if isinstance(s, dict) else s[2] for s in subs))
+    srcs = [f'src/saturn/weapon/{file}.c' for file in files]
+    add_srcs(srcs, build_base_path, WEAPON_OPT)
+    elf_srcs(srcs, build_base_path)
+    objs = [f'build/saturn/weapon/{file}.o' for file in files]
+    symbol_files = ['config/saturn/zero_syms.gen.txt', 'config/saturn/game_syms.gen.txt',
+                    'config/saturn/game_user_syms.txt', 'config/saturn/zero_user_syms.txt',
+                    f'config/saturn/weapon/{name}_data_syms.gen.txt',
+                    'build/saturn/zero_link_syms.txt', 'build/saturn/game_link_syms.txt']
+    elf = f'build/saturn/weapon/{name}.elf'
+    ninja.build(elf, 'link_multi', inputs=[objs[0]], implicit=objs[1:] + [f'config/saturn/weapon/{name}.ld'] + symbol_files,
+                variables={'ld_file': f'weapon/{name}.ld', 'map_file': f'build/saturn/weapon/{name}.map',
+                           'symbol_scripts': ' '.join(f'-T {x}' for x in symbol_files), 'target_aliases': '',
+                           'objs': ' '.join(objs[1:])})
+    ninja.build(f'build/saturn/weapon/{name}.bin', 'pad_slot', inputs=[elf], variables={'size': 0x3000})
+    weapon_slots.append(f'build/saturn/weapon/{name}.bin')
+if len(weapon_slots) == 64:
+    ninja.build('build/saturn/WEAPON0.PRG', 'concat', inputs=weapon_slots)
 
 ninja.close()

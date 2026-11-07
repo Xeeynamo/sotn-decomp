@@ -2,7 +2,6 @@
 use std::fs::File;
 use std::io::{self, Read, BufReader};
 use std::collections::HashMap;
-use std::io::BufRead;
 // use std::io::Seek;
 
 #[allow(dead_code)]
@@ -384,7 +383,15 @@ fn process_se_macro(line: &str) -> String {
 
 
 
+// every macro handled by `do_sub` starts with `_S`
+fn has_macro(line: &str) -> bool {
+    line.contains("_S")
+}
+
 fn do_sub(line: &str, psp: bool) -> String {
+    if !has_macro(line) {
+        return line.to_string();
+    }
     let mut processed = process_s_macro(line, psp);
     processed = process_s2_macro(&processed);
     processed = process_s2_hd_macro(&processed);
@@ -395,6 +402,10 @@ fn do_sub(line: &str, psp: bool) -> String {
 fn to_sjis(text: &str) -> Vec<u8> {
     let mut out = Vec::with_capacity(text.len());
     for line in text.split_inclusive('\n') {
+        if line.is_ascii() {
+            out.extend_from_slice(line.as_bytes());
+            continue;
+        }
         let (bytes, _, had_errors) = encoding_rs::SHIFT_JIS.encode(line);
         if had_errors {
             out.extend_from_slice(line.as_bytes());
@@ -412,19 +423,23 @@ fn process(filename: Option<String>, psp: bool, sjis: bool) -> io::Result<()> {
     };
 
     let mut reader = BufReader::new(reader);
-    let mut line = String::new();
-    let mut output = String::new();
-
-    while reader.read_line(&mut line)? > 0 {
-        output.push_str(&do_sub(&line, psp));
-        line.clear();
+    let mut input = String::new();
+    reader.read_to_string(&mut input)?;
+    let mut output = String::with_capacity(input.len());
+    for line in input.split_inclusive('\n') {
+        if has_macro(line) {
+            output.push_str(&do_sub(line, psp));
+        } else {
+            output.push_str(line);
+        }
     }
-    
+
+    use std::io::Write;
+    let mut stdout = io::stdout().lock();
     if sjis {
-        use std::io::Write;
-        io::stdout().write_all(&to_sjis(&output))?;
+        stdout.write_all(&to_sjis(&output))?;
     } else {
-        print!("{}", output);
+        stdout.write_all(output.as_bytes())?;
     }
 
     Ok(())
