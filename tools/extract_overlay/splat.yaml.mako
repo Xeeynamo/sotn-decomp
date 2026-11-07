@@ -21,7 +21,7 @@ options:
   asm_jtbl_label_macro: jlabel
   symbol_name_format: pspeu_$VRAM
   nonmatchings_path: nonmatchings
-  disassemble_all: true
+  disassemble_all: false
   section_order:
     - .text
     - .data

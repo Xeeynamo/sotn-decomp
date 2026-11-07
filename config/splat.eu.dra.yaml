@@ -18,7 +18,7 @@ options:
   use_legacy_include_asm: no
   asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
-  disassemble_all: true
+  disassemble_all: false
   global_vram_start: 0x80010000
   section_order:
     - ".data"
