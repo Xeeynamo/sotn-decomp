@@ -528,9 +528,9 @@
 |            | e_red_door.rodata                 |       16 |          0 | Yes    |       |     |
 |            | e_red_door.rodata                 |       16 |          0 | Yes    |       |     |
 | rbo5       | e_red_door.rodata                 |       16 |          0 | Yes    |       |     |
+| rbo6       | e_cutscene_faders.rodata          |       16 |          0 | Yes    |       |     |
 | rbo6       | e_dracula.rodata                  |       16 |          0 | Yes    |       |     |
 | rbo6       | e_red_door.rodata                 |       16 |          0 | Yes    |       |     |
-| rbo6       | unk_EB40.rodata                   |       16 |          0 | Yes    |       |     |
 |            | e_red_door.rodata                 |       16 |          0 | Yes    |       |     |
 | rbo8       | e_red_door.rodata                 |       16 |          0 | Yes    |       |     |
 | ric        | pl_subweapon_holywater.rodata     |       16 |          0 | Yes    |       |     |
@@ -5537,7 +5537,7 @@
 |            | func_pspeu_09247C48               |       95 |          9 |        |       |     |
 | lib        | func_psp_09263410                 |       95 |          9 |        |       |     |
 | dra        | func_psp_091392D8                 |       95 |         11 |        |       |     |
-| rbo6       | func_us_801A4028                  |       95 |         12 |        |       |     |
+| rbo6       | EntityDraculaChair                |       95 |         12 |        |       |     |
 | dra        | func_psp_09114880                 |       95 |         14 |        |       |     |
 | nz0        | func_pspeu_0923A7A0               |       95 |         14 |        |       |     |
 | rnz0       | func_pspeu_09256F98               |       95 |         14 |        |       |     |
@@ -6616,7 +6616,7 @@
 | rnz0       | func_pspeu_0923E290               |      123 |         15 |        |       |     |
 | bo6        | func_pspeu_0925F728               |      124 |         11 | Yes    |       |     |
 | ric        | func_pspeu_092B6C58               |      124 |         11 | Yes    |       |     |
-| rbo6       | func_us_801A367C                  |      124 |         12 |        |       |     |
+| rbo6       | EntityUnkID28                     |      124 |         12 |        |       |     |
 | main       | func_psp_089280CC                 |      124 |         12 |        |       |     |
 | no1        | func_pspeu_0925F280               |      124 |         12 |        |       |     |
 | bo6        | func_pspeu_09247B58               |      124 |         15 |        |       |     |
@@ -7022,7 +7022,7 @@
 | rnz1       | func_pspeu_09247808               |      156 |         20 |        |       |     |
 | main       | func_psp_08933C30                 |      156 |         22 | Yes    |       |     |
 | dra        | func_psp_091396C8                 |      156 |         26 |        |       |     |
-| rbo6       | func_us_801A37B4                  |      157 |         12 |        |       |     |
+| rbo6       | EntityUnkID2A                     |      157 |         12 |        |       |     |
 | bo6        | func_pspeu_0925E330               |      157 |         17 |        |       |     |
 | dra        | func_psp_0911DCF0                 |      157 |         18 |        |       |     |
 | dai        | func_pspeu_092568F0               |      157 |         20 |        |       |     |
@@ -7414,7 +7414,7 @@
 | are        | func_pspeu_09247638               |      188 |         17 |        |       |     |
 | no0        | func_pspeu_09240788               |      188 |         17 |        |       |     |
 | no0        | func_pspeu_09247B78               |      188 |         24 |        |       |     |
-| rbo6       | func_us_801A399C                  |      189 |         13 |        |       |     |
+| rbo6       | EntityUnkID2B                     |      189 |         13 |        |       |     |
 | np3        | EntityLargeGaibonProjectile       |      189 |         23 |        |       |     |
 | nz0        | func_pspeu_09258E00               |      189 |         23 |        |       |     |
 | rchi       | func_pspeu_0923DE70               |      189 |         23 |        |       |     |
@@ -8494,7 +8494,7 @@
 | are        | func_pspeu_092594B0               |      355 |         71 |        |       |     |
 | no0        | func_pspeu_09254250               |      355 |         71 |        |       |     |
 | nz1        | func_pspeu_0924D6D8               |      355 |         71 |        |       |     |
-| rbo6       | func_us_801A9208_from_bo6         |      356 |         21 | Yes    |       |     |
+| rbo6       | EntityUnkID29                     |      356 |         21 | Yes    |       |     |
 | no4        | func_pspeu_09249030               |      356 |         34 |        |       |     |
 | chi        | func_psp_0923CAC8                 |      356 |         37 |        |       |     |
 | rno3       | func_pspeu_0923A9F8               |      356 |         37 |        |       |     |
@@ -8575,7 +8575,7 @@
 | cat        | func_pspeu_0924CA30               |      364 |         59 |        |       |     |
 | rcat       | func_pspeu_09246238               |      364 |         59 |        |       |     |
 | lib        | func_psp_0924CF68                 |      364 |         72 |        |       |     |
-| rbo6       | func_us_801A3BE0                  |      365 |         23 |        |       |     |
+| rbo6       | EntityUnkID2C                     |      365 |         23 |        |       |     |
 | rbo2       | func_us_8019E558                  |      365 |         49 | Yes    |       |     |
 | dai        | func_pspeu_09239900               |      365 |         61 |        |       |     |
 | nz1        | func_pspeu_09257C20               |      366 |         33 |        |       |     |
