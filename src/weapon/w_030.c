@@ -171,7 +171,7 @@ void func_ptr_80170004(Entity* self) {
         self->ext.weapon.unk92 = D_D6000_8017A618[rand() & 0xF];
         self->ext.weapon.unk94 = PLAYER.posY.i.hi;
         self->ext.weapon.unk96 = PLAYER.posX.i.hi;
-        g_Player.timers[10] = 4;
+        g_Player.timers[ALU_T_USE_SUBWPN] = 4;
 
         self->step++;
         break;
