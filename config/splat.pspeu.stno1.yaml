@@ -26,7 +26,7 @@ options:
     - .bss
   ld_bss_is_noload: true
   disasm_unknown: true
-  disassemble_all: true
+  disassemble_all: false
   global_vram_start: 0x8000000
   ld_generate_symbol_per_data_segment: true
   asm_inc_header: |

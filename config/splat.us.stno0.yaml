@@ -19,7 +19,7 @@ options:
   migrate_rodata_to_functions: true
   asm_jtbl_label_macro: jlabel
   symbol_name_format: us_$VRAM
-  disassemble_all: true
+  disassemble_all: false
   global_vram_start: 0x80010000
   section_order:
     - .data
