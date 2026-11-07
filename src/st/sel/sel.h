@@ -15,6 +15,9 @@ typedef enum {
     MAIN_MENU_CURSOR_FILE_DELETE,
 } MainMenuCursor;
 
+#define PAD_MENU_CONFIRM (PAD_CROSS)
+#define PAD_MENU_BACK (PAD_TRIANGLE)
+
 typedef enum {
     Tips_Generic,
     Tips_Input,

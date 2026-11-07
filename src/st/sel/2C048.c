@@ -792,7 +792,7 @@ void UpdateNameEntry(void) {
         }
     }
 
-    if (g_pads[0].tapped & PAD_CROSS) { // Input Character
+    if (g_pads[0].tapped & PAD_MENU_CONFIRM) { // Input Character
         g_api.PlaySfx(SFX_UI_NAME_ENTRY);
         g_InputSaveName[g_InputCursorPos] = g_AsciiSet[D_801BC3E0];
         g_InputCursorPos++;
@@ -801,7 +801,7 @@ void UpdateNameEntry(void) {
         }
     }
 
-    if (g_pads[0].tapped & PAD_TRIANGLE) { // Backspace
+    if (g_pads[0].tapped & PAD_MENU_BACK) { // Backspace
         g_InputCursorPos--;
         if (g_InputCursorPos == -1) {
             g_InputCursorPos = 7;
@@ -1196,7 +1196,7 @@ void Update(void) {
     case Upd_Eng_MainMenuIdle:
         func_801AD590();
         func_801AD490();
-        if (g_pads[0].tapped & PAD_CROSS) {
+        if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
             switch (g_MainMenuCursor) {
             case 0:
                 g_api.PlaySfx(SFX_UI_CONFIRM);
@@ -1243,7 +1243,7 @@ void Update(void) {
             }
         }
         if ((g_pads[0].tapped & PAD_SELECT) ||
-            ((g_pads[0].tapped & PAD_TRIANGLE) && i == 8 &&
+            ((g_pads[0].tapped & PAD_MENU_BACK) && i == 8 &&
              g_InputCursorPos == 0)) {
             g_GameEngineStep = Upd_Eng_FileSelect;
         } else {
@@ -1335,11 +1335,11 @@ void Update(void) {
     case Upd_Eng_64:
         func_801ADF94(0x81, 0);
         DrawNavigationTips(Tips_YesNo);
-        if (g_pads[0].tapped & PAD_TRIANGLE) {
+        if (g_pads[0].tapped & PAD_MENU_BACK) {
             func_801AE9A8();
             func_801AD490();
             g_GameEngineStep = Upd_Eng_MainMenuIdle;
-        } else if (g_pads[0].tapped & PAD_CROSS) {
+        } else if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             g_GameEngineStep = Upd_Eng_0x10;
         }
@@ -1347,19 +1347,19 @@ void Update(void) {
     case Upd_Eng_65:
         func_801ADF94(0x83, 0);
         DrawNavigationTips(Tips_YesNo);
-        if (g_pads[0].tapped & PAD_TRIANGLE) {
+        if (g_pads[0].tapped & PAD_MENU_BACK) {
             D_801BAF0C = 0xFF;
             DrawNavigationTips(Tips_Generic);
             func_801B2608("Select file to be loaded．", 4);
             func_801B2608("", 5);
             g_GameEngineStep = Upd_Eng_51;
-        } else if (g_pads[0].tapped & PAD_CROSS) {
+        } else if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             g_GameEngineStep = Upd_Eng_0x10;
         }
         break;
     case Upd_Eng_51:
-        if (g_pads[0].tapped & PAD_TRIANGLE) {
+        if (g_pads[0].tapped & PAD_MENU_BACK) {
             func_801AE9A8();
             func_801AD490();
             g_GameEngineStep = Upd_Eng_MainMenuIdle;
@@ -1395,7 +1395,7 @@ void Update(void) {
                 func_801ADF94(0x81, 0);
                 DrawNavigationTips(Tips_YesNo);
                 g_GameEngineStep = Upd_Eng_65;
-            } else if (g_pads[0].tapped & PAD_CROSS) {
+            } else if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
                 port = D_801D6B04 / 15;
                 slot = D_801D6B04 % 15;
                 if (g_SaveSummary[port].icon[slot] >= 0) {
@@ -1459,7 +1459,7 @@ void Update(void) {
     case Upd_Eng_0xA0:
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x82, 0);
-        if (g_pads[0].tapped & PAD_CROSS) {
+        if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801AE9A8();
             func_801AD490();
@@ -1467,14 +1467,14 @@ void Update(void) {
         }
         break;
     case Upd_Eng_147:
-        if (g_pads[0].tapped & PAD_TRIANGLE) {
+        if (g_pads[0].tapped & PAD_MENU_BACK) {
             func_801AE9A8();
             func_801AD490();
             g_GameEngineStep = Upd_Eng_MainMenuIdle;
         } else {
             UpdateFileSelect();
             func_801ADF94(2, 0);
-            if (g_pads[0].tapped & PAD_CROSS) {
+            if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
                 port = D_801D6B04 / 15;
                 slot = D_801D6B04 % 15;
                 if (g_SaveSummary[port].icon[slot] >= 0) {
@@ -1498,7 +1498,7 @@ void Update(void) {
             }
         }
         if ((g_pads[0].tapped & PAD_SELECT) ||
-            (g_pads[0].tapped & PAD_TRIANGLE && i == 8 &&
+            (g_pads[0].tapped & PAD_MENU_BACK && i == 8 &&
              g_InputCursorPos == 0)) {
             SelectMainMenuOption(MAIN_MENU_CURSOR_FILE_DELETE);
             g_GameEngineStep = Upd_Eng_146;
@@ -1560,7 +1560,7 @@ void Update(void) {
     case Upd_Eng_152:
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x82, 0);
-        if (g_pads[0].tapped & PAD_CROSS) {
+        if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801ACBE4(GFX_UNK_15, 8);
             g_GameEngineStep = Upd_Eng_NameChange;
@@ -1569,7 +1569,7 @@ void Update(void) {
     case Upd_Eng_153:
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x82, 0);
-        if (g_pads[0].tapped & PAD_CROSS) {
+        if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             g_GameEngineStep = Upd_Eng_146;
         }
@@ -1621,7 +1621,7 @@ void Update(void) {
     case Upd_Eng_0x60:
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x82, 0);
-        if (g_pads[0].tapped & PAD_CROSS) {
+        if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801AE9A8();
             func_801AD490();
@@ -1629,14 +1629,14 @@ void Update(void) {
         }
         break;
     case Upd_Eng_83:
-        if (g_pads[0].tapped & PAD_TRIANGLE) {
+        if (g_pads[0].tapped & PAD_MENU_BACK) {
             func_801AE9A8();
             func_801AD490();
             g_GameEngineStep = Upd_Eng_MainMenuIdle;
         } else {
             UpdateFileSelect();
             func_801ADF94(2, 0);
-            if (g_pads[0].tapped & PAD_CROSS) {
+            if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
                 port = D_801D6B04 / 15;
                 slot = D_801D6B04 % 15;
                 if (g_SaveSummary[port].icon[slot] >= 0) {
@@ -1655,7 +1655,7 @@ void Update(void) {
         UpdateFileSelect();
         func_801ADF94(2, 1);
         func_801AE6D0();
-        if (g_pads[0].tapped & PAD_TRIANGLE) {
+        if (g_pads[0].tapped & PAD_MENU_BACK) {
             func_801ACBE4(GFX_UNK_18, 8);
             func_801ACBE4(GFX_UNK_19, 8);
             func_801ACBE4(GFX_UNK_20, 8);
@@ -1663,7 +1663,7 @@ void Update(void) {
             func_801B2608("to be copied．", 5);
             g_GameEngineStep--;
         } else {
-            if (g_pads[0].tapped & PAD_CROSS) {
+            if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
                 port = D_801D6B04 / 15;
                 slot = D_801D6B04 % 15;
                 if (D_801BC3EC != D_801D6B04) {
@@ -1722,7 +1722,7 @@ void Update(void) {
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x82, 1);
         func_801AE6D0();
-        if (g_pads[0].tapped & PAD_CROSS) {
+        if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801ACBE4(GFX_UNK_15, 8);
             g_GameEngineStep = Upd_Eng_FileCopy;
@@ -1732,7 +1732,7 @@ void Update(void) {
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x82, 1);
         func_801AE6D0();
-        if (g_pads[0].tapped & PAD_CROSS) {
+        if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801ACBE4(GFX_UNK_18, 8);
             func_801ACBE4(GFX_UNK_19, 8);
@@ -1744,13 +1744,13 @@ void Update(void) {
         DrawNavigationTips(Tips_YesNo);
         func_801ADF94(0x82, 1);
         func_801AE6D0();
-        if (g_pads[0].tapped & PAD_CROSS) {
+        if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801B2608("Copying data．", 4);
             func_801B2608("Do not remove Memory Card．", 5);
             g_GameEngineStep = Upd_Eng_85;
         } else {
-            if (g_pads[0].tapped & PAD_TRIANGLE) {
+            if (g_pads[0].tapped & PAD_MENU_BACK) {
                 func_801B1F4C(5);
                 func_801B25D4("どこにコピーしますか？", 4);
                 DrawNavigationTips(Tips_Generic);
@@ -1806,7 +1806,7 @@ void Update(void) {
     case Upd_Eng_0x80:
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x82, 0);
-        if (g_pads[0].tapped & PAD_CROSS) {
+        if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801AE9A8();
             func_801AD490();
@@ -1814,7 +1814,7 @@ void Update(void) {
         }
         break;
     case Upd_Eng_115:
-        if (g_pads[0].tapped & PAD_TRIANGLE) {
+        if (g_pads[0].tapped & PAD_MENU_BACK) {
             func_801AE9A8();
             func_801AD490();
             g_GameEngineStep = Upd_Eng_MainMenuIdle;
@@ -1822,7 +1822,7 @@ void Update(void) {
             UpdateFileSelect();
             func_801ADF94(2, 0);
             DrawNavigationTips(Tips_Generic);
-            if (g_pads[0].tapped & PAD_CROSS) {
+            if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
                 port = D_801D6B04 / 15;
                 slot = D_801D6B04 % 15;
                 if (g_SaveSummary[port].icon[slot] >= 0) {
@@ -1839,11 +1839,11 @@ void Update(void) {
     case Upd_Eng_116:
         DrawNavigationTips(Tips_YesNo);
         func_801ADF94(0x82, 0);
-        if (g_pads[0].tapped & PAD_TRIANGLE) {
+        if (g_pads[0].tapped & PAD_MENU_BACK) {
             func_801B2608("Select file", 4);
             func_801B2608("to be erased．", 5);
             g_GameEngineStep--;
-        } else if (g_pads[0].tapped & PAD_CROSS) {
+        } else if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
             func_801ACBE4(GFX_UNK_15, 8);
             g_api.PlaySfx(SFX_UI_CONFIRM);
             g_GameEngineStep++;
@@ -1878,7 +1878,7 @@ void Update(void) {
     case Upd_Eng_119:
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x82, 0);
-        if (g_pads[0].tapped & PAD_CROSS) {
+        if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801ACBE4(GFX_UNK_15, 8);
             g_GameEngineStep = Upd_Eng_FileDelete;
@@ -1887,7 +1887,7 @@ void Update(void) {
     case Upd_Eng_120:
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x82, 0);
-        if (g_pads[0].tapped & PAD_CROSS) {
+        if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             g_GameEngineStep = Upd_Eng_114;
         }
@@ -1954,13 +1954,13 @@ void Update(void) {
         break;
     case Upd_Eng_513:
         func_801ADF94(0x80, 0);
-        if (g_pads[0].tapped & PAD_TRIANGLE) {
+        if (g_pads[0].tapped & PAD_MENU_BACK) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801ACBE4(GFX_UNK_6, 8);
             MemCardSetPort(0);
             g_GameEngineStep++;
         } else {
-            if (g_pads[0].tapped & PAD_CROSS) {
+            if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
                 g_GameEngineStep = Upd_Eng_0x210;
             }
             func_801AD218();
@@ -1989,7 +1989,7 @@ void Update(void) {
     case Upd_Eng_515:
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x80, 0);
-        if (g_pads[0].tapped & PAD_CROSS) {
+        if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801ACBE4(GFX_UNK_15, 8);
             g_GameEngineStep = g_SelNextCrossPressEngStep;
@@ -1998,7 +1998,7 @@ void Update(void) {
     case Upd_Eng_516:
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x80, 0);
-        if (g_pads[0].tapped & PAD_CROSS) {
+        if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             g_GameEngineStep = g_SelNextCrossPressEngStep;
         }
@@ -2016,13 +2016,13 @@ void Update(void) {
         break;
     case Upd_Eng_529:
         func_801ADF94(0x80, 0);
-        if (g_pads[0].tapped & PAD_TRIANGLE) {
+        if (g_pads[0].tapped & PAD_MENU_BACK) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801ACBE4(GFX_UNK_6, 8);
             MemCardSetPort(1);
             g_GameEngineStep++;
         } else {
-            if (g_pads[0].tapped & PAD_CROSS) {
+            if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
                 g_GameEngineStep = Upd_Eng_0x220;
             }
             func_801AD218();
@@ -2051,7 +2051,7 @@ void Update(void) {
     case Upd_Eng_531:
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x80, 0);
-        if (g_pads[0].tapped & PAD_CROSS) {
+        if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801ACBE4(GFX_UNK_15, 8);
             g_GameEngineStep = g_SelNextCrossPressEngStep;
@@ -2060,7 +2060,7 @@ void Update(void) {
     case Upd_Eng_532:
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x80, 0);
-        if (g_pads[0].tapped & PAD_CROSS) {
+        if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             g_GameEngineStep = g_SelNextCrossPressEngStep;
         }
