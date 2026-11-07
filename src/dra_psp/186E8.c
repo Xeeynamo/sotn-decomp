@@ -4,6 +4,7 @@
 #include "../dra/dra_bss.h"
 
 #include "../get_lang.h"
+#include "game.h"
 
 extern void* g_ApiInit[sizeof(GameApi) / sizeof(void*)];
 
@@ -1609,8 +1610,8 @@ loop_5:
         g_MapCursorTimer += D_801362D4;
         if (D_800973EC == 0 && D_800974A4 == 0) {
             g_Status.timerFrames += D_801362D4;
-            if (g_Status.timerFrames >= 60) {
-                g_Status.timerFrames -= 60;
+            if (g_Status.timerFrames >= REFRESH_RATE) {
+                g_Status.timerFrames -= REFRESH_RATE;
                 g_Status.timerSeconds++;
                 if (g_Status.timerSeconds >= 60) {
                     g_Status.timerSeconds -= 60;
@@ -1626,10 +1627,10 @@ loop_5:
                     }
                 }
             }
-            // PSP apparently has another timekeeping system?
+            // Same as CLOCK_BUGFIX but for PSP
             g_TimerCopyFrames += D_801362D4;
-            if (g_TimerCopyFrames >= 60) {
-                g_TimerCopyFrames -= 60;
+            if (g_TimerCopyFrames >= REFRESH_RATE) {
+                g_TimerCopyFrames -= REFRESH_RATE;
                 g_TimerCopySeconds++;
                 if (g_TimerCopySeconds >= 60) {
                     g_TimerCopySeconds -= 60;

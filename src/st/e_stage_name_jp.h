@@ -21,7 +21,7 @@ long VectorNormalS(VECTOR* v0, SVECTOR* v1);
 #define STAGE_NAME_BOX_RIGHT_X 248
 #endif
 
-#if VERSION < VER_JP10
+#if TARGET != TARGET_PSP
 #define NUM_PRIMS 181
 #define TEXT_X 192
 #define TEXT_Y 177
@@ -128,8 +128,7 @@ static SVECTOR no_rotation = {0, 0, 0};
 // This is the banner version which "shutter opens" and wipes away to the left.
 // psp prims 8-183 and hd prims 6-181 seem to be completely unused
 void EntityStageNamePopup(Entity* self) {
-#if VERSION < VER_JP10
-    // NOTE: These vars are used in TEK, unused in MAD, removed in JP10
+#if TARGET != TARGET_PSP
     SVECTOR rotVector;
     VECTOR transVector;
     MATRIX mtx;
@@ -185,7 +184,7 @@ void EntityStageNamePopup(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         prim = &g_PrimBuf[primIndex];
         self->ext.stpopupj.firstTextPrim = prim;
-#if VERSION >= VER_JP10
+#if TARGET == TARGET_PSP
         while (prim != NULL) {
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
@@ -203,7 +202,7 @@ void EntityStageNamePopup(Entity* self) {
 // This splits the two loops in the middle because that is what is happening
 // functionally.  The two prims for psp together have the same left and right
 // sides (conceptually) as the single prim for hd.
-#if VERSION >= VER_JP10
+#if TARGET == TARGET_PSP
             prim->x3 = prim->x1 = 128;
             prim->y3 = prim->y2 = 173;
             prim->u2 = prim->u0 = 0;
@@ -294,7 +293,7 @@ void EntityStageNamePopup(Entity* self) {
         prim->v2 = 255;
         prim->v3 = prim->v2;
         prim->x2 = prim->x0 = STAGE_NAME_BOX_LEFT_X;
-#if VERSION < VER_JP10
+#if TARGET != TARGET_PSP
         prim->y1 = prim->y0 = 155;
         prim->x3 = prim->x1 = STAGE_NAME_BOX_RIGHT_X;
 #else
@@ -424,7 +423,7 @@ void EntityStageNamePopup(Entity* self) {
                 prim = prim->next;
             }
 
-#if VERSION >= VER_JP10
+#if TARGET == TARGET_PSP
             for (i = 0; i < 2; i++) {
                 prim->u0 = prim->u2 = 128;
                 prim->v0 = prim->v1 = 48;
@@ -463,7 +462,7 @@ void EntityStageNamePopup(Entity* self) {
 
             if (!primsSet) {
                 self->step_s++;
-#if VERSION >= VER_JP10
+#if TARGET == TARGET_PSP
                 self->ext.stpopupj.timer = 0;
                 prim = self->ext.stpopupj.firstTextPrim;
                 prim = prim->next;
@@ -481,7 +480,7 @@ void EntityStageNamePopup(Entity* self) {
             break;
         case STAGE_NAME_DRAW_TEXT:
             prim = self->ext.stpopupj.firstTextPrim;
-#if VERSION < VER_JP10
+#if TARGET != TARGET_PSP
             for (i = 0; i < 2; i++) {
                 prim->u0 -= 8;
                 prim->u2 = prim->u0;
@@ -538,7 +537,7 @@ void EntityStageNamePopup(Entity* self) {
                     } else {
                         self->step_s = STAGE_NAME_HOLD_TEXT;
                     }
-#if VERSION >= VER_JP10
+#if TARGET == TARGET_PSP
                     if (prim->y2 < i * 2 + PRIM_BOTTOM_Y) {
                         prim->v2++;
                         prim->v3 = prim->v2;
@@ -1095,7 +1094,7 @@ void EntityStageNamePopup(Entity* self) {
         prim->x1 -= 4; // Aligns right side of box with right side of text
         boxRightX = prim->x3 = prim->x1;
         prim = self->ext.stpopupj.firstTextPrim;
-#if VERSION < VER_JP10
+#if TARGET != TARGET_PSP
         for (i = 0; i < 2; i++) {
             if (prim->x1 > boxRightX) {
                 prim->x1 -= 4;
@@ -1109,7 +1108,7 @@ void EntityStageNamePopup(Entity* self) {
                 if (prim->x1 < prim->x0) {
                     prim->drawMode = DRAW_HIDE;
                 }
-#if VERSION < VER_JP10
+#if TARGET != TARGET_PSP
                 prim->u1 -= 4;
                 prim->u3 = prim->u1;
             }

@@ -138,7 +138,7 @@ void func_us_801C2184(Entity* self) {
                 g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
                 g_Player.demo_timer = 2;
                 g_Player.padSim = PAD_DOWN;
-#if TARGET != TARGET_PSP
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
                 player->velocityX = 0;
                 player->velocityY = 0;
 #endif

@@ -999,13 +999,8 @@ loop_5:
         g_MapCursorTimer += D_801362D4;
         if (D_800973EC == 0 && D_800974A4 == 0) {
             g_Status.timerFrames += D_801362D4;
-#if REGION == REGION_EU
-            if (g_Status.timerFrames >= 50) {
-                g_Status.timerFrames -= 50;
-#else
-            if (g_Status.timerFrames >= 60) {
-                g_Status.timerFrames -= 60;
-#endif
+            if (g_Status.timerFrames >= REFRESH_RATE) {
+                g_Status.timerFrames -= REFRESH_RATE;
                 g_Status.timerSeconds++;
                 if (g_Status.timerSeconds >= 60) {
                     g_Status.timerSeconds -= 60;
@@ -1021,17 +1016,10 @@ loop_5:
                     }
                 }
             }
-#if VERSION >= VER_EU
-            // BUGFIX: fixes the clock at the center of the castle works after
-            // 99:59:59 play time
+#ifdef CLOCK_BUGFIX
             g_TimerCopyFrames += D_801362D4;
-#if REGION == REGION_EU
-            if (g_TimerCopyFrames >= 50) {
-                g_TimerCopyFrames -= 50;
-#else
-            if (g_TimerCopyFrames >= 60) {
-                g_TimerCopyFrames -= 60;
-#endif
+            if (g_TimerCopyFrames >= REFRESH_RATE) {
+                g_TimerCopyFrames -= REFRESH_RATE;
                 g_TimerCopySeconds++;
                 if (g_TimerCopySeconds >= 60) {
                     g_TimerCopySeconds -= 60;

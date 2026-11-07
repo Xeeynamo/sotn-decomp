@@ -385,7 +385,7 @@ void EntityPrizeDrop(Entity* self) {
         AnimateEntity(g_SubweaponAnimPrizeDrop[itemId], self);
 #endif
     }
-#if VERSION == VER_US && STAGE != STAGE_ST0
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP && STAGE != STAGE_ST0
     if (self->step > 1 && self->step < 5 && self->hitFlags) {
 #else
     if (self->step && self->step < 5 && self->hitFlags) {
@@ -767,7 +767,7 @@ void EntityEquipItemDrop(Entity* self) {
 
     itemId = self->params & 0x7FFF;
     if (
-#if VERSION == VER_US && STAGE != STAGE_ST0
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP && STAGE != STAGE_ST0
         self->step >= 2 &&
 #else
         self->step &&
@@ -954,7 +954,7 @@ void EntityEquipItemDrop(Entity* self) {
     }
 }
 
-#if VERSION >= VER_JP10 && TARGET != TARGET_PSP && STAGE != STAGE_ST0
+#if REGION != REGION_JP && STAGE != STAGE_ST0
 #include "blit_char.h"
 #endif
 
@@ -962,7 +962,7 @@ void EntityEquipItemDrop(Entity* self) {
 extern char* obtainedStr; // BSS
 #else
 const char* g_RelicOrbTexts[] = {
-#if VERSION != VER_US || STAGE == STAGE_ST0
+#if REGION == REGION_JP || STAGE == STAGE_ST0
     "を入手した"
 #else
     "Obtained ",
@@ -1027,7 +1027,7 @@ void EntityRelicOrb(Entity* self) {
 #define orbUnk7C var_s2
 #endif
 
-#if VERSION != VER_US || STAGE == STAGE_ST0
+#if REGION == REGION_JP || STAGE == STAGE_ST0
     u16 vramX;
     u16* chPixSrc;
     u16* chPixDst;
@@ -1241,7 +1241,7 @@ void EntityRelicOrb(Entity* self) {
         }
         msgLen = strlen(sp34);
         BlitChar(&sp34[0], 0, 12, 0x100);
-#elif VERSION != VER_US || STAGE == STAGE_ST0
+#elif REGION == REGION_JP || STAGE == STAGE_ST0
         vramX = 0;
         msg = g_api.relicDefs[relicId].name;
         while (true) {
@@ -1360,7 +1360,7 @@ void EntityRelicOrb(Entity* self) {
 
     case 9:
         prim = &g_PrimBuf[self->primIndex];
-#if VERSION == VER_US && STAGE != STAGE_ST0
+#if REGION != REGION_JP && STAGE != STAGE_ST0
         prim->x0 = 0x80 - self->ext.relicOrb.unk7E;
 #else
         prim->x0 = 0x80 - self->ext.relicOrb.unk7E * 6;
@@ -1606,7 +1606,11 @@ void EntityMessageBox(Entity* self) {
                 prim->u1 = self->ext.messageBox.width;
                 prim->v1 = self->ext.messageBox.height;
                 prim->clut = PAL_UNK_1A1;
+#if VERSION >= VER_JP12 && TARGET != TARGET_PSP
+                prim->priority = 0x1FC;
+#else
                 prim->priority = 0x1FD;
+#endif
                 prim->drawMode = DRAW_HIDE;
             } else {
                 prim->type = PRIM_G4;
@@ -1626,7 +1630,11 @@ void EntityMessageBox(Entity* self) {
                         self->posY.i.hi + self->ext.messageBox.height / 2 + 4;
                     PGRN(prim) = 0x80;
                 }
+#if VERSION >= VER_JP12 && TARGET != TARGET_PSP
+                prim->priority = 0x1FB;
+#else
                 prim->priority = 0x1FC;
+#endif
                 prim->drawMode = DRAW_TPAGE | DRAW_TRANSP;
             }
             prim = prim->next;
@@ -1634,7 +1642,7 @@ void EntityMessageBox(Entity* self) {
         self->step++;
         break;
     case 2:
-#if VERSION == VER_US
+#if REGION != REGION_JP
         dstPix = g_Pix[0];
         chPix = dstPix;
         str = self->ext.messageBox.label;
@@ -1667,7 +1675,7 @@ void EntityMessageBox(Entity* self) {
         y = VramY;
         str = self->ext.messageBox.label;
         BlitChar(str, 0, 0, 0x180);
-#elif VERSION == VER_BETA_HD
+#elif VERSION >= VER_BETA_HD
         nCh = 0;
         x = VramX;
         y = VramY;

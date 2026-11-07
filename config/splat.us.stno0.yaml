@@ -140,7 +140,7 @@ segments:
       - [0x5D2B0, c, e_sealed_door]
       - [0x5E09C, c, prim_helpers]
       - [0x5E8CC, .bss, create_entity]
-      - [0x5E8DC, bss]
+      - [0x5E8DC, .bss, bss]
       - [0x5F548, .bss, clock_room]
       - [0x5F54C, .bss, e_collect]
   - [0x5F58C]

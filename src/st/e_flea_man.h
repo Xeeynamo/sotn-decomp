@@ -84,7 +84,7 @@ void EntityFleaMan(Entity* self) {
             self->step = 1;
         }
 
-#if VERSION == VER_US
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
         if (self->ext.fleaMan.unk7C) {
             self->step = 3;
         }
