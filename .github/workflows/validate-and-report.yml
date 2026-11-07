@@ -21,7 +21,7 @@ jobs:
   build-and-test:
     strategy:
       matrix:
-        version: ["us", "hd", "pspeu"]
+        version: ["us", "hd", "jp10", "jp11", "jp12", "usproto", "eu", "hk", "pspeu"]
     # Building and testing cannot work if the repository owner is not Xeeynamo
     # due to the missing secrets to clone the CI dependencies
     if: github.repository == 'Xeeynamo/sotn-decomp'
@@ -74,8 +74,9 @@ jobs:
       - name: Report progress (dry run)
         if: github.ref != 'refs/heads/master'
         run: .venv/bin/python3 tools/progress.py --dry-run --version ${{ matrix.version }}
+      # frogress only tracks us, hd and pspeu
       - name: Report progress (online)
-        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push' && contains(fromJSON('["us", "hd", "pspeu"]'), matrix.version)
         run: .venv/bin/python3 tools/progress.py --version ${{ matrix.version }}
 
   # unlike the matrix build above, this task builds all versions of the
