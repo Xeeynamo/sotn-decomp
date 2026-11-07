@@ -4,6 +4,7 @@
 
 extern u32 D_801BC3E8;
 extern s32 D_801D6B00;
+extern u16 g_DialoguePalTimer;
 extern Dialogue g_Dialogue;
 extern s32 g_SkipCutscene;
 
@@ -25,8 +26,21 @@ static u16 D_80180840[] = {
     0x1B, 0x34, 0x41, 0x35, 0x08, 0x0E, 0x4D, 0x11, 0x34, 0x41, 0x29, 0x48,
 };
 
+#if CUTSCENE_EARLY_VER
+static u16 actor_names[] = {
+    _SACTOR("アルカード"),
+    _SACTOR("マリア・ラーネッド"),
+    _SACTOR("リヒター・ベルモンド"),
+};
+static u8 actor_prims[] = {6, 10, 12};
+static u8 actor_name_len[] = {5, 9, 10};
+#else
 static const char* actor_names[] = {_S("Alucard"), _S("Maria"), _S("Richter")};
+#endif
 
+#if CUTSCENE_EARLY_VER
+#define CUTSCENE_UNK1_NEXT_X 0
+#endif
 #include "../cutscene_unk1.h"
 
 u8 SetCutsceneScript(u8* script) {
@@ -51,11 +65,16 @@ u8 SetCutsceneScript(u8* script) {
         prim->drawMode = DRAW_HIDE;
         prim = g_Dialogue.prim[3] = prim->next;
 
+#if CUTSCENE_EARLY_VER
+        prim->drawMode = DRAW_HIDE;
+        prim = g_Dialogue.primPortrait = prim->next;
+#else
         prim->drawMode = DRAW_HIDE;
         prim = g_Dialogue.prim[4] = prim->next;
 
         prim->drawMode = DRAW_HIDE;
         prim = g_Dialogue.primPortrait = prim->next;
+#endif
 
         prim->type = PRIM_GT4;
         prim->drawMode = DRAW_HIDE;
@@ -95,6 +114,7 @@ u8 SetCutsceneScript(u8* script) {
 // n.b.! unlike the stage version of this function, a `self`
 // parameter is used to store the substep instead of
 // `g_CurrentEntity`., entity
+#if IS_VER_INTL
 static void ScaleCutsceneAvatar(u8 ySteps, Entity* self) {
     const int PrimCount = 5;
     s32 primIndex = g_Dialogue.nextCharY + 1;
@@ -123,6 +143,7 @@ static void ScaleCutsceneAvatar(u8 ySteps, Entity* self) {
     }
     g_Dialogue.portraitAnimTimer++;
 }
+#endif
 
 void EntityCutscene(Entity* self) {
     s16 x, y;
@@ -132,7 +153,7 @@ void EntityCutscene(Entity* self) {
     s32 i;
     s32 nextChar2;
     s32 var_s7;
-    u32 ptr;
+    s32 ptr;
     switch (self->step) {
     case 0:
         if (SetCutsceneScript(cutscene_endings)) {
@@ -144,15 +165,48 @@ void EntityCutscene(Entity* self) {
             g_CutsceneHasControl = 1;
             self->step++;
         }
+#if REGION == REGION_EU
+        g_DialoguePalTimer = 0;
+#endif
         break;
 
     case 1:
         while (true) {
+#if IS_VER_INTL
             if (g_Dialogue.nextCharTimer && !g_SkipCutscene) {
+#if REGION == REGION_EU
+                // advance the text faster to compensate for 50Hz on PAL
+                u16 steps;
+                g_DialoguePalTimer += 0x1333;
+                steps = g_DialoguePalTimer >> 12;
+                g_DialoguePalTimer &= 0xFFF;
+                nextChar = steps;
+                if (g_Dialogue.nextCharTimer < nextChar) {
+                    g_Dialogue.nextCharTimer = 0;
+                } else {
+                    g_Dialogue.nextCharTimer -= nextChar;
+                    return;
+                }
+#else
+                g_Dialogue.nextCharTimer--;
+                return;
+#endif
+            }
+            nextChar = *g_Dialogue.scriptCur++;
+#else
+            nextChar = *g_Dialogue.scriptCur++;
+            if (g_Dialogue.nextCharTimer && !g_SkipCutscene) {
+                g_Dialogue.scriptCur--;
                 g_Dialogue.nextCharTimer--;
                 return;
             }
-            nextChar = *g_Dialogue.scriptCur++;
+#endif
+#if CUTSCENE_EARLY_VER
+            // the lead byte of a Shift-JIS character
+            if (nextChar & 0x80) {
+                goto sjis_char;
+            }
+#endif
             switch (nextChar) {
             case CSOP_END_CUTSCENE:
                 self->step = 7;
@@ -162,6 +216,15 @@ void EntityCutscene(Entity* self) {
                     continue;
                 }
                 g_Dialogue.nextCharX = g_Dialogue.nextLineX;
+#if CUTSCENE_EARLY_VER
+                if (!(g_Dialogue.unk12 & 1)) {
+                    g_Dialogue.nextLineY += 0x10;
+                }
+                g_Dialogue.nextCharY = (g_Dialogue.nextCharY + 1) & 3;
+                CutsceneUnk4();
+                if (!(g_Dialogue.unk12 & 1)) {
+                    if (g_Dialogue.nextCharY > 2) {
+#else
                 if (!(g_Dialogue.unk12 & 1)) {
                     g_Dialogue.nextLineY += 0xC;
                 }
@@ -172,12 +235,18 @@ void EntityCutscene(Entity* self) {
                 CutsceneUnk4();
                 if (!(g_Dialogue.unk12 & 1)) {
                     if (g_Dialogue.nextCharY > 3) {
+#endif
                         g_Dialogue.unk12 |= 1;
                         g_Dialogue.portraitAnimTimer = 0;
                         self->step_s = 0;
                         self->step++;
                     } else {
+#if REGION == REGION_EU || REGION == REGION_JP || VERSION == VER_USPROTO
+                        // seems to pause for one frame after a line break
+                        return;
+#else
                         continue;
+#endif
                     }
                 } else {
                     g_Dialogue.portraitAnimTimer = 0;
@@ -199,7 +268,7 @@ void EntityCutscene(Entity* self) {
                     continue;
                 }
                 prim = g_Dialogue.prim[0];
-                for (i = 0; i < 5; i++) {
+                for (i = 0; i < LEN(g_Dialogue.prim); i++) {
                     prim->drawMode = DRAW_HIDE;
                     prim = prim->next;
                 }
@@ -244,7 +313,7 @@ void EntityCutscene(Entity* self) {
                     continue;
                 }
                 prim = g_Dialogue.prim[0];
-                for (i = 0; i < 5; i++) {
+                for (i = 0; i < LEN(g_Dialogue.prim); i++) {
                     prim->drawMode = DRAW_HIDE;
                     prim = prim->next;
                 }
@@ -395,6 +464,17 @@ void EntityCutscene(Entity* self) {
                 }
                 g_Dialogue.scriptCur++;
                 continue;
+#if CUTSCENE_EARLY_VER
+            }
+            continue;
+        sjis_char:
+            if (g_SkipCutscene) {
+                g_Dialogue.scriptCur++;
+                continue;
+            }
+            nextChar = (nextChar << 8) | *g_Dialogue.scriptCur++;
+            g_Dialogue.nextCharTimer = g_Dialogue.unk17;
+#else
             default:
                 if (g_SkipCutscene) {
                     g_Dialogue.scriptCur++;
@@ -402,9 +482,18 @@ void EntityCutscene(Entity* self) {
                 }
                 g_Dialogue.nextCharTimer = g_Dialogue.unk17;
             }
+#endif
             break;
         }
 
+#if CUTSCENE_EARLY_VER
+        rect = (RECT*)g_api.func_80106A28(nextChar, 1);
+        if (rect) {
+            y = (g_Dialogue.nextCharY << 4) + 0x180;
+            LoadTPage((u_long*)rect, 0, 0, g_Dialogue.nextCharX, y, 12, 16);
+            g_Dialogue.nextCharX += 3;
+        }
+#else
         if (nextChar == ' ') {
             g_Dialogue.nextCharX += 2;
             break;
@@ -416,12 +505,71 @@ void EntityCutscene(Entity* self) {
         y = g_Dialogue.nextCharY * 12 + 0x180;
         MoveImage(rect, g_Dialogue.nextCharX, y);
         g_Dialogue.nextCharX += 2;
+#endif
         break;
     case 2:
+#if REGION == REGION_EU
+        // compensates for PAL timing
+        if (g_Dialogue.portraitAnimTimer == 0 ||
+            g_Dialogue.portraitAnimTimer == 2) {
+            ScaleCutsceneAvatar(3, self);
+        } else {
+            ScaleCutsceneAvatar(2, self);
+        }
+        if (g_Dialogue.portraitAnimTimer >= 5) {
+            self->step--;
+        }
+#elif IS_VER_INTL
         ScaleCutsceneAvatar(2, self);
         if (g_Dialogue.portraitAnimTimer >= 6) {
             self->step--;
         }
+#elif CUTSCENE_EARLY_VER
+    ptr = (g_Dialogue.nextCharY + 1) & 3;
+    if (self->step_s == 0) {
+        prim = g_Dialogue.prim[ptr];
+        prim->v1 -= 2;
+        prim->v0 += 2;
+        if (prim->v1 == 0) {
+            self->step_s++;
+            prim->drawMode = DRAW_HIDE;
+        }
+    }
+    for (i = 0; i < LEN(g_Dialogue.prim); i++) {
+        if (i != ptr) {
+            prim = g_Dialogue.prim[i];
+            prim->y0 -= 2;
+        }
+    }
+    g_Dialogue.portraitAnimTimer++;
+    if (g_Dialogue.portraitAnimTimer >= 8) {
+        self->step--;
+    }
+#else
+    ptr = g_Dialogue.nextCharY + 1;
+    while (ptr >= 5) {
+        ptr -= 5;
+    }
+    if (self->step_s == 0) {
+        prim = g_Dialogue.prim[ptr];
+        prim->v0 += 2;
+        prim->v1 -= 2;
+        if (prim->v1 == 0) {
+            self->step_s++;
+            prim->drawMode = DRAW_HIDE;
+        }
+    }
+    for (i = 0; i < 5; i++) {
+        if (i != ptr) {
+            prim = g_Dialogue.prim[i];
+            prim->y0 -= 2;
+        }
+    }
+    g_Dialogue.portraitAnimTimer++;
+    if (g_Dialogue.portraitAnimTimer >= 6) {
+        self->step--;
+    }
+#endif
         break;
 
     case 3:
@@ -503,8 +651,22 @@ void EntityCutscene(Entity* self) {
     }
 }
 
+#if REGION == REGION_EU
+// PAL credits use taller lines and scroll one pixel every 3 frames instead of 4
+#define CREDITS_LINE_H 20
+#define CREDITS_ENTRY_GAP 7
+#define CREDITS_SECTION_GAP 15
+#define CREDITS_SCROLL_FRAMES 3
+#else
+#define CREDITS_LINE_H 19
+#define CREDITS_ENTRY_GAP 6
+#define CREDITS_SECTION_GAP 12
+#define CREDITS_SCROLL_FRAMES 4
+#endif
+
 u8 func_801B76F0(u8* msg) {
-    const int PRIM = -5;
+    // aliases g_Dialogue.prim[1]; TODO must split like src/st/st0/3101C_psx.c
+    const int PRIM = -LEN(g_Dialogue.prim);
     Primitive* prim;
     s16 i;
     s16 temp_v0;
@@ -513,7 +675,11 @@ u8 func_801B76F0(u8* msg) {
     if (g_Dialogue.primIndex[PRIM] != -1) {
         g_Dialogue.scriptCur = msg;
         g_Dialogue.startY = g_Dialogue.nextCharX = 0x200;
-        g_Dialogue.startY += 0xB;
+#if VERSION >= VER_JP12
+        g_Dialogue.startY += 36;
+#else
+        g_Dialogue.startY += 11;
+#endif
         g_Dialogue.nextLineX = 0;
         g_Dialogue.nextCharY = 0;
         g_Dialogue.portraitAnimTimer = 0;
@@ -535,7 +701,7 @@ u8 func_801B76F0(u8* msg) {
             prim->v0 = temp_v0 * 0x10;
             prim->u1 = 0xF0;
             prim->v1 = 0x10;
-            prim->y0 = temp_v0 * 0x13 + 0xF0;
+            prim->y0 = temp_v0 * CREDITS_LINE_H + 0xF0;
             prim->clut = PAL_UNK_1A1;
             prim->x1 = 0;
             prim->priority = 3;
@@ -665,7 +831,11 @@ s32 func_801B79D4(Entity* entity) {
         switch (nextChar) {
         case CSOP_END_CREDITS:
             entity->step = 7;
+#if VERSION >= VER_US
             g_Dialogue.unk12 = 0x400;
+#else
+            g_Dialogue.unk12 = 0x600;
+#endif
             return 0;
         case CSOP_SUBTEXT:
             g_Dialogue.startY = g_Dialogue.nextCharX + *g_Dialogue.scriptCur++;
@@ -692,13 +862,13 @@ s32 func_801B79D4(Entity* entity) {
             prim = g_Dialogue.prim[0];
             while (prim != NULL) {
                 if (y0 <= prim->y0) {
-                    prim->y0 += 6;
-                    prim->x1 += 6;
+                    prim->y0 += CREDITS_ENTRY_GAP;
+                    prim->x1 += CREDITS_ENTRY_GAP;
                 }
                 prim = prim->next;
             }
-            g_Dialogue.unk12 += 0x18;
-            g_Dialogue.portraitAnimTimer += 6;
+            g_Dialogue.unk12 += CREDITS_SCROLL_FRAMES * CREDITS_ENTRY_GAP;
+            g_Dialogue.portraitAnimTimer += CREDITS_ENTRY_GAP;
             g_Dialogue.nextCharY = 0;
             return 0;
         case CSOP_SECTION:
@@ -717,13 +887,13 @@ s32 func_801B79D4(Entity* entity) {
             prim = g_Dialogue.prim[0];
             while (prim != NULL) {
                 if (y0 <= prim->y0) {
-                    prim->y0 += 12;
-                    prim->x1 += 12;
+                    prim->y0 += CREDITS_SECTION_GAP;
+                    prim->x1 += CREDITS_SECTION_GAP;
                 }
                 prim = prim->next;
             }
-            g_Dialogue.unk12 += 0x30;
-            g_Dialogue.portraitAnimTimer += 12;
+            g_Dialogue.unk12 += CREDITS_SCROLL_FRAMES * CREDITS_SECTION_GAP;
+            g_Dialogue.portraitAnimTimer += CREDITS_SECTION_GAP;
             g_Dialogue.nextCharY = 0;
             return 0;
         default:
@@ -768,20 +938,21 @@ s32 func_801B79D4(Entity* entity) {
     if (!g_Dialogue.unk12) {
         func_801B786C(g_Dialogue.nextLineX);
         g_Dialogue.nextCharY = 1;
-        g_Dialogue.unk12 = 76;
+        g_Dialogue.unk12 = CREDITS_SCROLL_FRAMES * CREDITS_LINE_H;
     }
     g_Dialogue.unk12--;
     if (!g_Dialogue.clutIndex) {
         prim = g_Dialogue.prim[0];
         for (i = 0; i < 0x20; i++) {
             prim->y0--;
-            if (prim->y0 == -19) {
-                prim->y0 = g_Dialogue.portraitAnimTimer - prim->x1 + 0x11D;
+            if (prim->y0 == -CREDITS_LINE_H) {
+                prim->y0 = g_Dialogue.portraitAnimTimer - prim->x1 +
+                           CREDITS_LINE_H * 15;
                 prim->x1 = g_Dialogue.portraitAnimTimer;
             }
             prim = prim->next;
         }
-        g_Dialogue.clutIndex = 4;
+        g_Dialogue.clutIndex = CREDITS_SCROLL_FRAMES;
     }
     g_Dialogue.clutIndex--;
     return 0;

@@ -63,7 +63,9 @@ static s32 g_MenuUnk084V0[] = {0xF0, 0xF0, 0x80, 0x80, 0x88, 0x88, 0x88, 0x88};
 static s32 g_MenuUnk084U1[] = {0x28, 0x28, 0x08, 0x18, 0x08, 0x08, 0x08, 0x08};
 static s32 g_MenuUnk084V1[] = {0x10, 0x10, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08};
 
-StageName D_80180128[80] = {
+#if REGION != REGION_JP
+// FOr some reason, they duplicated the place name talbe at g_SaveAreaNames
+static StageName stage_names[80] = {
     {_S("Marble"), _S("Gallery")},
     {_S("Outer"), _S("Wall")},
     {_S("Long"), _S("Library")},
@@ -105,9 +107,16 @@ StageName D_80180128[80] = {
     {_S("Anti-Chapel"), _S("")},
     {_S("Reverse"), _S("Entrance")},
     {_S(""), _S("")},
+#if VERSION >= VER_EU
+    // bugfix: typo in the US build
+    {_S("Reverse"), _S("Caverns")},
+    {_S("Reverse"), _S("Colosseum")},
+    {_S("Reverse"), _S("Keep")},
+#else
     {_S("Reverce"), _S("Caverns")},
     {_S("Reverce"), _S("Colosseum")},
     {_S("Reverce"), _S("Keep")},
+#endif
     {_S("Necromancy"), _S("Laboratory")},
     {_S(""), _S("")},
     {_S(""), _S("")},
@@ -145,6 +154,7 @@ StageName D_80180128[80] = {
     {_S(""), _S("")},
     {_S(""), _S("")},
 };
+#endif
 
 void SetupFileChoose(void) {
     g_MainMenuCursor = 1;
@@ -205,6 +215,16 @@ void InitMainMenuUI(void) {
         }
     }
 
+#if REGION == REGION_JP
+    D_801BAF18[GFX_UNK_6][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
+    prim = &g_PrimBuf[D_801BAF18[GFX_UNK_6][0]];
+    SetTexturedPrimRect(prim, 0x20, 0xB0, 0x10, 0x30, 0xA0, 0x50);
+    func_801B1D88(prim);
+    prim->tpage = 0xC;
+    prim->clut = 0x200;
+    prim->priority = 0x10;
+    prim->drawMode = DRAW_DEFAULT;
+#else
     D_801BAF18[GFX_UNK_6][0] = g_api.AllocPrimitives(PRIM_GT4, 4);
     prim = &g_PrimBuf[D_801BAF18[GFX_UNK_6][0]];
     SetTexturedPrimRect(prim, 0x20, 0xB0, 0x10, 0x10, 0xA0, 0x50);
@@ -237,6 +257,7 @@ void InitMainMenuUI(void) {
     prim->clut = 0x200;
     prim->priority = 0x10;
     prim->drawMode = DRAW_DEFAULT;
+#endif
 
     D_801BAF18[GFX_UNK_7][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
     prim = &g_PrimBuf[D_801BAF18[GFX_UNK_7][0]];
@@ -327,7 +348,11 @@ void InitMainMenuUI(void) {
 
     D_801BAF18[GFX_UNK_15][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
     prim = &g_PrimBuf[D_801BAF18[GFX_UNK_15][0]];
+#if REGION == REGION_JP
+    prim->x0 = 0x98;
+#else
     prim->x0 = 0x94;
+#endif
     prim->y0 = 0x10;
     prim->u0 = 0;
     prim->v0 = 0x40;
@@ -359,7 +384,11 @@ void InitMainMenuUI(void) {
     prim->y0 = 0xC0;
     prim->u0 = 0;
     prim->v0 = 0x90;
+#if REGION == REGION_JP
+    prim->u1 = 0x70;
+#else
     prim->u1 = 1;
+#endif
     prim->v1 = 0x10;
     func_801B1D88(prim);
     prim->tpage = 6;
@@ -516,10 +545,28 @@ void func_801ACF7C(void) {
 #endif
 }
 
+#if REGION == REGION_JP
+#ifndef SOTN_STR
+// indices into the glyph sheet built by func_801ACF7C
+#define _S2_SEL(x) (x)
+#endif
+char* D_801803A8[9] = {
+    _S2_SEL("…選択"),   _S2_SEL("…決定"),    _S2_SEL("…取消"),
+    _S2_SEL("…入力"),   _S2_SEL("未初期化"), _S2_SEL("…はい"),
+    _S2_SEL("…いいえ"), _S2_SEL("…確認"),    _S2_SEL("不良"),
+};
+#elif VERSION >= VER_US
 char* D_801803A8[10] = {
     _S("Select"), _S("Decide"), _S("Cancel"),  _S("Input"), _S("Not for-"),
     _S("Yes"),    _S("No"),     _S("Confirm"), _S("Error"), _S("matted"),
 };
+#else
+char* D_801803A8[9] = {
+    _S("Select"), _S("Decide"),          _S("Cansel"),
+    _S("Input"),  _S("Not initialized"), _S("Yes"),
+    _S("No"),     _S("Confirm"),         _S("Error"),
+};
+#endif
 
 #define STR_SELECT D_801803A8[0]
 #define STR_DECIDE D_801803A8[1]
@@ -538,6 +585,10 @@ static char* D_801803D0[] = {
     "Ｗ", "Ｘ", "Ｙ", "Ｚ", "＆", "！", "−",  "．", "’",  "？", "　",
 };
 
+#if REGION == REGION_JP
+extern const char* g_SaveAreaNames[];
+#endif
+
 void func_801ACFBC(s32 port, s32 slot, s32 textId) {
     char playerName[0x20];
     s32 i;
@@ -548,6 +599,18 @@ void func_801ACFBC(s32 port, s32 slot, s32 textId) {
         strcat(playerName, D_801803D0[charIndex]);
     }
     func_801B263C(playerName, textId);
+#if REGION == REGION_JP
+    func_801B25D4(g_SaveAreaNames[g_SaveSummary[port].stage[slot]], textId + 1);
+    if (g_SaveSummary[port].character[slot]) {
+        func_801B25D4("リヒター", textId + 2);
+    } else if (g_SaveSummary[port].kind[slot] & SAVE_FLAG_CLEAR) {
+        func_801B25D4("クリアー", textId + 2);
+    } else if (g_SaveSummary[port].kind[slot] & SAVE_FLAG_REPLAY) {
+        func_801B25D4("アナザープレイ", textId + 2);
+    } else {
+        func_801B25D4("　", textId + 2);
+    }
+#else
     func_801B25D4("　", textId + 1);
     if (g_SaveSummary[port].character[slot]) {
         func_801B2608("Richter", textId + 2);
@@ -558,28 +621,64 @@ void func_801ACFBC(s32 port, s32 slot, s32 textId) {
     } else {
         func_801B2608("　", textId + 2);
     }
+#endif
 }
 
+#if VERSION >= VER_USPROTO
 void PrintFileSelectPlaceName(s32 port, s32 slot, s32 y) {
+#if REGION != REGION_JP
     volatile u32 pad; // !FAKE:
 
     s32 stage = g_SaveSummary[port].stage[slot];
-    DrawString8x8(D_80180128[stage].line1, 0xA0, y, 1);
-    DrawString8x8(D_80180128[stage].line2, 0xA0, y + 8, 1);
+    DrawString8x8(stage_names[stage].line1, 0xA0, y, 1);
+    DrawString8x8(stage_names[stage].line2, 0xA0, y + 8, 1);
+#endif
 }
+#endif
 
-void func_801AD1D0(void) {
+void DrawYesNo(void) {
+#if REGION == REGION_JP
+    DrawString12x16(STR_YES, 0x30, 0xC0, 1);
+    DrawString12x16(STR_NO, 0x30, 0xD0, 1);
+#else
     DrawString8x8(STR_YES, 0x34, 0xC4, 1);
     DrawString8x8(STR_NO, 0x34, 0xD4, 1);
+#endif
 }
 
-void func_801AD218(void) {
+#if VERSION >= VER_US
+void DrawNoYes(void) {
     DrawString8x8(STR_NO, 0x34, 0xC4, 1);
     DrawString8x8(STR_YES, 0x34, 0xD4, 1);
 }
+#endif
 
 void DrawNavigationTips(NavigationTips mode) {
     Primitive* prim;
+
+#if REGION == REGION_JP
+    func_801ACBE4(GFX_UNK_6, 0);
+    prim = &g_PrimBuf[D_801BAF18[GFX_UNK_6][0]];
+    switch (mode) {
+    case Tips_Generic:
+        SetTexturedPrimRect(prim, 0x20, 0xB0, 0x10, 0x30, 0xA0, 0x50);
+        break;
+    case Tips_Input:
+        SetTexturedPrimRect(prim, 0x120, 0x20, 0x10, 0x40, 0xA0, 0x50);
+        break;
+    case Tips_YesNo:
+        SetTexturedPrimRect(prim, 0x20, 0xC0, 0x10, 0x20, 0xA0, 0x60);
+        DrawYesNo();
+        break;
+    case Tips_Confirm:
+        SetTexturedPrimRect(prim, 0x20, 0xC0, 0x10, 0x10, 0xA0, 0x60);
+        DrawString12x16(STR_CONFIRM, 0x30, 0xC0, 1);
+        break;
+    case Tips_MenuNavigation:
+        SetTexturedPrimRect(prim, 0x20, 0xB8, 0x10, 0x20, 0xA0, 0x50);
+        break;
+    }
+#else
 
     func_801ACBE4(GFX_UNK_6, 8);
     prim = &g_PrimBuf[D_801BAF18[GFX_UNK_6][0]];
@@ -611,18 +710,24 @@ void DrawNavigationTips(NavigationTips mode) {
         break;
 
     case Tips_YesNo:
+#if VERSION >= VER_US
     case Tips_NoYes:
+#endif
         prim = prim->next;
         SetPrimRect(prim, 0x20, 0xC0, 0x10, 0x10);
         prim->drawMode = DRAW_DEFAULT;
         prim = prim->next;
         SetPrimRect(prim, 0x20, 0xD0, 0x10, 0x10);
         prim->drawMode = DRAW_DEFAULT;
+#if VERSION >= VER_US
         if (mode == Tips_YesNo) {
-            func_801AD1D0();
+            DrawYesNo();
         } else {
-            func_801AD218();
+            DrawNoYes();
         }
+#else
+        DrawYesNo();
+#endif
         break;
 
     case Tips_Confirm:
@@ -640,6 +745,7 @@ void DrawNavigationTips(NavigationTips mode) {
         prim->drawMode = DRAW_DEFAULT;
         break;
     }
+#endif
 }
 
 void func_801AD490(void) {
@@ -647,8 +753,13 @@ void func_801AD490(void) {
     s32 i;
 
     DrawNavigationTips(Tips_MenuNavigation);
+#if REGION == REGION_JP
+    DrawString12x16(STR_SELECT, 0x30, 0xB8, 1);
+    DrawString12x16(STR_DECIDE, 0x30, 0xC8, 1);
+#else
     DrawString8x8(STR_SELECT, 0x34, 0xBC, 1);
     DrawString8x8(STR_DECIDE, 0x34, 0xCC, 1);
+#endif
     DrawString16x16("select", 0xF0, 0x20, 1);
     DrawString16x16("your", 0x100, 0x30, 1);
     DrawString16x16("destiny", 0xE8, 0x40, 1);
@@ -664,8 +775,13 @@ void func_801AD490(void) {
 }
 
 const char* D_80180454[] = {
+#if REGION == REGION_JP
+    "−＊＊＊＊＊−",     "−ゲームを始める−", "−名前を変える−",
+    "−ファイルを写す−", "−ファイルを消す−",
+#else
     "−＊＊＊＊＊−",  "− New Game −",   "− Change Name −",
     "− Copy File −", "− Erase File −",
+#endif
 };
 
 void func_801AD590(void) {
@@ -683,7 +799,11 @@ void func_801AD590(void) {
             g_MainMenuCursor = 4;
         }
     }
+#if REGION == REGION_JP
+    func_801B25D4(D_80180454[g_MainMenuCursor], 9);
+#else
     func_801B2608(D_80180454[g_MainMenuCursor], 9);
+#endif
 }
 
 static char* D_80180468 = "richter ";
@@ -733,10 +853,17 @@ void func_801AD66C(void) {
 void func_801AD78C(void) {
     Primitive* prim;
 
+#if REGION == REGION_JP
+    DrawString12x16(STR_SELECT, 0x130, 0x20, 1);
+    DrawString12x16(STR_INPUT, 0x130, 0x30, 1);
+    DrawString12x16(STR_CANCEL, 0x130, 0x40, 1);
+    DrawString12x16(STR_DECIDE, 0x130, 0x50, 1);
+#else
     DrawString8x8(STR_SELECT, 0x134, 0x24, 1);
     DrawString8x8(STR_INPUT, 0x134, 0x34, 1);
     DrawString8x8(STR_CANCEL, 0x134, 0x44, 1);
     DrawString8x8(STR_DECIDE, 0x134, 0x54, 1);
+#endif
     DrawString16x16("a b c d e f g h", 0x48, 0x70, 1);
     DrawString16x16("i j k l m n o p", 0x48, 0x88, 1);
     DrawString16x16("q r s t u v w x", 0x48, 0xA0, 1);
@@ -887,7 +1014,9 @@ void func_801ADF94(s32 flags, s32 yOffset) {
                 prim = &g_PrimBuf[D_801BAF18[GFX_UNK_16][0]];
                 prim->y0 = y + 0x60;
                 func_801ACFBC(port, slot, 6);
+#if VERSION >= VER_USPROTO
                 PrintFileSelectPlaceName(port, slot, y + 0x70);
+#endif
                 DrawNumber8x8(
                     g_SaveSummary[port].level[slot], 0x94, y + 0x90, 1);
                 DrawNumber8x8(
@@ -921,9 +1050,15 @@ void func_801ADF94(s32 flags, s32 yOffset) {
     }
 
     if (!hideButtons) {
+#if REGION == REGION_JP
+        DrawString12x16(STR_SELECT, 0x30, 0xB0, 1);
+        DrawString12x16(STR_DECIDE, 0x30, 0xC0, 1);
+        DrawString12x16(STR_CANCEL, 0x30, 0xD0, 1);
+#else
         DrawString8x8(STR_SELECT, 0x34, 0xB4, 1);
         DrawString8x8(STR_DECIDE, 0x34, 0xC4, 1);
         DrawString8x8(STR_CANCEL, 0x34, 0xD4, 1);
+#endif
     }
 
     for (port = 0; port < PORT_COUNT; port++) {
@@ -933,11 +1068,21 @@ void func_801ADF94(s32 flags, s32 yOffset) {
             DrawString16x16("card", (port * 0x100) + 0x20, 0x68, 1);
             break;
         case -2:
+#if IS_VER_INTL
             DrawString8x8(STR_NOTFOR, (port * 0x100) + 0x1E, 0x6C, 1);
             DrawString8x8(STR_MATTED, (port * 0x100) + 0x1E, 0x74, 1);
+#elif REGION == REGION_JP
+            DrawString12x16(STR_NOTFOR, (port * 0x100) + 0x28, 0x68, 1);
+#else
+            DrawString8x8(STR_NOTFOR, (port * 0x100) + 0x2C, 0x6C, 1);
+#endif
             break;
         case -3:
+#if REGION == REGION_JP
+            DrawString12x16(STR_ERROR, (port * 0x100) + 0x32, 0x68, 1);
+#else
             DrawString8x8(STR_ERROR, (port * 0x100) + 0x36, 0x6C, 1);
+#endif
             break;
         default:
             for (i = 0; i < BLOCK_PER_CARD; i++) {
@@ -999,7 +1144,9 @@ void func_801AE6D0(void) {
     func_801ACBE4(GFX_UNK_19, 0);
     func_801ACBE4(GFX_UNK_20, 0);
     func_801ACFBC(port, slot, 0xA);
+#if VERSION >= VER_USPROTO
     PrintFileSelectPlaceName(port, slot, 0x48);
+#endif
     DrawNumber8x8(g_SaveSummary[port].level[slot], 0x94, 0x68, 1);
     DrawNumber8x8(g_SaveSummary[port].playHours[slot], 0xC8, 0x68, 1);
     DrawTwoDigitsNumber8x8(
@@ -1161,22 +1308,31 @@ void Update(void) {
 
     func_801B1F34();
     switch (g_GameEngineStep) {
+#if VERSION >= VER_US
     case Upd_Eng_Init:
         func_801B18F4();
         SetTitleDisplayBuffer256();
         g_GameEngineStep--;
         break;
     case Upd_Eng_MenuInit:
+#else
+    case Upd_Eng_Init:
+#endif
         g_api.PlaySfx(MU_PRAYER);
         g_GameTimer = 0;
         D_801BAF08 = 0;
         func_801B2D6C();
+#if VERSION < VER_US
+        SetTitleDisplayBuffer256();
+#endif
         g_api.func_800EA5E4(ANIMSET_DRA(0));
         g_api.func_800EA5E4(ANIMSET_OVL(0));
         g_api.func_800EA5E4(ANIMSET_OVL(1));
         g_api.func_800EA5E4(ANIMSET_OVL(2));
         g_api.func_800EA5E4(ANIMSET_OVL(3));
+#if VERSION >= VER_USPROTO
         g_api.func_800EA5E4(ANIMSET_OVL(6));
+#endif
         SetupFileChoose();
         InitMainMenuBackgroundAndFadeMask();
         InitMainMenuUI();
@@ -1184,7 +1340,11 @@ void Update(void) {
         func_801AECA0();
         func_801B1F4C(9);
         func_801AD490();
+#if VERSION >= VER_US
         g_GameEngineStep += 2;
+#else
+        g_GameEngineStep++;
+#endif
         break;
     case Upd_Eng_MenuFadeIn:
         func_801AD590();
@@ -1286,8 +1446,13 @@ void Update(void) {
         break;
     case Upd_Eng_FileSelect:
         SelectMainMenuOption(MAIN_MENU_CURSOR_FILE_SELECT);
+#if REGION == REGION_JP
+        func_801B25D4("メモリーカードをチェックしています。", 4);
+        func_801B25D4("メモリーカードを抜かないでください。", 5);
+#else
         func_801B2608("Checking Memory Card．", 4);
         func_801B2608("Do not remove Memory Card．", 5);
+#endif
         func_801B3120();
         g_GameEngineStep++;
         /* fallthrough */
@@ -1319,8 +1484,13 @@ void Update(void) {
             g_MemCardSelectorX = g_MemCardSelectorX % 3;
         }
         if (D_801BAF10) {
+#if REGION == REGION_JP
+            func_801B25D4("このまま始めるとセーブ", 4);
+            func_801B25D4("できませんがよろしいですか？", 5);
+#else
             func_801B2608("You won’t be able to save", 4);
             func_801B2608("your game． Is that OK？", 5);
+#endif
             func_801ADF94(0x83, 0);
             DrawNavigationTips(Tips_YesNo);
             g_GameEngineStep = Upd_Eng_64;
@@ -1350,8 +1520,13 @@ void Update(void) {
         if (g_pads[0].tapped & PAD_MENU_BACK) {
             D_801BAF0C = 0xFF;
             DrawNavigationTips(Tips_Generic);
+#if REGION == REGION_JP
+            func_801B25D4("ロードするファイルを", 4);
+            func_801B25D4("選択してください。", 5);
+#else
             func_801B2608("Select file to be loaded．", 4);
             func_801B2608("", 5);
+#endif
             g_GameEngineStep = Upd_Eng_51;
         } else if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
@@ -1368,30 +1543,59 @@ void Update(void) {
             func_801ADF94(1, 0);
             D_801BAF0C++;
             if (D_801BAF0C == 0x100) {
+#if REGION == REGION_JP
+                func_801B25D4("ロードするファイルを", 4);
+                func_801B25D4("選択してください。", 5);
+#else
                 func_801B2608("Select file to be loaded．", 4);
                 func_801B2608("", 5);
+#endif
             }
             if (D_801BAF0C == 0x200) {
+#if REGION == REGION_JP
+                if (D_801BAF14) {
+                    func_801B25D4("スタートボタンを押すと", 4);
+                    func_801B25D4("新しいゲームを始めます。", 5);
+                } else {
+                    func_801B25D4("ＮＥＷ　ＧＡＭＥを選ぶと", 4);
+                    func_801B25D4("新しいゲームを始めます。", 5);
+                }
+#else
                 if (D_801BAF14) {
                     func_801B2608("Press Start button", 4);
+#if VERSION == VER_USPROTO
+                    func_801B2608("to bigin new game．", 5);
+#else
                     func_801B2608("to begin new game．", 5);
+#endif
                 } else {
                     func_801B2608("Select New Game", 4);
                     func_801B2608("to start from beginning．", 5);
                 }
+#endif
                 if (g_GameClearFlag == SAVE_FLAG_NORMAL) {
                     D_801BAF0C = 0;
                 }
             }
             if (D_801BAF0C == 0x300) {
+#if REGION == REGION_JP
+                func_801B25D4("名前をＲＩＣＨＴＥＲにすると", 4);
+                func_801B25D4("リヒターでプレイできます。", 5);
+#else
                 func_801B2608("Input ””RICHTER”” to play", 4);
                 func_801B2608("as Richter Belmont．", 5);
+#endif
                 D_801BAF0C = 0;
             }
             if ((g_pads[0].tapped & PAD_START) && D_801BAF14) {
                 g_api.PlaySfx(SFX_UI_CONFIRM);
+#if REGION == REGION_JP
+                func_801B25D4("このまま始めるとセーブ", 4);
+                func_801B25D4("できませんがよろしいですか？", 5);
+#else
                 func_801B2608("You won’t be able to save", 4);
                 func_801B2608("your game． Is that OK？", 5);
+#endif
                 func_801ADF94(0x81, 0);
                 DrawNavigationTips(Tips_YesNo);
                 g_GameEngineStep = Upd_Eng_65;
@@ -1413,8 +1617,13 @@ void Update(void) {
     case Upd_Eng_NameChange:
         SelectMainMenuOption(MAIN_MENU_CURSOR_FILE_DELETE);
         func_801ACBE4(GFX_UNK_15, 0);
+#if REGION == REGION_JP
+        func_801B25D4("メモリーカードをチェックしています。", 4);
+        func_801B25D4("メモリーカードを抜かないでください。", 5);
+#else
         func_801B2608("Checking Memory Card．", 4);
         func_801B2608("Do not remove Memory Card．", 5);
+#endif
         func_801B3120();
         g_GameEngineStep++;
         /* fallthrough */
@@ -1443,16 +1652,26 @@ void Update(void) {
         }
         func_801AEE74();
         if (D_801BAF10) {
+#if REGION == REGION_JP
+            func_801B1F4C(5);
+            func_801B25D4("データがありません。", 4);
+#else
             func_801B2608("No data found", 4);
             func_801B2608("on this Memory Card．", 5);
+#endif
             func_801ADF94(0x82, 0);
             DrawNavigationTips(Tips_Confirm);
             g_GameEngineStep = Upd_Eng_0xA0;
         } else {
             DrawNavigationTips(Tips_Generic);
             func_801ADF94(2, 0);
+#if REGION == REGION_JP
+            func_801B25D4("名前を変更するファイルを", 4);
+            func_801B25D4("選択してください。", 5);
+#else
             func_801B2608("Select the file", 4);
             func_801B2608("you wish to rename．", 5);
+#endif
             g_GameEngineStep++;
         }
         break;
@@ -1517,8 +1736,13 @@ void Update(void) {
                     g_GameEngineStep = Upd_Eng_146;
                 } else {
                     func_801ACBE4(GFX_UNK_15, 0);
+#if REGION == REGION_JP
+                    func_801B25D4("名前を変更しています。", 4);
+                    func_801B25D4("メモリーカードを抜かないでください。", 5);
+#else
                     func_801B2608("Changing Name．", 4);
                     func_801B2608("Do not remove Memory Card．", 5);
+#endif
                     g_api.PlaySfx(SFX_UI_CONFIRM);
                     g_GameEngineStep++;
                 }
@@ -1540,19 +1764,31 @@ void Update(void) {
         }
         if (temp_s1 == 1) {
             func_801B1F4C(5);
+#if REGION == REGION_JP
+            func_801B25D4("名前を変更しました。", 4);
+#else
             func_801B2608("Name changed．", 4);
+#endif
             func_801ACBE4(GFX_UNK_15, 0);
             g_GameEngineStep += 2;
         }
         if (temp_s1 == -1) {
             func_801B1F4C(5);
+#if REGION == REGION_JP
+            func_801B25D4("ロードエラーです。", 4);
+#else
             func_801B2608("Loading error．", 4);
+#endif
             func_801ACBE4(GFX_UNK_15, 0);
             g_GameEngineStep++;
         }
         if (temp_s1 == -3) {
             func_801B1F4C(5);
+#if REGION == REGION_JP
+            func_801B25D4("セーブエラーです。", 4);
+#else
             func_801B2608("Save error．", 4);
+#endif
             func_801ACBE4(GFX_UNK_15, 0);
             g_GameEngineStep++;
         }
@@ -1576,8 +1812,13 @@ void Update(void) {
         break;
     case Upd_Eng_FileCopy:
         SelectMainMenuOption(MAIN_MENU_CURSOR_NAME_CHANGE);
+#if REGION == REGION_JP
+        func_801B25D4("メモリーカードをチェックしています。", 4);
+        func_801B25D4("メモリーカードを抜かないでください。", 5);
+#else
         func_801B2608("Checking Memory Card．", 4);
         func_801B2608("Do not remove Memory Card．", 5);
+#endif
         func_801B3120();
         g_GameEngineStep++;
         /* fallthrough */
@@ -1605,16 +1846,26 @@ void Update(void) {
         }
         func_801AEE74();
         if (D_801BAF10) {
+#if REGION == REGION_JP
+            func_801B1F4C(5);
+            func_801B25D4("データがありません。", 4);
+#else
             func_801B2608("No data found", 4);
             func_801B2608("on this Memory Card．", 5);
+#endif
             func_801ADF94(0x82, 0);
             DrawNavigationTips(Tips_Confirm);
             g_GameEngineStep = Upd_Eng_0x60;
         } else {
             DrawNavigationTips(Tips_Generic);
             func_801ADF94(2, 0);
+#if REGION == REGION_JP
+            func_801B25D4("コピーするファイルを", 4);
+            func_801B25D4("選択してください。", 5);
+#else
             func_801B2608("Select file", 4);
             func_801B2608("to be copied．", 5);
+#endif
             g_GameEngineStep++;
         }
         break;
@@ -1640,8 +1891,13 @@ void Update(void) {
                 port = D_801D6B04 / 15;
                 slot = D_801D6B04 % 15;
                 if (g_SaveSummary[port].icon[slot] >= 0) {
+#if REGION == REGION_JP
+                    func_801B1F4C(5);
+                    func_801B25D4("どこにコピーしますか？", 4);
+#else
                     func_801B2608("Where do you want", 4);
                     func_801B2608("to copy to？", 5);
+#endif
                     D_801BC3EC = D_801D6B04;
                     g_api.PlaySfx(SFX_UI_CONFIRM);
                     g_GameEngineStep++;
@@ -1659,8 +1915,13 @@ void Update(void) {
             func_801ACBE4(GFX_UNK_18, 8);
             func_801ACBE4(GFX_UNK_19, 8);
             func_801ACBE4(GFX_UNK_20, 8);
+#if REGION == REGION_JP
+            func_801B25D4("コピーするファイルを", 4);
+            func_801B25D4("選択してください。", 5);
+#else
             func_801B2608("Select file", 4);
             func_801B2608("to be copied．", 5);
+#endif
             g_GameEngineStep--;
         } else {
             if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
@@ -1668,13 +1929,24 @@ void Update(void) {
                 slot = D_801D6B04 % 15;
                 if (D_801BC3EC != D_801D6B04) {
                     if (g_SaveSummary[port].icon[slot] >= 0) {
+#if REGION == REGION_JP
+                        func_801B25D4("データが上書きされますが", 4);
+                        func_801B25D4("よろしいですか？", 5);
+#else
                         func_801B1F4C(5);
                         func_801B2608("OK to overwrite data？", 4);
+#endif
                         g_api.PlaySfx(SFX_UI_CONFIRM);
                         g_GameEngineStep = Upd_Eng_89;
                     } else if (g_SaveSummary[port].icon[slot] != -2) {
+#if REGION == REGION_JP
+                        func_801B25D4("データをコピーしています。", 4);
+                        func_801B25D4(
+                            "メモリーカードを抜かないでください。", 5);
+#else
                         func_801B2608("Copying data．", 4);
                         func_801B2608("Do not remove Memory Card．", 5);
+#endif
                         g_api.PlaySfx(SFX_UI_CONFIRM);
                         g_GameEngineStep++;
                     }
@@ -1701,19 +1973,31 @@ void Update(void) {
         }
         if (temp_s1 == 1) {
             func_801B1F4C(5);
+#if REGION == REGION_JP
+            func_801B25D4("コピーしました。", 4);
+#else
             func_801B2608("File copied．", 4);
+#endif
             func_801ACBE4(GFX_UNK_15, 0);
             g_GameEngineStep += 2;
         }
         if (temp_s1 == -1) {
             func_801B1F4C(5);
+#if REGION == REGION_JP
+            func_801B25D4("ロードエラーです。", 4);
+#else
             func_801B2608("Loading error．", 4);
+#endif
             func_801ACBE4(GFX_UNK_15, 0);
             g_GameEngineStep++;
         }
         if (temp_s1 == -3) {
             func_801B1F4C(5);
+#if REGION == REGION_JP
+            func_801B25D4("セーブエラーです。", 4);
+#else
             func_801B2608("Save error．", 4);
+#endif
             func_801ACBE4(GFX_UNK_15, 0);
             g_GameEngineStep++;
         }
@@ -1746,8 +2030,13 @@ void Update(void) {
         func_801AE6D0();
         if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
+#if REGION == REGION_JP
+            func_801B25D4("データをコピーしています。", 4);
+            func_801B25D4("メモリーカードを抜かないでください。", 5);
+#else
             func_801B2608("Copying data．", 4);
             func_801B2608("Do not remove Memory Card．", 5);
+#endif
             g_GameEngineStep = Upd_Eng_85;
         } else {
             if (g_pads[0].tapped & PAD_MENU_BACK) {
@@ -1756,13 +2045,18 @@ void Update(void) {
                 DrawNavigationTips(Tips_Generic);
                 g_GameEngineStep = Upd_Eng_84;
             }
-            func_801AD1D0();
+            DrawYesNo();
         }
         break;
     case Upd_Eng_FileDelete:
         SelectMainMenuOption(MAIN_MENU_CURSOR_FILE_COPY);
+#if REGION == REGION_JP
+        func_801B25D4("メモリーカードをチェックしています。", 4);
+        func_801B25D4("メモリーカードを抜かないでください。", 5);
+#else
         func_801B2608("Checking Memory Card．", 4);
         func_801B2608("Do not remove Memory Card．", 5);
+#endif
         func_801B3120();
         g_GameEngineStep++;
         /* fallthrough */
@@ -1790,16 +2084,26 @@ void Update(void) {
         }
         func_801AEE74();
         if (D_801BAF10) {
+#if REGION == REGION_JP
+            func_801B1F4C(5);
+            func_801B25D4("データがありません。", 4);
+#else
             func_801B2608("No data found", 4);
             func_801B2608("on this Memory Card．", 5);
+#endif
             func_801ADF94(0x82, 0);
             DrawNavigationTips(Tips_Confirm);
             g_GameEngineStep = Upd_Eng_0x80;
         } else {
             DrawNavigationTips(Tips_Generic);
             func_801ADF94(2, 0);
+#if REGION == REGION_JP
+            func_801B25D4("消去するファイルを", 4);
+            func_801B25D4("選択してください。", 5);
+#else
             func_801B2608("Select file", 4);
             func_801B2608("to be erased．", 5);
+#endif
             g_GameEngineStep++;
         }
         break;
@@ -1827,7 +2131,11 @@ void Update(void) {
                 slot = D_801D6B04 % 15;
                 if (g_SaveSummary[port].icon[slot] >= 0) {
                     func_801B1F4C(5);
+#if REGION == REGION_JP
+                    func_801B25D4("消去してよろしいですか？", 4);
+#else
                     func_801B2608("Is it OK to erase file？", 4);
+#endif
                     g_api.PlaySfx(SFX_UI_CONFIRM);
                     g_GameEngineStep++;
                 } else {
@@ -1840,8 +2148,17 @@ void Update(void) {
         DrawNavigationTips(Tips_YesNo);
         func_801ADF94(0x82, 0);
         if (g_pads[0].tapped & PAD_MENU_BACK) {
+#if REGION == REGION_JP
+            func_801B25D4("消去するファイルを", 4);
+#if VERSION >= VER_JP12
+            func_801B25D4("選択してください。", 5);
+#else
+            func_801B25D4("選んでください。", 5);
+#endif
+#else
             func_801B2608("Select file", 4);
             func_801B2608("to be erased．", 5);
+#endif
             g_GameEngineStep--;
         } else if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
             func_801ACBE4(GFX_UNK_15, 8);
@@ -1864,13 +2181,21 @@ void Update(void) {
         }
         if (temp_s1 == 1) {
             func_801B1F4C(5);
+#if REGION == REGION_JP
+            func_801B25D4("消去しました。", 4);
+#else
             func_801B2608("File erased．", 4);
+#endif
             func_801ACBE4(GFX_UNK_15, 0);
             g_GameEngineStep += 2;
         }
         if (temp_s1 == -1) {
             func_801B1F4C(5);
+#if REGION == REGION_JP
+            func_801B25D4("デリートエラーです。", 4);
+#else
             func_801B2608("Delete error．", 4);
+#endif
             func_801ACBE4(GFX_UNK_15, 0);
             g_GameEngineStep++;
         }
@@ -1895,8 +2220,13 @@ void Update(void) {
     case Upd_Eng_0x100:
         func_801ACBE4(GFX_UNK_6, 8);
         func_801ADF94(0x81, 0);
+#if REGION == REGION_JP
+        func_801B25D4("データをロードしています。", 4);
+        func_801B25D4("メモリーカードを抜かないでください。", 5);
+#else
         func_801B2608("Loading Memory Card．", 4);
         func_801B2608("Do not remove Memory Card．", 5);
+#endif
         func_801ACBE4(GFX_UNK_15, 0);
         func_801B367C(D_801D6B04);
         g_GameEngineStep++;
@@ -1917,13 +2247,21 @@ void Update(void) {
         }
         if (temp_s1 == -1) {
             func_801B1F4C(5);
+#if REGION == REGION_JP
+            func_801B25D4("ロードエラーです。", 4);
+#else
             func_801B2608("Loading error．", 4);
+#endif
             func_801ACBE4(GFX_UNK_15, 0);
             g_GameEngineStep++;
         }
         if (temp_s1 == -2) {
             func_801B1F4C(5);
+#if REGION == REGION_JP
+            func_801B25D4("バージョンエラーです。", 4);
+#else
             func_801B2608("Version error．", 4);
+#endif
             func_801ACBE4(GFX_UNK_15, 0);
             g_GameEngineStep++;
         }
@@ -1942,28 +2280,49 @@ void Update(void) {
         }
         break;
     case Upd_Eng_0x200:
+#if IS_VER_INTL
         DrawNavigationTips(Tips_NoYes);
+#else
+        DrawNavigationTips(Tips_YesNo);
+#endif
         func_801ADF94(0x80, 0);
         if (g_SaveSummary[0].padding != -2) {
             g_GameEngineStep = Upd_Eng_0x210;
         } else {
+#if REGION == REGION_JP
+            func_801B25D4("スロット１のカードを", 4);
+            func_801B25D4("フォーマットしますか？", 5);
+#else
             func_801B2608("Format Memory Card", 4);
             func_801B2608("in slot １？", 5);
+#endif
             g_GameEngineStep++;
         }
         break;
     case Upd_Eng_513:
         func_801ADF94(0x80, 0);
+#if IS_VER_INTL
         if (g_pads[0].tapped & PAD_MENU_BACK) {
+#else
+        if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
+#endif
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801ACBE4(GFX_UNK_6, 8);
             MemCardSetPort(0);
             g_GameEngineStep++;
         } else {
+#if IS_VER_INTL
             if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
+#else
+            if (g_pads[0].tapped & PAD_MENU_BACK) {
+#endif
                 g_GameEngineStep = Upd_Eng_0x210;
             }
-            func_801AD218();
+#if IS_VER_INTL
+            DrawNoYes();
+#else
+            DrawYesNo();
+#endif
         }
         break;
     case Upd_Eng_514:
@@ -1975,13 +2334,21 @@ void Update(void) {
         }
         if (temp_s1 == 1) {
             func_801B1F4C(5);
+#if REGION == REGION_JP
+            func_801B25D4("フォーマットしました。", 4);
+#else
             func_801B2608("Formatting completed．", 4);
+#endif
             func_801ACBE4(GFX_UNK_15, 0);
             g_GameEngineStep += 2;
         }
         if (temp_s1 == -1) {
             func_801B1F4C(5);
+#if REGION == REGION_JP
+            func_801B25D4("フォーマットエラーです。", 4);
+#else
             func_801B2608("Formatting error．", 4);
+#endif
             func_801ACBE4(GFX_UNK_15, 0);
             g_GameEngineStep++;
         }
@@ -2005,27 +2372,54 @@ void Update(void) {
         break;
     case Upd_Eng_0x210:
         func_801ADF94(0x80, 0);
-        func_801AD218();
+#if IS_VER_INTL
+        DrawNoYes();
+#else
+        DrawYesNo();
+#endif
         if (g_SaveSummary[1].padding != -2) {
             g_GameEngineStep = Upd_Eng_0x220;
         } else {
+#if REGION == REGION_JP
+            func_801B25D4("スロット２のカードを", 4);
+            func_801B25D4("フォーマットしますか？", 5);
+#else
             func_801B2608("Format Memory Card", 4);
-            func_801B2608("in slot １？", 5);
+#endif
+#if REGION == REGION_JP
+#elif VERSION >= VER_EU
+            func_801B2608("in slot ２？", 5);
+#else
+    // bug: should be slot 2
+    func_801B2608("in slot １？", 5);
+#endif
             g_GameEngineStep++;
         }
         break;
     case Upd_Eng_529:
         func_801ADF94(0x80, 0);
+#if IS_VER_INTL
         if (g_pads[0].tapped & PAD_MENU_BACK) {
+#else
+        if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
+#endif
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801ACBE4(GFX_UNK_6, 8);
             MemCardSetPort(1);
             g_GameEngineStep++;
         } else {
+#if IS_VER_INTL
             if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
+#else
+            if (g_pads[0].tapped & PAD_MENU_BACK) {
+#endif
                 g_GameEngineStep = Upd_Eng_0x220;
             }
-            func_801AD218();
+#if IS_VER_INTL
+            DrawNoYes();
+#else
+            DrawYesNo();
+#endif
         }
         break;
     case Upd_Eng_530:
@@ -2037,13 +2431,21 @@ void Update(void) {
         }
         if (temp_s1 == 1) {
             func_801B1F4C(5);
+#if IS_VER_INTL
             func_801B2608("Formatting completed．", 4);
+#else
+            func_801B25D4("フォーマットしました。", 4);
+#endif
             func_801ACBE4(GFX_UNK_15, 0);
             g_GameEngineStep += 2;
         }
         if (temp_s1 == -1) {
             func_801B1F4C(5);
+#if IS_VER_INTL
             func_801B2608("Formatting error．", 4);
+#else
+            func_801B25D4("フォーマットエラーです。", 4);
+#endif
             func_801ACBE4(GFX_UNK_15, 0);
             g_GameEngineStep++;
         }

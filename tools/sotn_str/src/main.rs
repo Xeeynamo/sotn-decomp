@@ -401,6 +401,10 @@ fn process_s2_hd_macro(line: &str) -> String {
     process_macro(line, "_S2_HD", alt_hd_utf8_to_byte_literals)
 }
 
+fn process_s2_sel_macro(line: &str) -> String {
+    process_macro(line, "_S2_SEL", alt_sel_utf8_to_byte_literals)
+}
+
 fn process_sactor_macro(line: &str) -> String {
     process_macro(line, "_SACTOR", utf8_to_u16_list)
 }
@@ -423,6 +427,7 @@ fn do_sub(line: &str, psp: bool) -> String {
     let mut processed = process_s_macro(line, psp);
     processed = process_s2_macro(&processed);
     processed = process_s2_hd_macro(&processed);
+    processed = process_s2_sel_macro(&processed);
     processed = process_sactor_macro(&processed);
     processed = process_se_macro(&processed);
     processed
@@ -491,6 +496,13 @@ lazy_static! {
         .concat();
         values.chars().enumerate().map(|(index, value)| (value, index)).collect::<HashMap<char, usize>>()
     };
+    // glyph sheet of the JP SEL overlay, one row per func_801B25D4 call
+    static ref ALT_SEL_UTF8_TO_INDEX: HashMap<char, usize> = {
+        let rows = ["…選択決定取消入力未初期化確認", "はいえ不良"];
+        rows.iter().enumerate().flat_map(|(row, values)| {
+            values.chars().enumerate().map(move |(index, value)| (value, row * 0x10 + index))
+        }).collect::<HashMap<char, usize>>()
+    };
     static ref UTF8_TO_INDEX: HashMap<char, usize> = {
         let mut map = HashMap::new();
         for (index, value) in TABLE.iter().enumerate() {
@@ -555,6 +567,10 @@ fn alt_hd_utf8_to_index(c: &char) -> Option<usize> {
     return ALT_HD_UTF8_TO_INDEX.get(c).copied();
 }
 
+fn alt_sel_utf8_to_index(c: &char) -> Option<usize> {
+    return ALT_SEL_UTF8_TO_INDEX.get(c).copied();
+}
+
 fn alt_utf8_to_index(c: &char) -> Option<usize> {
     return ALT_UTF8_TO_INDEX.get(c).copied();
 }
@@ -588,6 +604,20 @@ fn alt_hd_utf8_to_byte_literals(input_str: &str) -> String {
     .collect::<String>();
     let out2 = format!("\"{}\"", output);
     out2
+}
+
+fn alt_sel_utf8_to_byte_literals(input_str: &str) -> String {
+    let mut bytes = Vec::new();
+    for char in input_str.chars() {
+        if let Some(index) = alt_sel_utf8_to_index(&char) {
+            bytes.push(index as u8);
+        }
+    }
+    bytes.push(0xFF);
+    let output = bytes.iter()
+    .map(|&c| format!("\\x{:02X}", c))
+    .collect::<String>();
+    format!("\"{}\"", output)
 }
 
 fn s3_utf8_to_byte_literals(input_str: &str) -> String {
@@ -984,6 +1014,11 @@ let expected = r#"const char* g_goldCollectTexts[] = {
         let expected = "0x71, 0x99, 0x76, 0x70, 0x8084, \
             0x98, 0x8B, 0x80, 0x70, 0x65, 0x808D, 0x99, 0x93, 0x9D, 0x8084, \
             0x24, 0x25, 0x21, 0x34, 0x28";
+        assert_eq!(out, expected);
+
+        let line = r#"_S2_SEL("…いいえ"), _S2_SEL("未初期化"), _S2_SEL("不良")"#;
+        let out = do_sub(line, false);
+        let expected = r#""\x00\x11\x11\x12\xFF", "\x09\x0A\x0B\x0C\xFF", "\x13\x14\xFF""#;
         assert_eq!(out, expected);
     }
 

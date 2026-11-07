@@ -10,20 +10,11 @@
 #ifdef PLATFORM_PSYZ
 static
 #endif
-    void
-    CutsceneUnk1(void) {
-#if VERSION <= VER_JP10 && !defined(STAGE_IS_NO3)
-    g_Dialogue.nextLineX = 0;
-    g_Dialogue.nextCharX = 0;
-#else
+    void CutsceneUnk1(void) {
     g_Dialogue.nextLineY = g_Dialogue.startY + 0x14;
     g_Dialogue.nextCharX = g_Dialogue.nextLineX = CUTSCENE_UNK1_NEXT_X;
-#endif
     g_Dialogue.nextCharY = 0;
     g_Dialogue.unk12 = 0;
     g_Dialogue.nextCharTimer = 0;
     g_Dialogue.unk17 = CUTSCENE_UNK1_UNK17;
-#if VERSION <= VER_JP10 && !defined(STAGE_IS_NO3)
-    g_Dialogue.nextLineY = g_Dialogue.startY + 0x14;
-#endif
 }

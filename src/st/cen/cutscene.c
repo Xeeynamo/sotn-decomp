@@ -187,6 +187,9 @@ static u32 __unused0[26];
 u32 g_CutsceneFlags;
 static s32 g_IsCutsceneDone;
 
+#if VERSION <= VER_JP10
+#define CUTSCENE_UNK1_NEXT_X 0
+#endif
 #include "../cutscene_unk1.h"
 #include "../set_cutscene_script.h"
 #include "../cutscene_unk3.h"

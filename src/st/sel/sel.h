@@ -1,4 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#include "version.h"
+
+#define STAGE_IS_SEL
+
 #include "stage.h"
 #include <romio.h>
 #include "memcard.h"
@@ -15,8 +19,13 @@ typedef enum {
     MAIN_MENU_CURSOR_FILE_DELETE,
 } MainMenuCursor;
 
+#if REGION == REGION_JP
+#define PAD_MENU_CONFIRM (PAD_CIRCLE)
+#define PAD_MENU_BACK (PAD_CROSS)
+#else
 #define PAD_MENU_CONFIRM (PAD_CROSS)
 #define PAD_MENU_BACK (PAD_TRIANGLE)
+#endif
 
 typedef enum {
     Tips_Generic,
@@ -24,7 +33,9 @@ typedef enum {
     Tips_YesNo,
     Tips_Confirm,
     Tips_MenuNavigation,
-    Tips_NoYes,
+#if IS_VER_INTL
+    Tips_NoYes, // inverted X/O on INTL versions
+#endif
 } NavigationTips;
 
 typedef enum {
@@ -60,7 +71,9 @@ typedef enum {
 // SEL seems to use these differently
 typedef enum {
     Upd_Eng_Init,
+#if VERSION >= VER_US
     Upd_Eng_MenuInit = -1,
+#endif
     Upd_Eng_MenuFadeIn = 1,
     Upd_Eng_MainMenuIdle,
     Upd_Eng_3,
@@ -135,7 +148,6 @@ typedef struct {
 } StreamInfo;
 
 extern s32 g_CurrentStream;
-extern StageName D_80180128[80];
 
 extern const s32 D_801A7B8C[2];
 extern u_long* g_Cluts[];

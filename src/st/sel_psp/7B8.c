@@ -554,12 +554,12 @@ void func_psp_09239530(SaveData* save) {
     func_801B2608(4, id + 2);
 }
 
-void func_801AD1D0(void) {
+void DrawYesNo(void) {
     DrawString8x8(STR_YES, 0x30, 0xC4, 1);
     DrawString8x8(STR_NO, 0x30, 0xD4, 1);
 }
 
-void func_801AD218(void) {
+void DrawNoYes(void) {
     DrawString8x8(STR_NO, 0x30, 0xC4, 1);
     DrawString8x8(STR_YES, 0x30, 0xD4, 1);
 }
@@ -637,7 +637,7 @@ void DrawNavigationTips(NavigationTips mode) {
         y += 0x10;
         func_psp_092397B8(GFX_UNK_21, 0x20, y + 0xC0);
         y += 0x10;
-        func_801AD1D0();
+        DrawYesNo();
         break;
 
     case Tips_Confirm:
@@ -1828,7 +1828,7 @@ void Update(void) {
                 DrawNavigationTips(Tips_Generic);
                 g_GameEngineStep = Upd_Eng_84;
             }
-            func_801AD1D0();
+            DrawYesNo();
         }
         break;
     case Upd_Eng_FileDelete:

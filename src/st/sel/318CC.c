@@ -56,6 +56,9 @@ void func_801B195C(s32 arg0) {
     SetDisplayBufferColorsToBlack();
     g_GpuBuffers[0].draw.dtd = g_GpuBuffers[1].draw.dtd = false;
     g_GpuBuffers[0].disp.isrgb24 = g_GpuBuffers[1].disp.isrgb24 = false;
+#if REGION == REGION_EU
+    g_GpuBuffers[0].disp.screen.y = g_GpuBuffers[1].disp.screen.y = 24;
+#endif
 }
 
 void func_801B19F4(void) {
@@ -79,6 +82,9 @@ void SetTitleDisplayBuffer(void) {
     g_GpuBuffers[0].draw.isbg = g_GpuBuffers[1].draw.isbg = true;
     SetDisplayBufferColorsToBlack();
     g_GpuBuffers[0].disp.isrgb24 = g_GpuBuffers[1].disp.isrgb24 = false;
+#if REGION == REGION_EU
+    g_GpuBuffers[0].disp.screen.y = g_GpuBuffers[1].disp.screen.y = 24;
+#endif
 }
 
 // same as SetTitleDisplayBuffer, but clips at 256 vertical height
@@ -93,6 +99,9 @@ void SetTitleDisplayBuffer256(void) {
     g_GpuBuffers[0].draw.isbg = g_GpuBuffers[1].draw.isbg = true;
     SetDisplayBufferColorsToBlack();
     g_GpuBuffers[0].disp.isrgb24 = g_GpuBuffers[1].disp.isrgb24 = false;
+#if REGION == REGION_EU
+    g_GpuBuffers[0].disp.screen.y = g_GpuBuffers[1].disp.screen.y = 24;
+#endif
 }
 
 // For the given prim, sets one of the vertices (0-3) to r,g,b values of
@@ -214,6 +223,7 @@ void func_801B1FD8(char* str, s32 y) {
 }
 
 // Variant of func_800F99B8, with the third argument stripped
+#if VERSION >= VER_USPROTO
 void func_801B2108(const char* str, s32 arg1) {
     // See src/st/blit_char.h
     const u16 DOUBLE_SPACE = 0x8140;
@@ -331,6 +341,7 @@ void func_801B2108(const char* str, s32 arg1) {
               var_s4 * 2, 0x10);
     D_801BAFD0 += var_s4 * 0x10;
 }
+#endif
 
 void func_801B248C(char* str, s32 id) {
     if (D_801BC398[id] != str) {
@@ -340,6 +351,7 @@ void func_801B248C(char* str, s32 id) {
     }
 }
 
+#if VERSION >= VER_USPROTO
 void func_801B24F8(char* str, s32 id) {
     if (D_801BC398[id] != str) {
         func_801B1F4C(id);
@@ -347,6 +359,7 @@ void func_801B24F8(char* str, s32 id) {
         func_801B2108(str, id);
     }
 }
+#endif
 
 void func_801B2564(char* str, s32 id) {
     D_801BAFD4 = 0x3C0;
@@ -354,11 +367,13 @@ void func_801B2564(char* str, s32 id) {
     func_801B248C(str, id);
 }
 
+#if VERSION >= VER_USPROTO
 void func_801B259C(char* str, s32 id) {
     D_801BAFD4 = 0x3C0;
     D_801BAFD8 = 0x100;
     func_801B24F8(str, id);
 }
+#endif
 
 void func_801B25D4(char* str, s32 id) {
     D_801BAFD4 = 0x180;
@@ -366,11 +381,13 @@ void func_801B25D4(char* str, s32 id) {
     func_801B248C(str, id);
 }
 
+#if VERSION >= VER_USPROTO
 void func_801B2608(char* str, s32 id) {
     D_801BAFD4 = 0x180;
     D_801BAFD8 = 0;
     func_801B24F8(str, id);
 }
+#endif
 
 void func_801B263C(char* str, s32 id) {
     D_801BAFD4 = 0x180;
@@ -459,6 +476,7 @@ void DrawString16x16(char* str, s32 x, s32 y, s32 tge) {
     }
 }
 
+#if VERSION >= VER_USPROTO
 void DrawGlyph8x8(s32 ch, s32 x, s32 y, s32 tge) {
     DrawGlyph(
         x, y, 8, 8, (ch & 0xF) * 8, (ch & 0xF0) / 2, 0x196, 0x1E, tge, 0x80);
@@ -470,9 +488,16 @@ void DrawString8x8(u8* str, s32 x, s32 y, s32 tge) {
             break;
         DrawGlyph8x8(*str, x, y, tge);
         x += 8;
+#if VERSION >= VER_US
         str++;
+#else
+        // bug: E3 demo can't print spaces without exiting the function
+        if (!*str++)
+            break;
+#endif
     }
 }
+#endif
 
 void DrawDigit8x8(s32 icon, s32 x, s32 y, s32 tge) {
     DrawGlyph(x, y, 8, 8, icon * 8 + 176, 120, 0x200, 0xC, tge, 0x40);
@@ -484,7 +509,7 @@ void DrawNumber8x8(s32 num, s32 x, s32 y, s32 tge) {
         DrawDigit8x8(digit, x, y, tge);
         x -= 8;
         num /= 10;
-    } while (num != 0);
+    } while (num);
 }
 
 void DrawTwoDigitsNumber8x8(s32 num, s32 x, s32 y, s32 tge) {

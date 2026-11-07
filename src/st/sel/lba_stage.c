@@ -2,7 +2,21 @@
 #include "game.h"
 #include "sfx.h"
 
+#if REGION == REGION_EU
+#include "lba_sel_eu.h"
+#elif REGION == REGION_HK
+#include "lba_sel_hk.h"
+#elif VERSION == VER_US
 #include "lba_sel_us.h"
+#elif VERSION == VER_USPROTO
+#include "lba_sel_usproto.h"
+#elif VERSION == VER_JP12
+#include "lba_sel_jp12.h"
+#elif VERSION == VER_JP11
+#include "lba_sel_jp11.h"
+#elif VERSION <= VER_JP10
+#include "lba_sel_jp10.h"
+#endif
 
 #if TARGET == TARGET_PSP
 #define NAME_CEN "mar2"

@@ -125,6 +125,14 @@ typedef enum {
 #define CREDITS_ENTRY(x) CSOP_ENTRY, x
 #define CREDITS_SECTION(x) CSOP_SECTION, x
 
+// JP 1.0 dialogue code: text is 16px tall max
+// SEL kept it in every JP release.
+#if VERSION <= VER_JP10 || (defined(STAGE_IS_SEL) && REGION == REGION_JP)
+#define CUTSCENE_EARLY_VER 1
+#else
+#define CUTSCENE_EARLY_VER 0
+#endif
+
 typedef struct {
     /* 0x00 */ u8* scriptCur;         // ptr to dialogue next character
     /* 0x04 */ s16 startX;            // starting x coord
@@ -139,7 +147,7 @@ typedef struct {
     /* 0x16 */ u8 nextCharTimer;      // timer to next character
     /* 0x17 */ u8 unk17;              // unknown
 // Of course, offsets beyond here won't be right in ST0_WEIRD_DIALOGUE.
-#if VERSION < VER_USPROTO || TARGET == TARGET_PSP
+#if VERSION < VER_USPROTO || TARGET == TARGET_PSP || CUTSCENE_EARLY_VER
     /* 0x18 */ Primitive* prim[4]; // one per text line
 #else
     /* 0x18 */ Primitive* prim[5]; // one per text line
