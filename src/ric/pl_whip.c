@@ -63,7 +63,7 @@ void RicEntityWhip(Entity* self) {
     s32 sp40;
     s32 prevX;
     s32 prevY;
-    s16 sp4A;
+    s16 isFlameWhip;
     s32 aimPath;
     s32 newY;
     s16 angle;
@@ -75,7 +75,7 @@ void RicEntityWhip(Entity* self) {
     s32 psp_s0;
 
     psp_s4 = self->params & 0xFF;
-    sp4A = self->params & 0xFF00;
+    isFlameWhip = self->params & 0xFF00;
     if (psp_s4 == 0) {
         if (self->ext.whip.unkA6) {
             self->ext.whip.unkA6--;
@@ -195,7 +195,12 @@ void RicEntityWhip(Entity* self) {
             self->hitboxHeight = 3;
             self->hitboxOffX = 0;
             self->hitboxOffY = 0;
+#if VERSION >= VER_JP12 && TARGET != TARGET_PSP
+            // bugfix: flame whip has a different damage formula
+            self->ext.whip.subweaponId = sp4A ? PL_W_15 : PL_W_WHIP;
+#else
             self->ext.whip.subweaponId = PL_W_WHIP;
+#endif
             RicSetSubweaponParams(self);
         }
         if (psp_s4 == 0) {
@@ -234,7 +239,7 @@ void RicEntityWhip(Entity* self) {
         RicEntityWhip(self);
         break;
     case 1:
-        if (sp4A == 0) {
+        if (isFlameWhip == 0) {
             if (self->palette < PAL_FLAG(PAL_UNK_148) &&
                 self->palette >= PAL_FLAG(PAL_RIC_WHIP)) {
                 if (self->ext.whip.unkA4) {
@@ -264,7 +269,7 @@ void RicEntityWhip(Entity* self) {
                 break;
             }
             if (psp_s4 == 0) {
-                if (sp4A) {
+                if (isFlameWhip) {
                     if (self->ext.whip.unkA6 == 0) {
                         g_api.PlaySfx(SFX_RIC_WHIP_RATTLE_A);
                         self->ext.whip.unkA6 = 0x20;
@@ -275,7 +280,7 @@ void RicEntityWhip(Entity* self) {
                         self->ext.whip.unkA6 = 0x20;
                     }
                 }
-                if (sp4A == 0) {
+                if (isFlameWhip == 0) {
                     RicCreateEntFactoryFromEntity(self, FACTORY(BP_18, 0), 0);
                 } else {
                     RicCreateEntFactoryFromEntity(self, FACTORY(BP_18, 1), 0);
@@ -369,7 +374,7 @@ void RicEntityWhip(Entity* self) {
                 }
                 break;
             case 6:
-                if (sp4A) {
+                if (isFlameWhip) {
                     if (PLAYER.poseTimer == D_80155C78[psp_s4]) {
                         RicCreateEntFactoryFromEntity(self, BP_20, 0);
                     }
@@ -476,7 +481,7 @@ void RicEntityWhip(Entity* self) {
             prim->priority = PLAYER.zPriority + 2;
         }
     }
-    if (sp4A) {
+    if (isFlameWhip) {
         if (psp_s4 != 7) {
             angle = (((g_GameTimer >> 2) & 7) + D_80155C98[psp_s4]) * 512;
             self->opacity = (rsin(angle) >> 6) + 0x80;

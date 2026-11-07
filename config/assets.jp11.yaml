@@ -101,3 +101,21 @@ files:
           - [0x3B1F0, palette, D_800DB114, 16]
           - [0x3B2D0, palette, D_800DB1F4, 16]
           - [0x3B490, skip]
+  - target: disks/jp11/BIN/RIC.BIN
+    asset_path: assets/ric
+    src_path: src/ric
+    splat_config_path: config/splat.jp11.ric.yaml
+    segments:
+      - start: 0
+        vram: 0x8013C000
+        assets:
+          - [0x0, skip]
+          - [0x20, spritesheet, richter, disks/jp11/BIN/F_GAME2.BIN, 0x40400]
+          - [0x170AC, spriteset, spritebank0]
+          - [0x17AA0, spriteset, spritebank1]
+          - [0x17D24, spriteset, spritebank2]
+          - [0x181A8, spriteset, spritebank3]
+          - [0x18688, subweaponsdef, subweapons, RicSubweapons, RicBlueprints]
+          - [0x188F4, skip]
+          - [0x18A6C, blueprintsdef, jp11/blueprints, RicBlueprints, RicEntities]
+          - [0x18C42, skip]

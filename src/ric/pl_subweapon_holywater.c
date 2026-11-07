@@ -205,7 +205,9 @@ void RicEntityCrashHydroStorm(Entity* self) {
         self->ext.subweapon.timer++;
         break;
     case 2:
-#if VERSION < VER_JP10 || TARGET == TARGET_PSP
+#if VERSION <= VER_JP10 || TARGET == TARGET_PSP
+        // bugfix: if another crash is triggered while the hydrostorm is still
+        // playing, then the new crash will be immediately halted.
         if (self->params == 0x28) {
             g_Player.unk4E = 1;
         }
