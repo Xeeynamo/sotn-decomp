@@ -102,6 +102,8 @@ for target, config_name, binary_name in [
     ('stage_16', 'stage_16.prg.yaml', 'STAGE_16.PRG'),
     ('stage_14', 'stage_14.prg.yaml', 'STAGE_14.PRG'),
     ('t_bat', 't_bat.prg.yaml', 'T_BAT.PRG'),
+    ('t_fairy2', 't_fairy2.prg.yaml', 'T_FAIRY2.PRG'),
+    ('sub', 'sub.prg.yaml', 'SUB.PRG'),
     ('warp', 'warp.prg.yaml', 'WARP.PRG'),
 ]:
     symbol_ownership_inputs.extend([
@@ -948,6 +950,12 @@ snd_srcs = [
     'src/saturn/t_bat/bathead.c',
     'src/saturn/t_bat/batmeta.c',
     'src/saturn/t_bat/batbss.c',
+    'src/saturn/t_fairy2.c',
+    'src/saturn/t_fairy2/header.c',
+    'src/saturn/t_fairy2/data.c',
+    'src/saturn/sub.c',
+    'src/saturn/sub/header.c',
+    'src/saturn/sub/data.c',
     'src/saturn/warp.c',
     'src/saturn/warp/obtain.c',
     'src/saturn/warp/warpmid.c',
@@ -1641,6 +1649,14 @@ multi_objs = {
         'build/saturn/t_bat/batmeta.o',
         'build/saturn/t_bat/batbss.o',
     ],
+    'build/saturn/t_fairy2.o' : [
+        'build/saturn/t_fairy2/header.o',
+        'build/saturn/t_fairy2/data.o',
+    ],
+    'build/saturn/sub.o' : [
+        'build/saturn/sub/header.o',
+        'build/saturn/sub/data.o',
+    ],
     'build/saturn/richter.o' : [
         'build/saturn/ric/header.o',
         'build/saturn/ric/hdrstub.o',
@@ -1836,6 +1852,8 @@ prgs = {
     'stage_14.elf': 'STAGE_14.PRG',
     'warp.elf': 'WARP.PRG',
     't_bat.elf': 'T_BAT.PRG',
+    't_fairy2.elf': 'T_FAIRY2.PRG',
+    'sub.elf': 'SUB.PRG',
     'maria.elf': 'MARIA.PRG'
 }
 
@@ -1873,7 +1891,7 @@ def bss_checks(target, output_dir):
 def make_prgs(prgs, output_dir):
     for elf, prg in prgs.items():
         checks = bss_checks(elf[:-len('.elf')], output_dir)
-        if prg == 'T_BAT.PRG':
+        if prg in ('T_BAT.PRG', 'T_FAIRY2.PRG'):
             ninja.build(
                 f"{output_dir}/{prg}",
                 'elf2prg_fixed',
