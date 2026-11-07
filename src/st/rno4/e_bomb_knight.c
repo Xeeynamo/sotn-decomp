@@ -1,16 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno4.h"
 
-INCLUDE_ASM("st/rno4/nonmatchings/e_bomb_knight", func_us_801BBE58_from_rnz1);
+#define THROW_BOMB_PALETTE_1 0x228
+#define THROW_BOMB_PALETTE_2 0x22C
+#define THROW_BOMB_PALETTE_3 0x22D
+#define UNK5A_VAL 0x4E
+#define ANIMSET 6
+#define TODO_WEIRD_ENTITYID 0x43
 
-INCLUDE_ASM("st/rno4/nonmatchings/e_bomb_knight", func_us_801BC650_from_rnz1);
-
-INCLUDE_ASM("st/rno4/nonmatchings/e_bomb_knight", func_us_801BCA5C_from_rnz1);
-
-INCLUDE_ASM("st/rno4/nonmatchings/e_bomb_knight", func_us_801BCB9C_from_rnz1);
-
-INCLUDE_ASM("st/rno4/nonmatchings/e_bomb_knight", func_us_801BCD80_from_rnz1);
-
-INCLUDE_ASM("st/rno4/nonmatchings/e_bomb_knight", func_us_801BCE4C_from_rnz1);
-
-INCLUDE_ASM("st/rno4/nonmatchings/e_bomb_knight", func_us_801BCFC8_from_rnz1);
+#include "../e_bomb_knight.h"
