@@ -93,6 +93,7 @@ void EntityWeaponAttack(Entity* self) {
     sine = -rsin(angle) * self->ext.weapon.unk7E;
     self->posX.val = cosine + fakePrim->posX.val;
     self->posY.val = sine + fakePrim->posY.val;
+    // Spawn a shadow image every-other frame
     if (self->ext.weapon.lifetime & 1) {
         // Create a factory, with a 1 shifted 0xC, or a 2 shifted 0xC (which is
         // a 1 shifted 0xD)
@@ -208,11 +209,11 @@ void func_ptr_80170008(Entity* self) {
         }
         if ((u16)self->ext.weapon_016.unk84 & 1) {
             g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) | 0x3A, 0);
+                self, WFACTORY(0x3A, 0), 0);
         }
         if (flag != 0) {
             g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) | 0x6E, 0);
+                self, WFACTORY(0x6E, 0), 0);
         }
         break;
     }
