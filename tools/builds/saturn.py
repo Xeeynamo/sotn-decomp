@@ -102,6 +102,8 @@ for target, config_name, binary_name in [
     ('stage_16', 'stage_16.prg.yaml', 'STAGE_16.PRG'),
     ('stage_14', 'stage_14.prg.yaml', 'STAGE_14.PRG'),
     ('t_bat', 't_bat.prg.yaml', 'T_BAT.PRG'),
+    ('t_fairy2', 't_fairy2.prg.yaml', 'T_FAIRY2.PRG'),
+    ('sub', 'sub.prg.yaml', 'SUB.PRG'),
     ('warp', 'warp.prg.yaml', 'WARP.PRG'),
 ]:
     symbol_ownership_inputs.extend([
@@ -948,6 +950,12 @@ snd_srcs = [
     'src/saturn/t_bat/bathead.c',
     'src/saturn/t_bat/batmeta.c',
     'src/saturn/t_bat/batbss.c',
+    'src/saturn/t_fairy2.c',
+    'src/saturn/t_fairy2/header.c',
+    'src/saturn/t_fairy2/data.c',
+    'src/saturn/sub.c',
+    'src/saturn/sub/header.c',
+    'src/saturn/sub/data.c',
     'src/saturn/warp.c',
     'src/saturn/warp/obtain.c',
     'src/saturn/warp/warpmid.c',
@@ -1068,6 +1076,7 @@ add_srcs(lib_srcs, build_base_path, "O0")
 
 add_srcs(o2_srcs, build_base_path, "O2")
 
+WEAPON_OPT = "O3"
 add_srcs(snd_srcs, build_base_path, "O3")
 
 def elf_srcs(srcs, output_dir):
@@ -1640,6 +1649,14 @@ multi_objs = {
         'build/saturn/t_bat/batmeta.o',
         'build/saturn/t_bat/batbss.o',
     ],
+    'build/saturn/t_fairy2.o' : [
+        'build/saturn/t_fairy2/header.o',
+        'build/saturn/t_fairy2/data.o',
+    ],
+    'build/saturn/sub.o' : [
+        'build/saturn/sub/header.o',
+        'build/saturn/sub/data.o',
+    ],
     'build/saturn/richter.o' : [
         'build/saturn/ric/header.o',
         'build/saturn/ric/hdrstub.o',
@@ -1835,6 +1852,8 @@ prgs = {
     'stage_14.elf': 'STAGE_14.PRG',
     'warp.elf': 'WARP.PRG',
     't_bat.elf': 'T_BAT.PRG',
+    't_fairy2.elf': 'T_FAIRY2.PRG',
+    'sub.elf': 'SUB.PRG',
     'maria.elf': 'MARIA.PRG'
 }
 
@@ -1872,7 +1891,7 @@ def bss_checks(target, output_dir):
 def make_prgs(prgs, output_dir):
     for elf, prg in prgs.items():
         checks = bss_checks(elf[:-len('.elf')], output_dir)
-        if prg == 'T_BAT.PRG':
+        if prg in ('T_BAT.PRG', 'T_FAIRY2.PRG'):
             ninja.build(
                 f"{output_dir}/{prg}",
                 'elf2prg_fixed',
@@ -1887,5 +1906,36 @@ def make_prgs(prgs, output_dir):
             implicit=checks)
 
 make_prgs(prgs, 'build/saturn')
+
+ninja.rule('pad_slot',
+           command='sh-elf-objcopy -O binary $in $out && truncate -s $size $out',
+           description='Padding $out')
+ninja.rule('concat', command='cat $in > $out', description='Joining $out')
+weapon_slots = []
+for n in range(64):
+    name = f'w_{n:02}'
+    config = f'config/saturn/weapon/{name}.prg.yaml'
+    if not os.path.exists(config):
+        continue
+    with open(config) as f:
+        subs = yaml.safe_load(f)['segments'][0]['subsegments']
+    files = list(dict.fromkeys(s['file'] if isinstance(s, dict) else s[2] for s in subs))
+    srcs = [f'src/saturn/weapon/{file}.c' for file in files]
+    add_srcs(srcs, build_base_path, WEAPON_OPT)
+    elf_srcs(srcs, build_base_path)
+    objs = [f'build/saturn/weapon/{file}.o' for file in files]
+    symbol_files = ['config/saturn/zero_syms.gen.txt', 'config/saturn/game_syms.gen.txt',
+                    'config/saturn/game_user_syms.txt', 'config/saturn/zero_user_syms.txt',
+                    f'config/saturn/weapon/{name}_data_syms.gen.txt',
+                    'build/saturn/zero_link_syms.txt', 'build/saturn/game_link_syms.txt']
+    elf = f'build/saturn/weapon/{name}.elf'
+    ninja.build(elf, 'link_multi', inputs=[objs[0]], implicit=objs[1:] + [f'config/saturn/weapon/{name}.ld'] + symbol_files,
+                variables={'ld_file': f'weapon/{name}.ld', 'map_file': f'build/saturn/weapon/{name}.map',
+                           'symbol_scripts': ' '.join(f'-T {x}' for x in symbol_files), 'target_aliases': '',
+                           'objs': ' '.join(objs[1:])})
+    ninja.build(f'build/saturn/weapon/{name}.bin', 'pad_slot', inputs=[elf], variables={'size': 0x3000})
+    weapon_slots.append(f'build/saturn/weapon/{name}.bin')
+if len(weapon_slots) == 64:
+    ninja.build('build/saturn/WEAPON0.PRG', 'concat', inputs=weapon_slots)
 
 ninja.close()

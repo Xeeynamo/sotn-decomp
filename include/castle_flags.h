@@ -173,6 +173,7 @@ typedef enum {
     /* 0xD8 */ MET_MARIA_IN_CEN = 216,    // Holy Glasses cutscene in CEN
     /* 0xDC */ DEATH_FIGHT_CS = 220,      // Cutscene during fight with Death
     /* 0xE0 */ SHAFT_FIGHT_CS_UNK1 = 224, // Cutscene with Shaft
+    /* 0xE1 */ DRAC_FIGHT_CS_UNK = 225,   // Set but not tested?
     /* 0xE2 */ TOP_FIGHT_CS_UNK1 = 226,
     /* 0xE3 */ TOP_FIGHT_CS_UNK2 = 227, // Set during TOP fight, read again in
                                         // RCEN Shaft fight, PSP only?
