@@ -197,7 +197,8 @@ void RicEntityWhip(Entity* self) {
             self->hitboxOffY = 0;
 #if VERSION >= VER_JP12 && TARGET != TARGET_PSP
             // bugfix: flame whip has a different damage formula
-            self->ext.whip.subweaponId = isFlameWhip ? PL_W_15 : PL_W_WHIP;
+            self->ext.whip.subweaponId =
+                isFlameWhip ? PL_W_FLAMEWHIP : PL_W_WHIP;
 #else
             self->ext.whip.subweaponId = PL_W_WHIP;
 #endif
