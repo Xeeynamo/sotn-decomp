@@ -63,6 +63,24 @@ const SATURN_ID_REMAP: Record<string, string> = {
   t_sword: "tt_004",
 };
 
+// WEAPON0.BIN and WEAPON1.BIN are two separate binaries, each split across many
+// units. Every weapon unit carries the shared "weapon" parent category plus a
+// per-binary sub-category, so the most specific one decides the overlay:
+//
+//   HD/PSP: ["weapon", "weapon.w0_012"] -> WEAPON0, [..., "weapon.w1_012"] -> WEAPON1
+//   US:     ["engine", "engine.weapon"] -> WEAPON0, [..., "engine.weapon1"] -> WEAPON1
+//
+// Returns null when the unit is not a weapon unit at all.
+function weaponOverlayId(cats: string[]): string | null {
+  if (cats.some((c) => c === "engine.weapon1" || c.startsWith("weapon.w1_"))) {
+    return "weapon1";
+  }
+  if (cats.some((c) => c === "weapon" || c === "engine.weapon" || c.startsWith("weapon."))) {
+    return "weapon";
+  }
+  return null;
+}
+
 // Collapse a unit's progress_categories into the canonical overlay id, i.e.
 // the original game binary the unit belongs to.
 function overlayIdForUnit(unit: ReportUnit): string | null {
@@ -71,10 +89,9 @@ function overlayIdForUnit(unit: ReportUnit): string | null {
     return null;
   }
 
-  // Weapons are split across many w0_*/w1_* units (PSP/HD) or engine.weapon/*
-  // units (US); both collapse to the single WEAPON0.BIN overlay.
-  if (cats.some((c) => c === "weapon" || c === "engine.weapon" || c.startsWith("weapon."))) {
-    return "weapon";
+  const weaponId = weaponOverlayId(cats);
+  if (weaponId) {
+    return weaponId;
   }
 
   // Otherwise use the second dotted segment of the most specific category,

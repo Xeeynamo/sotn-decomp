@@ -21,7 +21,7 @@ const PLAYER_IDS = new Set(["dra", "ric", "maria", "main", "sel", "alucard"]);
 const DEBUG_ENGINE_IDS = new Set(["fname", "sd", "tek"]);
 
 function classify(id: string): CategoryId {
-  if (id === "weapon") {
+  if (id === "weapon" || id === "weapon1") {
     return "weapon";
   }
   if (id.startsWith("tt_")) {

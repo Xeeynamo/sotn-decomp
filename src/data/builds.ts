@@ -223,8 +223,9 @@ export const overlayMeta: Record<string, OverlayMeta> = {
   rbo7: { name: "BOSS/RBO7/RBO7.BIN", desc: "Reverse boss: Akmodan II" },
   rbo8: { name: "BOSS/RBO8/RBO8.BIN", desc: "Reverse boss: Galamoth" },
 
-  // Weapons (single binary holding every sub-weapon program)
-  weapon: { name: "BIN/WEAPON0.BIN", desc: "Weapons, shields and consumable programs" },
+  // Weapons (one binary per weapon set; every sub-weapon program lives inside)
+  weapon: { name: "BIN/WEAPON0.BIN", desc: "Weapons, shields and consumable programs (Right-hand equip program)" },
+  weapon1: { name: "BIN/WEAPON1.BIN", desc: "Weapons, shields and consumable programs (Left-hand equip program)" },
 
   // Familiars
   tt_000: { name: "SERVANT/TT_000.BIN", desc: "Familiar: Bat" },
