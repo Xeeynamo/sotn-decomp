@@ -193,7 +193,7 @@ void EntityScylla(Entity* self) {
         /* fall through */
     case 1:
         AnimateEntity(D_us_80180D4C, self);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (GetDistanceToPlayerX() < 160) {
 #else
         if (GetDistanceToPlayerX() < 176 || self->hitFlags) {

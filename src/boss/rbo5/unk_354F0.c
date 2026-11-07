@@ -18,7 +18,7 @@ static u16 D_us_801806FC[][2] = {
     {0x05AE, 0x05AF}, {0x05B0, 0x05B1}, {0x05B2, 0x05B3}, {0x05B4, 0x05B5},
 };
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(ID_1B);
 #endif
 

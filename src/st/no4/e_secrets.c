@@ -39,7 +39,7 @@ static s16 breakable_wall_tile_layout[] = {
     0x0327, 0x031B, 0x0351, 0x0352};
 // clang-format on
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(BREAKABLE_WALL_DEBRIS);
 #endif
 

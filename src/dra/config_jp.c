@@ -27,11 +27,11 @@ SubweaponDef g_SubwpnDefs[] = {
 };
 
 Equipment g_EquipDefs[] = {
-#include "gen/hd/equipment.h"
+#include GEN_VERSION(equipment.h)
 };
 
 Accessory g_AccessoryDefs[] = {
-#include "gen/hd/accessories.h"
+#include GEN_VERSION(accessories.h)
 };
 
 const char* g_MenuStr[] = {
@@ -160,7 +160,11 @@ RelicDesc g_RelicDefs[] = {
     {"クレイジーエコー", "超音波でも攻撃できるようになる", 256, 259, 0},
     {"ソ\ウルオブウルフ", "狼に変身する力を得る", 257, 260, 0},
     {"パワーオブウルフ", "狼時に速く走れる", 257, 261, 0},
+#if VERSION == VER_JP12
+    {"スキルオブウルフ", "狼時に↓顰→攻撃（右向き）で必殺技を出せる", 257, 262, 0},
+#else
     {"スキルオブウルフ", "狼時に必殺技を出せる", 257, 262, 0},
+#endif
     {"ミスト", "霧に変身する力を得る", 258, 263, 0},
     {"パワーオブミスト", "霧に変身できる時間が長くなる", 258, 264, 0},
     {"ガスクラウド", "毒の霧になる", 258, 265, 0},
@@ -187,7 +191,7 @@ RelicDesc g_RelicDefs[] = {
 };
 
 EnemyDef g_EnemyDefs[] = {
-#include "gen/hd/enemydefs.h"
+#include GEN_VERSION(enemydefs.h)
 };
 
 // clang-format on

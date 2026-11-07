@@ -2,7 +2,7 @@
 
 extern EInit g_EInitInteractable;
 
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 static char alucard_mist_ENG[] = "\xBC\x10Mist could pass.";
 static char alucard_mist_ES[] =
     "\xBC\x10La niebla pasar\xD5"
@@ -29,7 +29,7 @@ static char* alucard_mist_label; // bss
 static char* maria_mist_label;   // bss
 static char* richter_mist_label; // bss
 
-#elif defined(VERSION_HD)
+#elif VERSION < VER_JP10
 static char alucard_mist_label[] = "\x9C\x0Eこの壁は霧で抜けられそうだ";
 static char richter_mist_label[] = "\x90\x0Eこの壁は俺には関係無いな";
 #else
@@ -57,7 +57,7 @@ void EntityMistDoor(Entity* self) {
             CreateEntityFromCurrentEntity(E_MESSAGE_BOX, messageBox);
             messageBox->posX.i.hi = 0x80;
             messageBox->posY.i.hi = 0xB0;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             alucard_mist_label =
                 GetLang(alucard_mist_ENG, alucard_mist_FR, alucard_mist_ES,
                         alucard_mist_DE, alucard_mist_IT);

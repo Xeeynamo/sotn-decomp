@@ -14,10 +14,10 @@ static s32 s_LastTargetedEntityIndex;
 
 #include "demon_data.h"
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s16 D_092F2810[];
 #define buggyPtr D_092F2810
-#elif defined(VERSION_PC)
+#elif defined(PLATFORM_PSYZ)
 static s16* EventsAsS16(void);
 #define buggyPtr (EventsAsS16())
 #else
@@ -598,7 +598,7 @@ void ServantInit(InitializeMode mode) {
     entity->params = 0;
 
     if (mode == MENU_SWITCH_SERVANT) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if ((D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_20) ||
             (D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_40)) {
 #else
@@ -1082,7 +1082,7 @@ void UpdateServantPressSwitch(Entity* self) {
 
     case 2:
         sfxFlag = ((s16*)sfxEvent)[0];
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
         pauseAllowed = false;
 #endif
         self->step++;
@@ -1091,7 +1091,7 @@ void UpdateServantPressSwitch(Entity* self) {
         if (sfxFlag < 0) {
             if (g_PlaySfxStep > 4) {
                 SetAnimationFrame(self, sfxEvent->animIndex);
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
                 pauseAllowed = true;
 #endif
                 self->step++;
@@ -1123,7 +1123,7 @@ void UpdateServantPressSwitch(Entity* self) {
     }
 
     if (s_CurrentSwitch && !s_CurrentSwitch->entityId) {
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
         pauseAllowed = true;
 #endif
         self->entityId = DEMON_MODE_DEFAULT_UPDATE;
@@ -1827,12 +1827,12 @@ void func_us_80177690(Entity* self) {
     DestroyEntity(self);
 }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 s16 D_092F2810[4] = {0};
 #endif
 
 #include "../shared_events.h"
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
 static s16* EventsAsS16(void) { return (s16*)g_Events; }
 #endif
 #include "../shared_globals.h"

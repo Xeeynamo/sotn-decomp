@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-#if defined(VERSION_PC)
+#ifdef PLATFORM_PSYZ
 #define NUM_CUTSCENE_PRIM 8
 #else
 #define NUM_CUTSCENE_PRIM 7
@@ -33,7 +33,7 @@ static u8 SetCutsceneScript(u8* script) {
         prim->drawMode = DRAW_HIDE;
         prim = g_Dialogue.prim[4] = prim->next;
 
-#if !defined(VERSION_PSP) && !defined(VERSION_HD)
+#if VERSION >= VER_JP10 && TARGET != TARGET_PSP
         prim->drawMode = DRAW_HIDE;
         prim = g_Dialogue.prim[5] = prim->next;
 #endif

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "wrp.h"
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(SMALL_ROCKS);
 #endif
 
@@ -158,7 +158,7 @@ void EntityWarpRoom(Entity* self) {
             g_Player.padSim = 0;
             g_Player.demo_timer = 128;
             g_PauseAllowed = false;
-#ifdef VERSION_US
+#if VERSION == VER_US
             PLAYER.velocityX = 0;
             PLAYER.velocityY = 0;
 #endif

@@ -102,7 +102,7 @@ void EntityLargeSlime(Entity* self) {
         child = self + 1;
         CreateEntityFromEntity(E_UNK_4B, self, child);
         child->posX.i.hi += 0x40;
-#ifdef VERSION_US
+#if VERSION == VER_US
         // BUG: likely unintended and seems removed on PSP side
         child->posY.i.hi = child->posY.i.hi;
 #endif
@@ -478,7 +478,7 @@ u8 func_us_801D3A50(Primitive* prim) {
     y = prim->y3;
     g_api.CheckCollision(x, y, &collider, 0);
     if (collider.effects & EFFECT_BLOCK) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         tileCollision.top = -collider.unk18 * 0x10;
         tileCollision.bottom = (collider.unk20 * 0x10) + 1;
         tileCollision.left = (-collider.unk14 * 0x10) + 2;
@@ -718,7 +718,7 @@ void EntitySlime(Entity* self) {
         child = self + 1;
         CreateEntityFromEntity(E_UNK_4D, self, child);
         child->posX.i.hi += 0x18;
-#ifdef VERSION_US
+#if VERSION == VER_US
         // BUG: likely unintended and seems removed on PSP side
         child->posY.i.hi = child->posY.i.hi;
 #endif

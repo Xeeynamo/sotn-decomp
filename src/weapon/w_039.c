@@ -102,7 +102,7 @@ s32 func_ptr_80170004(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
 
         for (i = 0; i < PrimCount; i++) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             prim->r0 = 0xBF;
             prim->r1 = i;
             prim->g0 = 0x3F;

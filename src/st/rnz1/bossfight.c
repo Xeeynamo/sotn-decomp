@@ -4,7 +4,7 @@
 extern EInit g_EInitInteractable;
 extern EInit g_EInitEnvironment;
 
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 extern s32 E_ID(DARKWING_PERCH);
 extern s32 E_ID(DARKWING_BAT);
 extern s32 E_ID(BOSS_DOORS);
@@ -147,7 +147,7 @@ void EntityBossDoors(Entity* self) {
         if (g_bossDoorsLocked) {
             g_api.PlaySfx(SFX_STONE_MOVE_B);
             self->step++;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             doorTilemap = D_us_8018113C;
             if (self->params) {
                 tileIndex = 0x9E;
@@ -205,7 +205,7 @@ void EntityBossDoors(Entity* self) {
     case 4:
         GetPlayerCollisionWith(self, 8, 32, 5);
         if (!g_bossDoorsLocked) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             doorTilemap = D_pspeu_092637C8;
 #else
             doorTilemap = D_us_8018113C;

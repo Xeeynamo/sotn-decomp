@@ -561,7 +561,7 @@ void func_801B786C(s16 nextCharY) {
 
 u16* func_801B78BC(char ch) {
     u16 jCh;
-#ifndef VERSION_PC
+#ifndef PLATFORM_PSYZ
 
     if (ch >= 'a') {
         jCh = ('ａ' - 'a') + ch;

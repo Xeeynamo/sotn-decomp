@@ -4,12 +4,12 @@
 #include <gen/rbo3_tilemap_0.h>
 #include <gen/rbo3_tilemap_1.h>
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 #include <gen/rbo3_tiledef_rload.h>
 #endif
 
 #include <gen/rbo3_tiledef_rbo3.h>
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 #include <gen/rbo3_tiledef_rsave.h>
 #endif

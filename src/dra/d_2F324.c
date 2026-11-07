@@ -225,7 +225,7 @@ static AluFrame D_800CFE28;
 static AluFrame D_800CFE30;
 static AluFrame D_800CFE38;
 static AluFrame D_800CFE40;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 static AluFrame D_psp_09234A30;
 static AluFrame D_psp_09234A38;
 static AluFrame D_psp_09234A40;
@@ -315,7 +315,7 @@ AluFrame* D_800CF324[] = {
     &D_800CFDD0, &D_800CFDD8, &D_800CFDE0, &D_800CFDE8, &D_800CFDF0,
     &D_800CFDF8, &D_800CFE00, &D_800CFE08, &D_800CFE10, &D_800CFE18,
     &D_800CFE20, &D_800CFE28, &D_800CFE30, &D_800CFE38, &D_800CFE40,
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     &D_psp_09234A30, &D_psp_09234A38, &D_psp_09234A40, &D_psp_09234A48, &D_psp_09234A50,
     &D_psp_09234A58, &D_psp_09234A60, &D_psp_09234A68, &D_psp_09234A70, &D_psp_09234A78,
     &D_psp_09234A80, &D_psp_09234A88, &D_psp_09234A90, &D_psp_09234A98, &D_psp_09234AA0,
@@ -562,7 +562,7 @@ static AluFrame D_800CFE28 = {0x80D6, -21, -21, 0};
 static AluFrame D_800CFE30 = {0x80D7, -19, -21, 0};
 static AluFrame D_800CFE38 = {0x80D8, -19, -21, 0};
 static AluFrame D_800CFE40 = {0x80D9, -12, -20, 0};
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 static AluFrame D_psp_09234A30 = {0x0000, 0, 0, 0};
 static AluFrame D_psp_09234A38 = {0x0000, 0, 0, 0};
 static AluFrame D_psp_09234A40 = {0x0000, 0, 0, 0};

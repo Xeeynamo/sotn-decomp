@@ -7,7 +7,7 @@ enum ShortcutSteps {
     SHORTCUT_OPEN = 16,
 };
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(STATUE);
 #endif
 

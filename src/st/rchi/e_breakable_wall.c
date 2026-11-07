@@ -4,7 +4,7 @@
 extern EInit g_EInitBreakableWallDebris;
 extern EInit g_EInitBreakableWalL;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(BREAKABLE_WALL_DEBRIS);
 #endif
 

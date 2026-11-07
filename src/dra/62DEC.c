@@ -27,7 +27,7 @@ static s32 D_80137E60;
 static s32 g_MemCardRStep;
 static s32 g_MemCardRStepSub;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 // PSP will place these here even if they are redeclared lower
 static s32 D_80137EE4;
 static s32 D_80137EE8;
@@ -46,7 +46,7 @@ static s32 D_80137EEC;
 static s32 D_80137EF0;
 static s32 D_80137EF4;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32* D_psp_091CE248;
 extern s32* D_psp_091CE240;
 extern s32* D_psp_091CE238;
@@ -104,7 +104,7 @@ static void func_80102EB8(void) {
         func_801072DC(prim1);
         prim1->tpage = 0x10;
         prim1->clut = PAL_UNK_1A1;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         prim1->priority = 0x1FF;
 #else
         prim1->priority = g_unkGraphicsStruct.g_zEntityCenter + 32;
@@ -118,7 +118,7 @@ static void func_80102EB8(void) {
         PRED(prim2) = 0;
         PGRN(prim2) = 0;
         prim2->tpage = 0x1F;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         prim2->priority = 0x1FF;
 #else
         prim2->priority = g_unkGraphicsStruct.g_zEntityCenter + 31;
@@ -130,7 +130,7 @@ static void func_80102EB8(void) {
 
     for (i = 0; i < 12; i++) {
         func_80107250(prim3, 255);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         prim3->priority = 0x1FF;
 #else
         prim3->priority = g_unkGraphicsStruct.g_zEntityCenter + 32;
@@ -196,20 +196,20 @@ static Primitive* func_80103148(Primitive* prim, Primitive* basis) {
 }
 
 static s32 HandleSaveMenu(s32 arg0) {
-#if defined(VERSION_US)
+#if REGION != REGION_JP
 #define CONFIRM PAD_CROSS
 #define EXIT PAD_TRIANGLE
-#elif defined(VERSION_HD)
+#elif TARGET != TARGET_PSP
 #define CONFIRM (PAD_START | PAD_SQUARE | PAD_CIRCLE)
 #define EXIT PAD_CROSS
-#elif defined(VERSION_PSP)
+#elif TARGET == TARGET_PSP
 #define CONFIRM (PAD_START | PAD_SQUARE | g_ConfirmButton)
 #define EXIT g_CancelButton
 #endif
 
 // Somewhat clumsy way to avoid ifdef throughout the code.
 // V86P70 means "Value is 86, except on PSP it's 70"
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #define V86P70 70
 #define Vx60Px90 0x90
 #define Vx70PxA0 0xA0
@@ -257,49 +257,52 @@ static s32 HandleSaveMenu(s32 arg0) {
                 PlaySfx(SFX_UI_ALERT_TINK);
             }
             if (D_80137E4C == 6) {
-#if defined(VERSION_US)
+#if REGION != REGION_JP
                 func_800F9D88("Data saved．", 0, 1);
-#elif defined(VERSION_HD)
+#elif TARGET != TARGET_PSP
                 func_800F9D40("セーブしました　　　", 0, 1);
-#elif defined(VERSION_PSP)
+#elif TARGET == TARGET_PSP
                 func_800F9D88(D_psp_091CE238, 0, 1);
 #endif
                 prim2->p1 += 2;
             }
             if (D_80137E4C == 7) {
-#if defined(VERSION_US)
+#if IS_VER_INTL
                 func_800F9D88("Memory Card", 0, 1);
                 func_800F9D88("  not found．", 1, 0);
-#elif defined(VERSION_HD)
+#elif VERSION == VER_USPROTO
+                func_800F9D88("Memory Card", 0, 1);
+                func_800F9D88("not detected．", 1, 0);
+#elif TARGET != TARGET_PSP
                 func_800F9D40("メモリーカードが　　", 0, 1);
                 func_800F9D40("ささっていません　　", 1, 0);
-#elif defined(VERSION_PSP)
+#elif TARGET == TARGET_PSP
                 func_800F9D88("セーブできません　　", 0, 1);
                 func_800F9D88("でした　　　　　　　", 1, 0);
 #endif
                 prim2->p1 += 2;
             }
             if (D_80137E4C == 8) {
-#if defined(VERSION_US)
+#if REGION != REGION_JP
                 func_800F9D88("Memory Card", 0, 1);
                 func_800F9D88("is Defective．", 1, 0);
-#elif defined(VERSION_HD)
+#elif TARGET != TARGET_PSP
                 func_800F9D40("メモリーカードが　　", 0, 1);
                 func_800F9D40("　壊れています　　　", 1, 0);
-#elif defined(VERSION_PSP)
+#elif TARGET == TARGET_PSP
                 func_800F9D88("メモリーカードが　　", 0, 1);
                 func_800F9D88("　壊れています　　　", 1, 0);
 #endif
                 prim2->p1 += 2;
             }
             if (D_80137E4C == 9) {
-#if defined(VERSION_US)
+#if REGION != REGION_JP
                 func_800F9D88("Memory Card is", 0, 1);
                 func_800F9D88("not formatted．", 1, 0);
-#elif defined(VERSION_HD)
+#elif TARGET != TARGET_PSP
                 func_800F9D40("　メモリーカードが　", 0, 1);
                 func_800F9D40("初期化されていません", 1, 0);
-#elif defined(VERSION_PSP)
+#elif TARGET == TARGET_PSP
                 func_800F9D88("　メモリーカードが　", 0, 1);
                 func_800F9D88("初期化されていません", 1, 0);
 #endif
@@ -307,35 +310,44 @@ static s32 HandleSaveMenu(s32 arg0) {
             }
             if (D_80137E4C == 10) {
                 if (D_80137E54 == 2) {
-#if defined(VERSION_US)
+#if IS_VER_INTL
                     func_800F9D88("Cannot", 0, 1);
                     func_800F9D88("overwrite file．", 1, 0);
-#elif defined(VERSION_HD)
+#elif VERSION == VER_USPROTO
+                    func_800F9D88("Cannot", 0, 1);
+                    func_800F9D88("overwrite．", 1, 0);
+#elif TARGET != TARGET_PSP
                     func_800F9D40("　　上書き　　　　　", 0, 1);
                     func_800F9D40("　できません　　　　", 1, 0);
-#elif defined(VERSION_PSP)
+#elif TARGET == TARGET_PSP
                     func_800F9D88("　　上書き　　　　　", 0, 1);
                     func_800F9D88("　できません　　　　", 1, 0);
 #endif
                 } else if (D_80137E54 == 3) {
-#if defined(VERSION_US)
+#if IS_VER_INTL
                     func_800F9D88("No game", 0, 1);
                     func_800F9D88("data found．", 1, 0);
-#elif defined(VERSION_HD)
+#elif VERSION == VER_USPROTO
+                    func_800F9D88("Cannot", 0, 1);
+                    func_800F9D88("overwrite．", 1, 0);
+#elif TARGET != TARGET_PSP
                     func_800F9D40("データがないため　　", 0, 1);
                     func_800F9D40("上書きできません　　", 1, 0);
-#elif defined(VERSION_PSP)
+#elif TARGET == TARGET_PSP
                     func_800F9D88("データがないため　　", 0, 1);
                     func_800F9D88("上書きできません　　", 1, 0);
 #endif
                 } else {
-#if defined(VERSION_US)
+#if IS_VER_INTL
                     func_800F9D88("   ０ memory", 0, 1);
                     func_800F9D88("blocks available．", 1, 0);
-#elif defined(VERSION_HD)
+#elif VERSION == VER_USPROTO
+                    func_800F9D88("No block", 0, 1);
+                    func_800F9D88("available．", 1, 0);
+#elif TARGET != TARGET_PSP
                     func_800F9D40("空きブロックが　　　", 0, 1);
                     func_800F9D40("　足りません　　　　", 1, 0);
-#elif defined(VERSION_PSP)
+#elif TARGET == TARGET_PSP
                     func_800F9D88(D_psp_091CE230, 0, 1);
                     func_800F9D88(D_psp_091CE228, 1, 0);
 #endif
@@ -343,13 +355,16 @@ static s32 HandleSaveMenu(s32 arg0) {
                 prim2->p1 += 2;
             }
             if (D_80137E4C == 11) {
-#if defined(VERSION_US)
+#if IS_VER_INTL
                 func_800F9D88("  Memory card", 0, 1);
                 func_800F9D88("  format error．", 1, 0);
-#elif defined(VERSION_HD)
+#elif VERSION == VER_USPROTO
+                func_800F9D88("Failed", 0, 1);
+                func_800F9D88("to format．", 1, 0);
+#elif TARGET != TARGET_PSP
                 func_800F9D40("　メモリーカードの　", 0, 1);
                 func_800F9D40("初期化に失敗しました　", 1, 0);
-#elif defined(VERSION_PSP)
+#elif TARGET == TARGET_PSP
                 func_800F9D88("　メモリーカードの　", 0, 1);
                 func_800F9D88("初期化に失敗しました　", 1, 0);
 #endif
@@ -366,7 +381,7 @@ static s32 HandleSaveMenu(s32 arg0) {
             SetPrimRect(prim1, 60, 96 - temp_t0, 136, temp_t0);
             func_80103148(prim3, prim1);
         } else if (D_80137E4C == 10 && temp_t0 < 33) {
-#if defined(VERSION_US)
+#if IS_VER_INTL
             temp_a1 = 0;
             if (D_80137E54 != 2 && D_80137E54 != 3) {
                 temp_a1 = -10;
@@ -413,7 +428,7 @@ static s32 HandleSaveMenu(s32 arg0) {
 
     if (arg0 == 1) {
 // This section handles memory card selection. PSP doesn't give that option.
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         D_80097924 = 0;
         D_8006C378 = -1;
         return 1;
@@ -422,11 +437,11 @@ static s32 HandleSaveMenu(s32 arg0) {
         if (temp_t0 == 0) {
             PlaySfx(SFX_UI_ALERT_TINK);
             prim2->p1 += 2;
-#if defined(VERSION_US)
+#if REGION != REGION_JP
             func_800F9D88("  Select the slot．", 0, 1);
             func_800F9D88(" Slot １", 1, 0);
             func_800F9D88(" Slot ２", 2, 0);
-#elif defined(VERSION_HD)
+#else
             func_800F9D40("スロットを選んで下さい　", 0, 1);
             func_800F9D40("スロット１　", 1, 0);
             func_800F9D40("スロット２　", 2, 0);
@@ -502,41 +517,50 @@ static s32 HandleSaveMenu(s32 arg0) {
         PlaySfx(SFX_UI_ALERT_TINK);
         prim2->p1 += 2;
         if (arg0 == 2) {
-#if defined(VERSION_US)
+#if IS_VER_INTL
             func_800F9D88(" Wish to format？", 0, 1);
-#elif defined(VERSION_HD)
-            func_800F9D40("初期化してもいいですか　", 0, 1);
+#elif VERSION == VER_USPROTO
+            func_800F9D88("Format？", 0, 1);
+#elif TARGET != TARGET_PSP
+                func_800F9D40("初期化してもいいですか　", 0, 1);
 #else
                 func_800F9D88("初期化してもいいですか　", 0, 1);
 #endif
             D_80137E6C = true;
         }
         if (arg0 == 3) {
-#if defined(VERSION_US)
+#if IS_VER_INTL
             func_800F9D88(" Overwrite data？", 0, 1);
-#elif defined(VERSION_HD)
-            func_800F9D40("　　上書きしますか　　　", 0, 1);
+#elif VERSION == VER_USPROTO
+            func_800F9D88("Overwrite？", 0, 1);
+#elif TARGET != TARGET_PSP
+                func_800F9D40("　　上書きしますか　　　", 0, 1);
 #else
                 func_800F9D88(D_psp_091CE240, 0, 1);
 #endif
             D_80137E6C = false;
         }
         if (arg0 == 4) {
-#if defined(VERSION_US)
+#if IS_VER_INTL
             func_800F9D88("   Wish to save？", 0, 1);
-#elif defined(VERSION_HD)
-            func_800F9D40("　　セーブしますか　　　", 0, 1);
+#elif VERSION == VER_USPROTO
+            func_800F9D88("    Save？", 0, 1);
+#elif TARGET != TARGET_PSP
+                func_800F9D40("　　セーブしますか　　　", 0, 1);
 #else
                 func_800F9D88(D_psp_091CE248, 0, 1);
 #endif
             D_80137E6C = false;
         }
-#if defined(VERSION_US)
+#if IS_VER_INTL
         func_800F9D88("Yes ", 1, 0);
         func_800F9D88("  No  ", 2, 0);
-#elif defined(VERSION_HD)
-        func_800F9D40("はい　　", 1, 0);
-        func_800F9D40("いいえ　", 2, 0);
+#elif VERSION == VER_USPROTO
+        func_800F9D88("Yes ", 1, 0);
+        func_800F9D88(" No  ", 2, 0);
+#elif TARGET != TARGET_PSP
+            func_800F9D40("はい　　", 1, 0);
+            func_800F9D40("いいえ　", 2, 0);
 #else
             func_800F9D88(D_psp_091CE220, 1, 0);
             func_800F9D88(D_psp_091CE218, 2, 0);
@@ -706,7 +730,7 @@ static void func_80103ED4(void) {
         // I believe the rand() call here selects the icon on the save
         // in the save-select screen.
         StoreSaveData(g_Pix, D_8006C378, rand() & 0xF);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         func_psp_090DFC68();
         if (MemcardWriteFile(D_80097924, 0, saveFile, g_Pix, 1, i, 1) != 0) {
             D_801379BC = 0x101;
@@ -933,7 +957,7 @@ void func_801042C4(s32 arg0) {
     func_80103EAC();
     D_801379B8 = ((s32)(g_StageId & STAGE_INVERTEDCASTLE_FLAG) / 2) + 8;
     D_801379C8.vx = D_801379C8.vy = D_801379C8.vz = 0;
-#if !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP
     D_801379C0.vx = D_801379C0.vy = D_801379C0.vz = 0;
 #endif
 
@@ -1011,7 +1035,7 @@ void func_801042C4(s32 arg0) {
 }
 
 static void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
-#if defined(VERSION_US)
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
     const s32 PRIORITY_SHIFT = 16;
 #else
     const s32 PRIORITY_SHIFT = 8;
@@ -1045,7 +1069,7 @@ static void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
     sp70[2] = sp70[1] = sp70[0] = 0x80;
     sp70[3] = 0;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     if (g_pads[1].tapped & PAD_TRIANGLE) {
         D_801379C8.vz += 0x40;
     }
@@ -1078,7 +1102,7 @@ static void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
 #endif
 
     RotMatrix(&D_801379C8, &D_80137E00); // types copied
-#if !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP
     RotMatrix(&D_801379C8, &D_80137E20); // types copied
     SetColorMatrix(&D_800A37B8);         // types copied
     SetLightMatrix(&D_80137E20);         // types copied
@@ -1181,7 +1205,7 @@ static void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
                 &sp7c[0], &sp7c[2], &sp7c[1], (s32*)&prim->x0, (s32*)&prim->x2,
                 (s32*)&prim->x1, &unused_interp, &nclip_otz, &unused_flag);
         }
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
         PGREY(prim, 3) = PGREY(prim, 2) = PGREY(prim, 1) = PGREY(prim, 0) =
             0xB0;
 #else
@@ -1267,7 +1291,7 @@ static void func_80105078(s32 arg0, s32 arg1) {
     sp70[2] = sp70[1] = sp70[0] = 0x80;
     sp70[3] = 0;
     RotMatrix(&D_801379C8, &D_80137E00);
-#if !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP
     RotMatrix(&D_801379C8, &D_80137E20);
     SetColorMatrix(&D_800A37B8);
     SetLightMatrix(&D_80137E20);
@@ -1329,18 +1353,18 @@ static void func_80105408(void) {
 }
 
 void func_80105428(void) {
-#if defined(VERSION_US)
+#if REGION != REGION_JP
     const s32 PAD_MASK = PAD_CROSS | PAD_TRIANGLE;
-#elif defined(VERSION_HD)
+#elif TARGET != TARGET_PSP
     const s32 PAD_MASK = PAD_START | PAD_SQUARE | PAD_CROSS | PAD_CIRCLE;
-#elif defined(VERSION_PSP)
+#elif TARGET == TARGET_PSP
 #define PAD_MASK (PAD_START | PAD_SQUARE | g_ConfirmButton | g_CancelButton)
 #endif
     s32 temp_s0;
     s32 temp_result;
     s32 timer_temp;
 // This is a really surprising ifdef. Makes me think it's fake.
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
     s32 temp_s3;
 #else
     u16 temp_s3;
@@ -1359,7 +1383,7 @@ void func_80105428(void) {
         func_80103ED4();
     }
     temp_s3 = D_801379C8.vy;
-#if defined(VERSION_US)
+#if VERSION >= VER_USPROTO && TARGET != TARGET_PSP
     g_Player.unk7A = 1;
 #endif
     switch (temp_s0 = D_801379BC) {
@@ -1377,7 +1401,7 @@ void func_80105428(void) {
         } else {
             timer_temp = (timer_temp * 4) + 0xA0;
         }
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
         D_80137E4C = 0;
 #endif
         func_80104790(0, timer_temp, 0);
@@ -1409,7 +1433,7 @@ void func_80105428(void) {
             (g_GameTimer != 0)) {
             D_801379B8++;
         }
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
         if (abs(PLAYER.posX.i.hi - 0x80) < 3) {
             PLAYER.posX.i.hi = 0x80;
         }
@@ -1452,7 +1476,7 @@ void func_80105428(void) {
             if (!D_80137E6C) {
                 D_80137E54 = 2;
                 D_801379BC = 2;
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
                 D_80137E4C = 0;
 #endif
             } else {
@@ -1471,7 +1495,7 @@ void func_80105428(void) {
                 D_80097924 = 0;
                 func_80102EB8();
                 D_801379BC = 0x100;
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
                 D_80137E4C = 0;
 #endif
             } else {
@@ -1627,7 +1651,7 @@ void func_80105428(void) {
             }
         }
         break;
-#if !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP
     case 0x200:
         func_80105408();
         if (HandleSaveMenu(2) != 0) {

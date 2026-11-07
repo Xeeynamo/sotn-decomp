@@ -1,5 +1,6 @@
 #ifndef CUTSCENE_H
 #define CUTSCENE_H
+#include "version.h"
 
 typedef enum {
     CSOP_END_CUTSCENE,
@@ -53,11 +54,11 @@ enum ActorNameIndices {
 
 #define CUTSCENE_FLAG_NONE 0
 
-#if defined(VERSION_PC)
+#ifdef PLATFORM_PSYZ
 u8* CutsceneAddrToPc(u32 psxAddr);
 #define CS_NEXT(ptr) (u16*)CutsceneAddrToPc(ptr)
 #define CS_PTR(ptr) CutsceneAddrToPc((u32)(uintptr_t)(ptr) + 0x100000)
-#elif defined(VERSION_PSP)
+#elif TARGET == TARGET_PSP
 #define CS_NEXT(ptr) (u8*)(ptr)
 #define CS_PTR(ptr) (u8*)(ptr)
 #else
@@ -92,7 +93,7 @@ u8* CutsceneAddrToPc(u32 psxAddr);
 #define SCRIPT_UNKNOWN_21() CSOP_SCRIPT_UNKNOWN_21
 #define SCRIPT_UNKNOWN_23() CSOP_SCRIPT_UNKNOWN_23
 #define WAIT_FOR_FLAG_RESET(x) CSOP_WAIT_FOR_FLAG_RESET, x
-#if defined(VERSION_PSP) || defined(VERSION_HD)
+#if VERSION < VER_USPROTO || TARGET == TARGET_PSP
 #define CS_LINE_SPACING 16
 #define CS_LINE_MAX 3
 #else
@@ -138,7 +139,7 @@ typedef struct {
     /* 0x16 */ u8 nextCharTimer;      // timer to next character
     /* 0x17 */ u8 unk17;              // unknown
 // Of course, offsets beyond here won't be right in ST0_WEIRD_DIALOGUE.
-#if defined(VERSION_PSP) || defined(VERSION_HD)
+#if VERSION < VER_USPROTO || TARGET == TARGET_PSP
     /* 0x18 */ Primitive* prim[5]; // for dialogue graphics rendering
 #else
     /* 0x18 */ Primitive* prim[6]; // for dialogue graphics rendering
@@ -158,7 +159,7 @@ typedef struct {
     /* 0x0A */ u8 nextCharTimer;
     /* 0x0B */ u8 unk17;
     // Of course, offsets beyond here won't be right on PSP
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
     /* 0x0C */ Primitive* prim[5]; // for dialogue graphics rendering
     /* 0x20 */ s32 nextLineX;
 #else

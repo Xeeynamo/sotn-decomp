@@ -13,7 +13,7 @@ void EntityBackgroundBlock(Entity* self) {
 #if defined(BG_FACING_LEFT_FIX)
         self->facingLeft = objInit->facingLeft;
         self->unk5A = objInit->unk5A;
-#elif defined(VERSION_PSP)
+#elif TARGET == TARGET_PSP
         self->unk5A = LOHU(objInit->facingLeft);
 #else
         self->unk5A = LOH(objInit->facingLeft);

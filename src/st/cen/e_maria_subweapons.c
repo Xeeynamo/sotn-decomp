@@ -611,7 +611,7 @@ void EntityMariaTurtleCrash(Entity* self) {
         self->scaleY = 0;
         self->drawFlags |= ENTITY_SCALEX | ENTITY_SCALEY;
         g_Maria.unk28 = NULL;
-#if defined(VERSION_PC)
+#ifdef PLATFORM_PSYZ
         g_Maria.unk20 = (signed long long)self;
 #else
         g_Maria.unk20 = (s32)self;

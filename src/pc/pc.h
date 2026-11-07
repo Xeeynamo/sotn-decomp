@@ -14,14 +14,9 @@ enum CustomStageId {
     STAGE_ID_USER_MOD_FIRST = 0x51,
 };
 
-#ifndef VERSION_PC
-#define VERSION_PC
+#ifndef PLATFORM_PSYZ
+#define PLATFORM_PSYZ
 #endif
-#define VERSION_US
-#ifdef VERSION
-#undef VERSION
-#endif
-#define VERSION "us"
 
 #include <stdio.h>
 #include <types.h>

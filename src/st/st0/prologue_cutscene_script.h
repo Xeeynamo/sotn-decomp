@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 
 static char prologue_script_it[] =
     "Il Conte Dracula \xD0 risorto\x01\x00"

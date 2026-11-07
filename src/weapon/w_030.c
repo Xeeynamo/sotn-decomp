@@ -75,7 +75,7 @@ void EntityWeaponAttack(Entity* self) {
 
 extern s16 D_D6000_8017A5F4[10];
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s8 D_D6000_8017A608[15];
 extern s8 D_D6000_8017A618[16];
 #else
@@ -140,7 +140,7 @@ void func_ptr_80170004(Entity* self) {
         prim->tpage = 0x19;
         prim->priority = PLAYER.zPriority + 2;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         prim->drawMode = DRAW_COLORS | DRAW_UNK02;
 #else
         prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |

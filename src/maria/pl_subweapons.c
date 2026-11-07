@@ -27,7 +27,7 @@ void EntityMariaDollAttack(Entity* self) {
     case 0:
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_UNK_100000;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         self->unk5A = 0x19;
 #else
         self->unk5A = 0x67;
@@ -121,7 +121,7 @@ void EntityMariaDollActivate(Entity* self) {
     case 0:
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_UNK_100000;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         self->unk5A = 0x19;
 #else
         self->unk5A = 0x67;
@@ -275,7 +275,7 @@ void EntityMariaCatAttack(Entity* self) {
     case 0:
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_UNK_100000;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         self->unk5A = 0x14;
 #else
         self->unk5A = 0x6E;
@@ -412,7 +412,7 @@ void EntityMariaCatCrash(Entity* self) {
     case 0:
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_UNK_100000;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         self->unk5A = 0x14;
 #else
         self->unk5A = 0x6E;
@@ -495,7 +495,7 @@ void EntityMariaCatCrashAttack(Entity* self) {
     case 0:
         self->flags = FLAG_UNK_100000 | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_POS_CAMERA_LOCKED;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         self->unk5A = 0x14;
 #else
         self->unk5A = 0x6E;
@@ -541,7 +541,7 @@ void EntityMariaDragonAttack(Entity* self) {
     switch (self->step) {
     case 0:
         self->flags = FLAG_UNK_100000 | FLAG_KEEP_ALIVE_OFFCAMERA;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         self->unk5A = 0x15;
 #else
         self->unk5A = 0x64;
@@ -699,7 +699,7 @@ void EntityMariaDragonCrash(Entity* self) {
     case 0:
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_UNK_100000;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         self->unk5A = 0x15;
 #else
         self->unk5A = 0x64;
@@ -853,7 +853,7 @@ void EntityMariaDragonCrashBodyPart(Entity* self) {
             return;
         }
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         self->unk5A = 0x15;
 #else
         self->unk5A = 0x64;
@@ -886,7 +886,7 @@ void EntityMariaDragonCrashBodyPart(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         var_s2 = D_pspeu_092E5900 - 1;
         for (i = 0; i < LEN(D_pspeu_092E5B08); i++) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             prim->tpage = 5;
 #else
             prim->tpage = 0x19;
@@ -921,7 +921,7 @@ void EntityMariaDragonCrashBodyPart(Entity* self) {
                         NormalizeAngle(ratan2(spD0 - var_s5, spD4 - var_s6));
                     func_psp_089285A0(angle, &m);
                     SetGeomOffset(var_s6, var_s5);
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
                     // I do not know why this works. The stack might be messed
                     // up and function just so happen to match PSP decomp.
                     spA0.vx = var_s6;
@@ -989,7 +989,7 @@ void EntityMariaDragonCrashBodyPart(Entity* self) {
                     u = 0x80;
                     v = 0;
                 }
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
                 // Dragon GFXs are re-located in the VRAM on other platforms
                 u -= 0x80;
 #endif
@@ -1046,7 +1046,7 @@ void EntityMariaCardinalAttack(Entity* self) {
     case 0:
         self->flags = FLAG_UNK_100000 | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_POS_CAMERA_LOCKED;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         self->unk5A = 0x11;
 #else
         self->unk5A = 0x65;
@@ -1115,7 +1115,7 @@ void EntityMariaCardinalCrash(Entity* self) {
     case 0:
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_UNK_100000;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         self->unk5A = 0x11;
 #else
         self->unk5A = 0x65;
@@ -1132,7 +1132,7 @@ void EntityMariaCardinalCrash(Entity* self) {
         }
         self->posX.i.hi = PLAYER.posX.i.hi + var_s0;
         self->posY.i.hi = PLAYER.posY.i.hi + 24;
-#if defined(VERSION_PC)
+#ifdef PLATFORM_PSYZ
         g_Player.unk20 = (signed long long)self;
 #else
         g_Player.unk20 = (s32)self;
@@ -1349,7 +1349,7 @@ void EntityMariaCardinalCrashFireball(Entity* self) {
         }
         self->flags =
             FLAG_HAS_PRIMS | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         self->unk5A = 0x11;
 #else
         self->unk5A = 0x65;
@@ -1495,7 +1495,7 @@ void EntityMariaCardinalCrashFireball(Entity* self) {
                     prim->v2 = 0x7F;
                     prim->u3 = 0xCF;
                     prim->v3 = 0x7F;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     prim->tpage = 0x4;
 #else
                     prim->tpage = 0x19;
@@ -1509,7 +1509,7 @@ void EntityMariaCardinalCrashFireball(Entity* self) {
                     prim->v2 = 0x47;
                     prim->u3 = 0xA7;
                     prim->v3 = 0x47;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     prim->tpage = 0x24;
 #else
                     prim->tpage = 0x39;
@@ -1546,7 +1546,7 @@ void EntityMariaTurtleAttack(Entity* self) {
     case 0:
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_UNK_100000;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         self->unk5A = 0x10;
 #else
         self->unk5A = 0x6D;
@@ -1602,7 +1602,7 @@ void EntityMariaTurtleCrash(Entity* self) {
     case 0:
         self->flags = FLAG_UNK_100000 | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_POS_CAMERA_LOCKED;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         self->unk5A = 0x10;
 #else
         self->unk5A = 0x6D;
@@ -1623,7 +1623,7 @@ void EntityMariaTurtleCrash(Entity* self) {
         self->scaleY = 0;
         self->drawFlags |= ENTITY_SCALEX | ENTITY_SCALEY;
         g_Player.unk28 = NULL;
-#if defined(VERSION_PC)
+#ifdef PLATFORM_PSYZ
         g_Player.unk20 = (signed long long)self;
 #else
         g_Player.unk20 = (s32)self;
@@ -1728,7 +1728,7 @@ void EntityMariaTurtleCrashVortex(Entity* self) {
     case 0:
         self->flags = FLAG_UNK_100000 | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_POS_CAMERA_LOCKED;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         self->unk5A = 0x10;
 #else
         self->unk5A = 0x6D;

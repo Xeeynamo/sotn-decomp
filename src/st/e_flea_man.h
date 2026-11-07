@@ -84,7 +84,7 @@ void EntityFleaMan(Entity* self) {
             self->step = 1;
         }
 
-#ifdef VERSION_US
+#if VERSION == VER_US
         if (self->ext.fleaMan.unk7C) {
             self->step = 3;
         }

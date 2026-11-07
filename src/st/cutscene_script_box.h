@@ -9,7 +9,7 @@ static void CutsceneUnk3(s16 nextCharY) {
     rect.w = 64;
     rect.h = 12;
     ClearImage(&rect, 0, 0, 0);
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
     memset(cutsceneUnk3Unknown, 0, LEN(cutsceneUnk3Unknown));
 #endif
 }

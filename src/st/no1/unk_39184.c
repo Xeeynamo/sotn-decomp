@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(ID_33);
 extern s32 E_ID(ID_5E);
 extern s32 D_psp_091CE570;
@@ -46,7 +46,7 @@ u8 func_us_801B9184(Primitive* prim) {
     return 0;
 }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 static u8 D_pspeu_09297E48[] = {
 #include <gen/D_pspeu_09297E48.h>
 };
@@ -83,7 +83,7 @@ void func_us_801B9304(Entity* self) {
     s16 angle;
     u8 count;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     if (D_psp_091CE570) {
         func_pspeu_0925F440();
     }
@@ -91,7 +91,7 @@ void func_us_801B9304(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitInteractable);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         func_pspeu_0925F440();
 #endif
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0xE);
@@ -106,7 +106,7 @@ void func_us_801B9304(Entity* self) {
                 UnkPolyFunc2(prim);
                 prim->tpage = 0x11;
                 prim->clut = PAL_UNK_19C;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 prim->u0 = prim->u2 = i * 18;
                 prim->u1 = prim->u3 = prim->u0 + 0x12;
 #else
@@ -178,7 +178,7 @@ void func_us_801B9304(Entity* self) {
         prim = self->ext.et_801B9304.unk7C;
         prim->tpage = 0x11;
         prim->clut = PAL_UNK_19C;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         prim->u0 = prim->u2 = 0;
         prim->u1 = prim->u3 = prim->u0 + 0x7E;
 #else

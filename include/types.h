@@ -1,7 +1,7 @@
 #ifndef TYPES_H
 #define TYPES_H
 
-#ifndef VERSION_PC
+#ifndef PLATFORM_PSYZ
 typedef char int8_t;
 typedef short int16_t;
 typedef int int32_t;
@@ -61,7 +61,7 @@ typedef signed char byte;
 typedef unsigned short ushort;
 typedef unsigned int uint;
 
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
 #include <stdbool.h>
 #else
 #ifndef __cplusplus

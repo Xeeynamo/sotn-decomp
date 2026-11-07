@@ -38,7 +38,7 @@ static u16 g_RlibBreakableUnk5A[] = {
     0, 0, 0, 0, 0x5B, 0x5B, 0x5B, 0x5B, 0x5B, 0x5B};
 static u16 g_RlibBreakableHitboxOffsetsY[12] = {0};
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(METAL_LAMP);
 extern s32 E_ID(BREAKABLE_DEBRIS);
 #endif

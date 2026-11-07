@@ -9,7 +9,7 @@ OVERLAY = $(BUILD_DIR)/MARIA.BIN
 CC = mipsel-linux-gnu-gcc
 CFLAGS = -mno-abicalls -G0 -fno-pic -g -O2 -I$(ROOT_DIR)/include -I$(ROOT_DIR)/include/psxsdk -I$(ROOT_DIR)/src/maria -msoft-float -march=3000
 CFLAGS += -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -fno-stack-protector
-CFLAGS += -DMARIA_SFX_MOD=1
+CFLAGS += -D_internal_version_$(VERSION) -DMARIA_SFX_MOD=1
 ifeq ($(MARIA_SFX_DEBUG),1)
 CFLAGS += -DMARIA_SFX_DEBUG=1
 endif

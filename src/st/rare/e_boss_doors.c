@@ -3,7 +3,7 @@
 
 extern EInit g_EInitEnvironment;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(BOSS_DOORS);
 #endif
 

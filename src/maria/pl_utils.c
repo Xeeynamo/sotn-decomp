@@ -206,7 +206,7 @@ void MarSetInvincibilityFrames(s32 kind, s16 invincibilityFrames) {
 void MarDisableAfterImage(s32 resetAnims, s32 arg1) {
     Primitive* prim;
 
-#if defined(VERSION_US)
+#if VERSION == VER_US
     FntPrint("op disable\n");
 #endif
     if (resetAnims) {

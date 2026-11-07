@@ -8,7 +8,7 @@ u8 stage_placeholder_cen[] = {
 #include <gen/stage_placeholder_cen.h>
 };
 
-#if defined(VERSION_HD)
+#if VERSION < VER_JP10
 // most likely the cutscene data is mis-extracted
 u8 cutscene_cen_alucard[] = {
 #include <gen/D_80181F60.h>

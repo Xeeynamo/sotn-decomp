@@ -550,7 +550,7 @@ void func_us_801D68E0(Entity* self) {
     }
 
     ent = self->ext.et_caveTroll.ent9C;
-#if defined(VERSION_PSP) || defined(FIX_UB)
+#if TARGET == TARGET_PSP || defined(FIX_UB)
     // Non-PSX versions fix a null pointer here
     if (ent != NULL) {
 #else

@@ -138,7 +138,7 @@ Primitive* StainedGlassRecurseDepth(
         gte_ldv0(&points[index3]);
         gte_rtps();
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         gte_stsxy((long*)tempPrim + sizeof(uvPair) * 6);
 #else
         gte_stsxy((long*)&tempPrim->x3);
@@ -248,7 +248,7 @@ void EntityStainedGlass(Entity* self) {
             transVector.vx += self->posX.i.hi - 128;
             transVector.vy += self->posY.i.hi - 160;
             transVector.vz += FLT(0.25);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             SetRotMatrix(&mtx);
 #else
             gte_SetRotMatrix(&mtx);
@@ -304,7 +304,7 @@ void EntityStainedGlass(Entity* self) {
                 transVector.vx += self->posX.i.hi - 128;
                 transVector.vy += self->posY.i.hi - 160;
                 transVector.vz += 1024;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 SetRotMatrix(&mtx);
 #else
                 gte_SetRotMatrix(&mtx);
@@ -361,7 +361,7 @@ void EntityStainedGlass(Entity* self) {
     }
 }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #define SETROTMATRIX(x) SetRotMatrix(x)
 #else
 #define SETROTMATRIX(x) gte_SetRotMatrix(x)
@@ -372,7 +372,7 @@ void EntityStainedGlass(Entity* self) {
 // Renders the non-stained glass portion of the background
 void EntityStainedGlassBackground(Entity* self) {
 // psp wants this higher in the stack than psx
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     RECT rect2, rect1;
 #endif
 
@@ -382,7 +382,7 @@ void EntityStainedGlassBackground(Entity* self) {
     CVECTOR color;
 
 // psx wants this lower in the stack than psp and uses 4 temp vars
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
     // I'm not sure if RECTs are quite right
     RECT rect1, rect2;
     s32 tempRect2w, tempRect2x;
@@ -507,7 +507,7 @@ void EntityStainedGlassBackground(Entity* self) {
             if (idx == 0) {
                 gte_ldv0(&bg_pos_vector);
                 gte_rtps();
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 gte_stsxy((long*)&rect2.w);
                 tempX = (u16)LOW(rect2.w);
                 tempY = LOW(rect2.w) >> 16;
@@ -522,7 +522,7 @@ void EntityStainedGlassBackground(Entity* self) {
                 prim->x1 = prim->x3 = tempX;
                 prim->y0 = prim->y1 = tempY - 62;
                 prim->y2 = prim->y3 = tempY + 62;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 prim->drawMode = DRAW_COLORS;
 #endif
                 prim = prim->next;
@@ -555,7 +555,7 @@ void EntityStainedGlassBackground(Entity* self) {
             } else {
                 gte_ldv3(&bg_points_0, &bg_points_1, &bg_points_2);
                 gte_rtpt();
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 gte_stsxy3(&rect2.w, &rect2.x, &rect1.w);
                 if (rect1.h >= 0) {
 #else
@@ -567,7 +567,7 @@ void EntityStainedGlassBackground(Entity* self) {
 
 // psx uses temp variables here where psp does not and the ordering is a bit
 // different between the two
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     gte_stsxy((long*)&rect1.x);
                     midindex1 =
                         ((LOW(rect2.w) + LOW(rect2.x)) / 2) & 0xFFFF0000;

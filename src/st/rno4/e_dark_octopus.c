@@ -302,7 +302,7 @@ void func_us_801D58FC(Entity* self) {
         self->hitboxOffY = -5;
         self->nextPart = self - 1;
 
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
         break;
 #endif
 

@@ -60,7 +60,7 @@ void func_us_801C03E8(Entity* self) {
             self->step = 0x14;
         }
     } else {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if ((self->hitFlags) && (self->step != 10)) {
 #else
         if ((self->hitFlags) && (self->step == 2)) {
@@ -318,7 +318,7 @@ void func_us_801C03E8(Entity* self) {
             prim = prim->next;
         }
     }
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
     FntPrint("tama_step:%02x\n", self->step);
 #endif
 }
@@ -331,7 +331,7 @@ void EntityShaft(Entity* self) {
     FntPrint("I AM SHAFT\n");
     switch (self->step) {
     case 0:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         self->flags = FLAG_UNK_10000000 | FLAG_HAS_PRIMS;
 #else
         self->flags = FLAG_UNK_10000000;

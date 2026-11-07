@@ -8,7 +8,7 @@
 #include "objects.h"
 #include "sfx.h"
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #define E_ID(name) D_psp_E_##name
 #else
 #define E_ID(name) E_##name

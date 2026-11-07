@@ -4,7 +4,7 @@
 
 extern EInit D_us_80180A34;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(ID_34);
 #endif
 
@@ -76,7 +76,7 @@ void func_us_801BA290(Entity* self) {
     case 1:
 
         if (self->hitFlags && (g_pads[0].pressed & PAD_UP) &&
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             !(g_Player.status + 0xF0000000)) {
 #else
             (g_Player.status == PLAYER_STATUS_UNK10000000)) {
@@ -431,7 +431,7 @@ void func_us_801BA290(Entity* self) {
                 prim->x0 = prim->x2 = 0x50;
                 prim->x1 = prim->x3 = 0xB0;
                 prim->u0 = 0x60;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 prim->r0 = 0x40;
 #else
                 prim->r0 = 0x80;

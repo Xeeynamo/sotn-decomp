@@ -27,7 +27,7 @@ static TeleportCheck GetTeleportToOtherCastle(void) {
     // Check for X/Y boundaries in RTOP
     if (g_StageId == STAGE_RTOP) {
         if (abs((g_Tilemap.left << 8) + g_PlayerX - 8384) < 4 &&
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
             abs((g_Tilemap.top << 8) + g_PlayerY - 14407) < 4) {
 #else
             abs((g_Tilemap.top << 8) + g_PlayerY) - 14407 < 4) {
@@ -95,7 +95,7 @@ void RicInit(s16 initParam) {
     SpriteParts** spriteptr;
     s32* memset_ptr;
     s32 memset_len;
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
     Entity* g_CurrentEntity;
 #endif
 
@@ -169,7 +169,7 @@ void RicInit(s16 initParam) {
             g_CurrentEntity, FACTORY(BP_TELEPORT, 5), 0);
         RicSetInit(5);
     }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     // new to PSP: block input for half a second when the Prologue stage starts
     // or after loading a save. Not sure if a bugfix or QOL.
     D_pspeu_092D7A68 = 30;
@@ -413,14 +413,14 @@ void RicMain(void) {
     draw = &g_PlayerDraw[0];
     g_Player.unk4C = 0;
     g_Player.unk72 = func_80156DE4();
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
     FntPrint("pl_head_f:%02x\n", g_Player.unk72);
-#if defined(VERSION_HD)
+#if VERSION < VER_JP10
     FntPrint("run_disable_f:%02x\n", g_Player.unk7A);
 #endif
 #endif
 
-#if defined(FIX_UB) || defined(VERSION_PSP)
+#if TARGET == TARGET_PSP || defined(FIX_UB)
     damageEffects = 0;
 #endif
     for (i = 0; i < LEN(g_Player.timers); i++) {
@@ -502,7 +502,7 @@ void RicMain(void) {
         g_Player.padPressed = g_Player.padSim;
     } else {
         g_Player.padPressed = g_pads[0].pressed;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (D_pspeu_092D7A68 > 0) {
             D_pspeu_092D7A68--;
             g_Player.padPressed = 0;
@@ -523,7 +523,7 @@ void RicMain(void) {
                 return;
             }
             if (
-#if defined(VERSION_HD) || defined(VERSION_PSP)
+#if VERSION < VER_JP10 || TARGET == TARGET_PSP
                 !(g_Player.timers[PL_T_INVINCIBLE_SCENE] |
                   g_Player.timers[PL_T_INVINCIBLE]) &&
 #endif
@@ -532,11 +532,11 @@ void RicMain(void) {
                     playerStep = PLAYER.step;
                     playerStepS = PLAYER.step_s;
                     RicSetStep(PL_S_BOSS_GRAB);
-#if defined(VERSION_HD) || defined(VERSION_PSP)
+#if VERSION < VER_JP10 || TARGET == TARGET_PSP
                     goto check_input_combo;
 #endif
                 } else if (
-#if defined(VERSION_US)
+#if VERSION == VER_US
                     !(g_Player.timers[PL_T_INVINCIBLE_SCENE] |
                       g_Player.timers[PL_T_INVINCIBLE]) &&
 #endif
@@ -545,7 +545,7 @@ void RicMain(void) {
                     playerStepS = PLAYER.step_s;
                     damage.effects = PLAYER.hitParams & ~0x1F;
                     damage.damageKind = PLAYER.hitParams & 0x1F;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     if (g_InvincibleFlag) {
                         PLAYER.hitPoints = 0;
                     }
@@ -641,7 +641,7 @@ void RicMain(void) {
         break;
     }
     g_Player.unk08 = g_Player.status;
-#if defined(FIX_UB) || defined(VERSION_PSP)
+#if TARGET == TARGET_PSP || defined(FIX_UB)
     // uninitialized on PSX, it was a coincidence it worked
     newStatus = 0;
 #endif
@@ -673,7 +673,7 @@ void RicMain(void) {
         break;
     case PL_S_BOSS_GRAB:
         newStatus =
-#if defined(VERSION_US)
+#if VERSION == VER_US
             NO_AFTERIMAGE |
 #endif
             PLAYER_STATUS_UNK100000 | PLAYER_STATUS_UNK10000 |
@@ -760,7 +760,7 @@ void RicMain(void) {
         if (PLAYER.poseTimer < 0) {
             PLAYER.animCurFrame |= ANIM_FRAME_LOAD;
         }
-#if defined(VERSION_HD) || defined(VERSION_PSP)
+#if VERSION < VER_JP10 || TARGET == TARGET_PSP
         PLAYER.posX.val += PLAYER.velocityX;
         PLAYER.posY.val += PLAYER.velocityY;
         return;

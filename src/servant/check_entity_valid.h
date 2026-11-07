@@ -12,7 +12,7 @@ s32 CheckEntityValid(Entity* entity) {
         return 0;
     if (entity->hitPoints >= 0x7000)
         return 0;
-#ifndef VERSION_BETA
+#if VERSION >= VER_BETA_HD
     if (entity->hitPoints <= 0)
         return 0;
 #endif

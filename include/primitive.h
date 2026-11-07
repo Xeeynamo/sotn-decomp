@@ -48,7 +48,7 @@ typedef enum {
 
 typedef struct Primitive {
     /* 0x00 */ struct Primitive* next;
-#if defined(VERSION_PC) || defined(VERSION_PSP)
+#if TARGET == TARGET_PSP || defined(PLATFORM_PSYZ)
     u_long dummy;
 #endif
     /* 0x04 */ u8 r0;
@@ -108,7 +108,7 @@ SYNC_FIELD(POLY_GT4, Primitive, y3);
 // But it's an alternate use of the Primitive structure.
 typedef struct FakePrim {
     struct FakePrim* next;
-#if defined(VERSION_PC) || defined(VERSION_PSP)
+#if TARGET == TARGET_PSP || defined(PLATFORM_PSYZ)
     u_long dummy;
 #endif
     /* 0x04 */ u8 r0;
@@ -139,7 +139,7 @@ typedef struct FakePrim {
 // it this for now. That one use is in RicEntityCrashHydroStorm.
 typedef struct PrimLineG2 {
     struct PrimLineG2* next;
-#if defined(VERSION_PC) || defined(VERSION_PSP)
+#if TARGET == TARGET_PSP || defined(PLATFORM_PSYZ)
     u_long dummy;
 #endif
     /* 0x04 */ u8 r0;
@@ -169,7 +169,7 @@ typedef struct PrimLineG2 {
 
 typedef struct AxePrim {
     struct AxePrim* next;
-#if defined(VERSION_PC) || defined(VERSION_PSP)
+#if TARGET == TARGET_PSP || defined(PLATFORM_PSYZ)
     u_long dummy;
 #endif
     /* 0x04 */ u8 r0;
@@ -204,7 +204,7 @@ typedef struct AxePrim {
 // dai/e_corner_guard
 typedef struct EntranceCascadePrim {
     /* 0x00 */ struct EntranceCascadePrim* next;
-#if defined(VERSION_PC) || defined(VERSION_PSP)
+#if TARGET == TARGET_PSP || defined(PLATFORM_PSYZ)
     u_long dummy;
 #endif
     /* 0x04 */ s32 : 32;
@@ -234,7 +234,7 @@ typedef struct EntranceCascadePrim {
 
 typedef struct FrozenShadePrim {
     /* 0x00 */ struct FrozenShadePrim* next;
-#if defined(VERSION_PC) || defined(VERSION_PSP)
+#if TARGET == TARGET_PSP || defined(PLATFORM_PSYZ)
     u_long dummy;
 #endif
     /* 0x04 */ u8 r0;
@@ -273,7 +273,7 @@ typedef struct FrozenShadePrim {
 
 typedef struct NumericPrim {
     /* 0x00 */ struct NumericPrim* next;
-#if defined(VERSION_PC) || defined(VERSION_PSP)
+#if TARGET == TARGET_PSP || defined(PLATFORM_PSYZ)
     u_long dummy;
 #endif
     /* 0x04 */ u8 r0;
@@ -325,7 +325,7 @@ struct SubPrim {
 
 typedef struct Primitive2 {
     struct Primitive2* next;
-#if defined(VERSION_PC) || defined(VERSION_PSP)
+#if TARGET == TARGET_PSP || defined(PLATFORM_PSYZ)
     u_long dummy;
 #endif
     struct SubPrim prim[4];

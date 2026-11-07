@@ -279,7 +279,7 @@ void EntitySubwpnInContainer(Entity* self) {
         self->hitboxState = 0;
         // fallthrough
     case 1:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (g_PlayableCharacter == PLAYER_MARIA) {
             if (params >= 14 && params < 23) {
                 switch (params) {

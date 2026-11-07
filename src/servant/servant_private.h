@@ -3,15 +3,12 @@
 #define SERVANT_PRIVATE_H
 #include <servant.h>
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 #define STATIC static
-#else
-#define STATIC
-#endif
 
-#ifndef VERSION_PSP
 #define pauseAllowed g_PauseAllowed
 #else
+#define STATIC
 extern s32 D_psp_091CE578;
 #define pauseAllowed D_psp_091CE578
 #endif

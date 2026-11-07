@@ -1,25 +1,90 @@
-// `version.h` specifies several `VERSION` macros that can be used to
-// conditionally compile particular version of the game. By including
-// this file, you'll get:
+// `version.h` describes which game build is being compiled. By including this
+// file, you'll get:
 //
-// * `VERSION` - a macro that expands to a string literal version (e.g, `"us"`,
-//   `"hd"`, `"psp"`)
-// * `VERSION_TOKEN` - a macro that expands to a token representing the version
+// * `VERSION` - the build date of the game, as one of the `VER_*` constants.
+//   Builds are ordered by date, so `VERSION >= VER_JP11` selects JP 1.1 and
+//   every build that came after it.
+// * `REGION` - one of the `REGION_*` constants, for regional differences that
+//   are not a consequence of a later code revision.
+// * `TARGET` - one of the `TARGET_*` constants, for code that only exists on
+//   a specific platform the game was released on.
+// * `VERSION_TOKEN` - a macro that expands to a token representing the build
 //   (e.g `us`, `hd`, `psp`), useful for building symbol names
-// * One of `VERSION_US`, `VERSION_HD`, `VERSION_PSP`, or `VERSION_BETA`
+// * `VERSION_STR` - a string literalized version of `VERSION_TOKEN`
 // * `GEN_VERSION` - macro that can be used to build an `#include` path for
 //   generated files specific to the version
+//
+// Examples:
+//
+//     #if VERSION >= VER_JP11                      // JP 1.1 and later builds
+//     #if VERSION >= VER_US && VERSION < VER_JP12  // a range of builds
+//     #if VERSION == VER_USPROTO                   // a single build
+//     #if REGION == REGION_JP                      // regional difference
+//     #if TARGET == TARGET_PSP                     // PSP exclusive code
+//     #if IS_VER_INTL                              // US, EU and HK builds
 #ifndef VERSION_H
 #define VERSION_H
 
+// Build dates as YYYYMMDD. A day of 00 means the exact date is unknown.
+#define VER_BETA_TEK 19970000U /* PSP_GAME/USRDIR/res/ps/hdbin/tek.bin */
+#define VER_BETA_MAD 19970100U /* ST/MAD/MAD.bin */
+#define VER_BETA_HD 19970200U  /* PSP_GAME/USRDIR/res/ps/hdbin/dra.bin */
+#define VER_JP10 19970220U     /* http://redump.org/disc/4687/ */
+#define VER_JP11 19970306U     /* http://redump.org/disc/4128/ */
+#define VER_USPROTO 19970617U  /* Also known as E3 Version */
+#define VER_US 19970901U       /* http://redump.org/disc/3379/ */
+#define VER_EU 19970929U       /* http://redump.org/disc/1130/ */
+#define VER_HK 19971112U       /* http://redump.org/disc/63544/ */
+#define VER_JP12 19980122U     /* http://redump.org/disc/4684/ */
+#define VER_PSP 20080215U      /* http://redump.org/disc/4528/ */
+#define VER_NEXT 20270101U     /* Community patches from SOTN Decomp */
+
+#define REGION_JP 1
+#define REGION_US 2
+#define REGION_EU 3
+#define REGION_HK 4
+
+#define TARGET_PS1 1
+#define TARGET_PSP 2
+#define TARGET_SATURN 3
+#define TARGET_XBOX 4
+
 #if defined(_internal_version_us)
-#define VERSION_US
+#define VERSION VER_US
+#define REGION REGION_US
 #define VERSION_TOKEN us
 #elif defined(_internal_version_hd)
-#define VERSION_HD
+#define VERSION VER_BETA_HD
+#define REGION REGION_JP
 #define VERSION_TOKEN hd
+#elif defined(_internal_version_jp10)
+#define VERSION VER_JP10
+#define REGION REGION_JP
+#define VERSION_TOKEN jp10
+#elif defined(_internal_version_jp11)
+#define VERSION VER_JP11
+#define REGION REGION_JP
+#define VERSION_TOKEN jp11
+#elif defined(_internal_version_jp12)
+#define VERSION VER_JP12
+#define REGION REGION_JP
+#define VERSION_TOKEN jp12
+#elif defined(_internal_version_usproto)
+#define VERSION VER_USPROTO
+#define REGION REGION_US
+#define VERSION_TOKEN usproto
+#elif defined(_internal_version_eu)
+#define VERSION VER_EU
+#define REGION REGION_EU
+#define VERSION_TOKEN eu
+#elif defined(_internal_version_hk)
+#define VERSION VER_HK
+#define REGION REGION_HK
+#define VERSION_TOKEN hk
 #elif defined(_internal_version_pspeu)
-#define VERSION_PSP
+#define VERSION VER_PSP
+#define REGION REGION_JP
+#define TARGET TARGET_PSP
 // use this to flag code as only non-psp due to deadstripping.
 // will make it easier to restore stripped code if we ever work out a
 // solution for doing proper deadstripping like the original.
@@ -28,15 +93,21 @@
 #define NOP                                                                    \
     static asm nop_##line##() { nop }
 #elif defined(_internal_version_beta)
-#define VERSION_BETA
+#define VERSION VER_BETA_MAD
+#define REGION REGION_JP
 #define VERSION_TOKEN beta
 #else
 #warning "Version not specified. Falling back to the US version."
-#define VERSION_US
+#define VERSION VER_US
+#define REGION REGION_US
 #define VERSION_TOKEN us
 #endif
 
-#ifdef VERSION_PC
+// International retail releases: US, EU and HK. Doesn't include VER_USPROTO.
+// Valid only for PlayStation 1 builds. It is always false on PSP.
+#define IS_VER_INTL (VERSION >= VER_US && REGION != REGION_JP)
+
+#ifdef PLATFORM_PSYZ
 
 // Macro to fix Undefined Behaviors found across the original codebase.
 // These are community, unofficial fixes brought for making the code portable
@@ -64,17 +135,17 @@
 #define PATH_JOIN(a, b) a/b
 // clang-format on
 
-// `VERSION` is a string literalized version of `VERSION_TOKEN`
-#define VERSION CPP_STR(VERSION_TOKEN)
+// `VERSION_STR` is a string literalized version of `VERSION_TOKEN`
+#define VERSION_STR CPP_STR(VERSION_TOKEN)
 
 // `GEN_VERSION` creates an include path for the provided `file`
 // for version specific generated files.
 //
 // Example:
 //
-//     // expands to `#include "gen/us/blueprints.h"` when `VERSION==us`
-//     // expands to `#include "gen/hd/blueprints.h"` when `VERSION==hd`
-//     // expands to `#include "gen/psp/blueprints.h"` when `VERSION==psp`
+//     // expands to `#include "gen/us/blueprints.h"` when building us
+//     // expands to `#include "gen/hd/blueprints.h"` when building hd
+//     // expands to `#include "gen/psp/blueprints.h"` when building pspeu
 //     #include GEN_VERSION(blueprints.h)
 //
 // Arguments:

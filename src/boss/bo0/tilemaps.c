@@ -3,7 +3,7 @@
 
 #include <gen/bo0_tilemap_0.h>
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 #include <gen/bo0_tiledef_load.h>
 #include <gen/bo0_tiledef_save.h>
 #endif

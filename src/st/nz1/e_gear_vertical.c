@@ -24,7 +24,7 @@ void EntityGearVertical(Entity* self) {
 
     case 1:
         AnimateEntity(D_us_80180FC0, self);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         collision = GetPlayerCollisionWith(self, 8, 0x20, 5);
 #else
         if (g_Player.vram_flag & (TOUCHING_L_WALL | TOUCHING_R_WALL)) {
@@ -42,7 +42,7 @@ void EntityGearVertical(Entity* self) {
 
     case 2:
         AnimateEntity(&D_us_80180FC0, self);
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
         collision = 0;
 #endif
         self->ext.gearPuzzle.cooldownTimer--;
@@ -58,7 +58,7 @@ void EntityGearVertical(Entity* self) {
                 player->posY.i.hi += offsetY;
                 g_unkGraphicsStruct.shoveY.val += offsetY;
             }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             collision = GetPlayerCollisionWith(
                 self, 8, self->ext.gearPuzzle.cooldownTimer, 5);
 #else

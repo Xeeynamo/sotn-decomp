@@ -46,7 +46,7 @@ typedef enum {
     GFX_UNK_18,
     GFX_UNK_19,
     GFX_UNK_20,
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     GFX_UNK_21,
     GFX_UNK_22,
     GFX_UNK_23,

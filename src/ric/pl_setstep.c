@@ -42,7 +42,7 @@ void RicSetStand(s32 velocityX) {
     RicSetAnimation(ric_anim_stand);
 }
 
-#if defined(VERSION_HD) || defined(VERSION_PSP) || defined(VERSION_PC)
+#if VERSION < VER_JP10 || TARGET == TARGET_PSP || defined(PLATFORM_PSYZ)
 // only on US, this is moved after RicSetWalk
 void RicSetRun(void) {
     g_Player.unk44 = 0;
@@ -73,7 +73,7 @@ void RicSetWalk(s32 arg0) {
     PLAYER.velocityY = 0;
 }
 
-#if defined(VERSION_US) && !defined(VERSION_PC)
+#if VERSION == VER_US && !defined(PLATFORM_PSYZ)
 void RicSetRun(void) {
     if (g_Player.unk7A) {
         RicSetWalk(0);
@@ -331,7 +331,7 @@ bool RicDoCrash(void) {
     if (subWpnID == PL_W_HOLYWATER && g_Player.timers[PL_T_3]) {
         return 0;
     }
-#if defined(VERSION_US)
+#if VERSION == VER_US
     if (subWpnID == PL_W_STOPWATCH && g_unkGraphicsStruct.D_800973FC) {
         return 0;
     }

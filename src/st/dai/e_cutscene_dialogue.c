@@ -26,7 +26,7 @@ enum DialogueSubsteps {
 #define CUTSCENE_UNK4_TPAGE 16
 
 // e_cutscene/cutscene_script_text
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #define CUTSCENE_UNK1_NEXT_X 0
 #define CUTSCENE_UNK1_UNK17 2
 #else
@@ -35,7 +35,7 @@ enum DialogueSubsteps {
 #endif
 
 // e_cutscene/set_cutscene_script
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
 #define NUM_CUTSCENE_PRIM 8
 #else
 #define NUM_CUTSCENE_PRIM 7
@@ -43,7 +43,7 @@ enum DialogueSubsteps {
 
 #define CUTSCENE_TILEMAP_SCROLL
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern u8* cutscene_script; // Defined by st_init
 #else
 extern u8 cutscene_script[];
@@ -51,7 +51,7 @@ extern u8 cutscene_script[];
 
 extern PfnEntityUpdate EntityUpdates[]; // Defined by e_init
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern u_long cutscene_script_ptr; // Defined by st_init
 extern u_long gfx_portrait_alucard;
 extern u_long gfx_portrait_maria;
@@ -134,7 +134,7 @@ static u8 actor_name_len_ge[] = {7, 7, 5, 7, 5, 12, 4, 8, 8, 5};
 #endif
 // data
 static u8 u_coords[] = {0, 64, 0, 0};
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 static u8 v_coords[] = {0, 0, 0, 0};
 #endif
 
@@ -152,7 +152,7 @@ static s16 red_line_increment[] = {
     7,  72, 47, 27, 54, 34, 57, 20, 57, 29, 10, 53, 16, 27, 61, 23, 46, 11,
     73, 66, 61, 42, 1,  12, 27, 52, 65, 53, 8,  14, 77, 17, 52, 65, 41, 72};
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 static u8 actor_name_len_index[] = {
     NAME_IDX_ALUCARD, NAME_IDX_MARIA, NAME_IDX_SHAFT, NAME_IDX_SUCCUBUS,
     NAME_IDX_PAD,     NAME_IDX_PAD,   NAME_IDX_PAD,   NAME_IDX_PAD};
@@ -179,6 +179,10 @@ static bool dialogue_started;
 #include "../cutscene_actor_name.h"
 #include "../cutscene_script_box.h"
 #include "../cutscene_script_text.h"
+
+// pspeu needs this to not be static
+void SetCutsceneEvents(u8* ptr) {
+    g_Dialogue.eventCur = ptr;
 #else
 static const char* actor_names[] = {_S("Alucard"), _S("Maria")};
 
@@ -193,13 +197,6 @@ static bool dialogue_started;
 #include "../cutscene_script_text.h"
 #include "../cutscene_script_box.h"
 #include "../cutscene_actor_name.h"
-#endif
-
-#ifdef VERSION_PSP
-// pspeu needs this to not be static
-void SetCutsceneEvents(u8* ptr) {
-    g_Dialogue.eventCur = ptr;
-#else
 static void SetCutsceneEvents(u8* ptr) {
     g_Dialogue.eventCur = ptr + 0x100000;
 #endif
@@ -253,7 +250,7 @@ void EntityCutsceneDialogue(Entity* self) {
     RECT rect;
     s32 ptr;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     DisableAutoPowerOff();
 #endif
 
@@ -302,7 +299,7 @@ void EntityCutsceneDialogue(Entity* self) {
         nextChar = 0;
         // This is a big while loop which ends in the ifdef on line 639
         while (true) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             nextChar = *g_Dialogue.scriptCur++;
             endLoop = false;
             if (PadReadPSP() & PAD_START) {
@@ -335,7 +332,7 @@ void EntityCutsceneDialogue(Entity* self) {
                     }
                     // This is line number increment
                     g_Dialogue.nextCharY++;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     g_Dialogue.nextCharY &= CS_LINE_MAX;
 #else
                 if (g_Dialogue.nextCharY > CS_LINE_MAX) {
@@ -349,11 +346,11 @@ void EntityCutsceneDialogue(Entity* self) {
                             g_Dialogue.portraitAnimTimer = 0;
                             self->step_s = DIALOG_BOX_INIT;
                             self->step++;
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
                             return;
 #endif
                         }
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
                         continue;
 #endif
                     } else {
@@ -363,7 +360,7 @@ void EntityCutsceneDialogue(Entity* self) {
                     }
                     return;
                 case CSOP_SET_SPEED:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     *g_Dialogue.scriptCur++;
 #else
                 g_Dialogue.unk17 = *g_Dialogue.scriptCur++;
@@ -398,7 +395,7 @@ void EntityCutsceneDialogue(Entity* self) {
                     vCoord = v_coords[charWidth];
                     prim->clut = cluts[i];
                     prim->tpage = 144;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     prim->u0 = prim->u2 = uCoord;
                     prim->u1 = prim->u3 = uCoord + 47;
 #else
@@ -421,7 +418,7 @@ void EntityCutsceneDialogue(Entity* self) {
                     CutsceneUnk4();
                     prim->priority = 510;
                     prim->drawMode = DRAW_DEFAULT;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     DrawCutsceneActorName(
                         i, self, actor_names, actor_name_len_index,
                         actor_name_index, 4);
@@ -473,7 +470,7 @@ void EntityCutsceneDialogue(Entity* self) {
                 case CSOP_PLAY_SOUND:
                     if (skip_cutscene) {
 // psp and psx refuse to agree on this particular increment
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                         g_Dialogue.scriptCur += 2;
 #else
                     g_Dialogue.scriptCur++;
@@ -512,7 +509,7 @@ void EntityCutsceneDialogue(Entity* self) {
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     ptr += (u_long)cutscene_script_ptr;
 #endif
                     SetCutsceneEvents((u8*)ptr);
@@ -527,7 +524,7 @@ void EntityCutsceneDialogue(Entity* self) {
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     ptr += (u_long)cutscene_script_ptr;
 #else
                 ptr += 0x100000;
@@ -541,7 +538,7 @@ void EntityCutsceneDialogue(Entity* self) {
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     ptr += (u_long)cutscene_script_ptr;
                     g_Dialogue.scriptCur = (u8*)ptr;
 #else
@@ -556,7 +553,7 @@ void EntityCutsceneDialogue(Entity* self) {
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     ptr += (u_long)cutscene_script_ptr;
                     g_Dialogue.scriptCur = (u8*)ptr;
 #else
@@ -589,7 +586,7 @@ void EntityCutsceneDialogue(Entity* self) {
                         ptr |= (u_long)*g_Dialogue.scriptCur++;
                         ptr <<= 4;
                         ptr |= (u_long)*g_Dialogue.scriptCur++;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                         switch (ptr) {
                         case 0:
                             ptr = (u_long)&gfx_portrait_alucard;
@@ -660,7 +657,7 @@ void EntityCutsceneDialogue(Entity* self) {
                         continue;
                     }
                     g_Dialogue.nextCharTimer = g_Dialogue.unk17;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     endLoop = true;
                 } // This closes the CSOP switch for psp
                 if (endLoop) {
@@ -701,7 +698,7 @@ void EntityCutsceneDialogue(Entity* self) {
         rect.w = 2;
         rect.h = 8;
         vCoord = (g_Dialogue.nextCharY * 12) + 384;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         StoreImage(&rect, (u_long*)charBuffer1);
         for (i = 0; i < 32; i++) {
             // swaps the upper and lower 4 bits of each member
@@ -794,7 +791,7 @@ void EntityCutsceneDialogue(Entity* self) {
 #endif
         break;
     case DIALOGUE_LOAD_PORTRAIT:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         ptr = g_Dialogue.nextCharY;
         ptr = (ptr + 1) & CS_LINE_MAX;
         if (!self->step_s) {

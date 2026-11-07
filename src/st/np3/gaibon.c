@@ -3,7 +3,7 @@
 
 extern bool slograGaibonRetreat;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(GAIBON);
 extern s32 E_ID(GAIBON_LEG);
 extern s32 E_ID(GAIBON_SMALL_FIREBALL);

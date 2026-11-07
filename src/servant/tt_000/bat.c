@@ -13,7 +13,7 @@ static FamiliarStats s_BatStats;
 static Point16 s_BatPathingPoints[4][16];
 static s32 s_IsServantDestroyed;
 static s32 s_LastTargetedEntityIndex;
-#ifdef VERSION_HD
+#if VERSION < VER_JP10
 static s32 _unused[26];
 #endif
 

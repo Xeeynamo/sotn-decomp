@@ -1276,7 +1276,7 @@ s16 D_us_8018192C[36][10] = {
     },
 };
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern u8** doppleganger_sprites;
 extern u8** bat_form_sprites;
 #else
@@ -1286,7 +1286,7 @@ extern u8** bat_form_sprites[];
 s32 D_us_80181BFC = 0;
 
 // player turns white for some sort of status effect
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5/unk_4907C", EntityDopplegangerBlinkWhite);
 #else
 void EntityDopplegangerBlinkWhite(Entity* self) {
@@ -1921,7 +1921,7 @@ s16 D_us_80181C00[23][5] = {
 
 };
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5/unk_4907C", EntityDopplegangerOutline);
 #else
 void EntityDopplegangerOutline(Entity* self) {
@@ -2362,7 +2362,7 @@ unkStr_8011E4BC* D_us_80181D98[] = {
 extern s32 D_us_801D36E8[32];
 extern s32 D_us_801D3768[32];
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5/unk_4907C", func_us_801CC788);
 #else
 void func_us_801CC788(Entity* self) {
@@ -2850,7 +2850,7 @@ Point16* D_us_80181E84[] = {
     &D_us_80181E7C, &D_us_80181E70, &D_us_80181E80, &D_us_80181E54,
 };
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5/unk_4907C", EntityHitByIce);
 #else
 void EntityHitByIce(Entity* self) {
@@ -3113,7 +3113,7 @@ static Primitive* func_80121F58(
         if (DOPPLEGANGER.animSet == 0xF) {
             arg2->tpage = 0x118;
         } else {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             arg2->tpage = 0x18;
 #else
             arg2->tpage = 0x10;
@@ -3173,7 +3173,7 @@ s32 D_us_801D367C;
 STATIC_PAD_BSS(0x68);
 
 // spawns mist (player transform)
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5/unk_4907C", EntityMist);
 #else
 void EntityMist(Entity* self) {
@@ -3856,6 +3856,6 @@ void EntityDopplegangerDissolves(Entity* self) {
     func_us_801C4954(1, 1);
 }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 u_long D_us_801D37EC[0x200];
 #endif

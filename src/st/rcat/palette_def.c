@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rcat.h"
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 u16 pal_02F[] = {
 #include <gen/pal_02F.h>
 };

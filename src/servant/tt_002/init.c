@@ -37,7 +37,7 @@ ServantDesc faerie_ServantDesc = {
     UpdateSubEntityUseItem,
 };
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 void func_092EF290(void) {
     memcpy((u8*)&g_ServantDesc, (u8*)&faerie_ServantDesc, sizeof(ServantDesc));
 }

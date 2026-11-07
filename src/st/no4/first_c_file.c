@@ -1,16 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no4.h"
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(SKELETON_APE);
 extern s32 E_ID(SKELETON_APE_BARREL);
 extern s32 E_ID(ID_5C);
 extern s32 E_ID(ID_54);
 extern s32 E_ID(ID_27);
 extern s32 E_ID(ID_26);
-#endif
 
-#ifdef VERSION_PSP
 void* func_pspeu_0923D4A0(
     s32 idx, void* en, void* fr, void* sp, void* ge, void* it) {
     switch (g_UserLanguage) {
@@ -142,7 +140,7 @@ void EntityFloatingIcePlatform(Entity* self) {
     prevPosY = self->posY.i.hi;
     self->posY.i.hi = self->ext.et_801C4980.posY - g_Tilemap.scrollY.i.hi +
                       self->ext.et_801C4980.timer;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     collision = GetPlayerCollisionWith(self, hitboxPtr[0], hitboxPtr[1], 4);
 #else
     collision = GetPlayerCollisionWith(self, *hitboxPtr++, *hitboxPtr, 4);
@@ -474,7 +472,7 @@ static s16 water_slow_zones[] = {
 
 #include "../water_slow_zone.h"
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 static char* D_us_80181644;
 
 static char D_pspeu_0929D7F0[] =
@@ -487,7 +485,7 @@ static char D_pspeu_0929D870[] =
     "\xB4\x24" _SE("Une chose est apparue\001près du pont en bois.");
 static char D_pspeu_0929D8A0[] =
     "\xB4\x24" _SE("Etwas ist bei der\001Holzbrücke erschienen.");
-#elif defined(VERSION_PC) // source is UTF-8, not Shift-JIS
+#elif defined(PLATFORM_PSYZ) // source is UTF-8, not Shift-JIS
 static char D_us_80181644[] =
     "\xB8\x1ESomething appeared near\001to the wooden bridge\x81\x44";
 #else
@@ -539,7 +537,7 @@ void func_us_801C5628(Entity* self) {
         }
     }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     D_us_80181644 = func_pspeu_0923D4A0(
         0, D_pspeu_0929D7F0, D_pspeu_0929D870, D_pspeu_0929D820,
         D_pspeu_0929D8A0, D_pspeu_0929D848);

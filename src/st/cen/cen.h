@@ -141,7 +141,7 @@ extern ObjInit D_8018125C[];
 
 #include "../../maria/maria_common.h"
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 enum MarPalette {
     /* 0x812E */ PAL_UNK_812E = 0x812E,
     /* 0x812F */ PAL_UNK_812F,

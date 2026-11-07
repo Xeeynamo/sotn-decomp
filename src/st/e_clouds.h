@@ -73,7 +73,7 @@ void EntityClouds(Entity* self) {
     Primitive* prim;
     Primitive* primTwo;
     MedusaCloudsUVal* uVals;
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
     s32 i;
     u8* var_s4;
     s32 var_s3;

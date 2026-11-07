@@ -510,7 +510,7 @@ s32 func_801ACEC0(void) {
 
 void func_801ACF7C(void) {
     func_801B1ED0();
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
     func_801B25D4("…選択決定取消入力未初期化確認", 0);
     func_801B25D4("はいえ不良", 1);
 #endif

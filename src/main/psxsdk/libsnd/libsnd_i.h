@@ -170,7 +170,7 @@ struct SeqStruct {
     s16 padaa;
 };
 
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
 extern struct SeqStruct* _ss_score[34];
 #else
 extern struct SeqStruct* _ss_score[32];

@@ -626,7 +626,7 @@ void EntityLesserDemonFireball(Entity* self) {
         prim->v0 = prim->v1 = 0x40;
         prim->v2 = prim->v3 = 0x5F;
         prim->x0 = self->posX.i.hi;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         prim->x3 = prim->x0;
 #else
         prim->x3 = uninitializedPrim->x0;
@@ -1022,7 +1022,7 @@ void EntityLesserDemon(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitLesserDemon);
-#ifdef VERSION_US
+#if VERSION == VER_US
         self->flags |= FLAG_UNK_02000000;
 #endif
         self->zPriority -= 2;

@@ -10,7 +10,7 @@
 #include <gen/bo3_tilemap_6.h>
 #include <gen/bo3_tilemap_7.h>
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 #include <gen/bo3_tiledef_load.h>
 #include <gen/bo3_tiledef_save.h>
 #endif

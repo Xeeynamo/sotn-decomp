@@ -60,7 +60,7 @@ void LoadGfxAsync(s32 gfxId) {
     if (gfxId & ANIMSET_OVL_FLAG) {
         gfxBank = g_api.o.gfxBanks[gfxId & 0x7FFF];
     } else {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         GfxBank** g_GfxSharedBank =
             GetLang(D_psp_0918BBD0, D_psp_0918BC30, D_psp_0918BBE8,
                     D_psp_0918BC18, D_psp_0918BC00);
@@ -85,7 +85,7 @@ void LoadGfxAsync(s32 gfxId) {
     }
 }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 s32 func_psp_091040A0(GfxBank* gfxBank) {
     GfxLoad* ptr;
     s32 i;
@@ -329,7 +329,7 @@ void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index) {
             g_Clut[1][index * COLORS_PER_PAL + i + 0xD00] =
                 g_PalEquipIcon[palette * 0x10 + i];
         }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         x = index & 0xF;
         y = index / 16;
         if (palette < PAL_ALUCARD) {

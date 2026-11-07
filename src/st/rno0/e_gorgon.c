@@ -32,7 +32,7 @@ static AnimateEntityFrame anim_snortpuff[] = {
     {4, 31}, {5, 32}, {4, 33}, {4, 34}, POSE_END};
 
 // This could be a file split issue
-#ifdef VERSION_US
+#if VERSION == VER_US
 static s32 fakepad = 0;
 #endif
 

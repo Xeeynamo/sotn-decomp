@@ -24,7 +24,7 @@ static s16 g_eBlueDoorTiles[][8] = {
     {0x597, 0x597, 0x597, 0x597, 0x000, 0x000, 0x000, 0x000},
 };
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 static char sealed_door_ENG[] = "\x98\x10Magically sealed\x81\x44";
 static char sealed_door_ES[] = "\x98\x10Sellado m\xCCgicamente.";
 static char sealed_door_IT[] = "\xA8\x10Sigillato magicamente.";
@@ -186,7 +186,7 @@ void EntitySealedDoor(Entity* self) {
                     break;
                 }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 sealed_door_label =
                     GetLang(sealed_door_ENG, sealed_door_FR, sealed_door_ES,
                             sealed_door_DE, sealed_door_IT);

@@ -124,26 +124,32 @@ void DrawEntitiesHitbox(s32 drawMode) {
     }
 }
 
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
 u16 g_CharBuffer[0x42]; // needs  more space on PC
 #else
 u16 g_CharBuffer[0x30];
 #endif
 
 u16 g_SjisPages[] = {
-#ifndef VERSION_US
+#if !IS_VER_INTL
     '踪',   '眷', '翔', '彷', '徨', '苺', '獰', '賤', '贄',
 #endif
 
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
     0x9F54, // use raw Shift-JIS value for the copyright symbol
 #else
-    '鬱', // last one is the copyright symbol
+    '鬱', // copyright symbol
+#endif
+#if (VERSION >= VER_JP11 && VERSION < VER_US) || VERSION == VER_JP12
+    '憑',
+#endif
+#if VERSION == VER_JP12
+    '顰',
 #endif
 };
 
 u8 g_CustomGlyphs[][30] = {
-#ifndef VERSION_US
+#if !IS_VER_INTL
     {
         0x00, 0x20, // □□□□□□□□□□■□□□□□
         0x7C, 0x20, // □■■■■■□□□□■□□□□□
@@ -315,6 +321,44 @@ u8 g_CustomGlyphs[][30] = {
         0x18, 0x30, // □□□■■□□□□□■■□□□□
         0x07, 0xC0, // □□□□□■■■■■□□□□□□
     },
+#if (VERSION >= VER_JP11 && VERSION < VER_US) || VERSION == VER_JP12
+    {
+        0x00, 0x00, // □□□□□□□□□□□□□□□□
+        0x47, 0xFC, // □■□□□■■■■■■■■■□□
+        0x24, 0x40, // □□■□□■□□□■□□□□□□
+        0x07, 0xF8, // □□□□□■■■■■■■■□□□
+        0x04, 0x40, // □□□□□■□□□■□□□□□□
+        0x07, 0xF8, // □□□□□■■■■■■■■□□□
+        0x14, 0x40, // □□□■□■□□□■□□□□□□
+        0x27, 0xFC, // □□■□□■■■■■■■■■□□
+        0x40, 0x04, // □■□□□□□□□□□□□■□□
+        0x85, 0x54, // ■□□□□■□■□■□■□■□□
+        0x09, 0x44, // □□□□■□□■□■□□□■□□
+        0x01, 0x18, // □□□□□□□■□□□■■□□□
+        0x48, 0x84, // □■□□■□□□■□□□□■□□
+        0x48, 0x12, // □■□□■□□□□□□■□□■□
+        0x87, 0xF2, // ■□□□□■■■■■■■□□■□
+    },
+#endif
+#if VERSION == VER_JP12
+    {
+        0x00, 0x00, // □□□□□□□□□□□□□□□□
+        0x40, 0x00, // □■□□□□□□□□□□□□□□
+        0x20, 0x00, // □□■□□□□□□□□□□□□□
+        0x10, 0x00, // □□□■□□□□□□□□□□□□
+        0x08, 0x00, // □□□□■□□□□□□□□□□□
+        0x04, 0x00, // □□□□□■□□□□□□□□□□
+        0x02, 0x00, // □□□□□□■□□□□□□□□□
+        0x01, 0x08, // □□□□□□□■□□□□■□□□
+        0x00, 0x88, // □□□□□□□□■□□□■□□□
+        0x00, 0x48, // □□□□□□□□□■□□■□□□
+        0x00, 0x28, // □□□□□□□□□□■□■□□□
+        0x00, 0x18, // □□□□□□□□□□□■■□□□
+        0x01, 0xF8, // □□□□□□□■■■■■■□□□
+        0x00, 0x00, // □□□□□□□□□□□□□□□□
+        0x00, 0x00, // □□□□□□□□□□□□□□□□
+    },
+#endif
 };
 // LUT of ceil(index / 2)
 u16 D_800AC934[] = {0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8};

@@ -89,7 +89,7 @@ extern Entity g_Entities_224;
 void EntityBreakableWallDebris(Entity* self) {
     Collider collider;
     Entity* debris;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     s32 collX;
     s32 collY;
 #endif
@@ -110,7 +110,7 @@ void EntityBreakableWallDebris(Entity* self) {
         /* fall through */
     case 1:
         MoveEntity();
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         self->rotate += ROT(2.8125);
         if (self->params) {
             self->rotate += ROT(2.8125);
@@ -125,7 +125,7 @@ void EntityBreakableWallDebris(Entity* self) {
         }
 #endif
         self->velocityY += FIX(0.125);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         collX = self->posX.i.hi;
         collY = self->posY.i.hi + 6;
         g_api.CheckCollision(collX, collY, &collider, 0);
@@ -134,7 +134,7 @@ void EntityBreakableWallDebris(Entity* self) {
             self->posX.i.hi, self->posY.i.hi + 6, &collider, 0);
 #endif
         if (collider.effects & EFFECT_SOLID) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             self->posY.i.hi += collider.unk18;
             if (self->velocityY < FIX(0.5)) {
                 debris = AllocEntity(&g_Entities[224], &g_Entities[256]);

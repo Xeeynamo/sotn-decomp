@@ -2,7 +2,7 @@
 #include "rchi.h"
 
 // Japanese stage name graphics, unused
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 u8 gfx_stage_name_jp_sm[] = {
 #include "gen/gfx_stage_name_jp_sm.h"
 };

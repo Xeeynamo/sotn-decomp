@@ -589,7 +589,7 @@ void TT_006_ServantInit(InitializeMode mode) {
     entity->params = 0;
 
     if (mode == MENU_SWITCH_SERVANT) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if ((D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_20) ||
             (D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_40)) {
 #else
@@ -1076,7 +1076,7 @@ void UpdateServantPressSwitch(Entity* self) {
 
     case 2:
         sfxFlag = ((s16*)sfxEvent)[0];
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
         pauseAllowed = false;
 #endif
         self->step++;
@@ -1085,7 +1085,7 @@ void UpdateServantPressSwitch(Entity* self) {
         if (sfxFlag < 0) {
             if (g_PlaySfxStep > 4) {
                 SetAnimationFrame(self, sfxEvent->animIndex);
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
                 pauseAllowed = true;
 #endif
                 self->step++;
@@ -1118,7 +1118,7 @@ void UpdateServantPressSwitch(Entity* self) {
     }
 
     if (s_CurrentSwitch && !s_CurrentSwitch->entityId) {
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
         pauseAllowed = true;
 #endif
         self->entityId = NOSEDEVIL_MODE_DEFAULT_UPDATE;

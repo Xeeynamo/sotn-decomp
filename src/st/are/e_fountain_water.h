@@ -27,7 +27,7 @@ void EntityFountainWater(Entity* self) {
 #ifdef INVERTED_STAGE
         prim->x0 = prim->x2 = 0x100 - (0x4F - g_Tilemap.scrollX.i.hi);
         prim->x1 = prim->x3 = prim->x0 - 0x81;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         prim->y0 = prim->y1 = 0x100 - (0x8C - g_Tilemap.scrollY.i.hi);
 #else
         prim->y0 = prim->y1 = 0xF7 - (0x8C - g_Tilemap.scrollY.i.hi);

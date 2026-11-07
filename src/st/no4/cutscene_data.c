@@ -2,7 +2,7 @@
 #include "no4.h"
 #include <cutscene.h>
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 // Played when the ferryman takes the player right across the river
 u8 cutscene_data_ferryman_right_it[] = {
 #include <gen/cutscene_data_ferryman_right_it.h>
@@ -44,7 +44,7 @@ u8 cutscene_data_ferryman_left_ge[] = {
 u8 cutscene_data_ferryman_left_en[] = {
 #include <gen/cutscene_data_ferryman_left_en.h>
 };
-#elif defined(VERSION_PC)
+#elif defined(PLATFORM_PSYZ)
 u8 cutscene_data_ferryman_left[] = {
 #include <gen/cutscene_data_ferryman_left_psx.h>
 };

@@ -3,7 +3,7 @@
 #include <scratchpad.h>
 #include <sfx.h>
 
-#ifndef STAGE_IS_TEK
+#if VERSION >= VER_BETA_MAD
 static u16 g_testCollEnemyLookup[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x2B, 0x00, 0x00, 0x5B, 0x00, 0x50,
     0x00, 0x29, 0x33, 0x33, 0x49, 0x00, 0x00, 0x00, 0x4E, 0x00, 0x48, 0x36,
@@ -48,7 +48,7 @@ static u16 g_testCollElementLookup[] = {
     ELEMENT_STONE, ELEMENT_CURSE,   ELEMENT_POISON, ELEMENT_WATER, ELEMENT_CUT,
 };
 
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
 static u8 g_testColliFrames[] = {2, 4, 3, 5, 6, 7, 8, 0, 2, 1};
 #else
 static u8 g_testColliFrames[] = {2, 4, 3, 5, 6, 7, 8, 8, 2, 1};
@@ -74,7 +74,7 @@ static u16 g_testCollPrizeTable[] = {
     ITEMDROP_LARGE_HEART, ITEMDROP_LARGE_HEART,
 };
 
-#ifndef STAGE_IS_TEK
+#if VERSION >= VER_BETA_MAD
 // See the notes about g_jewelSwordDropTable in src/st/collision.h
 // Note that while the thresholds are the same, the item IDs are not
 
@@ -96,7 +96,7 @@ static u16 g_eDamageDisplayClut[] = {
     PAL_UNK_1B4, PAL_UNK_1B5, PAL_UNK_1B0, PAL_UNK_1B1,
 };
 
-// The beta version used by MAD and by the even older TEK (STAGE_IS_TEK).
+// The beta version used by MAD and by the even older TEK.
 // Slightly different to the retail one in collision.h.
 void HitDetection(void) {
     Entity* otherEntity;
@@ -204,7 +204,7 @@ void HitDetection(void) {
                                 // iterEnt could be any entity?
                                 iterEnt->unkB8 = entity;
                                 // reminder: iterEnt1->hitboxState
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
                                 if (*spHitboxState & 8) {
 #else
                                 if (miscVar1 & 8) {
@@ -215,14 +215,14 @@ void HitDetection(void) {
                                 }
                                 if ((i == 3) &&
                                     (entity->flags & FLAG_UNK_8000)) {
-#ifndef STAGE_IS_TEK
+#if VERSION >= VER_BETA_MAD
                                     g_api.PlaySfx(SFX_METAL_CLANG_E);
 #endif
                                     iterEnt->hitFlags = 2;
                                 }
                                 if ((i == 4) &&
                                     (entity->flags & FLAG_UNK_4000)) {
-#ifndef STAGE_IS_TEK
+#if VERSION >= VER_BETA_MAD
                                     g_api.PlaySfx(SFX_METAL_CLANG_E);
 #endif
                                     iterEnt->hitFlags = 2;
@@ -266,7 +266,7 @@ void HitDetection(void) {
                     if (hitboxCheck2 <= hitboxCheck1) {
                         if (entity->attack) {
                             iterEnt->unkB8 = entity;
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
                             if (*spHitboxState & 8) {
 #else
                             if (miscVar1 & 8) {
@@ -298,7 +298,7 @@ void HitDetection(void) {
         if ((entityHit->flags & FLAG_DEAD) || !miscVar2) {
             continue;
         }
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
         if ((g_Status.relics[RELIC_FAERIE_SCROLL] & 2) &&
             (entityHit->flags & FLAG_NOT_AN_ENEMY) == 0) {
             if (g_unkGraphicsStruct.BottomCornerTextTimer != 0) {
@@ -376,7 +376,7 @@ void HitDetection(void) {
             }
             if (iterEnt->attack && entityHit->hitPoints != 0x7FFF) {
                 miscVar1 = g_api.DealDamage(entity, iterEnt);
-#ifndef STAGE_IS_TEK
+#if VERSION >= VER_BETA_MAD
                 if (iterEnt->hitboxState == 4) {
                     miscVar1 = 0;
                 }
@@ -412,7 +412,7 @@ void HitDetection(void) {
                             }
                         }
                     }
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
                     else {
                         miscVar2 = 0;
                     }
@@ -509,7 +509,7 @@ void HitDetection(void) {
                 if (otherEntity != NULL) {
                     // Determine which jewel to randomly drop from the
                     // Jewel Sword
-#ifndef STAGE_IS_TEK
+#if VERSION >= VER_BETA_MAD
                     if (hitboxCheck2 == 5) {
                         dropTable = g_jewelSwordDropTable;
                         miscVar3 = rand() & 0xFFF;
@@ -526,7 +526,7 @@ void HitDetection(void) {
                         miscVar3 = rand() & 0xFF;
                         if (miscVar3 < enemyDef->rareItemDropRate) {
                             miscVar3 = enemyDef->rareItemId;
-#ifndef STAGE_IS_TEK
+#if VERSION >= VER_BETA_MAD
                             miscVar1 =
                                 g_testCollEnemyLookup[entityHit->enemyId];
                             if (miscVar1) {
@@ -582,7 +582,7 @@ void HitDetection(void) {
             entityHit->hitFlags |= 0x10;
         }
         if ((entityHit->flags & FLAG_UNK_10) && iterEnt->attack) {
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
             g_api.PlaySfx(SFX_METAL_CLANG_E);
 #else
             if (iterEnt->hitEffect & 0x80) {

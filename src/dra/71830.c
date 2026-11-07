@@ -25,7 +25,7 @@ void func_8011197C(void) {
     PLAYER.hitParams = 0;
 }
 
-#ifndef VERSION_HD
+#if VERSION >= VER_JP11
 extern s32 D_80137FDC;
 #endif
 int func_801119C4(void) {
@@ -78,7 +78,7 @@ int func_801119C4(void) {
             PLAYER.posY.val += FIX(16.0f);
         }
     }
-#ifndef VERSION_HD
+#if VERSION >= VER_JP11
     if (g_Player.padTapped & PAD_TRIANGLE) {
         if (D_80137FDC & 1) {
             PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
@@ -334,7 +334,12 @@ void PlayerStepStand(void) {
         }
         break;
     case Player_Stand_ChairSit:
+#if VERSION == VER_JP12
+        if (PLAYER.ext.player.anim == 0xF2 && g_Servant != FAM_ACTIVE_YOUSEI &&
+            --g_AlucardChairSleepTimer == 0) {
+#else
         if (PLAYER.ext.player.anim == 0xF2 && --g_AlucardChairSleepTimer == 0) {
+#endif
             if (g_StageId == STAGE_NO1) {
                 PlaySfx(SFX_ALU_ZZZ_SNORE);
             }
@@ -1193,7 +1198,7 @@ void func_80113F7C(void) {
     s16 playerHitboxOffX;
     s16 posX;
 
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
     if (other == NULL) {
         return;
     }
@@ -2035,7 +2040,7 @@ void PlayerStepTeleport(void) {
 
     PLAYER.velocityX = PLAYER.velocityY = 0;
     g_Player.padSim = 0;
-#if defined(VERSION_PSP)
+#if VERSION >= VER_EU
     g_pads[0].pressed = g_pads[0].tapped = 0;
 #endif
     g_Player.demo_timer = 4;
@@ -2049,7 +2054,7 @@ void PlayerStepTeleport(void) {
                 PLAYER.poseTimer = 2;
             }
         }
-#if !defined(VERSION_PSP)
+#if VERSION < VER_EU
         if (PLAYER.poseTimer < 0) {
             func_8010E570(0);
         }
@@ -2072,7 +2077,7 @@ void PlayerStepTeleport(void) {
                 PLAYER.poseTimer = 2;
             }
         }
-#if !defined(VERSION_PSP)
+#if VERSION < VER_EU
         if (PLAYER.poseTimer < 0) {
             func_8010E570(0);
         }
@@ -2095,7 +2100,7 @@ void PlayerStepTeleport(void) {
                 PLAYER.poseTimer = 2;
             }
         }
-#if !defined(VERSION_PSP)
+#if VERSION < VER_EU
         if (PLAYER.poseTimer < 0) {
             func_8010E570(0);
         }
@@ -2516,7 +2521,7 @@ void ControlBatForm(void) {
     PLAYER.drawFlags = ENTITY_ROTATE;
     PLAYER.rotPivotY = 0;
 
-#if defined(VERSION_HD)
+#if VERSION < VER_JP11
     if (PLAYER.step_s != 3) {
 #else
     // Just to make the curly brackets match at the end of this block
@@ -2532,7 +2537,7 @@ void ControlBatForm(void) {
                 g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x5c), 0);
             CreateEntFactoryFromEntity(g_CurrentEntity, BP_67, 0);
             g_WingSmashTimer = 0x40;
-#if !defined(VERSION_HD)
+#if VERSION >= VER_JP11
             g_WingSmashButtonCounter = 0;
 #endif
         } else if ((g_Player.padTapped & PAD_TRIANGLE) &&
@@ -2566,7 +2571,7 @@ void ControlBatForm(void) {
             if (g_Player.unk66 == 0) {
                 newEntity = CreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x20), 0);
-#if !defined(VERSION_HD)
+#if VERSION >= VER_US
                 if (newEntity == NULL) {
                     return;
                 }
@@ -3025,7 +3030,7 @@ bool MistFormFinished(void) {
     if (PLAYER.step_s == 0) {
         return 0;
     }
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
     if (g_unkGraphicsStruct.D_8009744C != 0 || g_Player.padTapped & BTN_MIST ||
 #else
     if (g_SecondaryMistTimer != 0) {
@@ -3109,7 +3114,7 @@ void ControlMistForm(void) {
             func_800EA5E4(0x11FU);
             CreateEntFactoryFromEntity(g_CurrentEntity, BP_83, 0);
         }
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
         g_SecondaryMistTimer = 16;
 #endif
         // Note that this means Power of Mist doesn't make mist infinite!

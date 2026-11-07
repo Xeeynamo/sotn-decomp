@@ -37,7 +37,7 @@ void func_800EB758(
         p->y2 = p->y3 = dy + py;
     }
     if (flags & ENTITY_ROTATE) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (e->rotate == 0x800) {
             dx2 = p->x1 - p->x0;
             dy2 = p->y2 - p->y0;
@@ -155,7 +155,7 @@ void RenderEntities(void) {
     u8 uvBottom;
     POLY_GT4* poly;
     EntitiesRenderer* r;
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
     POLY_GT4 _poly;
     poly = &_poly;
     setPolyGT4(poly);
@@ -531,7 +531,7 @@ void RenderEntities(void) {
                     if (animFrameFlags & 0x100) {
                         polyX += 4;
                     }
-#ifdef VERSION_US
+#if VERSION >= VER_USPROTO && TARGET != TARGET_PSP
                     setSemiTrans(poly, true);
                     poly->tpage += 0x20;
 #endif
@@ -630,7 +630,7 @@ void InitRenderer(void) {
     }
 }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 
 void RenderEntitiesPSP(void) {
     s16 polyX;
@@ -650,7 +650,7 @@ void RenderEntitiesPSP(void) {
     u8 uvBottom;
     POLY_GT4* poly;
     EntitiesRenderer* r;
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
     POLY_GT4 _poly;
     poly = &_poly;
     setPolyGT4(poly);

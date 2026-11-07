@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no0.h"
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(ID_29);
 #endif
 
@@ -130,7 +130,7 @@ void func_us_801C2184(Entity* self) {
         if (var_s6) {
             dx = self->posX.i.hi - player->posX.i.hi;
             if (g_pads[0].pressed & PAD_DOWN && abs(dx) < 8) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 if (F(player->velocityX).i.hi != 0) {
                     break;
                 }
@@ -138,7 +138,7 @@ void func_us_801C2184(Entity* self) {
                 g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
                 g_Player.demo_timer = 2;
                 g_Player.padSim = PAD_DOWN;
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
                 player->velocityX = 0;
                 player->velocityY = 0;
 #endif

@@ -359,7 +359,7 @@ static SVECTOR bg_rot_vector = {0, 0, 0}; // bss on pspeu
 // Big mess of a function, these are probably not rects. Someone should
 // heavily rework the function to make it operate properly.
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #define LONG1 &rect2.w
 #define LONG2 &rect3.w
 #define LONG3 &rect3.x
@@ -377,7 +377,7 @@ static SVECTOR bg_rot_vector = {0, 0, 0}; // bss on pspeu
 
 void EntityStainedGlassBackground(Entity* self) {
 // psp wants this higher in the stack than psx
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     RECT rect3, rect2, rect1;
 #endif
     long unused;
@@ -387,7 +387,7 @@ void EntityStainedGlassBackground(Entity* self) {
     CVECTOR color;
 
 // psx wants this lower in the stack than psp and uses 4 temp vars
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
     // I'm not sure if RECTs are quite right
     RECT rect1, rect2, rect3;
     s32 tempRect2w, tempRect2x;
@@ -515,7 +515,7 @@ void EntityStainedGlassBackground(Entity* self) {
 
                 RotTransPers(
                     &bg_pos_vector, (long*)LONG1, (long*)LONG2, (long*)LONG3);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 tempX = (u16)LOW(rect2.w);
                 tempY = LOW(rect2.w) >> 16;
 #else
@@ -529,7 +529,7 @@ void EntityStainedGlassBackground(Entity* self) {
                 prim->x1 = prim->x3 = tempX;
                 prim->y0 = prim->y1 = tempY + 62;
                 prim->y2 = prim->y3 = tempY - 62;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 prim->drawMode = DRAW_COLORS;
 #endif
                 prim = prim->next;
@@ -564,7 +564,7 @@ void EntityStainedGlassBackground(Entity* self) {
                     &bg_points_0, &bg_points_1, &bg_points_2, &bg_points_3,
                     (long*)LONG1, (long*)LONG4, (long*)LONG5, (long*)LONG6,
                     (long*)LONG2, (long*)LONG3);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 if (rect1.h <= 0xF0) {
 #else
                 if (rect3.y <= 0xF0) {
@@ -572,7 +572,7 @@ void EntityStainedGlassBackground(Entity* self) {
 
 // psx uses temp variables here where psp does not and the ordering is a bit
 // different between the two
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     midindex1 =
                         ((LOW(rect2.w) + LOW(rect2.x)) / 2) & 0xFFFF0000;
                     midindex1 |= (rect2.w + rect2.x) >> 1;

@@ -36,12 +36,12 @@ static SVECTOR* D_80182568[] = {
     &D_80182558, &D_80182540, &D_80182540, &D_80182510, &D_80182538,
     &D_80182538, &D_80182538, &D_80182540, &D_80182540, &D_80182540,
     &D_80182538, &D_80182538,
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
     NULL,        NULL,
 #endif
 };
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern SVECTOR D_pspeu_09279DC0; // bss
 #endif
 
@@ -247,7 +247,7 @@ void func_801BC5C0(Entity* self) {
                     }
                     sp4c[0].vz = -var_s6;
                     sp4c[1].vz = -var_s6;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     RotMatrix(&D_pspeu_09279DC0, m);
                     RotMatrixY(var_s7, m);
                     RotMatrixX(vec->vx, m);

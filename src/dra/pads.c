@@ -64,7 +64,7 @@ void ReadPads(void) {
 
     for (pad = g_pads, i = 0; i < PAD_COUNT; i++, pad++) {
         pad->previous = pad->pressed;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (i == 0) {
             rawPadRead = PadRead_PSP();
         } else {

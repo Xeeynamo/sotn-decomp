@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo1.h"
 
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 #include "../../st/pfn_entity_update.h"
 #define GOLD_COLLECT_TEXT                                                      \
     _S("$1"), _S("$25"), _S("$50"), _S("$100"), _S("$250"), _S("$400"),        \

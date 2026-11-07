@@ -13,7 +13,7 @@ u8 gfx_cavern_door[] = {
 #include <gen/gfx_cavern_door.h>
 };
 
-#if !defined(VERSION_HD) && !defined(VERSION_PSP)
+#if VERSION >= VER_JP10 && TARGET != TARGET_PSP
 u8 gfx_stage_name_en[] = {
 #include <gen/gfx_stage_name_en.h>
 };
@@ -102,7 +102,7 @@ u8 gfx_paranthropus_2[] = {
 // Interestingly the graphics here are stripped on PSP, but the entity /
 // palettes are not... maybe this reveals something about how the graphics were
 // packed
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 u8 gfx_flea_man_armor[] = {
 #include <gen/gfx_flea_man_armor.h>
 };

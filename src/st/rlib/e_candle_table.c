@@ -9,7 +9,7 @@ static AnimateEntityFrame anim_flame_shadow[] = {
     {3, 9},  {3, 10}, {3, 11}, {3, 12},     {3, 13},
     {3, 14}, {3, 15}, {3, 16}, POSE_LOOP(0)};
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 static s32 D_us_80181A8C = 0;
 extern s32 E_ID(CANDLE_TABLE);
 #else

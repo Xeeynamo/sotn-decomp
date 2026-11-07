@@ -8,7 +8,7 @@
 #include <psxsdk/kernel.h>
 
 // lseek etc. conflicts
-#ifndef VERSION_PC
+#ifndef PLATFORM_PSYZ
 #include <libapi.h>
 #include <libc.h>
 #else
@@ -26,7 +26,7 @@
 
 // PSP does & 7FFF for many calls to rand(), PS1 does not.
 // This works around that.
-#if defined(VERSION_PSP) || defined(VERSION_PC)
+#if TARGET == TARGET_PSP || defined(PLATFORM_PSYZ)
 #define PSP_RANDMASK 0x7FFF
 #else
 #define PSP_RANDMASK 0xFFFFFFFF
@@ -134,7 +134,7 @@ typedef enum {
 #define OTSIZE 0x200
 #define MAX_ENV_COUNT 0x10
 #define MAX_DRAW_MODES 0x400
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
 #define MAX_POLY_GT4_COUNT 0x1400
 #else
 #define MAX_POLY_GT4_COUNT 0x300
@@ -156,7 +156,8 @@ typedef enum {
 // Width in pixel of how wide is the horizontal camera during normal game play
 #define STAGE_WIDTH 256
 
-#ifdef VERSION_PSP // PSP does not need a double buffer
+#if TARGET == TARGET_PSP
+// PSP does not need a double buffer
 #define DISP_STAGE_NEXT_X 0
 #else
 #define DISP_STAGE_NEXT_X DISP_STAGE_W
@@ -169,7 +170,7 @@ typedef enum {
     PAD_NONE = 0x0000,
 // R3 button on a DS3 controller attached to PSP
 // for debug mode may not be captured in these
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     BUTTON_COUNT = 7,
     PAD_L2 = 0x0002,
     PAD_R2 = 0x0400,
@@ -226,7 +227,7 @@ typedef enum {
 #define PAD_SHAPES (PAD_SQUARE | PAD_CROSS | PAD_CIRCLE | PAD_TRIANGLE)
 
 // PSP's wolf controls are slightly different.
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #define PAD_SHOULDERS (PAD_L1 | PAD_R1)
 // PSP only has one shoulder button, so it uses L1 for wolf transform.
 #define BTN_WOLF PAD_L1
@@ -237,7 +238,11 @@ typedef enum {
 #else
 #define PAD_SHOULDERS (PAD_L1 | PAD_R1 | PAD_L2 | PAD_R2)
 #define BTN_WOLF PAD_R2
+#if VERSION >= VER_EU
+#define WOLF_CHARGE_ATK_BTN (PAD_SQUARE | PAD_CIRCLE)
+#else
 #define WOLF_CHARGE_ATK_BTN (PAD_SQUARE)
+#endif
 #define BTN_MIST PAD_L1
 #endif
 
@@ -260,7 +265,7 @@ typedef enum {
 #define DEMO_KEY_LEN 3
 #define DEMO_MAX_LEN 0x2000
 
-#if defined(VERSION_PSP) || defined(VERSION_PC)
+#if TARGET == TARGET_PSP || defined(PLATFORM_PSYZ)
 #define DRA_PRG_PTR 0x800A0000
 #define SAVE_DATA_PTR D_psp_08D97C40
 #define RIC_PRG_PTR &g_PlOvl
@@ -494,7 +499,7 @@ typedef enum {
 #define CARD_BLOCK_SIZE (8192)
 
 typedef struct {
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
     /* 0x000 */ struct DIRENTRY entries[BLOCK_PER_CARD];
 #endif
     /* 0x258 */ u32 unk258;
@@ -504,7 +509,11 @@ typedef struct {
     /* 0x268 */ u8 blocks[BLOCK_PER_CARD];
 } MemcardInfo; /* size=0x278 */
 
-#if defined(VERSION_US)
+#if REGION == REGION_EU
+#define MEMCARD_ID "BESLES-00524DRAX00"
+#elif REGION == REGION_HK
+#define MEMCARD_ID "BISCPS-45196DRAX00"
+#elif VERSION == VER_US
 #define MEMCARD_ID "BASLUS-00067DRAX00"
 #else
 #define MEMCARD_ID "BISLPM-86023DRAX00"
@@ -1052,7 +1061,7 @@ typedef struct {
 #define RELIC_FLAG_DISABLE 0
 #define RELIC_FLAG_FOUND 1
 #define RELIC_FLAG_ACTIVE 2
-#if defined(VERSION_US)
+#if IS_VER_INTL
 #define NUM_AVAIL_RELICS (NUM_RELICS - 2)
 #else
 #define NUM_AVAIL_RELICS (NUM_RELICS)
@@ -1164,7 +1173,7 @@ typedef struct {
     /* 80097BB4 */ s32 mpMax;
     /* 80097BB8 */ s32 statsBase[4];
     /* 80097BC8 */ s32 statsEquip[4];
-#ifndef STAGE_IS_TEK
+#if VERSION >= VER_BETA_MAD
     /* 80097BD8 */ s32 statsTotal[4];
 #endif
     /* 80097BE8 */ s32 level;
@@ -1240,8 +1249,13 @@ typedef struct {
     /* 0x04 */ char Title[64];
     /* 0x44 */ u8 reserve[28];
     /* 0x60 */ u8 Clut[32];
+#if REGION == REGION_EU
+    /* 0x80 */ u8 Icon[128];
+} MemcardHeader; /* size=0x100 */
+#else
     /* 0x80 */ u8 Icon[3 * 128];
 } MemcardHeader; /* size=0x200 */
+#endif
 
 typedef struct {
     /* 0x00 */ char name[12];
@@ -1576,7 +1590,7 @@ typedef struct {
     /* 0x0C */ u8 statsBonus[4];
     /* 0x10 */ u16 weakToElements;
     /* 0x12 */ u16 resistElements;
-#ifndef STAGE_IS_TEK
+#if VERSION >= VER_BETA_MAD
     /* 0x14 */ u16 immuneElements;
     /* 0x16 */ u16 absorbElements;
 #endif
@@ -1602,10 +1616,10 @@ typedef struct {
 typedef struct {
     /* 0x00 */ const char* name;
     /* 0x04 */ char* desc;
-#ifndef STAGE_IS_TEK
+#if VERSION >= VER_BETA_MAD
     /* 0x08 */ u16 icon;
     /* 0x0A */ u16 iconPalette;
-#ifndef VERSION_BETA
+#if VERSION != VER_BETA_MAD
     /* 0x0C */ s32 unk0C;
 #endif
 #endif
@@ -1726,11 +1740,17 @@ typedef struct {
     /* 8003C898 */ void (*LearnSpell)(s32 spellId);
     /* 8003C89C */ void (*DebugInputWait)(const char* str);
 
+#if VERSION == VER_JP12
+    /* 8003C8A0 */ void (*ApplySoundMode)(void);
+    /* 8003C8A4 */ Lba* g_StagesLba;
+    /* 8003C8A8 */ void* unusedJp12[2];
+#else
     // exclusive to PSP
     /* 8003C8A0 */ int (*CalcDealDamageMaria)(s32 baseAttack);
     /* 8003C8A4 */ bool (*CalcPlayerDamageMaria)(DamageParam* damageParam);
     /* 8003C8A8 */ u16* (*func_psp_0913FA28)(u32 ch, u16 kind);
     /* 8003C8AC */ u16 (*func_psp_0913F960)(const char*, u8* ch);
+#endif
     /* 8003C8B4 */ void* unused13C;
 } GameApi; /* size=0x140 */
 
@@ -1964,7 +1984,7 @@ typedef struct {
     // unk18 & 0xFA00 give elemental status of damage received
     /* 0x368 80072F38 */ s32 unk18;
     /* 0x36C 80072F3C */ s32 warp_flag;
-#if defined(VERSION_PC)
+#ifdef PLATFORM_PSYZ
     /* 80072F40 */ signed long long unk20; // used as an Entity for maria
 #else
     /* 0x370 80072F40 */ s32 unk20; // used as an Entity for maria
@@ -1981,7 +2001,7 @@ typedef struct {
     /* 0x394 80072F64 */ u16 unk44;
     /* 0x396 80072F66 */ u16 unk46;
     /* 0x398 80072F68 */ u16 unk48;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     /* 0x39A 80072F6A */ u16 gravBootTimer;
 #else
     /* 0x39A 80072F6A */ s16 gravBootTimer;
@@ -2054,7 +2074,7 @@ typedef struct {
 
 // Used in game.h
 typedef struct {
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
     s32 unk0;
     s32 primIndex;
 #else
@@ -2110,7 +2130,7 @@ typedef struct {
     RECT D_800ACDD8;
     RECT D_800ACDE0;
     RECT D_800ACDE8;
-#ifdef VERSION_US
+#if VERSION >= VER_US && TARGET != TARGET_PSP
     RECT D_800ACDF0;
 #endif
 } Vram;
@@ -2132,7 +2152,7 @@ extern s32 g_GameClearFlag;
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C100;
 extern u16 g_ClutIds[]; // array of palette VRAM offsets
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
 extern bool (*g_PcStageLayerRenderer)(void);
 #endif
 extern s32 g_CutsceneHasControl;
@@ -2141,6 +2161,13 @@ extern s16 D_8003C710;
 extern s16 D_8003C712;
 extern s32 D_8003C728;
 extern s32 D_8003C730;
+#if VERSION >= VER_EU
+// related to a bugfix in the NO0 clock room at 99:59:59 gameplay time
+extern s32 g_TimerCopyFrames;
+extern s32 g_TimerCopyHours;
+extern s32 g_TimerCopySeconds;
+extern s32 g_TimerCopyMinutes;
+#endif
 extern GameState g_GameState;
 extern s32 D_8003C738;
 extern s32 D_8003C73C;

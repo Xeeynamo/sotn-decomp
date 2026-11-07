@@ -45,7 +45,7 @@ static u8 blend_modes[] = {
 static u16 hitbox_y_offsets[] = {0x0000, 0x0000, 0xFFE8, 0xFFF0, 0x0000,
                                  0x0000, 0x0000, 0x0000, 0x0000, 0x0000};
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(BREAKABLE_STATUE_BROKEN);
 #endif
 

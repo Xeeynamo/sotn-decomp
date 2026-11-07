@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern u8 actor_name_len_en[];
 extern u8 actor_name_len_fr[];
 extern u8 actor_name_len_sp[];
@@ -28,7 +28,7 @@ void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
     s32 primIndex;
     u8* len;
 
-#ifdef VERSION_HD
+#if VERSION < VER_JP10
     primIndex = g_api.AllocPrimitives(PRIM_SPRT, actor_prims[actorIndex]);
 #else
     // Create a certain amount of sprites based on the actor name's letter count
@@ -44,13 +44,13 @@ void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
         return;
     }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     // Pre-calculate primitives that renders the actor's name
     x = 0x38;
 #endif
     g_Dialogue.primIndex[1] = primIndex;
     prim = &g_PrimBuf[primIndex];
-#ifdef VERSION_HD
+#if VERSION < VER_JP10
     x = 0x38;
     len = &actor_name_len;
     actorNameStartIndex = 0;
