@@ -6,8 +6,8 @@
 #include <string.h>
 
 extern SaturnGameApi g_ApiInit;
-extern SaturnPlayerOvl MARIA_player;
-extern SaturnStageDataTables g_Stage15Data;
+extern SaturnPlayerOvl SATZ_PLAYER_DATA;
+extern SaturnStageDataTables SATZ_STAGE_DATA;
 extern SaturnPlayerOvl g_PlayerOvl;
 
 static const struct {
@@ -17,8 +17,8 @@ static const struct {
     u32 size;
 } s_Overlays[] = {
     {"GAME.PRG", &g_GameOvl, &g_ApiInit, sizeof(SaturnGameApi)},
-    {"MARIA.PRG", &g_PlayerOvl, &MARIA_player, sizeof(SaturnPlayerOvl)},
-    {"STAGE_15.PRG", &g_StageOverlayData, &g_Stage15Data,
+    {SATZ_PLAYER_PRG, &g_PlayerOvl, &SATZ_PLAYER_DATA, sizeof(SaturnPlayerOvl)},
+    {SATZ_STAGE_PRG, &g_StageOverlayData, &SATZ_STAGE_DATA,
      sizeof(SaturnStageDataTables)},
 };
 
@@ -30,6 +30,9 @@ static int is_prg(const char* name) {
 void* sotn_satz_load_target(void* dst) {
     unsigned long address = (unsigned long)dst;
 
+    if (address >= 0x30000000ul || (address & ~0x20000000ul) >= 0x08000000ul) {
+        return dst;
+    }
     if ((address & 0x07F00000) >= 0x05A00000 &&
         (address & 0x07F00000) < 0x06000000) {
         return satz_bus_pointer(address);
@@ -45,7 +48,8 @@ void* sotn_satz_load_target(void* dst) {
 s32 (*sotn_satz_movie_entry(void))(void);
 extern s32 (*DAT_06066000)();
 
-int sotn_satz_install_overlay(const char* name, void* dst, s32* size) {
+int sotn_satz_install_overlay(
+    const char* name, void* dst, u32 sector, s32* size) {
     u32 i;
 
     if (!is_prg(name)) {
