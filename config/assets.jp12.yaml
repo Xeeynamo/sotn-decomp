@@ -174,3 +174,25 @@ files:
           - [0x13D98, cmpgfx, D_80194018, 128, 128, 4]
           - [0x14FF4, cmpgfx, D_80195274, 128, 128, 4]
           - [0x16074, skip]
+  - target: disks/jp12/ST/WRP/WRP.BIN
+    asset_path: assets/st/wrp
+    src_path: src/st/wrp
+    splat_config_path: config/splat.jp12.stwrp.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x40, sprite_banks, jp12/sprite_banks]
+          - [0xA0, paldef, palette_def]
+          - [0xB8, layers, layers]
+          - [0x1B8, gfx_banks, graphics_banks]
+          - [0x23C, layout, entity_layouts]
+          - [0x3E4, skip]
+          - [0x11B0, rooms, rooms]
+          - [0x122C, skip]
+          - [0x1424, cmpgfx, stage_title_wrp_jp, 128, 128, 4]
+          - [0x1768, cmpgfx, stage_placeholder_wrp, 128, 128, 4]
+          - [0x1D0C, palette, D_80181D08, 16]
+          - [0x1D6C, skip] # tile data
+          - [0x296C, skip] # tile definitions
+          - [0x6D8C, skip] # sprites
