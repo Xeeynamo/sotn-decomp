@@ -1726,9 +1726,10 @@ void func_0600A088(void) {
         }
     }
     temp = VRAM_ADDR + SPR_2LookupTblNoToVram(0) * 8;
-    QueueVramTransfer(temp, DAT_06038DD0[0], 0x200);
+    QueueVramTransfer(temp, HOST_TO_BUS16(DAT_06038DD0[0], 0x200), 0x200);
     if (DAT_06038DBC != 0) {
-        QueueVramTransfer(DAT_06038DBC, DAT_06038DD0[3], 0x20);
+        QueueVramTransfer(
+            DAT_06038DBC, HOST_TO_BUS16(DAT_06038DD0[3], 0x20), 0x20);
     }
 }
 
@@ -2276,7 +2277,7 @@ void func_0600C298(s32 arg0) {
 // _SetLocalPalData
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C2EC, func_0600C2EC);
 
-s32 func_0600C3A8(u16* arg0, u16* arg1, u16* arg2, u32 arg3) {
+s32 func_0600C3A8(u16* arg0, u16* arg1, u16* arg2, u16* arg3) {
     s32 ret;
 
     ret = 1;

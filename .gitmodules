@@ -27,3 +27,6 @@
 [submodule "tools/saturn/sound-player"]
 	path = tools/saturn/sound-player
 	url = https://github.com/sozud/saturn-sound-player.git
+[submodule "tools/saturn/satz"]
+	path = tools/saturn/satz
+	url = https://github.com/sozud/satz.git

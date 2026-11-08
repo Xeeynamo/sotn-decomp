@@ -521,6 +521,13 @@ bool CdSoundCommandQueueEmpty(void);
 /* End moved declarations */
 
 #ifdef SATZ
+void* sotn_satz_be16_copy(const void* src, u32 bytes);
+#define HOST_TO_BUS16(src, size) sotn_satz_be16_copy(src, size)
+#else
+#define HOST_TO_BUS16(src, size) (src)
+#endif
+
+#ifdef SATZ
 #include "satz/prototypes.h"
 #endif
 

@@ -156,6 +156,10 @@ jobs:
           sudo dpkg -i dosemu2_2.0~pre9-1_amd64.deb
       - name: Build saturn
         run: ./sotn.sh build saturn
+      - name: Get satz
+        run: git submodule update --init --recursive tools/saturn/satz
+      - name: Build the native port
+        run: .venv/bin/python3 tools/saturn_satz/build.py --no-sanitize
       - name: Generate progress report
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
         run: ./sotn.sh progress saturn
