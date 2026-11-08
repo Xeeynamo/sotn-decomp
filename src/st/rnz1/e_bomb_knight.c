@@ -6,6 +6,6 @@
 #define THROW_BOMB_PALETTE_3 0x23B
 #define UNK5A_VAL 0x4A
 #define ANIMSET 12
-#define TODO_WEIRD_ENTITYID E_DEATH_PARTS
+#define BOMB_DEATH_ENTITYID E_DEATH_PARTS
 
 #include "../e_bomb_knight.h"

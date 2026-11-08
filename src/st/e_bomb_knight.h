@@ -400,7 +400,7 @@ void EntityThrownBomb(Entity* self) {
                 // We copy ourself into an other, set it as a death parts,
                 // and then destroy our self.
                 *other = *self;
-                other->entityId = TODO_WEIRD_ENTITYID;
+                other->entityId = BOMB_DEATH_ENTITYID;
                 other->drawFlags |= ENTITY_ROTATE;
                 other->hitboxState = 2;
                 other->attackElement = ELEMENT_FIRE;
