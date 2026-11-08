@@ -761,7 +761,7 @@
 | rno4       | e_jack_o_bones.rodata             |       18 |          0 | Yes    |       |     |
 | rnz0       | e_ctulhu.rodata                   |       18 |          0 | Yes    |       |     |
 | rnz1       | e_life_up.rodata                  |       18 |          0 | Yes    |       |     |
-| sel        | A578.rodata                       |       18 |          0 | Yes    |       |     |
+| sel        | memcard.rodata                    |       18 |          0 | Yes    |       |     |
 | main       | sceGuCheckList                    |       18 |          1 |        |       |     |
 | main       | func_psp_089107DC                 |       18 |          1 |        |       |     |
 | main       | func_psp_08910944                 |       18 |          1 |        |       |     |
@@ -1791,8 +1791,8 @@
 | nz0        | func_pspeu_0923E1D0               |       29 |          1 |        |       |     |
 | rcen       | func_pspeu_092460A8               |       29 |          1 |        |       |     |
 | rwrp       | func_pspeu_09244CA8               |       29 |          1 |        |       |     |
-| sel        | func_psp_09242B40                 |       29 |          1 |        |       |     |
 | sel        | func_psp_09245760                 |       29 |          1 |        |       |     |
+| sel        | func_psp_09242B40                 |       29 |          1 |        |       |     |
 | st0        | func_pspeu_09239060               |       29 |          1 |        |       |     |
 | top        | func_pspeu_0924C4B8               |       29 |          1 |        |       |     |
 | wrp        | func_psp_09244760                 |       29 |          1 |        |       |     |
@@ -1859,7 +1859,7 @@
 | rchi       | e_thornweed.rodata                |       30 |          0 | Yes    |       |     |
 | rno0       | e_clock_room.rodata               |       30 |          0 | Yes    |       |     |
 | rnz1       | e_darkwing_bat.rodata             |       30 |          0 | Yes    |       |     |
-| sel        | 94D8.rodata                       |       30 |          0 | Yes    |       |     |
+| sel        | title_psp.rodata                  |       30 |          0 | Yes    |       |     |
 | st0        | prologue_scroll.rodata            |       30 |          0 | Yes    |       |     |
 | main       | sceVfpuVector4HermiteXYZ          |       30 |          1 |        |       |     |
 | dra        | func_psp_090E7ED8                 |       30 |          2 |        |       |     |
@@ -2183,7 +2183,7 @@
 | rbo8       | RBO8_Load                         |       35 |          4 |        |       |     |
 | dra        | func_psp_090E7F98                 |       35 |          4 |        |       |     |
 | dra        | func_psp_090E8E58                 |       35 |          4 |        |       |     |
-| dra        | func_psp_090FFAB8                 |       35 |          4 |        |       |     |
+| dra        | PlayMovie                         |       35 |          4 |        |       |     |
 | main       | func_psp_0890CAF8                 |       35 |          4 |        |       |     |
 | main       | sceSasSetPause                    |       35 |          4 |        |       |     |
 | are        | func_pspeu_092379E8               |       35 |          4 |        |       |     |
@@ -2685,8 +2685,8 @@
 | main       | func_psp_08935794                 |       39 |          4 |        |       |     |
 | no4        | func_pspeu_0923BAB0               |       39 |          4 |        |       |     |
 | rare       | func_pspeu_0924BED8               |       39 |          4 |        |       |     |
-| sel        | func_psp_092407A0                 |       39 |          4 |        |       |     |
 | sel        | func_psp_09243610                 |       39 |          4 |        |       |     |
+| sel        | func_psp_092407A0                 |       39 |          4 |        |       |     |
 | dra        | func_psp_0913F780                 |       39 |          5 |        |       |     |
 | main       | sceWaveAudioSetVolume             |       39 |          5 |        |       |     |
 | main       | sceWaveAudioWrite                 |       39 |          5 |        |       |     |
@@ -3603,9 +3603,9 @@
 | rcen       | func_pspeu_09245BA0               |       51 |         10 |        |       |     |
 | rno0       | func_pspeu_0924DD88               |       51 |         10 |        |       |     |
 | rnz0       | func_pspeu_0924C670               |       51 |         10 |        |       |     |
-| sel        | func_psp_09237E38                 |       51 |         10 |        |       |     |
 | sel        | func_psp_0923F3C0                 |       51 |         10 |        |       |     |
 | sel        | func_psp_09245258                 |       51 |         10 |        |       |     |
+| sel        | func_psp_09237E38                 |       51 |         10 |        |       |     |
 | sel        | func_psp_092377C8                 |       51 |         10 |        |       |     |
 | st0        | func_pspeu_092377C8               |       51 |         10 |        |       |     |
 | top        | func_pspeu_0924BFB0               |       51 |         10 |        |       |     |
@@ -4386,9 +4386,9 @@
 | rlib       | func_pspeu_09246758               |       67 |          6 |        |       |     |
 | rno0       | func_pspeu_09254E20               |       67 |          6 |        |       |     |
 | rnz1       | func_pspeu_092507D0               |       67 |          6 |        |       |     |
+| sel        | func_psp_09243F78                 |       67 |          6 |        |       |     |
 | sel        | func_psp_0923F668                 |       67 |          6 |        |       |     |
 | sel        | func_psp_0923F760                 |       67 |          6 |        |       |     |
-| sel        | func_psp_09243F78                 |       67 |          6 |        |       |     |
 | st0        | func_pspeu_09237BC0               |       67 |          6 |        |       |     |
 | rbo6       | func_pspeu_0924A1D0               |       67 |          7 |        |       |     |
 | cat        | func_pspeu_09257FD0               |       67 |          7 |        |       |     |
@@ -5197,7 +5197,7 @@
 | main       | _setmodreent                      |       85 |         15 |        |       |     |
 | ric        | pl_blueprints.rodata              |       86 |          0 | Yes    |       |     |
 |            | sword.rodata                      |       86 |          0 | Yes    |       |     |
-| sel        | BB50.rodata                       |       86 |          0 | Yes    |       |     |
+| sel        | ending.rodata                     |       86 |          0 | Yes    |       |     |
 |            | func_pspeu_0924CF20               |       86 |          6 |        |       |     |
 | bo2        | func_pspeu_0924FA20               |       86 |          6 |        |       |     |
 | are        | func_pspeu_0925D530               |       86 |          6 |        |       |     |
