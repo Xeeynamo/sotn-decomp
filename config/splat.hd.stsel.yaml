@@ -37,10 +37,10 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, .data, 2C048]
-      - [0x1E8, .data, 318CC]
-      - [0x24C, .data, 3410C]
-      - [0x2F8, .data, 34B30]
+      - [0x0, .data, select]
+      - [0x1E8, .data, utils]
+      - [0x24C, .data, title]
+      - [0x2F8, .data, ending]
       - [0x3B4, .data, banks]
       - [0x564, .data, 764]
       - [0x624, .data, cutscene]
@@ -56,23 +56,23 @@ segments:
       - [0xF6A0, .data, F9A8]
       - [0x15FEC, .data, libpress]
       - [0x16130, data]
-      - [0x27130, .rodata, 2C048] # strings in D_80180128
-      #- [0x271A0, .rodata, 2C048] # strings in D_801803D0
-      #- [0x27224, .rodata, 2C048] # strings func_801ACFBC
-      #- [0x27230, .rodata, 2C048] # DrawNavigationTips jtbl
-      #- [0x27264, .rodata, 2C048] # strings in func_801AD490
-      #- [0x2727C, .rodata, 2C048] # strings in D_80180454
-      #- [0x272DC, .rodata, 2C048] # strings in func_801AD66C
-      #- [0x272F4, .rodata, 2C048] # strings in func_801AD78C
-      #- [0x27334, .rodata, 2C048] # strings in func_801ADF94
-      #- [0x2735C, .rodata, 2C048] # Update strings and jtbl
-      - [0x27934, .rodata, 32D6C] # "BASLUS-00067DRAX00"
-      #- [0x27F90, .rodata, 32D6C] # FntPrint strings
-      #- [0x27FAC, .rodata, 32D6C] # func_801B3164
-      - [0x27FF8, .rodata, 3410C] # E3 selection strings
-      - [0x28300, .rodata, 34B30] # TestCollision
-      #- [0x28340, .rodata, 34B30] # func_801B55C8
-      #- [0x28360, .rodata, 34B30]
+      - [0x27130, .rodata, select] # strings in D_80180128
+      #- [0x271A0, .rodata, select] # strings in D_801803D0
+      #- [0x27224, .rodata, select] # strings func_801ACFBC
+      #- [0x27230, .rodata, select] # DrawNavigationTips jtbl
+      #- [0x27264, .rodata, select] # strings in func_801AD490
+      #- [0x2727C, .rodata, select] # strings in D_80180454
+      #- [0x272DC, .rodata, select] # strings in func_801AD66C
+      #- [0x272F4, .rodata, select] # strings in func_801AD78C
+      #- [0x27334, .rodata, select] # strings in func_801ADF94
+      #- [0x2735C, .rodata, select] # Update strings and jtbl
+      - [0x27934, .rodata, memcard] # "BASLUS-00067DRAX00"
+      #- [0x27F90, .rodata, memcard] # FntPrint strings
+      #- [0x27FAC, .rodata, memcard] # func_801B3164
+      - [0x27FF8, .rodata, title] # E3 selection strings
+      - [0x28300, .rodata, ending] # TestCollision
+      #- [0x28340, .rodata, ending] # func_801B55C8
+      #- [0x28360, .rodata, ending]
       - [0x2843C, .rodata, cutscene] # g_DiagActors strings
       #- [0x2843C, .rodata, cutscene] # SEL_EntityCutscene jtbl
       - [0x284C0, .rodata, save_mgr]
@@ -81,23 +81,24 @@ segments:
       #- [0x2B6EC, .rodata, config_jp] # enemies strings
       - [0x2C154, .rodata, lba_stage]
       - [0x2C500, .rodata, libpress]
-      - [0x2C5AC, c, 2C048]
-      - [0x317E8, c, 318CC]
-      - [0x32750, c, 32D6C]
-      - [0x33A2C, c, 34048]
-      - [0x33AF0, c, 3410C]
-      - [0x34438, c, 34B30]
+      - [0x2C5AC, c, select]
+      - [0x317E8, c, utils]
+      - [0x32750, c, memcard]
+      - [0x33A2C, c, logo]
+      - [0x33AF0, c, title]
+      - [0x34438, c, ending]
       - [0x35D34, c, cutscene]
+      - [0x36F78, c, credits]
       - [0x37978, c, save_mgr]
       - [0x38FEC, c, stream]
       - [0x39D1C, c, libpress]
       - [0x3A42C, asm, handwritten/func_801BAB70]
       - [0x3A460, asm, handwritten/DecDCTvlc]
-      - [0x3A7C4, .bss, 2C048]
-      - [0x3A88C, .bss, 318CC]
-      - [0x3A898, .bss, 32D6C]
-      - [0x3A8CC, .bss, 3410C]
-      - [0x3A9B4, .bss, cutscene]
+      - [0x3A7C4, .bss, select]
+      - [0x3A88C, .bss, utils]
+      - [0x3A898, .bss, memcard]
+      - [0x3A8CC, .bss, title]
+      - [0x3A9B4, .bss, credits]
       - [0x3BBB4, .bss, save_mgr]
       - [0x3BBBC, .bss, stream]
       - [0x3BC0C, .bss, bss]

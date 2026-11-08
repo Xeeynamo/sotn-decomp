@@ -46,13 +46,12 @@ static void SetStep(Entity* entity, u16 step) {
 
 #include "../animate_entity.h"
 
-// Note: SEL uses entities weirdly. This probably shouldn't be PLAYER.
-// g_Entities[0] is probably its own thing.
 void func_801B4C68(void) {
-    Entity* self = &g_Entities[0];
+    Entity* self;
     s32 primIndex;
     Primitive* prim;
 
+    self = &g_Entities[0]; // not used as PLAYER
     switch (self->step) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
@@ -79,7 +78,6 @@ void func_801B4C68(void) {
             self->step++;
         }
         break;
-
     case 1:
         break;
     }
@@ -98,7 +96,6 @@ void func_801B4D78(void) {
         self->zPriority = 0x80;
         self->step++;
         break;
-
     case 1:
         break;
     }
@@ -131,7 +128,6 @@ void func_801B4DE0(void) {
             self->step++;
         }
         break;
-
     case 1:
         prim = self->ext.unkSelEnts.prim;
         if (D_801BC3E4 != 0) {
@@ -142,7 +138,6 @@ void func_801B4DE0(void) {
             }
         }
         break;
-
     case 2:
         prim = self->ext.unkSelEnts.prim;
         if (D_801BC3E4 != 0) {
@@ -153,7 +148,6 @@ void func_801B4DE0(void) {
             }
         }
         break;
-
     case 3:
         break;
     }
@@ -186,7 +180,6 @@ void func_801B4FFC(void) {
             self->step++;
         }
         break;
-
     case 1:
         prim = self->ext.unkSelEnts.prim;
         if (D_801BC3E4 != 0) {
@@ -196,7 +189,7 @@ void func_801B4FFC(void) {
                 self->step++;
             }
         }
-
+        break;
     case 2:
         break;
     }
@@ -236,7 +229,7 @@ void func_801B519C(void) {
             prim = prim->next;
         }
         self->step++;
-
+        // fallthrough
     case 1:
         self->ext.unkSelEnts.unk88 += 0x40;
         angle = self->ext.unkSelEnts.unk88;
@@ -261,7 +254,7 @@ void func_801B519C(void) {
 // Probably handles Alucard sprite in the ending, did not confirm but uses his
 // palette.
 void func_801B5350(void) {
-    Entity* self = &g_Entities[UNK_ENTITY_5];
+    Entity* self = &g_Entities[5];
 
     switch (self->step) {
     case 0:
@@ -274,18 +267,15 @@ void func_801B5350(void) {
         self->palette = PAL_FLAG(PAL_ALUCARD);
         self->step++;
         break;
-
     case 1:
         self->animCurFrame = 0x8E;
         break;
-
     case 2:
         if (!AnimateEntity(D_80180528, self)) {
             SetStep(self, 3);
         }
         self->ext.unkSelEnts.unk80.val -= FIX(1.5);
         break;
-
     case 3:
         AnimateEntity(D_80180504, self);
         self->ext.unkSelEnts.unk80.val -= FIX(1.5);
@@ -299,7 +289,7 @@ void func_801B5350(void) {
 // func_801B54C8 sets up the Richter sprite in the Alucard Mode ending scenes
 // where he was saved.
 void func_801B54C8(void) {
-    Entity* self = &g_Entities[UNK_ENTITY_7];
+    Entity* self = &g_Entities[7];
 
     switch (self->step) {
     case 0:
@@ -313,7 +303,6 @@ void func_801B54C8(void) {
         self->palette = PAL_FLAG(0x210);
         self->step++;
         break;
-
     case 1:
         break;
     }
@@ -321,7 +310,7 @@ void func_801B54C8(void) {
 
 // func_801B5548 sets up the Richter sprite in the Richter Mode ending scene.
 static void func_801B5548(void) {
-    Entity* self = &g_Entities[UNK_ENTITY_7];
+    Entity* self = &g_Entities[7];
 
     switch (self->step) {
     case 0:
@@ -335,7 +324,6 @@ static void func_801B5548(void) {
         self->palette = PAL_FLAG(0x210);
         self->step++;
         break;
-
     case 1:
         break;
     }
@@ -343,7 +331,7 @@ static void func_801B5548(void) {
 
 // func_801B55C8 handles Maria's sprite in the ending scene.
 void func_801B55C8(void) {
-    Entity* self = &g_Entities[UNK_ENTITY_6];
+    Entity* self = &g_Entities[6];
 
     switch (self->step) {
     case 0:
@@ -357,7 +345,6 @@ void func_801B55C8(void) {
         self->zPriority = 0xC0;
         self->step++;
         break;
-
     case 1:
         if (D_801BC3E8 & 0x10) {
             self->animSet = ANIMSET_OVL(4);
@@ -367,7 +354,6 @@ void func_801B55C8(void) {
             SetStep(self, 2);
         }
         break;
-
     case 2:
         self->ext.unkSelEnts.unk80.val -= FIX(0.75);
         if (!AnimateEntity(D_80180580, self)) {
@@ -377,7 +363,6 @@ void func_801B55C8(void) {
             self->step++;
         }
         break;
-
     case 3:
         if (D_801BC3E8 & 0x20) {
             self->animSet = ANIMSET_OVL(4);
@@ -387,7 +372,6 @@ void func_801B55C8(void) {
             SetStep(self, 4);
         }
         break;
-
     case 4:
         if (!AnimateEntity(D_80180578, self)) {
             self->animSet = ANIMSET_OVL(3);
@@ -396,7 +380,6 @@ void func_801B55C8(void) {
             SetStep(self, 5);
         }
         break;
-
     case 5:
         if (D_801BC3E8 & 0x40) {
             self->animSet = ANIMSET_OVL(4);
@@ -406,7 +389,6 @@ void func_801B55C8(void) {
             SetStep(self, 6);
         }
         break;
-
     case 6:
         if (!AnimateEntity(D_80180578, self)) {
             self->animSet = ANIMSET_OVL(3);
@@ -416,7 +398,6 @@ void func_801B55C8(void) {
         }
         self->ext.unkSelEnts.unk80.val -= FIX(0.75);
         break;
-
     case 7:
         AnimateEntity(D_80180564, self);
         self->ext.unkSelEnts.unk80.val -= FIX(1.5);
@@ -429,7 +410,7 @@ void func_801B55C8(void) {
 
 // Compare to func_801B5350
 void func_801B585C(u16 arg0) {
-    Entity* self = &g_Entities[UNK_ENTITY_5];
+    Entity* self = &g_Entities[5];
 
     switch (self->step) {
     case 0:
@@ -442,14 +423,12 @@ void func_801B585C(u16 arg0) {
         self->palette = PAL_FLAG(PAL_ALUCARD);
         self->step++;
         break;
-
     case 1:
         AnimateEntity(D_80180504, self);
         if (D_801BC3E8 & 4) {
             self->step++;
         }
         break;
-
     case 2:
         AnimateEntity(D_80180504, self);
         self->ext.unkSelEnts.unk80.val += FIX(1.5);
@@ -457,20 +436,17 @@ void func_801B585C(u16 arg0) {
             SetStep(self, 3);
         }
         break;
-
     case 3:
         if (!AnimateEntity(D_80180538, self)) {
             SetStep(self, 4);
         }
         break;
-
     case 4:
         AnimateEntity(D_80180554, self);
         if (D_801BC3E8 & 8) {
             SetStep(self, 5);
         }
         break;
-
     case 5:
         self->facingLeft = 1;
         if (!AnimateEntity(D_80180528, self)) {
@@ -478,7 +454,6 @@ void func_801B585C(u16 arg0) {
         }
         self->ext.unkSelEnts.unk80.val -= FIX(1.5);
         break;
-
     case 6:
         AnimateEntity(D_80180504, self);
         self->ext.unkSelEnts.unk80.val -= FIX(1.5);
@@ -492,7 +467,7 @@ void func_801B585C(u16 arg0) {
 
 void func_801B5A7C(void) {
     // Not sure where this entity is initialized...
-    Entity* self = &g_Entities[UNK_ENTITY_8];
+    Entity* self = &g_Entities[8];
     Entity* e;
 
     switch (self->params) {
@@ -502,13 +477,11 @@ void func_801B5A7C(void) {
             D_8018BC4A = 0;
             self->step++;
             break;
-
         case 1:
             D_801BC3E4 = 1;
             D_801D6B24 = -0x400000;
             self->step++;
             break;
-
         case 2:
             if (D_801BC3E4 == 0) {
                 D_801BC3E8 |= 1;
@@ -521,7 +494,6 @@ void func_801B5A7C(void) {
                 self->step++;
             }
             break;
-
         case 3:
             e = &g_Entities[UNK_ENTITY_5];
             e->step = 2;
@@ -530,7 +502,6 @@ void func_801B5A7C(void) {
             e->facingLeft = 1;
             self->step++;
             break;
-
         case 4:
             if (D_801BC3E4 == 0) {
                 D_801BD030 = 1;
@@ -546,13 +517,11 @@ void func_801B5A7C(void) {
             D_8018BC4A = 1;
             self->step++;
             break;
-
         case 1:
             D_801BC3E4 = 1;
             D_801D6B24 = -0x400000;
             self->step++;
             break;
-
         case 2:
             if (D_801BC3E4 == 0) {
                 D_801BC3E8 |= 1;
@@ -563,7 +532,6 @@ void func_801B5A7C(void) {
                 D_801D6B24 += 0x4000;
             }
             break;
-
         case 3:
             if (D_801D6B24 != 0) {
                 D_801D6B24 += 0x4000;
@@ -573,11 +541,9 @@ void func_801B5A7C(void) {
                 self->step++;
             }
             break;
-
         case 4:
             self->step++;
             break;
-
         case 5:
             if (D_801BC3E4 == 0) {
                 D_801BD030 = 1;
@@ -587,7 +553,6 @@ void func_801B5A7C(void) {
         func_801B585C(1);
         func_801B55C8();
         break;
-
     case 2:
         switch (self->step) {
         case 0:
@@ -595,13 +560,11 @@ void func_801B5A7C(void) {
             D_8018BC50 = 0;
             self->step++;
             break;
-
         case 1:
             D_801BC3E4 = 1;
             D_801D6B24 = -0x400000;
             self->step++;
             break;
-
         case 2:
             if (D_801BC3E4 == 0) {
                 D_801BC3E8 |= 1;
@@ -612,7 +575,6 @@ void func_801B5A7C(void) {
                 D_801D6B24 += 0x4000;
             }
             break;
-
         case 3:
             if (D_801D6B24 != 0) {
                 D_801D6B24 += 0x4000;
@@ -622,11 +584,9 @@ void func_801B5A7C(void) {
                 self->step++;
             }
             break;
-
         case 4:
             self->step++;
             break;
-
         case 5:
             if (D_801BC3E4 == 0) {
                 D_801BD030 = 1;
@@ -637,20 +597,17 @@ void func_801B5A7C(void) {
         func_801B54C8();
         func_801B55C8();
         break;
-
     case 3:
         switch (self->step) {
         case 0:
             D_8018BC4A = 3;
             self->step++;
             break;
-
         case 1:
             D_801BC3E4 = 1;
             D_801D6B24 = -0x400000;
             self->step++;
             break;
-
         case 2:
             if (D_801BC3E4 == 0) {
                 self->step++;
@@ -659,7 +616,6 @@ void func_801B5A7C(void) {
                 D_801D6B24 += 0x4000;
             }
             break;
-
         case 3:
             if (D_801D6B24 != 0) {
                 D_801D6B24 += 0x4000;
@@ -668,21 +624,18 @@ void func_801B5A7C(void) {
                 self->ext.unkSelEnts.unk8C = 0x80;
             }
             break;
-
         case 4:
             if (!--self->ext.unkSelEnts.unk8C) {
                 D_801BC3E8 |= 1;
                 self->step++;
             }
             break;
-
         case 5:
             if (D_801BC3E8 & 2) {
                 D_801BC3E4 = 1;
                 self->step++;
             }
             break;
-
         case 6:
             if (D_801BC3E4 == 0) {
                 D_801BD030 = 1;
@@ -691,7 +644,6 @@ void func_801B5A7C(void) {
         }
         func_801B5548();
         break;
-
     case 4:
         switch (self->step) {
         case 0:
@@ -699,13 +651,11 @@ void func_801B5A7C(void) {
             D_8018BC50 = 1;
             self->step++;
             break;
-
         case 1:
             D_801BC3E4 = 1;
             D_801D6B24 = -0x400000;
             self->step++;
             break;
-
         case 2:
             if (D_801BC3E4 == 0) {
                 D_801BC3E8 |= 1;
@@ -716,7 +666,6 @@ void func_801B5A7C(void) {
                 D_801D6B24 += 0x4000;
             }
             break;
-
         case 3:
             if (D_801D6B24 != 0) {
                 D_801D6B24 += 0x4000;
@@ -726,11 +675,9 @@ void func_801B5A7C(void) {
                 self->step++;
             }
             break;
-
         case 4:
             self->step++;
             break;
-
         case 5:
             if (D_801BC3E4 == 0) {
                 D_801BD030 = 1;
@@ -760,7 +707,6 @@ void func_801B60D4(void) {
             g_GameEngineStep++;
         }
         break;
-
     case 1:
         func_801B9C80();
         if (D_8003C728 == 0) {
@@ -774,7 +720,6 @@ void func_801B60D4(void) {
         }
         g_GameEngineStep++;
         break;
-
     case 2:
         // Important! This loop confirms that SEL uses the first 8
         // entities for its internal uses.
@@ -792,7 +737,6 @@ void func_801B60D4(void) {
         g_api.LoadGfxAsync(ANIMSET_OVL(0));
         g_GameEngineStep++;
         break;
-
     case 3:
         func_801B5A7C();
         ent = &g_Entities[UNK_ENTITY_4];
@@ -820,22 +764,18 @@ void func_801B60D4(void) {
             g_GameEngineStep++;
         }
         break;
-
     case 4:
         ClearImage(&D_8018258C, 0, 0, 0);
         g_GameEngineStep++;
         break;
-
     case 5:
         SetTitleDisplayBuffer256();
         g_GameEngineStep++;
         break;
-
     case 6:
         g_api.func_800EA5E4(ANIMSET_DRA(0));
         g_GameEngineStep++;
         break;
-
     case 7:
         ent = &g_Entities[UNK_ENTITY_4];
         if (func_801B79D4(ent)) {
@@ -845,7 +785,6 @@ void func_801B60D4(void) {
             g_GameEngineStep++;
         }
         break;
-
     case 8:
         func_801B4FFC();
         if (D_801BC3E4 == 0) {

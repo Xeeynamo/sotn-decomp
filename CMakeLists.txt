@@ -375,13 +375,14 @@ set(SOURCE_FILES_STAGE_SEL
     src/st/sel/CD54.c
     src/st/sel/sprites.c
     src/st/sel/F9A8.c
-    src/st/sel/2C048.c
-    src/st/sel/318CC.c
-    src/st/sel/32D6C.c
-    src/st/sel/34048.c
-    src/st/sel/3410C.c
-    src/st/sel/34B30.c
+    src/st/sel/select.c
+    src/st/sel/utils.c
+    src/st/sel/memcard.c
+    src/st/sel/logo.c
+    src/st/sel/title.c
+    src/st/sel/ending.c
     src/st/sel/cutscene.c
+    src/st/sel/credits.c
     src/st/sel/cutscene_data.c
 )
 
