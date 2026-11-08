@@ -375,7 +375,7 @@ void EntityThrownBomb(Entity* self) {
         self->velocityY += FIX(0.125);
         self->rotate += ROT(11.25);
         if (g_Timer & 2) {
-            self->palette = THROW_BOMB_PALETTE_1;
+            self->palette = PAL_BOMB_KNIGHT_ROCK_KNIGHT;
         } else {
             self->palette = PAL_FLAG(PAL_CC_RED_EFFECT_A);
         }
@@ -422,9 +422,9 @@ void EntityThrownBomb(Entity* self) {
         switch (self->step_s) { /* switch 2*/
         case 0:                 /* switch 2 */
             self->animSet = ANIMSET_OVL(ANIMSET);
-            self->palette = THROW_BOMB_PALETTE_2;
+            self->palette = PAL_BOMB_KNIGHT_THROW_BOMB_2;
             if ((self->hitboxState) == 2) {
-                self->palette = THROW_BOMB_PALETTE_3;
+                self->palette = PAL_BOMB_KNIGHT_THROW_BOMB_3;
             } else {
                 self->hitboxState = 1;
             }
