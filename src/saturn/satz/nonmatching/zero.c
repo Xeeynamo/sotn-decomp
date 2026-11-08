@@ -20,13 +20,22 @@ extern u8 DAT_06057F70[];
 
 extern s32 DAT_06050608;
 
+extern s32 DAT_060643BC;
+extern s32 DAT_06064224;
+extern s32 DAT_06063BEC;
 extern s32 DAT_06064428;
 void func_06011A6C(s32 arg0);
 void func_0601298C(void);
 
 extern u16 DAT_06039414[];
+extern u32 D_06041270[4];
+extern u32 D_06041288;
 extern s32 DAT_06062254;
+extern s32 DAT_06063C24;
 extern s32 DAT_06064204;
+extern s32 DAT_060642CC;
+extern CdcStat DAT_060644D0;
+extern Uint8* snd_adr_sys_int_work;
 
 extern GfsHn DAT_0605064C;
 extern s32 DAT_06050650;
@@ -51,7 +60,11 @@ typedef struct {
 
 int cdb_read_sector(int32_t fad, uint8_t* out2048);
 
+extern s32 DAT_06057C3C;
+extern s32 DAT_06057C40;
+extern s32 DAT_06057C38;
 extern s32 DAT_060642E0;
+s32 func_06016B9C(GfsHn gfs, void* dst, s32 size);
 
 extern u8 g_StageOvlArea[];
 s32 func_0600C99C(u16* dst, s32 offset, u32 len);
@@ -102,9 +115,68 @@ extern SprSpCmd* d_0605AEAC;
 #include "../../lib/csh.h"
 
 extern u16 DAT_06039414[];
+extern s8 DAT_0606225C;
+extern s16 DAT_06064228;
+extern s32 DAT_06063E74;
+extern s16 DAT_06062264;
+extern s32 DAT_06063BF4;
+extern s32 DAT_06062368;
+extern s32 DAT_0606224C;
+extern s32 DAT_06062230[2];
+extern s32 DAT_06062380[2];
+extern s32 DAT_06063E7C;
+extern s32 DAT_06064200;
+extern u32 DAT_06063EAC;
 extern s32 DAT_060642E0;
+extern s32 DAT_06063C04;
+extern s32 DAT_060641F8;
+extern u32 DAT_06063BE8;
+extern u32 DAT_0606421C;
+extern SndPcmChgPrm DAT_060643B0;
+extern s32 DAT_060440F8;
+extern s32 DAT_060440FC;
+extern s32 DAT_06064340;
+extern u32 DAT_0606420C;
 extern s32 DAT_06062254;
+extern u16 g_SaturnSoundValues512[512];
+extern SndPcmChgPrm DAT_06064440;
+extern s32 DAT_06044110;
+extern s32 DAT_06044114;
+extern s32 DAT_06043C4C;
+extern s32 DAT_06063BF0;
 extern s32 DAT_06064204;
+extern SndSeqStat DAT_06064478;
+
+void func_06012474(void);
+void func_060145F8(u8* arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4, s32 arg5);
+void func_06014658(u8* arg0, s32 arg1, s32 arg2, s32 arg3);
+void func_060146A4(u8* arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4, s32 arg5,
+                   s32 arg6, s32 arg7, s32 arg8);
+void func_06014724(u8* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+void func_060120A0(void);
+void func_06013538(u8* arg0, u16* arg1, u16* arg2, u32 arg3, s16* arg4,
+                   s16* arg5, s32* arg6, s32* arg7);
+s32 func_06014C20(void);
+s32 func_06017F28(void);
+void func_06016614(void);
+void func_06016D84(void);
+void func_06016E84(void);
+void func_060174D8(void);
+void func_06011F58(void);
+void func_06012054(void);
+void func_06012954(void);
+s32 func_06011B28(s32 arg0);
+s32 func_06014F3C(s32 arg0);
+s32 func_06015140(s32 arg0);
+s32 func_060155CC(s32 arg0);
+void func_06015E68(void);
+void func_06016644(void);
+s32 func_06016C60(void);
+s32 func_0601701C(s32 arg0);
+s32 func_06018034(s32 arg0);
+
+#define PCM_SRC_SIZE 0x6000
+#define PCM_RING_SIZE 0xC000
 
 extern SprSpCmd* d_0605AEAC;
 s32 func_0600B954(SprSpCmd* cmd, SpriteObject* obj, SpritePart* part, s32* pos);
@@ -147,7 +219,30 @@ static void PlaySfxCommand(s32 cmd);
 static void PlaySfxFadeAll(s32 withLast);
 
 static void PlaySfxFade(s32 frames, s32 volumeFrames);
+static void MusicBankFlag(s32 music, s8 value);
+s32 func_060129BC(s32 arg0);
 s32 func_06012C4C(u8 id, s32 offset);
+
+void func_060133CC(u8* src, u32* dst, u32 count, s16* pred, s32* index);
+void func_060139C4(void);
+s32 func_0601476C(s32 arg0);
+s32 func_06014B80(s32 arg0);
+s32 func_06014D44(u32 arg0);
+static u8* PcmBuf(s32 i);
+
+static u8* PcmSrcAddr(u32 pos);
+static void ClearPcmSlot(u32 x);
+static void StartPcmChannel7(void);
+static void QueueSplit(void);
+static void ClearSoundRam(u32 addr, u32 n);
+static void slave_snd_ram_copy(u8* dst, const void* src, u32 count);
+
+static void slave_snd_ram_clear(u8* dst, u32 count);
+void sotn_snd_ram_copy(u8* dst, const void* src, u32 count);
+static void slave_pcm_refill(s32 remain);
+static void slave_pcm_rewind(void);
+static void slave_pcm_ring_mark(void);
+void sotn_snd_ram_clear(u8* dst, u32 count);
 
 static s16 RingOffset(s32 trig, s32 radius);
 
@@ -1330,6 +1425,378 @@ static void SoundPlayConfig(s32 channel, s32 config) {
     SND_StartSeq_DR(channel, c->unk0, c->unk3, c->unk4);
 }
 
+void func_06010400(void) {
+    s32 cmd, i, result, mode;
+
+    if (DAT_060644C5 == 0) {
+        if (DAT_06064398 != 0) {
+            DAT_06064398--;
+        } else if ((u8)DAT_060644A0 != 0) {
+            DAT_060644A0--;
+        } else {
+            DAT_060644C5 = 1;
+            func_060125EC();
+        }
+    }
+    if (DAT_060644A8 != 0) {
+        if (DAT_06064420 != 0) {
+            DAT_06064420--;
+        } else {
+            SND_StopSeq(7);
+            DAT_060644A8 = 0;
+        }
+    }
+    if (DAT_06064401 != 0) {
+        if (DAT_060642D8 != 0) {
+            DAT_060642D8--;
+        } else {
+            SND_StopSeq(6);
+            DAT_06064401 = 0;
+        }
+    }
+    if (DAT_060643C7 != 0) {
+        SND_SetSeqPan(7, 0, (u8)DAT_0606436E);
+        DAT_060643C7 = 0;
+    }
+    if (DAT_0606440C != 0) {
+        SND_SetSeqPan(6, 0, (u8)DAT_060644E6);
+        DAT_0606440C = 0;
+    }
+    if (DAT_06064354 == 2) {
+        func_060126D4(1);
+        DAT_06064354 = 3;
+    }
+    if (DAT_06064354 == 3) {
+        func_060126D4(0);
+    }
+    if (DAT_060644AC == 2) {
+        func_060127F0(1);
+        DAT_060644AC = 3;
+    }
+    if (DAT_060644AC == 3) {
+        func_060127F0(0);
+    }
+    if (DAT_060641D8 == 1) {
+        if (DAT_06063BEC != 0) {
+            SND_ChgMixPrm(0, 0, 31);
+            SND_ChgMixPrm(1, 0, 15);
+            func_060129BC(1);
+            DAT_06063BEC = 0;
+        }
+        result = func_060129BC(0);
+        D_06041270[2] = result;
+        if (result == -1) {
+            DAT_060641D8 = 0;
+        }
+        if (result == 0) {
+            DAT_060641D8 = 0;
+        }
+    }
+    if (DAT_0606440D != 0) {
+        return;
+    }
+
+    cmd = DAT_06064250[0];
+    if (cmd == 0 || DAT_06064414 != DAT_0606423A) {
+        return;
+    }
+    for (i = 0; i <= 30; i++) {
+        DAT_06064250[i] = DAT_06064250[i + 1];
+    }
+    DAT_060642CC = 0;
+
+    if ((u32)(cmd - 1) <= 0x2FF) {
+        if (DAT_06064214 == 0 && DAT_06063BE0 == 0) {
+            if (DAT_06062280 == 0) {
+                return;
+            }
+            if ((u32)cmd >=
+                (((u32)DAT_06039414[2] << 16) | DAT_06039414[3]) + 1) {
+                return;
+            }
+            DAT_06062254 = cmd;
+            DAT_06064214 = 1;
+            DAT_06064204 = 1;
+            DAT_060623BC = 0;
+            DAT_06062248 = 0;
+            DAT_0606423C = 0;
+            DAT_06064350 = 0;
+            DAT_060642E8 = 0;
+            DAT_060644C2 = 0;
+            DAT_06063BD8 = 0;
+        } else if (DAT_060641DC == 0 || DAT_06064210 == 0) {
+            DAT_060641DC = cmd;
+            DAT_06064210 = 0;
+        }
+        return;
+    }
+    if ((u32)(cmd + 0x20000000) <= 0x00FFFFFF) {
+        if (DAT_06062258 != cmd) {
+            if (DAT_06062258 == -1) {
+                DAT_0606422C = 0;
+                DAT_06063C18 = 0;
+            }
+            DAT_06062258 = cmd;
+            DAT_060641E0 = 1;
+            DAT_06063BE0 = 1;
+            DAT_060641F4 = 0;
+            DAT_06063EB4 = 0;
+            DAT_06062248 = 0;
+            DAT_060644C1 = 0;
+            DAT_060644DC = 0;
+            DAT_06064400 = 0;
+            DAT_06064330 = 0;
+            DAT_060644C5 = 1;
+            DAT_06064398 = 0;
+            DAT_06064474 = 0;
+            DAT_06064378 = 0;
+            DAT_0606442C = 0;
+            if (func_06012DFC() != 0) {
+                DAT_06063BFC = 1;
+                DAT_060641DC = 0;
+                DAT_06064210 = 0;
+                DAT_06062248 = 0;
+                DAT_060642E8 = 0;
+                DAT_060644C2 = 0;
+            }
+            DAT_06063BD8 = 0;
+        }
+        DAT_06063C24 = 0;
+        return;
+    }
+
+    switch ((u32)cmd) {
+    case 0xF0000001:
+        DAT_06064388 = 1;
+        break;
+    case 0xF0000002:
+        DAT_06064388 = 2;
+        break;
+    case 0xF0000005:
+        HW_WRITE8(snd_adr_sys_int_work + 3, 0x80);
+        break;
+    case 0xF0000006:
+        HW_WRITE8(snd_adr_sys_int_work + 3, 0);
+        break;
+    case 0xF000000A:
+        DAT_06063BD0 = 1;
+        DAT_06063EB4 = 0;
+        DAT_06064400 = 0;
+        DAT_06064330 = 0;
+        DAT_060644C5 = 1;
+        DAT_06064398 = 0;
+        DAT_06063BD8 = 0;
+        DAT_06063BFC = 1;
+        DAT_060641DC = 0;
+        DAT_06064210 = 0;
+        DAT_06062248 = 0;
+        break;
+    case 0xF0000010:
+        if (DAT_06063BE0 != 0) {
+            DAT_06064474 = 1;
+            DAT_06064378 = 0;
+            DAT_060644C5 = 1;
+            func_060122C0(10);
+        } else if (DAT_06064214 != 0) {
+            DAT_060642E8 = 1;
+            DAT_060644C2 = 0;
+            func_060123D4(10);
+        } else {
+            DAT_06064474 = 0;
+            DAT_06064378 = 0;
+        }
+        break;
+    case 0xF0000011:
+        if (DAT_06062248 != 0) {
+            DAT_060644C2 = 1;
+            DAT_060642E8 = 0;
+            func_06012428(10);
+            break;
+        }
+        if (DAT_06064214 != 0 || DAT_06064330 == 0) {
+            break;
+        }
+        CDC_GetCurStat(&DAT_060644D0);
+        if ((DAT_060644D0.status & 0xF) == 2) {
+            DAT_06064398 = 80;
+        }
+        if (DAT_0606440E != 0) {
+            DAT_06064398 = 100;
+            DAT_0606440E = 0;
+        }
+        func_06012358(10);
+        DAT_06064378 = 1;
+        DAT_06064474 = 0;
+        DAT_06064330 = 0;
+        break;
+    case 0xF00000A1:
+        SND_SetSeqVl(6, 1, 1);
+        DAT_060642D8 = 150;
+        DAT_06064401 = 1;
+        break;
+    case 0xF00000A2:
+    case 0xF00000A3:
+        SND_StopSeq(6);
+        break;
+    case 0xF00000A4:
+        mode = DAT_060643E0[6];
+        if ((u32)(mode - 0x2B4) <= 1 || mode == 0x2B6 || mode == 0) {
+            break;
+        }
+        SoundPlayConfig(6, mode);
+        DAT_0606440C = 1;
+        break;
+    case 0xF00000A5:
+        SND_SetSeqVl(7, 1, 1);
+        DAT_06064420 = 150;
+        DAT_060644A8 = 1;
+        DAT_060643E0[7] = 0;
+        break;
+    case 0xF00000A6:
+        SND_StopSeq(7);
+        DAT_060643E0[7] = 0;
+        break;
+    case 0xF00000A7:
+        SND_StopSeq(7);
+        break;
+    case 0xF00000A8:
+        if (DAT_060643E0[7] != 0) {
+            SoundPlayConfig(7, DAT_060643E0[7]);
+            DAT_060643C7 = 1;
+        }
+        break;
+    case 0xF0000800:
+        func_0601269C();
+        if (DAT_06064354 == 0) {
+            DAT_06064354 = 2;
+        }
+        break;
+    case 0xF0000801:
+        func_0601269C();
+        break;
+    case 0xF0000804:
+        func_060126B8();
+        if (DAT_060644AC == 0) {
+            DAT_060644AC = 2;
+        }
+        break;
+    case 0xF0000805:
+        func_060126B8();
+        break;
+    case 0xF0000807:
+        SoundSetRequest(0xF00000E0);
+        break;
+    case 0xF0000808:
+        SoundSetRequest(0xF00000E1);
+        break;
+    case 0xF0000809:
+        SoundSetRequest(0xF00000E2);
+        break;
+    case 0xF000080A:
+        SoundSetRequest(0xF00000E3);
+        break;
+    case 0xF000080B:
+        SoundSetRequest(0xF00000E4);
+        break;
+    case 0xF000080C:
+        SoundSetRequest(0xF00000E5);
+        break;
+    case 0xF000080D:
+        SoundSetRequest2(0xF00000D0);
+        break;
+    case 0xF000080E:
+        SoundSetRequest2(0xF00000D1);
+        break;
+    case 0xF000080F:
+        SoundSetRequest2(0xF00000D2);
+        break;
+    case 0xF0000810:
+        SoundSetRequest(0xF00000E6);
+        SoundSetRequest(0xF00000E7);
+        break;
+    case 0xF0000811:
+        SoundSetRequest(0xF00000E7);
+        break;
+    case 0xF0000812:
+        SoundSetRequest(0xF00000E8);
+        break;
+    case 0xFE000001:
+        SND_SetSeqVl(0, 1, (u8)DAT_060643A0);
+        SND_SetSeqVl(1, 1, (u8)DAT_060643A0);
+        break;
+    case 0xFE000002:
+        SND_SetSeqVl(2, 1, (u8)DAT_060643A0);
+        SND_SetSeqVl(3, 1, (u8)DAT_060643A0);
+        break;
+    case 0xFE000003:
+        SND_SetSeqVl(4, 1, (u8)DAT_060643A0);
+        SND_SetSeqVl(5, 1, (u8)DAT_060643A0);
+        break;
+    case 0xFE000004:
+        SND_SetSeqVl(6, 1, (u8)DAT_060643A0);
+        DAT_060642D8 = 150;
+        DAT_06064401 = 1;
+        break;
+    case 0xFE000005:
+        SND_SetSeqVl(7, 1, (u8)DAT_060643A0);
+        DAT_06064420 = 150;
+        DAT_060644A8 = 1;
+        DAT_060643E0[7] = 0;
+        break;
+    case 0xFE000006:
+        func_06012290(DAT_060642F4);
+        break;
+    case 0xFE000008:
+        SND_StopSeq(0);
+        SND_StopSeq(1);
+        SND_StopSeq(2);
+        SND_StopSeq(3);
+        break;
+    case 0xFE000009:
+        SND_StopSeq(4);
+        SND_StopSeq(5);
+        SND_StopSeq(6);
+        SND_StopSeq(7);
+        DAT_060643E0[6] = 0;
+        DAT_060643E0[7] = 0;
+        if (DAT_060644C0 == 1) {
+            DAT_060644C0 = 2;
+        }
+        break;
+    case 0xFE00000A:
+        DAT_0606435C = 1;
+        break;
+    case 0xFE00000E:
+    case 0xFE00000F:
+    case 0xFE000010:
+    case 0xFE000011:
+        func_060110C0();
+        break;
+    case 0xFE000090:
+        if (DAT_06063BE0 == 5) {
+            func_060121F0(DAT_06064428);
+            DAT_0606442C = 1;
+        } else if (DAT_06064214 == 5) {
+            func_06012260(DAT_06064428);
+        } else if (DAT_06063BE0 != 0) {
+            DAT_06063BD0 = 1;
+            DAT_06063EB4 = 0;
+            DAT_06064400 = 0;
+            DAT_06064330 = 0;
+            DAT_060644C5 = 1;
+            DAT_06064398 = 0;
+            DAT_0606442C = 1;
+        } else if (DAT_06064214 != 0) {
+            DAT_06063BFC = 1;
+            DAT_060641DC = 0;
+            DAT_06064210 = 0;
+            DAT_06062248 = 0;
+            DAT_06063BD8 = 0;
+        }
+        break;
+    }
+}
+
 static void PlaySfxCommand(s32 cmd) {
     if (DAT_06064300 != 0) {
         func_0601298C();
@@ -1374,6 +1841,269 @@ static void PlaySfxFade(s32 frames, s32 volumeFrames) {
     PlaySfxFadeAll(1);
 }
 
+void PlaySfx(s32 sfxId) {
+    u32 id = sfxId;
+    s32 music, sfx, voice;
+    SaturnSoundConfig* config;
+    s32 pending, i;
+    u32 slot;
+
+    if (id == 0x687) {
+        DAT_0606440D = 1;
+        return;
+    }
+    music = id - 0xB00;
+    if ((u32)music <= 0xFF) {
+        if (DAT_060641D8 != 0) {
+            return;
+        }
+        DAT_060644C8 = func_06012C4C(g_SaturnSoundFiles[music].bank, 0);
+        DAT_06064224 = music;
+        DAT_06063BEC = 1;
+        DAT_060641D8 = 1;
+        DAT_06063BD8 = 0;
+        return;
+    }
+    sfx = id - 0x600;
+    if ((u32)sfx <= 0x3FF) {
+        DAT_060643BC = sfx;
+        config = &g_SaturnSoundConfigs[sfx];
+        if (config->unk0 == 8) {
+            if (DAT_06064300 != 0 && config->unk4 < (u8)DAT_060644C3) {
+                return;
+            }
+            DAT_060644C3 = config->unk4;
+            PlaySfxCommand(config->unk3);
+            return;
+        }
+        pending = DAT_06064414 - DAT_0606423A;
+        if (DAT_06064414 != DAT_0606423A && pending != 0) {
+            for (i = 0; i != pending + 0x80; i++) {
+                s32 back = DAT_06064414 - i;
+                slot = back > 0 ? back - 1 : back + 0x7F;
+                if (*(u16*)&DAT_06063ED0[slot][0] == (u32)DAT_060643BC) {
+                    return;
+                }
+                if (i + 1 == DAT_06064414 - DAT_0606423A) {
+                    break;
+                }
+            }
+        }
+        slot = DAT_06064414;
+        *(u16*)&DAT_06063ED0[slot][0] = (u16)DAT_060643BC;
+        if (DAT_060644C4 == 0) {
+            DAT_06063ED0[slot][2] = 0;
+            DAT_06063ED0[slot][3] = 64;
+            DAT_06063ED0[slot][4] = 0;
+        } else {
+            DAT_06063ED0[slot][2] = (u8)DAT_06064230;
+            DAT_06063ED0[slot][3] = (u8)DAT_060643C4;
+            DAT_06063ED0[slot][4] = 1;
+        }
+        DAT_06064414++;
+        if (DAT_06064414 == 0x80) {
+            DAT_06064414 = 0;
+        }
+        return;
+    }
+    voice = (id & 0xFFF) - 0x581;
+    if ((u32)voice <= 0x7E) {
+        PlaySfxCommand((id & 0xFFF) - 0x580);
+        return;
+    }
+    if (id != 0 && id <= 0x580) {
+        func_06011A6C(id > 0x33C ? id - 0x33C : id);
+        if (id > 0x33C) {
+            id -= 0x33C;
+        }
+    }
+    if (id + 0x20000000 <= 0x00FFFFFF) {
+        func_06011A6C(id);
+    }
+    switch (id) {
+    case 0xF0000001:
+    case 0xF0000002:
+    case 0xF0000005:
+    case 0xF0000006:
+    case 0xF000000A:
+    case 0xF0000010:
+    case 0xF0000011:
+    case 0xF00000A1:
+    case 0xF00000A2:
+    case 0xF00000A3:
+    case 0xF00000A4:
+    case 0xF00000A5:
+    case 0xF00000A6:
+    case 0xF00000A7:
+    case 0xF00000A8:
+    case 0xF0000800:
+    case 0xF0000801:
+    case 0xF0000804:
+    case 0xF0000805:
+    case 0xF0000807:
+    case 0xF0000808:
+    case 0xF0000809:
+    case 0xF000080A:
+    case 0xF000080B:
+    case 0xF000080C:
+    case 0xF000080D:
+    case 0xF000080E:
+    case 0xF000080F:
+    case 0xF0000810:
+    case 0xF0000811:
+    case 0xF0000812:
+    case 0xFE00000A:
+        func_06011A6C(id);
+        break;
+    case 0xF0000008:
+        func_06011A6C(0xFE000008);
+        func_06011A6C(0xFE000009);
+        func_06011A6C(0xFE00000A);
+        break;
+    case 0xF000000B:
+        func_06012FB4();
+        func_06011A6C(0xFE00000A);
+        func_06011A6C(0xF000000A);
+        func_06011A6C(0xFE000008);
+        func_06011A6C(0xFE000009);
+        DAT_060644C0 = 1;
+        break;
+    case 0xF000000E:
+        func_06011A6C(0xFE00000E);
+        func_06011A6C(0xFE000010);
+        break;
+    case 0xF000000F:
+        func_06011A6C(0xFE00000F);
+        func_06011A6C(0xFE000011);
+        break;
+    case 0xF0000080:
+        PlaySfxFade(10, 15);
+        break;
+    case 0xF0000081:
+        PlaySfxFade(20, 40 / 3);
+        break;
+    case 0xF0000082:
+        PlaySfxFade(60, 120 / 3);
+        break;
+    case 0xF0000083:
+        PlaySfxFade(120, 240 / 3);
+        break;
+    case 0xF0000084:
+        PlaySfxFade(180, 360 / 3);
+        break;
+    case 0xF0000090:
+        DAT_06064428 = 10;
+        func_06011A6C(0xFE000090);
+        break;
+    case 0xF0000091:
+        DAT_06064428 = 20;
+        func_06011A6C(0xFE000090);
+        break;
+    case 0xF0000092:
+        DAT_06064428 = 60;
+        func_06011A6C(0xFE000090);
+        break;
+    case 0xF0000093:
+        DAT_06064428 = 120;
+        func_06011A6C(0xFE000090);
+        break;
+    case 0xF0000094:
+        DAT_06064428 = 180;
+        func_06011A6C(0xFE000090);
+        break;
+    case 0xF00000A0:
+        DAT_060643A0 = 1;
+        PlaySfxFadeAll(0);
+        break;
+    }
+}
+
+static void MusicBankFlag(s32 music, s8 value) {
+    if (music == 0) {
+        DAT_06064404[0] = value;
+    } else if ((u32)music > 2 && music != 0x33) {
+        DAT_06064404[2] = value;
+    } else {
+        DAT_06064404[1] = value;
+    }
+}
+
+s32 func_060129BC(s32 arg0) {
+    s32 sctsz, nsct, lstsz, amode;
+    s32 music, result;
+
+    if (arg0 != 0) {
+        D_06041288 = 0;
+        return 1;
+    }
+    if (D_06041288 == 0) {
+        if (DAT_06063BD4 != 0 && DAT_06063EB4 == 0) {
+            return 1;
+        }
+        if (DAT_06063BE0 == 5 && DAT_0606238C == 0) {
+            return 1;
+        }
+        music = DAT_06064224;
+        if ((u32)music <= 56) {
+            DAT_0606223C =
+                func_06017F5C((char*)g_SaturnSoundFiles[music].filename);
+            if (DAT_0606223C == NULL) {
+                MusicBankFlag(music, 0);
+                return -1;
+            }
+        }
+        GFS_GetFileSize(DAT_0606223C, &sctsz, &nsct, &lstsz);
+        DAT_06057C40 = (nsct - 1) * sctsz + lstsz;
+        if (DAT_06064224 == 0xB8) {
+            DAT_06057C3C = DAT_0606441C;
+        } else {
+            DAT_06064470 = DAT_06064224;
+            DAT_06057C3C = DAT_060644C8;
+        }
+        D_06041288 = 1;
+    }
+    if (D_06041288 == 1) {
+        if (DAT_06063BD4 != 0 && DAT_06063EB4 == 0) {
+            return 1;
+        }
+        if (DAT_06063BE0 == 5 && DAT_0606238C == 0) {
+            return 1;
+        }
+        if (func_06016B9C(DAT_0606223C, (void*)(unsigned long)(u32)DAT_06057C3C,
+                          DAT_06057C40) == -1) {
+            DAT_0606223C = NULL;
+            MusicBankFlag(DAT_06064224, 0);
+            return -1;
+        }
+        D_06041288 = 2;
+    }
+    if (D_06041288 != 2) {
+        return D_06041288;
+    }
+    result = GFS_NwExecOne(DAT_0606223C);
+    DAT_060642E0 = result;
+    if (result == -1) {
+        return result;
+    }
+    if (result != 0) {
+        return 1;
+    }
+    GFS_NwGetStat(DAT_0606223C, &amode, &DAT_06057C38);
+    DAT_06057C3C += 0xC000;
+    DAT_060623B0[2] |= 2;
+    DAT_06057C40 -= DAT_06057C38;
+    if (DAT_06057C40 > 0) {
+        D_06041288 = 1;
+        return 1;
+    }
+    PcmClose(DAT_0606223C, 2);
+    DAT_0606223C = NULL;
+    DAT_060623B0[2] &= ~2;
+    D_06041288 = 0;
+    MusicBankFlag(DAT_06064224, 1);
+    return 0;
+}
+
 s32 func_06012C4C(u8 id, s32 offset) {
     u32 entry = 0x25A00500;
     s32 want = id + offset;
@@ -1389,6 +2119,974 @@ s32 func_06012C4C(u8 id, s32 offset) {
     return 0x25A00000 + ((HW_READ8(entry + 1) << 16) |
                          (HW_READ8(entry + 2) << 8) | HW_READ8(entry + 3));
 }
+
+void func_060139C4(void) {
+    s32 pan;
+    s32 cfgIdx;
+    s32 vol;
+    s32 i;
+    s32 slot;
+    s32 ret;
+    s32 sub;
+    s32 idx;
+    s32 kind;
+    volatile SoundRequest* req;
+    volatile SoundRequest* dst;
+    SaturnSoundConfig* cfg;
+    s8* row;
+
+    satz_set_sr(satz_get_sr() | 0xF0);
+    HW_WRITE16(0xFFFFFEE2, 0);
+    HW_WRITE16(0xFFFFFE60, 0);
+    HW_WRITE8(0xFFFFFE10, 1);
+    CSH_Init(0);
+    for (;;) {
+        CSH_AllClr();
+        while (!(HW_READ8(0xFFFFFE11) & 0x80)) {
+            satz_idle();
+        }
+        HW_WRITE8(0xFFFFFE11, 0);
+
+        if (DAT_06043C4C != 0) {
+            DAT_06043C4C = 0;
+            for (i = 0; i < 8; i++) {
+                if (DAT_06064310[i] != 0x40) {
+                    SND_SetSeqPan((u8)i, 0, (u8)DAT_06064310[i]);
+                    DAT_06064310[i] = 0x40;
+                }
+            }
+            goto after_music_cmd;
+        }
+        DAT_06043C4C = 1;
+        if ((u8)DAT_0606440D == 0) {
+            if ((u8)DAT_06064414 == (u8)DAT_0606423A) {
+                goto after_music_cmd;
+            }
+            row = DAT_06063ED0[(u8)DAT_0606423A];
+            cfgIdx = *(u16*)row;
+            pan = (u8)row[3];
+            if (row[4] == 0) {
+                vol = g_SaturnSoundConfigs[cfgIdx].unk1;
+            } else {
+                vol = (g_SaturnSoundConfigs[cfgIdx].unk1 * (u8)row[2]) / 127;
+            }
+            DAT_0606423A++;
+            if (DAT_0606423A == 0x80) {
+                DAT_0606423A = 0;
+            }
+        } else {
+            cfgIdx = 0x87;
+            pan = 64;
+            vol = g_SaturnSoundConfigs[0x87].unk1;
+            DAT_0606440D = 0;
+        }
+
+        vol = func_06011B28(vol);
+        if (cfgIdx <= 0xFF) {
+            if (DAT_06064404[0] == 0) {
+                goto after_music_cmd;
+            }
+        } else if (cfgIdx <= 0x12F) {
+            if (DAT_06064404[1] == 0 || DAT_06064404[0] == 0) {
+                goto after_music_cmd;
+            }
+        } else {
+            if (DAT_06064404[2] == 0 || DAT_06064404[0] == 0) {
+                goto after_music_cmd;
+            }
+        }
+
+        cfg = &g_SaturnSoundConfigs[cfgIdx];
+        switch (cfg->unk2) {
+        case 1:
+            DAT_060644A8 = 0;
+            SND_SetSeqVl(7, (u8)vol, 0);
+            SND_StartSeq_DR(7, cfg->unk0, cfg->unk3, cfg->unk4);
+            DAT_060644B0 = cfg->unk1;
+            DAT_060643E0[7] = cfgIdx;
+            DAT_06064310[7] = (s16)pan;
+            DAT_0606436E = (s16)pan;
+            break;
+        case 2:
+            SND_StopSeq(7);
+            DAT_060643E0[7] = 0;
+            break;
+        case 3:
+            DAT_06064401 = 0;
+            SND_SetSeqVl(6, (u8)vol, 0);
+            SND_StartSeq_DR(6, cfg->unk0, cfg->unk3, cfg->unk4);
+            DAT_060643E0[6] = cfgIdx;
+            DAT_06064310[6] = (s16)pan;
+            DAT_060644E6 = (s16)pan;
+            break;
+        case 0:
+        case 5:
+        case 9:
+            for (slot = 0; slot <= 5; slot++) {
+                if (DAT_060643E0[slot] == cfgIdx) {
+                    SND_StartSeq_DR((u8)slot, cfg->unk0, cfg->unk3, cfg->unk4);
+                    SND_SetSeqVl((u8)slot, (u8)vol, 0);
+                    DAT_06064310[slot] = (s16)pan;
+                    goto after_music_cmd;
+                }
+            }
+            for (slot = 0; slot <= 5; slot++) {
+                SND_GetSeqStat(&DAT_06064478, (u8)slot);
+                if (SND_SEQ_STAT_MODE(DAT_06064478) == 0) {
+                    SND_SetSeqVl((u8)slot, (u8)vol, 0);
+                    SND_StartSeq_DR((u8)slot, cfg->unk0, cfg->unk3, cfg->unk4);
+                    DAT_060643E0[slot] = cfgIdx;
+                    DAT_060644B8[slot] = cfg->unk4;
+                    DAT_06064310[slot] = (s16)pan;
+                    goto after_music_cmd;
+                }
+            }
+            for (slot = 0; slot <= 5; slot++) {
+                if (cfg->unk4 > (u8)DAT_060644B8[slot]) {
+                    goto steal_slot;
+                }
+            }
+            for (slot = 0; slot <= 5; slot++) {
+                if (cfg->unk4 == (u8)DAT_060644B8[slot]) {
+                    goto steal_slot;
+                }
+            }
+            break;
+        steal_slot:
+            SND_StartSeq_DR((u8)slot, cfg->unk0, cfg->unk3, cfg->unk4);
+            SND_SetSeqVl((u8)slot, (u8)vol, 0);
+            DAT_060643E0[slot] = cfgIdx;
+            DAT_060644B8[slot] = cfg->unk4;
+            DAT_06064310[slot] = (s16)pan;
+            break;
+        default:
+            break;
+        }
+
+    after_music_cmd:
+        if (DAT_06063BD8 == 0) {
+            if (DAT_06063BD0 != 0) {
+                func_06011F58();
+                DAT_06063BD0 = 0;
+            }
+            switch (DAT_06063BE0) {
+            case 1:
+                if (DAT_060641F4 == 0) {
+                    if (DAT_060641E0 != 0) {
+                        func_0601476C(1);
+                        DAT_060641E0 = 0;
+                    }
+                    ret = func_0601476C(0);
+                    if (ret == -1) {
+                        DAT_06063BE0 = 0;
+                    } else if (ret == 0) {
+                        if (DAT_060641D4 == -1) {
+                            func_06014F3C(1);
+                        } else {
+                            func_06015140(1);
+                        }
+                        DAT_06063BE0 = 2;
+                    }
+                } else {
+                    if (DAT_060641E0 != 0) {
+                        func_06014B80(1);
+                        DAT_060641E0 = 0;
+                    }
+                    ret = func_06014B80(0);
+                    if (ret == -1) {
+                        DAT_06063BE0 = 0;
+                    } else {
+                        DAT_06063BE0 = 2;
+                    }
+                }
+                break;
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+                if (DAT_06063BE0 - 3 <= 2) {
+                    if (DAT_060641D4 == -1) {
+                        func_06014F3C(0);
+                    } else {
+                        func_06015140(0);
+                    }
+                }
+                break;
+            case 7:
+                func_06011F58();
+                DAT_06063BE0 = 0;
+                break;
+            case 8:
+                if (DAT_060641D4 == -1) {
+                    ret = func_06014F3C(0);
+                } else {
+                    ret = func_06015140(0);
+                }
+                if (ret == 0) {
+                    DAT_06063BE0 = 0;
+                }
+                break;
+            default:
+                break;
+            }
+
+            if (DAT_06063BF0 != 0) {
+                func_06012054();
+                DAT_06063BF0 = 0;
+            }
+            if (DAT_06063BFC != 0) {
+                func_060120A0();
+                DAT_06063BFC = 0;
+            }
+
+            switch (DAT_06064214) {
+            case 1:
+                if (DAT_06064204 != 0) {
+                    func_06014D44(0);
+                    DAT_06064204 = 0;
+                }
+                if (DAT_060623BC == 0) {
+                    ret = func_06014D44(DAT_06062254);
+                    if (ret == -1) {
+                        DAT_06064214 = 0;
+                    } else if (ret == 0) {
+                        DAT_06064214 = 2;
+                    }
+                    func_060155CC(1);
+                } else {
+                    ret = func_06014C20();
+                    if (ret == -1) {
+                        DAT_06064214 = 0;
+                    } else {
+                        DAT_06064214 = 2;
+                    }
+                }
+                break;
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+                if ((DAT_06064214 & 0x0F) == 5) {
+                    func_060155CC(0);
+                }
+                break;
+            case 7:
+                func_060120A0();
+                DAT_0606423C = 0;
+                break;
+            case 8:
+                ret = func_060155CC(0);
+                if (ret == 0) {
+                    DAT_06064214 = ret;
+                }
+                break;
+            default:
+                break;
+            }
+
+            if (DAT_0606435C != 0) {
+                func_06012954();
+                DAT_0606435C = 0;
+            }
+
+            switch (DAT_06064300) {
+            case 1:
+                if (DAT_0606433C != 0) {
+                    func_0601701C(0);
+                    DAT_0606433C = 0;
+                }
+                if (DAT_06064334 == 0) {
+                    ret = func_0601701C(DAT_060642F8);
+                    if (ret == -1) {
+                        DAT_06064300 = 0;
+                    } else if (ret == 0) {
+                        DAT_06064300 = 2;
+                    }
+                } else {
+                    ret = func_06017F28();
+                    if (ret == -1) {
+                        DAT_06064300 = 0;
+                    } else if (ret == 0) {
+                        DAT_06064300 = 2;
+                    }
+                }
+                break;
+            case 7:
+                func_06012954();
+                DAT_06064430 = 0;
+                break;
+            case 8:
+                DAT_06064300 = 0;
+                break;
+            default:
+                break;
+            }
+        }
+
+        if (DAT_06063E70 == 0) {
+            func_06016C60();
+            func_06016614();
+        }
+        if (DAT_06062250 == 0) {
+            func_06016D84();
+            func_06016644();
+        }
+        if (DAT_06064234 == 0) {
+            func_06016E84();
+            func_060174D8();
+        }
+
+        if (DAT_06064328 != DAT_06062368 || DAT_06064380 != 0 ||
+            DAT_060644DC != 0) {
+            DAT_06064328 = DAT_06062368;
+            sub = DAT_06062368;
+            if (DAT_060644C1 == 1) {
+                sub = 0;
+            }
+            if (DAT_06063BE0 > 3) {
+                SND_PRM_TL(DAT_060643B0) =
+                    func_06018034((u32)(0x7FFF - sub) >> 7);
+                SND_ChgPcmTL(&DAT_060643B0);
+            }
+            if (DAT_06064380 != 0) {
+                DAT_06064380--;
+            }
+            if (DAT_060644DC != 0) {
+                DAT_060644DC--;
+            }
+        }
+        if (DAT_06064418 != (s32)DAT_06064498 || DAT_060643C6 != 0) {
+            DAT_06064418 = DAT_06064498;
+            if (DAT_06064214 > 3) {
+                SND_PRM_TL(DAT_06064440) =
+                    func_06018034((u32)(0x7FFF - DAT_06064498) >> 7);
+                SND_ChgPcmTL(&DAT_06064440);
+            }
+            if (DAT_060643C6 != 0) {
+                DAT_060643C6--;
+            }
+        }
+        if (DAT_060642F0 != (s32)DAT_0606448C || DAT_06064379 != 0) {
+            DAT_060642F0 = DAT_0606448C;
+            if ((u32)DAT_06064300 > 3) {
+                SND_PRM_TL(DAT_06064460) =
+                    func_06018034((u32)(0x7FFF - DAT_0606448C) >> 7);
+                SND_ChgPcmTL(&DAT_06064460);
+            }
+            if (DAT_06064379 != 0) {
+                DAT_06064379--;
+            }
+        }
+
+        for (i = 0; i < 4; i++) {
+            req = &DAT_06063C30[i];
+            if (req->unk0 == 0) {
+                continue;
+            }
+            kind = req->unk4;
+            if (kind == 1) {
+                func_060133CC(req->unk8, (u32*)(unsigned long)(u32)req->unkC,
+                              req->unk10, (s16*)&req->unk24, (s32*)&req->unk1C);
+                req->unk0 = 0;
+                if (i > kind) {
+                    dst = &DAT_06063C30[i - 2];
+                    dst->unk24 = req->unk24;
+                    dst->unk1C = req->unk1C;
+                }
+            } else if (kind == 2) {
+                func_06013538(req->unk8, (u16*)(unsigned long)(u32)req->unkC,
+                              (u16*)(unsigned long)((u32)req->unkC + 0x4000),
+                              req->unk10, (s16*)&req->unk24, (s16*)&req->unk26,
+                              (s32*)&req->unk1C, (s32*)&req->unk20);
+                req->unk0 = 0;
+                if (i > 1) {
+                    dst = &DAT_06063C30[i - 2];
+                    dst->unk24 = req->unk24;
+                    dst->unk1C = req->unk1C;
+                    dst->unk26 = req->unk26;
+                    dst->unk20 = req->unk20;
+                }
+            }
+        }
+    }
+}
+
+static u8* PcmBuf(s32 i) { return i ? DAT_06062270.unk4 : DAT_06062270.unk0; }
+
+static u8* PcmSrcAddr(u32 pos) {
+    return PcmBuf(pos / PCM_SRC_SIZE) + pos % PCM_SRC_SIZE;
+}
+
+static void ClearPcmSlot(u32 x) {
+    ClearSoundRam(DAT_06063C0C + 2 * x, 0x800);
+    ClearSoundRam(DAT_06063C0C + 2 * x + 0x4000, 0x800);
+}
+
+static void StartPcmChannel7(void) {
+    SndPcmStartPrm sprm;
+
+    DAT_06064380 = 2;
+    SND_PRM_MODE(sprm) = 0x80;
+    SND_PRM_SADR(sprm) = 0x7800;
+    SND_PRM_SIZE(sprm) = 0x2000;
+    SND_PRM_NUM(DAT_060643B0) = 7;
+    SND_PRM_TL(DAT_060643B0) = 255;
+    SND_PRM_LEV(DAT_060643B0) = 7;
+    SND_PRM_PAN(DAT_060643B0) = 0;
+    SND_PRM_PICH(DAT_060643B0) = 0;
+    SND_L_EFCT_IN(DAT_060643B0) = 0;
+    SND_L_EFCT_LEV(DAT_060643B0) = 0;
+    SND_R_EFCT_IN(DAT_060643B0) = 0;
+    SND_R_EFCT_LEV(DAT_060643B0) = 0;
+    SND_StartPcmTL(&sprm, &DAT_060643B0);
+    DAT_060641FC = 0;
+}
+
+static void QueueSplit(void) {
+    u32 pos = DAT_06063EAC;
+    u32 split = DAT_06063BE8;
+    u32 x = DAT_0606421C;
+
+    func_06014724(PcmSrcAddr(pos), DAT_06063C0C + 2 * x, (split & 0x3FF) >> 1,
+                  DAT_06062368, 0);
+    func_060146A4(PcmSrcAddr(split), DAT_06063C0C + 2 * x + 2 * (split & 0x3FF),
+                  0x200 - ((split & 0x3FF) >> 1), DAT_06064228, DAT_06062264,
+                  DAT_06063E74, DAT_06063BF4, DAT_06062368, 2);
+}
+
+void func_06015E68(void) {
+    SndPcmPlayAdr pcmAdr;
+    u32 pending;
+    u32 x;
+    u32 rem;
+
+    switch (DAT_06063BE0 & 0xF) {
+    case 2:
+        if (DAT_0606225C != 0) {
+            func_060146A4(PcmSrcAddr(DAT_06063EAC), DAT_06063C0C, 0x200, 0, 0,
+                          0, 0, DAT_06062368, 0);
+            DAT_0606225C = 0;
+        } else if (
+            DAT_06064200 != 0 && DAT_06063EAC == ((DAT_06063BE8 >> 10) << 10)) {
+            QueueSplit();
+            DAT_06064200 = 0;
+        } else {
+            func_06014724(
+                PcmSrcAddr(DAT_06063EAC), DAT_06063C0C, 0x200, DAT_06062368, 0);
+        }
+        DAT_06062238 -= 0x200;
+        DAT_06063EAC = (DAT_06063EAC + 0x400) % PCM_RING_SIZE;
+        DAT_0606421C = 0x400;
+        goto tail;
+    case 3:
+        if (DAT_06064200 != 0 && DAT_06063EAC == ((DAT_06063BE8 >> 10) << 10)) {
+            QueueSplit();
+            DAT_06064200 = 0;
+        } else {
+            func_06014724(
+                PcmSrcAddr(DAT_06063EAC), DAT_06063C0C + 2 * DAT_0606421C,
+                0x200, DAT_06062368, 0);
+        }
+        DAT_06062238 -= 0x200;
+        DAT_06063EAC = (DAT_06063EAC + 0x400) % PCM_RING_SIZE;
+        DAT_0606421C += 0x400;
+        goto tail;
+    case 4:
+        StartPcmChannel7();
+        DAT_06063BE0++;
+        return;
+    case 5:
+        SND_GetPcmPlayAdr(&pcmAdr, 7);
+        x = DAT_0606421C;
+        if (pcmAdr.radr == (x >> 12) && (x & 0xFFF) == 0) {
+            return;
+        }
+        if (DAT_06062230[DAT_06063E7C] == 0) {
+            ClearPcmSlot(x);
+            DAT_0606421C = (DAT_0606421C + 0x400) & 0x1FFF;
+            return;
+        }
+        if (DAT_06064200 != 0 && DAT_06063EAC == ((DAT_06063BE8 >> 10) << 10)) {
+            QueueSplit();
+            DAT_06064200 = 0;
+        } else {
+            func_06014724(
+                PcmSrcAddr(DAT_06063EAC), DAT_06063C0C + 2 * DAT_0606421C,
+                0x200, DAT_06062368, 0);
+        }
+        DAT_06062238 -= 0x200;
+        DAT_06063EAC = (DAT_06063EAC + 0x400) % PCM_RING_SIZE;
+        DAT_0606421C = (DAT_0606421C + 0x400) & 0x1FFF;
+        rem = DAT_06063EAC % PCM_SRC_SIZE;
+        if (rem == 0) {
+            DAT_06062230[DAT_06063E7C] = rem;
+            DAT_06063E7C = (DAT_06063E7C + 1) & 1;
+        }
+        return;
+    case 6:
+        SND_GetPcmPlayAdr(&pcmAdr, 7);
+        x = DAT_0606421C;
+        if (pcmAdr.radr != (x >> 12)) {
+            ClearPcmSlot(x);
+            DAT_06063BE0++;
+            return;
+        }
+        if ((x & 0xF00) != 0) {
+            ClearPcmSlot(x);
+            DAT_0606421C = (DAT_0606421C + 0x400) & 0x1FFF;
+        }
+        return;
+    case 7:
+        SND_StopPcm2(0);
+        return;
+    default:
+        return;
+    }
+tail:
+    rem = DAT_06063EAC % PCM_SRC_SIZE;
+    if (rem == 0) {
+        DAT_06062230[DAT_06063E7C] = rem;
+        DAT_06063E7C = (DAT_06063E7C + 1) & 1;
+    }
+    DAT_06063BE0++;
+}
+
+void func_06016644(void) {
+    SndPcmPlayAdr adr;
+    SndPcmStartPrm sprm;
+    u32 st;
+    s32 n;
+    s32 flag;
+    u32 idx;
+
+    st = (DAT_06064214 & 0xF) - 2;
+    if (st > 5) {
+        return;
+    }
+    switch (st) {
+    case 0:
+        DAT_060440FC = 0;
+        flag = DAT_0606227C;
+        if (flag != 0) {
+            func_060145F8(DAT_06062244, DAT_06063EBC, 0x100, 0, 0, 1);
+            DAT_06063C04 = (DAT_06063C04 + 0x100) & 0x3FFF;
+            DAT_06063EB0 -= 0x100;
+            DAT_0606420C = 0x200;
+            DAT_0606227C = 0;
+            goto next;
+        }
+        n = DAT_06063EB0;
+        if (n == 0) {
+            goto empty;
+        }
+        if ((u32)n > 0x100) {
+            func_06014658(DAT_06062244 + DAT_06063C04,
+                          DAT_06063EBC + 2 * DAT_0606420C, 0x100, 1);
+            DAT_06063EB0 -= 0x100;
+            DAT_06063C04 = (DAT_06063C04 + 0x100) & 0x3FFF;
+            DAT_0606420C = (DAT_0606420C + 0x200) & 0x1FFF;
+            goto next;
+        }
+        func_06014658(
+            DAT_06062244 + DAT_06063C04, DAT_06063EBC + 2 * DAT_0606420C, n, 1);
+        if (0x100 - n != 0) {
+            ClearSoundRam(DAT_06063EBC + 2 * DAT_0606420C + n * 4, 0x100 - n);
+        }
+        DAT_06063C04 += n;
+        DAT_06063EB0 = flag;
+        DAT_0606420C = (DAT_0606420C + 0x200) & 0x1FFF;
+        DAT_06064214 += 2;
+        goto check;
+    case 1:
+        n = DAT_06063EB0;
+        if (n == 0) {
+            goto empty;
+        }
+        if ((u32)n > 0x100) {
+            func_06014658(DAT_06062244 + DAT_06063C04,
+                          DAT_06063EBC + 2 * DAT_0606420C, 0x100, 1);
+            DAT_06063EB0 -= 0x100;
+            DAT_06063C04 = (DAT_06063C04 + 0x100) & 0x3FFF;
+        } else {
+            func_06014658(DAT_06062244 + DAT_06063C04,
+                          DAT_06063EBC + 2 * DAT_0606420C, n, 1);
+            if (0x100 - n != 0) {
+                ClearSoundRam(
+                    DAT_06063EBC + 2 * DAT_0606420C + n * 4, 0x100 - n);
+            }
+            DAT_06063C04 += n;
+            DAT_06063EB0 = 0;
+        }
+        DAT_0606420C = (DAT_0606420C + 0x200) & 0x1FFF;
+        goto next;
+    empty:
+        DAT_06064214 = 7;
+        goto check;
+    case 2:
+        DAT_060643C6 = 2;
+        sprm.mode = 0;
+        sprm.sadr = 0x7800;
+        sprm.size = 0x2000;
+        DAT_06064440.num = 6;
+        DAT_06064498 = g_SaturnSoundValues512[(u32)DAT_06062254 & 0xFFFFF];
+        DAT_06063EA8 = DAT_06064498;
+        if (DAT_06064350 != 0) {
+            DAT_06064498 = 0;
+        }
+        DAT_06064440.t_lev = 0xFF;
+        DAT_06064440.lev = 7;
+        DAT_06064440.pan = 0;
+        DAT_06064440.pich = 0x7800;
+        DAT_06064440.l_efct_in = 0;
+        DAT_06064440.l_efct_lev = 0;
+        DAT_06064440.r_efct_in = 0;
+        DAT_06064440.r_efct_lev = 0;
+        SND_StartPcmTL(&sprm, &DAT_06064440);
+        DAT_06064214 += 1;
+        if (DAT_06063EB0 == 0) {
+            DAT_06064214 += 1;
+        }
+        return;
+    case 3:
+        SND_GetPcmPlayAdr(&adr, 6);
+        idx = DAT_0606420C;
+        if (adr.radr == (idx >> 12) && (idx & 0xFFF) == 0) {
+            return;
+        }
+        if (DAT_06062380[DAT_060641F8] == 0) {
+            ClearSoundRam(DAT_06063EBC + 2 * idx, 0x400);
+            DAT_0606420C = (DAT_0606420C + 0x200) & 0x1FFF;
+            return;
+        }
+        n = DAT_06063EB0;
+        if (n == 0) {
+            goto check;
+        }
+        if ((u32)n > 0x100) {
+            func_06014658(
+                DAT_06062244 + DAT_06063C04, DAT_06063EBC + 2 * idx, 0x100, 1);
+            DAT_06063EB0 -= 0x100;
+            DAT_06063C04 = (DAT_06063C04 + 0x100) & 0x3FFF;
+            DAT_0606420C = (DAT_0606420C + 0x200) & 0x1FFF;
+            goto check;
+        }
+        func_06014658(
+            DAT_06062244 + DAT_06063C04, DAT_06063EBC + 2 * idx, n, 1);
+        if (0x100 - n != 0) {
+            ClearSoundRam(DAT_06063EBC + 2 * DAT_0606420C + n * 4, 0x100 - n);
+        }
+        DAT_06063C04 += n;
+        DAT_06063EB0 = 0;
+        DAT_0606420C = (DAT_0606420C + 0x200) & 0x1FFF;
+        goto next;
+    case 4:
+        SND_GetPcmPlayAdr(&adr, 6);
+        idx = DAT_0606420C;
+        if (adr.radr != (idx >> 12)) {
+            ClearSoundRam(DAT_06063EBC + 2 * idx, 0x400);
+            DAT_060440F8 = DAT_0606420C + 0x200;
+            DAT_060440FC = 1;
+        } else if ((idx & 0xF00) != 0) {
+            ClearSoundRam(DAT_06063EBC + 2 * idx, 0x400);
+            DAT_0606420C = (DAT_0606420C + 0x200) & 0x1FFF;
+        }
+        if (DAT_060440FC == 1) {
+            if (adr.radr == (DAT_0606420C >> 12)) {
+                DAT_06064214 += 1;
+                return;
+            }
+            ClearSoundRam(DAT_06063EBC + 2 * DAT_060440F8, 0x400);
+            DAT_060440F8 = (DAT_060440F8 + 0x200) & 0x1FFF;
+        }
+        return;
+    case 5:
+        SND_StopPcm2(1);
+        return;
+    }
+    return;
+next:
+    DAT_06064214 += 1;
+check:
+    idx = DAT_06063C04 & 0x1FFF;
+    if (idx == 0) {
+        DAT_06062380[DAT_060641F8] = idx;
+        DAT_060641F8 = (DAT_060641F8 + 1) & 1;
+    }
+}
+
+static void ClearSoundRam(u32 addr, u32 n) {
+    static const u8 zero[0x400];
+    u32 done;
+
+    for (done = 0; done < n; done += sizeof(zero)) {
+        satz_bus_store(addr + done, zero,
+                       n - done < sizeof(zero) ? n - done : sizeof(zero));
+    }
+}
+
+s32 func_06016C60(void) {
+    s32 r2;
+
+    if (DAT_06063BE0 == 5) {
+        s32 step = DAT_0606422C;
+
+        if (step != 0) {
+            DAT_06063C18 += step;
+            if ((u32)DAT_060641EC > (u32)DAT_06063C18) {
+                DAT_0606224C = 0;
+            } else {
+                if (DAT_06062258 == -1) {
+                    DAT_06063BE0 = 6;
+                } else {
+                    DAT_0606224C = 1;
+                }
+                DAT_06063C18 = DAT_060641EC;
+                DAT_0606422C = 0;
+            }
+        } else if ((s32)DAT_06062388 != 0) {
+            if (DAT_06063C18 > (s32)DAT_06062388) {
+                DAT_06063C18 -= (s32)DAT_06062388;
+            } else {
+                DAT_06062388 = step;
+                DAT_06063C18 = step;
+            }
+        }
+        if (DAT_060641EC >= (u32)DAT_06063C18) {
+            r2 = DAT_060641EC - (u32)DAT_06063C18;
+        } else {
+            r2 = 0;
+        }
+        DAT_06062368 = r2;
+    }
+
+    if (DAT_06064388 == 1) {
+        if (DAT_0606446C > 40) {
+            DAT_0606446C -= 2;
+        }
+    } else if (DAT_06064388 == 2) {
+        DAT_0606446C += 2;
+        if (DAT_0606446C > 100) {
+            DAT_0606446C = 100;
+            DAT_06064388 = 0;
+        }
+    } else {
+        goto skip_scale;
+    }
+    DAT_06062368 = (u32)((u32)DAT_06062368 * (u32)DAT_0606446C) / 100;
+skip_scale:
+    if (DAT_06062368 == 0 && DAT_06064358 == 1) {
+        DAT_06064358 = 0;
+        func_06012474();
+    }
+    return 0;
+}
+
+static void slave_snd_ram_copy(u8* dst, const void* src, u32 count) {
+    satz_bus_store(satz_bus_address(dst), src, count);
+}
+
+static void slave_snd_ram_clear(u8* dst, u32 count) {
+    static const u8 zero[0x400];
+    u32 done;
+
+    for (done = 0; done < count; done += sizeof(zero)) {
+        satz_bus_store(
+            satz_bus_address(dst + done), zero,
+            count - done < sizeof(zero) ? count - done : sizeof(zero));
+    }
+}
+
+void sotn_snd_ram_copy(u8* dst, const void* src, u32 count) {
+    slave_snd_ram_copy(dst, src, count);
+}
+
+static void slave_pcm_refill(s32 remain) {
+    s32 chunk;
+
+    while (remain != 0) {
+        chunk = DAT_06064340 - DAT_06064394;
+        DAT_06064360 = chunk;
+        DAT_060644E8 = (u8*)DAT_060644E8 - chunk;
+        if ((u32)chunk >= (u32)remain) {
+            slave_snd_ram_copy(
+                DAT_06064480 + DAT_0606434C, DAT_060644E8, remain);
+            DAT_060644E8 = (u8*)DAT_060644E8 + remain;
+            DAT_06064408 = (DAT_06064408 + remain) & 0x1FFF;
+            DAT_06064360 -= remain;
+            DAT_0606434C = (DAT_0606434C + remain) & 0x1FFF;
+            remain = 0;
+        } else {
+            slave_snd_ram_copy(
+                DAT_06064480 + DAT_0606434C, DAT_060644E8, chunk);
+            DAT_060644E8 = (u8*)DAT_060644E8 + DAT_06064360;
+            DAT_0606434C = (DAT_0606434C + DAT_06064360) & 0x1FFF;
+            DAT_06064408 = (DAT_06064408 + DAT_06064360) & 0x1FFF;
+            remain -= DAT_06064360;
+            DAT_06064360 = 0;
+        }
+    }
+}
+
+static void slave_pcm_rewind(void) {
+    s32 chunk;
+
+    if (DAT_06064360 == 0) {
+        chunk = DAT_06064340 - DAT_06064394;
+        DAT_06064360 = chunk;
+        DAT_060644E8 = (u8*)DAT_060644E8 - chunk;
+    }
+}
+
+static void slave_pcm_ring_mark(void) {
+    s32 offset = DAT_06064408 & 0x1FFF;
+
+    if (offset == 0) {
+        DAT_06064490[DAT_06064484] = offset;
+        DAT_06064484 = (DAT_06064484 + 1) & 1;
+    }
+}
+
+void func_06017988(void) {
+    SndPcmPlayAdr pcm_adr;
+    s32 pending;
+    s32 remain;
+    u32 count;
+    u32 state;
+
+    state = DAT_06064300 & 0xF;
+    if (state - 2 > 5) {
+        return;
+    }
+    switch (state) {
+    case 2:
+        DAT_06044110 = 0;
+        DAT_06044114 = 0;
+        remain = 0;
+        pending = DAT_06064238;
+        count = DAT_06064360;
+        if (pending != 0) {
+            if (count > 0x800) {
+                slave_snd_ram_copy(
+                    DAT_06064480 + DAT_0606434C, DAT_060644E8, 0x800);
+                DAT_060644E8 = (u8*)DAT_060644E8 + 0x800;
+                DAT_06064408 = (DAT_06064408 + 0x800) & 0x1FFF;
+                DAT_06064360 -= 0x800;
+                DAT_0606434C = 0x800;
+                DAT_06064238 = 0;
+                DAT_06064300 = 4;
+            } else {
+                slave_snd_ram_copy(
+                    DAT_06064480 + DAT_0606434C, DAT_060644E8, count);
+                DAT_060644E8 = (u8*)DAT_060644E8 + count;
+                remain = 0x800 - count;
+                DAT_06064408 = (DAT_06064408 + count) & 0x1FFF;
+                DAT_0606434C = count;
+                DAT_06064360 = 0;
+                DAT_06064238 = 0;
+                DAT_06064300 = 4;
+            }
+        } else if (count != 0) {
+            if (count > 0x800) {
+                slave_snd_ram_copy(
+                    DAT_06064480 + DAT_0606434C, DAT_060644E8, 0x800);
+                DAT_060644E8 = (u8*)DAT_060644E8 + 0x800;
+                DAT_06064360 -= 0x800;
+                DAT_06064408 = (DAT_06064408 + 0x800) & 0x1FFF;
+                DAT_0606434C = (DAT_0606434C + 0x800) & 0x1FFF;
+                DAT_06064300 = 4;
+            } else {
+                slave_snd_ram_copy(
+                    DAT_06064480 + DAT_0606434C, DAT_060644E8, count);
+                DAT_060644E8 = (u8*)DAT_060644E8 + count;
+                remain = 0x800 - count;
+                DAT_06064408 = (DAT_06064408 + count) & 0x1FFF;
+                DAT_0606434C = (DAT_0606434C + count) & 0x1FFF;
+                DAT_06064360 = 0;
+                DAT_06064300 = 4;
+            }
+        }
+        slave_pcm_refill(remain);
+        slave_pcm_rewind();
+        slave_pcm_ring_mark();
+    case 4:
+        DAT_06064379 = 2;
+        SND_PRM_MODE(DAT_06064368) = SND_MD_8;
+        SND_PRM_SADR(DAT_06064368) = 0x7600;
+        SND_PRM_SIZE(DAT_06064368) = 0x2000;
+        SND_PRM_NUM(DAT_06064460) = 5;
+        SND_PRM_LEV(DAT_06064460) = 7;
+        SND_PRM_PAN(DAT_06064460) = 0;
+        SND_PRM_PICH(DAT_06064460) = DAT_0606447C;
+        SND_L_EFCT_IN(DAT_06064460) = 0;
+        SND_L_EFCT_LEV(DAT_06064460) = (u8)DAT_060642D0;
+        SND_R_EFCT_IN(DAT_06064460) = 0;
+        SND_R_EFCT_LEV(DAT_06064460) = (u8)DAT_060642D0;
+        SND_PRM_TL(DAT_06064460) = -1;
+        SND_StartPcmTL(&DAT_06064368, &DAT_06064460);
+        DAT_06064300++;
+        if (DAT_06064360 == 0) {
+            DAT_06064300++;
+        }
+        break;
+    case 5:
+        SND_GetPcmPlayAdr(&pcm_adr, 5);
+        if (pcm_adr.radr == ((u32)DAT_0606434C >> 12) &&
+            (DAT_0606434C & 0xFFF) == 0) {
+            break;
+        }
+        remain = 0;
+        count = DAT_06064360;
+        if (count != 0) {
+            if (count > 0x800) {
+                slave_snd_ram_copy(
+                    DAT_06064480 + DAT_0606434C, DAT_060644E8, 0x800);
+                DAT_060644E8 = (u8*)DAT_060644E8 + 0x800;
+                DAT_06064360 -= 0x800;
+                DAT_06064408 = (DAT_06064408 + 0x800) & 0x1FFF;
+                DAT_0606434C = (DAT_0606434C + 0x800) & 0x1FFF;
+            } else {
+                slave_snd_ram_copy(
+                    DAT_06064480 + DAT_0606434C, DAT_060644E8, count);
+                DAT_060644E8 = (u8*)DAT_060644E8 + count;
+                remain = 0x800 - count;
+                DAT_06064408 += count;
+                DAT_0606434C = (DAT_0606434C + count) & 0x1FFF;
+                DAT_06064360 = 0;
+            }
+        }
+        slave_pcm_refill(remain);
+        slave_pcm_rewind();
+        if ((DAT_06064408 & 0x1FFF) == 0) {
+            DAT_06064490[DAT_06064484] = 0;
+            DAT_06064484 = (DAT_06064484 + 1) & 1;
+        }
+        break;
+    case 6:
+        SND_GetPcmPlayAdr(&pcm_adr, 5);
+        if (pcm_adr.radr != ((u32)DAT_0606434C >> 12)) {
+            slave_snd_ram_clear(DAT_06064480 + DAT_0606434C, 0x800);
+            DAT_06044110 = (DAT_0606434C + 0x800) & 0x1FFF;
+            DAT_06044114 = 1;
+        } else if (DAT_0606434C & 0x800) {
+            slave_snd_ram_clear(DAT_06064480 + DAT_0606434C, 0x800);
+            DAT_0606434C = (DAT_0606434C + 0x800) & 0x1FFF;
+        }
+        if (DAT_06044114 == 1) {
+            if (pcm_adr.radr == ((u32)DAT_0606434C >> 12)) {
+                DAT_06064300++;
+            } else {
+                slave_snd_ram_clear(DAT_06064480 + DAT_06044110, 0x800);
+                DAT_06044110 = (DAT_06044110 + 0x800) & 0x1FFF;
+            }
+        }
+        break;
+    case 7:
+        SND_StopPcm2(5);
+        break;
+    }
+}
+
+void sotn_snd_ram_clear(u8* dst, u32 count) { slave_snd_ram_clear(dst, count); }
 
 static s16 RingOffset(s32 trig, s32 radius) {
     return (s16)(trig * radius / 320);
