@@ -3229,22 +3229,22 @@ MenuContextInit g_MenuInit[NUM_MENU] = {
 };
 
 #if VERSION == VER_US
-#define PAD_MENU_SELECT_ALT (PAD_CROSS)
-#define PAD_MENU_SELECT (PAD_MENU_SELECT_ALT)
+#define PAD_MENU_CONFIRM_ALT (PAD_CROSS)
+#define PAD_MENU_CONFIRM (PAD_MENU_CONFIRM_ALT)
 #define PAD_MENU_BACK (PAD_TRIANGLE)
 #define PAD_MENU_SORT (PAD_SQUARE)
 #elif TARGET == TARGET_PSP
-#define PAD_MENU_SELECT_ALT (g_ConfirmButton)
-#define PAD_MENU_SELECT (PAD_MENU_SELECT_ALT | PAD_SQUARE)
+#define PAD_MENU_CONFIRM_ALT (g_ConfirmButton)
+#define PAD_MENU_CONFIRM (PAD_MENU_CONFIRM_ALT | PAD_SQUARE)
 #define PAD_MENU_BACK (g_CancelButton)
 #define PAD_MENU_SORT (PAD_TRIANGLE)
 #elif VERSION < VER_JP10
-#define PAD_MENU_SELECT_ALT (PAD_CIRCLE)
-#define PAD_MENU_SELECT (PAD_MENU_SELECT_ALT | PAD_SQUARE)
+#define PAD_MENU_CONFIRM_ALT (PAD_CIRCLE)
+#define PAD_MENU_CONFIRM (PAD_MENU_CONFIRM_ALT | PAD_SQUARE)
 #define PAD_MENU_BACK (PAD_CROSS)
 #define PAD_MENU_SORT (PAD_TRIANGLE)
 #endif
-#define PAD_MENU_BACK_ALT (PAD_MENU_BACK | PAD_MENU_SELECT)
+#define PAD_MENU_BACK_ALT (PAD_MENU_BACK | PAD_MENU_CONFIRM)
 
 s32 func_800FB23C(s32* nav, u8* order, u8* count, u32* selected) {
     s32 prevCursor;
@@ -3319,7 +3319,7 @@ s32 func_800FB23C(s32* nav, u8* order, u8* count, u32* selected) {
                 PlaySfx(SFX_UI_ERROR);
             }
         }
-    } else if (g_pads[0].tapped & PAD_MENU_SELECT) {
+    } else if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
         if (g_IsSelectingEquipment) {
             if (!func_800FB1EC(itemId)) {
                 func_800FB160(g_EquipmentCursor, *nav, D_801375CC);
@@ -3750,7 +3750,7 @@ block_4:
             goto block_4;
         }
         MenuHandleCursorInput(&g_MenuNavigation.cursorMain, 7, 0);
-        if (g_pads[0].tapped & PAD_MENU_SELECT) {
+        if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
             switch (g_MenuNavigation.cursorMain) {
             case 0:
                 MenuShow(MENU_DG_EQUIP_OVERVIEW);
@@ -3814,7 +3814,7 @@ block_4:
             break;
         }
         MenuHandleCursorInput(&D_psp_091CDD40, 2, 0);
-        if (g_pads[0].tapped & PAD_MENU_SELECT) {
+        if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
             if (D_psp_091CDD40 == 0) {
                 PlaySfx(SFX_UI_CONFIRM);
                 func_psp_090DFC80();
@@ -3836,7 +3836,7 @@ block_4:
             break;
         }
         MenuHandleCursorInput(&D_psp_091CDD40, 2, 0);
-        if (g_pads[0].tapped & PAD_MENU_SELECT) {
+        if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
             if (D_psp_091CDD40 == 0) {
                 PlaySfx(SFX_UI_CONFIRM);
                 MenuHide(MENU_PSP_EXTRA_1);
@@ -3857,7 +3857,7 @@ block_4:
         g_MenuStep++;
         break;
     case MENU_STEP_FAMILIAR:
-        if (g_pads[0].tapped & (PAD_MENU_SELECT | PAD_MENU_BACK)) {
+        if (g_pads[0].tapped & (PAD_MENU_CONFIRM | PAD_MENU_BACK)) {
             MenuShow(MENU_DG_MAIN);
             MenuShow(MENU_DG_BG);
             func_800EAEA4();
@@ -3891,7 +3891,7 @@ block_4:
             MenuHide(MENU_DG_INFO_BAR);
             MenuHide(MENU_DG_SETTINGS);
             g_MenuStep = MENU_STEP_OPENED;
-        } else if (g_pads[0].tapped & PAD_MENU_SELECT) {
+        } else if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
             switch (g_MenuNavigation.cursorSettings) {
             case 0:
                 MenuShow(MENU_DG_CFG_BUTTONS);
@@ -4057,7 +4057,7 @@ block_4:
             id += 2; // Skip the two exclusive Japanese relics
         }
 #endif
-        if (g_pads[0].tapped & PAD_MENU_SELECT &&
+        if (g_pads[0].tapped & PAD_MENU_CONFIRM &&
             g_Status.relics[id] & RELIC_FLAG_FOUND) {
             PlaySfx(SFX_UI_CONFIRM);
             g_Status.relics[id] = g_Status.relics[id] ^ 2;
@@ -4175,7 +4175,7 @@ block_4:
         break;
     case MENU_STEP_UNK_35:
         func_800F5A90();
-        if (g_pads[0].tapped & (PAD_MENU_SELECT | PAD_MENU_BACK)) {
+        if (g_pads[0].tapped & (PAD_MENU_CONFIRM | PAD_MENU_BACK)) {
             func_801073C0();
             g_CdStep = CdStep_None;
             SetGPUBuffRGBZero();
@@ -4225,7 +4225,7 @@ block_4:
             D_80137844[1] = 0;
             D_80137608 = 0;
             g_MenuStep = MENU_STEP_OPENED;
-        } else if (g_pads[0].tapped & PAD_MENU_SELECT) {
+        } else if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
             PlaySfx(SFX_UI_CONFIRM);
         block_191:
             func_800FB0FC();
@@ -4240,7 +4240,7 @@ block_4:
         func_800FB0FC();
         MenuHandleCursorInput(&g_EquipOrderType, 11, 0);
         MenuEquipHandlePageScroll(0);
-        if (g_pads[0].tapped & PAD_MENU_SELECT_ALT) {
+        if (g_pads[0].tapped & PAD_MENU_CONFIRM_ALT) {
             PlaySfx(SFX_UI_CONFIRM);
             func_800FBAC4();
             g_Menus[MENU_DG_EQUIP_SELECTOR].unk16 = 0;
@@ -4362,7 +4362,7 @@ void DrawHudSubweapon2(void) {
             g_MenuStep = 0x62;
         } else {
             MenuHandleCursorInput(&g_MenuNavigation.cursorMain, 3, 0);
-            if (g_pads[0].tapped & PAD_MENU_SELECT) {
+            if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
                 switch (g_MenuNavigation.cursorMain) {
                 case 0:
                     PlaySfx(SFX_UI_ERROR);
@@ -4396,7 +4396,7 @@ void DrawHudSubweapon2(void) {
             g_MenuStep = MENU_STEP_FADE_FROM_GAME;
         } else {
             MenuHandleCursorInput(&D_psp_091CDD40, 2, 0);
-            if (g_pads[0].tapped & PAD_MENU_SELECT) {
+            if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
                 if (D_psp_091CDD40 == 0) {
                     PlaySfx(SFX_UI_CONFIRM);
                     func_psp_090DFC80();
@@ -4419,7 +4419,7 @@ void DrawHudSubweapon2(void) {
             g_MenuStep = MENU_STEP_FADE_FROM_GAME;
         } else {
             MenuHandleCursorInput(&D_psp_091CDD40, 2, 0);
-            if (g_pads[0].tapped & PAD_MENU_SELECT) {
+            if (g_pads[0].tapped & PAD_MENU_CONFIRM) {
                 if (D_psp_091CDD40 == 0) {
                     PlaySfx(SFX_UI_CONFIRM);
                     MenuHide(MENU_PSP_EXTRA_3);
