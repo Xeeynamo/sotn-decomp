@@ -6,6 +6,7 @@
 #include <string.h>
 #include <cutscene.h>
 #include "overlay.h"
+#include "psyz/log.h"
 
 extern const char* D_801803A8[10];
 
@@ -13,6 +14,8 @@ extern const char* D_801803A8[10];
 RECT D_80182584 = {0};
 RECT D_8018258C = {0};
 RECT D_801825A4 = {0};
+s32 D_psp_0924F800;
+s32 D_psp_0924F808;
 
 // SEL owns a copy as on PSX, so banks.c can point to it from a static table
 u16 g_saveIconPal[] = {
@@ -53,3 +56,12 @@ void PlayMovie(void) {
     // reset g_IsMoviePlaying to signal the end of video playback
     g_IsMoviePlaying = 0;
 }
+
+void func_psp_09237CB8(void) {
+    // loads PSP graphics
+    NOT_IMPLEMENTED;
+}
+
+void func_psp_0891CEB8(s32 x, s32 y) { NOT_IMPLEMENTED; }
+
+void func_psp_08925F7C(s32 x, s32 y0, s32 w, s32 h) { NOT_IMPLEMENTED; }

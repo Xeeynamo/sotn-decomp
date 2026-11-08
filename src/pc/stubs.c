@@ -1,9 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#include "game.h"
 #include "pc.h"
 #include "dra.h"
 #include "memcard.h"
 
 // game.h
+s32 g_UserLanguage = LANG_EN;
+u32 g_ConfirmButton = PAD_CROSS;
 GameApi g_api;
 u32 g_GameStep;
 Pad g_pads[PAD_COUNT];
