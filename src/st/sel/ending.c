@@ -2,6 +2,7 @@
 #include "game.h"
 #include "libgpu.h"
 #include "sel.h"
+#include "stage.h"
 
 enum {
     ENT_BACKGROUND,
@@ -28,11 +29,23 @@ enum {
     ENDING_VARIANT_BEST = ENDING_BEST - 1,
 };
 
-extern RECT D_8018258C;
 extern u32 D_801BC3E8;
-extern u32 is_ending_sequence_done;
+
+#if TARGET == TARGET_PSP
+extern s8* D_psp_09285B80;
+extern s8* D_psp_09285B88;
+#define D_8018BC4A D_psp_09285B88[0]
+#define D_8018BC50 D_psp_09285B80[0]
+
+// BSS
+static s32 D_801D6B24;
+static s32 D_801BC3E4;
+static u32 is_ending_sequence_done;
+#else
+extern RECT D_8018258C;
 extern s8 D_8018BC4A;
 extern s8 D_8018BC50;
+#endif
 
 // DATA
 static AnimateEntityFrame D_801804E0[] = {
@@ -83,6 +96,64 @@ static void SetStep(Entity* entity, u16 step) {
 
 #include "../animate_entity.h"
 
+#if TARGET == TARGET_PSP
+// PSP splits the background castle as two primitives, not sure why?!
+void ActorBackgroundWithCastle(void) {
+    Entity* self;
+    s32 primIndex;
+    Primitive* prim;
+
+    self = &g_Entities[ENT_BACKGROUND];
+    switch (self->step) {
+    case 0:
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        if (primIndex != -1) {
+            prim = &g_PrimBuf[primIndex];
+
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            self->ext.unkSelEnts.prim = prim;
+            prim->tpage = 0x8A;
+            prim->clut = 0;
+
+            prim->u0 = prim->u2 = prim->v0 = prim->v1 = 0;
+            prim->u1 = prim->u3 = 0x7F;
+            prim->v2 = prim->v3 = 0xE0;
+
+            prim->x0 = prim->x2 = 0;
+            prim->x1 = prim->x3 = 0x80;
+            prim->y0 = prim->y1 = 0;
+            prim->y2 = prim->y3 = 0xE0;
+
+            prim->priority = 0x40;
+            prim->drawMode = DRAW_DEFAULT;
+            prim = prim->next;
+
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            self->ext.unkSelEnts.prim = prim;
+            prim->tpage = 0x8B;
+            prim->clut = 0;
+
+            prim->u0 = prim->u2 = prim->v0 = prim->v1 = 0;
+            prim->u1 = prim->u3 = 0x7F;
+            prim->v2 = prim->v3 = 0xE0;
+
+            prim->x0 = prim->x2 = 0x80;
+            prim->x1 = prim->x3 = 0x100;
+            prim->y0 = prim->y1 = 0;
+            prim->y2 = prim->y3 = 0xE0;
+
+            prim->priority = 0x40;
+            prim->drawMode = DRAW_DEFAULT;
+            self->step++;
+        }
+        break;
+    case 1:
+        break;
+    }
+}
+#else
 void ActorBackgroundWithCastle(void) {
     Entity* self;
     s32 primIndex;
@@ -119,6 +190,7 @@ void ActorBackgroundWithCastle(void) {
         break;
     }
 }
+#endif
 
 void ActorRockCliffEdge(void) {
     Entity* self = &g_Entities[ENT_ROCK_CLIFF_EDGE];
@@ -154,8 +226,14 @@ void ActorFadein(void) {
 
             prim->x0 = prim->x2 = 0;
             prim->x1 = prim->x3 = 0xFF;
+#if TARGET == TARGET_PSP
+            // PSP fades the entire screen
+            prim->y0 = prim->y1 = 0;
+            prim->y2 = prim->y3 = 0xFF;
+#else
             prim->y0 = prim->y1 = 4;
             prim->y2 = prim->y3 = 0xE4;
+#endif
 
             PCOL(prim) = 0xFF;
 
@@ -190,7 +268,7 @@ void ActorFadein(void) {
     }
 }
 
-static void ActorFadeout(void) {
+void ActorFadeout(void) {
     Entity* self = &g_Entities[ENT_FADEOUT];
     s32 primIndex;
     Primitive* prim;
@@ -206,8 +284,14 @@ static void ActorFadeout(void) {
 
             prim->x0 = prim->x2 = 0;
             prim->x1 = prim->x3 = 0x180;
+#if TARGET == TARGET_PSP
+            // PSP fades the entire screen
+            prim->y0 = prim->y1 = 0;
+            prim->y2 = prim->y3 = 0xFF;
+#else
             prim->y0 = prim->y1 = 4;
             prim->y2 = prim->y3 = 0xE4;
+#endif
 
             PCOL(prim) = 0;
 
@@ -227,8 +311,13 @@ static void ActorFadeout(void) {
             }
         }
         break;
+#if TARGET == TARGET_PSP
+    case 3:
+        break;
+#else
     case 2:
         break;
+#endif
     }
 }
 
@@ -305,13 +394,13 @@ static void ActorAlucardWorstEnding(void) {
         self->animCurFrame = 0x8E;
         break;
     case 2:
-        if (!AnimateEntity(anim_alucard_turn, self)) {
+        if (!AnimateEntity((u8*)anim_alucard_turn, self)) {
             SetStep(self, 3);
         }
         self->ext.unkSelEnts.unk80.val -= FIX(1.5);
         break;
     case 3:
-        AnimateEntity(anim_alucard_run, self);
+        AnimateEntity((u8*)anim_alucard_run, self);
         self->ext.unkSelEnts.unk80.val -= FIX(1.5);
         if (self->ext.unkSelEnts.unk80.i.hi < 0x40) {
             self->step = 0xFF;
@@ -340,19 +429,40 @@ void ActorRichter(void) {
     }
 }
 
+static inline void SetRichterSoloPose(Entity* self) {
+    self->animSet = ANIMSET_OVL(2);
+    self->animCurFrame = 7;
+    self->facingLeft = 0;
+    self->unk5A = 0xF;
+    self->ext.unkSelEnts.unk80.val = FIX(0x78);
+    self->posY.i.hi = 0x9E;
+    self->zPriority = 0xC0;
+    self->palette = PAL_FLAG(PAL_ACTOR_RICHTER);
+}
+static inline void SetMariaSoloPose(Entity* self) {
+    self->animSet = ANIMSET_OVL(3);
+    self->animCurFrame = 0xC;
+    self->unk5A = 0x46;
+    self->palette = PAL_ACTOR_MARIA;
+    self->facingLeft = 0;
+    self->ext.unkSelEnts.unk80.val = FIX(0x80);
+    self->posY.i.hi = 0xA0;
+    self->zPriority = 0xC0;
+}
 static void ActorRichterSolo(void) {
     Entity* self = &g_Entities[ENT_RICHTER];
 
     switch (self->step) {
     case 0:
-        self->animSet = ANIMSET_OVL(2);
-        self->animCurFrame = 7;
-        self->facingLeft = 0;
-        self->unk5A = 0xF;
-        self->ext.unkSelEnts.unk80.val = FIX(0x78);
-        self->posY.i.hi = 0x9E;
-        self->zPriority = 0xC0;
-        self->palette = PAL_FLAG(PAL_ACTOR_RICHTER);
+#if TARGET == TARGET_PSP
+        if (g_PlayableCharacter == PLAYER_MARIA) {
+            SetMariaSoloPose(self);
+        } else {
+            SetRichterSoloPose(self);
+        }
+#else
+        SetRichterSoloPose(self);
+#endif
         self->step++;
         break;
     case 1:
@@ -386,7 +496,7 @@ void ActorMaria(void) {
         break;
     case 2:
         self->ext.unkSelEnts.unk80.val -= FIX(0.75);
-        if (!AnimateEntity(D_80180580, self)) {
+        if (!AnimateEntity((u8*)D_80180580, self)) {
             self->animSet = ANIMSET_OVL(3);
             self->animCurFrame = 0xC;
             self->unk5A = 0x46;
@@ -403,7 +513,7 @@ void ActorMaria(void) {
         }
         break;
     case 4:
-        if (!AnimateEntity(D_80180578, self)) {
+        if (!AnimateEntity((u8*)D_80180578, self)) {
             self->animSet = ANIMSET_OVL(3);
             self->unk5A = 0x46;
             self->animCurFrame = 0xC;
@@ -420,7 +530,7 @@ void ActorMaria(void) {
         }
         break;
     case 6:
-        if (!AnimateEntity(D_80180578, self)) {
+        if (!AnimateEntity((u8*)D_80180578, self)) {
             self->animSet = ANIMSET_OVL(3);
             self->unk5A = 0x46;
             self->animCurFrame = 0x20;
@@ -429,7 +539,7 @@ void ActorMaria(void) {
         self->ext.unkSelEnts.unk80.val -= FIX(0.75);
         break;
     case 7:
-        AnimateEntity(D_80180564, self);
+        AnimateEntity((u8*)D_80180564, self);
         self->ext.unkSelEnts.unk80.val -= FIX(1.5);
         if (self->ext.unkSelEnts.unk80.i.hi < 0x20) {
             self->step = 0xFF;
@@ -453,38 +563,38 @@ void ActorAlucard(u16 isBadEnding) {
         self->step++;
         break;
     case 1:
-        AnimateEntity(anim_alucard_run, self);
+        AnimateEntity((u8*)anim_alucard_run, self);
         if (D_801BC3E8 & 4) {
             self->step++;
         }
         break;
     case 2:
-        AnimateEntity(anim_alucard_run, self);
+        AnimateEntity((u8*)anim_alucard_run, self);
         self->ext.unkSelEnts.unk80.val += FIX(1.5);
         if (self->ext.unkSelEnts.unk80.i.hi > 0x48) {
             SetStep(self, 3);
         }
         break;
     case 3:
-        if (!AnimateEntity(anim_alucard_stop_from_run, self)) {
+        if (!AnimateEntity((u8*)anim_alucard_stop_from_run, self)) {
             SetStep(self, 4);
         }
         break;
     case 4:
-        AnimateEntity(anim_alucard_idle_with_wind, self);
+        AnimateEntity((u8*)anim_alucard_idle_with_wind, self);
         if (D_801BC3E8 & 8) {
             SetStep(self, 5);
         }
         break;
     case 5:
         self->facingLeft = 1;
-        if (!AnimateEntity(anim_alucard_turn, self)) {
+        if (!AnimateEntity((u8*)anim_alucard_turn, self)) {
             SetStep(self, 6);
         }
         self->ext.unkSelEnts.unk80.val -= FIX(1.5);
         break;
     case 6:
-        AnimateEntity(anim_alucard_run, self);
+        AnimateEntity((u8*)anim_alucard_run, self);
         self->ext.unkSelEnts.unk80.val -= FIX(1.5);
         if ((isBadEnding && self->ext.unkSelEnts.unk80.i.hi < 0x20) ||
             (!isBadEnding && self->ext.unkSelEnts.unk80.i.hi < -0x10)) {
@@ -738,6 +848,9 @@ void HandleEndingSequence(void) {
     switch (g_GameEngineStep) {
     case STEP_MOVIE_INIT:
         if (!g_IsUsingCd) {
+#if TARGET == TARGET_PSP
+            func_psp_09237C78();
+#endif
             g_IsMoviePlaying = 1;
             if (g_EndingVariant != ENDING_NONE) {
                 g_CurrentStream = 3;
@@ -748,7 +861,7 @@ void HandleEndingSequence(void) {
         }
         break;
     case STEP_MOVIE_RUN:
-        func_801B9C80();
+        PlayMovie();
         if (g_IsMoviePlaying == 0) {
             g_CurrentStream = 0;
             func_801B18F4();
@@ -764,7 +877,7 @@ void HandleEndingSequence(void) {
         // Important! This loop confirms that SEL uses the first 8
         // entities for its internal uses.
         ent = &g_Entities[ENT_BACKGROUND];
-        for (i = 0; i < 9; i++, ent++) {
+        for (i = 0; i <= ENT_CUTSCENE_MANAGER; i++, ent++) {
             DestroyEntity(ent);
         }
         D_801D6B24 = 0;
@@ -805,7 +918,11 @@ void HandleEndingSequence(void) {
         }
         break;
     case STEP_CLEAR_SCREEN:
+#if TARGET == TARGET_PSP
+        ClearImage(&g_Vram.D_800ACD88, 0, 0, 0);
+#else
         ClearImage(&D_8018258C, 0, 0, 0);
+#endif
         g_GameEngineStep++;
         break;
     case STEP_CHANGE_RESOLUTION:

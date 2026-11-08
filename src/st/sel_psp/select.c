@@ -35,7 +35,6 @@ static s32 g_SelEng220NextStep;
 
 void Update(void);
 void HandleTitleScreen(void);
-void func_psp_090FFAB8(void);
 void InitSel(s32 objLayoutId);
 void HandleEndingSequence(void);
 void func_801B17C8(void);
@@ -44,7 +43,7 @@ void func_801B17C8(void);
 Overlay g_Overlay = {
     /* 0x00 */ Update,
     /* 0x04 */ HandleTitleScreen,
-    /* 0x08 */ func_psp_090FFAB8,
+    /* 0x08 */ PlayMovie,
     /* 0x0C */ InitSel,
     /* 0x10 */ NULL,
     /* 0x14 */ g_SpriteBanks,

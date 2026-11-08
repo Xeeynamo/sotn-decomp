@@ -4,7 +4,7 @@
 
 extern s32 g_CurrentStream;
 
-void func_psp_090FFAB8(void) {
+void PlayMovie(void) {
     s32 skipButton = PAD_NONE;
     switch (g_CurrentStream) {
     case 0:

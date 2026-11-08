@@ -48,7 +48,7 @@ void Psyz_ModuleStart(void* param) {
 
 void Psyz_ModuleStop(void) {}
 
-void func_801B9C80(void) {
+void PlayMovie(void) {
     // handles the video playback
     // reset g_IsMoviePlaying to signal the end of video playback
     g_IsMoviePlaying = 0;

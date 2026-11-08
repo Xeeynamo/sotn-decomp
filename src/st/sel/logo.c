@@ -14,11 +14,7 @@ void InitSel() {
         break;
 
     case Upd_Eng_MenuFadeIn:
-#if TARGET == TARGET_PSP
-        func_psp_090FFAB8();
-#else
-        func_801B9C80();
-#endif
+        PlayMovie();
         if (g_IsMoviePlaying) {
             break;
         }
