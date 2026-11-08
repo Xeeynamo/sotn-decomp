@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sel.h"
 
-extern u8* D_8018C404[];
+extern u8* ending_sprites[];
 extern char g_AsciiSet[];
 extern s32 g_MainMenuCursor;
 extern s32 g_InputCursorPos;
@@ -44,7 +44,7 @@ Overlay g_Overlay = {
     /* 0x24 */ g_EntityGfxs,
     /* 0x28 */ HandleEndingSequence,
     /* 0x2C */ NULL,
-    /* 0x30 */ D_8018C404,
+    /* 0x30 */ ending_sprites,
     /* 0x34 */ NULL,
     /* 0x38 */ NULL,
     /* 0x3C */ func_801B17C8,

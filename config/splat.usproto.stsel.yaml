@@ -50,7 +50,7 @@ segments:
       - [0xA4C0, .data, lba_stage]
       - [0xB280, .data, stream_info]
       - [0xB2B8, .data, cutscene_data]
-      - [0xC2DC, data] # TODO
+      - [0xC2DC, .data, C404]
       - [0xCC2C, .data, CD54]
       - [0xDAAC, .data, sprites]
       - [0xF880, .data, F9A8]

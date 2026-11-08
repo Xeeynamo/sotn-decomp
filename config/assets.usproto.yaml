@@ -157,7 +157,7 @@ files:
           - [0xB2B8, cutscene, usproto/cutscene_endings]
           - [0xBB41, skip]
           - [0xBB4C, credits, usproto/credits]
-          - [0xC2DC, skip]
+          - [0xC2DC, spritesheet, ending]
           - [0xCC2C, palette, usproto/D_8018CD54, 16]
           - [0xCC8C, palette, D_8018CDB4, 256]
           - [0xCE8C, palette, D_8018CFB4, 256]
