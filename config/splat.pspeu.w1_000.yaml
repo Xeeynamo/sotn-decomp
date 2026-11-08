@@ -11,8 +11,6 @@ options:
   compiler: GCC
   symbol_addrs_path:
     - config/symbols.pspeu.txt
-    - config/symbols.pspeu.weapon.txt
-    - config/symbols.pspeu.w1_000.txt
   undefined_funcs_auto_path: build/pspeu/config/undefined_funcs_auto.pspeu.w1_000.txt
   undefined_syms_auto_path: build/pspeu/config/undefined_syms_auto.pspeu.w1_000.txt
   find_file_boundaries: true

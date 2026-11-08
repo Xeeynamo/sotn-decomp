@@ -11,7 +11,6 @@ options:
   compiler:     GCC
   symbol_addrs_path:
     - config/symbols.hk.txt
-    - config/symbols.hk.stwrp.txt
   undefined_funcs_auto_path: build/hk/config/undefined_funcs_auto.hk.stwrp.txt
   undefined_syms_auto_path:  build/hk/config/undefined_syms_auto.hk.stwrp.txt
   find_file_boundaries: yes

@@ -11,7 +11,6 @@ options:
   compiler:     GCC
   symbol_addrs_path:
     - config/symbols.eu.txt
-    - config/symbols.eu.stwrp.txt
   undefined_funcs_auto_path: build/eu/config/undefined_funcs_auto.eu.stwrp.txt
   undefined_syms_auto_path:  build/eu/config/undefined_syms_auto.eu.stwrp.txt
   find_file_boundaries: yes
