@@ -56,6 +56,9 @@ void func_801B195C(s32 arg0) {
     SetDisplayBufferColorsToBlack();
     g_GpuBuffers[0].draw.dtd = g_GpuBuffers[1].draw.dtd = false;
     g_GpuBuffers[0].disp.isrgb24 = g_GpuBuffers[1].disp.isrgb24 = false;
+#if REGION == REGION_EU
+    g_GpuBuffers[0].disp.screen.y = g_GpuBuffers[1].disp.screen.y = 24;
+#endif
 }
 
 void func_801B19F4(void) {
@@ -79,6 +82,9 @@ void SetTitleDisplayBuffer(void) {
     g_GpuBuffers[0].draw.isbg = g_GpuBuffers[1].draw.isbg = true;
     SetDisplayBufferColorsToBlack();
     g_GpuBuffers[0].disp.isrgb24 = g_GpuBuffers[1].disp.isrgb24 = false;
+#if REGION == REGION_EU
+    g_GpuBuffers[0].disp.screen.y = g_GpuBuffers[1].disp.screen.y = 24;
+#endif
 }
 
 // same as SetTitleDisplayBuffer, but clips at 256 vertical height
@@ -93,6 +99,9 @@ void SetTitleDisplayBuffer256(void) {
     g_GpuBuffers[0].draw.isbg = g_GpuBuffers[1].draw.isbg = true;
     SetDisplayBufferColorsToBlack();
     g_GpuBuffers[0].disp.isrgb24 = g_GpuBuffers[1].disp.isrgb24 = false;
+#if REGION == REGION_EU
+    g_GpuBuffers[0].disp.screen.y = g_GpuBuffers[1].disp.screen.y = 24;
+#endif
 }
 
 // For the given prim, sets one of the vertices (0-3) to r,g,b values of
@@ -214,6 +223,7 @@ void func_801B1FD8(char* str, s32 y) {
 }
 
 // Variant of func_800F99B8, with the third argument stripped
+#if VERSION >= VER_USPROTO
 void func_801B2108(const char* str, s32 arg1) {
     // See src/st/blit_char.h
     const u16 DOUBLE_SPACE = 0x8140;
@@ -331,6 +341,7 @@ void func_801B2108(const char* str, s32 arg1) {
               var_s4 * 2, 0x10);
     D_801BAFD0 += var_s4 * 0x10;
 }
+#endif
 
 void func_801B248C(char* str, s32 id) {
     if (D_801BC398[id] != str) {
@@ -340,6 +351,7 @@ void func_801B248C(char* str, s32 id) {
     }
 }
 
+#if VERSION >= VER_USPROTO
 void func_801B24F8(char* str, s32 id) {
     if (D_801BC398[id] != str) {
         func_801B1F4C(id);
@@ -347,6 +359,7 @@ void func_801B24F8(char* str, s32 id) {
         func_801B2108(str, id);
     }
 }
+#endif
 
 void func_801B2564(char* str, s32 id) {
     D_801BAFD4 = 0x3C0;
@@ -354,11 +367,13 @@ void func_801B2564(char* str, s32 id) {
     func_801B248C(str, id);
 }
 
+#if VERSION >= VER_USPROTO
 void func_801B259C(char* str, s32 id) {
     D_801BAFD4 = 0x3C0;
     D_801BAFD8 = 0x100;
     func_801B24F8(str, id);
 }
+#endif
 
 void func_801B25D4(char* str, s32 id) {
     D_801BAFD4 = 0x180;
@@ -366,11 +381,13 @@ void func_801B25D4(char* str, s32 id) {
     func_801B248C(str, id);
 }
 
+#if VERSION >= VER_USPROTO
 void func_801B2608(char* str, s32 id) {
     D_801BAFD4 = 0x180;
     D_801BAFD8 = 0;
     func_801B24F8(str, id);
 }
+#endif
 
 void func_801B263C(char* str, s32 id) {
     D_801BAFD4 = 0x180;
@@ -391,8 +408,8 @@ void func_801B2700(s32 tpage, s32 otIdx) {
     g_GpuUsage.drawModes++;
 }
 
-void func_801B27A8(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 clut,
-                   s32 tpage, s32 tge, s32 c) {
+void DrawGlyph(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 clut, s32 tpage,
+               s32 tge, s32 c) {
     OT_TYPE* ot = g_CurrentBuffer->ot;
     SPRT* sprite = &g_CurrentBuffer->sprite[g_GpuUsage.sp];
     s32 otIdx = 0x20;
@@ -414,7 +431,7 @@ void func_801B27A8(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 clut,
     func_801B2700(tpage, otIdx);
 }
 
-void func_801B28D4(u8* str, s32 x, s32 y, s32 tge) {
+void DrawString12x16(u8* str, s32 x, s32 y, s32 tge) {
     const int w = 12;
     const int h = 16;
     u8 ch;
@@ -424,8 +441,7 @@ void func_801B28D4(u8* str, s32 x, s32 y, s32 tge) {
         if (ch == 0xFF) {
             break;
         }
-        func_801B27A8(
-            x, y, w, h, (ch & 0x0F) * w, ch & 0xF0, 0x1A1, 6, tge, 0x40);
+        DrawGlyph(x, y, w, h, (ch & 0x0F) * w, ch & 0xF0, 0x1A1, 6, tge, 0x40);
         x += w;
     }
 }
@@ -454,46 +470,54 @@ void DrawString16x16(char* str, s32 x, s32 y, s32 tge) {
         }
 
         uvIndex = func_801B2984(ch);
-        func_801B27A8(x, y, W, H, D_8018046C[uvIndex * 3 + 1],
-                      D_8018046C[uvIndex * 3 + 2], 0x200, 12, tge, 0x40);
+        DrawGlyph(x, y, W, H, D_8018046C[uvIndex * 3 + 1],
+                  D_8018046C[uvIndex * 3 + 2], 0x200, 12, tge, 0x40);
         x += W;
     }
 }
 
-void func_801B2A9C(s32 img, s32 x, s32 y, s32 tge) {
-    func_801B27A8(
-        x, y, 8, 8, (img & 0xF) * 8, (img & 0xF0) / 2, 0x196, 0x1E, tge, 0x80);
+#if VERSION >= VER_USPROTO
+void DrawGlyph8x8(s32 ch, s32 x, s32 y, s32 tge) {
+    DrawGlyph(
+        x, y, 8, 8, (ch & 0xF) * 8, (ch & 0xF0) / 2, 0x196, 0x1E, tge, 0x80);
 }
 
-void DrawImages8x8(u8* imgs, s32 x, s32 y, s32 tge) {
+void DrawString8x8(u8* str, s32 x, s32 y, s32 tge) {
     while (true) {
-        if (*imgs == 0xFF)
+        if (*str == 0xFF)
             break;
-        func_801B2A9C(*imgs, x, y, tge);
+        DrawGlyph8x8(*str, x, y, tge);
         x += 8;
-        imgs++;
+#if VERSION >= VER_US
+        str++;
+#else
+        // bug: E3 demo can't print spaces without exiting the function
+        if (!*str++)
+            break;
+#endif
     }
 }
+#endif
 
-void func_801B2B78(s32 icon, s32 x, s32 y, s32 tge) {
-    func_801B27A8(x, y, 8, 8, icon * 8 + 176, 120, 0x200, 0xC, tge, 0x40);
+void DrawDigit8x8(s32 icon, s32 x, s32 y, s32 tge) {
+    DrawGlyph(x, y, 8, 8, icon * 8 + 176, 120, 0x200, 0xC, tge, 0x40);
 }
 
-void func_801B2BD4(s32 num, s32 x, s32 y, s32 tge) {
+void DrawNumber8x8(s32 num, s32 x, s32 y, s32 tge) {
     do {
         s32 digit = num % 10;
-        func_801B2B78(digit, x, y, tge);
+        DrawDigit8x8(digit, x, y, tge);
         x -= 8;
         num /= 10;
-    } while (num != 0);
+    } while (num);
 }
 
-void func_801B2C70(s32 num, s32 x, s32 y, s32 tge) {
+void DrawTwoDigitsNumber8x8(s32 num, s32 x, s32 y, s32 tge) {
     s32 digit = num % 10;
-    func_801B2B78(digit, x, y, tge);
+    DrawDigit8x8(digit, x, y, tge);
     x -= 8;
     num /= 10;
-    func_801B2B78(num, x, y, tge);
+    DrawDigit8x8(num, x, y, tge);
 }
 
 void func_801B2CF8(Primitive* prim) {

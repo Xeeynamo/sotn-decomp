@@ -53,7 +53,7 @@ s32 func_801B2E5C(s32 port) {
     s32 totalSize;
     s32 nBlockUsed;
 
-    strcpy(cardName, "BASLUS-00067DRAX00");
+    strcpy(cardName, MEMCARD_ID);
     totalSize = 0;
     nBlockUsed = g_MemcardInfo[port].nBlockUsed;
     dirent = &g_MemcardInfo[port].entries;
@@ -397,7 +397,14 @@ s32 func_801B3A94(s32 arg0) {
                     }
                 }
                 ApplySaveData(g_Pix);
+#if VERSION >= VER_JP11
                 StoreSaveData(g_Pix, D_801BB008, save->info.cardIcon);
+#else
+                // bug: early versions refer to a memory card ID based on the
+                // icon, not the physical card block ID. This can overwrite
+                // existing save game unrelated to SOTN!
+                StoreSaveData(g_Pix, D_801BB00C, save->info.cardIcon);
+#endif
                 g_MemCardRetryCount = 10;
                 g_MemCardRStep++;
             }

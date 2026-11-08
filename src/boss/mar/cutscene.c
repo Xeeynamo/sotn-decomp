@@ -174,7 +174,7 @@ void EntityCutscene(Entity* self) {
                 // fake reuse of i?
                 i = *g_Dialogue.scriptCur++;
                 nextChar2 = *g_Dialogue.scriptCur++;
-                prim = g_Dialogue.prim[5];
+                prim = g_Dialogue.primPortrait;
                 x = D_us_801805D4[nextChar2 & 1];
                 y = D_us_801805D8[nextChar2 & 1];
                 prim->clut = D_us_801805DC[i];
@@ -224,7 +224,7 @@ void EntityCutscene(Entity* self) {
                 }
                 g_Dialogue.startX = *g_Dialogue.scriptCur++;
                 g_Dialogue.startY = *g_Dialogue.scriptCur++;
-                prim = g_Dialogue.prim[5];
+                prim = g_Dialogue.primPortrait;
                 prim = prim->next;
                 prim->y0 = prim->y1 = g_Dialogue.startY;
                 prim->y2 = prim->y3 = g_Dialogue.startY + 0x48;
@@ -431,7 +431,7 @@ void EntityCutscene(Entity* self) {
         break;
 
     case 3:
-        prim = g_Dialogue.prim[5];
+        prim = g_Dialogue.primPortrait;
         prim->x0 = prim->x2 -= 4;
         prim->x1 = prim->x3 += 4;
         prim->y0 = prim->y1 -= 6;
@@ -446,7 +446,7 @@ void EntityCutscene(Entity* self) {
         break;
 
     case 4:
-        prim = g_Dialogue.prim[5];
+        prim = g_Dialogue.primPortrait;
         prim->x0 = prim->x2 += 4;
         prim->x1 = prim->x3 -= 4;
         prim->y0 = prim->y1 += 6;
@@ -505,7 +505,7 @@ void EntityCutscene(Entity* self) {
             if (!j) {
                 g_api.FreePrimitives(g_Dialogue.primIndex[0]);
                 g_Dialogue.primIndex[0] = -1;
-                prim = g_Dialogue.prim[5];
+                prim = g_Dialogue.primPortrait;
                 prim = prim->next;
                 prim->drawMode = DRAW_TPAGE | DRAW_TRANSP;
                 prim = prim->next;
@@ -516,7 +516,7 @@ void EntityCutscene(Entity* self) {
 
         case 2:
             j = false;
-            prim = g_Dialogue.prim[5];
+            prim = g_Dialogue.primPortrait;
             prim = prim->next;
             if (prim->r0 < 0x10) {
                 prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0;
@@ -545,7 +545,7 @@ void EntityCutscene(Entity* self) {
         break;
 
     case 6:
-        prim = g_Dialogue.prim[5];
+        prim = g_Dialogue.primPortrait;
         prim = prim->next;
         if (--g_Dialogue.portraitAnimTimer >= 0xC) {
             prim = prim->next;

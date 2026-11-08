@@ -209,6 +209,7 @@ func parseScript(r io.ReadSeeker, baseAddr, addr psx.Addr, length int) ([][]stri
 				text += string([]byte{byte(op)})
 			}
 		} else if op >= 0x80 && op <= 0x9F {
+			flushText()
 			strByte := "0x" + strconv.FormatInt(int64(op), 16)
 			script = append(script, []string{"BYTE", strByte})
 			strByte = "0x" + strconv.FormatInt(int64(read1(r)), 16)
@@ -217,6 +218,7 @@ func parseScript(r io.ReadSeeker, baseAddr, addr psx.Addr, length int) ([][]stri
 			// PSP has multi-language support with characters that exceed the ASCII range
 			text += fmt.Sprintf("\\x%02X", byte(op))
 		} else {
+			flushText()
 			strByte := "0x" + strconv.FormatInt(int64(op), 16)
 			script = append(script, []string{"BYTE", strByte})
 		}

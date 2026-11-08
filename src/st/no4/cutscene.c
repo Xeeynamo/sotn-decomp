@@ -318,7 +318,7 @@ void EntityCutscene(Entity* self) {
                         continue;
                     }
                     i = *g_Dialogue.scriptCur++;
-                    prim = g_Dialogue.prim[LEN(g_Dialogue.prim) - 1];
+                    prim = g_Dialogue.primPortrait;
                     j = *g_Dialogue.scriptCur++;
                     uCoord = 0;
                     vCoord = 0;
@@ -369,7 +369,7 @@ void EntityCutscene(Entity* self) {
                     }
                     prim = g_Dialogue.prim[0];
 #if TARGET == TARGET_PSP
-                    for (i = 0; i < LEN(g_Dialogue.prim) - 1; i++) {
+                    for (i = 0; i < LEN(g_Dialogue.prim); i++) {
                         prim->drawMode = DRAW_HIDE;
                         prim = prim->next;
                     }
@@ -390,7 +390,7 @@ void EntityCutscene(Entity* self) {
                     if (skip_cutscene) {
                         continue;
                     }
-                    prim = g_Dialogue.prim[LEN(g_Dialogue.prim) - 1];
+                    prim = g_Dialogue.primPortrait;
                     prim = prim->next;
                     prim->y0 = prim->y1 = prim->y2 = prim->y3 = 24;
                     prim->drawMode = DRAW_TPAGE | DRAW_TRANSP;
@@ -687,7 +687,7 @@ void EntityCutscene(Entity* self) {
                 prim->drawMode = DRAW_HIDE;
             }
         }
-        for (i = 0; i < LEN(g_Dialogue.prim) - 1; i++) {
+        for (i = 0; i < LEN(g_Dialogue.prim); i++) {
             if (i == ptr) {
                 continue;
             }
@@ -701,7 +701,7 @@ void EntityCutscene(Entity* self) {
         break;
 #endif
     case DIALOGUE_START_TEXT:
-        prim = g_Dialogue.prim[LEN(g_Dialogue.prim) - 1];
+        prim = g_Dialogue.primPortrait;
         prim->x0 = prim->x2 -= 4;
         prim->x1 = prim->x3 += 4;
         prim->y0 = prim->y1 -= 6;
@@ -716,7 +716,7 @@ void EntityCutscene(Entity* self) {
         }
         break;
     case DIALOGUE_UNLOAD_PORTRAIT:
-        prim = g_Dialogue.prim[LEN(g_Dialogue.prim) - 1];
+        prim = g_Dialogue.primPortrait;
         prim->x0 = prim->x2 += 4;
         prim->x1 = prim->x3 -= 4;
         prim->y0 = prim->y1 += 6;
@@ -731,7 +731,7 @@ void EntityCutscene(Entity* self) {
         break;
     case DIALOGUE_OPEN_DIALOG_BOX:
         dialogue_started = true;
-        prim = g_Dialogue.prim[LEN(g_Dialogue.prim) - 1];
+        prim = g_Dialogue.primPortrait;
         prim = prim->next;
         g_Dialogue.portraitAnimTimer--;
         if (g_Dialogue.portraitAnimTimer >= 12) {
@@ -750,7 +750,7 @@ void EntityCutscene(Entity* self) {
         }
         break;
     case DIALOGUE_CLOSE_DIALOG_BOX:
-        prim = g_Dialogue.prim[LEN(g_Dialogue.prim) - 1];
+        prim = g_Dialogue.primPortrait;
         prim = prim->next;
         g_Dialogue.portraitAnimTimer--;
         if (g_Dialogue.portraitAnimTimer >= 12) {

@@ -3,9 +3,10 @@
 // Based on version JP 1.0 but accounts for multiple languages
 #include "cutscene_actor_name_psp.h"
 
-#elif VERSION <= VER_JP10
+#elif CUTSCENE_EARLY_VER
 // Creates primitives for the actor name at the head of the dialogue.
 // Function is drastically different than JP 1.1 and above.
+// SEL always uses this old version in JP 1.1 and JP 1.2
 void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
     Primitive* prim;
     u16 ch;
@@ -18,7 +19,11 @@ void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
 
     primIndex = g_api.AllocPrimitives(PRIM_SPRT, actor_prims[actorIndex]);
     if (primIndex == -1) {
+#if defined(STAGE_IS_SEL) && VERSION < VER_NEXT
+        // bug: SEL forgets to de-allocate the primitive
+#else
         DestroyEntity(self);
+#endif
         return;
     }
 

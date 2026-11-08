@@ -1,0 +1,88 @@
+options:
+  platform:     psx
+  basename:     stsel
+  base_path:    ..
+  build_path:   build/jp11
+  target_path:  disks/jp11/ST/SEL/SEL.BIN
+  asm_path:     asm/jp11/st/sel
+  asset_path:   assets/st/sel
+  src_path:     src/st/sel
+  ld_script_path: build/jp11/stsel.ld
+  compiler:     GCC
+  symbol_addrs_path:
+    - config/symbols.jp10.txt
+    - config/symbols.jp11.stsel.txt
+  undefined_funcs_auto_path: build/jp11/config/undefined_funcs_auto.jp11.stsel.txt
+  undefined_syms_auto_path:  build/jp11/config/undefined_syms_auto.jp11.stsel.txt
+  find_file_boundaries: yes
+  use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
+  asm_jtbl_label_macro: jlabel
+  extensions_path: tools/splat_ext
+  disassemble_all: true
+  global_vram_start: 0x80010000
+  section_order:
+    - ".data"
+    - ".rodata"
+    - ".text"
+    - ".bss"
+    - ".sbss"
+  ld_generate_symbol_per_data_segment: true
+sha1: b640225f57edeaff79ffe4b1f194b109c80df3e0
+segments:
+  - name: stsel
+    type: code
+    start: 0x00000000
+    vram:  0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, .data, 2C048]
+      - [0x1E8, .data, 318CC]
+      - [0x24C, .data, 3410C]
+      - [0x2F8, .data, 34B30]
+      - [0x3B4, .data, banks]
+      - [0x564, .data, 764]
+      - [0x624, .data, cutscene]
+      - [0x708, .data, save_mgr]
+      - [0x2370, data] # TODO
+      - [0x23E0, .data, config_jp]
+      - [0xA28C, .data, lba_stage]
+      - [0xB04C, .data, stream_info]
+      - [0xB084, .data, cutscene_data]
+      - [0xC0F4, data] # TODO
+      - [0xCA44, .data, CD54]
+      - [0xD8C4, .data, sprites]
+      - [0xF698, .data, F9A8]
+      - [0x15FE4, .data, libpress]
+      - [0x16128, data] # TODO
+      - [0x27128, .rodata, 2C048]
+      - [0x2792C, .rodata, 32D6C]
+      - [0x27FF0, .rodata, 3410C]
+      - [0x282F8, .rodata, 34B30]
+      - [0x28434, .rodata, cutscene]
+      - [0x284B8, .rodata, save_mgr]
+      - [0x28774, .rodata, config_jp]
+      - [0x2C148, .rodata, lba_stage]
+      - [0x2C4F4, .rodata, libpress]
+      - [0x2C5A0, c, 2C048]
+      - [0x317DC, c, 318CC]
+      - [0x32744, c, 32D6C]
+      - [0x33A20, c, 34048]
+      - [0x33AE4, c, 3410C]
+      - [0x3442C, c, 34B30]
+      - [0x35D28, c, cutscene]
+      - [0x3796C, c, save_mgr]
+      - [0x38FE0, c, stream]
+      - [0x39D10, c, libpress]
+      - [0x3A420, asm, handwritten/func_801BAB70]
+      - [0x3A454, asm, handwritten/DecDCTvlc]
+      - [0x3A7B8, .bss, 2C048]
+      - [0x3A880, .bss, 318CC]
+      - [0x3A88C, .bss, 32D6C]
+      - [0x3A8C0, .bss, 3410C]
+      - [0x3A9A8, .bss, cutscene]
+      - [0x3BBA8, .bss, save_mgr]
+      - [0x3BBB0, .bss, stream]
+      - [0x3BC00, .bss, bss]
+  - [0x563D4]

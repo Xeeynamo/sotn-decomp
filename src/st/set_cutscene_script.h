@@ -30,13 +30,13 @@ static u8 SetCutsceneScript(u8* script) {
         prim->drawMode = DRAW_HIDE;
         prim = g_Dialogue.prim[3] = prim->next;
 
-        prim->drawMode = DRAW_HIDE;
-        prim = g_Dialogue.prim[4] = prim->next;
-
 #if VERSION >= VER_JP11 && TARGET != TARGET_PSP
         prim->drawMode = DRAW_HIDE;
-        prim = g_Dialogue.prim[5] = prim->next;
+        prim = g_Dialogue.prim[4] = prim->next;
 #endif
+
+        prim->drawMode = DRAW_HIDE;
+        prim = g_Dialogue.primPortrait = prim->next;
 
         prim->type = PRIM_GT4;
         prim->drawMode = DRAW_HIDE;
