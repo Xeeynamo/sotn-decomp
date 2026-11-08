@@ -93,7 +93,6 @@ void func_060A55B4(s32 arg0);
 void func_060A59E0(s32 arg0);
 void func_060A5AF0(void);
 void func_060A5B94(s32 arg0);
-void SetPlayerStepNoInline(PlayerSteps step) __asm__("_func_060A5558");
 void SetSpeedXNoInline(s32 velocityX) __asm__("_func_060A5574");
 void func_060A56E4NoInline(s32 arg0, s32 arg1) __asm__("_func_060A56E4");
 void func_060A5674NoInline(s32 anim) __asm__("_func_060A5674");
