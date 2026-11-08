@@ -1,6 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../sel/sel.h"
 
+enum {
+    ENDING_VARIANT_WORST = ENDING_WORST - 1,
+    ENDING_VARIANT_BAD = ENDING_BAD - 1,
+    ENDING_VARIANT_GOOD = ENDING_GOOD - 1,
+    ENDING_VARIANT_RICHTER = ENDING_RICHTER - 1,
+    ENDING_VARIANT_BEST = ENDING_BEST - 1,
+};
+
 extern u32 D_801BC3E8;
 extern s8* D_psp_09285B80;
 extern s8* D_psp_09285B88;
@@ -8,29 +16,37 @@ extern s8* D_psp_09285B88;
 // BSS
 static s32 D_801D6B24;
 static s32 D_801BC3E4;
-static s32 D_801BD030;
+static s32 is_ending_sequence_done;
 
 // DATA
-static u8 D_80180504[] = {
-    0x04, 0x29, 0x04, 0x2A, 0x04, 0x2B, 0x04, 0x2C, 0x04, 0x2D, 0x04, 0x2E,
-    0x04, 0x2F, 0x04, 0x30, 0x04, 0x31, 0x04, 0x32, 0x04, 0x33, 0x04, 0x34,
-    0x04, 0x35, 0x04, 0x36, 0x04, 0x37, 0x04, 0x38, 0x00, 0x00};
-static u8 D_80180528[] = {0x04, 0x39, 0x04, 0x3A, 0x04, 0x3B, 0x04, 0x3C,
-                          0x04, 0x3D, 0x04, 0x3E, 0x04, 0x3F, 0xFF, 0x00};
-static u8 D_80180538[] = {
-    0x04, 0x43, 0x04, 0x44, 0x04, 0x45, 0x04, 0x46, 0x04, 0x47,
-    0x04, 0x48, 0x04, 0x49, 0x04, 0x4A, 0x04, 0x4B, 0x04, 0x4C,
-    0x04, 0x4D, 0x04, 0x4E, 0x04, 0x4F, 0xFF, 0x00};
-static u8 D_80180554[] = {0x04, 0x4E, 0x04, 0x4D, 0x04, 0x4C, 0x04,
-                          0x4D, 0x04, 0x4E, 0x04, 0x4F, 0x00, 0x00};
-static u8 D_80180564[] = {
-    0x02, 0x20, 0x04, 0x21, 0x04, 0x22, 0x04, 0x23, 0x04, 0x24,
-    0x04, 0x25, 0x04, 0x26, 0x04, 0x27, 0x02, 0x20, 0x00, 0x00};
-static u8 D_80180578[] = {0x01, 0x2A, 0x08, 0x2B, 0xFF, 0x00};
-static u8 D_80180580[] = {
-    0x02, 0x2C, 0x04, 0x2D, 0x05, 0x2E, 0x04, 0x2F, 0x04, 0x30,
-    0x04, 0x31, 0x04, 0x32, 0x04, 0x33, 0x05, 0x34, 0x04, 0x35,
-    0x04, 0x36, 0x04, 0x37, 0x02, 0x2C, 0xFF, 0x00};
+static AnimateEntityFrame anim_alucard_run[] = {
+    POSE(4, 0x29, 0), POSE(4, 0x2A, 0), POSE(4, 0x2B, 0), POSE(4, 0x2C, 0),
+    POSE(4, 0x2D, 0), POSE(4, 0x2E, 0), POSE(4, 0x2F, 0), POSE(4, 0x30, 0),
+    POSE(4, 0x31, 0), POSE(4, 0x32, 0), POSE(4, 0x33, 0), POSE(4, 0x34, 0),
+    POSE(4, 0x35, 0), POSE(4, 0x36, 0), POSE(4, 0x37, 0), POSE(4, 0x38, 0),
+    POSE_LOOP(0)};
+static AnimateEntityFrame anim_alucard_turn[] = {
+    POSE(4, 0x39, 0), POSE(4, 0x3A, 0), POSE(4, 0x3B, 0), POSE(4, 0x3C, 0),
+    POSE(4, 0x3D, 0), POSE(4, 0x3E, 0), POSE(4, 0x3F, 0), POSE_END};
+static AnimateEntityFrame anim_alucard_stop_from_run[] = {
+    POSE(4, 0x43, 0), POSE(4, 0x44, 0), POSE(4, 0x45, 0), POSE(4, 0x46, 0),
+    POSE(4, 0x47, 0), POSE(4, 0x48, 0), POSE(4, 0x49, 0), POSE(4, 0x4A, 0),
+    POSE(4, 0x4B, 0), POSE(4, 0x4C, 0), POSE(4, 0x4D, 0), POSE(4, 0x4E, 0),
+    POSE(4, 0x4F, 0), POSE_END};
+static AnimateEntityFrame anim_alucard_idle_with_wind[] = {
+    POSE(4, 0x4E, 0), POSE(4, 0x4D, 0), POSE(4, 0x4C, 0), POSE(4, 0x4D, 0),
+    POSE(4, 0x4E, 0), POSE(4, 0x4F, 0), POSE_LOOP(0)};
+static AnimateEntityFrame D_80180564[] = {
+    POSE(2, 0x20, 0), POSE(4, 0x21, 0), POSE(4, 0x22, 0), POSE(4, 0x23, 0),
+    POSE(4, 0x24, 0), POSE(4, 0x25, 0), POSE(4, 0x26, 0), POSE(4, 0x27, 0),
+    POSE(2, 0x20, 0), POSE_LOOP(0)};
+static AnimateEntityFrame D_80180578[] = {
+    POSE(1, 0x2A, 0), POSE(8, 0x2B, 0), POSE_END};
+static AnimateEntityFrame D_80180580[] = {
+    POSE(2, 0x2C, 0), POSE(4, 0x2D, 0), POSE(5, 0x2E, 0), POSE(4, 0x2F, 0),
+    POSE(4, 0x30, 0), POSE(4, 0x31, 0), POSE(4, 0x32, 0), POSE(4, 0x33, 0),
+    POSE(5, 0x34, 0), POSE(4, 0x35, 0), POSE(4, 0x36, 0), POSE(4, 0x37, 0),
+    POSE(2, 0x2C, 0), POSE_END};
 
 #include "../../destroy_entity.h"
 
@@ -45,7 +61,7 @@ static void SetStep(Entity* entity, u16 step) {
 
 // Note: SEL uses entities weirdly. This probably shouldn't be PLAYER.
 // g_Entities[0] is probably its own thing.
-void func_801B4C68(void) {
+void ActorBackgroundWithCastle(void) {
     Entity* self = &g_Entities[0];
     s32 primIndex;
     Primitive* prim;
@@ -101,7 +117,7 @@ void func_801B4C68(void) {
     }
 }
 
-void func_801B4D78(void) {
+void ActorRockCliffEdge(void) {
     Entity* self = &g_Entities[3];
 
     switch (self->step) {
@@ -120,7 +136,7 @@ void func_801B4D78(void) {
     }
 }
 
-void func_801B4DE0(void) {
+void ActorFadein(void) {
     Entity* self = &g_Entities[2];
     s32 primIndex;
     Primitive* prim;
@@ -175,7 +191,7 @@ void func_801B4DE0(void) {
     }
 }
 
-void func_801B4FFC(void) {
+void ActorFadeout(void) {
     Entity* self = &g_Entities[2];
     s32 primIndex;
     Primitive* prim;
@@ -218,7 +234,7 @@ void func_801B4FFC(void) {
     }
 }
 
-void func_801B519C(void) {
+void ActorWaterRipples(void) {
     Entity* self = &g_Entities[1];
     s32 primIndex;
     Primitive* prim;
@@ -273,10 +289,10 @@ void func_801B519C(void) {
     }
 }
 
-// Compare to func_801B585C
+// Compare to ActorAlucard
 // Probably handles Alucard sprite in the ending, did not confirm but uses his
 // palette.
-void func_801B5350(void) {
+void ActorAlucardWorstEnding(void) {
     Entity* self = &g_Entities[UNK_ENTITY_5];
 
     switch (self->step) {
@@ -296,14 +312,14 @@ void func_801B5350(void) {
         break;
 
     case 2:
-        if (!AnimateEntity(D_80180528, self)) {
+        if (!AnimateEntity((u8*)anim_alucard_turn, self)) {
             SetStep(self, 3);
         }
         self->ext.unkSelEnts.unk80.val -= FIX(1.5);
         break;
 
     case 3:
-        AnimateEntity(D_80180504, self);
+        AnimateEntity((u8*)anim_alucard_run, self);
         self->ext.unkSelEnts.unk80.val -= FIX(1.5);
         if (self->ext.unkSelEnts.unk80.i.hi < 0x40) {
             self->step = 0xFF;
@@ -312,9 +328,9 @@ void func_801B5350(void) {
     }
 }
 
-// func_801B54C8 sets up the Richter sprite in the Alucard Mode ending scenes
+// ActorRichter sets up the Richter sprite in the Alucard Mode ending scenes
 // where he was saved.
-void func_801B54C8(void) {
+void ActorRichter(void) {
     Entity* self = &g_Entities[UNK_ENTITY_7];
 
     switch (self->step) {
@@ -335,8 +351,8 @@ void func_801B54C8(void) {
     }
 }
 
-// func_801B5548 sets up the Richter sprite in the Richter Mode ending scene.
-static void func_801B5548(void) {
+// ActorRichterSolo sets up the Richter sprite in the Richter Mode ending scene.
+static void ActorRichterSolo(void) {
     Entity* self = &g_Entities[UNK_ENTITY_7];
 
     switch (self->step) {
@@ -368,8 +384,8 @@ static void func_801B5548(void) {
     }
 }
 
-// func_801B55C8 handles Maria's sprite in the ending scene.
-void func_801B55C8(void) {
+// ActorMaria handles Maria's sprite in the ending scene.
+void ActorMaria(void) {
     Entity* self = &g_Entities[UNK_ENTITY_6];
 
     switch (self->step) {
@@ -397,7 +413,7 @@ void func_801B55C8(void) {
 
     case 2:
         self->ext.unkSelEnts.unk80.val -= FIX(0.75);
-        if (!AnimateEntity(D_80180580, self)) {
+        if (!AnimateEntity((u8*)D_80180580, self)) {
             self->animSet = ANIMSET_OVL(3);
             self->animCurFrame = 0xC;
             self->unk5A = 0x46;
@@ -416,7 +432,7 @@ void func_801B55C8(void) {
         break;
 
     case 4:
-        if (!AnimateEntity(D_80180578, self)) {
+        if (!AnimateEntity((u8*)D_80180578, self)) {
             self->animSet = ANIMSET_OVL(3);
             self->unk5A = 0x46;
             self->animCurFrame = 0xC;
@@ -435,7 +451,7 @@ void func_801B55C8(void) {
         break;
 
     case 6:
-        if (!AnimateEntity(D_80180578, self)) {
+        if (!AnimateEntity((u8*)D_80180578, self)) {
             self->animSet = ANIMSET_OVL(3);
             self->unk5A = 0x46;
             self->animCurFrame = 0x20;
@@ -445,7 +461,7 @@ void func_801B55C8(void) {
         break;
 
     case 7:
-        AnimateEntity(D_80180564, self);
+        AnimateEntity((u8*)D_80180564, self);
         self->ext.unkSelEnts.unk80.val -= FIX(1.5);
         if (self->ext.unkSelEnts.unk80.i.hi < 0x20) {
             self->step = 0xFF;
@@ -454,8 +470,8 @@ void func_801B55C8(void) {
     }
 }
 
-// Compare to func_801B5350
-void func_801B585C(u16 arg0) {
+// Compare to ActorAlucardWorstEnding
+void ActorAlucard(u16 arg0) {
     Entity* self = &g_Entities[UNK_ENTITY_5];
 
     switch (self->step) {
@@ -471,14 +487,14 @@ void func_801B585C(u16 arg0) {
         break;
 
     case 1:
-        AnimateEntity(D_80180504, self);
+        AnimateEntity((u8*)anim_alucard_run, self);
         if (D_801BC3E8 & 4) {
             self->step++;
         }
         break;
 
     case 2:
-        AnimateEntity(D_80180504, self);
+        AnimateEntity((u8*)anim_alucard_run, self);
         self->ext.unkSelEnts.unk80.val += FIX(1.5);
         if (self->ext.unkSelEnts.unk80.i.hi > 0x48) {
             SetStep(self, 3);
@@ -486,13 +502,13 @@ void func_801B585C(u16 arg0) {
         break;
 
     case 3:
-        if (!AnimateEntity(D_80180538, self)) {
+        if (!AnimateEntity((u8*)anim_alucard_stop_from_run, self)) {
             SetStep(self, 4);
         }
         break;
 
     case 4:
-        AnimateEntity(D_80180554, self);
+        AnimateEntity((u8*)anim_alucard_idle_with_wind, self);
         if (D_801BC3E8 & 8) {
             SetStep(self, 5);
         }
@@ -500,14 +516,14 @@ void func_801B585C(u16 arg0) {
 
     case 5:
         self->facingLeft = 1;
-        if (!AnimateEntity(D_80180528, self)) {
+        if (!AnimateEntity((u8*)anim_alucard_turn, self)) {
             SetStep(self, 6);
         }
         self->ext.unkSelEnts.unk80.val -= FIX(1.5);
         break;
 
     case 6:
-        AnimateEntity(D_80180504, self);
+        AnimateEntity((u8*)anim_alucard_run, self);
         self->ext.unkSelEnts.unk80.val -= FIX(1.5);
         if ((arg0 && self->ext.unkSelEnts.unk80.i.hi < 0x20) ||
             (!arg0 && self->ext.unkSelEnts.unk80.i.hi < -0x10)) {
@@ -517,7 +533,7 @@ void func_801B585C(u16 arg0) {
     }
 }
 
-void func_801B5A7C(void) {
+void CutsceneManager(void) {
     // Not sure where this entity is initialized...
     Entity* self = &g_Entities[UNK_ENTITY_8];
     Entity* e;
@@ -560,11 +576,11 @@ void func_801B5A7C(void) {
 
         case 4:
             if (D_801BC3E4 == 0) {
-                D_801BD030 = 1;
+                is_ending_sequence_done = 1;
             }
             break;
         }
-        func_801B5350();
+        ActorAlucardWorstEnding();
         break;
 
     case 1:
@@ -607,12 +623,12 @@ void func_801B5A7C(void) {
 
         case 5:
             if (D_801BC3E4 == 0) {
-                D_801BD030 = 1;
+                is_ending_sequence_done = 1;
             }
             break;
         }
-        func_801B585C(1);
-        func_801B55C8();
+        ActorAlucard(1);
+        ActorMaria();
         break;
 
     case 2:
@@ -656,13 +672,13 @@ void func_801B5A7C(void) {
 
         case 5:
             if (D_801BC3E4 == 0) {
-                D_801BD030 = 1;
+                is_ending_sequence_done = 1;
             }
             break;
         }
-        func_801B585C(0);
-        func_801B54C8();
-        func_801B55C8();
+        ActorAlucard(0);
+        ActorRichter();
+        ActorMaria();
         break;
 
     case 3:
@@ -712,11 +728,11 @@ void func_801B5A7C(void) {
 
         case 6:
             if (D_801BC3E4 == 0) {
-                D_801BD030 = 1;
+                is_ending_sequence_done = 1;
             }
             break;
         }
-        func_801B5548();
+        ActorRichterSolo();
         break;
 
     case 4:
@@ -760,18 +776,18 @@ void func_801B5A7C(void) {
 
         case 5:
             if (D_801BC3E4 == 0) {
-                D_801BD030 = 1;
+                is_ending_sequence_done = 1;
             }
             break;
         }
-        func_801B585C(0);
-        func_801B54C8();
-        func_801B55C8();
+        ActorAlucard(0);
+        ActorRichter();
+        ActorMaria();
         break;
     }
 }
 
-void func_801B60D4(void) {
+void HandleEndingSequence(void) {
     Entity* ent;
     s32 i;
 
@@ -779,8 +795,8 @@ void func_801B60D4(void) {
     case 0:
         if (!g_IsUsingCd) {
             func_psp_09237C78();
-            D_8003C728 = 1;
-            if (D_800978B4 != 0) {
+            g_IsMoviePlaying = 1;
+            if (g_EndingVariant != ENDING_NONE) {
                 g_CurrentStream = 3;
             } else {
                 g_CurrentStream = 2;
@@ -791,11 +807,11 @@ void func_801B60D4(void) {
 
     case 1:
         func_psp_090FFAB8();
-        if (D_8003C728 == 0) {
+        if (g_IsMoviePlaying == 0) {
             g_CurrentStream = 0;
             func_801B18F4();
         }
-        if (D_800978B4 != 0) {
+        if (g_EndingVariant != ENDING_NONE) {
             g_GameStep++;
         } else {
             g_GameStep = 0x100;
@@ -811,9 +827,9 @@ void func_801B60D4(void) {
             DestroyEntity(ent);
         }
         D_801D6B24 = 0;
-        D_801BD030 = 0;
+        is_ending_sequence_done = 0;
         ent = &g_Entities[UNK_ENTITY_8];
-        ent->params = D_800978B4 - 1;
+        ent->params = g_EndingVariant - ENDING_WORST;
         g_api.func_800EA5E4(ANIMSET_DRA(0x16));
         g_api.func_800EA5E4(ANIMSET_DRA(0));
         g_api.func_800EA5E4(ANIMSET_OVL(5));
@@ -822,26 +838,26 @@ void func_801B60D4(void) {
         break;
 
     case 3:
-        func_801B5A7C();
+        CutsceneManager();
         ent = &g_Entities[UNK_ENTITY_4];
         EntityCutscene(ent);
-        func_801B4C68();
-        func_801B519C();
-        func_801B4D78();
-        func_801B4DE0();
+        ActorBackgroundWithCastle();
+        ActorWaterRipples();
+        ActorRockCliffEdge();
+        ActorFadein();
         ent = &g_Entities[3];
         for (i = 3; i < 8; i++, ent++) {
             ent->posX.i.hi =
                 (D_801D6B24 / 0x10000) + ent->ext.unkSelEnts.unk80.i.hi;
         }
 
-        if (D_801BD030 != 0) {
-            // This is kind of weird, we destroy the first 8...
+        if (is_ending_sequence_done != 0) {
+            // This is kind of weird, we destroy the first 9...
             ent = &g_Entities[0];
             for (i = 0; i <= 8; i++, ent++) {
                 DestroyEntity(ent);
             }
-            // ... and then another 8. Why not just 16 all at once?
+            // ... and then another 9. Why not just 18 all at once?
             for (i = 0; i <= 8; i++, ent++) {
                 DestroyEntity(ent);
             }
@@ -855,7 +871,7 @@ void func_801B60D4(void) {
         break;
 
     case 5:
-        SetTitleDisplayBuffer256();
+        SetMenuDisplayBuffer();
         g_GameEngineStep++;
         break;
 
@@ -866,7 +882,7 @@ void func_801B60D4(void) {
 
     case 7:
         ent = &g_Entities[UNK_ENTITY_4];
-        if (func_801B79D4(ent)) {
+        if (EntityCutsceneCredits(ent)) {
             ent = &g_Entities[1];
             ent->step = 0;
             D_801BC3E4 = 1;
@@ -875,7 +891,7 @@ void func_801B60D4(void) {
         break;
 
     case 8:
-        func_801B4FFC();
+        ActorFadeout();
         if (D_801BC3E4 == 0) {
             g_GameStep++;
         }

@@ -372,6 +372,7 @@ set(SOURCE_FILES_STAGE_SEL
     src/st/sel/bss.c
     src/st/sel/banks.c
     src/st/sel/764.c
+    src/st/sel/C404.c
     src/st/sel/CD54.c
     src/st/sel/sprites.c
     src/st/sel/F9A8.c

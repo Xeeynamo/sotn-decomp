@@ -43,7 +43,12 @@ static const char* actor_names[] = {_S("Alucard"), _S("Maria"), _S("Richter")};
 u8 SetCutsceneScript(u8* script) {
     Primitive* prim;
 
+#ifdef FIX_UB
+    // BUG! the code below walks 8 primitives, the last one is out of bounds
+    g_Dialogue.primIndex[2] = g_api.AllocPrimitives(PRIM_SPRT, 8);
+#else
     g_Dialogue.primIndex[2] = g_api.AllocPrimitives(PRIM_SPRT, 7);
+#endif
     if (g_Dialogue.primIndex[2] != -1) {
         g_Dialogue.scriptCur = script;
         g_Dialogue.hasEvents = 0;
@@ -145,12 +150,15 @@ static void ScaleCutsceneAvatar(u8 ySteps, Entity* self) {
 void EntityCutscene(Entity* self) {
     s16 x, y;
     RECT* rect;
+#ifdef FIX_UB
+    RECT rectBuf;
+#endif
     Primitive* prim;
     u16 nextChar;
     s32 i;
     s32 nextChar2;
     s32 var_s7;
-    s32 ptr;
+    intptr_t ptr;
     switch (self->step) {
     case 0:
         if (SetCutsceneScript(cutscene_endings)) {
@@ -387,7 +395,7 @@ void EntityCutscene(Entity* self) {
                 ptr |= *g_Dialogue.scriptCur++;
                 ptr <<= 4;
                 ptr |= *g_Dialogue.scriptCur++;
-                g_Dialogue.scriptCur += *((u8*)ptr + 0x100000) * 4;
+                g_Dialogue.scriptCur += *CS_PTR(ptr) * 4;
                 ptr = *g_Dialogue.scriptCur++;
                 ptr <<= 4;
                 ptr |= *g_Dialogue.scriptCur++;
@@ -395,7 +403,7 @@ void EntityCutscene(Entity* self) {
                 ptr |= *g_Dialogue.scriptCur++;
                 ptr <<= 4;
                 ptr |= *g_Dialogue.scriptCur;
-                g_Dialogue.scriptCur = (u8*)(ptr + 0x100000);
+                g_Dialogue.scriptCur = CS_PTR(ptr);
                 continue;
             case CSOP_SCRIPT_UNKNOWN_15:
                 ptr = *g_Dialogue.scriptCur++;
@@ -405,7 +413,7 @@ void EntityCutscene(Entity* self) {
                 ptr |= *g_Dialogue.scriptCur++;
                 ptr <<= 4;
                 ptr |= *g_Dialogue.scriptCur;
-                g_Dialogue.scriptCur = (u8*)(ptr + 0x100000);
+                g_Dialogue.scriptCur = CS_PTR(ptr);
                 continue;
             case CSOP_WAIT_FOR_FLAG:
                 if (!((D_801BC3E8 >> *g_Dialogue.scriptCur) & 1)) {
@@ -433,7 +441,7 @@ void EntityCutscene(Entity* self) {
                 ptr |= *g_Dialogue.scriptCur++;
                 ptr <<= 4;
                 ptr |= *g_Dialogue.scriptCur++;
-                ptr += 0x100000;
+                ptr = (intptr_t)CS_PTR(ptr);
                 nextChar2 = *g_Dialogue.scriptCur++;
                 LoadTPage((u_long*)ptr, 1, 0, D_80180834[nextChar2], 0x100,
                           0x30, 0x48);
@@ -495,6 +503,10 @@ void EntityCutscene(Entity* self) {
             g_Dialogue.nextCharX += 2;
             break;
         }
+#ifdef FIX_UB
+        // BUG! rect is never initialized, it only works on PSX by luck
+        rect = &rectBuf;
+#endif
         rect->x = ((nextChar & 0x0F) << 1) + 0x380;
         rect->y = ((nextChar & 0xF0) >> 1) + 0xF0;
         rect->w = 2;

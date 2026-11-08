@@ -88,7 +88,7 @@ void SetTitleDisplayBuffer(void) {
 }
 
 // same as SetTitleDisplayBuffer, but clips at 256 vertical height
-void SetTitleDisplayBuffer256(void) {
+void SetMenuDisplayBuffer(void) {
     SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_MENU_W, DISP_TITLE_H);
     SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, DISP_MENU_W, DISP_TITLE_H);
     SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, DISP_MENU_W, DISP_TITLE_H);

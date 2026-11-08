@@ -287,7 +287,7 @@ void func_us_8019F5F0(Entity* self) {
             prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 = ++prim->b3;
         if (prim->r0 == 0xFF) {
             if (g_PlayableCharacter != PLAYER_ALUCARD) {
-                D_800978B4 = 4;
+                g_EndingVariant = ENDING_RICHTER;
                 g_GameState = Game_Ending;
                 g_GameStep = 0;
             } else {

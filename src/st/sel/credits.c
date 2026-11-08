@@ -122,7 +122,7 @@ u16* func_801B78BC(char ch) {
     return g_api.func_80106A28(jCh, 0);
 }
 
-s32 func_801B79D4(Entity* entity) {
+s32 EntityCutsceneCredits(Entity* entity) {
     Primitive* prim;
     int bitDepth;
     u16 nextChar;

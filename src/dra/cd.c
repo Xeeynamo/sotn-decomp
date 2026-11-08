@@ -581,7 +581,7 @@ void UpdateCd(void) {
     s32* pLoadFile;
     CdMgr* cd;
 
-    if (D_8003C728 != 0) {
+    if (g_IsMoviePlaying != 0) {
         return;
     }
     pLoadFile = &g_LoadFile;

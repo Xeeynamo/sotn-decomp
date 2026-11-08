@@ -332,9 +332,9 @@ void EntityUnkID29(Entity* self) {
             g_unkGraphicsStruct.pauseEnemies = false;
 
             if (g_RoomCount > 1846) {
-                D_800978B4 = 3;
+                g_EndingVariant = ENDING_GOOD;
             } else {
-                D_800978B4 = 5;
+                g_EndingVariant = ENDING_BEST;
             }
             g_GameState = Game_Ending;
             g_GameStep = Play_Reset;
