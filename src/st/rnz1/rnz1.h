@@ -21,8 +21,10 @@ enum Palettes {
     PAL_BREAKABLE = 0x22A,
     PAL_VALHALLA_KNIGHT = 0x232,
     PAL_BOMB_KNIGHT_ROCK_KNIGHT = 0x236,
-    PAL_BOMB_KNIGHT_THROW_BOMB_2 = 0x23A, // TODO: check in-game for better name, also rno4
-    PAL_BOMB_KNIGHT_THROW_BOMB_3 = 0x23B, // TODO: check in-game for better name, also rno4
+    PAL_BOMB_KNIGHT_THROW_BOMB_2 =
+        0x23A, // TODO: check in-game for better name, also rno4
+    PAL_BOMB_KNIGHT_THROW_BOMB_3 =
+        0x23B, // TODO: check in-game for better name, also rno4
     PAL_CRUSHER = 0x23C,
     PAL_PUFF_OPAQUE_OFFSET = 0x2E0,
 };
