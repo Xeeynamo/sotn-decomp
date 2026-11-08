@@ -169,7 +169,7 @@ files:
           - [0xB304, cutscene, us/cutscene_endings]
           - [0xBC4A, skip]
           - [0xBC54, credits, us/credits]
-          - [0xC404, skip]
+          - [0xC404, spritesheet, ending]
           - [0xCD54, palette, us/D_8018CD54, 16]
           - [0xCDB4, palette, D_8018CDB4, 256]
           - [0xCFB4, palette, D_8018CFB4, 256]

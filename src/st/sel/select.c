@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sel.h"
 
-extern u8* D_8018C404; // unknown type
+extern u8* ending_sprites[];
 extern char g_AsciiSet[];
 extern s32 g_MainMenuCursor;
 extern s32 g_InputCursorPos;
@@ -25,16 +25,15 @@ static s32 g_SelEng220NextStep;
 
 void Update(void);
 void HandleTitleScreen(void);
-void func_801B9C80(void);
 void InitSel(s32 objLayoutId);
-void func_801B60D4(void);
+void HandleEndingSequence(void);
 void func_801B17C8(void);
 
 // DATA
 Overlay g_Overlay = {
     /* 0x00 */ Update,
     /* 0x04 */ HandleTitleScreen,
-    /* 0x08 */ func_801B9C80,
+    /* 0x08 */ PlayMovie,
     /* 0x0C */ InitSel,
     /* 0x10 */ NULL,
     /* 0x14 */ g_SpriteBanks,
@@ -42,9 +41,9 @@ Overlay g_Overlay = {
     /* 0x1C */ NULL,
     /* 0x20 */ NULL,
     /* 0x24 */ g_EntityGfxs,
-    /* 0x28 */ func_801B60D4,
+    /* 0x28 */ HandleEndingSequence,
     /* 0x2C */ NULL,
-    /* 0x30 */ &D_8018C404,
+    /* 0x30 */ ending_sprites,
     /* 0x34 */ NULL,
     /* 0x38 */ NULL,
     /* 0x3C */ func_801B17C8,
@@ -1311,7 +1310,7 @@ void Update(void) {
 #if VERSION >= VER_US
     case Upd_Eng_Init:
         func_801B18F4();
-        SetTitleDisplayBuffer256();
+        SetMenuDisplayBuffer();
         g_GameEngineStep--;
         break;
     case Upd_Eng_MenuInit:
@@ -1323,7 +1322,7 @@ void Update(void) {
         D_801BAF08 = 0;
         func_801B2D6C();
 #if VERSION < VER_US
-        SetTitleDisplayBuffer256();
+        SetMenuDisplayBuffer();
 #endif
         g_api.func_800EA5E4(ANIMSET_DRA(0));
         g_api.func_800EA5E4(ANIMSET_OVL(0));

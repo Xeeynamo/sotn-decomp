@@ -75,7 +75,7 @@ s32 func_060B3C70(void) {
         SetPlayerStep(0x19);
         g_Player.timers[0x45] = 0;
         g_Player.timers[0x46] = 0;
-        g_Player.pad0[0x39D] |= 2;
+        g_Player.unk39D |= 2;
         func_060BAF44(g_CurrentEntity, 0x0024007B, 0);
         PLAYER.velocityY >>= 1;
         return 1;

@@ -25,30 +25,81 @@ segments:
         file: ric/hdrstub
       - start: 0x60
         type: c
-        file: richter
-        end: 0x2CEF
+        file: ric/pl_main
+        end: 0x1427
         function_ranges:
-          - [0xAA0, 0x13F4]
-      - start: 0x2CF0
+          - [0xAA0, 0xAA0]
+      - start: 0x1428
         type: c
-        file: richter
-        end: 0x2FD3
+        file: ric/pl_steps
+        end: 0x3EB7
         function_ranges:
-          - [0x2CF0, 0x2FD2]
-      - start: 0x2FD4
+          - [0x2CF0, 0x2CF0]
+          - [0x2FD4, 0x2FD4]
+      - start: 0x3EB8
         type: c
-        file: richter
-        end: 0xD40B
+        file: ric/pl_setstep
+        end: 0x4C2B
+      - start: 0x4C2C
+        type: c
+        file: ric/pl_utils
+        end: 0x55BF
+      - start: 0x55C0
+        type: c
+        file: ric/pl_collision
+        end: 0x697F
+      - start: 0x6980
+        type: c
+        file: ric/pl_blueprints
+        end: 0xB61B
         function_ranges:
-          - [0xB0C4, 0xB5D8]
-      - start: 0xD40C
+          - [0x6F2C, 0x6F2C]
+          - [0x877C, 0x877C]
+          - [0xB0C4, 0xB0C4]
+      - start: 0xB61C
+        type: c
+        file: ric/pl_whip
+        end: 0xC507
+      - start: 0xC508
+        type: c
+        file: ric/pl_subweapon_dummy
+        end: 0xC51F
+      - start: 0xC520
+        type: c
+        file: ric/2F8E8
+        end: 0xE453
+        function_ranges:
+          - [0xD40C, 0xD40C]
+      - start: 0xE454
+        type: c
+        file: ric/319C4
+        end: 0x1264F
+        function_ranges:
+          - [0xE8FC, 0xE8FC]
+      - start: 0x12650
+        type: c
+        file: ric/pl_subweapons
+        end: 0x13663
+      - start: 0x13664
+        type: c
+        file: ric/pl_subweapon_cross
+        end: 0x1465B
+        function_ranges:
+          - [0x13664, 0x13664]
+      - start: 0x1465C
+        type: c
+        file: ric/pl_subweapon_holywater
+        end: 0x15787
+        function_ranges:
+          - [0x14978, 0x14978]
+      - start: 0x15788
+        type: c
+        file: ric/pl_crash_cross
+        end: 0x15CA3
+      - start: 0x15CA4
         type: c
         file: richter
         end: 0x19D6F
-        function_ranges:
-          - [0xE8FC, 0xEA1C]
-          - [0x13664, 0x13B12]
-          - [0x14978, 0x14A4E]
       - [0x19D70, .data, ric/d54568]
       - start: 0x19D7C
         type: .text

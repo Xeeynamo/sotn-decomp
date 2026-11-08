@@ -164,12 +164,15 @@ extern u8 cutscene_credits[];
 extern s32 g_StreamWidth;
 extern int g_StreamHeight;
 
+void PlayMovie(void);
+
 extern const char D_801ABFB8[]; // MDEC_in_sync
 extern const char D_801ABFC8[]; // MDEC_out_sync
 extern const char D_801ABFD8[]; // DMA=(%d,%d), ADDR=(0x%08x->0x%08x)
 extern const char D_801AC000[]; // FIFO
 extern const char D_801AC038[]; // "%s timeout:\n"
 extern s32 D_801BC3E4;
+extern u32 is_ending_sequence_done;
 extern s32 D_801BC650;
 extern SaveSummary g_SaveSummary[PORT_COUNT];
 extern u32 g_StreamEndFrame;

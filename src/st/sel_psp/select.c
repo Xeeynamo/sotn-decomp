@@ -35,16 +35,15 @@ static s32 g_SelEng220NextStep;
 
 void Update(void);
 void HandleTitleScreen(void);
-void func_psp_090FFAB8(void);
 void InitSel(s32 objLayoutId);
-void func_801B60D4(void);
+void HandleEndingSequence(void);
 void func_801B17C8(void);
 
 // DATA
 Overlay g_Overlay = {
     /* 0x00 */ Update,
     /* 0x04 */ HandleTitleScreen,
-    /* 0x08 */ func_psp_090FFAB8,
+    /* 0x08 */ PlayMovie,
     /* 0x0C */ InitSel,
     /* 0x10 */ NULL,
     /* 0x14 */ g_SpriteBanks,
@@ -52,7 +51,7 @@ Overlay g_Overlay = {
     /* 0x1C */ NULL,
     /* 0x20 */ NULL,
     /* 0x24 */ g_EntityGfxs,
-    /* 0x28 */ func_801B60D4,
+    /* 0x28 */ HandleEndingSequence,
     /* 0x2C */ NULL,
     /* 0x30 */ &D_8018C404,
     /* 0x34 */ NULL,
@@ -1218,7 +1217,7 @@ void Update(void) {
         g_GameTimer = 0;
         D_801BAF08 = 0;
         func_801B2D6C();
-        SetTitleDisplayBuffer256();
+        SetMenuDisplayBuffer();
         g_api.func_800EA5E4(ANIMSET_DRA(0));
         g_api.func_800EA5E4(ANIMSET_OVL(0));
         g_api.func_800EA5E4(ANIMSET_OVL(1));

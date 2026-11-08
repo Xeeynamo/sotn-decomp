@@ -214,7 +214,7 @@ files:
           - [0xB304, cutscene, eu/cutscene_endings]
           - [0xBC4E, skip]
           - [0xBC58, credits, eu/credits]
-          - [0xC40C, skip]
+          - [0xC40C, spritesheet, ending]
           - [0xCD5C, palette, eu/D_8018CD54, 16]
           - [0xCDBC, palette, D_8018CDB4, 256]
           - [0xCFBC, palette, D_8018CFB4, 256]

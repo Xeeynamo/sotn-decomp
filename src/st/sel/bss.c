@@ -29,7 +29,7 @@ u32 vlc_bits;
 MemcardInfo g_MemcardInfo[2];
 #endif
 SaveSummary g_SaveSummary[PORT_COUNT];
-u32 D_801BD030;
+u32 is_ending_sequence_done;
 u32 g_StreamEndFrame;
 u32 g_StreamIsRGB24;
 u32 D_801BD03C;

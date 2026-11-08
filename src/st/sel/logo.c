@@ -8,18 +8,14 @@ void InitSel() {
             break;
         }
         g_GameClearFlag = SAVE_FLAG_CLEAR;
-        D_8003C728 = 1;
+        g_IsMoviePlaying = 1;
         g_CurrentStream = 0;
         g_GameEngineStep++;
         break;
 
     case Upd_Eng_MenuFadeIn:
-#if TARGET == TARGET_PSP
-        func_psp_090FFAB8();
-#else
-        func_801B9C80();
-#endif
-        if (D_8003C728) {
+        PlayMovie();
+        if (g_IsMoviePlaying) {
             break;
         }
         g_GameClearFlag = SAVE_FLAG_NORMAL;

@@ -1408,7 +1408,7 @@ void HandleNowLoading(void) {
                 SetGameState(Game_MainMenu);
 #if TARGET == TARGET_PSP
             } else if ((g_StageId >= 0xF0) && (g_StageId < 0xFF)) {
-                D_800978B4 = g_StageId - 0xF0;
+                g_EndingVariant = g_StageId - 0xF0;
 #else
             } else if (g_StageId == STAGE_ENDING) {
 #endif
@@ -1991,7 +1991,7 @@ void HandleVideoPlayback(void) {
 #else
             if (!g_IsUsingCd) {
 #endif
-                D_8003C728 = 1;
+                g_IsMoviePlaying = 1;
                 g_CurrentStream = 1;
                 g_GameStep++;
             }
@@ -1999,7 +1999,7 @@ void HandleVideoPlayback(void) {
 
         case 6:
             g_api.o.UpdateRoomPosition();
-            if (!D_8003C728) {
+            if (!g_IsMoviePlaying) {
                 goto hack;
             }
             break;
@@ -2195,7 +2195,7 @@ void HandleEnding(void) {
             g_LoadFile = CdFile_AlucardPrg;
         }
         g_GameStep++;
-        if (D_800978B4 != 3 && D_800978B4 != 5) {
+        if (g_EndingVariant != ENDING_GOOD && g_EndingVariant != ENDING_BEST) {
             g_GameStep++;
         }
         break;
