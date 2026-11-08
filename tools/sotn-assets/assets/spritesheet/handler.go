@@ -101,7 +101,11 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 			if !headerFirst {
 				return fmt.Errorf("sprite pointer %v is out of bounds [%X:%X]", spritePtr, e.Start, e.End)
 			}
-			entries = append(entries, spriteEntry{Symbol: fmt.Sprintf("D_%08X", uint32(spritePtr))})
+			symbol := filepath.Base(e.Symbol(spritePtr))
+			if symbol == "." {
+				symbol = fmt.Sprintf("D_%08X", uint32(spritePtr))
+			}
+			entries = append(entries, spriteEntry{Symbol: symbol})
 			lastPtr = spritePtr
 			continue
 		}
