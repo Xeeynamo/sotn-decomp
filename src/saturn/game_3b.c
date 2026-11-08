@@ -316,7 +316,7 @@ void HitDetection(void) {
                 miscVar1 &= 0x3FFF;
                 if (entityHit->flags & FLAG_UNK_10) {
                     if (g_PlayableCharacter == 1) {
-                        PlaySfx(SFX_VALHALLA_KNIGHT_NEIGH);
+                        PlaySfx(SFX_RIC_WHIP_HIT);
                     } else if (g_PlayableCharacter == 2) {
                         if (iterEnt->hitEffect & 0x80) {
                             if (iterEnt->hitEffect & 0x100) {
@@ -326,7 +326,7 @@ void HitDetection(void) {
                             }
                         } else {
                             if (iterEnt->hitEffect & 0x100) {
-                                PlaySfx(SFX_MARIONETTE_YELL);
+                                PlaySfx(SFX_UNK_MARIA_726);
                             } else {
                                 PlaySfx(SFX_WEAPON_HIT_A);
                             }

@@ -633,7 +633,7 @@ void func_060AB4A4(void) {
     switch (PLAYER.step_s) {
     case 0:
         func_060B7A6C();
-        g_Player.unk42C = 0x46;
+        g_Player.damagePalette = 0x46;
         g_Player.timers[2] = 6;
         PLAYER.velocityX = 0;
         PLAYER.velocityY = 0;

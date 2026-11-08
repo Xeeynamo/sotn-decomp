@@ -6,6 +6,7 @@
 void RicGetPlayerSensor(Collider* col);
 void RicSetInvincibilityFrames(s32 kind, s16 invincibilityFrames);
 void func_8015F9F0(Entity* entity);
+void DisableAfterImage(s32 resetAnims, s32 arg1);
 
 SaturnPlayerOvl RIC_player = {
     RicInit,
