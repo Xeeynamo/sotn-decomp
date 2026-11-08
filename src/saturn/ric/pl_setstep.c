@@ -146,7 +146,7 @@ void RicSetHighJump(void) {
     RicSetAnimation(ric_anim_high_jump);
     func_8015CC28();
     RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_HIGH_JUMP, 0);
-    PlaySfx(SFX_UNUSED_712);
+    PlaySfx(SFX_VO_RIC_ATTACK_C);
     g_Player.timers[PL_T_12] = 4;
     if (g_Player.unk72) {
         PLAYER.velocityY = 0;
@@ -450,7 +450,7 @@ void RicSetSlide(void) {
     RicSetSpeedX(FIX(6.625));
     func_8015CC28();
     RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_25, 0);
-    PlaySfx(SFX_TOAD_CROAK);
+    PlaySfx(SFX_RIC_SLIDE_SKID);
     g_Player.timers[PL_T_12] = 4;
 }
 
@@ -479,6 +479,6 @@ void RicSetBladeDash(void) {
     g_Player.timers[PL_T_12] = 4;
     RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_BLADE_DASH, 0);
     func_8015CC28();
-    PlaySfx(SFX_UNUSED_712);
-    PlaySfx(SFX_TOAD_CROAK);
+    PlaySfx(SFX_VO_RIC_ATTACK_C);
+    PlaySfx(SFX_RIC_SLIDE_SKID);
 }
