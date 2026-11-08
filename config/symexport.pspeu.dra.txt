@@ -4,7 +4,7 @@ EXTERN(func_psp_090E4C18);
 EXTERN(func_psp_090E4C58);
 EXTERN(func_psp_090E4C68);
 EXTERN(func_psp_090E4C90);
-EXTERN(func_psp_090FFAB8);
+EXTERN(PlayMovie);
 EXTERN(IsMemcardBlockUsed);
 EXTERN(MemcardReadFile);
 EXTERN(MemcardEraseFile);

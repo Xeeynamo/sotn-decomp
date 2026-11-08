@@ -2174,7 +2174,7 @@ extern s32 g_CutsceneHasControl;
 extern FgLayer D_8003C708;
 extern s16 D_8003C710;
 extern s16 D_8003C712;
-extern s32 D_8003C728;
+extern s32 g_IsMoviePlaying;
 extern s32 D_8003C730;
 #ifdef CLOCK_BUGFIX
 extern s32 g_TimerCopyFrames;
@@ -2301,7 +2301,15 @@ extern Stages g_StageId;
 extern s32 D_800974A4; // map open
 extern DR_ENV D_800974AC[16];
 extern s32 g_UseDisk;
-extern s32 D_800978B4;
+enum {
+    ENDING_NONE,    // No ending selected
+    ENDING_WORST,   // Defeat Richter, no holy glasses obtained
+    ENDING_BAD,     // Defeat Richter, holy glasses not equipped
+    ENDING_GOOD,    // Dracula defeated, map completion below 196%
+    ENDING_RICHTER, // Shaft defeated as Richter
+    ENDING_BEST,    // Dracula defeated, map completion above 196%
+};
+extern s32 g_EndingVariant;
 extern s32 D_800978C4;
 extern u32 g_MenuStep;
 extern s32 D_80097904;

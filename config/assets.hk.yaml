@@ -214,7 +214,7 @@ files:
           - [0xB304, cutscene, hk/cutscene_endings]
           - [0xBC4A, skip]
           - [0xBC54, credits, hk/credits]
-          - [0xC408, skip]
+          - [0xC408, spritesheet, ending]
           - [0xCD58, palette, hk/D_8018CD54, 16]
           - [0xCDB8, palette, D_8018CDB4, 256]
           - [0xCFB8, palette, D_8018CFB4, 256]

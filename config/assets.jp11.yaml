@@ -157,7 +157,7 @@ files:
           - [0xB084, cutscene, jp11/cutscene_endings]
           - [0xB95C, skip]
           - [0xB964, credits, jp11/credits]
-          - [0xC0F4, skip]
+          - [0xC0F4, spritesheet, ending]
           - [0xCA44, palette, jp11/D_8018CD54, 16]
           - [0xCAA4, palette, D_8018CDB4, 256]
           - [0xCCA4, palette, D_8018CFB4, 256]

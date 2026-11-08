@@ -1,9 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#include "game.h"
 #include "pc.h"
 #include "dra.h"
 #include "memcard.h"
 
 // game.h
+s32 g_UserLanguage = LANG_EN;
+u32 g_ConfirmButton = PAD_CROSS;
 GameApi g_api;
 u32 g_GameStep;
 Pad g_pads[PAD_COUNT];
@@ -22,7 +25,7 @@ Primitive g_PrimBuf[MAX_PRIM_COUNT];
 FgLayer D_8003C708;
 s16 D_8003C710;
 s16 D_8003C712;
-s32 D_8003C728;
+s32 g_IsMoviePlaying;
 s32 D_8003C730;
 bool g_PauseAllowed;
 s32 g_IsUsingCd;
@@ -87,7 +90,7 @@ s32 D_80073080;
 s32 g_GameClearFlag;
 bool D_8003C908;
 s32 D_8003C100;
-s32 D_800978B4;
+s32 g_EndingVariant;
 u32 g_RoomCount;
 s32 g_EquippedWeaponIds[2] = {0};
 Tilemap g_Tilemap;
