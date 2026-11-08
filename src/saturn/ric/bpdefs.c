@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "sattypes.h"
+#include "richter.h"
 
 #define DECLARE_ENTITY(name) extern void name(Entity*)
 DECLARE_ENTITY(RicEntityDummy);
@@ -330,21 +330,6 @@ AnimationFrame anim_80154E38[] = {
     POSE(2, 1, 0), POSE(2, 2, 0), POSE(2, 3, 0), POSE(2, 4, 0), POSE(2, 5, 0),
     POSE(2, 6, 0), POSE(2, 7, 0), POSE(2, 8, 0), POSE_END,
 };
-
-typedef struct {
-    s16 xOffset;
-    s16 yOffset;
-    s32 velocityX;
-    s32 velocityY;
-    s16 timer;
-    s16 textureIndex;
-    u16 paletteIndex;
-    u8 uBase;
-    u8 vBase;
-} RicMariaPowerProperties;
-
-typedef char RicMariaPowerProperties_size
-    [sizeof(RicMariaPowerProperties) == 0x14 ? 1 : -1];
 
 RicMariaPowerProperties D_80154E5C[] = {
     {-0x40, 0, FIX(2.5), 0, 0x60, 0, 0, 0x80, 0x00},

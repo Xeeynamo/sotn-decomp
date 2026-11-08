@@ -26,6 +26,8 @@ void* sotn_satz_retail_address(u32 address);
 #define NULL 0
 #define FIX(x) ((s32)((x) * 65536.0))
 
+#define LEN(x) ((s32)(sizeof(x) / sizeof(*(x))))
+
 typedef struct {
     u8 storedWidth;
     u8 storedHeight;
@@ -35,6 +37,7 @@ typedef struct {
 typedef enum {
     PAD_NONE = 0x0000,
     PAD_L1 = 0x0008,
+    PAD_TRIANGLE = 0x0020,
     PAD_R1 = 0x0080,
     PAD_CROSS = 0x0100,
     PAD_SQUARE = 0x0400,
@@ -79,6 +82,7 @@ typedef enum {
 #define SFX_WEAPON_APPEAR 0x62F
 #define SFX_UI_CONFIRM 0x633
 #define SFX_START_SLAM_B 0x63D
+#define SFX_STOMP_SOFT_A 0x64B
 #define SFX_SAVE_HEARTBEAT 0x64D
 #define SFX_BAT_SCREECH 0x64E
 #define SFX_WEAPON_HIT_A 0x678
@@ -87,6 +91,8 @@ typedef enum {
 #define SFX_UI_SUBWEAPON_TINK 0x6A4
 #define SFX_UI_ALERT_TINK 0x6AD
 #define SFX_SAVE_COFFIN_SWISH 0x6E0
+#define SFX_RIC_SUC_REVIVE 0x6E2
+#define SFX_VO_RIC_ATTACK_B 0x711
 #define SFX_UNUSED_712 0x712
 #define SFX_VALHALLA_KNIGHT_NEIGH 0x718
 #define SFX_TOAD_CROAK 0x71A
@@ -293,12 +299,19 @@ typedef struct {
 typedef struct {
     /* 0x78 */ u8 pad78[0x10];
     /* 0x88 */ struct Entity* parent;
-    /* 0x8C */ u8 pad8C[0x2];
+    /* 0x8C */ s16 newEntityId;
     /* 0x8E */ s16 unk8E;
-    /* 0x90 */ u8 pad90[0xC];
+    /* 0x90 */ s16 amount;
+    /* 0x92 */ s16 nPerCycle;
+    /* 0x94 */ s16 tCycle;
+    /* 0x96 */ s16 delay;
+    /* 0x98 */ s16 kind;
+    /* 0x9A */ s16 isNonCritical;
     /* 0x9C */ u16 paramsBase;
-    /* 0x9E */ u8 pad9E[0x6];
-    /* 0xA4 */ u16 unkA4;
+    /* 0x9E */ s16 incParamsKind;
+    /* 0xA0 */ s16 origin;
+    /* 0xA2 */ s16 spawnIndex;
+    /* 0xA4 */ s16 entityIdMod;
 } ET_Factory;
 
 typedef struct {
@@ -673,6 +686,48 @@ typedef struct {
     /* 0x84 */ u8 facingLatch;
 } ET_060E411C;
 
+typedef struct {
+    /* 0x78 */ s16 timer;
+    /* 0x7A */ s16 boolDidSound;
+} ET_RicMaria;
+
+typedef struct {
+    /* 0x78 */ s16 width;
+    /* 0x7A */ s16 height;
+} ET_ExpandingCircle;
+
+typedef struct {
+    /* 0x78 */ s16 size;
+    /* 0x7A */ s16 timer;
+} ET_RicMariaPower;
+
+typedef struct {
+    /* 0x78 */ s16 unk7C;
+    /* 0x7A */ s16 unk7E;
+    /* 0x7C */ s16 unk80;
+    /* 0x7E */ s16 unk82;
+} ET_80162870;
+
+typedef struct {
+    /* 0x78 */ s16 unk7C;
+    /* 0x7A */ u8 pad7A[0xE];
+    /* 0x88 */ struct Entity* parent;
+    /* 0x8C */ u8 pad8C[0x20];
+    /* 0xAC */ s16 subweaponId;
+} ET_VibhutiCrashCloud;
+
+typedef struct {
+    /* 0x78 */ u8 pad78[0x8];
+    /* 0x80 */ s32 x;
+    /* 0x84 */ s32 y;
+    /* 0x88 */ u16 facing;
+} ET_VibhutiCrash;
+
+typedef struct {
+    /* 0x78 */ s16 timer;
+    /* 0x7A */ s16 size;
+} ET_stopwatchCircle;
+
 typedef union { // offset=0x78
     ET_Placeholder ILLEGAL;
     ET_AfterImage afterImage; // g_Entities[1], not entityID 1
@@ -699,6 +754,13 @@ typedef union { // offset=0x78
     ET_HPNumberMove hpNumMove;
     ET_Weapon weapon;
     ET_SpriteEntity spriteEntity;
+    ET_RicMaria ricMaria;
+    ET_ExpandingCircle circleExpand;
+    ET_RicMariaPower ricMariaPower;
+    ET_80162870 et_80162870;
+    ET_VibhutiCrashCloud vibCrashCloud;
+    ET_VibhutiCrash vibhutiCrash;
+    ET_stopwatchCircle et_stopwatchCircle;
     ET_EffectTimer effectTimer;
     ET_SaveRoom save;
     struct {
@@ -1041,6 +1103,32 @@ typedef struct {
     /* 0x24 */ s32 flags;
 } EnemyDef; /* size=0x28 */
 
+typedef enum {
+    GRAB_REACTION_NORMAL,
+    GRAB_REACTION_STONE = 2,
+} GrabReactionEffect; // these depend to the playable character
+
+typedef enum {
+    GRAB_NONE,
+    GRAB_START,   // enemy requests to grab the player
+    GRAB_HELD,    // player is held by the enemy
+    GRAB_DAMAGE,  // set to deal damage while player is grabbed
+    GRAB_RELEASE, // enemy releases the player with optional damage
+} GrabState;
+
+typedef enum {
+    SUBWPN_NONE,
+    SUBWPN_DAGGER,
+    SUBWPN_AXE,
+    SUBWPN_HOLYWATER,
+    SUBWPN_CROSS,
+    SUBWPN_BIBLE,
+    SUBWPN_STOPWATCH,
+    SUBWPN_REBNDSTONE,
+    SUBWPN_VIBHUTI,
+    SUBWPN_AGUNEA
+} SubWpnID;
+
 // Flags for g_Player.vram_flag
 // 0x01: touching the ground
 // 0x02: touching the ceiling
@@ -1071,7 +1159,10 @@ typedef enum {
 } PlayerVramFlag;
 
 typedef struct {
-    char pad0[0x320];
+    /* 0x000 */ Collider colFloor[4];
+    /* 0x090 */ Collider colCeiling[4];
+    /* 0x120 */ Collider colWall[14];
+    char pad318[0x8];
     u16 unk320;
     u16 unk322;
     char pad324[4];
@@ -1091,7 +1182,7 @@ typedef struct {
     char pad39F[0x11];
     /* 0x3B0 */ u32 padPressed;
     /* 0x3B4 */ u32 padTapped;
-    /* 0x3B8 */ s32 : 32;
+    /* 0x3B8 */ u32 padHeld;
     /* 0x3BC */ u32 padSim;
     /* 0x3C0 */ s32 : 32;
     /* 0x3C4 */ s32 demo_timer;
@@ -1099,13 +1190,14 @@ typedef struct {
     u16 unk3E8;
     char pad3EA[2];
     /* 0x3EC */ s32 vram_flag;
-    char pad2[8];
+    /* 0x3F0 */ s32 unk04; // copy of the previous field
+    char pad3F4[4];
     /* 0x3F8 */ u32 status;
     /* 0x3FC */ u32 unk3FC;
     char pad400[8];
     /* 0x408 */ s32 warp_flag;
     char pad40C[0x20];
-    u16 unk42C;
+    /* 0x42C */ u16 damagePalette;
     /* 0x42E */ u16 high_jump_timer;
     /* 0x430 */ u16 unk44;
     /* 0x432 */ u16 unk46;
@@ -1118,10 +1210,12 @@ typedef struct {
     char pad440[0x2];
     /* 0x442 */ u16 healKind;   // 0 = none, 1 = potion, 2 = high potion
     /* 0x444 */ u16 healAmount; // hit points restored by func_060B0638
-    char pad446[6];
-    /* 0x44C */ s16 unk44C;
-    /* 0x44E */ s16 unk44E;
-    /* 0x450 */ s16 unk450;
+    /* 0x446 */ u16 damageTaken;
+    /* 0x448 */ u16 unk5C;
+    /* 0x44A */ u16 unk5E;
+    /* 0x44C */ u16 grabState;          // see GrabState
+    /* 0x44E */ u16 grabReactionEffect; // see GrabReactionEffect
+    /* 0x450 */ u16 grabDamage;
     /* 0x452 */ s16 unk452;
     u16 unk454;
     char pad456[6];
