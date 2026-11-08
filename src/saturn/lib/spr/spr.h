@@ -304,6 +304,7 @@ struct SprAreaSize {
 
 extern Sint32 SpLCoordX;
 extern Sint32 SpLCoordY;
+extern SprGourTbl* SpGourTbl;
 
 #ifdef _SPR3_
 #define SPR_2DefineWork(sp2WorkArea, sp2CommandMax, sp2GourTblMax,             \
