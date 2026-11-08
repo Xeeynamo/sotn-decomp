@@ -146,18 +146,12 @@ static u8 actor_name_index[] = {
 static const char* actor_names[] = {_S("Alucard"), _S("Maria")};
 static const char _pad[4] = "";
 #else
-// clang-format off
 static u16 actor_names[] = {
-    // アルカード
-    0x71, 0x99, 0x76, 0x70, 0x8084,
-    // マリア・ラーネッド
-    0x8F, 0x98, 0x71, 0x65, 0x97, 0x70, 0x88, 0x6F, 0x8084,
-    // シャフト
-    0x7C, 0x6C, 0x8C, 0x84,
-    // サキュバス
-    0x7B, 0x77, 0x6D, 0x808A, 0x7D,
+    _SACTOR("アルカード"),
+    _SACTOR("マリア・ラーネッド"),
+    _SACTOR("シャフト"),
+    _SACTOR("サキュバス"),
 };
-// clang-format on
 static u8 actor_prims[] = {6, 10, 4, 6};
 static u8 actor_name_len[] = {5, 9, 4, 5};
 #endif

@@ -182,6 +182,30 @@ fn utf8_to_byte_literals(input_str: &str) -> String {
     out2
 }
 
+// cutscene actor names: one u16 per glyph, dakuten and handakuten as high bits
+fn utf8_to_u16_list(input_str: &str) -> String {
+    let input_str = input_str.trim();
+    let input_str = &input_str[1..input_str.len() - 1];
+    let mut values = Vec::new();
+    for char in input_str.chars() {
+        let mut flags = 0;
+        if has_dakuten(&char) {
+            flags = 0x8000;
+        } else if has_handakuten(&char) {
+            flags = 0x4000;
+        }
+        let base = remove_dakuten_handakuten(&char);
+        match table_index(&base) {
+            Some(index) => values.push(index as u16 | flags),
+            None => panic!("_SACTOR: character '{}' not in the font table", char),
+        }
+    }
+    values.iter()
+        .map(|&val| format!("0x{:X}", val))
+        .collect::<Vec<String>>()
+        .join(", ")
+}
+
 fn utf8_to_byte_literals_psp(input_str: &str) -> String {
     let mut bytes = Vec::new();
     for char in input_str.chars() {
@@ -377,6 +401,10 @@ fn process_s2_hd_macro(line: &str) -> String {
     process_macro(line, "_S2_HD", alt_hd_utf8_to_byte_literals)
 }
 
+fn process_sactor_macro(line: &str) -> String {
+    process_macro(line, "_SACTOR", utf8_to_u16_list)
+}
+
 fn process_se_macro(line: &str) -> String {
     process_macro(line, "_SE", s3_utf8_to_byte_literals)
 }
@@ -395,6 +423,7 @@ fn do_sub(line: &str, psp: bool) -> String {
     let mut processed = process_s_macro(line, psp);
     processed = process_s2_macro(&processed);
     processed = process_s2_hd_macro(&processed);
+    processed = process_sactor_macro(&processed);
     processed = process_se_macro(&processed);
     processed
 }
@@ -948,6 +977,13 @@ let expected = r#"const char* g_goldCollectTexts[] = {
         let line = r#"_S2_HD("使い魔")"#;
         let out = do_sub(line, false);
         let expected = r#""\x0B\x2F\x11\xFF""#;
+        assert_eq!(out, expected);
+
+        let line = r#"_SACTOR("アルカード"), _SACTOR("リヒター・ベルモンド"), _SACTOR("DEATH")"#;
+        let out = do_sub(line, false);
+        let expected = "0x71, 0x99, 0x76, 0x70, 0x8084, \
+            0x98, 0x8B, 0x80, 0x70, 0x65, 0x808D, 0x99, 0x93, 0x9D, 0x8084, \
+            0x24, 0x25, 0x21, 0x34, 0x28";
         assert_eq!(out, expected);
     }
 

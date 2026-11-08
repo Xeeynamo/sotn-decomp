@@ -479,6 +479,10 @@ typedef enum {
 // characters with accent characters for european languages. e.g. _SE("Eliminé
 // par Richter ")
 #define _SE(x) (x)
+
+// Like `_S`, but expands to a list of u16 glyph indices with dakuten and
+// handakuten as high bits. Used by cutscene actor names.
+#define _SACTOR(x) 0
 #endif
 // same as above, but it processes a single character from CPP
 #define CH(x) ((x) - 0x20)
