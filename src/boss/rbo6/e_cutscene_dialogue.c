@@ -220,8 +220,8 @@ void EntityCutscene(Entity* self) {
                 if (g_SkipCutscene) {
                     continue;
                 }
-                for (prim = g_Dialogue.prim[0], i = 0;
-                     i < LEN(g_Dialogue.prim); i++) {
+                for (prim = g_Dialogue.prim[0], i = 0; i < LEN(g_Dialogue.prim);
+                     i++) {
                     prim->drawMode = DRAW_HIDE;
                     prim = prim->next;
                 }
