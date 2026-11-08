@@ -15,8 +15,8 @@ enum Palettes {
     PAL_DARK_OCTOPUS = 0x220,
     PAL_CAVE_TROLL = 0x227,
     PAL_BOMB_KNIGHT_ROCK_KNIGHT = 0x228,
-    PAL_BOMB_KNIGHT_THROW_BOMB_2 = 0x22C, // TODO: check in-game for better name
-    PAL_BOMB_KNIGHT_THROW_BOMB_3 = 0x22D, // TODO: check in-game for better name
+    PAL_BOMB_KNIGHT_THROW_BOMB_2 = 0x22C, // TODO: check in-game for better name, also rnz1
+    PAL_BOMB_KNIGHT_THROW_BOMB_3 = 0x22D, // TODO: check in-game for better name, also rnz1
     PAL_BLUE_VENUS_WEED = 0x234,
     PAL_KILLER_FISH = 0x268,
     PAL_IMP_BALLOON_POD = 0x280,
