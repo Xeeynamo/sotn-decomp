@@ -337,9 +337,16 @@ s32 func_060071C8(void) {
     return 1;
 }
 
+#ifdef SATZ
+void sotn_satz_equip(void);
+#endif
+
 Equipment* func_060076D0(s32 arg0) {
     Equipment* ret;
 
+#ifdef SATZ
+    sotn_satz_equip();
+#endif
     if (g_Status.equipment[4] == 0x19) {
         ret = &DAT_060645AC[0xDF];
     } else {
