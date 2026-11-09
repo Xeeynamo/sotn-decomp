@@ -1335,75 +1335,6 @@ void func_0600DE38(void) {
     }
 }
 
-s32 rsin(s32 angle) {
-    s32 a = angle & 0xFFF;
-
-    if (a <= 0x3FF) {
-        return rsin_tbl[a];
-    }
-    if (a <= 0x7FF) {
-        return rsin_tbl[0x7FF - a];
-    }
-    if (a <= 0xBFF) {
-        return -rsin_tbl[a - 0x800];
-    }
-    return -rsin_tbl[0xFFF - a];
-}
-
-s32 rcos(s32 angle) {
-    s32 a = angle & 0xFFF;
-
-    if (a <= 0x3FF) {
-        return rsin_tbl[0x3FF - a];
-    }
-    if (a <= 0x7FF) {
-        return -rsin_tbl[a - 0x400];
-    }
-    if (a <= 0xBFF) {
-        return -rsin_tbl[0xBFF - a];
-    }
-    return rsin_tbl[a - 0xC00];
-}
-
-void rsincos(s32 angle, s32* sinOut, s32* cosOut) {
-    s32 a = angle & 0xFFF;
-
-    if (a <= 0x3FF) {
-        *sinOut = rsin_tbl[a];
-        *cosOut = rsin_tbl[0x3FF - a];
-    } else if (a <= 0x7FF) {
-        *sinOut = rsin_tbl[0x7FF - a];
-        *cosOut = -rsin_tbl[a - 0x400];
-    } else if (a <= 0xBFF) {
-        *sinOut = -rsin_tbl[a - 0x800];
-        *cosOut = -rsin_tbl[0xBFF - a];
-    } else {
-        *sinOut = -rsin_tbl[0xFFF - a];
-        *cosOut = rsin_tbl[a - 0xC00];
-    }
-}
-
-u32 SquareRoot0(s32 value) {
-    u32 x = value;
-    u32 bits, root, step, next;
-
-    if (x == 0) {
-        return 0;
-    }
-    bits = 1;
-    for (step = x; step > 1; step >>= 1) {
-        bits++;
-    }
-    root = 1u << ((bits - 1) >> 1);
-    for (step = root >> 1; step != 0; step >>= 1) {
-        next = root + step;
-        if (next * next <= x) {
-            root = next;
-        }
-    }
-    return root;
-}
-
 static void SoundSetRequest(s32 fx) {
     func_0601269C();
     if (DAT_06064354 == 0) {
@@ -3313,7 +3244,7 @@ s32 func_0600BA24(
     rotate = (flags & 0x40) ? obj->rotate : 0;
     angle = (s16)(part->rotate + rotate);
     if (rotate != 0) {
-        RotateVec2(&offset, rotate);
+        func_0600E5A4(&offset, rotate);
     }
     if (angle != 0) {
         func_0600BCE0(m, angle);

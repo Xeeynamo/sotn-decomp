@@ -3332,27 +3332,25 @@ bool CheckClipScreenArea(XyInt* arg0) {
     return true;
 }
 
-// 0x0600E51C
-void RotateVec2Degrees(MthXy* arg0, s16 arg1) {
-    Fixed32 angle;
+void func_0600E51C(MthXy* arg0, s16 angle) {
+    Fixed32 a;
     Fixed32 s, c;
     MthXy pos;
 
-    angle = MTH_IntToFixed(arg1);
-    c = MTH_Cos(angle);
-    s = MTH_Sin(angle);
+    a = MTH_IntToFixed(angle);
+    c = MTH_Cos(a);
+    s = MTH_Sin(a);
 
     pos = *arg0;
     arg0->x = MTH_Mul(c, pos.x) - MTH_Mul(s, pos.y);
     arg0->y = MTH_Mul(s, pos.x) + MTH_Mul(c, pos.y);
 }
 
-// 0x0600E5A4
-void RotateVec2(MthXy* arg0, s16 arg1) {
+void func_0600E5A4(MthXy* arg0, s16 angle) {
     Fixed32 s, c;
     MthXy pos;
 
-    rsincos(arg1, &s, &c);
+    rsincos(angle, &s, &c);
     c *= 0x10;
     s *= 0x10;
 
@@ -3639,13 +3637,92 @@ const s16 rsin_tbl[] = {
     0x0FFF, 0x0FFF, 0x0FFF, 0x0FFF, 0x0FFF, 0x0FFF, 0x0FFF,
 };
 
-//_SSsin
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F7BC, rsin);
+// original name: SSsin
+s32 rsin(s32 angle) {
+    s32 a = angle & 0xFFF;
+    s32 ret;
 
-//_SScos
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F81C, rcos);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F87C, rsincos);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F914, SquareRoot0);
+    if (a < 0x800) {
+        if (a < 0x400) {
+            ret = rsin_tbl[a];
+        } else {
+            ret = rsin_tbl[0x7FF - a];
+        }
+    } else {
+        if (a < 0xC00) {
+            ret = -rsin_tbl[a - 0x800];
+        } else {
+            ret = -rsin_tbl[0xFFF - a];
+        }
+    }
+    return ret;
+}
+
+// original name: SScos
+s32 rcos(s32 angle) {
+    s32 a = angle & 0xFFF;
+    s32 ret;
+
+    if (a < 0x800) {
+        if (a < 0x400) {
+            ret = rsin_tbl[0x3FF - a];
+        } else {
+            ret = -rsin_tbl[a - 0x400];
+        }
+    } else {
+        if (a < 0xC00) {
+            ret = -rsin_tbl[0xBFF - a];
+        } else {
+            ret = rsin_tbl[a - 0xC00];
+        }
+    }
+    return ret;
+}
+
+void rsincos(s32 angle, s32* sinOut, s32* cosOut) {
+    s32 a = angle & 0xFFF;
+
+    if (a < 0x800) {
+        if (a < 0x400) {
+            *sinOut = rsin_tbl[a];
+            *cosOut = rsin_tbl[0x3FF - a];
+        } else {
+            *sinOut = rsin_tbl[0x7FF - a];
+            *cosOut = -rsin_tbl[a - 0x400];
+        }
+    } else {
+        if (a < 0xC00) {
+            *sinOut = -rsin_tbl[a - 0x800];
+            *cosOut = -rsin_tbl[0xBFF - a];
+        } else {
+            *sinOut = -rsin_tbl[0xFFF - a];
+            *cosOut = rsin_tbl[a - 0xC00];
+        }
+    }
+}
+
+u32 SquareRoot0(s32 value) {
+    u32 root = 1;
+    u32 step;
+
+    if (value == 0) {
+        return 0;
+    }
+
+    for (step = value; step > 1; step >>= 1) {
+        root++;
+    }
+
+    root = 1 << ((root - 1) / 2);
+
+    for (step = root >> 1; step != 0; step >>= 1) {
+        u32 next = root + step;
+        if (next * next <= value) {
+            root += step;
+        }
+    }
+    return root;
+}
 
 #define N 1024 // Size of ring buffer - must be power of 2.
 #define N_MIN_1 1023
