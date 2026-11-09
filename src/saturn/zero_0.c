@@ -1806,12 +1806,12 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A77C, func_0600A77C);
 // original name: UpdateMirage
 void func_0600AA18(s32 arg0) {
     s32 i, j, k;
-    s32 var_r2_2;
+    s32 var_r2;
     UNK0605D910* var_r7;
     unkStruct2* temp_r4;
     unkStruct* var_r3;
     unkStruct* var_r5;
-    unkStruct* var_r6_2;
+    unkStruct* var_r6;
 
     if (arg0 == 0 || arg0 == 2) {
         if (arg0 == 2) {
@@ -1834,16 +1834,16 @@ void func_0600AA18(s32 arg0) {
         }
         temp_r4 = &var_r7->unkA8[0];
         var_r5 = &var_r7->unk14[5];
-        var_r6_2 = &var_r7->unk14[4];
+        var_r6 = &var_r7->unk14[4];
         for (k = 5; k > 0; k--) {
-            *var_r5-- = *var_r6_2--;
+            *var_r5-- = *var_r6--;
         }
         var_r7->unk14[0] = temp_r4->unk10;
-        var_r2_2 = var_r7->unk8 + 1;
-        if (var_r2_2 > 6) {
-            var_r2_2 = 0;
+        var_r2 = var_r7->unk8 + 1;
+        if (var_r2 > 6) {
+            var_r2 = 0;
         }
-        var_r7->unk4 = var_r2_2;
+        var_r7->unk4 = var_r2;
     }
 }
 
