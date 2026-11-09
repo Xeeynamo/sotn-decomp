@@ -3244,7 +3244,7 @@ s32 func_0600BA24(
     rotate = (flags & 0x40) ? obj->rotate : 0;
     angle = (s16)(part->rotate + rotate);
     if (rotate != 0) {
-        RotateVec2(&offset, rotate);
+        func_0600E5A4(&offset, rotate);
     }
     if (angle != 0) {
         func_0600BCE0(m, angle);

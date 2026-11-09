@@ -3332,27 +3332,25 @@ bool CheckClipScreenArea(XyInt* arg0) {
     return true;
 }
 
-// 0x0600E51C
-void RotateVec2Degrees(MthXy* arg0, s16 arg1) {
-    Fixed32 angle;
+void func_0600E51C(MthXy* arg0, s16 angle) {
+    Fixed32 a;
     Fixed32 s, c;
     MthXy pos;
 
-    angle = MTH_IntToFixed(arg1);
-    c = MTH_Cos(angle);
-    s = MTH_Sin(angle);
+    a = MTH_IntToFixed(angle);
+    c = MTH_Cos(a);
+    s = MTH_Sin(a);
 
     pos = *arg0;
     arg0->x = MTH_Mul(c, pos.x) - MTH_Mul(s, pos.y);
     arg0->y = MTH_Mul(s, pos.x) + MTH_Mul(c, pos.y);
 }
 
-// 0x0600E5A4
-void RotateVec2(MthXy* arg0, s16 arg1) {
+void func_0600E5A4(MthXy* arg0, s16 angle) {
     Fixed32 s, c;
     MthXy pos;
 
-    rsincos(arg1, &s, &c);
+    rsincos(angle, &s, &c);
     c *= 0x10;
     s *= 0x10;
 
