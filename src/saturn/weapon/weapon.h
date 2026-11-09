@@ -6,7 +6,11 @@
 #include <saturn_sprite.h>
 #include <saturn_weapon.h>
 
+#ifdef SATZ
+#define WEAPON_HEADER
+#else
 #define WEAPON_HEADER __attribute__((section(".rodata")))
+#endif
 
 typedef struct {
     /* 0x00 */ u16** frames;

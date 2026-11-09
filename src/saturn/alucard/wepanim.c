@@ -1,21 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 #include "alucard.h"
+#include "weapon/weapon.h"
 
-typedef struct {
-    u16** frames;
-    s8* frameProps;
-    u16 palette;
-    u16 soundId;
-    u8 frameStart;
-    u8 soundFrame;
-    s16 unused;
-} AlucardWeaponAnimation;
-
-AlucardWeaponAnimation g_AlucardEffectWeaponAnimation[] = {
+WeaponAnimation g_AlucardEffectWeaponAnimation[] = {
     {
         g_AlucardEffectAnimTable,
-        D_060B24B0,
+        (s8*)&g_AlucardFrameProperties[22],
         0,
         0x060C,
         0x1B,
