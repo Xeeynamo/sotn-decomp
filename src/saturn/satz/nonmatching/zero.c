@@ -3196,17 +3196,6 @@ void func_06030DF0(void) {}
 
 #include <stdarg.h>
 
-void LookupTblNoToVramAddr(u16 tableNo, u8* src) {
-    u32 dst;
-
-    if ((tableNo >> 14) & 1) {
-        dst = 0x25F00800 + (tableNo & 0xBFFF) * 32;
-    } else {
-        dst = 0x25C00000 + (u16)SPR_2LookupTblNoToVram(tableNo & 0xFFF) * 8;
-    }
-    QueueVramTransfer(dst, sotn_satz_be16_copy(src, 32), 32);
-}
-
 #define R16(p, o) (*(u16*)((u8*)(p) + (o)))
 #define R32(p, o) (*(s32*)((u8*)(p) + (o)))
 extern u8 DAT_0604B5E0[];

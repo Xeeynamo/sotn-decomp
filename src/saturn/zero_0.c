@@ -1761,7 +1761,7 @@ void LookupTblNoToVramAddr(u16 arg0, s32 arg1) {
     } else {
         var_r2 = VRAM_ADDR + SPR_2LookupTblNoToVram(arg0 & 0xFFF) * 8;
     }
-    QueueVramTransfer(var_r2, arg1, 0x20);
+    QueueVramTransfer(var_r2, HOST_TO_BUS16(arg1, 0x20), 0x20);
 }
 
 void func_0600A304(s32 gourTblNo, SprGourTbl* gourTbl) {
