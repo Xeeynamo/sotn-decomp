@@ -520,9 +520,9 @@ mod tests {
         assert_eq!(
             transform_with(
                 NO_PALETTES,
-                "#ifdef VERSION_PSP\nEInit g_EInitUnk = {ANIMSET_DRA(0), 0, 0x00, 0, 0xFFF};\n#endif\n"
+                "#if TARGET == TARGET_PSP\nEInit g_EInitUnk = {ANIMSET_DRA(0), 0, 0x00, 0, 0xFFF};\n#endif\n"
             ),
-            "#ifdef VERSION_PSP\n// clang-format off\nEInit g_EInitUnk = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, 0xFFF};\n#endif"
+            "#if TARGET == TARGET_PSP\n// clang-format off\nEInit g_EInitUnk = {ANIMSET_DRA(0), 0x00, 0x00, PAL_NONE, 0xFFF};\n#endif"
         );
     }
 

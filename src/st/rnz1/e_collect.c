@@ -3,7 +3,7 @@
 
 #define HEART_DROP_CASTLE_FLAG 0x2D8
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #include "../pfn_entity_update.h"
 
 #define GOLD_COLLECT_TEXT                                                      \

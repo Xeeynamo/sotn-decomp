@@ -29,7 +29,7 @@ void EntityWallGear(Entity* self) {
 
     case 1:
         self->hitboxState = 2;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (self->params != 1 || self->posY.i.hi >= 97)
 #endif
         {

@@ -9,7 +9,7 @@ extern EInit g_EInitShaftFlame;
 extern EInit g_EInitShaftLightningHitbox;
 extern s32 g_CutsceneFlags;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(CUTSCENE_DIALOGUE);
 extern s32 E_ID(SHAFT_MERIDIAN_RINGS);
 extern s32 E_ID(SHAFT_CRYSTAL_BALL);

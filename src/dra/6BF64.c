@@ -72,10 +72,15 @@ void func_8010BFFC(void) {
     if ((g_Player.vram_flag & TOUCHING_GROUND) || D_801396EA) {
         return;
     }
-#ifdef VERSION_US
+#if VERSION >= VER_USPROTO && TARGET != TARGET_PSP
     if ((g_Player.status &
          (PLAYER_STATUS_TRANSFORM | PLAYER_STATUS_UNK40000000)) ||
         ((g_PlayableCharacter != 0) && (PLAYER.step == 0x18))) {
+        return;
+    }
+#elif VERSION == VER_JP11
+    if (g_Player.status &
+        (PLAYER_STATUS_TRANSFORM | PLAYER_STATUS_UNK40000000)) {
         return;
     }
 #else
@@ -120,7 +125,7 @@ void func_8010BFFC(void) {
             for (i = 0; i < 4; i++) {
                 x = PLAYER.posX.i.hi + g_SensorsCeiling[i].x;
                 y = PLAYER.posY.i.hi + g_SensorsCeiling[i].y;
-#if defined(VERSION_US)
+#if VERSION >= VER_USPROTO && TARGET != TARGET_PSP
                 if (g_PlayableCharacter != PLAYER_ALUCARD) {
                     y += 6;
                 }

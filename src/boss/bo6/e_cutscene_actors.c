@@ -154,9 +154,9 @@ void func_us_801A9208(Entity* self) {
                 g_unkGraphicsStruct.pauseEnemies = false;
             }
             if (g_CastleFlags[0xD8] != 0) {
-                D_800978B4 = 2;
+                g_EndingVariant = ENDING_BAD;
             } else {
-                D_800978B4 = 1;
+                g_EndingVariant = ENDING_WORST;
             }
             g_GameState = Game_Ending;
             g_GameStep = Play_Reset;
@@ -229,7 +229,7 @@ void func_us_801A95F4(Entity* self) {
             if (g_unkGraphicsStruct.pauseEnemies != false) {
                 g_unkGraphicsStruct.pauseEnemies = false;
             }
-            D_800978B4 = 0;
+            g_EndingVariant = ENDING_NONE;
             g_GameState = Game_Ending;
             g_GameStep = Play_Reset;
             self->step++;

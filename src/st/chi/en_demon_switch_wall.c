@@ -8,7 +8,7 @@
 
 #include "chi.h"
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(GREY_PUFF);
 #endif
 

@@ -172,7 +172,7 @@ static u8 anim_23[] = {
 typedef struct Unk8 {
     s16 a, b, c, d;
 } Unk8;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 static Unk8 D_us_801A9344 =
 #else
 static const Unk8 D_us_801A9344 =
@@ -960,13 +960,13 @@ void EntityGroundBlast(Entity* self) {
     case 3:
         draw = g_CurrentBuffer->draw;
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
         tpage = 0x100;
         if (draw.ofs[0]) {
-#endif
             tpage = 0x104;
-#ifndef VERSION_PSP
         }
+#else
+        tpage = 0x104;
 #endif
 
         prim = self->ext.olroxGroundBlast.prim;
@@ -1037,13 +1037,13 @@ void EntityGroundBlast(Entity* self) {
         posY = self->posY.i.hi;
         draw = g_CurrentBuffer->draw;
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
         tpage = 0x100;
         if (draw.ofs[0]) {
-#endif
             tpage = 0x104;
-#ifndef VERSION_PSP
         }
+#else
+        tpage = 0x104;
 #endif
 
         prim2 = self->ext.olroxGroundBlast.prim;

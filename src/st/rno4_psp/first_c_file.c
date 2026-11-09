@@ -403,7 +403,7 @@ void func_us_801C5EE4(Entity* self) {
             playerPos += scrollYWrap;
             playerPosRelTop -= scrollYWrap;
             prim->y0 = prim->y1 = playerPos;
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
             prim->y2 -= 1;
             prim->y3 -= 1;
 #endif
@@ -444,7 +444,7 @@ INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/first_c_file", func_us_801C4228_f
 
 INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/first_c_file", EntityWaterBox);
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(UNK_26);
 extern s32 E_ID(UNK_27);
 #endif
@@ -503,7 +503,7 @@ void EntityFloatingIcePlatform(Entity* self) {
     self->posY.i.hi =
         self->ext.floatingIcePlatform.baseY - g_Tilemap.scrollY.i.hi +
         self->ext.floatingIcePlatform.bobOffset;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     collision = GetPlayerCollisionWith(self, hitboxPtr[0], hitboxPtr[1], 4);
 #else
     collision = GetPlayerCollisionWith(self, *hitboxPtr++, *hitboxPtr, 4);

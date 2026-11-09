@@ -23,12 +23,13 @@ void InitSolidProp(Entity* self) {
         }
 
         sprite = CreateSpriteObject(
-            g_EntitySpriteBank08.allocationIndex, g_EntitySpriteBank08.flags,
-            g_EntitySpriteBank08.images, spriteSize);
+            g_SaturnSharedSpriteBank8Resource.allocationIndex,
+            g_SaturnSharedSpriteBank8Resource.flags,
+            g_SaturnSharedSpriteBank8Resource.images, spriteSize);
         self->unk0 = sprite;
         TekiInit(self, 3);
 
-        frame = DAT_06046CD0;
+        frame = g_SaturnSharedSpriteBank8Frames;
         self->step++;
         if (frameType != 0) {
             frame += 2;

@@ -436,7 +436,7 @@ void EntityParanthropus(Entity* self) {
         }
         break;
     case DEATH:
-#if defined(VERSION_PSP) || defined(VERSION_HD)
+#if VERSION <= VER_JP10 || TARGET == TARGET_PSP
         if (UnkCollisionFunc3(sensors_ground) & 1) {
             PlaySfxPositional(SFX_SKELETON_DEATH_A);
             ParanthropusSetStep(DEATH_EFFECTS);
@@ -695,7 +695,7 @@ void EntityParanthropusSkull(Entity* self) {
     self->posY.i.hi = (self - 2)->posY.i.hi + skull_positions[i].y;
 
     // Player can stand on top of the skull as a platform
-#ifdef VERSION_US
+#if VERSION == VER_US
     i = 0;
 #endif
     if (entity->step < DEATH) {

@@ -1,25 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 #include "t_bat.h"
-
-typedef struct {
-    void (*Init)(s32 mode);
-    PfnEntityUpdate Update;
-    PfnEntityUpdate Unk08;
-    PfnEntityUpdate Unk0C;
-    PfnEntityUpdate Unk10;
-    PfnEntityUpdate Unk14;
-    PfnEntityUpdate Unk18;
-    PfnEntityUpdate Unk1C;
-    PfnEntityUpdate Unk20;
-    PfnEntityUpdate Unk24;
-    PfnEntityUpdate Unk28;
-    PfnEntityUpdate Unk2C;
-    PfnEntityUpdate Unk30;
-    PfnEntityUpdate Unk34;
-    PfnEntityUpdate Unk38;
-    PfnEntityUpdate Unk3C;
-} BatServantDesc;
+#include "zero/overlay.h"
 
 void unused_339C(Entity* self);
 void unused_33A4(Entity* self);

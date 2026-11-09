@@ -3,11 +3,11 @@
 
 #define STAGE_FLAG ARE_STAGE_FLAG
 
-#ifdef VERSION_US
+#if VERSION == VER_US
 #include "../e_stage_name_us.h"
 #endif
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 static u8 stage_name_en[] = {
 #include <gen/stage_name_en.h>
 };
@@ -29,6 +29,6 @@ static u8 stage_name_ge[] = {
 #include "../e_stage_name_jp.h"
 #endif
 
-#ifdef VERSION_HD
+#if VERSION < VER_JP10
 #include "../e_stage_name_jp.h"
 #endif

@@ -837,7 +837,7 @@ void RicEntityVibhutiCrashCloud(Entity* entity) {
     }
 }
 
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 extern s32 crash_vibhuti_timer;
 #else
 static s32 crash_vibhuti_timer;

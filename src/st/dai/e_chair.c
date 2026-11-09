@@ -22,7 +22,7 @@ enum ChairSteps {
     CHAIR_PLAYER_SITTING = 4,
 };
 
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 extern s32 E_ID(CONFESSIONAL_GHOST);
 #endif
 

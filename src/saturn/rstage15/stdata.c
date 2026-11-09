@@ -37,10 +37,9 @@ typedef struct {
 } Entity17Variant;
 
 EntityEntry g_RStage15EntityEntry00 = {NULL, func_060DC040};
-u8 g_RStage15BreakableAnimation[8] = {
-    5, 0x26, 5, 0x27, 5, 0x28, 5, 0x29,
+u8 g_RStage15BreakableAnimation[10] = {
+    5, 0x26, 5, 0x27, 5, 0x28, 5, 0x29, 0, 0,
 };
-u16 g_RStage15BreakableAnimationPadding = 0;
 s16 g_RStage15BreakablePrimitiveOffsets[4][5] = {
     {-23, 6, 26, 0, 0},
     {-16, 7, 27, 0, 0},

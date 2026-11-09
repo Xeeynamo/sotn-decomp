@@ -16,6 +16,8 @@ import yaml
 entries = dict()
 linker_scripts = set()
 
+CMASPSX = "bin/cmaspsx"
+
 extra_cpp_defs = ""
 sotn_progress_report = "SOTN_PROGRESS_REPORT" in os.environ
 force_symbols = "FORCE_SYMBOLS" in os.environ
@@ -117,6 +119,14 @@ class CompilerParams:
     encoding: str = "sjis"
 
 
+def sotn_str_flags(encoding: str) -> str:
+    if encoding == "sjis":
+        return "--sjis"
+    if encoding == "utf8":
+        return ""
+    raise ValueError(f"Encoding '{encoding}' is not supported")
+
+
 def get_compiler_params(source_file_path: str) -> CompilerParams:
     """
     Parses optional compiler overrides from the source file header.
@@ -189,7 +199,7 @@ def add_c_psx(
         rule="psx-cc",
         outputs=output,
         inputs=file_name,
-        implicit=[ld_path],
+        implicit=[ld_path, CMASPSX],
         order_only=[f"src/.assets_build_done_{ver}"],
         variables={
             "version": ver,
@@ -331,7 +341,7 @@ def add_c_psp(
             "cpp_flags": cpp_flags,
             "opt_level": c_params.mwcc_opt,
             "src_dir": os.path.dirname(file_name),
-            "encoding": c_params.encoding,
+            "str_flags": sotn_str_flags(c_params.encoding),
         },
     )
 
@@ -858,6 +868,16 @@ with open(build_ninja, "w") as f:
     nw = ninja_syntax.Writer(f)
 
     nw.rule(
+        "host-cc",
+        command="cc -O2 -Wall -Werror -static -s -o $out $in",
+        description="host cc $in",
+    )
+    nw.build(
+        rule="host-cc",
+        outputs=CMASPSX,
+        inputs="tools/builds/cmaspsx.c",
+    )
+    nw.rule(
         "splat",
         # 'touch' circumnavigates a bug where splat would not update the
         # mtime of the linker script if it is already up-to-date.
@@ -872,11 +892,10 @@ with open(build_ninja, "w") as f:
     cpp_defs = f"-Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C -DNO_LOGS -DHACKS -DUSE_INCLUDE_ASM -D_internal_version_$version -DSOTN_STR"
     cc_command = (
         "VERSION=$version"
-        f" mipsel-linux-gnu-cpp $cpp_flags -MMD -MF $out.d -lang-c -Iinclude -Iinclude/psxsdk -undef -Wall -fno-builtin {cpp_defs} {extra_cpp_defs} $in"
-        " | tools/sotn_str/target/release/sotn_str process"
-        " | iconv --from-code=UTF-8 --to-code=Shift-JIS"
+        f" cpp -nostdinc $cpp_flags -MMD -MF $out.d -lang-c -Iinclude -Iinclude/psxsdk -undef -Wall -fno-builtin {cpp_defs} {extra_cpp_defs} $in"
+        " | tools/sotn_str/target/release/sotn_str process --sjis"
         " | bin/cc1-psx-26 -G0 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -g -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff $cc_flags"
-        " | python3 tools/maspsx/maspsx.py --expand-div --aspsx-version=$aspsx_ver"
+        f" | {CMASPSX} $aspsx_ver"
         " | mipsel-linux-gnu-as -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1 -G0 -o $out"
     )
     nw.rule(
@@ -921,8 +940,7 @@ with open(build_ninja, "w") as f:
         "psp-cc",
         command=(
             "VERSION=$version"
-            " tools/sotn_str/target/release/sotn_str process -p -f $in"
-            " | iconv --from-code=UTF-8 --to-code=$encoding"
+            " tools/sotn_str/target/release/sotn_str process -p -f $in $str_flags"
             f" | bin/mw -o $out {extra_mw_flags}"
             " --mwcc-path bin/mwccpsp.exe --use-wibo --wibo-path bin/wibo --as-path tools/pspas/target/release/pspas"
             " --asm-dir asm/pspeu --macro-inc-path include/macro.inc "
@@ -997,7 +1015,12 @@ with open(build_ninja, "w") as f:
     )
     actual_version = os.getenv("VERSION")
     if not actual_version:
-        actual_version = "us,hd,pspeu"
+        optional = {"jp10", "jp11", "jp12", "usproto", "eu", "hk"}
+        actual_version = ",".join(
+            v
+            for v in "us,hd,jp10,jp11,jp12,usproto,eu,hk,pspeu".split(",")
+            if v not in optional or os.path.isdir(f"disks/{v}")
+        )
     for version in actual_version.split(","):
         nw.build(
             rule="assets-extract",

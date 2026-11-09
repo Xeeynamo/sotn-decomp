@@ -142,6 +142,20 @@ func GenSaturnNinja() error {
 	}).Run()
 }
 
+func SaturnWeaponSlices() error {
+	binPath, err := venvPython()
+	if err != nil {
+		return err
+	}
+	return (&exec.Cmd{
+		Path:   binPath,
+		Args:   []string{binPath, "tools/saturn/weapon_configs.py", "--slices-only"},
+		Stdin:  os.Stdin,
+		Stdout: os.Stdout,
+		Stderr: os.Stderr,
+	}).Run()
+}
+
 const ninjaStampFile = "build.ninja.version"
 
 func GenNinja(args ...string) error {

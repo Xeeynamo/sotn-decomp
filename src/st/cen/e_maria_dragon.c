@@ -36,7 +36,7 @@ void EntityMariaDragonAttack(Entity* self) {
         self->hitboxOffY = 0xC;
         self->ext.mariaDragon.unkB0 = 0;
         MarSetWeaponParams(self, 48, ELEMENT_HOLY, 0, 16, 16, 1, 0);
-        g_Maria.unk7A = 1;
+        g_Maria.runDisable = 1;
         self->ext.mariaDragon.timer = 0;
         self->step = 3;
         // fallthrough
@@ -79,7 +79,7 @@ void EntityMariaDragonAttack(Entity* self) {
         }
         break;
     case 4:
-        g_Maria.unk7A = 0;
+        g_Maria.runDisable = 0;
         DestroyEntity(self);
         break;
     }

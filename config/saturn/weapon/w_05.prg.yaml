@@ -1,0 +1,50 @@
+options:
+  target_path:  build/saturn/weapon/W0_05.PRG
+  asm_path:     asm/saturn/weapon/w_05
+  src_path:     src/saturn/weapon
+  obj_path:     build/saturn/weapon
+  ld_scripts_path: config/saturn/weapon
+  syms_path: config/saturn/weapon
+  decomp_empty_funcs: false
+  symbol_files:
+    - ../game_user_syms.txt
+    - ../zero_user_syms.txt
+    - ../game_syms.gen.txt
+    - ../zero_syms.gen.txt
+segments:
+  - name: w_05
+    type: code
+    start: 0x00000000
+    vram:  0x060D6000
+    subalign: 2
+    subsegments:
+      - start: 0x0
+        type: .rodata
+        file: w_05
+        end: 0x60
+      - start: 0x60
+        type: c
+        file: w_05
+        end: 0x450
+        function_ranges:
+          - [0x60, 0x60]
+          - [0x128, 0x128]
+          - [0x2f4, 0x2f4]
+          - [0x30c, 0x30c]
+          - [0x324, 0x324]
+          - [0x33c, 0x33c]
+          - [0x354, 0x354]
+          - [0x36c, 0x36c]
+          - [0x378, 0x378]
+          - [0x390, 0x390]
+          - [0x3a8, 0x3a8]
+          - [0x3c0, 0x3c0]
+          - [0x3d8, 0x3d8]
+          - [0x3f0, 0x3f0]
+          - [0x408, 0x408]
+          - [0x420, 0x420]
+          - [0x438, 0x438]
+      - start: 0x450
+        type: .data
+        file: w_05
+        end: 0xd58

@@ -30,7 +30,7 @@ static u8 D_8018212C[] = {
 static cloudData data[] = {
     {.unkPtr = D_801820EC, .unk4 = 0xFEE0, .priority = 0x1C},
     {.unkPtr = D_8018212C, .unk4 = 0x00C0, .priority = 0x18}};
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern E_ID(PHOTOGRAPH_FIRE);
 extern SVECTOR empty; // bss on PSP
 #else
@@ -478,7 +478,7 @@ void EntityClockTower3D(Entity* self) {
 }
 
 static u8 D_80182438[3] = {0x70, 0x50, 0x40};
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 static SVECTOR D_8018243C = {-128, -108, 0};
 static SVECTOR D_80182444 = {127, -108, 0};
 static SVECTOR D_8018244C = {-128, 100, 0};
@@ -525,7 +525,7 @@ void EntityCutscenePhotograph(Entity* self) {
     g_PauseAllowed = false;
     switch (self->step) {
     case 0:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         func_psp_0891B0BC(0);
 #endif
         InitializeEntity(g_EInit3DObject);
@@ -543,7 +543,7 @@ void EntityCutscenePhotograph(Entity* self) {
             prim = prim->next;
         }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         func_psp_0891B0DC(0x300, 0);
         prim = self->ext.cutscenePhoto.prim;
         prim->tpage = 0;
@@ -659,7 +659,7 @@ void EntityCutscenePhotograph(Entity* self) {
         prim = prim->next;
 
         drawEnv = g_CurrentBuffer->draw;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         prim->tpage = 0x10C;
 #else
         if (drawEnv.ofs[0] == 0) {
@@ -671,7 +671,7 @@ void EntityCutscenePhotograph(Entity* self) {
         prim->type = PRIM_GT4;
         prim->u0 = prim->u2 = 6;
         prim->u1 = prim->u3 = 0xF9;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         prim->v0 = prim->v1 = 26;
         prim->v2 = prim->v3 = 26 + 0xC4;
         prim->x0 = prim->x2 = 6;
@@ -733,7 +733,7 @@ void EntityCutscenePhotograph(Entity* self) {
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
         prim->priority = 0x1F9;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         prim->drawMode = DRAW_HIDE;
 #else
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
@@ -759,7 +759,7 @@ void EntityCutscenePhotograph(Entity* self) {
         prim->tpage = 0x110;
         prim->u0 = prim->u2 = 0;
         prim->u1 = prim->u3 = 0xFF;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         prim->v0 = prim->v1 = 20;
         prim->v2 = prim->v3 = 20 + 0xD0;
         prim->x0 = prim->x2 = 0;
@@ -839,7 +839,7 @@ void EntityCutscenePhotograph(Entity* self) {
             return;
         }
         self->step++;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         func_psp_0891B0DC(0x300, 0);
 #endif
         return;
@@ -848,7 +848,7 @@ void EntityCutscenePhotograph(Entity* self) {
         prim = prim->next;
 
         drawEnv = g_CurrentBuffer->draw;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         prim->tpage = 0x10C;
 #else
         if (drawEnv.ofs[0] == 0) {
@@ -860,7 +860,7 @@ void EntityCutscenePhotograph(Entity* self) {
         prim->type = PRIM_GT4;
         prim->u0 = prim->u2 = 0;
         prim->u1 = prim->u3 = 0xFF;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         prim->v0 = prim->v1 = 20;
         prim->v2 = prim->v3 = 20 + 0xD0;
         prim->x0 = prim->x2 = 0;
@@ -974,7 +974,7 @@ void EntityCutscenePhotograph(Entity* self) {
         self->pose = 0;
         g_api.PlaySfx(SFX_BURNING_PHOTOGRAPH);
         self->step++;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         func_psp_0891B0BC(1);
 #endif
         /* fallthrough */

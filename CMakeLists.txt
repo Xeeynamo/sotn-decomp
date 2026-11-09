@@ -372,16 +372,18 @@ set(SOURCE_FILES_STAGE_SEL
     src/st/sel/bss.c
     src/st/sel/banks.c
     src/st/sel/764.c
+    src/st/sel/C404.c
     src/st/sel/CD54.c
     src/st/sel/sprites.c
     src/st/sel/F9A8.c
-    src/st/sel/2C048.c
-    src/st/sel/318CC.c
-    src/st/sel/32D6C.c
-    src/st/sel/34048.c
-    src/st/sel/3410C.c
-    src/st/sel/34B30.c
+    src/st/sel/select.c
+    src/st/sel/utils.c
+    src/st/sel/memcard.c
+    src/st/sel/logo.c
+    src/st/sel/title.c
+    src/st/sel/ending.c
     src/st/sel/cutscene.c
+    src/st/sel/credits.c
     src/st/sel/cutscene_data.c
 )
 
@@ -790,6 +792,64 @@ set(SOURCE_FILES_STAGE_RARE
     src/st/rare/e_fountain_water.c
     src/st/rare/create_entity.c
     src/st/rare/popup.c
+)
+
+set(SOURCE_FILES_STAGE_NO1
+    src/pc/stages/stage_no1.c
+    src/st/no1/header.c
+    src/st/no1/sprite_banks.c
+    src/st/no1/palette_def.c
+    src/st/no1/layers.c
+    src/st/no1/graphics_banks.c
+    src/st/no1/gen/e_laydef.c
+    src/st/no1/e_init.c
+    src/st/no1/e_room_bg.c
+    src/st/no1/e_red_door.c
+    src/st/no1/e_red_door_tiles.c
+    src/st/no1/e_lock_camera.c
+    src/st/no1/e_breakable.c
+    src/st/no1/unk_36490.c
+    src/st/no1/e_mouse.c
+    src/st/no1/e_chair.c
+    src/st/no1/unk_381E8.c
+    src/st/no1/unk_38F50.c
+    src/st/no1/unk_39028.c
+    src/st/no1/unk_39184.c
+    src/st/no1/unk_3A290.c
+    src/st/no1/unk_3B5E0.c
+    src/st/no1/unk_3D8AC.c
+    src/st/no1/e_secrets.c
+    src/st/no1/unk_3FA34.c
+    src/st/no1/d_prize_drops.c
+    src/st/no1/st_update.c
+    src/st/no1/collision.c
+    src/st/no1/st_common.c
+    src/st/no1/e_collect.c
+    src/st/no1/e_misc.c
+    src/st/no1/e_blue_axe_knight.c
+    src/st/no1/e_particles.c
+    src/st/no1/e_room_fg.c
+    src/st/no1/e_skeleton.c
+    src/st/no1/e_wereskeleton.c
+    src/st/no1/e_bone_musket.c
+    src/st/no1/e_sword_lord.c
+    src/st/no1/e_bone_archer.c
+    src/st/no1/e_armor_lord.c
+    src/st/no1/e_spear_guard.c
+    src/st/no1/unk_54400.c
+    src/st/no1/e_skeleton_ape.c
+    src/st/no1/e_medusa_head.c
+    src/st/no1/e_mist_door.c
+    src/st/no1/gen/rooms.c
+    src/st/no1/gen/e_layout.c
+    src/st/no1/stage_data.c
+    src/st/no1/tilemaps.c
+    src/st/no1/gen/us/sprites.c
+    src/st/no1/unk_40E98.c
+    src/st/no1/e_stage_name.c
+    src/st/no1/prim_helpers.c
+    src/st/no1/create_entity.c
+    src/st/no1/popup.c
 )
 
 set(SOURCE_FILES_STAGE_NP3
@@ -2344,7 +2404,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC
     _USE_MATH_DEFINES # needed for msvc
-    VERSION_PC
+    PLATFORM_PSYZ
     PERMUTER
     NON_MATCHING
     HARD_LINK
@@ -2383,7 +2443,7 @@ function(add_overlay name)
 
     target_compile_definitions(${_target} PRIVATE
         _USE_MATH_DEFINES
-        VERSION_PC
+        PLATFORM_PSYZ
         PERMUTER
         NON_MATCHING
         HARD_LINK
@@ -2403,6 +2463,7 @@ endfunction()
 
 add_overlay(sel ${SOURCE_FILES_STAGE_SEL})
 add_overlay(no0 ${SOURCE_FILES_STAGE_NO0})
+add_overlay(no1 ${SOURCE_FILES_STAGE_NO1})
 add_overlay(lib ${SOURCE_FILES_STAGE_LIB})
 add_overlay(cat ${SOURCE_FILES_STAGE_CAT})
 add_overlay(no2 ${SOURCE_FILES_STAGE_NO2})

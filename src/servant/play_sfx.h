@@ -38,7 +38,7 @@ void ProcessSfxState(Entity* entity) {
         break;
 
     case 5:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (D_8003C708.flags & FLAG_UNK_20 || D_8003C708.flags & FLAG_UNK_40) {
 #else
         if (LOW(D_8003C708.flags) & (FLAG_UNK_20 | FLAG_UNK_40)) {

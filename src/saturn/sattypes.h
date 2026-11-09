@@ -10,6 +10,14 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
 typedef unsigned long long u64;
+typedef unsigned long uptr;
+
+#ifdef SATZ
+void* sotn_satz_retail_address(u32 address);
+#define RETAIL_ADDRESS(address) sotn_satz_retail_address(address)
+#else
+#define RETAIL_ADDRESS(address) ((void*)(address))
+#endif
 
 #define true 1
 #define false 0
@@ -17,6 +25,8 @@ typedef unsigned long long u64;
 
 #define NULL 0
 #define FIX(x) ((s32)((x) * 65536.0))
+
+#define LEN(x) ((s32)(sizeof(x) / sizeof(*(x))))
 
 typedef struct {
     u8 storedWidth;
@@ -27,6 +37,7 @@ typedef struct {
 typedef enum {
     PAD_NONE = 0x0000,
     PAD_L1 = 0x0008,
+    PAD_TRIANGLE = 0x0020,
     PAD_R1 = 0x0080,
     PAD_CROSS = 0x0100,
     PAD_SQUARE = 0x0400,
@@ -71,6 +82,7 @@ typedef enum {
 #define SFX_WEAPON_APPEAR 0x62F
 #define SFX_UI_CONFIRM 0x633
 #define SFX_START_SLAM_B 0x63D
+#define SFX_STOMP_SOFT_A 0x64B
 #define SFX_SAVE_HEARTBEAT 0x64D
 #define SFX_BAT_SCREECH 0x64E
 #define SFX_WEAPON_HIT_A 0x678
@@ -79,14 +91,28 @@ typedef enum {
 #define SFX_UI_SUBWEAPON_TINK 0x6A4
 #define SFX_UI_ALERT_TINK 0x6AD
 #define SFX_SAVE_COFFIN_SWISH 0x6E0
-#define SFX_UNUSED_712 0x712
-#define SFX_VALHALLA_KNIGHT_NEIGH 0x718
-#define SFX_TOAD_CROAK 0x71A
-#define SFX_MARIONETTE_YELL 0x726
+#define SFX_RIC_SUC_REVIVE 0x6E2
+#define SFX_VO_RIC_ATTACK_B 0x711
+#define SFX_VO_RIC_ATTACK_C 0x712
+#define SFX_RIC_WHIP_HIT 0x718
+#define SFX_RIC_SLIDE_SKID 0x71A
+#define SFX_UNK_MARIA_726 0x726
 
 #define PLAYER g_Entities[PLAYER_CHARACTER]
 
+#ifdef SATZ
+#define LOW(x)                                                                 \
+    ((s32)((u32)(u16)((const s16*)&(x))[0] << 16 | (u16)((const s16*)&(x))[1]))
+#define SET_LOW(x, v)                                                          \
+    do {                                                                       \
+        s32 low_ = (v);                                                        \
+        ((s16*)&(x))[0] = (s16)(low_ >> 16);                                   \
+        ((s16*)&(x))[1] = (s16)low_;                                           \
+    } while (0)
+#else
 #define LOW(x) (*(s32*)&(x))
+#define SET_LOW(x, v) (LOW(x) = (v))
+#endif
 
 #define ABS(x) ((x) < 0 ? -(x) : (x))
 
@@ -273,9 +299,29 @@ typedef struct {
 typedef struct {
     /* 0x78 */ u8 pad78[0x10];
     /* 0x88 */ struct Entity* parent;
-    /* 0x8C */ u8 pad8C[0x10];
+    /* 0x8C */ s16 newEntityId;
+    /* 0x8E */ s16 unk8E;
+    /* 0x90 */ s16 amount;
+    /* 0x92 */ s16 nPerCycle;
+    /* 0x94 */ s16 tCycle;
+    /* 0x96 */ s16 delay;
+    /* 0x98 */ s16 kind;
+    /* 0x9A */ s16 isNonCritical;
     /* 0x9C */ u16 paramsBase;
+    /* 0x9E */ s16 incParamsKind;
+    /* 0xA0 */ s16 origin;
+    /* 0xA2 */ s16 spawnIndex;
+    /* 0xA4 */ s16 entityIdMod;
+    /* 0xA6 */ s16 unkA6;
+    /* 0xA8 */ s16 unkA8;
+    /* 0xAA */ s16 argLow;
+    /* 0xAC */ s16 argHigh;
 } ET_Factory;
+
+typedef struct {
+    s16 buttonsCorrect;
+    s16 timer;
+} ButtonComboState;
 
 typedef struct {
     /* 0x7C */ u8 pad0[0x4];
@@ -293,7 +339,9 @@ typedef struct {
     /* 0x84 */ s32 : 32;
     /* 0x88 */ s32 : 32;
     /* 0x8C */ struct Entity* parent;
+#ifndef SATZ
     /* 0x90 */ s32 : 32;
+#endif
     /* 0x94 */ s32 : 32;
     /* 0x98 */ s32 : 32;
     /* 0x9C */ s32 : 32;
@@ -361,8 +409,8 @@ typedef union {
 typedef struct {
     s32 unk0;
     s32 unk4;
-    s32 unk8;
-    s32 unkC;
+    Primitive* unk8;
+    Primitive* unkC;
     Primitive* unk10;
     Primitive* unk14;
     Primitive* unk18;
@@ -541,7 +589,9 @@ typedef struct {
 } ET_HPNumberMove;
 
 typedef struct {
-    /* 0x78 */ u8 padding[0x32];
+    /* 0x78 */ u8 padding[0x10];
+    /* 0x88 */ struct Entity* parent;
+    /* 0x8C */ u8 pad8C[0x1E];
     /* 0xAA */ s16 equipId;
 } ET_Weapon;
 
@@ -645,6 +695,48 @@ typedef struct {
     /* 0x84 */ u8 facingLatch;
 } ET_060E411C;
 
+typedef struct {
+    /* 0x78 */ s16 timer;
+    /* 0x7A */ s16 boolDidSound;
+} ET_RicMaria;
+
+typedef struct {
+    /* 0x78 */ s16 width;
+    /* 0x7A */ s16 height;
+} ET_ExpandingCircle;
+
+typedef struct {
+    /* 0x78 */ s16 size;
+    /* 0x7A */ s16 timer;
+} ET_RicMariaPower;
+
+typedef struct {
+    /* 0x78 */ s16 unk7C;
+    /* 0x7A */ s16 unk7E;
+    /* 0x7C */ s16 unk80;
+    /* 0x7E */ s16 unk82;
+} ET_80162870;
+
+typedef struct {
+    /* 0x78 */ s16 unk7C;
+    /* 0x7A */ u8 pad7A[0xE];
+    /* 0x88 */ struct Entity* parent;
+    /* 0x8C */ u8 pad8C[0x20];
+    /* 0xAC */ s16 subweaponId;
+} ET_VibhutiCrashCloud;
+
+typedef struct {
+    /* 0x78 */ u8 pad78[0x8];
+    /* 0x80 */ s32 x;
+    /* 0x84 */ s32 y;
+    /* 0x88 */ u16 facing;
+} ET_VibhutiCrash;
+
+typedef struct {
+    /* 0x78 */ s16 timer;
+    /* 0x7A */ s16 size;
+} ET_stopwatchCircle;
+
 typedef union { // offset=0x78
     ET_Placeholder ILLEGAL;
     ET_AfterImage afterImage; // g_Entities[1], not entityID 1
@@ -671,6 +763,13 @@ typedef union { // offset=0x78
     ET_HPNumberMove hpNumMove;
     ET_Weapon weapon;
     ET_SpriteEntity spriteEntity;
+    ET_RicMaria ricMaria;
+    ET_ExpandingCircle circleExpand;
+    ET_RicMariaPower ricMariaPower;
+    ET_80162870 et_80162870;
+    ET_VibhutiCrashCloud vibCrashCloud;
+    ET_VibhutiCrash vibhutiCrash;
+    ET_stopwatchCircle et_stopwatchCircle;
     ET_EffectTimer effectTimer;
     ET_SaveRoom save;
     struct {
@@ -796,6 +895,14 @@ typedef struct SpriteObject {
     /* 0x24 */ struct SpriteObject* next;
 } SpriteObject; /* size = 0x28 */
 
+SpriteObject* CreateSpriteObject(
+    u16 charBase, u16 clutBase, SaturnSpriteImage* images, s32 maxParts);
+#ifdef SATZ
+#define BSS
+#else
+#define BSS __attribute__((section(".bss")))
+#endif
+
 #define SPRITE_OBJECT_MAX 255 /* 0x0FF */
 #define SPRITE_PART_MAX 640   /* 0x280 */
 
@@ -804,52 +911,52 @@ typedef struct {
         Entity* self, u32 flags, s32 arg2);
 } GameApi;
 
-void (*func_06064580)();
-void (*func_0606458C)();
-void (*func_06064590)();
-void (*func_06064594)();
-void (*func_06064598)();
-void (*func_060645A0)();
-void (*func_060645A4)();
-void (*func_060645B0)();
-void (*func_060645B4)();
-void (*func_060645BC)();
-void (*func_060645C0)();
-void (*func_060645C4)();
-void (*func_060645CC)();
-void (*func_8010E168)(s32, s32);
-s32 (*func_060645DC)();
-void (*func_060645E0)();
-void (*func_060645E8)();
-void (*func_060645FC)();
-void (*func_06064600)();
-void (*func_06064604)();
-void (*func_06064608)();
-void (*func_06064614)();
-void (*func_06064618)();
-void (*func_0606461C)(s32);
-void (*func_06064620)();
-void (*func_06064624)(s32);
-void (*func_06064628)(s32);
-void (*func_0606462C)();
-void (*func_06064630)();
-void (*GetPlayerSensor)(Collider* col);
-void (*func_06064638)();
-void (*func_0606463C)();
-void (*func_06064640)(s32);
-void (*func_06064644)();
-void (*func_0606464C)();
-void (*func_06064658)(s32);
-void (*func_0606465C)();
-void (*func_06064660)();
-void (*func_06064664)();
-void (*func_06064674)();
-void (*func_06064680)();
-void (*func_06064684)();
-void (*func_06064688)();
-void (*func_0606468C)();
-s32 (*func_06064690)();
-void (*func_060CF01C)();
+extern void (*func_06064580)();
+extern void (*func_0606458C)();
+extern void (*func_06064590)();
+extern void (*func_06064594)();
+extern void (*func_06064598)();
+extern void (*func_060645A0)();
+extern void (*func_060645A4)();
+extern void (*func_060645B0)();
+extern void (*func_060645B4)();
+extern void (*func_060645BC)();
+extern void (*func_060645C0)();
+extern void (*func_060645C4)();
+extern void (*func_060645CC)();
+extern void (*func_8010E168)(s32, s32);
+extern s32 (*func_060645DC)();
+extern void (*func_060645E0)();
+extern void (*func_060645E8)();
+extern void (*func_060645FC)();
+extern void (*func_06064600)();
+extern void (*func_06064604)();
+extern void (*func_06064608)();
+extern void (*func_06064614)();
+extern void (*func_06064618)();
+extern void (*func_0606461C)(s32);
+extern void (*func_06064620)();
+extern void (*func_06064624)(s32);
+extern void (*func_06064628)(s32);
+extern void (*func_0606462C)();
+extern void (*func_06064630)();
+extern void (*GetPlayerSensor)(Collider* col);
+extern void (*func_06064638)();
+extern void (*func_0606463C)();
+extern void (*func_06064640)(s32);
+extern void (*func_06064644)();
+extern void (*func_0606464C)();
+extern void (*func_06064658)(s32);
+extern void (*func_0606465C)();
+extern void (*func_06064660)();
+extern void (*func_06064664)();
+extern void (*func_06064674)();
+extern void (*func_06064680)();
+extern void (*func_06064684)();
+extern void (*func_06064688)();
+extern void (*func_0606468C)();
+extern s32 (*func_06064690)();
+extern void (*func_060CF01C)();
 
 typedef struct {
     // Either a legacy SpriteParts table or a Saturn sprite-resource descriptor.
@@ -1005,6 +1112,32 @@ typedef struct {
     /* 0x24 */ s32 flags;
 } EnemyDef; /* size=0x28 */
 
+typedef enum {
+    GRAB_REACTION_NORMAL,
+    GRAB_REACTION_STONE = 2,
+} GrabReactionEffect; // these depend to the playable character
+
+typedef enum {
+    GRAB_NONE,
+    GRAB_START,   // enemy requests to grab the player
+    GRAB_HELD,    // player is held by the enemy
+    GRAB_DAMAGE,  // set to deal damage while player is grabbed
+    GRAB_RELEASE, // enemy releases the player with optional damage
+} GrabState;
+
+typedef enum {
+    SUBWPN_NONE,
+    SUBWPN_DAGGER,
+    SUBWPN_AXE,
+    SUBWPN_HOLYWATER,
+    SUBWPN_CROSS,
+    SUBWPN_BIBLE,
+    SUBWPN_STOPWATCH,
+    SUBWPN_REBNDSTONE,
+    SUBWPN_VIBHUTI,
+    SUBWPN_AGUNEA
+} SubWpnID;
+
 // Flags for g_Player.vram_flag
 // 0x01: touching the ground
 // 0x02: touching the ceiling
@@ -1035,12 +1168,16 @@ typedef enum {
 } PlayerVramFlag;
 
 typedef struct {
-    char pad0[0x320];
+    /* 0x000 */ Collider colFloor[4];
+    /* 0x090 */ Collider colCeiling[4];
+    /* 0x120 */ Collider colWall[14];
+    /* 0x318 */ s32 unk318;
+    char pad31C[4];
     u16 unk320;
     u16 unk322;
     char pad324[4];
     /* 0x328 */ s32 anim; // index into the character's animation table
-    char pad32C[0x30];
+    /* 0x32C */ s32 unk32C[12];
     /* 0x35C */ u16 poseTimer;
     /* 0x35E */ u16 pose;
     /* 0x360 */ AnimationFrame* animFrames;
@@ -1048,26 +1185,37 @@ typedef struct {
     /* 0x394 */ u8 unk394;
     /* 0x395 */ u8 unk395;
     /* 0x396 */ u16 unk396;
-    char pad398[4];
+    /* 0x398 */ u8 unk398;
+    char pad399[1];
+    /* 0x39A */ u8 unk39A;
+    /* 0x39B */ u8 unk39B;
     /* 0x39C */ u8 unk39C;
     /* 0x39D */ u8 unk39D;
     /* 0x39E */ s8 unk39E;
-    char pad39F[0x11];
+    char pad39F[9];
+    /* 0x3A8 */ u8 unk3A8;
+    char pad3A9[7];
     /* 0x3B0 */ u32 padPressed;
     /* 0x3B4 */ u32 padTapped;
-    /* 0x3B8 */ s32 : 32;
+    /* 0x3B8 */ u32 padHeld;
     /* 0x3BC */ u32 padSim;
-    /* 0x3C0 */ s32 : 32;
+    /* 0x3C0 */ u32 D_80072EF8;
     /* 0x3C4 */ s32 demo_timer;
     /* 0x3C8 */ s16 timers[16]; // the array is bigger than PSX
     u16 unk3E8;
     char pad3EA[2];
     /* 0x3EC */ s32 vram_flag;
-    char pad2[8];
+    /* 0x3F0 */ s32 unk04; // copy of the previous field
+    /* 0x3F4 */ s32 unk08;
     /* 0x3F8 */ u32 status;
     /* 0x3FC */ u32 unk3FC;
-    char pad400[0x2C];
-    u16 unk42C;
+    /* 0x400 */ u32 unk14;
+    /* 0x404 */ s32 unk18;
+    /* 0x408 */ s32 warp_flag;
+    /* 0x40C */ s32 unk20;
+    /* 0x410 */ u32 unk24;
+    char pad414[0x18];
+    /* 0x42C */ u16 damagePalette;
     /* 0x42E */ u16 high_jump_timer;
     /* 0x430 */ u16 unk44;
     /* 0x432 */ u16 unk46;
@@ -1077,21 +1225,25 @@ typedef struct {
     /* 0x43A */ u16 unk4E;
     /* 0x43C */ u16 prev_step;
     /* 0x43E */ u16 prev_step_s;
-    char pad440[0x2];
+    /* 0x440 */ u16 unk54;
     /* 0x442 */ u16 healKind;   // 0 = none, 1 = potion, 2 = high potion
     /* 0x444 */ u16 healAmount; // hit points restored by func_060B0638
-    char pad446[6];
-    /* 0x44C */ s16 unk44C;
-    /* 0x44E */ s16 unk44E;
-    /* 0x450 */ s16 unk450;
+    /* 0x446 */ u16 damageTaken;
+    /* 0x448 */ u16 unk5C;
+    /* 0x44A */ u16 unk5E;
+    /* 0x44C */ u16 grabState;          // see GrabState
+    /* 0x44E */ u16 grabReactionEffect; // see GrabReactionEffect
+    /* 0x450 */ u16 grabDamage;
     /* 0x452 */ s16 unk452;
     u16 unk454;
-    char pad456[6];
+    char pad456[2];
+    /* 0x458 */ u16 unk6C;
+    /* 0x45A */ u16 unk6E;
     /* 0x45C */ u16 unk70;
     /* 0x45E */ u16 unk72;
     /* 0x460 */ u32 unk74;
     /* 0x464 */ u16 unk78;
-    /* 0x466 */ u16 unk7A;
+    /* 0x466 */ u16 runDisable;
     /* 0x468 */ u16 unk7C;
     /* 0x46A */ u16 unk7E;
 } PlayerState;
@@ -1278,7 +1430,8 @@ typedef struct {
     /* 0x2 */ s16 y;
 } Point16; // size = 0x4
 
-#define CASTLE_MAP_BITMAP ((u8*)0x002B2000)
+extern u8 DAT_002B2000[];
+#define CASTLE_MAP_BITMAP DAT_002B2000
 #define CASTLE_MAP_BITMAP_PITCH 0xA0
 #define CASTLE_MAP_BITMAP_SIZE 0x9600
 #define CASTLE_MAP_CELL_WIDTH 0x0A
@@ -1509,11 +1662,10 @@ s32 func_800F4D38(s32, s32);
 // the struct to the base address
 
 extern Entity g_Entities[TOTAL_ENTITY_COUNT]; // 0x060997F8
-extern UNK_060485C0 DAT_060485C0;
 // One entry of the VRAM transfer queue at d_0605DB60.
 typedef struct {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ s32 unk4;
+    /* 0x00 */ void* unk0;
+    /* 0x04 */ void* unk4;
     /* 0x08 */ s16 unk8;
     /* 0x0A */ s16 unkA;
     /* 0x0C */ s16 unkC;
@@ -1543,7 +1695,7 @@ enum RicSubweapons {
     PL_W_CRASH_CROSS,
     PL_W_CRASH_CROSS_BEAM,
     PL_W_WHIP,
-    PL_W_15,
+    PL_W_FLAMEWHIP,
     PL_W_HYDROSTORM,
     PL_W_BIBLE_BEAM,
     PL_W_KICK,

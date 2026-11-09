@@ -35,12 +35,12 @@ void func_060195F0(void) {
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601960C, func_0601960C);
 
-extern u16 DAT_06064500[];
-extern u16 DAT_06064520[];
-
 #define ExtractBit(x)                                                          \
     x & 1;                                                                     \
     x >>= 1
+
+u16* func_060199F8();
+u16* func_0601992C();
 
 // very similar to func_80106A28
 u16* func_0601972C(u16 ch) {

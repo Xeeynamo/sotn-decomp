@@ -28,7 +28,8 @@ void func_us_801C2A34(Entity* self) {
         self->drawFlags = ENTITY_ROTATE | ENTITY_OPACITY;
         self->opacity = 0x60;
     }
-    angle = rsin((((g_Timer % 120) << 0xC) + 60) / 120);
+    angle = rsin((((g_Timer % (REFRESH_RATE * 2)) << 0xC) + REFRESH_RATE) /
+                 (REFRESH_RATE * 2));
     if (!angle) {
         g_api.PlaySfx(SFX_LOW_CLOCK_TICK);
     }
@@ -44,7 +45,7 @@ void func_us_801C2B24(Entity* self) {
     if (!self->step) {
         InitializeEntity(D_us_80180A88);
     }
-    if ((g_Timer % 60) == 0) {
+    if ((g_Timer % REFRESH_RATE) == 0) {
         switch (self->params) {
         case 0:
             g_api.PlaySfx(SFX_LOW_CLOCK_TICK);

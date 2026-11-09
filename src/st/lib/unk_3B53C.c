@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(ID_1F);
 extern s32 E_ID(ID_12);
 extern s32 E_ID(ID_42);
@@ -42,7 +42,7 @@ void func_us_801BB53C(Entity* self) {
         CreateEntityFromCurrentEntity(E_ID(ID_1F), tempEntity);
         tempEntity->posX.i.hi = 0x200 - g_Tilemap.scrollX.i.hi;
         tempEntity->posY.i.hi = 0x2A0 - g_Tilemap.scrollY.i.hi;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         tempEntity = &g_Entities[0x4F];
 #else
         tempEntity--;

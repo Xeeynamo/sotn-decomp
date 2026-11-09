@@ -64,7 +64,7 @@ void EntitySpectralSword(Entity* self) {
     case 0:
         InitializeEntity(g_EInitSpectralSword);
         self->animCurFrame = 1;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         self->blendMode |= BLEND_TRANSP | BLEND_ADD;
 #else
         self->blendMode = BLEND_TRANSP | BLEND_ADD;

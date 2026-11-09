@@ -11,17 +11,15 @@ extern RoomHeader rooms[];
 extern u_long* cluts[];
 extern RoomDef rooms_layers[];
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern SpriteParts* spriteBanks[];
 extern GfxBank* gfxBanks[];
+
+// overlay
+u8* D_pspeu_09293958[];
 #else
 extern s16** spriteBanks[];
 extern u_long** gfxBanks[];
-#endif
-
-#ifdef VERSION_PSP
-// overlay
-u8* D_pspeu_09293958[];
 #endif
 
 Overlay g_Overlay = {
@@ -36,7 +34,7 @@ Overlay g_Overlay = {
     .tileLayers = rooms_layers,
     .gfxBanks = gfxBanks,
     .UpdateStageEntities = UpdateStageEntities,
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     .unk2C = NULL,
     .unk30 = D_pspeu_09293958,
     .unk34 = NULL,
@@ -45,7 +43,7 @@ Overlay g_Overlay = {
 #endif
 };
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 #include <gen/sprite_banks.h>
 #include <gen/palette_def.h>
 #include <gen/layers.h>

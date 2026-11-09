@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #ifndef TEK_H
 #define TEK_H
-#define STAGE_IS_TEK
 
+#include <version.h>
+#undef VERSION
+#define VERSION VER_BETA_TEK
 #include <stage.h>
 
 // TEK uses the same entity freeze flag that the beta MAD has in st_update.h

@@ -4,6 +4,7 @@
 #include "../dra/dra_bss.h"
 
 #include "../get_lang.h"
+#include "game.h"
 
 extern void* g_ApiInit[sizeof(GameApi) / sizeof(void*)];
 
@@ -63,10 +64,6 @@ extern RelicDesc* D_psp_091CF814;
 
 extern s32 D_psp_091FC4A0;
 extern s32 D_psp_091CE1E8;
-extern s32 D_psp_091FC3F8;
-extern s32 D_psp_091FC400;
-extern s32 D_psp_091FC408;
-extern s32 D_psp_091FC410;
 extern s32 g_DebugEnabled2;
 
 // BSS
@@ -79,7 +76,7 @@ s32 g_DebugPalIdx;
 DebugColorChannel g_DebugColorChannel;
 u32 D_801362C8;
 OT_TYPE* g_CurrentOT;
-s32 D_psp_091CE2A0;
+s32 D_801362D4;
 s32 g_DebugIsRecordingVideo;
 GpuUsage g_GpuMaxUsage;
 s32 g_DebugWaitInfoTimer;
@@ -94,7 +91,7 @@ void DebugShowWaitInfo(const char* msg) {
     VSync(0);
     PutDrawEnv(&g_CurrentBuffer->draw);
     PutDispEnv(&g_CurrentBuffer->disp);
-#if !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP
     FntFlush(-1);
 #endif
 }
@@ -1412,7 +1409,7 @@ void func_psp_090F5B10(void) {
     D_psp_091CF814 = g_RelicDefs;
 }
 
-#if defined(VERSION_PC)
+#ifdef PLATFORM_PSYZ
 #define IS_QUIT_REQUESTED                                                      \
     (g_IsQuitRequested || (g_TimedExit && g_Timer >= g_TimeLimit))
 extern bool g_IsQuitRequested;
@@ -1423,12 +1420,12 @@ extern int g_TimeLimit;
 #endif
 
 void MainGame(void) {
-#if defined(VERSION_HD)
+#if VERSION < VER_JP10
     CdlFILE fp;
 #endif
     s32 i;
 
-#if defined(VERSION_US)
+#if VERSION == VER_US
     SetVideoMode(0);
 #endif
     func_psp_090F5560();
@@ -1456,9 +1453,9 @@ void MainGame(void) {
     g_Settings.D_8003CB00 = 0;
     g_Settings.D_8003CB04 = 0;
     g_CurrentBuffer = &g_GpuBuffers[0];
-#if defined(VERSION_US)
+#if VERSION == VER_US
     SetCdPos(OFF_SD_XA_STR1);
-#elif defined(VERSION_HD)
+#elif VERSION < VER_JP10
     do {
 
     } while (CdSearchFile(&fp, "\\SD\\XA_STR1.;1") == 0);
@@ -1482,7 +1479,7 @@ void MainGame(void) {
     g_GpuMaxUsage.tile = 0;
     g_GpuMaxUsage.sp = 0;
     g_GpuMaxUsage.env = 0;
-#if defined(VERSION_US)
+#if VERSION == VER_US
     g_DebugPlayer = 0;
 #else
     g_DebugPlayer = 1;
@@ -1524,7 +1521,7 @@ loop_5:
     D_80097904 = 0;
     D_psp_091FC4A0 = 0;
     D_80097C98 = 0;
-#if defined(VERSION_US)
+#if VERSION == VER_US
     g_softResetTimer = 0;
 #endif
     g_GameClearFlag = SAVE_FLAG_CLEAR;
@@ -1560,7 +1557,7 @@ loop_5:
         RenderPrimitives();
         DrawSync(0);
         D_psp_091CE1E8 = 1;
-        D_psp_091CE2A0 = GsGetVcount();
+        D_801362D4 = GsGetVcount();
         GsClearVcount();
         func_psp_090F5520();
         InitVCount();
@@ -1609,12 +1606,12 @@ loop_5:
         }
 
         // Update game timer
-        D_psp_091CE2A0 = (D_psp_091CE2A0 + 0xFF) >> 8;
-        g_MapCursorTimer += D_psp_091CE2A0;
+        D_801362D4 = (D_801362D4 + 0xFF) >> 8;
+        g_MapCursorTimer += D_801362D4;
         if (D_800973EC == 0 && D_800974A4 == 0) {
-            g_Status.timerFrames += D_psp_091CE2A0;
-            if (g_Status.timerFrames >= 60) {
-                g_Status.timerFrames -= 60;
+            g_Status.timerFrames += D_801362D4;
+            if (g_Status.timerFrames >= REFRESH_RATE) {
+                g_Status.timerFrames -= REFRESH_RATE;
                 g_Status.timerSeconds++;
                 if (g_Status.timerSeconds >= 60) {
                     g_Status.timerSeconds -= 60;
@@ -1630,26 +1627,26 @@ loop_5:
                     }
                 }
             }
-            // PSP apparently has another timekeeping system?
-            D_psp_091FC3F8 += D_psp_091CE2A0;
-            if (D_psp_091FC3F8 >= 60) {
-                D_psp_091FC3F8 -= 60;
-                D_psp_091FC400++;
-                if (D_psp_091FC400 >= 60) {
-                    D_psp_091FC400 -= 60;
-                    D_psp_091FC408++;
-                    if (D_psp_091FC408 >= 60) {
-                        D_psp_091FC408 -= 60;
-                        D_psp_091FC410++;
-                        if (D_psp_091FC410 >= 12) {
-                            D_psp_091FC410 -= 12;
+            // Same as CLOCK_BUGFIX but for PSP
+            g_TimerCopyFrames += D_801362D4;
+            if (g_TimerCopyFrames >= REFRESH_RATE) {
+                g_TimerCopyFrames -= REFRESH_RATE;
+                g_TimerCopySeconds++;
+                if (g_TimerCopySeconds >= 60) {
+                    g_TimerCopySeconds -= 60;
+                    g_TimerCopyMinutes++;
+                    if (g_TimerCopyMinutes >= 60) {
+                        g_TimerCopyMinutes -= 60;
+                        g_TimerCopyHours++;
+                        if (g_TimerCopyHours >= 12) {
+                            g_TimerCopyHours -= 12;
                         }
                     }
                 }
             }
         }
         rand();
-#if defined(VERSION_HD)
+#if VERSION < VER_JP10
         FntFlush(-1);
 #endif
     }

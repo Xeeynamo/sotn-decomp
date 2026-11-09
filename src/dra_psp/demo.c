@@ -354,7 +354,7 @@ void DemoUpdate(void) {
     u8 frameCount;
     s32 demoOffset;
 
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
     g_DemoPtr = DEMO_KEY_PTR;
 #endif
     btnLo = g_DemoPtr[0];

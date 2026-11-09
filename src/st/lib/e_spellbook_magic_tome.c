@@ -124,7 +124,7 @@ void func_us_801D1BCC(void) {
                 gte_ldv0(vecPtr[3]);
                 gte_rtps();
                 gte_stsxy((long*)&prim->x3);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 gte_minsz4();
 #else
                 gte_avsz4();

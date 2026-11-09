@@ -42,8 +42,8 @@ void RicSetStand(s32 velocityX) {
     RicSetAnimation(ric_anim_stand);
 }
 
-#if defined(VERSION_HD) || defined(VERSION_PSP) || defined(VERSION_PC)
-// only on US, this is moved after RicSetWalk
+#if VERSION <= VER_JP10 || TARGET == TARGET_PSP
+// bug: Richter can run even when running is disabled
 void RicSetRun(void) {
     g_Player.unk44 = 0;
     RicSetStep(PL_S_RUN);
@@ -57,7 +57,7 @@ void RicSetRun(void) {
 #endif
 
 void RicSetWalk(s32 arg0) {
-    if (g_Player.timers[PL_T_8] && !g_Player.unk7A) {
+    if (g_Player.timers[PL_T_8] && !g_Player.runDisable) {
         RicSetRun();
         return;
     }
@@ -73,9 +73,10 @@ void RicSetWalk(s32 arg0) {
     PLAYER.velocityY = 0;
 }
 
-#if defined(VERSION_US) && !defined(VERSION_PC)
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
+// bugfix: force walking when running is disabled
 void RicSetRun(void) {
-    if (g_Player.unk7A) {
+    if (g_Player.runDisable) {
         RicSetWalk(0);
     } else {
         g_Player.unk44 = 0;
@@ -331,8 +332,16 @@ bool RicDoCrash(void) {
     if (subWpnID == PL_W_HOLYWATER && g_Player.timers[PL_T_3]) {
         return 0;
     }
-#if defined(VERSION_US)
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
+    // bugfix: don't trigger stopwatch crash while stopwatch is active
     if (subWpnID == PL_W_STOPWATCH && g_unkGraphicsStruct.D_800973FC) {
+        return 0;
+    }
+#endif
+#if VERSION == VER_JP11
+    // only jp11 avoids reading an uninitialized subWpnEnt? Looks like a
+    // scrapped bugfix.
+    if (!subWpn.blueprintNum) {
         return 0;
     }
 #endif

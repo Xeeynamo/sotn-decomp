@@ -30,7 +30,7 @@ ServantDesc sword_ServantDesc = {
     func_us_80177480, func_us_80177590,
 };
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 void func_092EF780(void) {
     memcpy((u8*)&g_ServantDesc, (u8*)&sword_ServantDesc, sizeof(ServantDesc));
 }

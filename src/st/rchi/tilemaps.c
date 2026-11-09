@@ -19,7 +19,7 @@
 #include <gen/rchi_tilemap_15.h>
 
 #include <gen/rchi_tiledef_rload.h>
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #include <gen/rchi_tiledef_rsave.h>
 #include <gen/rchi_tiledef_rchi.h>
 #else

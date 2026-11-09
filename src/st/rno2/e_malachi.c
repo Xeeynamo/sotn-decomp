@@ -454,7 +454,7 @@ void EntityMalachi(Entity* self) {
                 if (other != NULL) {
                     CreateEntityFromCurrentEntity(E_EXPLOSION, other);
                     other->posX.i.hi = prim->x0 + xVar;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     other->posY.i.hi = prim->y2 - 0x30 + yVar;
 #else
                     other->posY.i.hi = prim->y2 + yVar - 0x30;

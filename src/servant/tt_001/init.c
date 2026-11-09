@@ -27,7 +27,7 @@ ServantDesc ghost_ServantDesc = {
     DestroyServantEntity,
 };
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 void func_092EA620(void) {
     memcpy((u8*)&g_ServantDesc, (u8*)&ghost_ServantDesc, sizeof(ServantDesc));
 }

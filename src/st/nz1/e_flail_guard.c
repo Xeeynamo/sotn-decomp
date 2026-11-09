@@ -27,7 +27,7 @@ static s16 D_us_801821E4[] = {
 extern EInit g_EInitFlailGuard;
 
 // similar to the checks in `create_entities.h` but inverted.
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #define DECREMENT_AND_CHECK(x) !(x)--
 #else
 #define DECREMENT_AND_CHECK(x) --(x) == (u8) - 1

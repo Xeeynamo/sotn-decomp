@@ -3,7 +3,7 @@
 
 // D_801C2578 is initialized in this file, but the bss layout for psx does not
 // allow for it to be defined in this file currently
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 u32 D_801C2578;
 #else
 extern u32 D_801C2578;
@@ -121,7 +121,7 @@ static s16 D_80181108[] = {
 static s32 D_80181148 = 0;
 static u32 D_8018114C = 0;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(DRACULA_FINAL_FORM);
 extern s32 E_ID(DRACULA_MEGA_FIREBALL);
 extern s32 E_ID(DEMATERIALIZE_STAGE_BG);
@@ -382,7 +382,7 @@ void EntityDraculaFinalForm(Entity* self) {
             part = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (part != NULL) {
                 CreateEntityFromEntity(E_ID(DRACULA_MEGA_FIREBALL), self, part);
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
                 // Appears to be a bug on PSX.
                 // Possibly supposed to be assigning from self
                 part->posX.i.hi = part->posX.i.hi;
@@ -630,7 +630,7 @@ void EntityDraculaFinalForm(Entity* self) {
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_DRACULA_DEFEAT, TIMEATTACK_SET_RECORD);
             g_PauseAllowed = false;
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
             D_80181148 = 0x800;
 #endif
             self->step_s++;
@@ -641,7 +641,7 @@ void EntityDraculaFinalForm(Entity* self) {
             }
             break;
         case 2:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             if (g_api.func_80131F68() != true) {
                 g_api.PlaySfx(0x35C);
                 self->step_s++;
@@ -662,7 +662,7 @@ void EntityDraculaFinalForm(Entity* self) {
 
             break;
         case 3:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             g_api.PlaySfx(SFX_EXPLODE_A);
             self->ext.dracFinalForm.unk82 = 0x80;
             self->step_s++;
@@ -1027,7 +1027,7 @@ void func_801AF6D0(void) {
 
     for (i = 0; i < LEN(D_80181150); i++) {
         valOne = (constThree + *ptrTwo) - (constOne + *ptrOne);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         valOne = (valOne << 0x10) / 0x80;
 #else
         valOne = (valOne << 9);
@@ -1037,7 +1037,7 @@ void func_801AF6D0(void) {
         ptrTwo++;
 
         valTwo = (constFour + *ptrTwo) - (constTwo + *ptrOne);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         valTwo = (valTwo << 0x10) / 0x80;
 #else
         valTwo = (valTwo << 9);
@@ -1152,7 +1152,7 @@ void func_801AF774(Entity* self) {
         rect.y = 0x100;
         rect.w = 0x7f;
         rect.h = 0xff;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         drawEnv.dtd = 0;
 #endif
         drawEnv.clip = rect;
@@ -1182,7 +1182,7 @@ void func_801AF774(Entity* self) {
         rect.y = 0x100;
         rect.w = 0x80;
         rect.h = 0x80;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         drawEnv.dtd = 0;
 #endif
         drawEnv.clip = rect;
@@ -1269,7 +1269,7 @@ void func_801AF774(Entity* self) {
             prim = prim->next;
         }
         self->ext.et_801AF774.unk8E--;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         self->ext.et_801AF774.unk8C = self->ext.et_801AF774.unk8E << 8;
 #else
         self->ext.et_801AF774.unk8C = self->ext.et_801AF774.unk8E << 0x10 >> 8;

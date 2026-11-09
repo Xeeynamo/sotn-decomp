@@ -3,7 +3,7 @@
 extern EInit g_EInitWerewolfAttackHitbox;
 extern s8 werewolf_attack_hitboxes[][4];
 extern u8 werewolf_attack_hitbox_indices[];
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(WEREWOLF);
 #endif
 

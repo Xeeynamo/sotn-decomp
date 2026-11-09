@@ -48,7 +48,7 @@ extern u16 D_800DB0F4[0x10];
 extern u16 D_800DB114[0x70];
 extern u16 D_800DB1F4[0xE0];
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 
 u8 D_psp_09189E60[] = {
 #include "../dra/gen/D_psp_09189E60.h"
@@ -74,7 +74,7 @@ u_long* D_800A384C[] = {
     GFX_TERMINATE(),
 };
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 
 u_long* D_psp_0918B848[] = {
     (u_long*)GFX_BANK_COMPRESSED,
@@ -321,7 +321,7 @@ u_long* D_800A3B4C[] = {
     PAL_COPY_DATA(0x1000, D_800DB1F4),
 };
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 
 u_long** D_psp_0918BBD0[] = {
     D_800A3848, D_800A384C, D_800A3848, g_SaveRoomGfx, g_LoadRoomGfx};

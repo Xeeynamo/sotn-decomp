@@ -2,7 +2,7 @@
 #include "common.h"
 #include "libspu_internal.h"
 
-#ifndef VERSION_PC
+#ifndef PLATFORM_PSYZ
 s32 _SpuMallocSeparateTo3(s32 arg0, u32 addr, s32 size) {
     s32 temp_t1;
     s32 temp_t3;
@@ -118,7 +118,7 @@ s32 _SpuMallocSeparateTo3(s32 arg0, u32 addr, s32 size) {
 }
 #endif
 
-#ifndef VERSION_PC
+#ifndef PLATFORM_PSYZ
 long SpuMallocWithStartAddr(unsigned long _addr, long size) {
     s32 temp_a2;
     s32 addr;

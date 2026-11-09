@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Note: Two functions in this file have weird temp variables for PSX.
-// Look for the "VERSION_PSP" defines in this file to see. The PSP version
+// Look for the "TARGET_PSP" defines in this file to see. The PSP version
 // of both functions is simple and reasonable, but PSX has odd temps.
 // You will be the lord of this castle if you can work out the match :)
 
@@ -242,7 +242,7 @@ void EntityFireWarg(Entity* self) {
             self->params = 0;
             self->flags &= ~(FLAG_NOT_AN_ENEMY | FLAG_DEAD);
             part->flags &= ~(FLAG_NOT_AN_ENEMY | FLAG_DEAD);
-#ifdef VERSION_HD
+#if VERSION <= VER_JP10
             self->flags |= FLAG_SUPPRESS_STUN;
 #else
             self->flags |= FLAG_SUPPRESS_STUN | FLAG_UNK_400;
@@ -1232,7 +1232,7 @@ void EntityFireWargWaveAttack(Entity* self) {
             palette = self->palette + 4;
 
             for (p0Offset = 0; prim != NULL; p0Offset += 4, prim = prim->next) {
-#if !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP
                 // These are both !FAKE; psp matches without them. ps1 needs
                 // them. I dunno. permuter found them.
                 s32 twobits;
@@ -1422,7 +1422,7 @@ void EntityFireWargDeathBeams(Entity* self) {
     u16 palette;
     s32 primIndex;
 
-#if !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP
     s32 temp_s1;
     u16 temp_s1_u16;
 #else
@@ -1433,7 +1433,7 @@ void EntityFireWargDeathBeams(Entity* self) {
     case 0:
         temp_s1 = self->unk5A + 3;
         palette = self->palette + 4;
-#if !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP
         temp_s1_u16 = (u16)temp_s1;
 #endif
 
@@ -1446,7 +1446,7 @@ void EntityFireWargDeathBeams(Entity* self) {
             self->primIndex = primIndex;
 
             while (prim != NULL) {
-#if !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP
                 prim->tpage = temp_s1_u16 >> 2;
 #else
                 prim->tpage = temp_s1 >> 2;

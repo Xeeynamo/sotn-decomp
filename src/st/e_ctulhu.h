@@ -540,7 +540,7 @@ void EntityCtulhu(Entity* self) {
                 if (newEntity != NULL) {
                     CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
                     newEntity->posX.i.hi = prim->x0 + posX;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     newEntity->posY.i.hi = prim->y2 - 0x30 + posY;
 #else
                     newEntity->posY.i.hi = prim->y2 + posY - 0x30;
@@ -840,7 +840,7 @@ void EntityCtulhuIceShockwave(Entity* self) {
                         prim->p3 = 0;
                         prim->drawMode = DRAW_HIDE;
                     }
-#if defined(FIX_UB) || defined(VERSION_PSP)
+#if TARGET == TARGET_PSP || defined(FIX_UB)
                     // Looks to be a bug fix on PSP
                     // PSX can index outside size of ctulhu_shockwave_uvs
                     else {
@@ -852,7 +852,7 @@ void EntityCtulhuIceShockwave(Entity* self) {
                         prim->u1 = prim->u3 = *ptr++;
                         prim->v2 = prim->v3 = *ptr++;
                         prim->p2 = 3;
-#if defined(FIX_UB) || defined(VERSION_PSP)
+#if TARGET == TARGET_PSP || defined(FIX_UB)
                     }
 #endif
                 } else {

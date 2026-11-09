@@ -14,7 +14,7 @@ void EntityCastleWall1(Entity* self) {
     }
 
     InitializeEntity(g_EInitInteractable);
-#if defined(STAGE_IS_RDAI) && !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP && defined(STAGE_IS_RDAI)
     self->posY.i.hi += 32;
 #endif
     primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
@@ -66,7 +66,7 @@ void EntityCastleWall2(Entity* self) {
     }
 
     InitializeEntity(g_EInitInteractable);
-#if defined(STAGE_IS_RDAI) && !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP && defined(STAGE_IS_RDAI)
     self->posY.i.hi += 32;
 #endif
     rows = self->params & 0xF;

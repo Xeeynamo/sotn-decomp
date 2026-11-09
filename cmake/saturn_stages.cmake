@@ -73,7 +73,7 @@ function(add_saturn_stage name source music test_stage)
     target_compile_definitions(${name}_room_test PRIVATE
         SATURN_STAGE_ROOM_TEST
         ${test_stage}
-        VERSION_PC
+        PLATFORM_PSYZ
         _internal_version_us
         __psyz)
     target_include_directories(${name}_room_test PRIVATE

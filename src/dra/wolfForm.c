@@ -2,7 +2,7 @@
 #include "dra.h"
 #include "dra_bss.h"
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 helper_8012F178 D_800B08CC[6] = {0};
 
 s32 D_800B0914 = 0;
@@ -18,7 +18,7 @@ extern s32 D_800B0920;
 #endif
 
 void func_8012C600(void) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     const s32 limiting_value = 0x13;
 #else
     const s32 limiting_value = 0x14;
@@ -98,6 +98,19 @@ void func_8012C600(void) {
         }
     }
 }
+
+#if VERSION == VER_JP12
+// Checks if the transformation happens in mid-air or not, unused.
+void ResetWolfTouchingFloor(void) { g_WolfIsTouchingFloor = 0; }
+
+void UpdateWolfTouchingFloor(void) {
+    if (g_Player.vram_flag & TOUCHING_GROUND) {
+        g_WolfIsTouchingFloor = 1;
+    }
+}
+
+bool IsWolfTouchingFloor(void) { return g_WolfIsTouchingFloor; }
+#endif
 
 bool WolfFormFinished(void) {
     if (PLAYER.step_s == 0 || PLAYER.step_s == 8) {
@@ -352,7 +365,7 @@ void WolfStepS_7(void) {
     } else if (!(g_Player.vram_flag & TOUCHING_GROUND)) {
         func_8012CFA8();
     } else {
-#ifdef VERSION_US
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
         if (PLAYER.facingLeft) {
             if (g_Player.padPressed & PAD_LEFT) {
                 func_8012CB4C();
@@ -951,7 +964,7 @@ void WolfStepS_3(void) {
 void WolfStepS_0(void) {
     s32 i, j; // Not nested, just two iterators for two loops
     Entity* entity;
-#if defined(VERSION_US)
+#if VERSION >= VER_US && TARGET != TARGET_PSP
     if (g_Entities[16].entityId != 0x22) {
         if (CreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x23), 0) == NULL) {
@@ -1002,13 +1015,16 @@ void WolfStepS_0(void) {
     PLAYER.animSet = 0xF;
     PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
 
-#if !defined(VERSION_US)
+#if VERSION < VER_US || TARGET == TARGET_PSP
     if (g_Entities[16].entityId != 0x22) {
         CreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x23), 0);
         func_8010FAF4();
         g_Player.unk66++;
     }
+#endif
+#if VERSION == VER_JP12
+    ResetWolfTouchingFloor();
 #endif
 }
 
@@ -1092,7 +1108,7 @@ void PlayerStepUnmorphWolf(void) {
         break;
     case 2:
         if (g_Player.unk66 == 3) {
-#if defined(VERSION_US)
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
             PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
 #endif
 
@@ -1160,8 +1176,11 @@ void PlayerStepMorphWolf(void) {
 
     PLAYER.palette = PAL_ALUCARD_WOLF;
     PLAYER.blendMode = BLEND_NO;
-#if defined(VERSION_US)
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
     PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter - 2;
+#endif
+#if VERSION == VER_JP12
+    UpdateWolfTouchingFloor();
 #endif
     if (WolfFormFinished()) {
         return;
@@ -1228,7 +1247,7 @@ void PlayerStepMorphWolf(void) {
     if (D_80138430 > 0xA00) {
         D_80138430 = 0xA00;
     }
-#if defined(VERSION_US)
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
     PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter - 2;
 #endif
 }
@@ -1253,7 +1272,7 @@ static void func_8012F178(Primitive* prim, s32 count, bool finishUp) {
     } scratchpad_8012F178;
     scratchpad_8012F178* s;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #define LEFTVEL -0x13
 #define TPAGE 0x4118
 #define V_OFFSET 0
@@ -1262,7 +1281,7 @@ static void func_8012F178(Primitive* prim, s32 count, bool finishUp) {
 #define TPAGE 0x118
 #define V_OFFSET 0xC0
 #endif
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
     scratchpad_8012F178 _s;
     s = &_s;
 #else
@@ -1289,7 +1308,7 @@ static void func_8012F178(Primitive* prim, s32 count, bool finishUp) {
                 DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
             s->helper->state++;
         case 1:
-#if defined(VERSION_US)
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
             s->prim->priority = PLAYER.zPriority - 6;
 #endif
             s->prim->drawMode |= DRAW_HIDE;
@@ -1315,7 +1334,7 @@ static void func_8012F178(Primitive* prim, s32 count, bool finishUp) {
                 s->prim->b1 = s->prim->g1 = s->prim->r2 = s->prim->b2 =
                     s->prim->g2 = s->prim->r3 = s->prim->b3 = s->prim->g3 =
                         0x80;
-#if defined(VERSION_US)
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
             s->prim->priority = PLAYER.zPriority - 6;
 #endif
             s->helper->timer = 0x20;
@@ -1349,7 +1368,7 @@ static void func_8012F178(Primitive* prim, s32 count, bool finishUp) {
                 s->prim->b2 = s->prim->g2;
             s->prim->r1 = s->prim->b1 = s->prim->g1 = s->prim->r3 =
                 s->prim->b3 = s->prim->g3;
-#if defined(VERSION_US)
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
             s->prim->priority = PLAYER.zPriority - 6;
 #endif
             if (--s->helper->timer == 0) {
@@ -1465,14 +1484,14 @@ void func_8012F894(Entity* self) {
         self->animSet = 0xF;
         self->unk5A = 0x7E;
         self->palette = PLAYER.palette;
-#ifndef VERSION_US
+#if VERSION < VER_JP11 || TARGET == TARGET_PSP
         self->zPriority = PLAYER.zPriority - 2;
 #endif
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
                       FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->step++;
     }
-#ifdef VERSION_US
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
     self->zPriority = PLAYER.zPriority - 2;
 #endif
     self->facingLeft = PLAYER.facingLeft;
@@ -1748,7 +1767,7 @@ void func_80130264(Entity* self) {
         self->animCurFrame = 1;
         self->unk5A = 0x7E;
         self->palette = PLAYER.palette;
-#if !defined(VERSION_US)
+#if VERSION < VER_JP11 || TARGET == TARGET_PSP
         self->zPriority = PLAYER.zPriority;
 #endif
         self->flags =
@@ -1762,7 +1781,7 @@ void func_80130264(Entity* self) {
         self->hitboxHeight = 6;
         self->step++;
     }
-#if defined(VERSION_US)
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
     self->zPriority = PLAYER.zPriority;
 #endif
     self->facingLeft = PLAYER.facingLeft;
@@ -1860,7 +1879,7 @@ void func_80130618(Entity* self) {
         self->animCurFrame = 0x23;
         self->unk5A = 0x7E;
         self->palette = PLAYER.palette;
-#if !defined(VERSION_US)
+#if VERSION < VER_JP11 || TARGET == TARGET_PSP
         self->zPriority = PLAYER.zPriority - 2;
 #endif
         self->flags =
@@ -1870,7 +1889,7 @@ void func_80130618(Entity* self) {
         self->rotPivotY = 8;
         self->step++;
     }
-#if defined(VERSION_US)
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
     self->zPriority = PLAYER.zPriority - 2;
 #endif
     self->facingLeft = PLAYER.facingLeft;
@@ -1982,7 +2001,7 @@ void func_801309B4(Entity* self) {
     if (!self->step) {
         self->animSet = ANIMSET_DRA(15);
         self->unk5A = 0x7E;
-#if !defined(VERSION_US)
+#if VERSION < VER_JP11 || TARGET == TARGET_PSP
         self->zPriority = PLAYER.zPriority + 2;
 #endif
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_100000 |
@@ -1995,7 +2014,7 @@ void func_801309B4(Entity* self) {
         self->animCurFrame = 72;
         self->step++;
     }
-#if defined(VERSION_US)
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
     self->zPriority = PLAYER.zPriority + 2;
 #endif
     self->facingLeft = PLAYER.facingLeft;
@@ -2152,7 +2171,7 @@ void func_80130E94(Entity* self) {
         self->animCurFrame = D_800B0B0C[params];
         self->unk5A = 0x7E;
         self->palette = PLAYER.palette;
-#if !defined(VERSION_US)
+#if VERSION < VER_JP11 || TARGET == TARGET_PSP
         self->zPriority = PLAYER.zPriority - 3;
 #endif
         self->flags =
@@ -2166,7 +2185,7 @@ void func_80130E94(Entity* self) {
     otherEnt--;
     var_s7 = 2;
     self->facingLeft = PLAYER.facingLeft;
-#if defined(VERSION_US)
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
     self->zPriority = PLAYER.zPriority - 3;
 #endif
     if (params == 0) {
@@ -2496,7 +2515,7 @@ static u8 D_800B0F94[][5] = {
     {0x50, 0x58, 0x18, 0x10, 0x0F}, {0x50, 0x58, 0x18, 0x10, 0x1F},
 };
 
-#ifdef VERSION_US
+#if VERSION >= VER_JP11 && VERSION < VER_JP12
 static u8 dirty_data1 = 0x20;
 static u8 dirty_data2 = 0x0D;
 #endif
@@ -2520,7 +2539,7 @@ void EntityGiantSpinningCross(Entity* self) {
     u16 temp_priority;
 
 // Uninitialized in other versions
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     z = 0;
     nclip = 0;
 #endif
@@ -2672,7 +2691,7 @@ void EntityGiantSpinningCross(Entity* self) {
     for (i = 0; i < LEN(D_800B0CB4); i++, prim = prim->next, vectors_ptr += 4) {
         gte_ldv3(vectors_ptr[0], vectors_ptr[1], vectors_ptr[3]);
         gte_rtpt();
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
         temp_vec2 = vectors_ptr[2];
 #endif
         prim->type = PRIM_GT4;
@@ -2684,14 +2703,14 @@ void EntityGiantSpinningCross(Entity* self) {
         }
         gte_stsxy3(&prim->x0, &prim->x1, &prim->x2);
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
         gte_ldv0(temp_vec2);
 #else
         gte_ldv0(vectors_ptr[2]);
 #endif
         gte_rtps();
         prim->drawMode = DRAW_DEFAULT;
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
         if (z < 16) {
             temp_priority = 0x1B6;
         } else if (z > 998) {

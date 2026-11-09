@@ -2,7 +2,7 @@
 #include <stage.h>
 #include <scratchpad.h>
 
-#if defined(VERSION_US)
+#if REGION != REGION_JP
 static u16 g_testCollEnemyLookup[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1E, 0x00, 0x00, 0x2B, 0x00, 0x10,
     0x00, 0x0D, 0x68, 0x68, 0x16, 0x00, 0x00, 0x00, 0x3E, 0x00, 0x23, 0x50,
@@ -39,7 +39,7 @@ static u16 g_testCollEnemyLookup[] = {
     0x04, 0x00, 0x70, 0x00, 0x00, 0x6C, 0x00, 0x00, 0x80, 0x80, 0x00, 0x00,
     0x8F, 0x00, 0x00, 0x00,
 };
-#elif defined(VERSION_PSP)
+#elif TARGET == TARGET_PSP
 static u16 g_testCollEnemyLookup[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1E, 0x00, 0x00, 0x2A, 0x00, 0x11,
     0x00, 0x0E, 0x68, 0x68, 0x16, 0x00, 0x00, 0x00, 0x3D, 0x00, 0x28, 0x52,
@@ -75,7 +75,7 @@ static u16 g_testCollEnemyLookup[] = {
     0x7F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x93, 0x00, 0x00, 0x00, 0x00,
     0x03, 0x00, 0x72, 0x00, 0x00, 0x6C, 0x00, 0x00, 0x81, 0x81, 0x00, 0x00,
     0x90, 0x00, 0x00, 0x00, 0x8C, 0x00, 0x00, 0x00};
-#elif defined(VERSION_HD)
+#else
 static u16 g_testCollEnemyLookup[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1E, 0x00, 0x00, 0x2A, 0x00, 0x11,
     0x00, 0x0E, 0x68, 0x68, 0x16, 0x00, 0x00, 0x00, 0x3D, 0x00, 0x28, 0x52,
@@ -156,11 +156,20 @@ static u16 g_testCollPrizeTable[] = {
 };
 
 // The Jewel Sword drop table below consists of pairs of numbers
-// The first value of each pair is the threshold (out of 0xFFF)
-// The second value of each pair is the dropped item ID
-
+// The first value is how unlikely is to receive the item, from a random
+// generated number from 0 to 0xFFF. JP 1.2 affects the luck rate too.
+// The second value of each pair is the dropped item ID.
+// clang-format off
 static u16 g_jewelSwordDropTable[] = {
-    // clang-format off
+#if VERSION >= VER_JP12 && TARGET != TARGET_PSP
+    0x99E, DROP_ZIRCON,
+    0xD1E, DROP_AQUAMARINE,
+    0xE9E, DROP_TURQUOISE,
+    0xF5E, DROP_ONYX,
+    0xFBE, DROP_GARNET,
+    0xFF6, DROP_OPAL,
+    0xFFF, DROP_DIAMOND,
+#else
     0xC00, DROP_ZIRCON,
     0xF00, DROP_AQUAMARINE,
     0xFD0, DROP_TURQUOISE,
@@ -168,8 +177,9 @@ static u16 g_jewelSwordDropTable[] = {
     0xFF8, DROP_GARNET,
     0xFFD, DROP_OPAL,
     0xFFF, DROP_DIAMOND,
-    // clang-format on
+#endif
 };
+// clang-format on
 
 // To determine the ratio for a given drop, you subtract the threshold that came
 // before it in the list (0 for the first entry) from its threshold.
@@ -495,7 +505,7 @@ void HitDetection(void) {
                 miscVar1 &= 0x3FFF;
                 if (entityHit->flags & FLAG_UNK_10) {
                     // Different on PSP vs PSX
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     if (g_PlayableCharacter == PLAYER_RICHTER) {
 #else
                     if (g_PlayableCharacter != PLAYER_ALUCARD) {
@@ -584,7 +594,17 @@ void HitDetection(void) {
                     // Jewel Sword
                     if (hitboxCheck2 == 5) {
                         dropTable = g_jewelSwordDropTable;
+#if VERSION >= VER_JP12 && TARGET != TARGET_PSP
+                        // bugfix: luck now affects Jewel Sword drops
+                        miscVar3 = (rand() & 0xFFF) +
+                                   (g_Status.statsTotal[STAT_LCK] / 4 +
+                                    enemyDef->level / 6);
+                        if (miscVar3 > 0xFFF) {
+                            miscVar3 = 0xFFF;
+                        }
+#else
                         miscVar3 = rand() & 0xFFF;
+#endif
                         while (true) {
                             if (*dropTable++ >= miscVar3) {
                                 miscVar3 = *dropTable;

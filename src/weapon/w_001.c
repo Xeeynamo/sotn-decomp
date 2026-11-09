@@ -325,7 +325,7 @@ s32 func_ptr_80170004(Entity* self) {
         xOffset = -xOffset;
     }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     xOffset = PLAYER.posX.i.hi + xOffset;
     yOffset = PLAYER.posY.i.hi + yOffset;
     if (PLAYER.drawFlags & ENTITY_SCALEY) {
@@ -343,7 +343,7 @@ s32 func_ptr_80170004(Entity* self) {
         switch (prim->r1) {
         case 0:
             if (--prim->r0 == 0) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 x = xOffset + (rand() % 24) - 12;
                 y = yOffset + (rand() % 18) - 9;
 #else

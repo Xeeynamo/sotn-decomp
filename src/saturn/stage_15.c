@@ -436,13 +436,16 @@ void func_060DFC08(MthMatrixTbl* unused, s32 angle) {
     DAT_06061DF0.current->val[2][0] = MTH_Mul(x, cosine) + MTH_Mul(y, sine);
 }
 
-const u16 DAT_060DFC9C[38] = {
-    0x0415, 0x1010, 0x10FF, 0x0000, 0x0412, 0x1010, 0x10FF, 0x0000,
-    0x0411, 0x1010, 0x10FF, 0x0000, 0x0417, 0x1010, 0xFF00, 0x0009,
-    0x0414, 0x1010, 0xFF00, 0x0009, 0x0412, 0x1510, 0xFF00, 0x0009,
-    0x0411, 0x1010, 0xFF00, 0x0009, 0x0415, 0x10FF, 0x0000, 0x0009,
-    0x0412, 0x15FF, 0x0000, 0x0009, 0x0411, 0xFF00,
-};
+const char g_Stage15GoldText5000[] = "\x04\x15\x10\x10\x10\xFF";
+const char g_Stage15GoldText2000[] = "\x04\x12\x10\x10\x10\xFF";
+const char g_Stage15GoldText1000[] = "\x04\x11\x10\x10\x10\xFF";
+const char g_Stage15GoldText700[] = "\x04\x17\x10\x10\xFF";
+const char g_Stage15GoldText400[] = "\x04\x14\x10\x10\xFF";
+const char g_Stage15GoldText250[] = "\x04\x12\x15\x10\xFF";
+const char g_Stage15GoldText100[] = "\x04\x11\x10\x10\xFF";
+const char g_Stage15GoldText50[] = "\x04\x15\x10\xFF";
+const char g_Stage15GoldText25[] = "\x04\x12\x15\xFF";
+const char g_Stage15GoldText1[] = "\x04\x11\xFF";
 void func_060DFCE8(u16 arg0) {
     Collider collider;
     Entity* self = g_CurrentEntity;
@@ -601,7 +604,7 @@ void func_060E320C(Entity* self) {
         break;
     }
 }
-INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E32F8, func_060E32F8);
+INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E32F8, EntityDestructAnim);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E3464, func_060E3464);
 #define SPAWN_DESTRUCT_ANIM_ID 19
 #include "spawn_destruct_anim.h"
@@ -638,7 +641,7 @@ void func_060E3F58(Entity* self) {
         TekiInit(self, 3);
 
         self->step++;
-        frame = DAT_06046CD0;
+        frame = g_SaturnSharedSpriteBank8Frames;
         if (frameType != 0) {
             frame += 2;
         } else {
@@ -723,7 +726,7 @@ INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E56C8, func_060E56C8);
 u16 func_060E57E0(s32 minX, s32 maxX) {
     u16 standing;
 
-    g_Player.unk7A = 1;
+    g_Player.runDisable = 1;
     if (PLAYER.step != 0 || (standing = PLAYER.step_s) != 1 ||
         PLAYER.posX.i.hi < minX || PLAYER.posX.i.hi > maxX) {
         standing = 0;
@@ -772,7 +775,7 @@ void func_060E6310(s32 scale, s32 unused) {
     s32 factor;
     s32 i;
 
-    base = DAT_060485E0;
+    base = g_WorkBuffer.model.vertices;
     src = g_Stage15Entity08ModelVertices14[0];
     dst = base;
     factor = scale << 8;
@@ -832,9 +835,9 @@ INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E7564, func_060E7564);
 void func_060E7780(Entity* self) {
     if (self->step == 0) {
         self->unk0 = CreateSpriteObject(
-            g_Stage15SpriteBankRedGargoyle[0].allocationIndex,
-            g_Stage15SpriteBankRedGargoyle[0].flags,
-            g_Stage15SpriteBank24Images, 1);
+            g_Stage15SpriteBankRedGargoyle.allocationIndex,
+            g_Stage15SpriteBankRedGargoyle.flags, g_Stage15SpriteBank24Images,
+            1);
         SyncSpriteObjectPosUnchecked(
             self, (s16*)&g_Stage15RedGargoyleAttackEntityParams[1]);
         self->step = 1;
@@ -999,7 +1002,11 @@ void func_060E9D38(Entity* self) {
             random_value = Random();
             index = (u8)(random_value % (8 - i));
             DAT_060FB0EC[i] = values[index];
+#ifdef SATZ
+            while (index < 7) {
+#else
             while (index <= 7) {
+#endif
                 values[index] = values[index + 1];
                 index++;
             }

@@ -95,6 +95,57 @@ var miscEntries = []lbaEntry{
 	{"SD_MAK_VB_LEN", "SERVANT/SD_SWORD.VB", lbaSize},
 }
 
+
+var cdEntries = []lbaEntry{
+	{"OFF_BIN_FTITLE", "BIN/F_TITLE0.BIN", lbaOffset},
+	{"OFF_BIN_FPROLO", "BIN/F_PROLO0.BIN", lbaOffset},
+	{"OFF_SD_ALK_VH", "VAB/SD_ALK.VH", lbaOffset},
+	{"OFF_SD_ALK_VB", "VAB/SD_ALK.VB", lbaOffset},
+	{"OFF_SD_RIH_VH", "VAB/SD_RIH.VH", lbaOffset},
+	{"OFF_SD_RIH_VB", "VAB/SD_RIH.VB", lbaOffset},
+	{"OFF_SD_MAR_VH", "VAB/SD_MAR.VH", lbaOffset},
+	{"OFF_SD_MAR_VB", "VAB/SD_MAR.VB", lbaOffset},
+	{"OFF_SD_J010_VH", "SD_J010.VH", lbaOffset},
+	{"OFF_SD_J010_VB", "SD_J010.VB", lbaOffset},
+	{"OFF_BIN_WEAPON0", "BIN/WEAPON0.BIN", lbaOffset},
+	{"OFF_BIN_WEAPON1", "BIN/WEAPON1.BIN", lbaOffset},
+	{"OFF_BIN_MONSTER", "BIN/MONSTER.BIN", lbaOffset},
+	{"OFF_BIN_DEMOKEY", "BIN/DEMOKEY.BIN", lbaOffset},
+	{"OFF_BIN_RIC", "BIN/RIC.BIN", lbaOffset},
+	{"LEN_BIN_RIC", "BIN/RIC.BIN", lbaSize},
+	{"OFF_BIN_ARC_F", "BIN/ARC_F.BIN", lbaOffset},
+	{"OFF_OPN_WS_STR", "OPN_WS.STR", lbaOffset},
+	{"OFF_END_WS_STR", "END_WS.STR", lbaOffset},
+	{"OFF_TYK_WS_STR", "TYK_WS.STR", lbaOffset},
+	{"OFF_LOGO15XA_STR", "LOGO15XA.STR", lbaOffset},
+	{"OFF_BIN_FGO", "BIN/F_GO.BIN", lbaOffset},
+	{"OFF_BIN_FEND", "BIN/F_END.BIN", lbaOffset},
+	{"OFF_FT_000_BIN", "SERVANT/FT_000.BIN", lbaOffset},
+	{"OFF_FT_001_BIN", "SERVANT/FT_001.BIN", lbaOffset},
+	{"OFF_FT_002_BIN", "SERVANT/FT_002.BIN", lbaOffset},
+	{"OFF_FT_003_BIN", "SERVANT/FT_003.BIN", lbaOffset},
+	{"OFF_FT_004_BIN", "SERVANT/FT_004.BIN", lbaOffset},
+	{"OFF_FT_005_BIN", "SERVANT/FT_005.BIN", lbaOffset},
+	{"OFF_FT_006_BIN", "SERVANT/FT_006.BIN", lbaOffset},
+	{"OFF_SD_BAT_VH", "SERVANT/SD_BAT.VH", lbaOffset},
+	{"OFF_SD_BAT_VB", "SERVANT/SD_BAT.VB", lbaOffset},
+	{"OFF_SD_DEVI2_VH", "SERVANT/SD_DEVI2.VH", lbaOffset},
+	{"OFF_SD_DEVI2_VB", "SERVANT/SD_DEVI2.VB", lbaOffset},
+	{"OFF_SD_DEVIL_VH", "SERVANT/SD_DEVIL.VH", lbaOffset},
+	{"OFF_SD_DEVIL_VB", "SERVANT/SD_DEVIL.VB", lbaOffset},
+	{"OFF_SD_FAIR2_VH", "SERVANT/SD_FAIR2.VH", lbaOffset},
+	{"OFF_SD_FAIR2_VB", "SERVANT/SD_FAIR2.VB", lbaOffset},
+	{"SD_FAIR2_VH_LEN", "SERVANT/SD_FAIR2.VH", lbaSize},
+	{"SD_FAIR2_VB_LEN", "SERVANT/SD_FAIR2.VB", lbaSize},
+	{"OFF_SD_FAIRY_VH", "SERVANT/SD_FAIRY.VH", lbaOffset},
+	{"OFF_SD_FAIRY_VB", "SERVANT/SD_FAIRY.VB", lbaOffset},
+	{"OFF_SD_GHOST_VH", "SERVANT/SD_GHOST.VH", lbaOffset},
+	{"OFF_SD_GHOST_VB", "SERVANT/SD_GHOST.VB", lbaOffset},
+	{"SD_GHOST_VB_LEN", "SERVANT/SD_GHOST.VB", lbaSize},
+	{"OFF_SD_SWORD_VH", "SERVANT/SD_SWORD.VH", lbaOffset},
+	{"OFF_SD_SWORD_VB", "SERVANT/SD_SWORD.VB", lbaOffset},
+}
+
 var seqEntries = []lbaEntry{
 	{"OFF_SEQ_LIB_SEQ", "ST/LIB/SEQ_LIB.SEQ", lbaOffset},
 	{"SEQ_LIB_SEQ_LEN", "ST/LIB/SEQ_LIB.SEQ", lbaSize},
@@ -137,6 +188,11 @@ func GenerateLbaHeader(img *iso9660.WritableImage, w io.Writer) error {
 	fmt.Fprintln(w)
 
 	if err := writeEntries(w, miscEntries, img); err != nil {
+		return err
+	}
+
+	fmt.Fprintln(w)
+	if err := writeEntries(w, cdEntries, img); err != nil {
 		return err
 	}
 

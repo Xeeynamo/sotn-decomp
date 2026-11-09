@@ -163,8 +163,7 @@ void FallEntity(void) {
     }
 }
 
-#if defined(VERSION_BETA) || defined(STAGE_IS_TEK) ||                          \
-    (STAGE == STAGE_ST0 && !defined(VERSION_PSP))
+#if VERSION < VER_BETA_HD || (TARGET != TARGET_PSP && STAGE == STAGE_ST0)
 u8 func_8019214C(void) {
     u8 unkState;
     Entity* entity;
@@ -233,7 +232,7 @@ s32 UnkCollisionFunc3(s16* sensors) {
     return 0;
 }
 
-#if defined(VERSION_BETA) || defined(STAGE_IS_TEK) || STAGE == STAGE_ST0
+#if VERSION < VER_BETA_HD || STAGE == STAGE_ST0
 s32 func_80192408(u16* sensors, u16 arg1) {
     Collider col[5];
     s16 i;
@@ -444,7 +443,7 @@ u16 LimitAngleChange(u16 delta, u16 base, u16 target) {
     // Equivalent to 0-360 versus -180 to 180.
     // This converts the absolute diff into signed.
     if (diff & 0x800) {
-#if STAGE == STAGE_ST0 || defined(STAGE_IS_TEK)
+#if STAGE == STAGE_ST0 || VERSION < VER_BETA_MAD
         ret = diff & 0x7FF;
 #else
         ret = (0x800 - diff) & 0x7FF;
@@ -483,7 +482,7 @@ void SetSubStep(u8 step_s) {
 void EntityExplosionSpawn(u16 params, u16 arg1) {
 #if STAGE != STAGE_ST0
     if (arg1) {
-#if defined(VERSION_BETA) || defined(STAGE_IS_TEK)
+#if VERSION < VER_BETA_HD
         g_api.PlaySfx(arg1);
 #else
         PlaySfxPositional(arg1);
@@ -608,7 +607,7 @@ void CheckFieldCollision(s16* hitSensors, s16 sensorCount) {
 // and from which direction.
 // w and h holds the collider size of the entity
 // while flags stores which sides are solid
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
 u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
     Entity* player = &PLAYER;
     s16 x, y;

@@ -69,7 +69,7 @@ typedef enum {
     /* 4 */ SUCCUBUS_DYING_ANIM_2,
 } SuccubusDyingSubSteps;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern u8* D_801816C4; // defined in st_init_psp
 extern s32 E_ID(SUCCUBUS_PETAL);
 extern s32 E_ID(SUCCUBUS_WING_OVERLAY);
@@ -88,14 +88,14 @@ extern EInit D_80180500;
 extern EInit D_8018050C;
 
 // bss on pspeu
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 static s32 multiple_count = 0; // clones counter
 static s32 D_80180664 = 0;
 static s32 D_80180668 = 0;
 #endif
 
 // This data comes at the beginning for pspeu, but the end for us
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 static s8 D_801807F8[] = {
     0,  0,  0,   0,   -68, -62, 0, 0, 0,   6,  4,   20,  0,   4,
     4,  18, 0,   -2,  4,   12,  0, 0, 3,   3,  -4,  0,   4,   4,
@@ -170,7 +170,7 @@ static u8 g_CloneShootOrder[4][7] = {
 static s16 D_801807F0[] = {168, 744, -312, -768};
 
 // This data comes at the beginning for pspeu, but the end for us
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 static s8 D_801807F8[] = {
     0,  0,  0,   0,   -68, -62, 0, 0, 0,   6,  4,   20,  0,   4,
     4,  18, 0,   -2,  4,   12,  0, 0, 3,   3,  -4,  0,   4,   4,
@@ -183,13 +183,13 @@ static u8 D_80180830[] = {
     8, 9, 10, 11, 1, 1, 1, 1, 2, 2, 2, 12, 12, 13, 13, 13, 0, 0, 0, 0, 0, 0, 0};
 #endif
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 static s32 D_80180668;
 static s32 D_80180664;
 static s32 multiple_count = 0; // clones counter
 #endif
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 // defined in cutscene_data
 extern u8 D_801816C4[]; // Succubus facing assigned to it
 #endif
@@ -925,7 +925,7 @@ void EntitySuccubus(Entity* self) {
                 }
             }
             if (!self->poseTimer && self->pose == 5) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 PlaySfxPositional(SFX_UNUSED_SUCCUBUS_ATTACK_A);
                 PlaySfxPositional(SFX_RNO2_ANIME_SWORD);
 #else
@@ -1096,7 +1096,7 @@ void EntitySuccubusPetal(Entity* self) {
         if (!self->facingLeft) {
             angle = 0x800 - angle;
         }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         temp_s2 = (((rand() & 0x7fff) * 4) + 0x38000) >> 0xC;
 #else
         temp_s2 = ((rand() * 4) + 0x38000) >> 0xC;
@@ -1239,7 +1239,7 @@ void EntitySuccubusClone(Entity* self) {
         }
         if (!self->poseTimer && self->pose == 5) {
             PlaySfxPositional(SFX_SUCCUBUS_HOMING_ORB_ATTACK);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             PlaySfxPositional(SFX_RNO2_ANIME_SWORD);
 #else
             PlaySfxPositional(SFX_SUCCUBUS_HOMING_ORB);

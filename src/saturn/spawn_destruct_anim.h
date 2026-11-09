@@ -14,7 +14,7 @@ void SpawnDestructAnim(
     initialX = x + self->posX.i.hi;
     currentY = y + self->posY.i.hi;
     if (i < count) {
-        resource = &g_EntitySpriteBank01;
+        resource = &g_SaturnSharedSpriteBank1Resource;
         currentX = initialX;
         do {
             entity = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);

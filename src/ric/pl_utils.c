@@ -36,7 +36,7 @@ void InitRicAfterImage(void) {
         g_Entities[E_AFTERIMAGE_1].pose--;
         return;
     }
-#if !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP
     prim = &g_PrimBuf[g_Entities[E_AFTERIMAGE_1].primIndex];
 #endif
     for (prim = &g_PrimBuf[g_Entities[E_AFTERIMAGE_1].primIndex], i = 0;
@@ -204,7 +204,7 @@ void RicSetInvincibilityFrames(s32 kind, s16 invincibilityFrames) {
 void DisableAfterImage(s32 resetAnims, s32 arg1) {
     Primitive* prim;
 
-#if defined(VERSION_US)
+#if VERSION >= VER_USPROTO && TARGET != TARGET_PSP
     FntPrint("op disable\n");
 #endif
     if (resetAnims) {

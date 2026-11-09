@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno1.h"
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(WALL_SEGMENT);
 extern s32 E_ID(WALL_PARTICLES);
 extern s32 E_ID(WALL_DEBRIS);
@@ -229,7 +229,7 @@ void EntityWallParticles(Entity* self) {
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
             self->ext.prim = prim;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             UnkPolyFunc2(prim);
 #else
             UnkPolyFunc2(prim, primIndex);

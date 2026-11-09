@@ -15,7 +15,7 @@ static u8 blend_modes[8] = {
     BLEND_TRANSP | BLEND_ADD,
 };
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 static u8 unused[8] = {0};
 #endif
 

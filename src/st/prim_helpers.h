@@ -118,7 +118,7 @@ s32 UpdateAnimation(u8* texAnimations, Primitive* prim) {
     }
 
     prim->p2--;
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
     retVal |= 1;
 #endif
     retVal = (retVal | 1) & 0xFFFF;
@@ -238,7 +238,7 @@ void UnkPolyFunc0(Primitive* prim) {
     prim->next->drawMode = DRAW_HIDE;
 }
 
-#if !defined(VERSION_BETA) && !defined(STAGE_IS_TEK)
+#if VERSION >= VER_BETA_HD
 s32 PrimDecreaseBrightness(Primitive2* prim, u8 amount) {
     s32 isEnd;
     s32 i, j;

@@ -40,7 +40,10 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, header]
-      - [0x2C, data]
+      - [0x2C, .data, sprite_banks]
+      - [0x90, .data, palette_def]
+      - [0x1D4, .data, layers]
+      - [0x3AC, .data, graphics_banks]
       - [0x618, .data, gen/e_laydef]
       - [0x7C0, .data, e_init]
       - [0xB60, .data, e_room_bg]
@@ -82,7 +85,9 @@ segments:
       - [0x3448, .data, e_mist_door]
       - [0x3488, .data, gen/rooms]
       - [0x3544, .data, gen/e_layout]
-      - [0x44FC, data]
+      - [0x44FC, .data, stage_data]
+      - [0x16170, .data, tilemaps]
+      - [0x269A0, .data, gen/us/sprites]
       - [0x34668, .rodata, e_room_bg]
       - [0x34670, .rodata, e_red_door]
       - [0x34688, .rodata, e_breakable]

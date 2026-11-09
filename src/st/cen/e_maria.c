@@ -4,7 +4,7 @@
 
 void EntityMaria(Entity* self) {
     if (self->step == 0) {
-#if !defined(VERSION_HD)
+#if VERSION >= VER_JP10
         /* Has player seen Maria Holy Glasses Cutscene? */
         if (g_CastleFlags[MET_MARIA_IN_CEN] != 0) {
             DestroyEntity(self);

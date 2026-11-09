@@ -430,7 +430,7 @@ void EntitySpectralSwordSpear(Entity* self) {
             // sure.
             otherIdx = self->params & 0xFF;
             otherIdx = (otherIdx * 4) / 6;
-#ifdef VERSION_US
+#if VERSION == VER_US
             other = self - (self->params & 0xFF) + (otherIdx + 6);
 #else
             other = self - (self->params & 0xFF) + otherIdx + 6;

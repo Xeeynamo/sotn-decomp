@@ -382,7 +382,7 @@ void EntityDiplocephalus(Entity* self) {
         break;
 
     case 3:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (self->ext.diplo.unk9F++ == 0) {
 #else
         if (++self->ext.diplo.unk9F == 1) {
@@ -447,7 +447,7 @@ void EntityDiplocephalus(Entity* self) {
         break;
 
     case 6:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (self->ext.diplo.unk9F++ == 0) {
 #else
         if (++self->ext.diplo.unk9F == 1) {

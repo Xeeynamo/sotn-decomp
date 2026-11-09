@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/deps"
 )
@@ -15,6 +16,8 @@ var saturnSplitterYAMLs = []string{
 	"config/saturn/t_bat.prg.yaml",
 	"config/saturn/stage_02.prg.yaml",
 	"config/saturn/warp.prg.yaml",
+	"config/saturn/title.prg.yaml",
+	"config/saturn/logo.prg.yaml",
 	"config/saturn/alucard.prg.yaml",
 	"config/saturn/richter.prg.yaml",
 	"config/saturn/maria.prg.yaml",
@@ -23,6 +26,8 @@ var saturnSplitterYAMLs = []string{
 	"config/saturn/rstage16.prg.yaml",
 	"config/saturn/stage_16.prg.yaml",
 	"config/saturn/stage_14.prg.yaml",
+	"config/saturn/t_fairy2.prg.yaml",
+	"config/saturn/sub.prg.yaml",
 }
 
 func buildSaturn() error {
@@ -65,7 +70,11 @@ var saturnExtractSentinels = []string{
 	"config/saturn/stage_15.ld",
 	"config/saturn/stage_16.ld",
 	"config/saturn/t_bat.ld",
+	"config/saturn/t_fairy2.ld",
+	"config/saturn/sub.ld",
 	"config/saturn/warp.ld",
+	"config/saturn/title.ld",
+	"config/saturn/logo.ld",
 	"config/saturn/zero.ld",
 	"config/saturn/zero_syms.txt",
 }
@@ -76,12 +85,31 @@ func extractSaturn() error {
 			return runSaturnSplitter()
 		}
 	}
+	weapons, _ := filepath.Glob("config/saturn/weapon/w_*.prg.yaml")
+	for _, yaml := range weapons {
+		ld := strings.TrimSuffix(yaml, ".prg.yaml") + ".ld"
+		if _, err := os.Stat(ld); err != nil {
+			return runSaturnSplitter()
+		}
+	}
 	return nil
 }
 
 func runSaturnSplitter() error {
 	const splitter = "tools/saturn-splitter/rust-dis/target/release/rust-dis"
 	for _, yaml := range saturnSplitterYAMLs {
+		if err := deps.RunApp(splitter, yaml); err != nil {
+			return fmt.Errorf("split %s: %w", filepath.Base(yaml), err)
+		}
+	}
+	if err := deps.SaturnWeaponSlices(); err != nil {
+		return fmt.Errorf("slice WEAPON0.PRG: %w", err)
+	}
+	weapons, err := filepath.Glob("config/saturn/weapon/w_*.prg.yaml")
+	if err != nil {
+		return err
+	}
+	for _, yaml := range weapons {
 		if err := deps.RunApp(splitter, yaml); err != nil {
 			return fmt.Errorf("split %s: %w", filepath.Base(yaml), err)
 		}

@@ -18,7 +18,7 @@ void _SsInit(void) {
     var_a2 = (u16*)0x1F801C00;
     for (i = 0; i < 24; i++) {
         for (j = 0; j < 8; j++) {
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
             write_16(0x1F801C00 + (i * 8 + j) * 2, D_80032EC0[j], __FILE__,
                      __LINE__);
 #else
@@ -29,7 +29,7 @@ void _SsInit(void) {
 
     var_a2 = (u16*)0x1F801D80;
     for (i = 0; i < 16; i++) {
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
         write_16(0x1F801D80 + i * 2, D_80032ED0[i], __FILE__, __LINE__);
 #else
         *var_a2++ = D_80032ED0[i];

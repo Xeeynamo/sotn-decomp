@@ -16,15 +16,21 @@ const (
 	PlatformPSP    = Platform("psp")
 	PlatformPSX    = Platform("psx")
 
-	VersionUS     = Version("us")
-	VersionHD     = Version("hd")
-	VersionPSPEU  = Version("pspeu")
-	VersionSaturn = Version("saturn")
+	VersionUS      = Version("us")
+	VersionHD      = Version("hd")
+	VersionJP10    = Version("jp10")
+	VersionJP11    = Version("jp11")
+	VersionJP12    = Version("jp12")
+	VersionUSProto = Version("usproto")
+	VersionEU      = Version("eu")
+	VersionHK      = Version("hk")
+	VersionPSPEU   = Version("pspeu")
+	VersionSaturn  = Version("saturn")
 )
 
 var (
 	// VersionsAll defaults when doing `build [all]`
-	VersionsAll = []Version{VersionUS, VersionHD, VersionPSPEU}
+	VersionsAll = []Version{VersionUS, VersionHD, VersionJP10, VersionJP11, VersionJP12, VersionUSProto, VersionEU, VersionHK, VersionPSPEU}
 
 	// VersionsEverything adds Saturn to the mix for more specific stuff we do
 	// not want to propagate to the usual build chain

@@ -166,10 +166,10 @@ files:
           - [0x1FE4, rawgfx, g_saveIcon14, 16, 48, 4, 0xAA4]
           - [0x2164, rawgfx, g_saveIcon15, 16, 48, 4, 0xAC4]
           - [0x22E4, skip]
-          - [0xB304, cutscene, cutscene_endings]
+          - [0xB304, cutscene, us/cutscene_endings]
           - [0xBC4A, skip]
-          - [0xBC54, credits, credits]
-          - [0xC404, skip]
+          - [0xBC54, credits, us/credits]
+          - [0xC404, spritesheet, ending]
           - [0xCD54, palette, us/D_8018CD54, 16]
           - [0xCDB4, palette, D_8018CDB4, 256]
           - [0xCFB4, palette, D_8018CFB4, 256]
@@ -652,16 +652,70 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
-          #- [0x2C, sprite_banks, sprite_banks]
-          #- [0x8C, paldef, palette_def] # embedded interleaved clut, see issue #2401
-          #- [0x1C4, layers, layers]
-          #- [0x5A4, gfx_banks, graphics_banks]
+          - [0x2C, sprite_banks, us/sprite_banks]
+          # palette_def.c is written by hand: the paldef handler cannot
+          # extract the palette stored between its defs, see issue #2401
+          - [0x90, skip]
+          - [0x1D4, layers, layers]
+          - [0x3AC, gfx_banks, us/graphics_banks]
           - [0x618, layout, entity_layouts]
           - [0x7C0, skip]
           - [0x3488, rooms, rooms]
           - [0x3544, skip]
-          #- [0x4CE0, cutscene, cutscene_data]
-          #- [0x4E60, skip]
+          - [0x44FC, cmpgfx, D_801844FC, 128, 128, 4]
+          - [0x50D8, cmpgfx, D_801850D8, 128, 128, 4]
+          - [0x5FC8, cmpgfx, D_80185FC8, 128, 128, 4]
+          - [0x6BB8, cmpgfx, D_80186BB8, 128, 128, 4]
+          - [0x8054, cmpgfx, D_80188054, 128, 128, 4] # guessed: unreferenced, inflates to 0x2000
+          - [0x8720, cmpgfx, D_80188720, 128, 128, 4]
+          - [0x90CC, cmpgfx, D_801890CC, 128, 128, 4]
+          - [0x9FD4, cmpgfx, D_80189FD4, 128, 128, 4]
+          - [0xA704, cmpgfx, D_8018A704, 128, 128, 4]
+          - [0xB264, cmpgfx, D_8018B264, 128, 128, 4]
+          - [0xB9A0, cmpgfx, D_8018B9A0, 128, 128, 4]
+          - [0xC4DC, cmpgfx, D_8018C4DC, 128, 128, 4]
+          - [0xD2EC, cmpgfx, D_8018D2EC, 128, 128, 4]
+          - [0xDF80, cmpgfx, D_8018DF80, 128, 128, 4]
+          - [0xE650, cmpgfx, D_8018E650, 128, 128, 4]
+          - [0xF584, cmpgfx, D_8018F584, 128, 128, 4]
+          - [0x105E4, cmpgfx, D_801905E4, 128, 128, 4]
+          - [0x111F4, cmpgfx, D_801911F4, 128, 128, 4]
+          - [0x11CB0, cmpgfx, D_80191CB0, 128, 128, 4]
+          - [0x1257C, cmpgfx, D_8019257C, 128, 128, 4]
+          - [0x12D20, cmpgfx, D_80192D20, 128, 128, 4]
+          - [0x137E4, cmpgfx, D_801937E4, 128, 128, 4]
+          - [0x141F0, cmpgfx, D_801941F0, 128, 128, 4]
+          - [0x14460, cmpgfx, D_80194460, 128, 128, 4]
+          - [0x14E14, cmpgfx, D_80194E14, 128, 128, 4]
+          - [0x1519C, cmpgfx, D_8019519C, 128, 128, 4]
+          - [0x15490, palette, D_80195490, 16]
+          - [0x154B0, palette, D_801954B0, 16]
+          - [0x154D0, palette, D_801954D0, 16]
+          - [0x154F0, palette, D_801954F0, 16]
+          - [0x15510, palette, D_80195510, 16]
+          - [0x15530, palette, D_80195530, 16]
+          - [0x15550, palette, D_80195550, 16] # 0x200
+          - [0x155B0, palette, D_801955B0, 16] # guessed: unused, no palette def refers to it
+          - [0x155D0, palette, D_801955D0, 16] # 0x203
+          - [0x15650, palette, D_80195650, 16] # 0x207
+          - [0x156B0, palette, D_801956B0, 16] # 0x20A
+          - [0x157B0, palette, D_801957B0, 16] # 0x213
+          - [0x157F0, palette, D_801957F0, 16] # 0x212
+          - [0x15810, palette, D_80195810, 16] # 0x215
+          - [0x15830, palette, D_80195830, 16] # 0x216
+          - [0x158B0, palette, D_801958B0, 16] # 0x21A
+          - [0x158F0, palette, D_801958F0, 16] # guessed: unused, no palette def refers to it
+          - [0x15AD0, palette, D_80195AD0, 16] # 0x21C
+          - [0x15B90, palette, D_80195B90, 16] # guessed: unused, no palette def refers to it
+          - [0x15C50, palette, D_80195C50, 16] # 0x222
+          - [0x15CB0, palette, D_80195CB0, 16] # 0x228
+          - [0x15D10, palette, D_80195D10, 16] # 0x225
+          - [0x15D70, palette, D_80195D70, 16] # 0x22B
+          - [0x15DB0, palette, D_80195DB0, 16] # 0x22D
+          - [0x15EB0, palette, D_80195EB0, 16] # 0x2E0
+          - [0x160B0, palette, D_801960B0, 16] # unreferenced by the palette defs
+          - [0x16170, skip] # tilemaps and tiledefs, from layers
+          - [0x269A0, skip] # sprites, from sprite_banks
   - target: disks/us/ST/NO2/NO2.BIN
     asset_path: assets/st/no2
     src_path: src/st/no2

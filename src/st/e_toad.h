@@ -11,7 +11,7 @@ static u8 anim_tongue[] = {
     0x01, 0x09, 0x01, 0x0A, 0x01, 0x0B, 0x01, 0x0C, 0x01, 0x0D,
     0x01, 0x0E, 0x06, 0x0F, 0x05, 0x0E, 0x04, 0x0D, 0x03, 0x0C,
     0x02, 0x0B, 0x02, 0x0A, 0x03, 0x09, 0xFF, 0x00};
-#if defined(STAGE_IS_TEK)
+#if VERSION < VER_BETA_MAD
 static s16 sensors_ground[4][2] = {{0, 12}, {0, 4}, {8, -4}, {-16, 0}};
 #else
 static s16 sensors_ground[4][2] = {{0, 12}, {0, 4}, {4, -4}, {-8, 0}};
@@ -29,7 +29,7 @@ static Point32 jumpVelocities[] = {
 };
 
 void EntityToad(Entity* self) {
-#if !defined(STAGE_IS_TEK)
+#if VERSION >= VER_BETA_MAD
     Collider collider;
 #endif
     Entity* entity;
@@ -48,7 +48,7 @@ void EntityToad(Entity* self) {
             entity->params = 1;
         }
 
-#if !defined(STAGE_IS_TEK)
+#if VERSION >= VER_BETA_MAD
         PlaySfxPositional(SFX_FROG_CROAK);
 #endif
         DestroyEntity(self);
@@ -69,7 +69,7 @@ void EntityToad(Entity* self) {
         }
         break;
     case 1:
-#if defined(STAGE_IS_TEK)
+#if VERSION < VER_BETA_MAD
         if (UnkCollisionFunc3(sensors_ground) & 1) {
             self->step++;
         }
@@ -106,7 +106,7 @@ void EntityToad(Entity* self) {
                 SetStep(4);
                 break;
             }
-#if !defined(STAGE_IS_TEK)
+#if VERSION >= VER_BETA_MAD
             PlaySfxPositional(SFX_TOAD_CROAK);
 #endif
 
@@ -135,14 +135,14 @@ void EntityToad(Entity* self) {
                 self->hitboxOffY = -7;
                 self->hitboxWidth = 7;
                 self->hitboxHeight = 0xC;
-#if !defined(STAGE_IS_TEK)
+#if VERSION >= VER_BETA_MAD
                 PlaySfxPositional(SFX_BLIPS_A);
 #endif
                 self->step_s++;
             }
             break;
         case 1:
-#if !defined(STAGE_IS_TEK)
+#if VERSION >= VER_BETA_MAD
             posX = self->posX.i.hi;
             if (self->velocityX > 0) {
                 posX += 0x10;
@@ -207,7 +207,7 @@ void EntityToad(Entity* self) {
             break;
         case 1:
             if (!AnimateEntity(anim_open_mouth, self)) {
-#if !defined(STAGE_IS_TEK)
+#if VERSION >= VER_BETA_MAD
                 PlaySfxPositional(SFX_FROG_TOAD_TONGUE);
 #endif
                 SetSubStep(2);

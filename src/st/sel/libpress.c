@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#include <common.h>
 #include <types.h>
 #include <libetc.h>
+#include <libc.h>
 
 typedef struct {
     u_char iq_y[64];
@@ -32,6 +34,23 @@ void DecDCTReset(s32 option) {
     MDEC_reset(option);
 }
 
+#if VERSION >= VER_HK
+extern s32 func_801BAB70(s32 size);
+extern s32 func_801BBB4C(u32* bs, u32* buf);
+extern s32 func_801BBE80(u32* bs, u32* buf);
+
+u16 DecDCTBufSize(u16* arg0) { return *arg0; }
+
+s32 DecDCTvlcSize(s32 size) { return func_801BAB70(size); }
+
+s32 DecDCTvlc(u32* bs, u32* buf) {
+    s32 ret = func_801BBB4C(bs, buf);
+    if (ret == -1) {
+        return func_801BBE80(bs, buf);
+    }
+    return ret;
+}
+#else
 static inline void _memcpy(long* dst, long* src, size_t size) {
     while (size--) {
         *dst++ = *src++;
@@ -56,6 +75,7 @@ s32* DecDCTPutEnv(DECDCTENV* arg0) {
 }
 
 u16 DecDCTBufSize(u16* arg0) { return *arg0; }
+#endif
 
 void DecDCTin(s32* arg0, s32 arg1) {
     if (arg1 & 1) {
@@ -100,6 +120,10 @@ static volatile u32* mdec0 = 0x1F801820;
 static volatile u32* mdec1 = 0x1F801824;
 static volatile u32* d_pcr = 0x1F8010F0;
 
+#if VERSION >= VER_HK
+// updated libpress build?
+INCLUDE_ASM("st/sel/nonmatchings/libpress", MDEC_reset);
+#else
 static void MDEC_reset(s32 option) {
     switch (option) {
     case 0:
@@ -119,9 +143,13 @@ static void MDEC_reset(s32 option) {
         return;
     default:
         printf("MDEC_rest:bad option(%d)\n", option);
+#if VERSION >= VER_HK
+        exit();
+#endif
         return;
     }
 }
+#endif
 
 static void MDEC_in(s32* arg0, u32 arg1) {
     MDEC_in_sync();
@@ -144,7 +172,11 @@ static void MDEC_out(s32 arg0, u32 arg1) {
 static int MDEC_in_sync(void) {
     volatile s32 retries = 0x100000;
 
+#if VERSION >= VER_HK
+    while (*d0_chcr & 0x01000000) {
+#else
     while (*mdec1 & 0x20000000) {
+#endif
         if (--retries == -1) {
             timeout("MDEC_in_sync");
             return -1;
@@ -167,6 +199,9 @@ static int MDEC_out_sync(void) {
     return 0;
 }
 
+#if VERSION >= VER_HK
+INCLUDE_ASM("st/sel/nonmatchings/libpress", timeout);
+#else
 int timeout(const char* funcName) {
     const char* errDma = "\t DMA=(%d,%d), ADDR=(0x%08x->0x%08x)\n";
     const char* errFifo =
@@ -191,3 +226,4 @@ int timeout(const char* funcName) {
 
     return 0;
 }
+#endif

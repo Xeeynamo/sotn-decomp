@@ -2,7 +2,7 @@
 #include "common.h"
 #include "libsnd_i.h"
 
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
 extern s16 _svm_sreg_buf[];
 extern char _svm_sreg_dirty[];
 extern struct SpuVoice _svm_voice[];
@@ -112,7 +112,7 @@ u8 SpuVmAlloc(s32 arg0) {
     return channel;
 }
 
-#ifndef VERSION_PC
+#ifndef PLATFORM_PSYZ
 void SpuVmKeyOnNow(u8 vagCount, u16 arg2) {
     struct SeqStruct* score =
         &_ss_score[_svm_cur.field_16_vag_idx & 0xFF]
@@ -685,7 +685,7 @@ void SpuVmInit(u8 arg0) {
         _svm_voice[var_a1].start_pan = 0;
         _svm_voice[var_a1].start_vol = 0;
 
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
         write_16(0x1F801C00 + var_a1 * 0x10 + 6, 0x200, __FILE__, __LINE__);
         write_16(0x1F801C00 + var_a1 * 0x10 + 4, 0x1000, __FILE__, __LINE__);
         write_16(0x1F801C00 + var_a1 * 0x10 + 8, 0x80FF, __FILE__, __LINE__);
@@ -826,7 +826,7 @@ s32 SpuVmPitchBend(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
     return var_s1;
 }
 
-#ifndef VERSION_PC
+#ifndef PLATFORM_PSYZ
 void SpuVmFlush(void) {
     u32 env_mask;
     s32 i;
@@ -898,7 +898,7 @@ void SpuVmFlush(void) {
 }
 #endif
 
-#ifndef VERSION_PC
+#ifndef PLATFORM_PSYZ
 s32 SpuVmKeyOn(s16 arg0, s16 vabId, s16 prog, u16 note, u16 voll, u16 volr) {
     struct SeqStruct* score = &_ss_score[arg0 & 0xFF][(arg0 & 0xFF00) >> 8];
     u8 vagIdx[0x80];
@@ -1165,7 +1165,7 @@ s32 SpuVmGetProgPan(s16 vabId, s16 prog) {
     return _svm_pg[prog].mpan;
 }
 
-#ifndef VERSION_PC
+#ifndef PLATFORM_PSYZ
 s32 SpuVmSetVol(s16 seq_sep_no, s16 vabId, s16 prog, u16 arg3, u16 arg4) {
     struct SeqStruct* score =
         &_ss_score[seq_sep_no & 0xFF][(seq_sep_no & 0xFF00) >> 8];

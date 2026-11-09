@@ -2,7 +2,7 @@
 
 // HuntingGirlDrawAttack has conditions that can be expected to attempt to
 // divide by 0, therefore psp uses a division guard.
-#if defined(FIX_UB) || defined(VERSION_PSP)
+#if TARGET == TARGET_PSP || defined(FIX_UB)
 #define DIV_GUARD(q, a, b)                                                     \
     if (b) {                                                                   \
         q = a / b;                                                             \
@@ -100,7 +100,7 @@ extern EInit g_EInitHuntingGirl;
 static AnimateEntityFrame anim[] = {{1, 1}, {1, 2}, POSE_LOOP(0)};
 static u8 unused[] = {0, 0, 46, 0, 4, 0, 0, 0};
 static s16 sensors[] = {0, 46, 0, 4, 4, -4, -8, 0};
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 static s8 fade_interval[] = {8, 4, 3, 12, 8, 4, 0, 0};
 #else
 static u8 fade_interval[] = {8, 4, 3, 12, 8, 4, 0, 0};
@@ -228,7 +228,7 @@ static bool HuntingGirlDrawAttack(HuntingGirlAttackStep* attackPattern) {
         g_CurrentEntity->ext.huntingGirl.attackStep++;
         attackPattern++;
         prim = g_CurrentEntity->ext.huntingGirl.attackPrim;
-#if defined(FIX_UB) || defined(VERSION_PSP)
+#if TARGET == TARGET_PSP || defined(FIX_UB)
         // Null reference here on non-PSX platforms
         if (!prim) {
             return false;
@@ -690,7 +690,7 @@ void EntityHuntingGirlAttack(Entity* self) {
         self->ext.huntingGirl.attack = self->attack;
     }
     if (g_Player.status & (PLAYER_STATUS_WOLF_FORM | PLAYER_STATUS_BAT_FORM)) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         self->attack = self->ext.huntingGirl.attack * 2;
 #else
         self->attack = LOHU(self->ext.huntingGirl.attack) * 2;

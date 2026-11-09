@@ -1,0 +1,32 @@
+options:
+  target_path:  disks/saturn/T_FAIRY2.PRG
+  asm_path:     asm/saturn/t_fairy2
+  src_path:     src/saturn
+  obj_path:     build/saturn
+  ld_scripts_path: config/saturn
+  syms_path: config/saturn
+  decomp_empty_funcs: true
+  symbol_files:
+    - game_user_syms.txt
+    - zero_user_syms.txt
+    - game_syms.gen.txt
+    - zero_syms.gen.txt
+segments:
+  - name: t_fairy2
+    type: code
+    start: 0x00000000
+    vram:  0x060CF000
+    subalign: 2
+    subsegments:
+      - start: 0x0
+        type: .data
+        file: t_fairy2/header
+        end: 0x5F
+      - start: 0x60
+        type: c
+        file: t_fairy2
+        end: 0x4B7F
+      - start: 0x4B80
+        type: .data
+        file: t_fairy2/data
+        end: 0x6EFF

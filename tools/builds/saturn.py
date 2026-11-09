@@ -102,7 +102,11 @@ for target, config_name, binary_name in [
     ('stage_16', 'stage_16.prg.yaml', 'STAGE_16.PRG'),
     ('stage_14', 'stage_14.prg.yaml', 'STAGE_14.PRG'),
     ('t_bat', 't_bat.prg.yaml', 'T_BAT.PRG'),
+    ('t_fairy2', 't_fairy2.prg.yaml', 'T_FAIRY2.PRG'),
+    ('sub', 'sub.prg.yaml', 'SUB.PRG'),
     ('warp', 'warp.prg.yaml', 'WARP.PRG'),
+    ('title', 'title.prg.yaml', 'TITLE.PRG'),
+    ('logo', 'logo.prg.yaml', 'LOGO.PRG'),
 ]:
     symbol_ownership_inputs.extend([
         f'config/saturn/{target}_user_syms.txt',
@@ -538,6 +542,8 @@ snd_srcs = [
     'src/saturn/zero/zero_data_0.c',
     'src/saturn/zero/zero_data.c',
     'src/saturn/lib/spr/spr_data.c',
+    'src/saturn/zero/bss_0.c',
+    'src/saturn/zero/bss.c',
     'src/saturn/game_0.c',
     'src/saturn/game_1.c',
     'src/saturn/game_3a.c',
@@ -569,7 +575,22 @@ snd_srcs = [
     'src/saturn/game/capepal.c',
     'src/saturn/game/miscend.c',
     'src/saturn/game/sinetbl.c',
+    'src/saturn/game/bss.c',
     'src/saturn/richter.c',
+    'src/saturn/ric/pl_main.c',
+    'src/saturn/ric/pl_steps.c',
+    'src/saturn/ric/pl_setstep.c',
+    'src/saturn/ric/pl_utils.c',
+    'src/saturn/ric/pl_collision.c',
+    'src/saturn/ric/pl_blueprints.c',
+    'src/saturn/ric/pl_whip.c',
+    'src/saturn/ric/pl_subweapon_dummy.c',
+    'src/saturn/ric/2F8E8.c',
+    'src/saturn/ric/319C4.c',
+    'src/saturn/ric/pl_subweapons.c',
+    'src/saturn/ric/pl_subweapon_cross.c',
+    'src/saturn/ric/pl_subweapon_holywater.c',
+    'src/saturn/ric/pl_crash_cross.c',
     'src/saturn/ric/header.c',
     'src/saturn/ric/hdrstub.c',
     'src/saturn/ric/d54568.c',
@@ -756,6 +777,7 @@ snd_srcs = [
     'src/saturn/rstage15/s28res.c',
     'src/saturn/rstage15/entguard.c',
     'src/saturn/rstage15/s28gfx.c',
+    'src/saturn/rstage15/bss.c',
     'src/saturn/stage_15.c',
     'src/saturn/stage_15/header.c',
     'src/saturn/stage_15/s16res.c',
@@ -813,6 +835,7 @@ snd_srcs = [
     'src/saturn/stage_15/s31res.c',
     'src/saturn/stage_15/entlead.c',
     'src/saturn/stage_15/s31gfx.c',
+    'src/saturn/stage_15/bss.c',
     'src/saturn/rstage16.c',
     'src/saturn/rstage16/s16res.c',
     'src/saturn/rstage16/header.c',
@@ -859,6 +882,7 @@ snd_srcs = [
     'src/saturn/rstage16/s23res.c',
     'src/saturn/rstage16/ent37.c',
     'src/saturn/rstage16/s23gfx.c',
+    'src/saturn/rstage16/bss.c',
     'src/saturn/stage_16.c',
     'src/saturn/stage_16/s16res.c',
     'src/saturn/stage_16/header.c',
@@ -908,6 +932,7 @@ snd_srcs = [
     'src/saturn/stage_16/s26res.c',
     'src/saturn/stage_16/entwisp.c',
     'src/saturn/stage_16/s26gfx.c',
+    'src/saturn/stage_16/bss.c',
     'src/saturn/stage_14.c',
     'src/saturn/stage_14/header.c',
     'src/saturn/stage_14/s16res.c',
@@ -941,6 +966,18 @@ snd_srcs = [
     'src/saturn/t_bat/bathead.c',
     'src/saturn/t_bat/batmeta.c',
     'src/saturn/t_bat/batbss.c',
+    'src/saturn/t_fairy2.c',
+    'src/saturn/t_fairy2/header.c',
+    'src/saturn/t_fairy2/data.c',
+    'src/saturn/sub.c',
+    'src/saturn/sub/header.c',
+    'src/saturn/sub/data.c',
+    'src/saturn/logo.c',
+    'src/saturn/logo/header.c',
+    'src/saturn/logo/data.c',
+    'src/saturn/title.c',
+    'src/saturn/title/header.c',
+    'src/saturn/title/data.c',
     'src/saturn/warp.c',
     'src/saturn/warp/obtain.c',
     'src/saturn/warp/warpmid.c',
@@ -1043,7 +1080,7 @@ lib_srcs = [
     'src/saturn/lib/spr/spr_slv.c',
     'src/saturn/lib/sys.c',
     'src/saturn/lib/sound_driver.c',
-    'src/saturn/lib/sys_bss.c',
+    'src/saturn/zero/workbuf.c',
     'src/saturn/lib/sys_tail.c',
 ]
 
@@ -1061,6 +1098,7 @@ add_srcs(lib_srcs, build_base_path, "O0")
 
 add_srcs(o2_srcs, build_base_path, "O2")
 
+WEAPON_OPT = "O3"
 add_srcs(snd_srcs, build_base_path, "O3")
 
 def elf_srcs(srcs, output_dir):
@@ -1438,6 +1476,7 @@ multi_objs = {
         'build/saturn/rstage15/s28res.o',
         'build/saturn/rstage15/entguard.o',
         'build/saturn/rstage15/s28gfx.o',
+        'build/saturn/rstage15/bss.o',
     ],
     'build/saturn/stage_15.o' : [
         'build/saturn/stage_15/header.o',
@@ -1496,6 +1535,7 @@ multi_objs = {
         'build/saturn/stage_15/s31res.o',
         'build/saturn/stage_15/entlead.o',
         'build/saturn/stage_15/s31gfx.o',
+        'build/saturn/stage_15/bss.o',
     ],
     'build/saturn/rstage16.o' : [
         'build/saturn/rstage16/header.o',
@@ -1543,6 +1583,7 @@ multi_objs = {
         'build/saturn/rstage16/s23res.o',
         'build/saturn/rstage16/ent37.o',
         'build/saturn/rstage16/s23gfx.o',
+        'build/saturn/rstage16/bss.o',
     ],
     'build/saturn/stage_16.o' : [
         'build/saturn/stage_16/header.o',
@@ -1593,6 +1634,7 @@ multi_objs = {
         'build/saturn/stage_16/s26res.o',
         'build/saturn/stage_16/entwisp.o',
         'build/saturn/stage_16/s26gfx.o',
+        'build/saturn/stage_16/bss.o',
     ],
     'build/saturn/stage_14.o' : [
         'build/saturn/stage_14/header.o',
@@ -1629,7 +1671,29 @@ multi_objs = {
         'build/saturn/t_bat/batmeta.o',
         'build/saturn/t_bat/batbss.o',
     ],
+    'build/saturn/t_fairy2.o' : [
+        'build/saturn/t_fairy2/header.o',
+        'build/saturn/t_fairy2/data.o',
+    ],
+    'build/saturn/sub.o' : [
+        'build/saturn/sub/header.o',
+        'build/saturn/sub/data.o',
+    ],
     'build/saturn/richter.o' : [
+        'build/saturn/ric/pl_main.o',
+        'build/saturn/ric/pl_steps.o',
+        'build/saturn/ric/pl_setstep.o',
+        'build/saturn/ric/pl_utils.o',
+        'build/saturn/ric/pl_collision.o',
+        'build/saturn/ric/pl_blueprints.o',
+        'build/saturn/ric/pl_whip.o',
+        'build/saturn/ric/pl_subweapon_dummy.o',
+        'build/saturn/ric/2F8E8.o',
+        'build/saturn/ric/319C4.o',
+        'build/saturn/ric/pl_subweapons.o',
+        'build/saturn/ric/pl_subweapon_cross.o',
+        'build/saturn/ric/pl_subweapon_holywater.o',
+        'build/saturn/ric/pl_crash_cross.o',
         'build/saturn/ric/header.o',
         'build/saturn/ric/hdrstub.o',
         'build/saturn/ric/d54568.o',
@@ -1699,6 +1763,15 @@ multi_objs = {
         'build/saturn/game/capepal.o',
         'build/saturn/game/miscend.o',
         'build/saturn/game/sinetbl.o',
+        'build/saturn/game/bss.o',
+    ],
+    'build/saturn/logo.o' : [
+        'build/saturn/logo/header.o',
+        'build/saturn/logo/data.o',
+    ],
+    'build/saturn/title.o' : [
+        'build/saturn/title/header.o',
+        'build/saturn/title/data.o',
     ],
     'build/saturn/warp.o' : [
         'build/saturn/warp/obtain.o',
@@ -1770,7 +1843,7 @@ multi_objs = {
         'build/saturn/zero/zero_data_0.o',
         'build/saturn/zero/zero_data.o',
         'build/saturn/lib/sound_driver.o',
-        'build/saturn/lib/sys_bss.o',
+        'build/saturn/zero/workbuf.o',
         'build/saturn/zero/snddata.o',
         'build/saturn/zero/adpcm.o',
         'build/saturn/zero/sndlut.o',
@@ -1795,6 +1868,8 @@ multi_objs = {
         'build/saturn/zero/sysflag.o',
         'build/saturn/lib/spr/spr_data.o',
         'build/saturn/lib/sys_tail.o',
+        'build/saturn/zero/bss_0.o',
+        'build/saturn/zero/bss.o',
     ]
 }
 
@@ -1820,24 +1895,93 @@ prgs = {
     'stage_16.elf': 'STAGE_16.PRG',
     'stage_14.elf': 'STAGE_14.PRG',
     'warp.elf': 'WARP.PRG',
+    'title.elf': 'TITLE.PRG',
+    'logo.elf': 'LOGO.PRG',
     't_bat.elf': 'T_BAT.PRG',
+    't_fairy2.elf': 'T_FAIRY2.PRG',
+    'sub.elf': 'SUB.PRG',
     'maria.elf': 'MARIA.PRG'
 }
 
+ninja.rule('check_bss_layout',
+           command='python3 tools/saturn/check_bss_layout.py $map $object $syms && touch $out',
+           description='Checking bss placement in $object')
+
+bss_objects = {
+    'zero': ['zero/bss_0', 'zero/bss'],
+    'game': ['game/bss'],
+    'rstage15': ['rstage15/bss'],
+    'stage_15': ['stage_15/bss'],
+    'rstage16': ['rstage16/bss'],
+    'stage_16': ['stage_16/bss'],
+}
+
+def bss_checks(target, output_dir):
+    stamps = []
+    for obj in bss_objects.get(target, []):
+        syms = [f'config/saturn/{name}_user_syms.txt'
+                for name in dict.fromkeys([target, 'zero', 'game'])]
+        stamp = f'{output_dir}/{obj}.bss.ok'
+        ninja.build(
+            stamp,
+            'check_bss_layout',
+            inputs=[f'{output_dir}/{target}.elf', f'{output_dir}/{obj}.o'],
+            implicit=['tools/saturn/check_bss_layout.py'] + syms,
+            variables={
+                'map': f'{output_dir}/{target}.map',
+                'object': f'{output_dir}/{obj}.o',
+                'syms': ' '.join(syms)})
+        stamps.append(stamp)
+    return stamps
+
 def make_prgs(prgs, output_dir):
     for elf, prg in prgs.items():
-        if prg == 'T_BAT.PRG':
+        checks = bss_checks(elf[:-len('.elf')], output_dir)
+        if prg in ('T_BAT.PRG', 'T_FAIRY2.PRG'):
             ninja.build(
                 f"{output_dir}/{prg}",
                 'elf2prg_fixed',
                 inputs=[f"{output_dir}/{elf}"],
+                implicit=checks,
                 variables={'size': 0x7000})
             continue
         ninja.build(
             f"{output_dir}/{prg}",
             'elf2prg',
-            inputs=[f"{output_dir}/{elf}"])
+            inputs=[f"{output_dir}/{elf}"],
+            implicit=checks)
 
 make_prgs(prgs, 'build/saturn')
+
+ninja.rule('pad_slot',
+           command='sh-elf-objcopy -O binary $in $out && truncate -s $size $out',
+           description='Padding $out')
+ninja.rule('concat', command='cat $in > $out', description='Joining $out')
+weapon_slots = []
+for n in range(64):
+    name = f'w_{n:02}'
+    config = f'config/saturn/weapon/{name}.prg.yaml'
+    if not os.path.exists(config):
+        continue
+    with open(config) as f:
+        subs = yaml.safe_load(f)['segments'][0]['subsegments']
+    files = list(dict.fromkeys(s['file'] if isinstance(s, dict) else s[2] for s in subs))
+    srcs = [f'src/saturn/weapon/{file}.c' for file in files]
+    add_srcs(srcs, build_base_path, WEAPON_OPT)
+    elf_srcs(srcs, build_base_path)
+    objs = [f'build/saturn/weapon/{file}.o' for file in files]
+    symbol_files = ['config/saturn/zero_syms.gen.txt', 'config/saturn/game_syms.gen.txt',
+                    'config/saturn/game_user_syms.txt', 'config/saturn/zero_user_syms.txt',
+                    f'config/saturn/weapon/{name}_data_syms.gen.txt',
+                    'build/saturn/zero_link_syms.txt', 'build/saturn/game_link_syms.txt']
+    elf = f'build/saturn/weapon/{name}.elf'
+    ninja.build(elf, 'link_multi', inputs=[objs[0]], implicit=objs[1:] + [f'config/saturn/weapon/{name}.ld'] + symbol_files,
+                variables={'ld_file': f'weapon/{name}.ld', 'map_file': f'build/saturn/weapon/{name}.map',
+                           'symbol_scripts': ' '.join(f'-T {x}' for x in symbol_files), 'target_aliases': '',
+                           'objs': ' '.join(objs[1:])})
+    ninja.build(f'build/saturn/weapon/{name}.bin', 'pad_slot', inputs=[elf], variables={'size': 0x3000})
+    weapon_slots.append(f'build/saturn/weapon/{name}.bin')
+if len(weapon_slots) == 64:
+    ninja.build('build/saturn/WEAPON0.PRG', 'concat', inputs=weapon_slots)
 
 ninja.close()

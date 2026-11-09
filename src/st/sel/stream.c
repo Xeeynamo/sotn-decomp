@@ -182,4 +182,4 @@ void func_801B9C18(s32 unused, void (*callback)()) {
     StSetStream(*g_StreamIsRGB24, START_FRAME, -1, NULL, NULL);
 }
 
-INCLUDE_ASM("st/sel/nonmatchings/stream", func_801B9C80);
+INCLUDE_ASM("st/sel/nonmatchings/stream", PlayMovie);

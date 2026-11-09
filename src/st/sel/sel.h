@@ -1,4 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#include "version.h"
+
+#define STAGE_IS_SEL
+
 #include "stage.h"
 #include <romio.h>
 #include "memcard.h"
@@ -15,13 +19,23 @@ typedef enum {
     MAIN_MENU_CURSOR_FILE_DELETE,
 } MainMenuCursor;
 
+#if REGION == REGION_JP
+#define PAD_MENU_CONFIRM (PAD_CIRCLE)
+#define PAD_MENU_BACK (PAD_CROSS)
+#else
+#define PAD_MENU_CONFIRM (PAD_CROSS)
+#define PAD_MENU_BACK (PAD_TRIANGLE)
+#endif
+
 typedef enum {
     Tips_Generic,
     Tips_Input,
     Tips_YesNo,
     Tips_Confirm,
     Tips_MenuNavigation,
-    Tips_NoYes,
+#if IS_VER_INTL
+    Tips_NoYes, // inverted X/O on INTL versions
+#endif
 } NavigationTips;
 
 typedef enum {
@@ -46,7 +60,7 @@ typedef enum {
     GFX_UNK_18,
     GFX_UNK_19,
     GFX_UNK_20,
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     GFX_UNK_21,
     GFX_UNK_22,
     GFX_UNK_23,
@@ -57,7 +71,9 @@ typedef enum {
 // SEL seems to use these differently
 typedef enum {
     Upd_Eng_Init,
+#if VERSION >= VER_US
     Upd_Eng_MenuInit = -1,
+#endif
     Upd_Eng_MenuFadeIn = 1,
     Upd_Eng_MainMenuIdle,
     Upd_Eng_3,
@@ -132,7 +148,6 @@ typedef struct {
 } StreamInfo;
 
 extern s32 g_CurrentStream;
-extern StageName D_80180128[80];
 
 extern const s32 D_801A7B8C[2];
 extern u_long* g_Cluts[];
@@ -149,12 +164,15 @@ extern u8 cutscene_credits[];
 extern s32 g_StreamWidth;
 extern int g_StreamHeight;
 
+void PlayMovie(void);
+
 extern const char D_801ABFB8[]; // MDEC_in_sync
 extern const char D_801ABFC8[]; // MDEC_out_sync
 extern const char D_801ABFD8[]; // DMA=(%d,%d), ADDR=(0x%08x->0x%08x)
 extern const char D_801AC000[]; // FIFO
 extern const char D_801AC038[]; // "%s timeout:\n"
 extern s32 D_801BC3E4;
+extern u32 is_ending_sequence_done;
 extern s32 D_801BC650;
 extern SaveSummary g_SaveSummary[PORT_COUNT];
 extern u32 g_StreamEndFrame;

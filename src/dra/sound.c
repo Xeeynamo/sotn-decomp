@@ -16,7 +16,7 @@ u8 aPbav_1[] = {
 };
 
 // files included as headers as data should not be aligned by 4
-#if !defined(VERSION_PC)
+#ifndef PLATFORM_PSYZ
 __asm__(".pushsection .data\n"
         ".globl aPqes_1\n"
         "aPqes_1:\n"
@@ -28,6 +28,10 @@ __asm__(".pushsection .data\n"
         "aPqes_0:\n"
         ".incbin \"assets/dra/sd_eve2.seq\"\n"
         ".popsection\n");
+#endif
+
+#if VERSION == VER_JP12
+u8 D_800BD1E4 = 0;
 #endif
 
 s16 g_CdVolumeTable[] = {
@@ -50,10 +54,10 @@ static s16 D_800BD17C[][2] = {
 s32 g_DebugEnabled = 0;
 s32 D_800BD1C4 = 0;
 
-#ifdef VERSION_US
+#if IS_VER_INTL
 s32 g_VabAddrs[] = {0x00001010, 0x00042CC0, 0x00050E50,
                     0x00060A40, 0x00060A40, 0x00060A40};
-#else // VERSION_HD
+#else
 s32 g_VabAddrs[] = {0x00001010, 0x00042CC0, 0x00050E90,
                     0x00060D40, 0x00060D40, 0x00060D40};
 #endif
@@ -108,6 +112,38 @@ void func_80131FCC(void) {
     }
     D_8013B680 = 0;
 }
+
+#if VERSION == VER_JP12
+u8 DoCdCommandF(u_char com, u_char* param, u_char* result) {
+    g_CdCommandStatus = CdSync(CdlNop, g_CdCommandResult);
+
+    if (D_800BD1E4 == CdlGetlocL) {
+        if (g_CdCommandStatus != CdlComplete) {
+            CdControlF(CdlNop, NULL);
+            D_8013B680 = 2;
+            return D_8013B680;
+        }
+    } else if (*g_CdCommandResult & CdlStatShellOpen) {
+        CdControlF(CdlNop, NULL);
+        D_8013B680 = 2;
+        return D_8013B680;
+    } else if (*g_CdCommandResult & CdlStatSeekError) {
+        CdControlF(CdlNop, NULL);
+        D_8013B680 = 2;
+        return D_8013B680;
+    }
+
+    if (g_CdCommandStatus == CdlComplete) {
+        CdControlF(com, param);
+        D_800BD1E4 = com;
+        D_8013B680 = 0;
+        return D_8013B680;
+    }
+
+    D_8013B680 = 1;
+    return D_8013B680;
+}
+#endif
 
 u8 DoCdCommand(u_char com, u_char* param, u_char* result) {
     g_CdCommandStatus = CdSync(CdlNop, g_CdCommandResult);
@@ -448,7 +484,7 @@ void CdSoundCommand4(void) {
     case 0:
         D_801390A0 = 1;
         g_CurrentXaConfigId = g_QueuedXaBgmId;
-#ifdef VERSION_HD
+#if REGION == REGION_JP
         if (g_QueuedXaBgmId < 0x3D) {
 #else
         if (g_QueuedXaBgmId < 0x40) {
@@ -505,6 +541,23 @@ void CdSoundCommand4(void) {
         break;
 
     case 7:
+#if VERSION == VER_JP12
+        if (DoCdCommandF(CdlNop, NULL, NULL) == 0) {
+            g_CdSoundCommandStep++;
+        }
+        break;
+
+    case 8:
+        CdSync(CdlNop, g_CdCommandResult);
+        if (*g_CdCommandResult & CdlStatSeek) {
+            g_CdSoundCommandStep--;
+        } else {
+            g_CdSoundCommandStep++;
+        }
+        break;
+
+    case 9:
+#else
         if (DoCdCommand(CdlNop, NULL, g_CdCommandResult) == 0) {
             if ((*g_CdCommandResult & CdlStatSeek) == 0) {
                 g_CdSoundCommandStep++;
@@ -513,6 +566,7 @@ void CdSoundCommand4(void) {
         break;
 
     case 8:
+#endif
         SsSetSerialAttr(SS_SERIAL_A, SS_MIX, SS_SON);
         D_8013AEF4 = VSync(-1);
         g_PlayingXaBgmId = g_CurrentXaConfigId;
@@ -555,6 +609,23 @@ void CdSoundCommand6(void) {
         break;
 
     case 3:
+#if VERSION == VER_JP12
+        if (DoCdCommandF(CdlNop, NULL, NULL) == 0) {
+            g_CdSoundCommandStep++;
+        }
+        break;
+
+    case 4:
+        CdSync(CdlNop, g_CdCommandResult);
+        if (*g_CdCommandResult & CdlStatSeek) {
+            g_CdSoundCommandStep--;
+        } else {
+            g_CdSoundCommandStep++;
+        }
+        break;
+
+    case 5:
+#else
         if (DoCdCommand(CdlNop, NULL, g_CdCommandResult) == 0) {
             if ((*g_CdCommandResult & CdlStatSeek) == 0) {
                 g_CdSoundCommandStep++;
@@ -563,6 +634,7 @@ void CdSoundCommand6(void) {
         break;
 
     case 4:
+#endif
         D_8013AEF4 = VSync(-1);
         D_8013AE90 = g_XaMusicConfigs[D_8013845C + 1].unk228;
         SetReverbDepth(g_ReverbDepth);
@@ -831,6 +903,23 @@ void CdSoundStartXaPlayback(void) {
         break;
 
     case 5:
+#if VERSION == VER_JP12
+        if (DoCdCommandF(CdlNop, NULL, NULL) == 0) {
+            g_CdSoundCommandStep++;
+        }
+        break;
+
+    case 6:
+        CdSync(CdlNop, g_CdCommandResult);
+        if (*g_CdCommandResult & CdlStatSeek) {
+            g_CdSoundCommandStep--;
+        } else {
+            g_CdSoundCommandStep++;
+        }
+        break;
+
+    case 7:
+#else
         if (DoCdCommand(CdlNop, NULL, g_CdCommandResult) == 0) {
             if ((*g_CdCommandResult & CdlStatSeek) == 0) {
                 g_CdSoundCommandStep++;
@@ -839,6 +928,7 @@ void CdSoundStartXaPlayback(void) {
         break;
 
     case 6:
+#endif
         D_8013AEF4 = VSync(-1);
         SsSetSerialAttr(SS_SERIAL_A, SS_MIX, SS_SON);
         D_8013AE90 = D_8013B5F4[g_CdSoundCommand16 - 1].unk8;
@@ -846,7 +936,11 @@ void CdSoundStartXaPlayback(void) {
         g_CdSoundCommandStep++;
         break;
 
+#if VERSION == VER_JP12
+    case 8:
+#else
     case 7:
+#endif
         if (g_CdVolume < g_XaMusicVolume) {
             g_CdVolume += 12;
         }
@@ -857,7 +951,11 @@ void CdSoundStartXaPlayback(void) {
         SetCdVolume(0, g_CdVolume, g_CdVolume);
         break;
 
+#if VERSION == VER_JP12
+    case 9:
+#else
     case 8:
+#endif
         g_CdSoundCommand16--;
         D_801390A0 = 0;
         D_8013980C = 0;
@@ -873,7 +971,9 @@ void CdSoundStartXaPlayback(void) {
     }
 }
 
+#if VERSION < VER_JP12
 const u32 padding_CdSoundCommand14 = 0;
+#endif
 
 void func_80133FCC(void) {
     if (g_PlayingXaBgmId == 0) {
@@ -1254,11 +1354,11 @@ void ExecSoundCommands(void) {
             continue;
         }
 
-#if defined(VERSION_PC)
+#ifdef PLATFORM_PSYZ
         if (id > 0x300 && id < 0x535) {
-#elif defined(VERSION_HD)
+#elif REGION == REGION_JP
         if (id > 0x300 && id < 0x531) {
-#elif defined(VERSION_PSP)
+#elif TARGET == TARGET_PSP
         if (id > 0x300 && id < 0x532) {
 #else
         if (id > 0x300 && id < 0x533) {
@@ -1422,7 +1522,7 @@ void ExecSoundCommands(void) {
 
         case SET_UNK_0B:
             AddCdSoundCommand(CD_SOUND_COMMAND_FADE_OUT_2);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             func_psp_0892A620(0, false);
             func_psp_0892A620(1, false);
 #endif
@@ -1432,7 +1532,7 @@ void ExecSoundCommands(void) {
 
         case SET_UNK_0C:
             AddCdSoundCommand(CD_SOUND_COMMAND_FADE_OUT_2);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             func_psp_0892A620(0, false);
             func_psp_0892A620(1, false);
 #endif

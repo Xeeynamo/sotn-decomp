@@ -2,6 +2,7 @@
 #include "inc_asm.h"
 #include "sattypes.h"
 #include "maria.h"
+#include "saturn_hw.h"
 
 typedef enum {
     TELEPORT_CHECK_NONE = 0,
@@ -146,7 +147,7 @@ void MariaStepWalk(void) {
 void func_060A6A94(void) {
     s32 velocityX;
 
-    if (g_Player.unk7A != 0) {
+    if (g_Player.runDisable != 0) {
         func_060A926C(0);
         return;
     }
@@ -157,7 +158,7 @@ void func_060A6A94(void) {
     if (MariaCheckInput(0x8305C) == 0) {
         MariaDecelerateX(FIX(0.15625));
         if (MariaCheckFacing() == 0) {
-            RicSetStand(PLAYER.velocityX >> 1);
+            MariaSetStand(PLAYER.velocityX >> 1);
             if (g_Player.timers[0xB] == 0 && !(g_Player.vram_flag & 0xC)) {
                 if (g_Player.vram_flag & 0x20) {
                     RicSetAnimation(g_MariaAnimWalkStopFacingBitSet);
@@ -265,7 +266,7 @@ void func_060A8308(void) {
     }
 
     if (PLAYER.poseTimer < 0) {
-        RicSetStand(0);
+        MariaSetStand(0);
         g_Player.unk46 = 0;
         RicCreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(MARIA_BP_RIC_BLINK, 0x45), 0);
@@ -284,7 +285,7 @@ void func_060A8308(void) {
 // func_060A83C8
 void RicStepHydrostorm(void) {
     if (PLAYER.poseTimer < 0) {
-        RicSetStand(0);
+        MariaSetStand(0);
         g_Player.unk46 = 0;
     }
 
@@ -297,7 +298,7 @@ void RicStepHydrostorm(void) {
 // func_060A841C
 void RicStepGenericSubwpnCrash(void) {
     if (g_Player.unk4E) {
-        RicSetStand(0);
+        MariaSetStand(0);
         g_Player.unk46 = 0;
     }
 
@@ -319,7 +320,7 @@ void func_060A8470(void) {
         DAT_060D2918 = timer;
         if (timer == 0) {
             g_Player.unk46 = 0;
-            RicSetStand(0);
+            MariaSetStand(0);
             g_Player.unk4E = 1;
         }
     }
@@ -388,7 +389,7 @@ void func_060A8E34(void) {
         (g_Entities->velocityX >= 0 ? g_Entities->velocityX <= 0x7FFF
                                     : -g_Entities->velocityX <= 0x7FFF)) {
         g_Player.unk46 = 0;
-        RicSetStand(0);
+        MariaSetStand(0);
         return;
     }
 
@@ -501,7 +502,7 @@ void func_060A9194(s32 arg0, s32 arg1) {
 
 // func_060A9210
 // new alt animation
-void RicSetStand(s32 velocityX) {
+void MariaSetStand(s32 velocityX) {
     PLAYER.velocityX = velocityX;
     PLAYER.velocityY = 0;
     g_Player.unk44 = 0;
@@ -515,7 +516,7 @@ void RicSetStand(s32 velocityX) {
 }
 
 void MariaSetWalk(s32 arg0) {
-    if (g_Player.timers[MARIA_PL_T_8] && !g_Player.unk7A) {
+    if (g_Player.timers[MARIA_PL_T_8] && !g_Player.runDisable) {
         func_060A9304();
         return;
     }
@@ -531,7 +532,7 @@ void MariaSetWalk(s32 arg0) {
     PLAYER.velocityY = 0;
 }
 void func_060A9304(void) {
-    if (g_Player.unk7A) {
+    if (g_Player.runDisable) {
         MariaSetWalk(0);
         return;
     }
@@ -548,7 +549,7 @@ void func_060A9304(void) {
 
 // _RicSetFall
 
-void func_060A939C(void) {
+void RicSetFall(void) {
     if (g_Player.prev_step != 0x19 && g_Player.prev_step != 0x17) {
         g_Entities->velocityX = 0;
     }
@@ -580,7 +581,7 @@ s32 func_060A9474(void) {
     s32 velocityX;
 
     if (player->unk72 != 0) {
-        RicSetFall();
+        ((void (*)())RicSetFall)();
         return;
     }
 
@@ -863,7 +864,7 @@ s32 func_060AAA2C(void) {
 
     return ret;
 }
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AAA68, func_060AAA68);
+INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AAA68, MariaCheckInput);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AB088, func_060AB088);
 
 // func_060AB258
@@ -943,10 +944,10 @@ void func_8015FA5C(s32 arg0) {
     D_80174FB8 = g_MariaBlueprintColors[arg0][3];
 }
 
-void func_060ABF40(Entity* self) {
+void MariaSetSubweaponParams(Entity* self) {
     SubweaponDef* subweaponDef;
 
-    subweaponDef = &DAT_060C1B02[self->ext.subweapon.subweaponId];
+    subweaponDef = &g_MariaSubweaponDefs[self->ext.subweapon.subweaponId];
     if (g_Player.timers[13] != 0) {
         self->attack = subweaponDef->attack * 2;
     } else {
@@ -958,7 +959,7 @@ void func_060ABF40(Entity* self) {
     self->stunFrames = subweaponDef->stunFrames;
     self->hitEffect = subweaponDef->hitEffect;
     self->entityRoomIndex = subweaponDef->entityRoomIndex;
-    self->attack = func_0606F328(self->attack);
+    self->attack = func_800FD664(self->attack);
     func_060ABE94(self);
 }
 
@@ -974,7 +975,7 @@ void func_060ABFF0(Entity* entity, MariaAttackDef* def) {
     entity->stunFrames = def->stunFrames;
     entity->hitEffect = def->hitEffect;
     entity->entityRoomIndex = def->entityRoomIndex;
-    entity->attack = func_0606F328(entity->attack);
+    entity->attack = func_800FD664(entity->attack);
     func_060ABE94(entity);
 }
 s32 func_060AC09C(
@@ -1024,8 +1025,8 @@ s32 func_060AC148(Primitive* prim, s16 posX, s16 posY) {
     prim->x2 = posX + xOffset;
     prim->y2 = posY + offset;
 
-    texture =
-        DAT_0605AEC0[(u16)DAT_060C6D7C + g_MariaPrimitiveSizeIndices[frame]];
+    texture = DAT_0605AEC0[g_MariaSpriteResources[1].allocationIndex +
+                           g_MariaPrimitiveSizeIndices[frame]];
     prim->unk8 = texture[0];
     prim->unkA = texture[1];
 
@@ -1063,7 +1064,7 @@ void func_060AC850(void) {
         ((s32(*)(s32, s32))func_060AA8AC)(1, 3);
     }
 }
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AC90C, func_060AC90C);
+INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AC90C, RicCreateEntFactoryFromEntity);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AC9E0, func_060AC9E0);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60ACD98, func_060ACD98);
 void func_060ACE84(Entity* entity) {
@@ -1083,7 +1084,7 @@ void func_060ACE84(Entity* entity) {
         entity->hitboxWidth = 11;
         entity->hitboxHeight = 9;
         entity->ext.subweapon.subweaponId = 23;
-        MariaSetSubweaponParams(entity);
+        ((void (*)())MariaSetSubweaponParams)(entity);
         entity->step++;
     }
     if (g_Entities[PLAYER_CHARACTER].animCurFrame == 140) {
@@ -1119,7 +1120,7 @@ void func_060AD048(Entity* arg0) {
         arg0->hitboxWidth = 0xA;
         arg0->hitboxHeight = 0xC;
         arg0->ext.subweapon.subweaponId = 0x16;
-        MariaSetSubweaponParams(arg0);
+        ((void (*)())MariaSetSubweaponParams)(arg0);
         arg0->step++;
     }
 }
@@ -1132,13 +1133,14 @@ void func_060AE2C8(Entity* self) {
     switch (self->step) {
     case 0:
         self->unk0 = CreateSpriteObject(
-            g_EntitySpriteBank01.allocationIndex, g_EntitySpriteBank01.flags,
-            g_EntitySpriteBank01.images, 5);
+            g_SaturnSharedSpriteBank1Resource.allocationIndex,
+            g_SaturnSharedSpriteBank1Resource.flags,
+            g_SaturnSharedSpriteBank1Resource.images, 5);
         if (self->unk0 != NULL) {
-            self->ext.spriteEntity.frames = DAT_06045E14;
+            self->ext.spriteEntity.frames = g_SaturnSharedSpriteBank1Frames;
             self->unk0->zPriority = g_Entities->zPriority + 4;
             self->animSet = 2;
-            self->anim = &DAT_060C2408;
+            self->anim = g_MariaAnimRisingEmber;
             self->flags = 0x00170000;
             self->velocityY = (MTH_GetRand() & 0x3FFF) - FIX(1);
             self->step++;
@@ -1213,18 +1215,19 @@ void func_060B18C8(Entity* entity) {
 
     if (entity->step == 0) {
         sprite = CreateSpriteObject(
-            g_EntitySpriteBank09.allocationIndex,
+            g_SaturnSharedSpriteBank9Resource.allocationIndex,
             (u16)(g_SaturnSharedSpriteBank7Resource.flags + 0x1C),
-            g_EntitySpriteBank09.images, 1);
+            g_SaturnSharedSpriteBank9Resource.images, 1);
         entity->unk0 = sprite;
         if (sprite != NULL) {
-            entity->ext.spriteEntity.frames = &g_Stage02OpaquePuffFrameData1;
+            entity->ext.spriteEntity.frames = g_SaturnSharedOpaquePuffFrames1;
             entity->unk0->zPriority = PLAYER.zPriority + 2;
             entity->anim = &g_MariaEntity87Anim0;
             entity->flags = 0x08100000;
             entity->posY.i.hi -= 6;
             entity->velocityY = FIX(-0.5);
-            func_060ABFF0NoInline(entity, &g_MariaEntity87CombatConfig);
+            ((s32(*)(Entity*, MariaAttackDef*))func_060ABFF0)(
+                entity, &g_MariaEntity87CombatConfig);
             PlaySfx(0x65C);
             entity->step++;
         } else {
@@ -1251,7 +1254,7 @@ void MariaEntityCrashReboundStoneParticles(Entity* entity) {
     case 0:
         entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
         entity->ext.subweapon.subweaponId = PL_W_CRASH_REBOUND_STONE;
-        MariaSetSubweaponParams(entity);
+        ((s32(*)())MariaSetSubweaponParams)(entity);
         entity->hitboxWidth = 5;
         entity->hitboxHeight = 4;
         entity->step++;
@@ -1281,7 +1284,7 @@ void MariaEntityStopwatchCrashLightning(Entity* entity) {
     case 0:
         entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
         entity->ext.subweapon.subweaponId = PL_W_30;
-        MariaSetSubweaponParams(entity);
+        ((s32(*)())MariaSetSubweaponParams)(entity);
         entity->hitboxWidth = 10;
         entity->hitboxHeight = 8;
         entity->step++;
@@ -1455,7 +1458,8 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BCCE8, func_060BCCE8);
 void func_060BCFF4(Entity* arg0) {
     switch (arg0->step) {
     case 0:
-        func_060ABFF0NoInline(arg0, &g_MariaEntity060BCFF4CombatConfig);
+        ((s32(*)(Entity*, MariaAttackDef*))func_060ABFF0)(
+            arg0, &g_MariaEntity060BCFF4CombatConfig);
         arg0->flags = 0x04020000;
         arg0->step++;
         break;
@@ -1508,14 +1512,15 @@ void func_060BD150(Entity* self) {
     switch (self->step) {
     case 0:
         self->flags = 0x60000;
-        func_060ABFF0NoInline(self, &g_MariaEntity060BD150CombatConfig);
+        ((s32(*)(Entity*, MariaAttackDef*))func_060ABFF0)(
+            self, &g_MariaEntity060BD150CombatConfig);
         self->ext.et_060BD150.timer = 300;
         RicCreateEntFactoryFromEntity(self, 100, 0);
         self->step++;
         break;
 
     case 1:
-        if (func_060AAA2CNoInline() != 3) {
+        if (((s32(*)())func_060AAA2C)() != 3) {
             self->step++;
         }
         break;
@@ -1548,7 +1553,7 @@ void func_060BD5F0(void) {
     memset(&g_MariaCastleMapState, 0, 4);
     memcpy(CASTLE_MAP_BITMAP, g_MariaCastleMapBitmap, CASTLE_MAP_BITMAP_SIZE);
 
-    func_060BB330();
+    func_060BDC7C();
 }
 
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BD638, func_060BD638);
@@ -1673,10 +1678,10 @@ void func_060BE258(void) {
 
     ptr = func_060784A8();
     func_060BE72C(ptr);
-    d_060cd748 = DAT_060476a0;
-    d_060cd74c = DAT_060476a4;
+    g_MariaSavedMapVramBase = DAT_060476a0;
+    g_MariaSavedMapPlaneConfig = DAT_060476a4;
     if (g_PlayableCharacter == 0) {
-        DAT_060476a0 = (s32)&DAT_00252000;
+        DAT_060476a0 = DAT_00252000;
         DAT_060476a4 = 1;
     }
     colors0 = SpGourTbl->colors0;
@@ -1691,7 +1696,7 @@ void func_060BE308(s32* src) {
     Unk0605DB60* entry;
     s32 i;
 
-    dst = (s32*)((DAT_0605AEC0[0][0] * 8) + 0x25C00000);
+    dst = (s32*)((DAT_0605AEC0[0][0] * 8) + 0x25C00000ul);
     DMA_CpuMemCopy2(dst, src, 0x8400);
     while (DMA_CpuResult() == 2) {
     }
@@ -1703,7 +1708,7 @@ void func_060BE308(s32* src) {
         entry++;
     }
 
-    dst = (s32*)((SPR_2LookupTblNoToVram(0x10) * 8) + 0x25C00000);
+    dst = (s32*)((SPR_2LookupTblNoToVram(0x10) * 8) + 0x25C00000ul);
     DMA_CpuMemCopy2(dst, src + 0x4200, 0x400);
     while (DMA_CpuResult() == 2) {
     }
@@ -1715,14 +1720,14 @@ void func_060BE308(s32* src) {
 }
 
 s32 DAT_06086390;
-s32 DAT_060476a0;
+u8* DAT_060476a0;
 s32 DAT_060476a4;
 s32* func_060784A8();
 
 void func_060BE3D4(void) {
     s32* iVar2;
     iVar2 = func_060784A8();
-    func_060BB9BC(iVar2);
+    ((void (*)())func_060BE308)(iVar2);
     DAT_060476a0 = g_MariaSavedMapVramBase;
     DAT_060476a4 = g_MariaSavedMapPlaneConfig;
 }
@@ -1771,7 +1776,7 @@ void func_060BE440(void) {
 
     i = 0;
     do {
-        func_06078700(dst, DAT_06085DCC[i], 4);
+        func_06078700(dst, (s8*)g_StatusMenuLabelPointers[i], 4);
         dst += 0x180;
         i++;
     } while (i <= 1);
@@ -1781,7 +1786,7 @@ void func_060BE440(void) {
     dma_offset = *(u16*)(table_base + table_offset);
     dma_offset *= 8U;
     dma_offset += 0x25C00000U;
-    DMA_CpuMemCopy2((s32*)dma_offset, work + 0x4501, 0xFC0U);
+    DMA_CpuMemCopy2((s32*)(uptr)dma_offset, work + 0x4501, 0xFC0U);
     while (DMA_CpuResult() == 2) {
     }
 }
@@ -1800,13 +1805,13 @@ void func_060BE54C(void) {
 
     text = (u8*)(base + 0x4501);
     for (i = 0; i <= 7; i++) {
-        func_06078700(text, func_06078748(i), 12);
+        func_06078700(text, GetMenuItemName(i), 12);
         text += 0x480;
     }
-    func_06078700(text, DAT_06085DCC[2], 6);
+    func_06078700(text, (s8*)g_StatusMenuLabelPointers[2], 6);
 
     slot = 2;
-    dst = (s32*)((DAT_0605AEC0[slot][0] * 8) + 0x25C00000);
+    dst = (s32*)((DAT_0605AEC0[slot][0] * 8) + 0x25C00000ul);
     DMA_CpuMemCopy2(dst, base + 0x4501, 0x1320);
     while (DMA_CpuResult() == 2) {
     }
@@ -1825,12 +1830,12 @@ void func_060BE618(void) {
 
     text = (u8*)(base + 0x4501);
     for (i = 0; i <= 0x1F; i++) {
-        func_06078700(text, func_06078748(i), 12);
+        func_06078700(text, GetMenuItemName(i), 12);
         text += 0x480;
     }
 
     slot = 2;
-    dst = (s32*)((DAT_0605AEC0[slot][0] * 8) + 0x25C00000);
+    dst = (s32*)((DAT_0605AEC0[slot][0] * 8) + 0x25C00000ul);
     DMA_CpuMemCopy2(dst, base + 0x4501, 0x4800);
     while (DMA_CpuResult() == 2) {
     }
@@ -1944,19 +1949,19 @@ void func_060BF0F4(u32 param_1) {
     first = g_MariaMapRevealRowIndices[param_1];
 
     for (cur = first; cur < first + 4; cur++) {
-        int tile = cur << 6;
+        uptr tile = cur << 6;
 
         ptr = (u8*)tile;
         ptr += (u32)0x25E58000 + offset;
 
         for (i = 0; i < 0x20; i++)
-            *ptr++ = 0;
+            HW_STORE(ptr++, 0);
 
         if (offset == 0x28) {
             ptr = (u8*)(0x25E58800 + tile);
 
             for (i = 0; i < 0x10; i++)
-                *ptr++ = 0;
+                HW_STORE(ptr++, 0);
         }
     }
 }
@@ -2022,7 +2027,7 @@ void func_060BFE38(void) {
     s32 stageId;
 
     for (i = 0; i < 28; i++) {
-        DAT_060D2A94[i] = func_0606F21C(i, 0);
+        DAT_060D2A94[i] = TimeAttackController(i, 0);
         if (DAT_060D2A94[i] == 0) {
             DAT_060D2A94[i] = 1000000;
         }

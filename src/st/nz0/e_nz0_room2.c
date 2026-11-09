@@ -116,7 +116,7 @@ void EntityFloorSpikes(Entity* self) {
         prim->v1 = 0x20;
         prim->priority = 0x5F;
         prim->drawMode = DRAW_UNK02;
-#ifdef VERSION_US
+#if VERSION == VER_US
         self->posY.i.hi -= 28;
 #endif
     case 1:

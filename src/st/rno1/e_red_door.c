@@ -240,7 +240,7 @@ void EntityRedDoor(Entity* self) {
                 PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
             }
             self->step++;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             g_Player.demo_timer = 0;
 #endif
         }

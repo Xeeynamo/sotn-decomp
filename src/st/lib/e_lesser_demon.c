@@ -4,7 +4,7 @@
 
 extern s32 D_us_80181ACC;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #define BUTTON_SYMBOL g_ConfirmButton
 extern s32 E_ID(ID_22);
 extern s32 E_ID(ID_21);
@@ -630,7 +630,7 @@ void func_us_801BCC10(Entity* self) {
         prim->v0 = prim->v1 = 0x40;
         prim->v2 = prim->v3 = 0x5F;
         prim->x0 = self->posX.i.hi;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         prim->x3 = prim->x0;
 #else
         prim->x3 = uninitializedPrim->x0;

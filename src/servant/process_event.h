@@ -36,7 +36,7 @@ void ProcessEvent(Entity* self, bool resetEvent) {
                 continue;
             }
 
-#if defined(VERSION_US)
+#if VERSION == VER_US
             if (evt->roomX < 0) {
                 if (!(g_StageId & STAGE_INVERTEDCASTLE_FLAG)) {
                     continue;
@@ -45,7 +45,7 @@ void ProcessEvent(Entity* self, bool resetEvent) {
             }
             if (!(g_StageId & STAGE_INVERTEDCASTLE_FLAG)) {
             block_13:
-#elif defined(VERSION_HD) || defined(VERSION_PSP)
+#elif VERSION < VER_JP10 || TARGET == TARGET_PSP
             if (evt->roomX >= 0 ||
                 (g_StageId >= STAGE_RNO0 && g_StageId < STAGE_RNZ1_DEMO)) {
 #endif

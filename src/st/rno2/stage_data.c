@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno2.h"
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 u8 gfx_unused[] = {
 #include "gen/gfx_unused.h"
 };
@@ -17,7 +17,7 @@ u8 D_80184344[] = {
 u8 D_801848E8[] = {
 #include "gen/D_801848E8.h"
 };
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 u8 unused_gfx[] = {
 #include "gen/unused_gfx.h"
 };
@@ -109,7 +109,7 @@ u16 D_8019396C[] = {
 u16 D_80193A6C[] = {
 #include "gen/D_80193A6C.h"
 };
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
 // palette_def bulk copies 0x80 colors, PSX reads the rest from tilemaps
 u16 D_80193AAC[0x80] = {
 #else

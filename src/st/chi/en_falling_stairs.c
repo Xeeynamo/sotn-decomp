@@ -18,7 +18,7 @@ static void UpdateDustParticles(Primitive* prim) {
     if (!prim->p2) {
         prim->u0 = prim->v0 = 1;
         prim->drawMode = DRAW_UNK02;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         LOW(prim->x2) = -(Random() & 0x7F) << 9;
 #else
         LOW(prim->x2) = -((Random() & 0x7F) << 9);

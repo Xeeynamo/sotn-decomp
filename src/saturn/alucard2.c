@@ -75,7 +75,7 @@ s32 func_060B3C70(void) {
         SetPlayerStep(0x19);
         g_Player.timers[0x45] = 0;
         g_Player.timers[0x46] = 0;
-        g_Player.pad0[0x39D] |= 2;
+        g_Player.unk39D |= 2;
         func_060BAF44(g_CurrentEntity, 0x0024007B, 0);
         PLAYER.velocityY >>= 1;
         return 1;
@@ -159,7 +159,7 @@ void func_060B7994(void) {
     do {
         *entry->unk4 = zero;
         entry++;
-    } while ((s32)entry <= (s32)DAT_060CEA70);
+    } while ((long)entry <= (long)&DAT_060CE980[15]);
 }
 s32 func_060B79B8(s16 arg0) {
     s32 sp[4];
@@ -179,7 +179,7 @@ s32 func_060B79B8(s16 arg0) {
     }
     g_Player.timers[2] = 4;
     g_Player.timers[0x32] = 0x46;
-    PlaySfx(DAT_060CC98E[MTH_GetRand() & 1]);
+    PlaySfx(g_SfxPainGrunts[(MTH_GetRand() & 1) + 3]);
     return 0;
 }
 void func_060B7A6C(void) {
@@ -440,7 +440,7 @@ s32 func_060BA604(Primitive* prim, s16 posX, s16 posY) {
     prim->x2 = posX + xOffset;
     prim->y2 = posY + offset;
 
-    texture = DAT_0605AEC0[(u16)DAT_060CBE3C +
+    texture = DAT_0605AEC0[AlucardSpriteResources[5].allocationIndex +
                            g_AlucardFactoryAnimationLookup[frame]];
     prim->unk8 = texture[0];
     prim->unkA = texture[1];
@@ -598,8 +598,8 @@ void func_060BD5A4(void) {
 
     if (g_Entities->animSet == 13 || g_Entities->animSet <= 13 ||
         g_Entities->animSet != 15) {
-        destination = &DAT_060C8574;
-        tableNo = (u16)DAT_060CBE02;
+        destination = (u8*)g_AlucardPaletteVariants[3];
+        tableNo = AlucardSpriteResources[0].flags;
     } else {
         flags = &AlucardSpriteResources[2].flags;
         tableNo = *flags;

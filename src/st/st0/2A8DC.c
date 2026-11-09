@@ -3,7 +3,7 @@
 
 extern EInit g_EInitSecretStairs;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern u32 E_ID(SECRET_STAIRS);
 extern u32 E_ID(SECRET_BUTTON);
 #endif

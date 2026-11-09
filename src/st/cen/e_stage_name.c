@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "cen.h"
 
-#ifdef VERSION_US
+#if VERSION == VER_US
 #include "../e_stage_name_us.h"
 #endif
 
-#if defined(VERSION_PSP) || defined(VERSION_HD)
+#if VERSION < VER_JP10 || TARGET == TARGET_PSP
 #include "../e_stage_name_jp.h"
 #endif

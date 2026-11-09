@@ -1,0 +1,10 @@
+spriteBanks = 0x8018002C;
+cluts = 0x8018014C;
+rooms_layers = 0x801804B0;
+gfxBanks = 0x8018074C;
+entityLayoutHorizontal = 0x80180778;
+entityLayoutVertical = 0x8018084C;
+rooms = 0x801827E4;
+sprites_no0_8 = 0x801BA0CC;
+sprites_no0_12 = 0x801BEB50;
+ctulhu_shockwave_uvs = 0x801C1150;

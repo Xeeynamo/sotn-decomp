@@ -14,7 +14,7 @@ typedef struct {
     /* 0x10 */ u16 portraitAnimTimer;
     /* 0x12 */ u8 unk12;
     /* 0x13 */ u8 clutIndex;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     /* 0x14 */ u8 nextCharTimer;
     /* 0x15 */ u8 unk17;
 #endif
@@ -27,7 +27,7 @@ typedef struct {
     /* 0x2C */ s32 clutArrLength;
     /* 0x30 */ s32 : 32;
     /* 0x34 */ u8* script;
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
     /* 0x38 */ u16 hasEvents;
     /* 0x3A */ u16 timer;
 #endif
@@ -99,7 +99,7 @@ void func_801B1198(s16 yVal) {
 
 u16* func_801B11E8(u8 ch) {
     u16 jCh;
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
 // use raw Shift-JIS values
 #define SJIS_A 0x8260
 #define SJIS_a 0x8281

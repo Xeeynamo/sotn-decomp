@@ -62,15 +62,11 @@ void UpdateBirdcages(Entity* self, u32 timerMinutes) {
     }
 }
 
-#ifdef VERSION_PSP
-extern s32 D_91FC3F8;
-extern s32 D_91FC400;
-extern s32 D_91FC408;
-extern s32 D_91FC410;
-#define timer_frames D_91FC3F8
-#define timer_seconds D_91FC400
-#define timer_minutes D_91FC408
-#define timer_hours D_91FC410
+#ifdef CLOCK_BUGFIX
+#define timer_frames g_TimerCopyFrames
+#define timer_seconds g_TimerCopySeconds
+#define timer_minutes g_TimerCopyMinutes
+#define timer_hours g_TimerCopyHours
 void UpdateClockHands(Entity* self) {
 #else
 #define timer_frames status->timerFrames
@@ -85,7 +81,7 @@ void UpdateClockHands(Entity* self, PlayerStatus* status) {
 
     // self + 6 is the hour hand
     self += 1;
-#if defined(VERSION_US) && defined(INVERTED_STAGE)
+#if VERSION == VER_US && defined(INVERTED_STAGE)
 #define HOURS (timer_hours)
 #else
 #define HOURS (timer_hours % 12)
@@ -101,7 +97,7 @@ typedef enum Statues {
 } Statues;
 
 static u16 g_Statues[2];
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 static u32 D_pspeu_092A1D08;
 static u32 D_pspeu_092A1D00;
 #endif
@@ -109,7 +105,7 @@ static u32 D_pspeu_092A1D00;
 extern EInit g_EInitCommon;
 
 void EntityClockRoomController(Entity* self) {
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
     PlayerStatus* status = &g_Status;
 #endif
     Primitive* prim;
@@ -161,7 +157,7 @@ void EntityClockRoomController(Entity* self) {
         if (primIndex == -1) {
             return;
         }
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
         InitializeEntity(g_EInitCommon);
 #endif
         self->flags |= FLAG_HAS_PRIMS;
@@ -175,7 +171,7 @@ void EntityClockRoomController(Entity* self) {
         LOW(prim->r3) = LOW(prim->r0);
         prim->priority = 0x1F0;
         prim->drawMode = DRAW_HIDE;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         InitializeEntity(g_EInitCommon);
 #endif
 
@@ -204,7 +200,7 @@ void EntityClockRoomController(Entity* self) {
             CreateEntityFromCurrentEntity(E_CLOCK_HANDS, entity);
             entity->params = i;
         }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         UpdateClockHands(self);
 #else
         UpdateClockHands(self, status);
@@ -256,7 +252,7 @@ void EntityClockRoomController(Entity* self) {
             g_api.PlaySfx(SFX_CLOCK_ROOM_TICK);
         }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         UpdateClockHands(self);
 #else
         UpdateClockHands(self, status);
@@ -276,7 +272,7 @@ void EntityClockRoomController(Entity* self) {
 
         if (!g_CastleFlags[RCEN_OPEN]) {
             entity = &PLAYER;
-#if defined(VERSION_US) && defined(INVERTED_STAGE)
+#if VERSION == VER_US && defined(INVERTED_STAGE)
 #define XLIM 0x60
 #else
 #define XLIM 0x50
@@ -304,7 +300,7 @@ void EntityClockRoomController(Entity* self) {
         g_Player.demo_timer = 1;
         entity = &PLAYER;
         posX = entity->posX.i.hi;
-#if defined(VERSION_US) && defined(INVERTED_STAGE)
+#if VERSION == VER_US && defined(INVERTED_STAGE)
         entity->posX.i.hi = (posX <= 0x80 ? 0x60 : 0xA0);
 #endif
         switch (self->step_s) {
@@ -413,7 +409,7 @@ void EntityClockRoomController(Entity* self) {
                 // Hour hand
                 entity++;
                 LOW(entity->ext.clockRoom.unk80) = entity->ext.clockRoom.hand;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 posX = ((timer_hours % 12) * 300) + (timer_minutes * 5);
 #else
                 posX = (timer_hours * 300) + (timer_minutes * 5);

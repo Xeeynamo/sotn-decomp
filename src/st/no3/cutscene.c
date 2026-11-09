@@ -2,7 +2,7 @@
 #include "no3.h"
 #include <cutscene.h>
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 // clang-format off
 static u16 actor_names_en[] = {
     CH('R'), CH('i'), CH('c'), CH('h'), CH('t'), CH('e'), CH('r'),
@@ -75,7 +75,7 @@ static u8 actor_name_len_ge[] = {7, 7, 5, 7, 5, 12, 4, 8, 8, 5};
 #endif
 
 static u8 D_80181A28[] = {0, 64};
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 static u8 D_80181A2C[2] = {0, 0};
 #endif
 static u16 D_80181A30[] = {0x2E0, 0x2E8};
@@ -88,7 +88,7 @@ static s16 D_80181A3C[] = {
     73, 66, 61, 42, 1,  12, 27, 52, 65, 53, 8,  14, 77, 17, 52, 65, 41, 72,
 };
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 static u8 D_pspeu_09296D28[] = {3, 2};
 static u8 D_pspeu_09296D30[] = {3, 2};
 
@@ -107,15 +107,12 @@ static s32 g_IsCutsceneDone;
 #include "../cutscene_actor_name_psp.h"
 
 #else
-#ifdef VERSION_US
+#if VERSION == VER_US
 static const char* actor_names[] = {_S("Alucard"), _S("Death")};
 #else
 static wchar_t actor_names[] = {
-    // clang-format off
-    // アルカード
-    0x71, 0x99, 0x76, 0x70, 0x8084,
-    CH('D'), CH('E'), CH('A'), CH('T'), CH('H'),
-    // clang-format on
+    _SACTOR("アルカード"),
+    _SACTOR("DEATH"),
 };
 static u8 actor_prims[] = {6, 5};
 static u8 actor_name_len[] = {5, 5};
@@ -129,7 +126,7 @@ u32 D_801D7D68[26];
 u32 g_CutsceneFlags;
 s32 g_IsCutsceneDone;
 
-#ifdef VERSION_HD
+#if VERSION < VER_JP10
 #define CUTSCENE_UNK1_NEXT_X 0x180
 #else
 #define CUTSCENE_UNK1_NEXT_X 0x182
@@ -140,7 +137,7 @@ s32 g_IsCutsceneDone;
 #endif
 
 #define CUTSCENE_UNK3_RECT_X 384
-#ifdef VERSION_HD
+#if VERSION < VER_JP10
 #define CUTSCENE_UNK3_RECT_H 16
 #endif
 #define CUTSCENE_UNK3_RECT_Y 256
@@ -151,7 +148,7 @@ s32 g_IsCutsceneDone;
 
 #include "../cutscene_unk4.h"
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #define CUTSCENE_UNK1_NEXT_X 0x180
 #define CUTSCENE_UNK1_UNK17 2
 #include "../cutscene_unk1.h"
@@ -167,7 +164,7 @@ s32 g_IsCutsceneDone;
 
 #include "../cutscene_skip.h"
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern u8* cutscene_data;
 
 extern s32 E_ID(BG_LIGHTNING);
@@ -184,7 +181,7 @@ extern u_long D_894490C;
 extern u_long D_894568C;
 extern u_long D_8943B8C;
 #else
-#ifdef VERSION_US
+#if VERSION == VER_US
 #include "../cutscene_scale_avatar.h"
 #endif
 
@@ -192,12 +189,12 @@ extern u8 cutscene_data[];
 #endif
 
 void EntityCutscene(Entity* self) {
-#ifndef VERSION_US
-    const int PRIM_COUNT = 4;
-    const int TIMER_DELAY = 8;
-#else
+#if VERSION == VER_US
     const int PRIM_COUNT = 5;
     const int TIMER_DELAY = 6;
+#else
+    const int PRIM_COUNT = 4;
+    const int TIMER_DELAY = 8;
 #endif
 
     s16 uCoord;
@@ -205,7 +202,7 @@ void EntityCutscene(Entity* self) {
     s32 primIndex;
     Entity* entity;
     s32 sp40;
-#ifndef VERSION_HD
+#if VERSION >= VER_JP10
     RECT rect;
 #endif
     s32 i;
@@ -219,7 +216,7 @@ void EntityCutscene(Entity* self) {
     u32 var_s3;
     u8* var_s1;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     DisableAutoPowerOff();
 #endif
 
@@ -236,13 +233,13 @@ void EntityCutscene(Entity* self) {
     case 0:
         entity = &g_Entities[192];
         CreateEntityFromCurrentEntity(E_ID(BG_LIGHTNING), entity);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if ((!g_CutsceneHasControl && g_CastleFlags[IVE_BEEN_ROBBED]) ||
 #else
         if (g_CastleFlags[IVE_BEEN_ROBBED] ||
 #endif
             (g_PlayableCharacter != PLAYER_ALUCARD)) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             g_PauseAllowed = true;
 #endif
             DestroyEntity(self);
@@ -257,7 +254,7 @@ void EntityCutscene(Entity* self) {
             g_IsCutsceneDone = 0;
             g_SkipCutscene = 0;
             self->step++;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             if (!g_CastleFlags[IVE_BEEN_ROBBED] &&
                 (g_PlayableCharacter == PLAYER_ALUCARD)) {
                 g_CutsceneHasControl = 1;
@@ -268,7 +265,7 @@ void EntityCutscene(Entity* self) {
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_MEET_DEATH, TIMEATTACK_SET_RECORD);
             g_Settings.D_8003CB04 |= 4;
-#elif defined(VERSION_US)
+#elif VERSION == VER_US
             g_CutsceneHasControl = 1;
 #endif
         }
@@ -277,9 +274,9 @@ void EntityCutscene(Entity* self) {
         nextChar = 0;
         // this is a huge While-loop! Don't miss it!
         while (1) {
-#ifndef VERSION_US
+#if VERSION != VER_US
             nextChar = *g_Dialogue.scriptCur++;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             sp40 = 0;
             if (PadReadPSP() & PAD_START) {
                 g_Dialogue.nextCharTimer = 0;
@@ -288,16 +285,16 @@ void EntityCutscene(Entity* self) {
 #endif
             if (g_Dialogue.nextCharTimer && !g_SkipCutscene) {
                 g_Dialogue.nextCharTimer--;
-#ifndef VERSION_US
+#if VERSION != VER_US
                 g_Dialogue.scriptCur--;
 #endif
                 return;
             }
-#ifndef VERSION_US
-            if (!(nextChar & 0x80)) {
-#else
+#if VERSION == VER_US
             nextChar = *g_Dialogue.scriptCur++;
             {
+#else
+            if (!(nextChar & 0x80)) {
 #endif
                 switch (nextChar) {
                 case CSOP_END_CUTSCENE:
@@ -309,26 +306,26 @@ void EntityCutscene(Entity* self) {
                     }
                     g_Dialogue.nextCharX = g_Dialogue.nextLineX;
                     if (!(g_Dialogue.unk12 & 1)) {
-#ifndef VERSION_US
-                        g_Dialogue.nextLineY += 16;
-#else
+#if VERSION == VER_US
                         g_Dialogue.nextLineY += 12;
+#else
+                        g_Dialogue.nextLineY += 16;
 #endif
                     }
                     g_Dialogue.nextCharY++;
-#ifndef VERSION_US
-                    g_Dialogue.nextCharY &= 3;
-#else
+#if VERSION == VER_US
                     if (g_Dialogue.nextCharY > 4) {
                         g_Dialogue.nextCharY = 0;
                     }
+#else
+                    g_Dialogue.nextCharY &= 3;
 #endif
                     CutsceneUnk4();
                     if (!(g_Dialogue.unk12 & 1)) {
-#ifndef VERSION_US
-                        if (g_Dialogue.nextCharY > 2)
-#else
+#if VERSION == VER_US
                         if (g_Dialogue.nextCharY > 3)
+#else
+                        if (g_Dialogue.nextCharY > 2)
 #endif
                         {
                             g_Dialogue.unk12 |= 1;
@@ -336,9 +333,9 @@ void EntityCutscene(Entity* self) {
                             self->step_s = 0;
                             self->step++;
                         } else {
-#ifdef VERSION_US
+#if VERSION == VER_US
                             continue;
-#elif defined(VERSION_HD)
+#elif VERSION < VER_JP10
                             return;
 #endif
                         }
@@ -349,7 +346,7 @@ void EntityCutscene(Entity* self) {
                     }
                     return;
                 case CSOP_SET_SPEED:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     g_Dialogue.scriptCur++;
 #else
                     g_Dialogue.unk17 = *g_Dialogue.scriptCur++;
@@ -386,7 +383,7 @@ void EntityCutscene(Entity* self) {
                     prim->clut = D_80181A30[i];
                     prim->tpage =
                         0x94; // Weird, this is 0x90 in other cutscenes
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     prim->u0 = prim->u2 = uCoord;
                     prim->u1 = prim->u3 = uCoord + 0x2F;
 #else
@@ -409,7 +406,7 @@ void EntityCutscene(Entity* self) {
                     CutsceneUnk4();
                     prim->priority = 0x1FE;
                     prim->drawMode = DRAW_DEFAULT;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     DrawCutsceneActorName(
                         i, self, D_pspeu_09299278, D_pspeu_09296D28,
                         D_pspeu_09296D30, 2);
@@ -494,7 +491,7 @@ void EntityCutscene(Entity* self) {
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     ptr += (u_long)cutscene_data;
 #endif
                     SetCutsceneEvents((u8*)ptr);
@@ -509,10 +506,10 @@ void EntityCutscene(Entity* self) {
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     ptr += (u_long)cutscene_data;
                     g_Dialogue.scriptCur += *CS_NEXT(ptr) * 4;
-#elif defined(VERSION_HD)
+#elif VERSION < VER_JP10
                     g_Dialogue.scriptCur += *CS_PTR(ptr) * 4;
 #else
                 // clang-format off
@@ -529,7 +526,7 @@ void EntityCutscene(Entity* self) {
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     ptr += (u_long)cutscene_data;
 #endif
                     g_Dialogue.scriptCur = CS_PTR(ptr);
@@ -542,7 +539,7 @@ void EntityCutscene(Entity* self) {
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     ptr += (u_long)cutscene_data;
 #endif
                     g_Dialogue.scriptCur = CS_PTR(ptr);
@@ -572,7 +569,7 @@ void EntityCutscene(Entity* self) {
                         ptr |= (u_long)*g_Dialogue.scriptCur++;
                         ptr <<= 4;
                         ptr |= (u_long)*g_Dialogue.scriptCur++;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                         switch (ptr) {
                         case 0:
                             ptr = (u_long)&cutscene_alucard;
@@ -640,7 +637,7 @@ void EntityCutscene(Entity* self) {
                     *g_Dialogue.scriptCur++;
                     continue;
                 default:
-#ifdef VERSION_HD
+#if VERSION < VER_JP10
                     continue;
 #else
                     if (g_SkipCutscene) {
@@ -656,13 +653,13 @@ void EntityCutscene(Entity* self) {
                 }
                 continue;
             }
-#ifndef VERSION_US
+#if VERSION != VER_US
             else {
                 if (g_SkipCutscene) {
                     g_Dialogue.scriptCur++;
                     continue;
                 }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 if (0xA7 <= nextChar && nextChar < 0xAD) {
                     nextChar = nextChar + 0x27;
                 } else if (nextChar == 0xA6) {
@@ -682,7 +679,7 @@ void EntityCutscene(Entity* self) {
 #endif
             break;
         } // Close the giant while loop
-#ifdef VERSION_HD
+#if VERSION < VER_JP10
         var_v0 = g_api.func_80106A28(nextChar, 1);
         if (var_v0) {
             vCoord = (LOHU(g_Dialogue.nextCharY) * 16) + 0x100;
@@ -692,16 +689,16 @@ void EntityCutscene(Entity* self) {
             return;
         }
 #endif
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         var_s6 = (u8*)&D_pspeu_092997F8;
-#elif defined(VERSION_US)
+#elif VERSION == VER_US
         if (nextChar == ' ') {
             g_Dialogue.nextCharX += 2;
             return;
         }
 #endif
 
-#ifndef VERSION_HD
+#if VERSION >= VER_JP10
         rect.x = ((nextChar & 0xF) * 2) + 0x380;
         rect.y = ((s32)(nextChar & 0xF0) >> 1) + 0xF0;
         rect.w = 2;
@@ -709,7 +706,7 @@ void EntityCutscene(Entity* self) {
         // Other cutscenes have + 0x180 here
         vCoord = (g_Dialogue.nextCharY * 0xC) + 0x100;
 #endif
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         StoreImage(&rect, (u_long*)var_s6);
         for (i = 0; i < 32; i++) {
             // swaps the upper and lower 4 bits of each member
@@ -791,13 +788,13 @@ void EntityCutscene(Entity* self) {
         if (((g_Dialogue.nextCharX - g_Dialogue.nextLineX) / 2) < 0x70) {
         };
         D_pspeu_09299818 = nextChar;
-#elif defined(VERSION_US)
+#elif VERSION == VER_US
         MoveImage(&rect, g_Dialogue.nextCharX, vCoord);
         g_Dialogue.nextCharX += 2;
 #endif
         break;
     case 2:
-#ifdef VERSION_US
+#if VERSION == VER_US
         ScaleCutsceneAvatar(2);
 #else
         ptr = (g_Dialogue.nextCharY + 1) & 3;
@@ -953,18 +950,18 @@ void EntityCutscene(Entity* self) {
         break;
 
     case 7:
-#ifndef VERSION_US
+#if VERSION != VER_US
         DestroyEntity(self);
 #endif
         g_CastleFlags[IVE_BEEN_ROBBED] = 1;
         g_api.TimeAttackController(
             TIMEATTACK_EVENT_MEET_DEATH, TIMEATTACK_SET_RECORD);
-#ifdef VERSION_US
+#if VERSION == VER_US
         g_CutsceneHasControl = 0;
-#endif
         g_Settings.D_8003CB04 |= 4;
-#ifdef VERSION_US
         DestroyEntity(self);
+#else
+        g_Settings.D_8003CB04 |= 4;
 #endif
         break;
     }

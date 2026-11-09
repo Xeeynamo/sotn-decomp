@@ -60,7 +60,7 @@ extern SaturnRoomGraphics g_RStage16RoomGraphics[];
 extern SaturnRoomLayerSetup g_RStage16LayerSetup[];
 extern SaturnLayerMapOffsets g_RStage16LayerMapOffsets[];
 extern SaturnLayerCompressedSizes g_RStage16LayerCompressedSizes[];
-extern SaturnRoomHeader g_RStage16Rooms[];
+extern u8 g_RStage16Rooms[];
 extern LayoutEntity* g_RStage16LayoutVertical[];
 extern LayoutEntity* g_RStage16LayoutHorizontal[];
 extern void* g_RStage16SpriteBanks[];
@@ -85,7 +85,7 @@ void DestroyEntity();
 void PlaySfx(s32 sfxId);
 void SetStep(u8 step);
 void SyncSpriteObjectPosUnchecked(Entity* self, s16* offset);
-void func_0600B004(SpriteObject* sprite, void* frame);
+void func_0600B004(SpriteObject* sprite, SaturnSpriteFrameHeader* frame);
 void SyncSpriteObjectPos(Entity* self);
 u8 UnkCollisionFunc2(void* self, void* sensors);
 u16 UnkCollisionFunc(void* self, void* sensors, int count);
@@ -97,7 +97,8 @@ void func_060E2300(s32 scale, s32 arg1);
 void func_060E23D0(Primitive* arg0, s32 arg1, s32 arg2);
 extern MthXyz DAT_060EFCC0[];
 extern MthXyz DAT_060EFCD0[];
-u32 AnimateEntityWithSpriteData(Entity* entity, u8* frames, s16** spriteFrames);
+u32 AnimateEntityWithSpriteData(
+    Entity* entity, u8* frames, SaturnSpriteFrameHeader** spriteFrames);
 SpriteObject* CreateSpriteObject(
     u16 charBase, u16 clutBase, SaturnSpriteImage* images, s32 maxParts);
 /* End moved declarations */

@@ -1919,9 +1919,9 @@ void ExecSoundCommands(void) {
             continue;
         }
 
-#ifdef VERSION_HD
+#if VERSION < VER_JP10
         if (id > 0x300 && id < 0x531) {
-#elif defined(VERSION_PSP)
+#elif TARGET == TARGET_PSP
         if (id > 0x300 && id < 0x532) {
 #else
         if (id > 0x300 && id < 0x533) {
@@ -2085,7 +2085,7 @@ void ExecSoundCommands(void) {
 
         case SET_UNK_0B:
             AddCdSoundCommand(CD_SOUND_COMMAND_FADE_OUT_2);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             func_psp_0892A620(0, false);
             func_psp_0892A620(1, false);
 #endif
@@ -2095,7 +2095,7 @@ void ExecSoundCommands(void) {
 
         case SET_UNK_0C:
             AddCdSoundCommand(CD_SOUND_COMMAND_FADE_OUT_2);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             func_psp_0892A620(0, false);
             func_psp_0892A620(1, false);
 #endif

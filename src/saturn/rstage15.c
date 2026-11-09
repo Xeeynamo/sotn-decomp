@@ -434,7 +434,7 @@ void func_060E1C20(Entity* self) {
         break;
     }
 }
-INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E1D0C, func_060E1D0C);
+INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E1D0C, EntityDestructAnim);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E1E78, func_060E1E78);
 #define SPAWN_DESTRUCT_ANIM_ID 19
 #include "spawn_destruct_anim.h"
@@ -448,7 +448,7 @@ INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E2A90, func_060E2A90);
 u16 func_060E3874(s32 minX, s32 maxX) {
     u16 result;
 
-    g_Player.unk7A = 1;
+    g_Player.runDisable = 1;
     if (PLAYER.step != 0 || (result = PLAYER.step_s, result != 1) ||
         PLAYER.posX.i.hi < minX || PLAYER.posX.i.hi > maxX) {
         result = 0;
@@ -493,7 +493,7 @@ void func_060E43A4(s32 scale, s32 unused) {
     s32 factor;
     s32 i;
 
-    base = DAT_060485E0;
+    base = g_WorkBuffer.model.vertices;
     src = g_RStage15Entity08ModelVertices14[0];
     dst = base;
     factor = scale << 8;

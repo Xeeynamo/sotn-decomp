@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(CAVERN_DOOR_PLATFORM);
 #endif
 

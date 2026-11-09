@@ -88,10 +88,10 @@ void SPR_WaitEndSlaveSH(void);
 #define SPR_R_TVSTAT 0x00000004
 #define SPR_R_VCNT 0x0000000A
 
-#define VRAM_ADDR 0x25C00000
-#define FBUF_ADDR 0x25C80000
-#define VDP1_REG_BASE 0x25D00000
-#define VDP2_REG_BASE 0x25F80000
+#define VRAM_ADDR 0x25C00000ul
+#define FBUF_ADDR 0x25C80000ul
+#define VDP1_REG_BASE 0x25D00000ul
+#define VDP2_REG_BASE 0x25F80000ul
 
 struct SprSpStatus {
     Uint16 frameChgMode;
@@ -304,6 +304,7 @@ struct SprAreaSize {
 
 extern Sint32 SpLCoordX;
 extern Sint32 SpLCoordY;
+extern SprGourTbl* SpGourTbl;
 
 #ifdef _SPR3_
 #define SPR_2DefineWork(sp2WorkArea, sp2CommandMax, sp2GourTblMax,             \

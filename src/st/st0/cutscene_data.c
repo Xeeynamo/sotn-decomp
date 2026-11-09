@@ -2,7 +2,7 @@
 #include "st0.h"
 #include <cutscene.h>
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 u8 cutscene_script_it[] = {
 #include <gen/cutscene_script_it.h>
 };

@@ -646,7 +646,7 @@ void EntityLossothNapalmFlare(Entity* self) {
         self->hitboxOffX = 0x10;
         self->hitboxHeight = 8;
         self->hitboxOffY = -8;
-#ifdef VERSION_US
+#if VERSION == VER_US
         self->hitboxState = 1;
 #endif
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x10);
@@ -763,7 +763,7 @@ void EntityLossothFlames(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitLossoth);
-#ifdef VERSION_US
+#if VERSION == VER_US
         self->flags |= FLAG_UNK_00200000 | FLAG_UNK_2000;
         self->hitboxState = 0;
 #else

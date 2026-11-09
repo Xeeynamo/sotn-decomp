@@ -242,7 +242,7 @@ void EntityCutscene(Entity* self) {
                         continue;
                     }
                     prim = g_Dialogue.prim[0];
-                    for (i = 0; i < LEN(g_Dialogue.prim) - 1; i++) {
+                    for (i = 0; i < LEN(g_Dialogue.prim); i++) {
                         prim->drawMode = DRAW_HIDE;
                         prim = prim->next;
                     }
@@ -254,7 +254,7 @@ void EntityCutscene(Entity* self) {
                     }
                     // fake reuse of i?
                     i = *g_Dialogue.scriptCur++;
-                    prim = g_Dialogue.prim[LEN(g_Dialogue.prim) - 1];
+                    prim = g_Dialogue.primPortrait;
                     j = *g_Dialogue.scriptCur++;
                     var_s7 = j & 1;
                     uCoord = D_psp_092987D8[var_s7];
@@ -284,7 +284,7 @@ void EntityCutscene(Entity* self) {
                         continue;
                     }
                     for (prim = g_Dialogue.prim[0], i = 0;
-                         i < LEN(g_Dialogue.prim) - 1; i++) {
+                         i < LEN(g_Dialogue.prim); i++) {
                         prim->drawMode = DRAW_HIDE;
                         prim = prim->next;
                     }
@@ -300,7 +300,7 @@ void EntityCutscene(Entity* self) {
                     }
                     g_Dialogue.startX = *g_Dialogue.scriptCur++;
                     g_Dialogue.startY = *g_Dialogue.scriptCur++;
-                    prim = g_Dialogue.prim[LEN(g_Dialogue.prim) - 1];
+                    prim = g_Dialogue.primPortrait;
                     prim = prim->next;
                     prim->y0 = prim->y1 = g_Dialogue.startY;
                     prim->y2 = prim->y3 = g_Dialogue.startY + 0x48;
@@ -619,7 +619,7 @@ void EntityCutscene(Entity* self) {
             }
         }
 
-        for (i = 0; i < LEN(g_Dialogue.prim) - 1; i++) {
+        for (i = 0; i < LEN(g_Dialogue.prim); i++) {
             if (i == ptr) {
                 continue;
             }
@@ -633,7 +633,7 @@ void EntityCutscene(Entity* self) {
         }
         break;
     case 3:
-        prim = g_Dialogue.prim[LEN(g_Dialogue.prim) - 1];
+        prim = g_Dialogue.primPortrait;
         prim->x0 = prim->x2 -= 4;
         prim->x1 = prim->x3 += 4;
         prim->y0 = prim->y1 -= 6;
@@ -651,7 +651,7 @@ void EntityCutscene(Entity* self) {
         }
         break;
     case 4:
-        prim = g_Dialogue.prim[LEN(g_Dialogue.prim) - 1];
+        prim = g_Dialogue.primPortrait;
         prim->x0 = prim->x2 += 4;
         prim->x1 = prim->x3 -= 4;
         prim->y0 = prim->y1 += 6;
@@ -703,7 +703,7 @@ void EntityCutscene(Entity* self) {
             if (!uCoord) {
                 g_api.FreePrimitives(g_Dialogue.primIndex[0]);
                 g_Dialogue.primIndex[0] = -1;
-                prim = g_Dialogue.prim[LEN(g_Dialogue.prim) - 1];
+                prim = g_Dialogue.primPortrait;
                 prim = prim->next;
                 prim->drawMode = DRAW_DITHERING | DRAW_TPAGE | DRAW_TRANSP;
                 prim = prim->next;
@@ -714,7 +714,7 @@ void EntityCutscene(Entity* self) {
             break;
         case 2:
             uCoord = 0;
-            prim = g_Dialogue.prim[LEN(g_Dialogue.prim) - 1];
+            prim = g_Dialogue.primPortrait;
             prim = prim->next;
             if (prim->r0 < 0x10) {
                 prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0;
@@ -742,7 +742,7 @@ void EntityCutscene(Entity* self) {
         }
         break;
     case 6:
-        prim = g_Dialogue.prim[LEN(g_Dialogue.prim) - 1];
+        prim = g_Dialogue.primPortrait;
         prim = prim->next;
         g_Dialogue.portraitAnimTimer--;
         if (g_Dialogue.portraitAnimTimer >= 0xC) {

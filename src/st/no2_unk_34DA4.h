@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-#if defined(VERSION_PSP) && !defined(BOSS_IS_BO0)
+#if TARGET == TARGET_PSP && !defined(BOSS_IS_BO0)
 #define TPAGE_FLAG 0x1000
 #else
 #define TPAGE_FLAG 0
@@ -116,7 +116,7 @@ void func_us_801B4DA4(Entity* self) {
         prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
         prim = prim->next;
         prim->type = PRIM_GT4;
-#if defined(VERSION_PSP) && !defined(BOSS_IS_BO0)
+#if TARGET == TARGET_PSP && !defined(BOSS_IS_BO0)
         prim->tpage = 0x104;
 #else
         if (flag) {
@@ -146,7 +146,7 @@ void func_us_801B4DA4(Entity* self) {
         prim->x1 = prim->x3 = 0xC3;
         prim->y0 = prim->y1 = 0x27;
         prim->y2 = prim->y3 = 0x6F;
-#if defined(VERSION_PSP) && !defined(BOSS_IS_BO0)
+#if TARGET == TARGET_PSP && !defined(BOSS_IS_BO0)
         prim->r0 = 0x20;
         prim->g0 = 0x10;
         prim->b0 = 0x20;

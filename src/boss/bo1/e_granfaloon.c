@@ -60,7 +60,7 @@ extern s32 g_BossMgrState;
 extern EInit g_EInitGranfaloonCore;
 extern EInit g_EInitGranfaloonShell;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(GRANFALOON_TENTACLE);
 extern s32 E_ID(TENTACLE_HEAD);
 extern s32 E_ID(TENTACLE_LASER);

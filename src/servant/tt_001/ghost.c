@@ -205,7 +205,7 @@ Entity* CreateChildEntity(Entity* parent, s32 entityType) {
     }
 
     if (entity->entityId) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         return NULL;
 #else
         return;
@@ -457,7 +457,7 @@ void UpdateServantDefault(Entity* self) {
         } else {
             self->ext.ghost.frameCounter = 0;
             if (
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 self->ext.ghost.attackEntity != NULL &&
 #endif
                 self->ext.ghost.attackEntity->entityId ==
@@ -475,7 +475,7 @@ void UpdateServantDefault(Entity* self) {
         if (!(g_Player.status &
               (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_AXEARMOR))) {
             if (
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 self->ext.ghost.confusedEntity != NULL &&
 #endif
                 self->ext.ghost.confusedEntity->entityId ==

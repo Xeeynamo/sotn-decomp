@@ -9,6 +9,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 
 	"github.com/goccy/go-yaml"
@@ -23,9 +24,12 @@ import (
 const BPP = 4
 
 type spriteEntry struct {
-	Name           string
-	PivotX, PivotY uint8
-	Padding        uint16 `yaml:"padding,omitempty"`
+	Name    string `yaml:"name,omitempty"`
+	PivotX  uint8  `yaml:"pivotx,omitempty"`
+	PivotY  uint8  `yaml:"pivoty,omitempty"`
+	Padding uint16 `yaml:"padding,omitempty"`
+	// Symbol is set when the pointer refers to data outside the spritesheet
+	Symbol string `yaml:"symbol,omitempty"`
 }
 
 type handler struct{}
@@ -86,6 +90,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	}
 	eg := errgroup.Group{}
 	entries := make([]spriteEntry, 0, 0x100)
+	lastPtr := psx.Addr(0)
 	for i := 0; i < maxSpritCount; i++ {
 		spritePtr := psx.ReadAddr(r)
 		if spritePtr < e.RamBase {
@@ -93,8 +98,27 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 		}
 		offset := spritePtr.Real(e.RamBase)
 		if offset < e.Start || offset >= e.End {
-			return fmt.Errorf("sprite pointer %v is out of bounds [%X:%X]", spritePtr, e.Start, e.End)
+			if !headerFirst {
+				return fmt.Errorf("sprite pointer %v is out of bounds [%X:%X]", spritePtr, e.Start, e.End)
+			}
+			symbol := filepath.Base(e.Symbol(spritePtr))
+			if symbol == "." {
+				symbol = fmt.Sprintf("D_%08X", uint32(spritePtr))
+			}
+			entries = append(entries, spriteEntry{Symbol: symbol})
+			lastPtr = spritePtr
+			continue
 		}
+		if spritePtr == lastPtr {
+			// the same sprite can be referenced multiple times in a row
+			entries = append(entries, spriteEntry{
+				Name:   entries[len(entries)-1].Name,
+				PivotX: entries[len(entries)-1].PivotX,
+				PivotY: entries[len(entries)-1].PivotY,
+			})
+			continue
+		}
+		lastPtr = spritePtr
 		spriteData := e.Data[offset:]
 		entry := spriteEntry{
 			Name:   fmt.Sprintf("%s/%s_%d.png", e.Name, e.Name, len(entries)),
@@ -152,7 +176,16 @@ func (h *handler) Build(e assets.BuildArgs) error {
 	lastSymbol := ""
 	sbData := strings.Builder{}
 	sbData.WriteString("// clang-format off\n")
+	externs := []string{}
 	for i, entry := range entries {
+		if entry.Symbol != "" {
+			symbols[i] = entry.Symbol
+			symbolDataLen[i] = -1
+			if !slices.Contains(externs, entry.Symbol) {
+				externs = append(externs, entry.Symbol)
+			}
+			continue
+		}
 		pngData, err := os.ReadFile(filepath.Join(e.AssetDir, entry.Name))
 		if err != nil {
 			return err
@@ -195,6 +228,9 @@ func (h *handler) Build(e assets.BuildArgs) error {
 	}
 	sbHeader := strings.Builder{}
 	sbHeader.WriteString("// clang-format off\n")
+	for _, symbol := range externs {
+		sbHeader.WriteString(fmt.Sprintf("extern unsigned char %s[];\n", symbol))
+	}
 	if headerFirst {
 		for i := 0; i < len(entries); i++ {
 			if symbolDataLen[i] == -1 {

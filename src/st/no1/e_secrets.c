@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(ID_25);
 extern s32 E_ID(ID_26);
 extern s32 E_ID(ID_27);
@@ -103,7 +103,7 @@ void func_us_801BE880(Entity* self) {
 
     case 3:
         self->animCurFrame = 0x4E;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         tempEntity2 = self + 1;
         if (tempEntity2->step == 1 && (tempEntity2->flags & FLAG_DEAD) == 0) {
             tempEntity2->flags |= FLAG_DEAD;

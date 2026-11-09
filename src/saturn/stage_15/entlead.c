@@ -11,7 +11,7 @@ typedef struct {
 } Stage15SkeletonLeaderHitbox;
 
 EntityEntry g_Stage15EntitySkeletonLeader = {
-    &g_Stage15SpriteBank31, func_060EF0C0};
+    &g_Stage15SpriteBankSkeletonLeader, func_060EF0C0};
 EntityEntry g_Stage15EntityEntry64 = {NULL, func_060EF5E0};
 EntityEntry g_Stage15EntityEntry65 = {NULL, func_060EF6E0};
 EntityEntry g_Stage15EntityEntry66 = {NULL, func_060EFF44};

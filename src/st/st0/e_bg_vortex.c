@@ -82,7 +82,7 @@ void EntityBackgroundVortex(Entity* self) {
         self->step++;
         break;
     case 2:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         func_psp_0891CB80(0x180, 0x100, 0x40, 0x40, 0x180, 0, 0);
         func_psp_0891CB80(0x180, 0x100, 0x40, 0x40, 0x180, 0x40, 0);
         func_psp_0891CB80(0x180, 0x100, 0x40, 0x40, 0x180, 0x80, 0);
@@ -90,7 +90,7 @@ void EntityBackgroundVortex(Entity* self) {
 #endif
         prim = self->ext.bgVortex.prim;
         while (prim != NULL) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             prim->clut = PAL_UNK_19E;
             prim->tpage = 6;
             prim->u0 = prim->u2 = 0;
@@ -200,7 +200,7 @@ void EntityBackgroundVortex(Entity* self) {
         SetRotMatrix(&m);
         transVector.vx = 0;
         transVector.vy = 0;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         transVector.vz = 0x1E0;
 #else
         transVector.vz = 0xC0;

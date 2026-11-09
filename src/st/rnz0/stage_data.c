@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 
 // This is an unused image that says "Golem Maker". Likely stripped on PSP.
 u8 gfx_stage_name_jp_sm[] = {

@@ -856,7 +856,7 @@ void MarEntityHitByCutBlood(Entity* self) {
             case 8:
                 tilePrim->posX.i.hi = x;
                 tilePrim->posY.i.hi = y;
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
                 tilePrim->velocityX.val = ((rand() & 0x7FFF) - FIX(0.25)) >> 1;
 #else
                 tilePrim->velocityX.val = (rand() - FIX(0.25)) >> 1;
@@ -1307,7 +1307,7 @@ void EntityMariaOwl(Entity* self) {
     case 0:
         self->flags = FLAG_UNK_100000 | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_POS_CAMERA_LOCKED;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         self->unk5A = 0x18;
 #else
         self->unk5A = 0x66;
@@ -2501,7 +2501,7 @@ void MarEntityTeleport(Entity* self) {
             self->ext.teleport.unk90 = 0xFF;
             var_s5 = true;
             self->step = Player_Unk20;
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
             g_api.PlaySfx(SFX_TELEPORT_SYNTH_DOWN);
 #endif
         } else {
@@ -2582,7 +2582,7 @@ void MarEntityTeleport(Entity* self) {
     case 21:
         var_s5 = true;
         if (--self->ext.teleport.timer == 0) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             g_api.PlaySfx(SFX_TELEPORT_SYNTH_DOWN);
 #endif
             self->step++;
@@ -2978,7 +2978,7 @@ void EntityMariaCrashSummon(Entity* self) {
             return;
         }
         self->flags = FLAG_HAS_PRIMS | FLAG_KEEP_ALIVE_OFFCAMERA;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         self->unk5A = 0x1C;
 #else
         self->unk5A = 0x70;
@@ -2994,7 +2994,7 @@ void EntityMariaCrashSummon(Entity* self) {
         self->ext.mariaCrashSummon.timer -= 0x10;
         if (self->ext.mariaCrashSummon.timer > 0) {
             prim = &g_PrimBuf[self->primIndex];
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             prim->tpage = 7;
 #else
             prim->tpage = 0x1C;

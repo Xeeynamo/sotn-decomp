@@ -5,7 +5,7 @@ extern EInit g_EInitCommon;
 extern u16 g_WaterSounds[];
 extern s16 g_WaterXTbl[];
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 static s16 g_splashAspects[] = {0, 1, 2, 4, -1, -2, -4, -4};
 #else
 static s16 g_splashAspects[] = {0, 1, 2, 4, -1, -2, -4, 0};
@@ -398,7 +398,7 @@ void EntitySurfacingWater(Entity* self) {
         if (!(params & 0x8000)) {
             g_api.PlaySfxVolPan(g_WaterSounds[1], 0x7F, temp_s3);
         }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         params = (params >> 5) & 0x7;
 #else
         params = (params >> 8) & 0x7F;

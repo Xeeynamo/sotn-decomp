@@ -139,7 +139,7 @@ static u16 explode_lifetime[] = {16, 24, 42, 47};
 void EntityExplosionVariants(Entity* self) {
     if (!self->step) {
         self->velocityY = explode_yVel[self->ext.destructAnim.index];
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
 #else
         self->flags =
@@ -167,7 +167,7 @@ void EntityExplosionVariants(Entity* self) {
 // params: Index of scaleX and velocityY to use
 void EntityGreyPuff(Entity* self) {
     if (!self->step) {
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
 #else
         self->flags =
@@ -472,7 +472,7 @@ u8 UnkCollisionFunc4(u8 arg0) {
 void EntityIntenseExplosion(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_EInitParticle);
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
 #endif
         self->palette = PAL_FLAG(PAL_UNK_170);
@@ -528,7 +528,7 @@ void InitializeUnkEntity(Entity* self) {
     }
 }
 
-#if defined(VERSION_BETA) || defined(STAGE_IS_TEK)
+#if VERSION < VER_BETA_HD
 void func_801966B0(u16* sensors) {
     switch (g_CurrentEntity->step_s) {
     case 0:
@@ -582,7 +582,7 @@ void MakeEntityFromId(u16 entityId, Entity* src, Entity* dst) {
     dst->unk5A = src->unk5A;
     dst->zPriority = src->zPriority;
     dst->animSet = src->animSet;
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
     dst->flags =
         FLAG_NOT_AN_ENEMY | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED |
         FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA | FLAG_DESTROY_IF_OUT_OF_CAMERA;
@@ -617,7 +617,7 @@ void MakeExplosions(void) {
             CreateEntityFromEntity(E_EXPLOSION, g_CurrentEntity, entity);
 #endif
             // EntityExplosion does not seem to use these values.
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
             entity->params = 6 - i;
 #else
             entity->ext.destructAnim.unk85 = 6 - i;
@@ -634,7 +634,7 @@ extern AnimateEntityFrame g_bigRedFireballAnim[];
 // but is not actually called in NZ0. Will need to check future overlays for
 // any actual uses.
 // TEK stores the fireball speed in params instead of the ext data
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
 #define FIREBALL_SPEED self->params
 #else
 #define FIREBALL_SPEED self->ext.bigredfireball.speed
@@ -818,15 +818,10 @@ static s16 g_QuadIndices2[] = {
     1, 2, 4, 5, //top right quad
     3, 4, 6, 7, //bottom left quad
     4, 5, 7, 8, //bottom right quad
-#if !defined(STAGE_IS_NZ0) && !defined(STAGE_IS_NO1) &&                        \
-    !defined(STAGE_IS_CHI) && !defined(STAGE_IS_LIB) &&                        \
-    !defined(STAGE_IS_CAT) && !defined(STAGE_IS_RNO0) &&                       \
-    !defined(BOSS_IS_BO1) && STAGE != STAGE_ST0 && !defined(STAGE_IS_TEK) &&   \
-    (!defined(VERSION_PSP) ||                                                  \
-     (!defined(BOSS_IS_BO0) && !defined(STAGE_IS_RLIB)))
+#if !defined(STAGE_IS_NZ0) && !defined(STAGE_IS_NO1) && !defined(STAGE_IS_CHI) && !defined(STAGE_IS_LIB) && !defined(STAGE_IS_CAT) && !defined(STAGE_IS_RNO0) && !defined(BOSS_IS_BO1) && STAGE != STAGE_ST0 && VERSION >= VER_BETA_MAD && (TARGET != TARGET_PSP || (!defined(BOSS_IS_BO0) && !defined(STAGE_IS_RLIB)))
     0, 0,
 #endif
-#if defined(VERSION_BETA)
+#if VERSION == VER_BETA_MAD
     0, 0
 #endif
 };
@@ -984,7 +979,7 @@ void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
     }
 }
 
-#ifndef STAGE_IS_TEK
+#if VERSION >= VER_BETA_MAD
 void PlaySfxPositional(s16 sfxId) {
     s32 posX, posY;
     s16 sfxPan;

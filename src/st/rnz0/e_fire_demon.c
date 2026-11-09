@@ -59,7 +59,7 @@ void EntityFireDemonFlames(Entity* self) {
 
 typedef struct fireDemonPrim {
     struct fireDemonPrim* next;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     s32 : 32;
 #endif
     s32 : 32;
@@ -480,7 +480,7 @@ void ent20Helper1(Primitive* prim) {
 }
 
 void ent20Helper2(Primitive* prim) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     u16 sp10[2];
     s16 sp14[2];
 #define VAR(x) (x)
@@ -520,7 +520,7 @@ void ent20Helper2(Primitive* prim) {
             LOW(VAR(sp10)) = (prim->x0 << 0x10) + X1(prim->x1);
             LOW(prim->x3) += 0x400;
         }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         LOW(sp10) += LOW(prim->x2);
         prim->x0 = sp10[1];
         prim->x1 = sp10[0];
@@ -736,7 +736,7 @@ typedef enum {
 } FireDemonSteps;
 
 // PSP uses 15E for everything. US has a mix of 15E and 15F.
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #define SECONDARY_PAL PAL_FIREDEMON_15E
 #else
 #define SECONDARY_PAL PAL_FIREDEMON_15F
@@ -1001,7 +1001,7 @@ void EntityFireDemon(Entity* self) {
             sp38 = g_CurrentBuffer->draw;
             sp38.isbg = 1;
             sp38.clip = sp30;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             sp38.r0 = sp38.g0 = sp38.b0 = 0;
 #endif
             sp38.ofs[0] = 0;

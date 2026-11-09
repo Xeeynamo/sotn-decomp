@@ -9,7 +9,7 @@ extern u8 minotaur_attack_hitbox_indices[];
 extern s32 fireball_config[][2];
 extern u8 anim_spit[];
 extern u8 anim_death_puff[];
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(MINOTAUR);
 #endif
 
@@ -148,7 +148,7 @@ void EntityMinotaurSpitLiquid(Entity* self) {
         self->rotate += ROT(11.25) - Random();
         angle = self->rotate;
         self->velocityX = rsin(angle) << 5;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         self->velocityY = (-rcos(angle)) << 5;
 #else
         self->velocityY = -(rcos(angle) << 5);

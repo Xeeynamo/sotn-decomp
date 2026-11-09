@@ -34,8 +34,11 @@ typedef struct {
     s16 offset;
 } ShakeState;
 extern ShakeState DAT_06057A10;
-extern s32 DAT_00252000;
+extern u8 DAT_00252000[];
 extern s32 DAT_00258000;
+extern u8 DAT_002B2000[];
+extern s16 DAT_002C7000[];
+extern s32 DAT_002F2000[];
 extern s32 DAT_060937F8;
 
 extern SaturnSpriteResource** DAT_060645D0;
@@ -43,12 +46,12 @@ extern SaturnSpriteResource** DAT_060645D0;
 extern Unk0605DB60 d_0605DB60[32];
 
 typedef struct {
-    s32 dst0;
-    s32 dst4;
+    u16* dst0;
+    u16* dst4;
     u16* unk8;
-    s32 unkC;
-    s32 unk10;
-    s32 unk14;
+    u8* unkC;
+    u8* unk10;
+    u8* unk14;
     s32 unk18;
     s32 unk1C;
     s32 unk20;
@@ -87,19 +90,18 @@ extern u8 DAT_00232000[];
 extern u8 DAT_00200000[];
 extern u8 DAT_00211800[];
 extern u8 DAT_0022A000[];
-extern u8 g_FileLoadBuffer[];
-extern s32 DAT_060485E0[];
 extern u8 g_Weapon0OvlArea[];
 extern u8 g_Weapon1OvlArea[];
 
 void func_0600871C(Unk0605CD90*, UNK_0605c680*, s32);
 
 void BuildSubDispTilemap(Unk0605CD90* arg0);
+s32 DecompressLZSS(u8*, u8*, u32);
 void DmaScroll(u16* src, u16* dest, u32 cnt);
 
 typedef struct {
     u32 tileFlags;
-    u32 src;
+    u16* src;
     u32 dest;
     u32 cnt;
 } BgTransfer;
@@ -107,8 +109,8 @@ typedef struct {
 extern Unk0605CD90 DAT_0605CD90[4];
 extern BgTransfer DAT_0605D6C0[8];
 
-extern s32 DAT_002E0000;
-#define DMA_SRC_ADDR ((u16*)&DAT_002E0000)
+extern u16 DAT_002E0000[];
+#define DMA_SRC_ADDR DAT_002E0000
 
 extern s16 DAT_06062224[];
 extern u16 DAT_06039210[];
@@ -120,7 +122,7 @@ extern SaturnStageDataTables g_StageOverlayData;
 
 void func_06006FA8(void);
 
-extern s32 DAT_060476a0;
+extern u8* DAT_060476a0;
 extern s32 DAT_060476a4;
 extern s32 DAT_06038A44;
 
@@ -170,17 +172,38 @@ extern u8 DAT_06057f68;
 extern u8* DAT_060645B8;
 void func_06009510(u16);
 void SetCanRevealMap(void);
-extern s32 DAT_0605D7DC;
+extern u8* DAT_0605D7DC;
 extern s32 DAT_0605ceb0;
 extern Unk0605cd70 DAT_0605cd70;
 extern s32 g_PlayerX;
-extern s32 DAT_0605cd54;
+extern s32 stopMusicFlag;
 extern s32 DAT_0605C668;
 extern s32 D_80097C98;
 extern s32 g_PlayerY;
 extern u32 g_RoomCount;
 void func_0601960C(char*, u8*, s16*, s16*, s32);
-extern u8 DAT_0604E5E0[];
+typedef union {
+    UNK_060485C0 save;
+    struct {
+        u8 unk0[0x20];
+        u8 data[0x8000];
+    } load;
+    struct {
+        u8 unk0[0x20];
+        s32 state[0x30];
+        s32 box[0x30 * 4];
+    } hit;
+    struct {
+        u8 unk0[0x20];
+        MthXyz vertices[0x100];
+    } model;
+    struct {
+        u8 unk0[0x6020];
+        u8 vram[0x2000];
+    } stage;
+    u8 raw[0x8020];
+} WorkBuffer;
+extern WorkBuffer g_WorkBuffer;
 extern void* memset(void* dest, int value, unsigned long size);
 extern SaturnSpriteResource g_SaturnSharedSpriteBank13Resource;
 extern SaturnSpriteResource g_SaturnSharedSpriteBank12Resource;
@@ -190,7 +213,7 @@ extern s32 g_GameClearFlag;
 extern u8 g_CastleMap[0x800];
 extern u16 D_8003C730;
 extern s32 D_8013AEE4;
-extern s32 DAT_0606459C;
+extern u8* DAT_0606459C;
 extern u8 DAT_06038DC0[16];
 extern u16 DAT_06038DD0[][0x10];
 extern s32 DAT_06038FD0;
@@ -205,6 +228,7 @@ extern SaturnLayerCompressedSizes* DAT_060645F4;
 extern SaturnLayerMapOffsets* DAT_06064654;
 extern SaturnRoomLayerSetup* DAT_0606466C;
 extern SaturnRoomGraphics* DAT_060645C8;
+void func_0600A088(void);
 extern s32 DAT_0605C104;
 extern u32 D_8006C374;
 extern s32 DAT_0605C10C;
@@ -217,8 +241,7 @@ extern s32 DAT_06061dd0;
 extern SaturnStageFileRecord g_StageFileRecords[];
 extern Unk0605cd70 DAT_0605cea0;
 extern SaturnSpriteResource g_EntitySpriteBank14;
-extern SaturnSpriteResource g_EntitySpriteBank01;
-extern SaturnSpriteFrameHeader* DAT_06045E14[];
+extern SaturnSpriteFrameHeader* g_SaturnSharedSpriteBank1Frames[];
 extern EntityEntry g_EntityNoopEntry;
 extern SaturnSpriteFrameHeader* g_SaturnSharedOpaquePuffFrames1[15];
 extern SaturnSpriteFrameHeader* g_SaturnSharedOpaquePuffFrames0[14];
@@ -273,6 +296,7 @@ void func_0600C18C();
 void func_0600BF08();
 void func_0600BEA8();
 SpriteObject* AllocSpriteObject(void);
+struct SprGourTbl* GetSpriteObjectGourTbl(SpriteObject* obj);
 extern s32 g_SpritePartsInUse;               /* 0x06038DB8 */
 extern s32 g_SpriteObjectsInUse;             /* 0x06038DB4 */
 extern s32 g_SpriteListCount;                /* 0x06038DB0 */
@@ -280,8 +304,7 @@ extern SpriteObject* g_SpriteListTail;       /* 0x06057794 */
 extern SpriteObject* g_SpriteListHead;       /* 0x06057790 */
 extern SpritePart* g_SpritePartFreeList;     /* 0x0605779C */
 extern SpriteObject* g_SpriteObjectFreeList; /* 0x06057798 */
-extern SaturnSpriteResource g_EntitySpriteBank08;
-extern SaturnSpriteFrameHeader* DAT_06046CD0[];
+extern SaturnSpriteFrameHeader* g_SaturnSharedSpriteBank8Frames[];
 void func_0600AFA8(SpriteObject* sprite, SaturnSpriteFrameHeader* frame);
 void SetVdp2BackgroundColor();
 extern s32 g_FileLoadEnabled;
@@ -317,9 +340,10 @@ void func_0600456C();
 void ClearDebugPrintTilemap(void);
 extern s32 SpMstCmdPos;
 void CSH_Init(Uint16 sw);
-s32 ReadFileToAddr(char* path, s32 addr);
+s32 ReadFileToAddr(char* path, void* addr);
 extern s16 DAT_0605AEA8;
 extern u16 DAT_0605AEB0;
+char* func_06006E14(char* path);
 extern Equipment* DAT_060645AC;
 void FlushVramTransfers(void);
 void func_06008464(void);
@@ -400,6 +424,51 @@ typedef struct {
     u32 dst;
     s32 size;
 } VramTransfer;
+extern VramTransfer DAT_060576B0[16];
+extern s8 DAT_06057F50[PER_WORK_SIZE(1, 2)];
+extern XyInt DAT_0605AEA0[2];
+extern struct SprSpCmd* DAT_0605AEAC;
+extern SclConfig DAT_0605BED0[];
+extern s16* DAT_0605C120[];
+extern u32 D_8003C744;
+
+typedef struct {
+    u16 unk0[5];
+    u16 unkA[5];
+} unkStruct;
+
+typedef struct {
+    s32 unk0;
+    u32 unk4;
+    s32 unk8;
+    s16 unkC;
+    s16 unkE;
+    unkStruct unk10;
+} unkStruct2;
+
+typedef struct {
+    s16 : 16;
+    s16 unk2;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    s32 unk10;
+    unkStruct unk14[6];
+    s32 unk8C[7];
+    unkStruct2 unkA8[3];
+    s32 unk114;
+    s32 unk118;
+    s32 unk11C;
+    s32 unk120;
+} UNK0605D910; // size: 0x124
+
+extern UNK0605D910 DAT_0605D910[2];
+extern char DAT_0605DD70[];
+extern BupDir DAT_0605DDA0;
+extern u8 text_buf[];
+extern s32 DAT_060642F8;
+extern u16 DAT_06064500[];
+extern u16 DAT_06064520[];
 extern s32 DAT_06057770;
 extern s16 DAT_06057774[];
 extern s16 DAT_06057780[];
@@ -434,9 +503,11 @@ extern u16 DAT_06038D80[];
 extern u16 DAT_06038D90[];
 extern u16 DAT_06038DA0[];
 extern s32 DAT_06038FDC;
-extern s32 DAT_060579A4;
+extern u8* DAT_060579A4;
+u16* func_0600CB04(s32 col, s32 row);
 extern u8 DAT_060578A0[];
 void rsincos(s32 angle, s32* sinOut, s32* cosOut);
+long ratan2(long dx, long dy);
 void func_0600BF38();
 void func_0600BF8C();
 void func_0600BFD8();
@@ -461,5 +532,16 @@ extern XyInt DAT_06057A08;
 extern XyInt DAT_06057A0C;
 bool CdSoundCommandQueueEmpty(void);
 /* End moved declarations */
+
+#ifdef SATZ
+void* sotn_satz_be16_copy(const void* src, u32 bytes);
+#define HOST_TO_BUS16(src, size) sotn_satz_be16_copy(src, size)
+#else
+#define HOST_TO_BUS16(src, size) (src)
+#endif
+
+#ifdef SATZ
+#include "satz/prototypes.h"
+#endif
 
 #endif

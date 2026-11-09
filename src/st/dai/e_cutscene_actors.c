@@ -82,7 +82,7 @@ void EntityCutsceneStage(Entity* self) {
         if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
             g_Player.padSim = PAD_BAT;
         } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             g_Player.padSim = PAD_NONE;
 #else
             g_Player.padSim = PAD_MIST;

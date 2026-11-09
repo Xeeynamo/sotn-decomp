@@ -199,7 +199,7 @@ s32 func_ptr_80170004(Entity* self) {
             prim->b1 = ((blue & 0xFFFF) * (9 - i)) / 10;
             prim->g1 = ((green & 0xFFFF) * (9 - i)) / 10;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             prim->x2 = rand() & 0x7FFF;
 #else
             prim->x2 = rand();

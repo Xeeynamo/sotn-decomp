@@ -2,7 +2,6 @@
 use std::fs::File;
 use std::io::{self, Read, BufReader};
 use std::collections::HashMap;
-use std::io::BufRead;
 // use std::io::Seek;
 
 #[allow(dead_code)]
@@ -181,6 +180,30 @@ fn utf8_to_byte_literals(input_str: &str) -> String {
         .collect::<String>();
     let out2 = format!("\"{}\"", out);
     out2
+}
+
+// cutscene actor names: one u16 per glyph, dakuten and handakuten as high bits
+fn utf8_to_u16_list(input_str: &str) -> String {
+    let input_str = input_str.trim();
+    let input_str = &input_str[1..input_str.len() - 1];
+    let mut values = Vec::new();
+    for char in input_str.chars() {
+        let mut flags = 0;
+        if has_dakuten(&char) {
+            flags = 0x8000;
+        } else if has_handakuten(&char) {
+            flags = 0x4000;
+        }
+        let base = remove_dakuten_handakuten(&char);
+        match table_index(&base) {
+            Some(index) => values.push(index as u16 | flags),
+            None => panic!("_SACTOR: character '{}' not in the font table", char),
+        }
+    }
+    values.iter()
+        .map(|&val| format!("0x{:X}", val))
+        .collect::<Vec<String>>()
+        .join(", ")
 }
 
 fn utf8_to_byte_literals_psp(input_str: &str) -> String {
@@ -378,16 +401,34 @@ fn process_s2_hd_macro(line: &str) -> String {
     process_macro(line, "_S2_HD", alt_hd_utf8_to_byte_literals)
 }
 
+fn process_s2_sel_macro(line: &str) -> String {
+    process_macro(line, "_S2_SEL", alt_sel_utf8_to_byte_literals)
+}
+
+fn process_sactor_macro(line: &str) -> String {
+    process_macro(line, "_SACTOR", utf8_to_u16_list)
+}
+
 fn process_se_macro(line: &str) -> String {
     process_macro(line, "_SE", s3_utf8_to_byte_literals)
 }
 
 
 
+// every macro handled by `do_sub` starts with `_S`
+fn has_macro(line: &str) -> bool {
+    line.contains("_S")
+}
+
 fn do_sub(line: &str, psp: bool) -> String {
+    if !has_macro(line) {
+        return line.to_string();
+    }
     let mut processed = process_s_macro(line, psp);
     processed = process_s2_macro(&processed);
     processed = process_s2_hd_macro(&processed);
+    processed = process_s2_sel_macro(&processed);
+    processed = process_sactor_macro(&processed);
     processed = process_se_macro(&processed);
     processed
 }
@@ -395,6 +436,10 @@ fn do_sub(line: &str, psp: bool) -> String {
 fn to_sjis(text: &str) -> Vec<u8> {
     let mut out = Vec::with_capacity(text.len());
     for line in text.split_inclusive('\n') {
+        if line.is_ascii() {
+            out.extend_from_slice(line.as_bytes());
+            continue;
+        }
         let (bytes, _, had_errors) = encoding_rs::SHIFT_JIS.encode(line);
         if had_errors {
             out.extend_from_slice(line.as_bytes());
@@ -412,19 +457,23 @@ fn process(filename: Option<String>, psp: bool, sjis: bool) -> io::Result<()> {
     };
 
     let mut reader = BufReader::new(reader);
-    let mut line = String::new();
-    let mut output = String::new();
-
-    while reader.read_line(&mut line)? > 0 {
-        output.push_str(&do_sub(&line, psp));
-        line.clear();
+    let mut input = String::new();
+    reader.read_to_string(&mut input)?;
+    let mut output = String::with_capacity(input.len());
+    for line in input.split_inclusive('\n') {
+        if has_macro(line) {
+            output.push_str(&do_sub(line, psp));
+        } else {
+            output.push_str(line);
+        }
     }
-    
+
+    use std::io::Write;
+    let mut stdout = io::stdout().lock();
     if sjis {
-        use std::io::Write;
-        io::stdout().write_all(&to_sjis(&output))?;
+        stdout.write_all(&to_sjis(&output))?;
     } else {
-        print!("{}", output);
+        stdout.write_all(output.as_bytes())?;
     }
 
     Ok(())
@@ -446,6 +495,13 @@ lazy_static! {
         ]
         .concat();
         values.chars().enumerate().map(|(index, value)| (value, index)).collect::<HashMap<char, usize>>()
+    };
+    // glyph sheet of the JP SEL overlay, one row per func_801B25D4 call
+    static ref ALT_SEL_UTF8_TO_INDEX: HashMap<char, usize> = {
+        let rows = ["…選択決定取消入力未初期化確認", "はいえ不良"];
+        rows.iter().enumerate().flat_map(|(row, values)| {
+            values.chars().enumerate().map(move |(index, value)| (value, row * 0x10 + index))
+        }).collect::<HashMap<char, usize>>()
     };
     static ref UTF8_TO_INDEX: HashMap<char, usize> = {
         let mut map = HashMap::new();
@@ -511,6 +567,10 @@ fn alt_hd_utf8_to_index(c: &char) -> Option<usize> {
     return ALT_HD_UTF8_TO_INDEX.get(c).copied();
 }
 
+fn alt_sel_utf8_to_index(c: &char) -> Option<usize> {
+    return ALT_SEL_UTF8_TO_INDEX.get(c).copied();
+}
+
 fn alt_utf8_to_index(c: &char) -> Option<usize> {
     return ALT_UTF8_TO_INDEX.get(c).copied();
 }
@@ -544,6 +604,20 @@ fn alt_hd_utf8_to_byte_literals(input_str: &str) -> String {
     .collect::<String>();
     let out2 = format!("\"{}\"", output);
     out2
+}
+
+fn alt_sel_utf8_to_byte_literals(input_str: &str) -> String {
+    let mut bytes = Vec::new();
+    for char in input_str.chars() {
+        if let Some(index) = alt_sel_utf8_to_index(&char) {
+            bytes.push(index as u8);
+        }
+    }
+    bytes.push(0xFF);
+    let output = bytes.iter()
+    .map(|&c| format!("\\x{:02X}", c))
+    .collect::<String>();
+    format!("\"{}\"", output)
 }
 
 fn s3_utf8_to_byte_literals(input_str: &str) -> String {
@@ -933,6 +1007,18 @@ let expected = r#"const char* g_goldCollectTexts[] = {
         let line = r#"_S2_HD("使い魔")"#;
         let out = do_sub(line, false);
         let expected = r#""\x0B\x2F\x11\xFF""#;
+        assert_eq!(out, expected);
+
+        let line = r#"_SACTOR("アルカード"), _SACTOR("リヒター・ベルモンド"), _SACTOR("DEATH")"#;
+        let out = do_sub(line, false);
+        let expected = "0x71, 0x99, 0x76, 0x70, 0x8084, \
+            0x98, 0x8B, 0x80, 0x70, 0x65, 0x808D, 0x99, 0x93, 0x9D, 0x8084, \
+            0x24, 0x25, 0x21, 0x34, 0x28";
+        assert_eq!(out, expected);
+
+        let line = r#"_S2_SEL("…いいえ"), _S2_SEL("未初期化"), _S2_SEL("不良")"#;
+        let out = do_sub(line, false);
+        let expected = r#""\x00\x11\x11\x12\xFF", "\x09\x0A\x0B\x0C\xFF", "\x13\x14\xFF""#;
         assert_eq!(out, expected);
     }
 

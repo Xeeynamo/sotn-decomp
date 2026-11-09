@@ -7,7 +7,7 @@
 
 #include "chi.h"
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(BREAKABLE_WALL_DEBRIS);
 #endif
 

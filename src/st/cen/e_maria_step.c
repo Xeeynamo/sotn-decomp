@@ -408,8 +408,8 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 step, s16 step_s) {
     s16 posX;
     s32 step_s_zero;
 
-    if (g_Maria.unk7A == 2) {
-        g_Maria.unk7A = 0;
+    if (g_Maria.runDisable == 2) {
+        g_Maria.runDisable = 0;
         g_Maria.unk66 = 0;
     }
 

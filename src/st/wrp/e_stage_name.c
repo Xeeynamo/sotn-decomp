@@ -3,10 +3,8 @@
 
 #define STAGE_NAME WRP_STAGE_NAME
 
-#ifdef VERSION_US
+#if IS_VER_INTL
 #include "../e_stage_name_us.h"
-#endif
-
-#if defined(VERSION_PSP) || defined(VERSION_HD)
+#else
 #include "../e_stage_name_jp.h"
 #endif

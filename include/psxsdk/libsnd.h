@@ -1,7 +1,7 @@
 #ifndef LIBSND_H
 #define LIBSND_H
 
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
 // crashes in SetTableSize otherwise
 #define SS_SEQ_TABSIZ 192
 #else

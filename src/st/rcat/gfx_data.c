@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rcat.h"
 
-#ifdef VERSION_US
+#if VERSION == VER_US
 
 u8 gfx_alucard_sleep[] = {
 #include <gen/gfx_alucard_sleep.h>
@@ -29,7 +29,7 @@ u8 gfx_unk_8934[] = {
 #include <gen/gfx_unk_8934.h>
 };
 
-#ifdef VERSION_US
+#if VERSION == VER_US
 
 u8 gfx_unk_925C[] = {
 #include <gen/gfx_unk_925C.h>
@@ -78,7 +78,7 @@ u8 gfx_skeleton[] = {
 };
 
 // Palettes
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 u16 pal_21A[] = {
 #include <gen/pal_21A.h>
 };

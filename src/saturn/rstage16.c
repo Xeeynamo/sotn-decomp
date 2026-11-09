@@ -165,7 +165,7 @@ void func_060DFB7C(Entity* self) {
         break;
     }
 }
-INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60DFC68, func_060DFC68);
+INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60DFC68, EntityDestructAnim);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60DFDD4, func_060DFDD4);
 #define SPAWN_DESTRUCT_ANIM_ID 19
 #include "spawn_destruct_anim.h"
@@ -198,13 +198,13 @@ void func_060E16B8(void* arg0) {
     return;
 
 L_case10_success:
-    DAT_060485C0.unk5 = count;
-    DAT_060485C0.unk4 = item;
+    g_WorkBuffer.save.unk5 = count;
+    g_WorkBuffer.save.unk4 = item;
     self->ext.save.unk4 = 30;
     goto L_case10_after;
 
 L_case10:
-    item = DAT_060485C0.unk4;
+    item = g_WorkBuffer.save.unk4;
     count = 1;
 
     for (;;) {
@@ -226,8 +226,8 @@ L_case10_after:
     return;
 
 L_case30:
-    item = DAT_060485C0.unk4;
-    count = DAT_060485C0.unk5;
+    item = g_WorkBuffer.save.unk4;
+    count = g_WorkBuffer.save.unk5;
 
     status = BUP_Stat(item, 70, &sttb);
     if (status == BUP_UNFORMAT) {
@@ -252,7 +252,7 @@ L_case30:
 u16 func_060E17D0(s32 minX, s32 maxX) {
     u16 result;
 
-    g_Player.unk7A = 1;
+    g_Player.runDisable = 1;
     if (PLAYER.step != 0 || (result = PLAYER.step_s, result != 1) ||
         PLAYER.posX.i.hi < minX || PLAYER.posX.i.hi > maxX) {
         result = 0;
@@ -294,7 +294,7 @@ void func_060E2300(s32 scale, s32 unused) {
     s32 factor;
     s32 i;
 
-    base = DAT_060485E0;
+    base = g_WorkBuffer.model.vertices;
     src = (MthXyz*)g_RStage16Entity08ModelVertices14;
     dst = base;
     factor = scale << 8;

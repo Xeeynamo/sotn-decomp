@@ -1,0 +1,142 @@
+options:
+  platform: psx
+  basename: stno0
+  base_path: ..
+  build_path: build/jp12
+  target_path: disks/jp12/ST/NO0/NO0.BIN
+  asm_path: asm/jp12/st/no0
+  asset_path: assets/st/no0
+  src_path: src/st/no0
+  ld_script_path: build/jp12/stno0.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.jp12.txt
+    - config/symbols.jp12.stno0.txt
+  undefined_funcs_auto_path: build/jp12/config/undefined_funcs_auto.jp12.stno0.txt
+  undefined_syms_auto_path: build/jp12/config/undefined_syms_auto.jp12.stno0.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: jp12_$VRAM
+  disassemble_all: true
+  global_vram_start: 0x80010000
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  ld_generate_symbol_per_data_segment: true
+sha1: 50396d7a45df6443d51a20c68b37675f2b3437f7
+segments:
+  - name: stno0
+    type: code
+    start: 0
+    vram: 0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, .data, header]
+      - [0x2C, data] # sprite banks, palettes, layers, gfx banks, layouts
+      - [0x920, .data, e_init]
+      - [0xC5C, .data, e_red_door_tiles]
+      - [0xC8C, .data, e_room_bg]
+      - [0xE94, .data, e_lock_camera]
+      - [0xF04, .data, e_breakable]
+      - [0xFC0, .data, e_elevator]
+      - [0xFF0, .data, 42A34]
+      - [0x1094, .data, e_explosion_puff_opaque]
+      - [0x1100, .data, d_prize_drops]
+      - [0x111C, .data, st_update]
+      - [0x1168, .data, collision]
+      - [0x1528, .data, e_red_door]
+      - [0x1540, .data, e_room_fg]
+      - [0x15CC, .data, e_particles]
+      - [0x164C, .data, st_common]
+      - [0x184C, .data, e_collect]
+      - [0x1B3C, .data, e_misc]
+      - [0x1C14, .data, 4C750]
+      - [0x1C34, .data, clock_room]
+      - [0x1CA0, .data, 4E2E0]
+      - [0x1CCC, .data, e_diplocephalus]
+      - [0x1DC0, .data, e_diplocephalus_tail]
+      - [0x1E98, .data, e_skelerang]
+      - [0x1F84, .data, e_plate_lord]
+      - [0x1FA4, .data, e_plate_lord_2]
+      - [0x1FCC, .data, e_ghost]
+      - [0x1FEC, .data, e_marionette]
+      - [0x2198, .data, e_slinger]
+      - [0x226C, .data, e_stone_rose]
+      - [0x2348, .data, e_ctulhu]
+      - [0x247C, .data, e_axe_knight]
+      - [0x25D0, .data, e_ouija_table]
+      - [0x261C, .data, e_flea_man]
+      - [0x2674, .data, e_skeleton]
+      - [0x2774, .data, e_sealed_door]
+      - [0x27E4, data] # rooms, layouts, stage data, sprites
+      - [0x41308, .rodata, e_explosion_puff_opaque]
+      - [0x4131C, .rodata, e_red_door]
+      - [0x41334, .rodata, e_collect]
+      - [0x413BC, .rodata, e_misc]
+      - [0x41408, .rodata, clock_room]
+      - [0x41460, .rodata, 4E2E0]
+      - [0x41470, .rodata, e_stage_name]
+      - [0x41484, .rodata, e_diplocephalus]
+      - [0x414D8, .rodata, e_diplocephalus_tail]
+      - [0x41550, .rodata, e_skelerang]
+      - [0x415BC, .rodata, e_plate_lord]
+      - [0x41638, .rodata, e_plate_lord_2]
+      - [0x41688, .rodata, e_marionette]
+      - [0x416B4, .rodata, e_slinger]
+      - [0x416D0, .rodata, e_stone_rose]
+      - [0x416F8, .rodata, e_ctulhu]
+      - [0x41724, .rodata, e_axe_knight]
+      - [0x41748, .rodata, e_ouija_table]
+      - [0x4179C, .rodata, e_flea_man]
+      - [0x417B0, .rodata, e_skeleton]
+      - [0x417CC, .rodata, e_sealed_door]
+      - [0x417E4, .rodata, prim_helpers]
+      - [0x417EC, c, e_room_bg]
+      - [0x41984, c, e_lock_camera]
+      - [0x41DE0, c, e_breakable]
+      - [0x41F30, c, e_elevator]
+      - [0x429CC, c, 42A34]
+      - [0x432CC, c, e_explosion_puff_opaque]
+      - [0x43720, c, st_update]
+      - [0x43B54, c, collision]
+      - [0x45364, c, create_entity]
+      - [0x45EDC, c, e_red_door]
+      - [0x46B8C, c, e_room_fg]
+      - [0x46C78, c, popup]
+      - [0x47050, c, e_particles]
+      - [0x47894, c, st_common]
+      - [0x48D44, c, e_collect]
+      - [0x4A2C0, c, e_misc]
+      - [0x4C5AC, c, 4C750]
+      - [0x4C908, c, clock_room]
+      - [0x4E3E8, c, 4E2E0]
+      - [0x4E75C, c, e_stage_name]
+      - [0x4EE84, c, e_diplocephalus]
+      - [0x5036C, c, e_diplocephalus_tail]
+      - [0x512F8, c, e_skelerang]
+      - [0x51D50, c, e_plate_lord]
+      - [0x5480C, c, e_plate_lord_2]
+      - [0x55828, c, e_ghost]
+      - [0x55C30, c, e_marionette]
+      - [0x56FC0, c, e_slinger]
+      - [0x575FC, c, e_stone_rose]
+      - [0x58C40, c, e_ctulhu]
+      - [0x5A898, c, e_axe_knight]
+      - [0x5B7A8, c, e_ouija_table]
+      - [0x5C028, c, e_flea_man]
+      - [0x5C48C, c, e_skeleton]
+      - [0x5CC8C, c, e_sealed_door]
+      - [0x5DA78, c, prim_helpers]
+      - [0x5E2A8, .bss, create_entity]
+      - [0x5E2B8, .bss, bss]
+      - [0x5EF24, .bss, clock_room]
+      - [0x5EF28, .bss, e_collect]
+  - [0x5EF68]

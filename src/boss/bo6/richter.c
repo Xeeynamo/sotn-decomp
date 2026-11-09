@@ -148,7 +148,7 @@ void RicMain(void) {
     // status = saved_reg_s3;
     // step = saved_reg_s5;
     // step_s = saved_reg_s6;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     status = 0;
 #endif
     g_CurrentEntity = &RIC;
@@ -263,7 +263,7 @@ void RicMain(void) {
             damage.effects =
                 D_us_80181210[g_CurrentEntity->nFramesInvincibility];
             RicSetStep(0x11);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_SAVE_RICHTER, TIMEATTACK_SET_RECORD);
 #endif
@@ -391,7 +391,7 @@ void RicMain(void) {
         RicSetInvincibilityFrames(1, 8);
         break;
     case PL_S_DEAD: /* switch 4 */
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         g_api.TimeAttackController(
             TIMEATTACK_EVENT_SAVE_RICHTER, TIMEATTACK_SET_RECORD);
 #endif
@@ -425,7 +425,7 @@ void RicMain(void) {
         status |= 0x08000000;
         break;
     case PL_S_ENDING_3: /* switch 4 */
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         g_api.TimeAttackController(
             TIMEATTACK_EVENT_SAVE_RICHTER, TIMEATTACK_SET_RECORD);
 #endif
@@ -495,7 +495,7 @@ void RicMain(void) {
     posY = RIC.posY.val;
     func_us_801B4EAC();
     func_us_801B96F4();
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     FntPrint("pl_color:%04x\n", RIC.palette);
 #endif
 }
@@ -1191,7 +1191,19 @@ void RicStepStandInAir(void) {
     }
 }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepEnableFlameWhip);
+void RicStepEnableFlameWhip(void) {
+    if ((RIC.animCurFrame == 0xB5) && (RIC.poseTimer == 1)) {
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_35, 0);
+        g_api.PlaySfx(SFX_WEAPON_APPEAR);
+    }
+    if (RIC.poseTimer < 0) {
+        RicSetStand(0);
+        g_Ric.unk46 = 0;
+        RicCreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x45), 0);
+        g_Ric.timers[PL_T_POISON] = 0x800;
+    }
+}
 
 void RicStepHydrostorm(void) {
     if (RIC.poseTimer < 0) {
@@ -1234,6 +1246,26 @@ void RicStepBladeDash(void) {
     }
 }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", func_us_801B8E80);
+void func_us_801B8E80(s32 arg0) {
+    s32 var_s0;
+
+    var_s0 = 3;
+    if (RIC.facingLeft != 0) {
+        var_s0 = -3;
+    }
+    RIC.posY.i.hi -= 0x10;
+    RIC.posX.i.hi = var_s0 + RIC.posX.i.hi;
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_EMBERS, 1), 0);
+    RIC.posY.i.hi += 0x10;
+    RIC.posX.i.hi -= var_s0;
+    if (arg0 & 1) {
+        g_api.ShakeCamera(SHAKE_Y_SMALL2);
+        g_api.PlaySfx(SFX_WALL_DEBRIS_B);
+    }
+    if (arg0 & 2) {
+        RIC.velocityX = 0;
+        RIC.velocityY = 0;
+    }
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepHighJump);

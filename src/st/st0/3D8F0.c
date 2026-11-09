@@ -73,7 +73,7 @@ void EntityDematerializeStageBg(Entity* self) {
         self->step++;
         // fallthrough
     case 3:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         func_psp_0891B0DC(0x300, 0);
 #else
         prim = self->ext.prim;
@@ -130,7 +130,7 @@ void EntityDematerializeStageBg(Entity* self) {
         break;
     case 4:
         prim = self->ext.prim;
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
         prim = prim->next;
         for (i = 0; i < 2; i++) {
             dr_env = PRIM_DR_ENV(prim);
@@ -144,7 +144,7 @@ void EntityDematerializeStageBg(Entity* self) {
             for (j = 0; j < 15; j++) {
                 xVar = j * 17;
                 yVar = i * 16;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 prim->tpage = ((yVar & 0x100) >> 4 | 0x100 |
                                ((xVar + 0x300) & 0x3FF) >> 6) |
                               ((yVar & 0x200) << 2);

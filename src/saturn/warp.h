@@ -104,7 +104,7 @@ void EntityWarpStageNamePopup(Entity* self);
 void InitSolidProp(Entity* self);
 void EntityWarpRedDoor(Entity* self);
 extern char g_WarpObtainedText[];
-extern s16 DAT_060E2218[];
+extern u32 g_WarpGoldPrizes[10];
 extern u16 g_WarpAlucardSubweaponIds[];
 void CheckCollision(s32 x, s32 y, Collider* res, u16 unk);
 void MoveEntity(Entity* self);
@@ -117,9 +117,9 @@ void func_060DCF5C(u16 arg0);
 extern u8 g_CastleFlags[0x300];
 extern u8 DAT_0608FFF8[];
 extern Tilemap g_Tilemap;
-void func_060DE8B4(Entity* self);
+void EntityWarpHeartDrop(Entity* self);
 void func_060DF938(Entity* self);
-void func_060E0364(Entity* self);
+void EntityWarpUnkId13(Entity* self);
 /* End moved declarations */
 
 extern s16 g_ExplosionVariantSizes[];

@@ -296,7 +296,7 @@ mod test {
                 PAL_NONE, // implicit zero
                 PAL_A = 0x200,
                 PAL_B,
-            #ifdef VERSION_PSP
+            #if TARGET == TARGET_PSP
                 PAL_C = 10, /* decimal */
             #endif
                 PAL_D = PAL_A + 4,

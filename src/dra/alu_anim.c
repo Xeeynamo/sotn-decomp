@@ -276,7 +276,7 @@ u32 UpdateAnim(s8* frameProps, AnimationFrame** anims) {
     s32 ret;
 #endif
 
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP || defined(PLATFORM_PSYZ)
     if (!g_CurrentEntity->anim) {
         return -1;
     }

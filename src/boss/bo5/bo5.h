@@ -84,7 +84,7 @@ enum BossMgrState {
     BOSS_MGR_TERMINATED = 4, // boss is dead, entity got destroyed
 };
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(BACKGROUND_BLOCK);
 extern s32 E_ID(LOCK_CAMERA);
 extern s32 E_ID(UNK_ID13);

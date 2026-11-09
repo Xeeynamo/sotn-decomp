@@ -69,7 +69,6 @@ _g_Stage14RoomGraphics = 0x060E7DC8;
 _g_Stage14LayerSetup = 0x060E7DD8;
 _g_Stage14LayerSetupPadding = 0x060E7DEA;
 _g_Stage14Rooms = 0x060E7DEC;
-_g_Stage14RoomsTerminator = 0x060E7DFE;
 _g_Stage14EntityEntry25 = 0x060E7E00;
 _g_Stage14EntityEntry26 = 0x060E7E08;
 _g_Stage14EntityEntry27 = 0x060E7E10;

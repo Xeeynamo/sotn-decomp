@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rdai.h"
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 u8 gfx_2FC0[] = {
 #include "gen/gfx_2FC0.h"
 };

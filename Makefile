@@ -63,7 +63,6 @@ ASMDIFFER_APP	:= $(TOOLS_DIR)/asm-differ/diff.py
 M2CTX_APP       := $(TOOLS_DIR)/m2ctx.py
 M2C_APP         := $(TOOLS_DIR)/m2c/m2c.py
 PERMUTER_APP	:= $(TOOLS_DIR)/decomp-permuter
-MASPSX_APP      := $(TOOLS_DIR)/maspsx/maspsx.py
 PSPAS           := $(TOOLS_DIR)/pspas/target/release/pspas
 SOTNDISK        := bin/sotn-disk
 SOTNASSETS      := bin/sotn-assets
@@ -82,10 +81,8 @@ M2C_DIR         := $(TOOLS_DIR)/m2c
 M2C_APP         := $(M2C_DIR)/m2c.py
 M2C             := $(PYTHON) $(M2C_APP)
 M2C_ARGS        := -P 4
-MASPSX_DIR      := $(TOOLS_DIR)/maspsx
-MASPSX_APP      := $(MASPSX_DIR)/maspsx.py
 
-DEPENDENCIES	= $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(MIPSMATCH_APP) python-dependencies
+DEPENDENCIES	= $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MIPSMATCH_APP) python-dependencies
 
 SOTNDISK_SOURCES   := $(shell find tools/sotn-disk -name '*.go')
 SOTNASSETS_SOURCES := $(shell find tools/sotn-assets -name '*.go')
@@ -96,7 +93,7 @@ endif
 
 ##@ Variables
 ##@
-##@     VERSION              the game version to build (us, hd, pspeu, saturn, pc) (Default: us)
+##@     VERSION              the game version to build (us, hd, jp10, jp11, jp12, usproto, eu, hk, pspeu, saturn, pc) (Default: us)
 ##@
 ##@ Primary Targets
 ##@
@@ -118,12 +115,18 @@ extract: ##@ extract assets
 extract: extract_$(VERSION)
 extract_us: extract_assets
 extract_hd: extract_assets
+extract_jp10: extract_assets
+extract_jp11: extract_assets
+extract_jp12: extract_assets
+extract_usproto: extract_assets
+extract_eu: extract_assets
+extract_hk: extract_assets
 extract_pspeu: extract_assets
 
 .PHONY: build
 build: ##@ build game files
 build: build_$(VERSION)
-build_us build_hd build_pspeu build_saturn:
+build_us build_hd build_jp10 build_jp11 build_jp12 build_usproto build_eu build_hk build_pspeu build_saturn:
 	@./sotn.sh build $(subst build_,,$@)
 .PHONY: build_all
 build_all:
@@ -269,9 +272,6 @@ $(M2C_APP):
 	git submodule init $(M2C_DIR)
 	git submodule update $(M2C_DIR)
 	$(PYTHON) -m pip install --upgrade pycparser
-$(MASPSX_APP):
-	git submodule init $(MASPSX_DIR)
-	git submodule update $(MASPSX_DIR)
 
 $(MIPSMATCH_DIR)/target/release/mipsmatch: $(MIPSMATCH_DIR) $(shell find $(MIPSMATCH_DIR)/src $(MIPSMATCH_DIR)/Cargo.* -type f)
 	git submodule init $(MIPSMATCH_DIR)
@@ -382,11 +382,11 @@ disks/sotn.%.bin disks/sotn.%.cue:
 # They are grouped in the general order you will find the targets in the file.
 PHONY: # Since .PHONY reads % as a literal %, we need this target as a prereq to treat pattern targets as .PHONY
 PHONY_TARGETS += all all-clean clean $(addprefix CLEAN_,$(CLEAN_FILES)) extract build patch expected
-PHONY_TARGETS += dump-disk $(addprefix dump-disk_,eu hk jp10 jp11 saturn us usproto) extract-disk disk disk-prepare disk-debug
+PHONY_TARGETS += dump-disk $(addprefix dump-disk_,eu hk jp10 jp11 jp12 saturn us usproto) extract-disk disk disk-prepare disk-debug
 PHONY_TARGETS += force-symbols $(addprefix FORCE_,$(FORCE_SYMBOLS)) force-extract context function-finder duplicates-report
 PHONY_TARGETS += git-submodules update-dependencies update-dependencies-all $(addprefix dependencies_,us pspeu hd saturn) requirements-python graphviz
 PHONY_TARGETS += help get-debug get-phony get-silent
-MUFFLED_TARGETS += $(PHONY_TARGETS) $(MASPSX_APP) $(EXTRACTED_DISK_DIR)
+MUFFLED_TARGETS += $(PHONY_TARGETS) $(EXTRACTED_DISK_DIR)
 MUFFLED_TARGETS += $(ASMDIFFER) $(dir $(M2C_APP)) $(M2C_APP) $(PERMUTER_APP) $(SOTNDISK) $(SOTNASSETS) $(VENV_DIR) $(VENV_DIR)/bin
 .PHONY: $(PHONY_TARGETS)
 # Specifying .SILENT in this manner allows us to set the DEBUG environment variable and display everything for debugging

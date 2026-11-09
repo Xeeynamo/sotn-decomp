@@ -28,7 +28,7 @@ Weapon WeaponOverlay = {
     WeaponUnused3C,
 };
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 // TODO: this should be WEAPON0_PTR
 #ifdef WEAPON0
 extern void D_8017A000[];
@@ -39,9 +39,9 @@ extern void D_8017D000[];
 #endif
 
 void WeaponLoad(void) { memcpy(&WEAPON_PTR, &WeaponOverlay, sizeof(Weapon)); }
-#endif // VERSION_PSP
+#endif // TARGET == TARGET_PSP
 
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
 #include <psyz/module.h>
 #include <string.h>
 
@@ -51,4 +51,4 @@ void Psyz_ModuleStart(void* param) {
 }
 
 void Psyz_ModuleStop(void) {}
-#endif // VERSION_PC
+#endif // PLATFORM_PSYZ

@@ -4,7 +4,7 @@
 #include <gen/dre_tilemap_0.h>
 #include <gen/dre_tilemap_1.h>
 
-#ifdef VERSION_US
+#if VERSION == VER_US
 #include <gen/dre_tiledef_load.h>
 #endif
 

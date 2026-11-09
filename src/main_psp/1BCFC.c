@@ -806,7 +806,7 @@ static void func_psp_0891CDE0(u16* clut, s32 x, s32 y) {
     LoadClut8bpp(x, y, 0x100, clut);
 }
 
-static void func_psp_0891CEB8(s32 x, s32 y) {
+void func_psp_0891CEB8(s32 x, s32 y) {
     RECT rect;
 
     rect.x = x;

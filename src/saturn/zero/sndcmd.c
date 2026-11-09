@@ -2,7 +2,10 @@
 #include "sattypes.h"
 #include "zero/sound.h"
 
-u32 D_060440D0[18] = {0};
+u32 D_060440D0[14] = {0};
+s32 DAT_06044108 = 0;
+s32 DAT_0604410C = 0;
+u32 D_06044110[2] = {0};
 u16 D_06044118 = 0;
 
 SaturnSoundCommandConfig g_SaturnSoundCommands[93] = {
