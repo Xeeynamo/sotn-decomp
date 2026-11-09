@@ -844,6 +844,15 @@ void FlushVramTransfers(void) {
     s32 i;
 
     ptr = DAT_060576B0;
+#ifdef SATZ
+    for (i = 0; i < DAT_06057770; i++, ptr++) {
+        DMA_ScuMemCopy(
+            satz_bus_pointer((u32)(uptr)ptr->dst), ptr->src, ptr->size);
+        while (DMA_ScuResult() == 2) {
+        }
+    }
+    return;
+#endif
     for (i = 0; i < DAT_06057770; i++, ptr++) {
         s32 temp_r2 = (uptr)ptr->src & 0x0FF00000;
         if (temp_r2 == 0x00200000) {
