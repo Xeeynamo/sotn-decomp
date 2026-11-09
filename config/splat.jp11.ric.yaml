@@ -11,7 +11,6 @@ options:
   compiler:     GCC
   symbol_addrs_path:
     - config/symbols.jp10.txt
-    - config/symbols.jp11.ric.txt
   undefined_funcs_auto_path: build/jp11/config/undefined_funcs_auto.jp11.ric.txt
   undefined_syms_auto_path:  build/jp11/config/undefined_syms_auto.jp11.ric.txt
   find_file_boundaries: yes

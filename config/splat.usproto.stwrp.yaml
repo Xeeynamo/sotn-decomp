@@ -1,0 +1,89 @@
+options:
+  platform:     psx
+  basename:     stwrp
+  base_path:    ..
+  build_path:   build/usproto
+  target_path:  disks/usproto/ST/WRP/WRP.BIN
+  asm_path:     asm/usproto/st/wrp
+  asset_path:   assets/st/wrp
+  src_path:     src/st/wrp
+  ld_script_path: build/usproto/stwrp.ld
+  compiler:     GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+  undefined_funcs_auto_path: build/usproto/config/undefined_funcs_auto.usproto.stwrp.txt
+  undefined_syms_auto_path:  build/usproto/config/undefined_syms_auto.usproto.stwrp.txt
+  find_file_boundaries: yes
+  use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
+  asm_jtbl_label_macro: jlabel
+  extensions_path: tools/splat_ext
+  disassemble_all: true
+  global_vram_start: 0x80010000
+  section_order:
+    - ".data"
+    - ".rodata"
+    - ".text"
+    - ".bss"
+    - ".sbss"
+  ld_generate_symbol_per_data_segment: true
+sha1: 87afcda936a9cc9c71d19dfb826afedf4f2d15eb
+segments:
+  - name: stwrp
+    type: code
+    start: 0x00000000
+    vram:  0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, .data, header]
+      - [0x40, .data, sprite_banks]
+      - [0xA0, .data, cluts]
+      - [0xB8, .data, layers]
+      - [0x1B8, .data, graphics_banks]
+      - [0x23C, .data, gen/e_laydef]
+      - [0x3E4, .data, e_init]
+      - [0x4D0, .data, background_block_init]
+      - [0x508, .data, e_red_door_tiles]
+      - [0x528, .data, e_lock_camera]
+      - [0x5A8, .data, e_breakable]
+      - [0x608, .data, d_prize_drops]
+      - [0x648, .data, warp]
+      - [0x670, .data, st_update]
+      - [0x6BC, .data, collision]
+      - [0xA7C, .data, e_red_door]
+      - [0xA94, .data, st_common]
+      - [0xC94, .data, e_collect]
+      - [0xF84, .data, e_misc]
+      - [0xFE8, .data, e_particles]
+      - [0x1124, .data, e_room_fg]
+      - [0x11B0, .data, gen/rooms]
+      - [0x122C, .data, gen/e_layout]
+      - [0x1424, .data, stage_data]
+      - [0x6D8C, .data, gen/usproto/sprites]
+      - [0x6E34, .rodata, warp]
+      - [0x6EAC, .rodata, e_red_door]
+      - [0x6EC4, .rodata, e_collect]
+      - [0x6F4C, .rodata, e_misc]
+      - [0x6F98, .rodata, e_stage_name]
+      - [0x6FAC, .rodata, prim_helpers]
+      - [0x6FB4, c, e_room_bg]
+      - [0x7094, c, e_lock_camera]
+      - [0x7250, c, e_breakable]
+      - [0x7384, c, warp]
+      - [0x81CC, c, st_update]
+      - [0x8600, c, collision]
+      - [0x9DBC, c, create_entity]
+      - [0xA934, c, e_red_door]
+      - [0xB5E4, c, st_common]
+      - [0xCA94, c, e_collect]
+      - [0xF404, c, e_misc]
+      - [0x117A0, c, e_stage_name]
+      - [0x11EC8, c, e_particles]
+      - [0x1270C, c, e_room_fg]
+      - [0x127F8, c, popup]
+      - [0x12B28, c, prim_helpers]
+      - [0x13368, .bss, create_entity]
+      - [0x13378, .bss, bss]
+      - [0x13FE0, .bss, e_collect]
+  - [0x14020]

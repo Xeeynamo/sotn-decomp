@@ -158,7 +158,9 @@ void EntityWarpRoom(Entity* self) {
             g_Player.padSim = 0;
             g_Player.demo_timer = 128;
             g_PauseAllowed = false;
-#if VERSION == VER_US
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
+            // bugfix: solve a bug where the warp gets glitchy if you dash and
+            // press UP immediately
             PLAYER.velocityX = 0;
             PLAYER.velocityY = 0;
 #endif
