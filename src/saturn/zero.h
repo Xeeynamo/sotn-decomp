@@ -438,17 +438,29 @@ typedef struct {
 } unkStruct;
 
 typedef struct {
+    s32 unk0;
+    u32 unk4;
+    s32 unk8;
+    s16 unkC;
+    s16 unkE;
+    unkStruct unk10;
+} unkStruct2;
+
+typedef struct {
     s16 : 16;
-    s16 : 16;
+    s16 unk2;
     s32 unk4;
     s32 unk8;
     s32 unkC;
     s32 unk10;
     unkStruct unk14[6];
-    s32 unk8C[7]; // pad
-    s32 unkA8;
-    s32 unkAC[30]; // pad
-} UNK0605D910;     // size: 0x124
+    s32 unk8C[7];
+    unkStruct2 unkA8[3];
+    s32 unk114;
+    s32 unk118;
+    s32 unk11C;
+    s32 unk120;
+} UNK0605D910; // size: 0x124
 
 extern UNK0605D910 DAT_0605D910[2];
 extern char DAT_0605DD70[];

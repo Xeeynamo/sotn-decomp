@@ -454,7 +454,14 @@ void func_060078EC(s32 arg0) {
 
 s32 DAT_06038C5C = 0;
 
-SPR_2DefineWork(sp2WorkArea, 0x280, 0x304, 0x200, 1, 0x200);
+#define COMMAND_MAX 0x280
+#define GOUR_TBL_MAX 0x304
+#define LOOKUP_TBL_MAX 0x200
+#define CHAR_MAX 1
+#define DRAW_PRTY_MAX 0x200
+
+SPR_2DefineWork(sp2WorkArea, COMMAND_MAX, GOUR_TBL_MAX, LOOKUP_TBL_MAX,
+                CHAR_MAX, DRAW_PRTY_MAX);
 
 static s32 DAT_060576AC;
 
@@ -472,7 +479,7 @@ void InitSpriteEngine(s32 arg0) {
     DAT_0605BECA = 0;
     DAT_0605AEB0 = 0;
     DAT_0605AEA8 = 0;
-    DAT_0605BEC8 = 0x304;
+    DAT_0605BEC8 = GOUR_TBL_MAX;
     DAT_060576AC = 0;
     DAT_0605AEAC = (SprSpCmd*)sp2MstSpCmd;
     DAT_0605BEC4 = 0x11180;
@@ -523,7 +530,7 @@ u16 func_06007B34(SprLookupTbl* tbl) {
     u16 tblNo;
 
     tblNo = DAT_0605AEA8;
-    if (tblNo < 0x200) {
+    if (tblNo < LOOKUP_TBL_MAX) {
         if (tbl != NULL) {
             entry = tbl->entry;
             for (i = 0; i < 0x10; i++) {
@@ -531,7 +538,7 @@ u16 func_06007B34(SprLookupTbl* tbl) {
             }
             SPR_2SetLookupTbl(tblNo, tbl);
         }
-        DAT_0605AEA8 += 1;
+        DAT_0605AEA8++;
     }
     return tblNo;
 }
@@ -563,7 +570,7 @@ u16 func_06007BE0(s16* colors, s32 arg1) {
     SprLookupTbl lookupTbl;
 
     tblNo = DAT_0605AEA8;
-    if (tblNo > 0x1FFU) {
+    if (tblNo >= LOOKUP_TBL_MAX) {
         return tblNo;
     }
     if (DAT_0605AEB0 > 0x3E) {
@@ -582,7 +589,7 @@ u16 func_06007BE0(s16* colors, s32 arg1) {
 
         SPR_2SetLookupTbl(DAT_0605AEA8, &lookupTbl);
     }
-    DAT_0605AEA8 += 1;
+    DAT_0605AEA8++;
     DAT_0605AEB0++;
     return tblNo;
 }
@@ -592,7 +599,7 @@ u16 SprSetGourTbl(SprGourTbl* gourTbl) {
     u16 prev;
 
     prev = DAT_0605BEC8;
-    if (DAT_0605BEC8 < 0x304) {
+    if (DAT_0605BEC8 < GOUR_TBL_MAX) {
         SPR_2SetGourTbl(DAT_0605BEC8, gourTbl);
         DAT_0605BEC8++;
     }
@@ -608,7 +615,7 @@ void ResetSpriteVram() {
     DAT_0605BECA = 0;
     DAT_0605AEA8 = 0;
     DAT_0605AEB0 = 0;
-    DAT_0605BEC8 = 0x304;
+    DAT_0605BEC8 = GOUR_TBL_MAX;
     DAT_060576AC = 0;
     DAT_0605BEC4 = 0x11180;
     DAT_06038DBC = 0;
@@ -1746,7 +1753,16 @@ void SetCharTrans(u16 arg0, s32 arg1, s32 arg2) {
     QueueVramTransfer(VRAM_ADDR + DAT_0605AEC0[arg0][0] * 8, arg2, arg1);
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A29C, LookupTblNoToVramAddr);
+void LookupTblNoToVramAddr(u16 arg0, s32 arg1) {
+    s32 var_r2;
+
+    if (arg0 & 0x4000) {
+        var_r2 = SCL_COLRAM_ADDR + 0x800 + (arg0 & ~0x4000) * 0x20;
+    } else {
+        var_r2 = VRAM_ADDR + SPR_2LookupTblNoToVram(arg0 & 0xFFF) * 8;
+    }
+    QueueVramTransfer(var_r2, arg1, 0x20);
+}
 
 void func_0600A304(s32 gourTblNo, SprGourTbl* gourTbl) {
     SPR_2SetGourTbl(gourTblNo, gourTbl);
@@ -1764,8 +1780,8 @@ void func_0600A330(void) {
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A350, func_0600A350);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A490, func_0600A490);
 
-// MapBytesThroughLutPair
-void func_0600A5FC(u8* src, u8* dst0, u8* dst1, s32 count) {
+// func_0600A5FC
+void MapBytesThroughLutPair(u8* src, u8* dst0, u8* dst1, s32 count) {
     u8 value;
 
     while (count > 0) {
@@ -1789,26 +1805,24 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A77C, func_0600A77C);
 
 // original name: UpdateMirage
 void func_0600AA18(s32 arg0) {
-    unkStruct* var_r3;
-    UNK0605D910* var_r7;
-    unkStruct* var_r5;
-    s32 var_r0;
-    s32 var_r0_2;
+    s32 i, j, k;
     s32 var_r2_2;
-    s32 var_r6;
-    s16* temp_r4;
+    UNK0605D910* var_r7;
+    unkStruct2* temp_r4;
+    unkStruct* var_r3;
+    unkStruct* var_r5;
     unkStruct* var_r6_2;
 
-    if ((arg0 == 0) || (arg0 == 2)) {
+    if (arg0 == 0 || arg0 == 2) {
         if (arg0 == 2) {
             var_r3 = DAT_0605D910[1].unk14;
         } else {
             var_r3 = DAT_0605D910[0].unk14;
         }
-        for (var_r6 = 0; var_r6 < 6; var_r6++) {
-            for (var_r0 = 0; var_r0 < 5; var_r0++) {
-                var_r3->unk0[var_r0] = -1;
-                var_r3->unkA[var_r0] = 0;
+        for (i = 0; i < 6; i++) {
+            for (j = 0; j < 5; j++) {
+                var_r3->unk0[j] = -1;
+                var_r3->unkA[j] = 0;
             }
             var_r3++;
         }
@@ -1818,13 +1832,13 @@ void func_0600AA18(s32 arg0) {
         } else {
             var_r7 = &DAT_0605D910[0];
         }
-        temp_r4 = &var_r7->unkA8;
+        temp_r4 = &var_r7->unkA8[0];
         var_r5 = &var_r7->unk14[5];
         var_r6_2 = &var_r7->unk14[4];
-        for (var_r0_2 = 5; var_r0_2 > 0; var_r0_2--) {
+        for (k = 5; k > 0; k--) {
             *var_r5-- = *var_r6_2--;
         }
-        var_r7->unk14[0] = *((unkStruct*)&temp_r4[8]);
+        var_r7->unk14[0] = temp_r4->unk10;
         var_r2_2 = var_r7->unk8 + 1;
         if (var_r2_2 > 6) {
             var_r2_2 = 0;
@@ -2045,7 +2059,7 @@ void func_0600BD68(void) {
     node = g_SpriteListHead;
     func_0600A088();
     func_0600A77C(0, 0, NULL);
-    var_r9 = DAT_0605D910;
+    var_r9 = &DAT_0605D910[0];
     var_r11 = 4;
     for (i = 0; i < 2; i++) {
         if (var_r9->unk10 != 0) {
