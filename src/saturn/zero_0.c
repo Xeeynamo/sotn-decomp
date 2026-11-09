@@ -487,14 +487,14 @@ void InitSpriteEngine(s32 arg0) {
     DAT_06038C5C = 2;
 }
 
-u16 AllocSpriteCharVram(u16 arg0, s32 arg1, s16* size, void* src) {
+u16 AllocSpriteCharVram(u16 arg0, s32 arg1, XyInt* size, void* src) {
     u32 temp_r2;
     s32 dst;
     u32 var_r8;
     u16 temp_r10;
 
     temp_r10 = DAT_0605BECA;
-    var_r8 = size[0] * size[1];
+    var_r8 = size->x * size->y;
     if (arg0 == 0 || arg0 == 8) {
         var_r8 = var_r8 / 2;
     } else if (arg0 == 40) {
@@ -504,7 +504,7 @@ u16 AllocSpriteCharVram(u16 arg0, s32 arg1, s16* size, void* src) {
     if (DAT_0605BECA < 0x400) {
         u16* ptr = DAT_0605AEC0[DAT_0605BECA];
         ptr[0] = DAT_0605BEC4 / 8;
-        ptr[1] = (((u16)size[0] / 8) << 8) | size[1];
+        ptr[1] = (((u16)size->x / 8) << 8) | size->y;
         if (src != NULL) {
             dst = VRAM_ADDR + DAT_0605BEC4;
             temp_r2 = (uptr)src & 0x0FF00000;
@@ -2103,13 +2103,13 @@ void func_0600BE7C(void) {
 }
 
 void func_0600BEA8(void) {
-    s16 size[2];
+    XyInt size;
     Unk0605DB60* entry;
     s32 i;
 
-    size[0] = 0x80;
-    size[1] = 0x40;
-    AllocSpriteCharVram(8, 0, size, NULL);
+    size.x = 0x80;
+    size.y = 0x40;
+    AllocSpriteCharVram(8, 0, &size, NULL);
 
     entry = d_0605DB60;
 
@@ -2123,42 +2123,42 @@ void func_0600BEA8(void) {
 }
 
 void func_0600BF08(void) {
-    s16 size[2];
+    XyInt size;
 
-    size[0] = 0x60;
-    size[1] = 0x80;
-    AllocSpriteCharVram(8, 0, size, NULL);
+    size.x = 0x60;
+    size.y = 0x80;
+    AllocSpriteCharVram(8, 0, &size, NULL);
 }
 
 void func_0600BF38(void) {
-    s16 size[2];
+    XyInt size;
     s32 i;
 
-    size[0] = 0x80;
-    size[1] = 0x50;
+    size.x = 0x80;
+    size.y = 0x50;
     for (i = 0; i < 8; i++) {
-        AllocSpriteCharVram(8, 0, size, NULL);
+        AllocSpriteCharVram(8, 0, &size, NULL);
     }
     func_0600AB60();
 }
 
 void func_0600BF8C(void) {
-    s16 size[2];
+    XyInt size;
     s32 i;
 
-    size[0] = 0x100;
-    size[1] = 0x80;
+    size.x = 0x100;
+    size.y = 0x80;
     for (i = 0; i < 2; i++) {
-        AllocSpriteCharVram(8, 0, size, NULL);
+        AllocSpriteCharVram(8, 0, &size, NULL);
     }
 }
 
 void func_0600BFD8(void) {
-    s16 size[2];
+    XyInt size;
 
-    size[0] = 0x100;
-    size[1] = 0xA0;
-    AllocSpriteCharVram(8, 0, size, NULL);
+    size.x = 0x100;
+    size.y = 0xA0;
+    AllocSpriteCharVram(8, 0, &size, NULL);
 }
 
 void func_0600C00C(void) {
@@ -2192,7 +2192,7 @@ void func_0600C00C(void) {
     DAT_06038FD4 = DAT_0605BECA;
 }
 
-void func_0600C0C4(int arg0) {
+void func_0600C0C4(s32 arg0) {
     if (arg0 == 0) {
         DAT_0605BECA = 10;
         DAT_060645D4[0]->allocationIndex = 10;
