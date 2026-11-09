@@ -905,7 +905,6 @@
 | zero/f_nonmat/f601449C.s        | func_0601449C   |       57 |          2 |       |     |
 | zero/f_nonmat/f600C818.s        | func_0600C818   |       57 |          3 |       |     |
 | zero/f_nonmat/f6012C4C.s        | func_06012C4C   |       57 |          5 |       |     |
-| zero/f_nonmat/f600A29C.s        | func_0600A29C   |       59 |          4 |       |     |
 | title/f_nonmat/f60A8A58.s       | func_060A8A58   |       60 |          2 |       |     |
 | alucard/f_nonmat/f60ADD74.s     | func_060ADD74   |       60 |          3 |       |     |
 | zero/f_nonmat/f600F7BC.s        | func_0600F7BC   |       60 |          6 |       |     |
