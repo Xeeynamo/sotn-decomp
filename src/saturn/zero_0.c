@@ -1753,15 +1753,15 @@ void SetCharTrans(u16 arg0, s32 arg1, s32 arg2) {
     QueueVramTransfer(VRAM_ADDR + DAT_0605AEC0[arg0][0] * 8, arg2, arg1);
 }
 
-void LookupTblNoToVramAddr(u16 arg0, s32 arg1) {
-    s32 var_r2;
+void LookupTblNoToVramAddr(u16 tableNo, u8* src) {
+    u32 dst;
 
-    if (arg0 & 0x4000) {
-        var_r2 = SCL_COLRAM_ADDR + 0x800 + (arg0 & ~0x4000) * 0x20;
+    if (tableNo & 0x4000) {
+        dst = SCL_COLRAM_ADDR + 0x800 + (tableNo & ~0x4000) * 0x20;
     } else {
-        var_r2 = VRAM_ADDR + SPR_2LookupTblNoToVram(arg0 & 0xFFF) * 8;
+        dst = VRAM_ADDR + SPR_2LookupTblNoToVram(tableNo & 0xFFF) * 8;
     }
-    QueueVramTransfer(var_r2, HOST_TO_BUS16(arg1, 0x20), 0x20);
+    QueueVramTransfer(dst, HOST_TO_BUS16(src, 0x20), 0x20);
 }
 
 void func_0600A304(s32 gourTblNo, SprGourTbl* gourTbl) {
