@@ -111,7 +111,7 @@ s32 func_060BA9A0(Entity* entity, s32 arg);
 void func_060B7994(void);
 void func_060B7A6C(void);
 long ratan2(long dx, long dy);
-s32 func_0606FFC8(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+s32 func_800FE8F0(void);
 
 typedef struct {
     u32 unk0;
