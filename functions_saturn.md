@@ -1048,7 +1048,6 @@
 | weapon/w_19/f_nonmat/f60D6060.s | func_060D6060   |      112 |          8 |       |     |
 | weapon/w_44/f_nonmat/f60D6060.s | func_060D6060   |      112 |          8 |       |     |
 | weapon/w_59/f_nonmat/f60D6060.s | func_060D6060   |      112 |          8 |       |     |
-| zero/f_nonmat/f600AEE4.s        | func_0600AEE4   |      112 |         16 |       |     |
 | alucard/f_nonmat/f60AF050.s     | func_060AF050   |      113 |          3 |       |     |
 | zero/f_nonmat/f601A020.s        | func_0601A020   |      113 |          5 |       |     |
 | weapon/w_20/f_nonmat/f60D6060.s | func_060D6060   |      113 |          8 |       |     |
