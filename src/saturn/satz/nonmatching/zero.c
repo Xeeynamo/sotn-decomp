@@ -1006,6 +1006,21 @@ SpriteObject* AllocSpriteObject(void) {
     return obj;
 }
 
+void func_0600B0B8(SpritePart* part, void* arg1, s32 count) {
+    SaturnSpritePart* src = arg1;
+    s32 i;
+
+    for (i = 0; i < count; i++, src++, part = part->next) {
+        u16 attributes =
+            (part->attributes & 0xE080) | (src->attributes & 0x1F7F);
+        part->attributes = src->attributes;
+        part->offsetX = src->offsetX;
+        part->offsetY = src->offsetY;
+        part->imageIndex = src->imageIndex;
+        part->attributes = attributes;
+    }
+}
+
 void func_0600B254(void) {
     SpriteObject* obj;
     SpritePart* part;

@@ -266,3 +266,28 @@ void satz_app_frame(uint64_t frame) {
         DAT_0605D7F8 = 1;
     }
 }
+
+void sotn_satz_equip(void) {
+    static int done;
+    const char* v = getenv("SOTN_SATZ_EQUIP");
+    char* end;
+    int i;
+
+    if (done) {
+        return;
+    }
+    done = 1;
+    if (getenv("SOTN_SATZ_EQUIP_LOG")) {
+        for (i = 0; i < 8; i++) {
+            fprintf(stderr, "equip[%d] = %#x\n", i,
+                    (unsigned)g_Status.equipment[i]);
+        }
+    }
+    for (i = 0; v && *v && i < 8; i++) {
+        g_Status.equipment[i] = strtoul(v, &end, 0);
+        if (end == v) {
+            satz_die("SOTN_SATZ_EQUIP: want numbers");
+        }
+        v = end;
+    }
+}

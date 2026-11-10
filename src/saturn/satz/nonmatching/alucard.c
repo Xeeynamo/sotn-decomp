@@ -541,6 +541,103 @@ static void sit_down(void) {
     D_060C84E4 = 0x1800;
 }
 
+int ReduceWeapon(s32 hand);
+
+void func_060A6688(s32 arg0) {
+    PLAYER.step = 0x12;
+    PLAYER.step_s = arg0;
+    set_anim(arg0 & 1 ? 0xD7 : 0xD6);
+    g_Player.padSim = 0;
+    g_Player.demo_timer = 8;
+    if (!arg0) {
+        g_pads[0].pressed = 0;
+    }
+}
+
+Entity* func_060A66FC(Equipment* item, s32 hand) {
+    s32 equipId = g_Status.equipment[hand];
+    Entity* e;
+    s32 i;
+
+    if (item->unk14 == 0x14) {
+        if (PLAYER.step <= 1 || PLAYER.step == 0x13 || PLAYER.step == 2) {
+            func_060A6688(0);
+            ReduceWeapon(hand);
+            return &g_Entities[0];
+        }
+        return NULL;
+    }
+    for (e = &g_Entities[32], i = 32; i < 64; i++, e++) {
+        if (e->entityId == 0x27) {
+            return NULL;
+        }
+    }
+    return func_060BAF44(
+        g_CurrentEntity, (((item->unk14 & 0x7F) + hand * 0x80) << 16) + 0x37,
+        (s16)equipId);
+}
+
+s32 func_060A67B8(void) {
+    s32 atLedge = (g_Player.vram_flag & 0x20) ? 1 : 0;
+    s32 equipId = g_Status.equipment[2];
+    Equipment* item = &g_EquipDefs[equipId];
+    Entity* made = NULL;
+    Entity* e;
+    s32 anim;
+    s32 n;
+    s32 i;
+
+    for (e = &g_Entities[16], i = 16, n = 0; i < 64; i++, e++) {
+        if (e->ext.weapon.equipId == equipId && ++n >= item->chainLimit) {
+            return 0;
+        }
+    }
+    if (item->unk13 == 0x37) {
+        made = func_060A66FC(item, 2);
+        if (made == &g_Entities[0]) {
+            return 1;
+        }
+        if (PLAYER.step_s < 0x40 && PLAYER.step == 0) {
+            set_anim(item->playerAnim + atLedge);
+        }
+    } else if (item->unk13 == 0x80) {
+        for (e = &g_Entities[32], i = 32, n = 0; i < 64; i++, e++) {
+            if (e->entityId == 0x48) {
+                n++;
+            }
+        }
+        if (n > 1) {
+            return 0;
+        }
+        made =
+            func_060BAF44(g_CurrentEntity, ((item->unk14 & 0x7F) << 16) | 0x80,
+                          (s16)g_Status.equipment[2]);
+        if (PLAYER.step_s < 0x40) {
+            anim = item->playerAnim;
+            if (PLAYER.step == 0) {
+                set_anim(anim + atLedge);
+            } else if (PLAYER.step == 2) {
+                if (g_Player.unk72) {
+                    set_anim(anim + 2);
+                } else if (PLAYER.step_s == 2) {
+                    PLAYER.step = 0;
+                    PLAYER.step_s = 0;
+                    set_anim(anim + atLedge);
+                } else {
+                    set_anim(anim + 2);
+                }
+            }
+        }
+    }
+    if (made == NULL) {
+        return 0;
+    }
+    if (made != &g_Entities[0]) {
+        ReduceWeapon(2);
+    }
+    return 1;
+}
+
 static s32 pressing_back(void) {
     return (g_Entities[0].facingLeft && (g_Player.padPressed & 0x8000)) ||
            (!g_Entities[0].facingLeft && (g_Player.padPressed & 0x4000));
@@ -2594,6 +2691,192 @@ void func_060B0310(void) {
     }
 }
 
+typedef struct {
+    /* 0x78 */ s16 timer;
+    /* 0x7A */ u8 pad7A[2];
+    /* 0x7C */ s32 bounce;
+} AluFoodExt;
+#define ALU_FOOD(e) ((AluFoodExt*)&(e)->ext)
+
+extern SaturnSpriteImage g_SaturnSharedSpriteBank10Images[];
+extern SaturnSpriteFrameHeader* g_SaturnSharedSpriteBank10Frames[];
+s32 func_060B24E0(Entity* self, s32 landed);
+void func_060A5614(s32 amount);
+void func_060B2B30(Entity* self);
+void func_060C1618(Entity* self);
+
+static void food_got(Entity* self, u16 padSim) {
+    s32 id = (self->params >> 8) & 0x7F;
+
+    if (id == 7 || id == 0x29) {
+        ALU_FOOD(self)->timer = 0xC;
+        self->animCurFrame = 0;
+        self->step = 4;
+        g_Player.padSim = padSim;
+        g_Player.demo_timer = 0x14;
+        return;
+    }
+    if (g_Player.healKind) {
+        ALU_FOOD(self)->timer = 8;
+        self->animCurFrame = 0;
+        self->step = 3;
+        return;
+    }
+    g_Player.healKind = 1;
+    g_Player.healAmount = self->attack;
+    DestroyEntity(self);
+}
+
+void func_060B25F4(Entity* self) {
+    AluFoodExt* ext = ALU_FOOD(self);
+    SpriteObject* sprite;
+    Collider col;
+    s32 id = (self->params >> 8) & 0x7F, v, dx;
+
+    switch (self->step) {
+    case 0:
+        sprite = CreateSpriteObject(
+            g_SaturnSharedSpriteBank10Resource.allocationIndex,
+            g_SaturnSharedSpriteBank10Resource.flags,
+            g_SaturnSharedSpriteBank10Images, 1);
+        self->unk0 = sprite;
+        if (!sprite) {
+            DestroyEntity(self);
+            return;
+        }
+        self->ext.spriteEntity.frames = g_SaturnSharedSpriteBank10Frames;
+        sprite->zPriority = PLAYER.zPriority + 2;
+        self->animSet = 0x8010;
+        self->palette = 0x110;
+        self->unk56 = 0x64;
+        if (id == 0x2B) {
+            self->params = (rand() % 43 + 0x1D) << 8;
+            self->step = 0x100;
+            return;
+        }
+        self->facingLeft = PLAYER.facingLeft;
+        self->flags = 0x08000000;
+        self->animCurFrame = id + 1;
+        self->posY.i.hi -= 4;
+        v = (MTH_GetRand() & 0x3FFF) + 0xE000;
+        self->velocityX = self->facingLeft == 1 ? -v : v;
+        self->velocityY = -0x20000;
+        if (id == 6) {
+            self->posX.i.hi += self->facingLeft ? -8 : 8;
+            v = (MTH_GetRand() & 0xFFF) + 0x1000;
+            self->velocityX = self->facingLeft == 1 ? -v : v;
+            self->velocityY = -0x58000;
+            ext->bounce = 0xFFFA8000;
+        }
+        self->attack = g_EquipDefs[self->ext.factory.argLow].attack;
+        if (g_Player.unk48) {
+            DestroyEntity(&g_Entities[16]);
+            g_Player.unk48 = 0;
+        }
+        self->facingLeft = 0;
+        self->hitboxWidth = 8;
+        self->hitboxHeight = 8;
+        self->step++;
+        break;
+    case 1:
+        if (func_060B24E0(self, 0)) {
+            food_got(self, 0x2000);
+            if (!self->entityId) {
+                return;
+            }
+            break;
+        }
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        self->velocityY += 0x2800;
+        CheckCollision(self->posX.val, self->posY.val + 0x80000, &col, 0);
+        if (col.effects & 1) {
+            self->posY.val += col.unk18;
+            if (id != 6) {
+                ext->timer = 0x80;
+                self->step++;
+                break;
+            }
+            ext->bounce /= 2;
+            self->velocityY = ext->bounce;
+            if (ext->bounce > (s32)0xFFFF0000) {
+                DestroyEntity(self);
+                return;
+            }
+            self->posY.val += ext->bounce;
+        }
+        dx = self->velocityX < 0 ? -0x40000 : 0x40000;
+        CheckCollision(self->posX.val + dx, self->posY.val, &col, 0);
+        if (col.effects & 2) {
+            self->posX.val += dx < 0 ? col.unkC : col.unk4;
+            self->velocityX = -(self->velocityX / 2);
+            if (id == 6) {
+                DestroyEntity(self);
+                return;
+            }
+        }
+        CheckCollision(
+            self->posX.val,
+            self->posY.val + (id == 6 ? (s32)0xFFFC0000 : (s32)0xFFF80000),
+            &col, 0);
+        if (col.effects & 1) {
+            self->posY.val += 1 + col.unk20;
+            self->velocityY = 0x10000;
+            self->velocityX /= 2;
+        }
+        break;
+    case 2:
+        func_060A5614(0x4800);
+        self->posX.val += self->velocityX;
+        if (func_060B24E0(self, 1)) {
+            food_got(self, 0);
+            if (!self->entityId) {
+                return;
+            }
+            break;
+        }
+        if (ext->timer == 0x18) {
+            self->drawFlags |= 0x80;
+        }
+        if (--ext->timer == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    case 3:
+        if (--ext->timer == 0) {
+            if (!g_Player.healKind) {
+                g_Player.healKind = 1;
+                g_Player.healAmount = self->attack;
+                DestroyEntity(self);
+                return;
+            }
+            ext->timer = 8;
+        }
+        break;
+    case 4:
+        if (--ext->timer == 0) {
+            PLAYER.hitParams = 0x81;
+            PLAYER.hitPoints = 0;
+            PLAYER.hitboxState = 0;
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    case 5:
+    case 6:
+        if (self->step == 5 || --ext->timer == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    default:
+        func_060B2B30(self);
+        return;
+    }
+    func_060C1618(self);
+}
+
 void func_060B3024(void) {
     Collider c;
     s32 i = 0, lift = 0, abs_vx, r7, room;
@@ -2976,6 +3259,243 @@ void func_060B3A90(void) {
     }
 }
 
+typedef struct {
+    /* 0x78 */ u8 digits[4];
+    /* 0x7C */ u16 number;
+    /* 0x7E */ s16 type;
+    /* 0x80 */ s16 nDigits;
+    /* 0x82 */ u8 pad82[6];
+    /* 0x88 */ s16 w;
+    /* 0x8A */ s16 h;
+    /* 0x8C */ s16 timer;
+    /* 0x8E */ s16 x2;
+    /* 0x90 */ s16 angle;
+    /* 0x92 */ u8 pad92[2];
+    /* 0x94 */ s16 spin;
+    /* 0x96 */ u8 pad96[2];
+    /* 0x98 */ s32 dist;
+} AluHPNumExt;
+#define ALU_HPNUM(e) ((AluHPNumExt*)&(e)->ext)
+
+static u16 res_clut(u16 f) {
+    return ((f >> 14) & 1) ? LocalLookupTblNoToVram(f & 0xFFF)
+                           : SPR_2LookupTblNoToVram(f & 0xFFF);
+}
+
+void func_060B9694(Entity* self) {
+    AluHPNumExt* ext = ALU_HPNUM(self);
+    SaturnSpriteResource* res = DAT_060645EC[4];
+    Primitive* p;
+    s32 spark = -1, i, w, h, x, xb, yt, yb, r, k, tx, ty;
+    u16 n;
+    s16 a;
+
+    switch (self->step) {
+    case 0:
+        n = ext->number;
+        self->primIndex = AllocPrimitives(2, 0x14);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = 0x04810000;
+        ext->w = 0;
+        ext->h = 2;
+        ext->timer = 8;
+        ext->digits[0] = n % 10;
+        if (n /= 10) {
+            ext->digits[1] = n % 10;
+            ext->nDigits++;
+            if (n /= 10) {
+                ext->digits[2] = n % 10;
+                ext->nDigits++;
+                if (n /= 10) {
+                    ext->digits[3] = n % 10;
+                    ext->nDigits++;
+                }
+            }
+        }
+        p = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 4; i++, p = p->next) {
+            if (!ext->digits[i]) {
+                ext->digits[i] = 10;
+            }
+            k = 6;
+            if (!ext->number) {
+                k = 7;
+            }
+            if (ext->type == 1) {
+                k = 8;
+            }
+            if (ext->type == 2) {
+                k = 0;
+            }
+            p->unk6 = res_clut(k + res->flags);
+            p->unk4 &= ~0x38;
+            p->unk6 = (p->unk6 & ~0x7000) | 0x4000;
+            p->unk8 =
+                DAT_0605AEC0[ext->digits[i] + 3 + res->allocationIndex][0];
+            p->unkA =
+                DAT_0605AEC0[ext->digits[i] + 3 + res->allocationIndex][1];
+            if (i > ext->nDigits) {
+                p->drawMode = 8;
+            }
+            p->priority = 0xE2;
+        }
+        for (i = 0; i < 16; i++, p = p->next) {
+            p->type = 0x1004;
+            p->unk4 = 0x4C0;
+            p->priority = 0x92;
+            p->unk6 = 0xA11F;
+            if (!ext->number) {
+                p->unk6 = 0xFD08;
+            }
+            if (ext->type == 1) {
+                p->unk6 = 0xA3E8;
+            }
+            if (ext->type == 2) {
+                p->unk6 = 0xFD1F;
+            }
+            p->drawMode = 0xA;
+        }
+        self->step++;
+        break;
+    case 1:
+    case 3:
+        ext->w++;
+        ext->h++;
+        if (ext->type != 2) {
+            self->posY.i.hi--;
+        }
+        if (--ext->timer == 0) {
+            ext->timer = self->step == 1 ? 8 : 3;
+            self->step++;
+        }
+        break;
+    case 2:
+        ext->w--;
+        ext->h--;
+        if (ext->w == 4) {
+            self->step++;
+            ext->timer = 4;
+        }
+        break;
+    case 4:
+        ext->w--;
+        ext->h--;
+        if (ext->w == 5) {
+            ext->timer = 0x18;
+            self->step++;
+        }
+        break;
+    case 5:
+        if (--ext->timer == 0) {
+            tx = self->posX.i.hi - 0xD;
+            ty = self->posY.i.hi - 0x46;
+            ext->angle = ratan2(-ty, tx) & 0xFFF;
+            ext->dist = SquareRoot0(tx * tx + ty * ty);
+            ext->timer = 0x10;
+            ext->spin = 0;
+            self->step++;
+        }
+        break;
+    case 6:
+        if (ext->w != 2) {
+            ext->w--;
+            ext->h--;
+        }
+        spark = --ext->timer;
+        a = ext->angle;
+        r = (u32)(ext->dist * spark) >> 4;
+        self->posX.i.hi = (((rcos(a) >> 4) * r) >> 8) + 0xD;
+        self->posY.i.hi = -(((rsin(a) >> 4) * r) >> 8) + 0x46;
+        ext->spin += 0x100;
+        self->posX.i.hi += rcos(ext->spin) >> 9;
+        self->posY.i.hi -= rsin(ext->spin) >> 9;
+        if (!ext->timer) {
+            if (ext->type == 2) {
+                DestroyEntity(self);
+                return;
+            }
+            self->step++;
+        }
+        break;
+    case 7:
+    case 9:
+        ext->w++;
+        ext->h++;
+        if (ext->w == 8) {
+            self->step++;
+            ext->timer = 0x18;
+        }
+        break;
+    case 8:
+        if (ext->w != 5) {
+            ext->w--;
+            ext->h--;
+        } else {
+            self->step++;
+        }
+        break;
+    case 10:
+        if (ext->w != 5) {
+            ext->w--;
+            ext->h--;
+        }
+        if (--ext->timer == 0) {
+            self->step++;
+        }
+        break;
+    case 11:
+        ext->x2 += 2;
+        self->posX.i.hi -= 2;
+        if (!(--ext->timer & 2)) {
+            ext->h--;
+        }
+        if (!ext->h) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    w = ext->w;
+    h = ext->h;
+    if (self->step != 0xB) {
+        ext->x2 = self->posX.i.hi;
+    }
+    x = self->posX.i.hi + ext->nDigits * w;
+    xb = ext->x2 + ext->nDigits * w;
+    yt = self->posY.i.hi - 0x10 - h;
+    yb = h + self->posY.i.hi - 0x10;
+    p = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < 4; i++, p = p->next) {
+        p->x0 = x - w;
+        p->y0 = yt;
+        p->x1 = w + x;
+        p->y1 = yt;
+        p->x3 = xb - w;
+        p->y3 = yb;
+        p->x2 = w + xb;
+        p->y2 = yb;
+        x = x + 3 - w * 2;
+        xb = xb + 3 - w * 2;
+    }
+    for (i = 0; i < 16; i++, p = p->next) {
+        if (p->unkA) {
+            if (--p->unk8 == 0) {
+                p->drawMode = 8;
+            }
+            p->y0 = p->y1 = p->y3 = p->y2 = p->y0 + 1;
+        } else if (spark == i) {
+            p->drawMode &= ~8;
+            p->x0 = p->x3 = p->x2 = p->x1 = self->posX.i.hi;
+            p->y0 = p->y1 = p->y3 = p->y2 = self->posY.i.hi;
+            p->unkA++;
+            p->unk8 = 0xC;
+        }
+    }
+}
+
 void func_060BAB00(void) {
     s32 paused = g_unkGraphicsStruct.unk28;
     Entity* e;
@@ -3265,6 +3785,138 @@ void func_060BB070(Entity* self) {
 
 static u16 subweapon_def_a(SubweaponDef* d) {
     return (d->anim << 8) | d->blueprintNum;
+}
+
+extern s16 g_AlucardEffectPositionOffsets[6];
+extern s32 g_AlucardEffectVelocities[6];
+extern u16 g_AlucardEffectSizes[6];
+extern u8 g_AlucardSubweaponFramePairs0[8][2];
+extern u8 g_AlucardSubweaponFramePairs1[5][2];
+extern AnimationFrame g_AlucardSubweaponAnim0[];
+extern SaturnSpriteFrameHeader* g_SaturnSharedSpriteBank5Frames[];
+
+void func_060BB968(Entity* self) {
+    s32 lo, hi, i, x;
+    SpriteObject* sprite;
+    u8* pairs;
+
+    switch (self->step) {
+    case 0:
+        lo = (u8)self->params;
+        hi = self->params >> 8;
+        if ((g_Player.status & 0x20000) && hi != 9) {
+            DestroyEntity(self);
+            return;
+        }
+        self->animSet = 5;
+        self->anim = g_AlucardSubweaponAnim0;
+        self->flags = 0x08110000;
+        self->palette = 0x8195;
+        self->unk1C = 0x10;
+        self->drawFlags = 3;
+        x = g_AlucardEffectPositionOffsets[lo];
+        if (hi == 0) {
+            x += 6;
+        }
+        if (hi == 1) {
+            x -= 8;
+        }
+        if (hi == 2 || hi == 0xA) {
+            x -= 2;
+        }
+        if (hi == 5) {
+            x = -6;
+        }
+        if (hi == 6) {
+            x = -0x18;
+        }
+        if (hi == 3) {
+            x = MTH_GetRand() % 30 - 0xE;
+            lo = (u8)((MTH_GetRand() & 3) + 2);
+            self->posY.i.hi -= MTH_GetRand() & 3;
+        }
+        if (hi == 7) {
+            x = MTH_GetRand() % 60 - 0x1E;
+            lo = (u8)((MTH_GetRand() & 3) + 2);
+            self->posY.i.hi -= MTH_GetRand() & 3;
+        }
+        if (hi == 9) {
+            x = (MTH_GetRand() & 0xF) - 8;
+            lo = (u8)((MTH_GetRand() & 3) + 2);
+            self->posY.i.hi -= (MTH_GetRand() & 3) + 0x14;
+        }
+        if (hi == 4 || hi == 8) {
+            s32 end = hi == 4 ? 14 : 10;
+            pairs = hi == 4 ? &g_AlucardSubweaponFramePairs0[0][0]
+                            : &g_AlucardSubweaponFramePairs1[0][0];
+            for (i = lo * 2; i < end; i++) {
+                if (g_Player.colWall[pairs[i]].effects & 3) {
+                    break;
+                }
+            }
+            if (i == end) {
+                DestroyEntity(self);
+                return;
+            }
+            self->posX.val = PLAYER.posX.val + g_AlucardSensorsWall[pairs[i]].x;
+            self->posY.val = PLAYER.posY.val + g_AlucardSensorsWall[pairs[i]].y;
+            if (hi == 4) {
+                self->velocityY = -0x4000;
+                self->scaleX = self->scaleY = g_AlucardEffectSizes[1] + 0x40;
+            } else {
+                self->velocityY = g_AlucardEffectVelocities[lo];
+                self->scaleX = self->scaleY = g_AlucardEffectSizes[lo] + 0x20;
+            }
+            self->step++;
+            return;
+        }
+        if (hi == 1 && (g_Player.vram_flag & 0x8000)) {
+            x /= 2;
+        }
+        if (hi == 6) {
+            if (PLAYER.velocityX > 0) {
+                x = -x;
+            }
+        } else if (self->facingLeft) {
+            x = -x;
+        }
+        self->posX.i.hi += x;
+        self->posY.i.hi += 0x18;
+        self->scaleX = g_AlucardEffectSizes[lo] + 0x40;
+        self->velocityY = g_AlucardEffectVelocities[lo];
+        if (hi == 1) {
+            self->velocityY = -0x4000;
+            self->velocityX = self->facingLeft == 1 ? 0x3000 : -0x3000;
+            self->scaleX = g_AlucardEffectSizes[1] + 0x40;
+        }
+        if (hi == 5) {
+            self->velocityY = g_AlucardEffectVelocities[4 - lo * 2];
+        }
+        self->scaleY = self->scaleX;
+        if (hi == 0xA) {
+            self->posY.i.hi -= 6;
+        }
+        sprite = CreateSpriteObject(
+            g_SaturnSharedSpriteBank5Resource.allocationIndex,
+            g_SaturnSharedSpriteBank5Resource.flags,
+            g_SaturnSharedSpriteBank5Resource.images, 1);
+        self->unk0 = sprite;
+        if (!sprite) {
+            DestroyEntity(self);
+            return;
+        }
+        sprite->zPriority = PLAYER.zPriority + 2;
+        self->ext.spriteEntity.frames = g_SaturnSharedSpriteBank5Frames;
+        self->step++;
+        break;
+    case 1:
+        self->posY.val += self->velocityY;
+        self->posX.val += self->velocityX;
+        if (self->poseTimer < 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
 }
 
 void func_060BBF5C(Primitive* prim) {
@@ -4007,4 +4659,99 @@ static PfnEntityUpdate player_entity_function(u16 id) {
         return (PfnEntityUpdate)((void**)g_Weapon1OvlArea)[id - 0xF0];
     }
     return (PfnEntityUpdate)((void**)g_Weapon0OvlArea)[id - 0xE0];
+}
+
+void func_060C1618(Entity* self) {
+    SaturnSpriteFrameHeader** frames = self->ext.spriteEntity.frames;
+    SpriteObject* sprite = self->unk0;
+    SaturnSpriteFrameHeader* frame;
+    s32 n;
+
+    if (!frames || !sprite) {
+        return;
+    }
+    frame = frames[self->animCurFrame];
+    sprite->flags = (sprite->flags & ~0x3F08) | (frame->header & 0x3F08);
+    sprite->slotAndStreamId =
+        (sprite->slotAndStreamId & ~0x7F) | (frame->commandFlags & 0x7F);
+    func_0600B0B8(sprite->parts, frame + 1, (sprite->flags >> 8) & 0x3F);
+    sprite->posX = self->posX.val;
+    sprite->posY = self->posY.val;
+    if (self->unk24) {
+        sprite->posX += self->unk24 << 16;
+    }
+    if (self->unk26) {
+        sprite->posY += self->unk26 << 16;
+    }
+    if (self->facingLeft) {
+        sprite->flags |= 0x10;
+    } else {
+        sprite->flags &= ~0x10;
+    }
+    if (self->drawFlags & 0x80) {
+        sprite->unk0C |= 0x80;
+    }
+    n = 0;
+    if (self->drawFlags & 4) {
+        sprite->rotate = self->rotate & 0xFFF;
+        n = 1;
+    }
+    if (self->drawFlags & 1) {
+        n++;
+        sprite->scaleX = (u32)self->scaleX >> 2;
+    }
+    if (self->drawFlags & 2) {
+        n++;
+        sprite->scaleY = (u32)self->scaleY >> 2;
+    }
+    if (n) {
+        sprite->flags |= 0x40;
+    } else {
+        sprite->flags &= ~0x40;
+    }
+}
+
+s32 func_060C175C(s8* frameProps, AnimationFrame** anims) {
+    Entity* e = g_CurrentEntity;
+    AnimationFrame* f;
+    s32 ret = 0;
+    s8* hb;
+
+    if (e->poseTimer == -1) {
+        ret = -1;
+    } else if (e->poseTimer == 0) {
+        e->poseTimer = e->anim[e->pose].duration;
+    } else if (--e->poseTimer == 0) {
+        e->pose++;
+        f = &e->anim[e->pose];
+        if (f->duration == 0) {
+            e->pose = f->pose;
+            e->poseTimer = e->anim[e->pose].duration;
+        } else if (f->duration == 0xFFFF) {
+            e->pose--;
+            e->poseTimer = -1;
+            ret = -1;
+        } else if (f->duration == 0xFFFE) {
+            e->anim = anims[f->pose];
+            e->pose = 0;
+            ret = -2;
+            e->poseTimer = e->anim->duration;
+        } else {
+            e->poseTimer = f->duration;
+        }
+    }
+    if (frameProps) {
+        e = g_CurrentEntity;
+        hb = &frameProps[(e->anim[e->pose].pose >> 9) * 4];
+        e->hitboxOffX = hb[0];
+        e->hitboxOffY = hb[1];
+        e->hitboxWidth = hb[2];
+        e->hitboxHeight = hb[3];
+    }
+    e = g_CurrentEntity;
+    e->animCurFrame = e->anim[e->pose].pose & 0x1FF;
+    if (e->unk0) {
+        func_060C1618(e);
+    }
+    return ret;
 }

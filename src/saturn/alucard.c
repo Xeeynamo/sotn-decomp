@@ -1037,7 +1037,7 @@ s16 func_060B0584(void) {
 void func_060B0638(s32 arg0, s32 arg1, s32 arg2) {
     if (g_Player.healKind != 0) {
         g_Status.hp += g_Player.healAmount;
-        func_0606FFC8(arg0, arg1, arg2, 0x250);
+        func_800FE8F0();
         func_060B9610Healing(g_Player.healAmount, 1);
 
         if (g_Player.healKind == 1) {
