@@ -1955,7 +1955,8 @@ u16 func_0600AE30(void* src, SaturnSpriteImage* arg1, u16 colorMode) {
         size.x = arg1->storedWidth * 2;
         size.y = arg1->storedHeight * 2;
         if (src != NULL) {
-            AllocSpriteCharVram(colorMode, 0, &size, (uptr)src + arg1->characterOffsetUnits * 8);
+            AllocSpriteCharVram(colorMode, 0, &size,
+                                (uptr)src + arg1->characterOffsetUnits * 8);
         } else {
             AllocSpriteCharVram(colorMode, 0, &size, NULL);
         }
@@ -2368,9 +2369,11 @@ void func_0600C00C(void) {
             continue;
         }
         if (bank->flags & 0x4000) {
-            bank->allocationIndex = ((u16(*)())func_0600AE30)(NULL, bank->images, 0);
+            bank->allocationIndex =
+                ((u16(*)())func_0600AE30)(NULL, bank->images, 0);
         } else {
-            bank->allocationIndex = ((u16(*)())func_0600AE30)(NULL, bank->images, 8);
+            bank->allocationIndex =
+                ((u16(*)())func_0600AE30)(NULL, bank->images, 8);
         }
     }
     DAT_06038FD4 = DAT_0605BECA;
@@ -2403,9 +2406,11 @@ void func_0600C114(void) {
             continue;
         }
         if (bank->flags & 0x4000) {
-            bank->allocationIndex = ((u16(*)())func_0600AE30)(NULL, bank->images, 0);
+            bank->allocationIndex =
+                ((u16(*)())func_0600AE30)(NULL, bank->images, 0);
         } else {
-            bank->allocationIndex = ((u16(*)())func_0600AE30)(NULL, bank->images, 8);
+            bank->allocationIndex =
+                ((u16(*)())func_0600AE30)(NULL, bank->images, 8);
         }
     }
 }
@@ -2488,7 +2493,9 @@ void SetLocalPalData(void) {
         }
         bank->flags = func_0600AEE4(bank->palettes);
     }
-    DAT_06038DBC = VRAM_ADDR + LookupTblNoToVram(g_SaturnSharedSpriteBank0Resource.flags + 15) * 8;
+    DAT_06038DBC =
+        VRAM_ADDR +
+        LookupTblNoToVram(g_SaturnSharedSpriteBank0Resource.flags + 15) * 8;
 }
 
 s32 func_0600C3A8(u16* arg0, u16* arg1, u16* arg2, u16* arg3) {
