@@ -1955,8 +1955,9 @@ u16 func_0600AE30(void* src, SaturnSpriteImage* arg1, u16 colorMode) {
         size.x = arg1->storedWidth * 2;
         size.y = arg1->storedHeight * 2;
         if (src != NULL) {
-            AllocSpriteCharVram(colorMode, 0, &size,
-                                (uptr)src + arg1->characterOffsetUnits * 8);
+            AllocSpriteCharVram(
+                colorMode, 0, &size,
+                (void*)((uptr)src + arg1->characterOffsetUnits * 8));
         } else {
             AllocSpriteCharVram(colorMode, 0, &size, NULL);
         }
