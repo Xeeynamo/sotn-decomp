@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-# python3 tools/saturn_satz/build.py [--window] && build/satz_alucard_warp/sotn --output OUT --cue DISC.cue --bios sega_101.bin [--window]
+# python3 tools/saturn_satz/build.py [--window] && build/satz/sotn --output OUT --cue DISC.cue --bios sega_101.bin [--window]
 import argparse
+import json
 import os
 from pathlib import Path
 import re
+import shlex
 import subprocess
 import sys
 
@@ -14,19 +16,9 @@ SRC = ROOT / 'src/saturn'
 CONFIG = ROOT / 'config/saturn'
 PROGRAM_WARNINGS = ['-Wno-implicit-function-declaration', '-Wno-incompatible-pointer-types', '-Wno-discarded-qualifiers',
                     '-Wno-format-security', '-Wno-return-mismatch']
-MODULES = ['zero.bin.yaml', 'game.prg.yaml', 'warp.prg.yaml']
-STAGES = {
-    'stage_15': ('STAGE_15.PRG', 'g_Stage15Data', 0x42, ''),
-    'stage_16': ('STAGE_16.PRG', 'g_Stage16Data', 0x43, '0x10 0x88 0'),
-    'rstage15': ('RSTAGE15.PRG', 'g_RStage15Data', 0x62, '0x10 0x88 0'),
-    'rstage16': ('RSTAGE16.PRG', 'g_RStage16Data', 0x63, '0x10 0x288 0'),
-    'stage_14': ('STAGE_14.PRG', 'g_Stage14Data', 0x08, '0x140 0x1c0 0'),
-    'warp': ('WARP.PRG', 'g_WarpStageData', 0x0E, '0xa0 0x88 6'),
-}
-PLAYERS = {
-    'alucard': ('ALUCARD.PRG', 'ALUCARD_player', 0, 'alucard.prg.yaml', True),
-    'null': ('MARIA.PRG', 'g_NullPlayer', 2, 'maria.prg.yaml', False),
-}
+HOST_CONFIGS = ['zero.bin.yaml', 'game.prg.yaml']
+STAGES = ['stage_15', 'stage_16', 'rstage15', 'rstage16', 'stage_14', 'warp']
+PLAYERS = {'alucard': False, 'maria': True}
 SATZ_LIBRARIES = re.compile(r'^lib/(?!sound_driver$)')
 SDK_HEADERS = {'XPT_H': 'sega_xpt.h', 'SYS_H': 'sega_sys.h', 'PER_H': 'sega_per.h'}
 SDK_NAMES = {'SND_StartSeq_DR': 'SND_StartSeq', 'SND_StopPcm2': 'SND_StopPcm'}
@@ -71,17 +63,24 @@ def module_of(path):
     return next((name for name in names if path.stem == name or path.stem.startswith(name + '_')), None)
 
 
-def nonmatching_sources():
-    built = {module.split('.')[0] for module in MODULES}
-    return sorted(path for path in (SRC / 'satz/nonmatching').glob('*.c') if module_of(path) in built | {None})
+def nonmatching_sources(modules):
+    return sorted(path for path in (SRC / 'satz/nonmatching').glob('*.c') if module_of(path) in modules)
 
 
 def weapon_slots():
     return sorted(int(path.stem[2:]) for path in (SRC / 'satz/nonmatching/weapon').glob('w_[0-9][0-9].c'))
 
 
-def defined_functions(path):
-    return set(re.findall(r'^[A-Za-z_][\w \*]*?\b(\w+)\([^;{}]*\)\s*\{', path.read_text(), re.M))
+FUNCTION = re.compile(r'^[A-Za-z_][\w \*]*?\b(\w+)\([^;{}]*\)\s*\{', re.M)
+
+
+def ported_functions(paths):
+    names = set()
+    for path in paths:
+        text = path.read_text()
+        names.update(FUNCTION.findall(text))
+        names.update(re.findall(r'^#define\s+\w+\s+(func_[0-9A-Fa-f]{8})\s*$', text, re.M))
+    return names
 
 
 def write_if_changed(path, text):
@@ -89,49 +88,7 @@ def write_if_changed(path, text):
         path.write_text(text)
 
 
-def weapon_sources(output):
-    table = output / 'weapon_table.c'
-    tags = [(hand, slot, f'w{hand}_{slot:02}') for hand in (0, 1) for slot in weapon_slots()]
-    write_if_changed(table, '#include <saturn_weapon.h>\n' +
-                     ''.join(f'extern SaturnWeaponOvl {tag}_header;\n' for _, _, tag in tags) +
-                     'SaturnWeaponOvl* const sotn_satz_weapon_headers[2][WEAPON_SLOTS] = {\n' +
-                     ''.join('    {\n' + ''.join(f'        [{slot}] = &{tag}_header,\n'
-                                                 for h, slot, tag in tags if h == hand) + '    },\n'
-                             for hand in (0, 1)) + '};\n')
-    wrappers = output / 'weapon'
-    wrappers.mkdir(exist_ok=True)
-    prefixes, labels = {}, []
-    for hand, slot, tag in tags:
-        paths = [SRC / 'weapon' / f'w_{slot:02}.c', SRC / 'satz/nonmatching/weapon' / f'w_{slot:02}.c']
-        text = ''.join(path.read_text(errors='ignore') for path in paths)
-        names = sorted(set(re.findall(r'\b((?:func|DAT|D|d|jtbl)_060D[6-8][0-9A-Fa-f]{3}\w*)\b', text)) |
-                       {'g_WeaponHeader', 'g_WeaponHeaderJunk'})
-        prefix = output / f'weapon_{tag}_names.h'
-        write_if_changed(prefix, f'#define WEAPON_HAND {hand}\n' + ''.join(
-            f'#define {name} {tag}_{"header" if name == "g_WeaponHeader" else name}\n' for name in names))
-        ported = defined_functions(paths[1])
-        labels += [f'{tag}_{label}' for label in INCLUDE_ASM.findall(paths[0].read_text(errors='ignore'))
-                   if label not in ported]
-        for path in paths:
-            wrapper = wrappers / f'{tag}_{"port" if "satz" in path.parts else "data"}.c'
-            write_if_changed(wrapper, f'#include "{path}"\n')
-            prefixes[wrapper] = prefix
-    return table, prefixes, labels
-
-
-def ported_functions():
-    names = set()
-    for path in nonmatching_sources() + sorted((SRC / 'satz').glob('*.c')):
-        text = path.read_text()
-        names.update(re.findall(r'^[A-Za-z_][\w \*]*?\b(\w+)\([^;{}]*\)\s*\{', text, re.M))
-        names.update(re.findall(r'^#define\s+\w+\s+(func_[0-9A-Fa-f]{8})\s*$', text, re.M))
-    return names
-
-
-def write_stubs(sources, path, extra=()):
-    ported = ported_functions()
-    known = symbol_addresses()
-
+def write_stubs(sources, path, ported, known):
     def address(name):
         match = re.match(r'^func_([0-9A-Fa-f]{8})$', name)
         return int(match.group(1), 16) if match else known.get(name)
@@ -143,18 +100,58 @@ def write_stubs(sources, path, extra=()):
                 labels.append(label)
     lines = ['/* Generated by tools/saturn_satz/build.py: functions that are still assembly. */',
              'void sotn_satz_unimplemented(const char* name) __attribute__((noreturn));', '']
-    lines += [f'void {label}(void) {{ sotn_satz_unimplemented("{label}"); }}' for label in labels + list(extra)]
-    text = '\n'.join(lines) + '\n'
-    if not path.exists() or path.read_text() != text:
-        path.write_text(text)
+    lines += [f'void {label}(void) {{ sotn_satz_unimplemented("{label}"); }}' for label in labels]
+    write_if_changed(path, '\n'.join(lines) + '\n')
     return labels
+
+
+class Unit:
+
+    def __init__(self, name, kind, configs, sources, ported, entry=None, span=None, flags=()):
+        self.name, self.kind, self.configs, self.sources = name, kind, configs, list(sources)
+        self.ported, self.entry, self.span, self.flags = ported, entry, span, list(flags)
+        self.objects = []
+
+
+def config_span(config):
+    for segment in yaml.safe_load(config.read_text()).get('segments', []):
+        if isinstance(segment, dict) and 'vram' in segment:
+            last = segment.get('subsegments', [])[-1]
+            end = last['end'] if isinstance(last, dict) and 'end' in last else (
+                last[0] if isinstance(last, list) else last['start'])
+            return segment['vram'] - segment['start'], segment['vram'] - segment['start'] + end + 1
+    return None
+
+
+def units():
+    satz_c = [path for path in sorted((SRC / 'satz').glob('*.c')) if path.name != 'null_player.c']
+    port = nonmatching_sources({'zero', 'game', None})
+    out = [Unit('host', 'host', HOST_CONFIGS,
+                [SRC / f'{name}.c' for config in HOST_CONFIGS for name in module_sources(CONFIG / config)]
+                + satz_c + port, ported_functions(satz_c + port))]
+    for stage in STAGES:
+        config = f'{stage}.prg.yaml'
+        port = nonmatching_sources({stage})
+        out.append(Unit(stage, 'stage', [config], [SRC / f'{n}.c' for n in module_sources(CONFIG / config)] + port,
+                        ported_functions(port), SRC / f'satz/modules/{stage}.c', config_span(CONFIG / config)))
+    for player, data_only in PLAYERS.items():
+        config = f'{player}.prg.yaml'
+        port = nonmatching_sources({player}) + ([SRC / 'satz/null_player.c'] if data_only else [])
+        out.append(Unit(player, 'player', [config],
+                        [SRC / f'{n}.c' for n in module_sources(CONFIG / config, data_only)] + port,
+                        ported_functions(port), SRC / f'satz/modules/{player}.c', config_span(CONFIG / config)))
+    for slot in weapon_slots():
+        port = SRC / 'satz/nonmatching/weapon' / f'w_{slot:02}.c'
+        for hand in (0, 1):
+            out.append(Unit(f'w{hand}_{slot:02}', 'weapon', [f'weapon/w_{slot:02}.prg.yaml'],
+                            [SRC / 'weapon' / f'w_{slot:02}.c', port], ported_functions([port]),
+                            SRC / 'satz/modules/weapon.c', (0x060D6000, 0x060D9000), [f'-DWEAPON_HAND={hand}']))
+    return out
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('--stage', choices=sorted(STAGES), default='warp', help='the stage overlay to build')
-    parser.add_argument('--player', choices=sorted(PLAYERS), default='alucard', help='the player overlay to build')
-    parser.add_argument('--output', type=Path, help='default build/satz_PLAYER_STAGE')
+    parser.add_argument('--output', type=Path, default=ROOT / 'build/satz')
     parser.add_argument('--satz', type=Path, default=Path(os.environ.get('SATZ', ROOT / 'tools/saturn/satz')))
     parser.add_argument('--window', action='store_true', help='link the SDL window')
     parser.add_argument('--no-build', action='store_true', help='only write build.ninja')
@@ -164,27 +161,24 @@ def main():
     parser.add_argument('--no-sanitize', dest='sanitize', action='store_false',
                         help='build without AddressSanitizer and UndefinedBehaviorSanitizer')
     args = parser.parse_args()
-    MODULES[2:] = [PLAYERS[args.player][3], f'{args.stage}.prg.yaml']
-    if args.output is None:
-        args.output = ROOT / f'build/satz_{args.player}_{args.stage}'
     sys.path.insert(0, str(args.satz.resolve()))
     import satz
 
     output = args.output.resolve()
-    (output / 'obj').mkdir(parents=True, exist_ok=True)
+    for sub in ('obj', 'gen', 'modules'):
+        (output / sub).mkdir(parents=True, exist_ok=True)
     core_dir = ROOT / (('build/satz_core' if args.sanitize else 'build/satz_core_nosan') +
                        ('_novideo' if args.no_video else ''))
     (core_dir / 'obj').mkdir(parents=True, exist_ok=True)
     core = write_core_ninja(satz, args, core_dir)
-    program = write_ninja(satz, args, output, core, fixed=None)
+    all_units = units()
+    objects = write_ninja(satz, args, output, core, all_units, plan=None)
     if args.no_build:
         return
     satz.ninja(core_dir)
-    run_ninja(output, program)
-    fixed = output / 'fixed_symbols.c'
-    count = write_fixed_symbols(core.objects + program, fixed, output / 'fixed_stubs.c')
-    write_ninja(satz, args, output, core, fixed=fixed)
-    print(f'{count} fixed-address symbols')
+    run_ninja(output, objects)
+    plan = plan_links(all_units, core, output)
+    write_ninja(satz, args, output, core, all_units, plan=plan)
     satz.ninja(output)
 
 
@@ -206,9 +200,11 @@ def run_ninja(output, targets):
         raise SystemExit(result.returncode)
 
 
-def symbol_addresses():
+def symbol_addresses(configs):
     addresses = {}
-    for path in [CONFIG / (module.split('.')[0] + '_user_syms.txt') for module in MODULES]:
+    order = list(configs) + [c.name for c in sorted(CONFIG.glob('*.yaml')) if c.name not in configs]
+    for config in order:
+        path = CONFIG / (Path(config).name.split('.')[0] + '_user_syms.txt')
         if not path.exists():
             continue
         for line in path.read_text().splitlines():
@@ -218,9 +214,9 @@ def symbol_addresses():
     return addresses
 
 
-def code_ranges():
+def code_ranges(configs):
     ranges = []
-    for config in [CONFIG / module for module in MODULES]:
+    for config in [CONFIG / c for c in configs]:
         for segment in yaml.safe_load(config.read_text()).get('segments', []):
             if not isinstance(segment, dict) or 'vram' not in segment:
                 continue
@@ -239,20 +235,128 @@ def alias_flag(name, target):
     return f'-Wl,--defsym={name}={target}'
 
 
-def write_fixed_symbols(objects, path, stubs_path):
-    defined, undefined = set(), set()
-    for obj in objects:
-        for line in subprocess.run(['nm', str(obj)], capture_output=True, text=True,
-                                   check=True).stdout.splitlines():
-            parts = line.split()
-            if sys.platform == 'darwin' and parts and parts[-1].startswith('_'):
-                parts[-1] = parts[-1][1:]
-            if len(parts) == 2 and parts[0] == 'U':
-                undefined.add(parts[1])
-            elif len(parts) >= 3 and parts[-2] in 'TtDdBbRrCcVvWwS':
+_NM = {}
+
+
+def _parse_nm(text):
+    out, current = {}, None
+    for line in text.splitlines():
+        if line.endswith(':') and ' ' not in line.strip():
+            current = line[:-1]
+            out[current] = (set(), set(), set())
+            continue
+        parts = line.split()
+        if current is None or not parts:
+            continue
+        defined, undefined, common = out[current]
+        if sys.platform == 'darwin' and parts[-1].startswith('_'):
+            parts[-1] = parts[-1][1:]
+        if len(parts) == 2 and parts[0] == 'U':
+            undefined.add(parts[1])
+        elif len(parts) >= 3 and parts[-2] in 'TtDdBbRrCcVvWwS':
+            if parts[-2].isupper() or parts[-2] == 'S':
                 defined.add(parts[-1])
-    known = symbol_addresses()
-    code = code_ranges()
+            if parts[-2] == 'C':
+                common.add(parts[-1])
+    return out
+
+
+def _key(obj):
+    st = obj.stat()
+    return [st.st_mtime_ns, st.st_size]
+
+
+def nm_prefetch(objects, cache_file):
+    if not _NM and cache_file.exists():
+        try:
+            for path, (key, d, u, c) in json.loads(cache_file.read_text()).items():
+                _NM[path] = (key, (set(d), set(u), set(c)))
+        except (ValueError, TypeError):
+            _NM.clear()
+    stale = [o for o in dict.fromkeys(objects) if str(o) not in _NM or _NM[str(o)][0] != _key(o)]
+    for i in range(0, len(stale), 200):
+        batch = stale[i:i + 200]
+        text = subprocess.run(['nm', *map(str, batch)], capture_output=True, text=True, check=True).stdout
+        if len(batch) == 1:
+            text = f'{batch[0]}:\n' + text
+        parsed = _parse_nm(text)
+        for obj in batch:
+            _NM[str(obj)] = (_key(obj), parsed.get(str(obj), (set(), set(), set())))
+    if stale:
+        cache_file.write_text(json.dumps({path: [key, sorted(d), sorted(u), sorted(c)]
+                                          for path, (key, (d, u, c)) in _NM.items()}))
+    return len(stale)
+
+
+def address_of(name, known):
+    match = re.match(r'^(?:DAT|D|d|func)_([0-9A-Fa-f]{8})$', name)
+    return known.get(name, int(match.group(1), 16) if match else None)
+
+
+def plan_links(all_units, core, output):
+    host, modules = all_units[0], all_units[1:]
+    ran = nm_prefetch([o for u in all_units for o in u.objects] + core.objects, output / 'nm_cache.json')
+    print(f'nm: {ran} objects read' if ran else 'nm: nothing changed')
+    defined, undefined, commons = {}, {}, {}
+    for u in all_units:
+        d, und, com = set(), set(), set()
+        for obj in u.objects + (core.objects if u is host else []):
+            a, b, c = _NM[str(obj)][1]
+            d |= a
+            und |= b
+            com |= c
+        if u is not host:
+            known = symbol_addresses(u.configs)
+            for name in com:
+                address = address_of(name, known)
+                if address is not None and not (u.span and u.span[0] <= address < u.span[1]):
+                    d.discard(name)
+                    und.add(name)
+        d.add('sotn_fixed_symbols')
+        defined[u.name], undefined[u.name], commons[u.name] = d, und - d, com
+    exports = {u.name: {'satz_module_start', 'satz_module_stop'} for u in modules}
+    host_names = set(undefined['host'])
+    local = {}
+    for m in modules:
+        known = symbol_addresses(m.configs)
+        names = set()
+        for name in undefined[m.name]:
+            if name in defined['host']:
+                continue
+            players = [p for p in modules if p.kind == 'player' and name in defined[p.name]]
+            if players and m.kind != 'player':
+                for p in players:
+                    exports[p.name].add(name)
+                continue
+            address = address_of(name, known)
+            if address is None or (m.span and m.span[0] <= address < m.span[1]):
+                names.add(name)
+            else:
+                host_names.add(name)
+        local[m.name] = names
+    problems = []
+    for name in sorted(host_names - defined['host']):
+        owners = [m.name for m in modules if name in defined[m.name]]
+        if owners:
+            problems.append(f'the host uses {name}, which only modules define ({", ".join(owners[:4])})')
+    if problems:
+        raise SystemExit('build.py: the host reaches into modules:\n  ' + '\n  '.join(problems))
+    plan = {}
+    for u in all_units:
+        gen = output / 'gen' / u.name
+        gen.mkdir(parents=True, exist_ok=True)
+        names = host_names if u is host else local[u.name]
+        aliases = write_fixed_symbols(names, defined[u.name], u.configs, gen / 'fixed_symbols.c',
+                                      gen / 'fixed_stubs.c')
+        interpose = sorted(commons[u.name] & (defined['host'] | host_names)) if u is not host else []
+        plan[u.name] = {'fixed': gen / 'fixed_symbols.c', 'stubs': gen / 'fixed_stubs.c', 'aliases': aliases,
+                        'exports': sorted(exports.get(u.name, ())), 'interpose': interpose}
+    return plan
+
+
+def write_fixed_symbols(names, defined, configs, path, stubs_path):
+    known = symbol_addresses(configs)
+    code = code_ranges(configs)
     functions, missing, data, aliases = [], [], {}, []
     defined_at = {}
     for name in sorted(defined):
@@ -262,22 +366,18 @@ def write_fixed_symbols(objects, path, stubs_path):
             match = re.match(r'^(?:DAT|D|d|func)_([0-9A-Fa-f]{8})$', name)
             if match:
                 defined_at.setdefault(int(match.group(1), 16), name)
-
-    def defined_alias(address):
-        return defined_at.get(address)
-    for name in sorted(undefined - defined):
+    for name in sorted(names - defined):
         if name in SDK_NAMES:
             aliases.append((name, SDK_NAMES[name]))
             continue
         if name.startswith('_') and name[1:] in defined:
             aliases.append((name, name[1:]))
             continue
-        match = re.match(r'^(?:DAT|D|d|func)_([0-9A-Fa-f]{8})$', name)
-        address = known.get(name, int(match.group(1), 16) if match else None)
+        address = address_of(name, known)
         if address is None or not (0x06000000 <= address < 0x06100000 or 0x00200000 <= address < 0x00300000):
             missing.append(name)
-        elif defined_alias(address):
-            aliases.append((name, defined_alias(address)))
+        elif address in defined_at:
+            aliases.append((name, defined_at[address]))
         elif any(start <= address < end for start, end in code):
             if name not in HOST_LIBC:
                 functions.append(name)
@@ -288,30 +388,27 @@ def write_fixed_symbols(objects, path, stubs_path):
     lines = ['/* Generated by tools/saturn_satz/build.py: storage for the symbols the retail link places by address. */',
              '#include <stdint.h>', '']
     table = []
-    for address, names in sorted(data.items()):
+    for address, group in sorted(data.items()):
         following = next((b for b in bounds if b > address), address + 0x1000)
         size = max(8, 2 * min(following - address, 0x40000))
-        first = names[0]
+        first = group[0]
         lines.append(f'uint8_t {first}[0x{size:X}] __attribute__((aligned(16))); /* 0x{address:08X} */')
-        lines += [f'__asm__(".globl {p}{alias}\\n.set {p}{alias}, {p}{first}");' for alias in names[1:]]
+        lines += [f'__asm__(".globl {p}{alias}\\n.set {p}{alias}, {p}{first}");' for alias in group[1:]]
         table.append(f'    {{ "{first}", 0x{address:08X}u, {first}, 0x{size // 2:X}u }},')
     lines += ['', 'const struct { const char* name; uint32_t address; uint8_t* data; uint32_t retail_size; } '
               'sotn_fixed_symbols[] = {'] + table + ['    { 0, 0, 0, 0 },', '};']
     if missing:
         lines += ['', '/* Undefined and not at a known work-RAM address: ' + ', '.join(missing) + ' */']
-    text = '\n'.join(lines) + '\n'
-    if not path.exists() or path.read_text() != text:
-        path.write_text(text)
-    stub_text = '\n'.join(['/* Generated by tools/saturn_satz/build.py: retail functions with no C. */',
-                           'void sotn_satz_unimplemented(const char* name) __attribute__((noreturn));', ''] +
-                          [f'void {name}(void) {{ sotn_satz_unimplemented("{name}"); }}' for name in functions]) + '\n'
-    if not stubs_path.exists() or stubs_path.read_text() != stub_text:
-        stubs_path.write_text(stub_text)
-    alias_text = ''.join(alias_flag(name, target) + '\n' for name, target in aliases)
-    alias_path = stubs_path.with_name('fixed_aliases.rsp')
-    if not alias_path.exists() or alias_path.read_text() != alias_text:
-        alias_path.write_text(alias_text)
-    return len(lines)
+        shown = [name for name in missing if re.search('[A-Z]', name) and not name.startswith('_') and '$' not in name]
+        if shown:
+            print(f'{path.parent.name}: undefined, not at a known address: {", ".join(shown[:8])}'
+                  + (' ...' if len(shown) > 8 else ''))
+    write_if_changed(path, '\n'.join(lines) + '\n')
+    write_if_changed(stubs_path, '\n'.join(['/* Generated by tools/saturn_satz/build.py: retail functions with no C. */',
+                                            'void sotn_satz_unimplemented(const char* name) __attribute__((noreturn));', ''] +
+                                           [f'void {name}(void) {{ sotn_satz_unimplemented("{name}"); }}'
+                                            for name in functions]) + '\n')
+    return aliases
 
 
 class Core:
@@ -334,8 +431,8 @@ def write_core_ninja(satz, args, core_dir):
     return Core(list(build.objects), list(build.libs), toolkit, toolkit_headers)
 
 
-def write_ninja(satz, args, output, core, fixed):
-    program = []
+def write_ninja(satz, args, output, core, all_units, plan):
+    objects = []
     with (output / 'build.ninja').open('w') as stream:
         build = satz.Build(stream, output, gcc=True, sanitize=args.sanitize)
         n = build.n
@@ -347,13 +444,8 @@ def write_ninja(satz, args, output, core, fixed):
         cflags = satz.SATURN + [f'-D{name}=sotn_{name}' for name in RENAMED] + [
             f'-DSYM_PREFIX="{SYM_PREFIX}"', '-I' + str(SRC), '-I' + str(SRC / 'lib'),
             '-I' + str(ROOT / 'include'), '-DSATZ_SOTN=1', '-DSKIP_ASM=1']
-        prg, header, stage_id, start = STAGES[args.stage]
-        player_prg, player_header, player_id, _, weapons = PLAYERS[args.player]
         if sys.platform == 'darwin':
             cflags.append('-DSCL_DisplayFrame=__wrap_SCL_DisplayFrame')
-        cflags += [f'-DSATZ_STAGE_PRG="{prg}"', f'-DSATZ_STAGE_DATA={header}', f'-DSATZ_STAGE_ID=0x{stage_id:02X}', f'-DSATZ_STAGE_START="{start}"',
-                   f'-DSATZ_PLAYER_PRG="{player_prg}"', f'-DSATZ_PLAYER_DATA={player_header}',
-                   f'-DSATZ_PLAYER_ID={player_id}']
         for guard, header in SDK_HEADERS.items():
             cflags += ['-D' + guard, '-include', str(toolkit_dir / header)]
         n.rule('sotn_cpp', f'{satz.GCC} -E $flags $in -o $out -MMD -MF $out.d', depfile='$out.d', deps='gcc',
@@ -364,43 +456,90 @@ def write_ninja(satz, args, output, core, fixed):
                description='sotn_str $in')
         n.rule('sotn_cc', f'{satz.GCC} $flags -fcommon -x cpp-output -c $in -o $out', description='gcc $in')
 
-        program_flags = [f for f in build.saturn_common if f != '-w'] + ['-std=gnu99'] + PROGRAM_WARNINGS
-        sources = []
-        for module in MODULES:
-            data_only = args.player == 'null' and module == PLAYERS['null'][3]
-            sources += [SRC / f'{name}.c' for name in module_sources(CONFIG / module, data_only)]
-        sources += [path for path in sorted((SRC / 'satz').glob('*.c'))
-                    if args.player == 'null' or path.name != 'null_player.c'] + nonmatching_sources()
-        weapon_prefixes, weapon_labels = {}, []
-        if weapons:
-            cflags.append('-DSATZ_WEAPONS=1')
-            table, weapon_prefixes, weapon_labels = weapon_sources(output)
-            sources.append(table)
-        generate_headers(sources)
-        stubs = output / 'stubs.c'
-        labels = write_stubs(sources, stubs, weapon_labels)
-        for source in sources + list(weapon_prefixes) + [stubs]:
+        program_flags = [f for f in build.saturn_common if f != '-w'] + ['-std=gnu99'] + PROGRAM_WARNINGS + ['-fPIC']
+        sanitize = ' '.join(satz.GCC_SANITIZE) + ' ' if args.sanitize else ''
+        if sys.platform == 'darwin':
+            n.rule('link_host', f'{satz.CC} {sanitize}$in -o $out -Wl,-map,$out.map $libs -lm', description='link $out')
+            n.rule('link_module', f'{satz.GCC} {sanitize}-bundle -bundle_loader $host -Wl,-dead_strip '
+                                  f'-Wl,-undefined,dynamic_lookup -Wl,-commons,use_dylibs '
+                                  f'-Wl,-exported_symbols_list,$exports $in -o $out $libs',
+                   description='module $out')
+        else:
+            n.rule('link_host', f'{satz.CC} {sanitize}-rdynamic -fuse-ld=bfd $in -o $out -Wl,-Map,$out.map '
+                                f'$libs -lm -ldl', description='link $out')
+            n.rule('link_module', f'{satz.GCC} {sanitize}-shared -Wl,-Bsymbolic-functions -Wl,--gc-sections '
+                                  f'-Wl,--version-script=$exports $in -o $out $libs', description='module $out')
+
+        def compile_(source, flags=()):
             stem = build.object_path(source).with_suffix('')
             pre, expanded, obj = stem.with_suffix('.i'), stem.with_suffix('.sjis.i'), stem.with_suffix('.o')
-            flags = cflags + (['-include', str(weapon_prefixes[source])] if source in weapon_prefixes else [])
-            n.build(pre, 'sotn_cpp', source, implicit=toolkit_headers, variables={'flags': satz.q(flags)})
+            n.build(pre, 'sotn_cpp', source, implicit=toolkit_headers, variables={'flags': satz.q(cflags + list(flags))})
             n.build(expanded, 'sotn_str', pre, implicit=[sotn_str])
             n.build(obj, 'sotn_cc', expanded, variables={'flags': satz.q(program_flags)})
-            program.append(obj)
-        if sys.platform == 'darwin':
-            build.libs.append(alias_flag('__real_SCL_DisplayFrame', 'SCL_DisplayFrame'))
-        else:
-            build.libs.append('-Wl,--wrap=SCL_DisplayFrame')
+            return obj
+
+        def wrapper(unit, path):
+            w = output / 'gen' / unit.name / ('src_' + str(Path(path).relative_to(SRC)).replace('/', '_'))
+            w.parent.mkdir(parents=True, exist_ok=True)
+            write_if_changed(w, f'#include "{path}"\n')
+            return w
+
+        generate_headers([s for u in all_units for s in u.sources])
+        stub_count = 0
+        for u in all_units:
+            shared = u.kind == 'weapon'
+            sources = [wrapper(u, s) if shared else s for s in u.sources]
+            if u.entry:
+                sources.append(wrapper(u, u.entry) if shared else u.entry)
+            stubs = output / 'gen' / u.name / 'stubs.c'
+            stubs.parent.mkdir(parents=True, exist_ok=True)
+            stub_count += len(write_stubs(u.sources, stubs, u.ported, symbol_addresses(u.configs)))
+            sources.append(stubs)
+            u.objects = [compile_(s, u.flags) for s in sources]
+            objects += u.objects
+        if plan is None:
+            print(f'{len(all_units) - 1} modules, {stub_count} assembly stubs')
+            return objects
+
+        host = all_units[0]
         binary = output / 'sotn'
-        if fixed:
-            build.libs.append(f'@{output / "fixed_aliases.rsp"}')
-            build.host_cc(fixed)
-            build.host_cc(output / 'fixed_stubs.c')
-            build.link(binary, extra=program + core.objects, window=args.window)
-            satz.Writer(stream).default([binary])
-    if not fixed:
-        print(f'{len(sources)} sources, {len(labels)} assembly stubs')
-    return program
+        p = plan['host']
+        libs = list(build.libs) + [alias_flag(name, target) for name, target in p['aliases']]
+        if sys.platform == 'darwin':
+            libs.append(alias_flag('__real_SCL_DisplayFrame', 'SCL_DisplayFrame'))
+        else:
+            libs.append('-Wl,--wrap=SCL_DisplayFrame')
+        if args.window:
+            sdl = lambda option: shlex.split(subprocess.run(['sdl2-config', option], check=True, capture_output=True,
+                                                            text=True).stdout)
+            window = build.host_cc(satz.SATZ / 'window/window_sdl.c', sdl('--cflags'))
+            libs += sdl('--libs')
+        else:
+            window = build.host_cc(satz.SATZ / 'window/window_none.c')
+        n.build(binary, 'link_host', host.objects + [build.host_cc(p['fixed']), build.host_cc(p['stubs'])]
+                + core.objects + [window], variables={'libs': ' '.join(dict.fromkeys(libs))})
+        host_symbols = output / 'host_symbols.txt'
+        names = 'nm -gUj' if sys.platform == 'darwin' else 'nm -g --defined-only --format=just-symbols'
+        n.rule('host_symbols', f'{names} $in | sort > $out.new && (cmp -s $out.new $out || mv $out.new $out); '
+                               'rm -f $out.new', description='symbols $in', restat=True)
+        n.build(host_symbols, 'host_symbols', binary)
+        defaults = [binary]
+        for u in all_units[1:]:
+            p = plan[u.name]
+            objs = u.objects + [build.host_cc(p['fixed'], ['-fPIC']), build.host_cc(p['stubs'], ['-fPIC'])]
+            exports = output / 'gen' / u.name / 'exports.txt'
+            if sys.platform == 'darwin':
+                write_if_changed(exports, ''.join(f'{SYM_PREFIX}{name}\n' for name in p['exports']))
+            else:
+                write_if_changed(exports, '{ global: ' + ''.join(f'{name}; ' for name in p['exports'] + p['interpose'])
+                                 + '\n local: *; };\n')
+            module = output / 'modules' / (u.name + ('.dylib' if sys.platform == 'darwin' else '.so'))
+            mlibs = [alias_flag(name, target) for name, target in p['aliases']]
+            n.build(module, 'link_module', objs, implicit=[host_symbols, exports],
+                    variables={'host': str(binary), 'exports': str(exports), 'libs': ' '.join(dict.fromkeys(mlibs))})
+            defaults.append(module)
+        satz.Writer(stream).default(defaults)
+    print(f'{len(all_units) - 1} modules')
 
 
 if __name__ == '__main__':

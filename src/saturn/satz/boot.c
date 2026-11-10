@@ -70,12 +70,52 @@ static void sotn_satz_cram_init(void) {
     fclose(f);
 }
 
+static const struct {
+    const char* name;
+    int id;
+    const char* start;
+} s_Stages[] = {
+    {"stage_15", 0x42, ""},
+    {"stage_16", 0x43, "0x10 0x88 0"},
+    {"rstage15", 0x62, "0x10 0x88 0"},
+    {"rstage16", 0x63, "0x10 0x288 0"},
+    {"stage_14", 0x08, "0x140 0x1c0 0"},
+    {"warp", 0x0E, "0xa0 0x88 6"},
+};
+
+static int satz_stage(void) {
+    const char* name = getenv("SOTN_SATZ_STAGE");
+    size_t i;
+
+    if (!name) {
+        name = "warp";
+    }
+    for (i = 0; i < sizeof(s_Stages) / sizeof(s_Stages[0]); i++) {
+        if (!strcmp(s_Stages[i].name, name)) {
+            return (int)i;
+        }
+    }
+    satz_die("SOTN_SATZ_STAGE: no stage %s", name);
+}
+
+static int satz_player_id(void) {
+    const char* name = getenv("SOTN_SATZ_PLAYER");
+
+    if (!name || !strcmp(name, "alucard")) {
+        return 0;
+    }
+    if (!strcmp(name, "null")) {
+        return 2;
+    }
+    satz_die("SOTN_SATZ_PLAYER: no player %s", name);
+}
+
 static void sotn_satz_warp(void) {
     const char* warp = getenv("SOTN_SATZ_WARP");
     unsigned x, y, room;
 
     if (!warp) {
-        warp = SATZ_STAGE_START;
+        warp = s_Stages[satz_stage()].start;
     }
     if (!*warp) {
         return;
@@ -90,8 +130,8 @@ static void sotn_satz_warp(void) {
 
 void sotn_satz_boot_override(void) {
     sotn_satz_cram_init();
-    g_CurrentRoom.stageID = SATZ_STAGE_ID;
-    g_PlayableCharacter = SATZ_PLAYER_ID;
+    g_CurrentRoom.stageID = s_Stages[satz_stage()].id;
+    g_PlayableCharacter = satz_player_id();
     D_8006C374 = 0x48;
     DAT_06061dd0 = 1;
     sotn_satz_warp();

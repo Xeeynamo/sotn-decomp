@@ -4,28 +4,15 @@
 #include "../game.h"
 #include <saturn_player.h>
 #include <saturn_weapon.h>
+#include <ctype.h>
+#include <stdio.h>
 #include <string.h>
+#include "module.h"
 
 extern SaturnGameApi g_ApiInit;
-extern SaturnPlayerOvl SATZ_PLAYER_DATA;
-extern SaturnStageDataTables SATZ_STAGE_DATA;
 extern SaturnPlayerOvl g_PlayerOvl;
 
-static const struct {
-    const char* name;
-    void* area;
-    const void* header;
-    u32 size;
-} s_Overlays[] = {
-    {"GAME.PRG", &g_GameOvl, &g_ApiInit, sizeof(SaturnGameApi)},
-    {SATZ_PLAYER_PRG, &g_PlayerOvl, &SATZ_PLAYER_DATA, sizeof(SaturnPlayerOvl)},
-    {SATZ_STAGE_PRG, &g_StageOverlayData, &SATZ_STAGE_DATA,
-     sizeof(SaturnStageDataTables)},
-};
-
-#if SATZ_PLAYER_ID != 2
 void (*g_MariaMapMenuFunctions[19])(void);
-#endif
 
 static int is_prg(const char* name) {
     size_t n = strlen(name);
@@ -52,9 +39,6 @@ void* sotn_satz_load_target(void* dst) {
 
 s32 (*sotn_satz_movie_entry(void))(void);
 extern s32 (*DAT_06066000)();
-
-#ifdef SATZ_WEAPONS
-extern SaturnWeaponOvl* const sotn_satz_weapon_headers[2][WEAPON_SLOTS];
 extern void* DAT_060D9018;
 
 static int install_weapon(int hand, void* dst, u32 sector, s32* size) {
@@ -77,18 +61,16 @@ static int install_weapon(int hand, void* dst, u32 sector, s32* size) {
         &DAT_060D603C,
     };
     u32 slot = sector / (WEAPON_SLOT_SIZE / 0x800);
-    SaturnWeaponOvl* header;
+    SaturnWeaponOvl* header = dst;
+    char name[8];
     u32 i;
 
     if (dst != (hand ? g_Weapon1OvlArea : g_Weapon0OvlArea) ||
         sector % (WEAPON_SLOT_SIZE / 0x800) || slot >= WEAPON_SLOTS) {
         satz_die("WEAPON%d.PRG loaded to %p from sector %u", hand, dst, sector);
     }
-    header = sotn_satz_weapon_headers[hand][slot];
-    if (!header) {
-        satz_die("WEAPON%d.PRG slot %u has no C", hand, slot);
-    }
-    memcpy(dst, header, sizeof(*header));
+    snprintf(name, sizeof(name), "w%d_%02u", hand, slot);
+    satz_module_open(hand ? SATZ_AREA_WEAPON1 : SATZ_AREA_WEAPON0, name, dst);
     if (hand) {
         DAT_060D9018 = (void*)header->entries[6];
         DAT_060D9040 = header->data;
@@ -102,40 +84,51 @@ static int install_weapon(int hand, void* dst, u32 sector, s32* size) {
     return 1;
 }
 
-#endif
+static void module_name(const char* prg, char* out, size_t size) {
+    size_t i;
+
+    for (i = 0; prg[i] && prg[i] != '.' && i + 1 < size; i++) {
+        out[i] = (char)tolower((unsigned char)prg[i]);
+    }
+    out[i] = '\0';
+}
 
 int sotn_satz_install_overlay(
     const char* name, void* dst, u32 sector, s32* size) {
-    u32 i;
+    char module[32];
 
     if (!is_prg(name)) {
         return 0;
     }
-#ifdef SATZ_WEAPONS
     if (!strcmp(name, "WEAPON0.PRG") || !strcmp(name, "WEAPON1.PRG")) {
         return install_weapon(name[6] == '1', dst, sector, size);
     }
-#endif
     if (!strcmp(name, "MOVIE.PRG")) {
         DAT_06066000 = sotn_satz_movie_entry();
         *size = 0;
         return 1;
     }
-    for (i = 0; i < sizeof(s_Overlays) / sizeof(s_Overlays[0]); i++) {
-        if (!strcmp(name, s_Overlays[i].name)) {
-            if (dst != s_Overlays[i].area) {
-                satz_die("%s loaded to %p, not its header area", name, dst);
-            }
-            memcpy(
-                s_Overlays[i].area, s_Overlays[i].header, s_Overlays[i].size);
-            if (s_Overlays[i].area == &g_PlayerOvl) {
-                DAT_060A5000 = (void (*)())g_PlayerOvl.init;
-                DAT_060A5004 = g_PlayerOvl.main;
-                DAT_060A5008 = g_PlayerOvl.updatePlayerEntities;
-            }
-            *size = s_Overlays[i].size;
-            return 1;
+    if (!strcmp(name, "GAME.PRG")) {
+        if (dst != &g_GameOvl) {
+            satz_die("%s loaded to %p, not its header area", name, dst);
         }
+        memcpy(&g_GameOvl, &g_ApiInit, sizeof(SaturnGameApi));
+        *size = sizeof(SaturnGameApi);
+        return 1;
     }
-    satz_die("overlay %s is not in the native build", name);
+    module_name(name, module, sizeof(module));
+    if (dst == &g_PlayerOvl) {
+        satz_module_open(SATZ_AREA_PLAYER, module, dst);
+        DAT_060A5000 = (void (*)())g_PlayerOvl.init;
+        DAT_060A5004 = g_PlayerOvl.main;
+        DAT_060A5008 = g_PlayerOvl.updatePlayerEntities;
+        *size = sizeof(SaturnPlayerOvl);
+        return 1;
+    }
+    if (dst == &g_StageOverlayData) {
+        satz_module_open(SATZ_AREA_STAGE, module, dst);
+        *size = sizeof(SaturnStageDataTables);
+        return 1;
+    }
+    satz_die("overlay %s loaded to %p, not an overlay area", name, dst);
 }
