@@ -20,12 +20,3 @@ XyInt scrSize[8] = {
 
 Uint16 g_SaturnSpriteLibraryUnusedModeDefaults[4] = {0};
 Uint32 SPR_SlaveParam = 0;
-
-/*
- * The game allocates the live SDK mode globals in its fixed work-RAM region,
- * rather than using the initialized copies above.
- */
-Uint16 SpFbcrMode BSS = 0;
-Uint16 SpDil BSS = 0;
-Uint16 SpDie BSS = 0;
-Uint16 SpTvMode BSS = 0;

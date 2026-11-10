@@ -550,18 +550,19 @@ u16 func_06007B34(SprLookupTbl* tbl) {
     return tblNo;
 }
 
-s32 func_06007B8C(s16* colors) {
+u16 func_06007B8C(SprLookupTbl* tbl) {
+    u16* entry;
     u32 charNo;
     s16* dst;
     s32 i;
 
     charNo = DAT_0605AEB0;
     if (charNo <= 0x3E) {
-        if (colors != NULL) {
+        if (tbl != NULL) {
             dst = (s16*)(SCL_COLRAM_ADDR + 0x800 + charNo * 0x20);
-
+            entry = tbl->entry;
             for (i = 0; i < 0x10; i++) {
-                HW_STORE(dst++, *colors++ & 0x7FFF);
+                HW_STORE(dst++, *entry++ & 0x7FFF);
             }
         }
         DAT_0605AEB0++;
@@ -569,7 +570,8 @@ s32 func_06007B8C(s16* colors) {
     return charNo | 0x4000;
 }
 
-u16 func_06007BE0(s16* colors, s32 arg1) {
+u16 func_06007BE0(SprLookupTbl* tbl) {
+    u16* entry;
     u16 tblNo;
     u16 i;
     u16 vram;
@@ -583,10 +585,11 @@ u16 func_06007BE0(s16* colors, s32 arg1) {
     if (DAT_0605AEB0 > 0x3E) {
         return DAT_0605AEB0 | 0x4000;
     }
-    if (colors != NULL) {
+    if (tbl != NULL) {
         dst = (s16*)(SCL_COLRAM_ADDR + 0x800 + DAT_0605AEB0 * 0x20);
+        entry = tbl->entry;
         for (i = 0; i < 0x10; i++) {
-            HW_STORE(dst++, *colors++ & 0x7FFF);
+            HW_STORE(dst++, *entry++ & 0x7FFF);
         }
 
         vram = LocalLookupTblNoToVram(DAT_0605AEB0);
@@ -1868,7 +1871,39 @@ s32 GetEnemyPlayerCharaAddr(void) {
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600AD98, InitPaletteRemapLuts);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600AE30, func_0600AE30);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600AEE4, func_0600AEE4);
+
+u16 func_06007B34(SprLookupTbl* tbl);
+u16 func_06007B8C(SprLookupTbl* tbl);
+u16 func_06007BE0(SprLookupTbl* tbl);
+
+u16 func_0600AEE4(u16* arg0) {
+    s32 count;
+    s16 temp_r1;
+    s32 i;
+    u16 var_r12;
+
+    temp_r1 = *arg0 & 0xF000;
+    count = *arg0 & 0xFFF;
+
+    if (temp_r1 == 0x4000) {
+        var_r12 = ((u16(*)())func_06007B8C)(&(((SprLookupTbl*)(arg0 + 1))[0]));
+        for (i = 1; i < count; i++) {
+            ((u16(*)())func_06007B8C)(&(((SprLookupTbl*)(arg0 + 1))[i]));
+        }
+    } else if (temp_r1 == 0x2000) {
+        var_r12 = ((u16(*)())func_06007BE0)(&(((SprLookupTbl*)(arg0 + 1))[0]));
+        for (i = 1; i < count; i++) {
+            ((u16(*)())func_06007BE0)(&(((SprLookupTbl*)(arg0 + 1))[i]));
+        }
+    } else {
+        count = *arg0;
+        var_r12 = ((u16(*)())func_06007B34)(&(((SprLookupTbl*)(arg0 + 1))[0]));
+        for (i = 1; i < count; i++) {
+            ((u16(*)())func_06007B34)(&(((SprLookupTbl*)(arg0 + 1))[i]));
+        }
+    }
+    return var_r12;
+}
 
 void func_0600AFA8(SpriteObject* sprite, SaturnSpriteFrameHeader* frame) {
     SpritePart* part;

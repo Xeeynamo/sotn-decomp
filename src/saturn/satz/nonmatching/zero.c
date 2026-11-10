@@ -105,9 +105,6 @@ extern SprSpCmd* d_0605AEAC;
 extern s32 DAT_0603900C[];
 extern s32 (*DAT_0603904C[])(Primitive* prim);
 
-s32 func_06007B8C(s16* colors);
-u16 func_06007BE0(s16* colors, s32 arg1);
-u16 func_06007B34(SprLookupTbl* tbl);
 #include "../../zero/text.h"
 
 extern SprSpCmd* d_0605AEAC;
@@ -981,32 +978,6 @@ s16 func_0600AE30(u8* data, SaturnSpriteImage* images, s32 colorMode) {
         AllocSpriteCharVram(
             (u16)colorMode, 0, size,
             data != NULL ? data + images->characterOffsetUnits * 8 : NULL);
-    }
-    return first;
-}
-
-s16 func_0600AEE4(u16* palettes) {
-    u16 header = palettes[0];
-    s32 count = header & 0x0FFF;
-    s32 i;
-    u16 first;
-
-    if ((header & 0xF000) == 0x4000) {
-        first = func_06007B8C((s16*)(palettes + 1));
-        for (i = 1; i < count; i++) {
-            func_06007B8C((s16*)(palettes + 1 + i * 16));
-        }
-    } else if ((header & 0xF000) == 0x2000) {
-        first = func_06007BE0((s16*)(palettes + 1), 0);
-        for (i = 1; i < count; i++) {
-            func_06007BE0((s16*)(palettes + 1 + i * 16), 0);
-        }
-    } else {
-        count = header;
-        first = func_06007B34((SprLookupTbl*)(palettes + 1));
-        for (i = 1; i < count; i++) {
-            func_06007B34((SprLookupTbl*)(palettes + 1 + i * 16));
-        }
     }
     return first;
 }
