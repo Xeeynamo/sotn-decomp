@@ -104,7 +104,7 @@ def weapon_sources(output):
     for hand, slot, tag in tags:
         paths = [SRC / 'weapon' / f'w_{slot:02}.c', SRC / 'satz/nonmatching/weapon' / f'w_{slot:02}.c']
         text = ''.join(path.read_text(errors='ignore') for path in paths)
-        names = sorted(set(re.findall(r'\b((?:func|DAT|D|d|jtbl)_060D[6-8][0-9A-Fa-f]{3})\b', text)) |
+        names = sorted(set(re.findall(r'\b((?:func|DAT|D|d|jtbl)_060D[6-8][0-9A-Fa-f]{3}\w*)\b', text)) |
                        {'g_WeaponHeader', 'g_WeaponHeaderJunk'})
         prefix = output / f'weapon_{tag}_names.h'
         write_if_changed(prefix, f'#define WEAPON_HAND {hand}\n' + ''.join(
