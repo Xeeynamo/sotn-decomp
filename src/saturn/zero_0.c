@@ -1065,14 +1065,14 @@ void func_0600871C(Unk0605CD90* arg0, UNK_0605c680* arg1, s32 arg2) {
     tileBase = arg0->unk24 * 0x1000;
 
     src += (x % arg0->width) + (y % arg0->height) * arg0->width;
-    dst += ((y & 0x3F) * 0x40) + (x & 0x3F);
+    dst += (x % 0x40U) + (y % 0x40U) * 0x40;
 
     for (i = 0; i < rows; i++) {
         for (j = 0; j < cols; j++) {
             HW_STORE(dst, *src + tileBase);
 
-            if (((x + j) & 0x3F) == 0x3F) {
-                dst -= 0x3F;
+            if (((x + j) % 0x40U) == (0x40 - 1)) {
+                dst -= (0x40 - 1);
             } else {
                 dst++;
             }
@@ -1084,8 +1084,7 @@ void func_0600871C(Unk0605CD90* arg0, UNK_0605c680* arg1, s32 arg2) {
                 src++;
             }
         }
-        dst = arg0->unk8 + (x & 0x3F);
-        dst += ((y + i + 1) & 0x3F) * 0x40;
+        dst = arg0->unk8 + (x % 0x40U) + ((y + i + 1) % 0x40U) * 0x40;
 
         src = DAT_0605C120[arg2] + 2;
         src += (x % arg0->width) + ((y + i + 1) % arg0->height) * arg0->width;
@@ -1104,9 +1103,11 @@ void BuildSubDispTilemap(Unk0605CD90* arg0) {
     u16 i, j;
 
     src = DAT_0605C120[3] + 2;
+    dst = arg0->unk8;
     tileBase = arg0->unk24 * 0x1000;
+
     j = 0;
-    dst = arg0->unk8 + j * 0x20;
+    dst += j * 0x20;
     for (j = 0; j < 32; j++) {
         for (i = 0; i < 32; i++) {
             HW_STORE(dst, *src + tileBase);
