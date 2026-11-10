@@ -1,9 +1,78 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#if defined(VERSION_PSP) || defined(VERSION_HD)
+#if TARGET == TARGET_PSP
+// Based on version JP 1.0 but accounts for multiple languages
 #include "cutscene_actor_name_psp.h"
-#else
-extern const char* actor_names[];
 
+#elif CUTSCENE_EARLY_VER
+// Creates primitives for the actor name at the head of the dialogue.
+// Function is drastically different than JP 1.1 and above.
+// SEL always uses this old version in JP 1.1 and JP 1.2
+void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
+    Primitive* prim;
+    u16 ch;
+    u16 i;
+    s16 x;
+    u16 actorNameStartIndex;
+    u16* actorName;
+    s32 primIndex;
+    u8* len;
+
+    primIndex = g_api.AllocPrimitives(PRIM_SPRT, actor_prims[actorIndex]);
+    if (primIndex == -1) {
+#if defined(STAGE_IS_SEL) && VERSION < VER_NEXT
+        // bug: SEL forgets to de-allocate the primitive
+#else
+        DestroyEntity(self);
+#endif
+        return;
+    }
+
+    g_Dialogue.primIndex[1] = primIndex;
+    prim = &g_PrimBuf[primIndex];
+    x = 0x38;
+    len = actor_name_len;
+    actorNameStartIndex = 0;
+    for (i = 0; i < actorIndex; i++) {
+        actorNameStartIndex += *len & 0x7F;
+        len++;
+    }
+    actorName = &actor_names[actorNameStartIndex];
+    while (prim) {
+        prim->type = PRIM_SPRT;
+        prim->tpage = 0x1E;
+        prim->clut = PAL_UNK_196;
+        ch = *actorName++;
+        prim->u0 = (s8)((ch & 0xF) * FONT_W);
+        prim->v0 = (s8)((ch & 0xF0) >> 1);
+        prim->u1 = prim->v1 = FONT_W;
+        prim->priority = 0x1FF;
+        prim->drawMode = DRAW_HIDE;
+        prim->x0 = x;
+        prim->y0 = g_Dialogue.startY + 6;
+        if (ch & 0xF000) {
+            prim = prim->next;
+            prim->type = PRIM_SPRT;
+            prim->tpage = 0x1E;
+            prim->clut = PAL_UNK_196;
+            if (ch & 0x4000) {
+                prim->u0 = 0x78;
+            } else {
+                prim->u0 = 0x70;
+            }
+            prim->v0 = 0x48;
+            prim->u1 = prim->v1 = FONT_W;
+            prim->priority = 0x1FF;
+            prim->drawMode = DRAW_HIDE;
+            prim->x0 = x;
+            prim->y0 = g_Dialogue.startY - 2;
+        }
+        x += FONT_GAP;
+        prim = prim->next;
+    }
+}
+#else
+
+extern const char* actor_names[];
 #ifndef DRAW_NAME_ACTOR_INDEX
 #define DRAW_NAME_ACTOR_INDEX actorIndex
 #endif

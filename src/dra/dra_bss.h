@@ -31,6 +31,7 @@ extern s32 D_80138438;
 extern s32 D_8013843C;
 extern s32 D_80138440;
 extern s32 D_80138444;
+extern s32 g_WolfIsTouchingFloor;
 
 // BSS sound.c
 extern s32 D_80138454;

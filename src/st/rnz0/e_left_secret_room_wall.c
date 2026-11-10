@@ -2,7 +2,7 @@
 #include "rnz0.h"
 
 extern EInit g_EInitInteractable;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(WALL_DEBRIS);
 #endif
 

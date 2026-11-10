@@ -124,7 +124,7 @@ void EntityThickBookcase(Entity* self) {
                 prim->drawMode = DRAW_DITHERING | DRAW_COLORS | DRAW_UNK02;
                 prim = prim->next;
             }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             prim->drawMode = DRAW_HIDE;
 #else
             if (self->params) {
@@ -297,7 +297,7 @@ void EntityThickBookcase(Entity* self) {
         prim2->drawMode = DRAW_HIDE;
         prim2 = prim2->next;
     }
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
     if (!self->params) {
         prim = self->ext.et_801AE8E8.unk94;
         prim->r0 = abs(rcos(self->ext.et_801AE8E8.unk80)) * 0x28 / 0x1000;

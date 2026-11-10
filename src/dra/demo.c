@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
 
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
 // mimic PSP behavior
 static u8* g_DemoPtr = DEMO_KEY_PTR;
 #else
@@ -222,7 +222,7 @@ void DemoOpenFile(s32 arg0) {
         return;
     }
 
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
     memset(DEMO_KEY_PTR, 0, DEMO_MAX_LEN);
     FileReadToBuf(SOTN_DATA_DIR "/BIN/DEMOKEY.BIN", DEMO_KEY_PTR,
                   g_DemoKeyIdx * DEMO_MAX_LEN, DEMO_MAX_LEN);

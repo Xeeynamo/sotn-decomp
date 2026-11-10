@@ -11,7 +11,7 @@ void EntityStaircase(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitInteractable);
-#if !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP
         self->posY.i.hi += 32;
 #endif
         primIndex = g_api.AllocPrimitives(PRIM_G4, 1);

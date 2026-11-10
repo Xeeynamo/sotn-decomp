@@ -323,7 +323,7 @@ void RicEntityCrashReboundStone(Entity* entity) {
 }
 
 #define BIBLE_PAGE_COUNT 6
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 extern Point16 bible_pages_pos[BIBLE_PAGE_COUNT];
 #else
 static Point16 bible_pages_pos[BIBLE_PAGE_COUNT];
@@ -437,7 +437,7 @@ void RicEntityCrashBibleBeam(Entity* self) {
 static s16 bible_page_angles[BIBLE_PAGE_COUNT] = {
     0x0400, 0x06AB, 0x0955, 0x0C00, 0x0EAB, 0x1155,
 };
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 extern s32 bible_pages_volume;
 #else
 static s32 bible_pages_volume;
@@ -644,7 +644,7 @@ void RicEntityCrashBible(Entity* self) {
 
 void func_8016F198(Entity* self) {
     const int PrimCount = 16;
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
     const int MaxHeight = 248;
     const int HalfHeight = 128;
 #else
@@ -668,7 +668,7 @@ void func_8016F198(Entity* self) {
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, PrimCount);
         if (self->primIndex == -1) {
             DestroyEntity(self);
-#if !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP
             g_Player.unk4E = 1;
 #endif
             return;
@@ -696,7 +696,7 @@ void func_8016F198(Entity* self) {
         }
         break;
     case 3:
-#if !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP
         g_Player.unk4E = 1;
 #endif
         DestroyEntity(self);
@@ -706,7 +706,7 @@ void func_8016F198(Entity* self) {
         return;
     }
     if (
-#if !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP
         g_CurrentBuffer == g_GpuBuffers
 #else
         0
@@ -752,7 +752,7 @@ void func_8016F198(Entity* self) {
         prim->u3 = 0xFF - prim->x3;
         prim->v1 = MaxHeight - prim->y1;
         prim->v3 = MaxHeight - prim->y3;
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
         prim->u0 = prim->u0 = CLAMP(prim->u0, 1, 0xFE);
         prim->u2 = prim->u2 = CLAMP(prim->u2, 1, 0xFE);
         prim->u1 = prim->u1 = CLAMP(prim->u1, 1, 0xFE);
@@ -1168,7 +1168,7 @@ void RicEntityCrashStopwatch(Entity* self) {
         break;
     case 8:
         DestroyEntity(self);
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
         g_Player.unk4E = 1;
 #endif
         break;
@@ -1343,7 +1343,7 @@ void RicEntityAguneaLightning(Entity* self) {
 }
 
 #define LIGHTNING_COUNT 8
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 extern s32 g_AguneaParams[LIGHTNING_COUNT];
 #else
 static s32 g_AguneaParams[LIGHTNING_COUNT];
@@ -1578,7 +1578,7 @@ void RicEntitySubwpnStopwatchCircle(Entity* self) {
     }
 }
 
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 extern u32 D_801758D0;
 extern Entity* D_801758D4[3];
 #else
@@ -1778,7 +1778,7 @@ void RicEntitySubwpnStopwatch(Entity* self) {
             psp_s2 = PLAYER.posY.val - FIX(16);
         } else if (D_801758D4[self->ext.ricStopWatch.crashIndex - 2] != NULL) {
             if (
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
                 self->ext.ricStopWatch.unk98
 #else
                 1
@@ -1809,7 +1809,7 @@ void RicEntitySubwpnStopwatch(Entity* self) {
             }
         } else if (D_801758D4[self->ext.ricStopWatch.crashIndex - 2] != NULL) {
             if (
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
                 self->ext.ricStopWatch.unk98 &&
 #endif
                 self->ext.ricStopWatch.unk98->facingLeft != self->facingLeft) {
@@ -1885,7 +1885,7 @@ void RicEntitySubwpnStopwatch(Entity* self) {
         if (psp_s4 <= 0) {
             psp_s4 = 1;
         }
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
         psp_s3 = (self->ext.ricStopWatch.t << 5) + 0xC;
 #else
         psp_s3 = (self->ext.ricStopWatch.t << 16 >> 11) + 0xC;
@@ -2054,7 +2054,7 @@ void RicEntitySubwpnBible(Entity* self) {
 
 // This variable is uninitialized. It's an error for PSP compiler.
 // Maybe they tossed this "= 0" line as a quick workaround.
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
     psp_s4 = 0;
 #endif
     switch (self->step) {

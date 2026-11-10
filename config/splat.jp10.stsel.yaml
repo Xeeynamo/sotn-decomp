@@ -1,0 +1,89 @@
+options:
+  platform:     psx
+  basename:     stsel
+  base_path:    ..
+  build_path:   build/jp10
+  target_path:  disks/jp10/ST/SEL/SEL.BIN
+  asm_path:     asm/jp10/st/sel
+  asset_path:   assets/st/sel
+  src_path:     src/st/sel
+  ld_script_path: build/jp10/stsel.ld
+  compiler:     GCC
+  symbol_addrs_path:
+    - config/symbols.jp10.txt
+    - config/symbols.jp10.stsel.txt
+  undefined_funcs_auto_path: build/jp10/config/undefined_funcs_auto.jp10.stsel.txt
+  undefined_syms_auto_path:  build/jp10/config/undefined_syms_auto.jp10.stsel.txt
+  find_file_boundaries: yes
+  use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
+  asm_jtbl_label_macro: jlabel
+  extensions_path: tools/splat_ext
+  disassemble_all: true
+  global_vram_start: 0x80010000
+  section_order:
+    - ".data"
+    - ".rodata"
+    - ".text"
+    - ".bss"
+    - ".sbss"
+  ld_generate_symbol_per_data_segment: true
+sha1: 6fa5c062d8fd169f3bdd8593bbb0f3f3104bd330
+segments:
+  - name: stsel
+    type: code
+    start: 0x00000000
+    vram:  0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, .data, select]
+      - [0x1E8, .data, utils]
+      - [0x24C, .data, title]
+      - [0x2A0, .data, ending]
+      - [0x35C, .data, banks]
+      - [0x50C, .data, 764]
+      - [0x5CC, .data, cutscene]
+      - [0x6B0, .data, save_mgr]
+      - [0x2318, data] # TODO
+      - [0x2388, .data, config_jp]
+      - [0xA234, .data, lba_stage]
+      - [0xAFF4, .data, stream_info]
+      - [0xB02C, .data, cutscene_data]
+      - [0xC0A4, .data, C404]
+      - [0xC9F4, .data, CD54]
+      - [0xD874, .data, sprites]
+      - [0xF648, .data, F9A8]
+      - [0x15F94, .data, libpress]
+      - [0x160D8, data] # TODO
+      - [0x270D8, .rodata, select]
+      - [0x278DC, .rodata, memcard]
+      - [0x27FA0, .rodata, title]
+      - [0x28140, .rodata, ending]
+      - [0x2827C, .rodata, cutscene]
+      - [0x28300, .rodata, save_mgr]
+      - [0x285BC, .rodata, config_jp]
+      - [0x2BF94, .rodata, lba_stage]
+      - [0x2C340, .rodata, libpress]
+      - [0x2C3EC, c, select]
+      - [0x31628, c, utils]
+      - [0x32590, c, memcard]
+      - [0x3386C, c, logo]
+      - [0x33930, c, title]
+      - [0x34278, c, ending]
+      - [0x35B74, c, cutscene]
+      - [0x36DB8, c, credits]
+      - [0x377B8, c, save_mgr]
+      - [0x38E2C, c, stream]
+      - [0x39B5C, c, libpress]
+      - [0x3A26C, asm, handwritten/func_801BAB70]
+      - [0x3A2A0, asm, handwritten/DecDCTvlc]
+      - [0x3A604, .bss, select]
+      - [0x3A6CC, .bss, utils]
+      - [0x3A6D8, .bss, memcard]
+      - [0x3A70C, .bss, title]
+      - [0x3A7F4, .bss, credits]
+      - [0x3B9F4, .bss, save_mgr]
+      - [0x3B9FC, .bss, stream]
+      - [0x3BA4C, .bss, bss]
+  - [0x56220]

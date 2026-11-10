@@ -3,7 +3,7 @@
 
 #define STAGE_FLAG NO3_STAGE_FLAG
 
-#ifdef VERSION_US
+#if VERSION == VER_US
 #include "../e_stage_name_us.h"
 #else
 #include "../e_stage_name_jp.h"

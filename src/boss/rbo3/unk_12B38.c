@@ -2,7 +2,7 @@
 
 #include "rbo3.h"
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(LIFE_UP_SPAWN);
 #endif
 

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 u8 gfx_stage_name_jp_sm[] = {
 #include <gen/gfx_stage_name_jp_sm.h>
 };
@@ -15,7 +15,7 @@ u8 gfx_stage_name_jp_lg[] = {
 #include <gen/gfx_stage_name_jp_lg.h>
 };
 
-#ifdef VERSION_US
+#if VERSION == VER_US
 // unreferenced
 u8 D_801843AC[] = {
 #include <gen/D_801843AC.h>
@@ -89,7 +89,7 @@ u8 gfx_spectral_sword[] = {
 #include <gen/gfx_spectral_sword.h>
 };
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 u8 gfx_sealed_door[] = {
 #include <gen/gfx_sealed_door.h>
 };
@@ -115,7 +115,7 @@ u8 gfx_cutscene_2[] = {
 #include <gen/gfx_cutscene_2.h>
 };
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 u8 gfx_stage_name_en[] = {
 #include <gen/gfx_stage_name_en.h>
 };
@@ -129,7 +129,7 @@ u16 pal_skelerang_spittle_bone[] = {
 #include <gen/pal_skelerang_spittle_bone.h>
 };
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 u16 pal_unused_1698C[] = {
 #include <gen/pal_unused_1698C.h>
 };

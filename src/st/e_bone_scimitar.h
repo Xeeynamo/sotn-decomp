@@ -160,7 +160,7 @@ void EntityBoneScimitar(Entity* self) {
             self->hitboxOffY = 0;
         }
 
-#if !defined(STAGE_IS_TEK)
+#if VERSION >= VER_BETA_MAD
         if (self->pose == 7 && !self->poseTimer) {
             PlaySfxPositional(SFX_BONE_SWORD_SWISH_B);
         }

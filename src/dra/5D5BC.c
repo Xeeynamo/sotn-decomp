@@ -34,7 +34,7 @@ s32 func_800FD664(s32 arg0) {
     return arg0;
 }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 bool CalcPlayerDamageMaria(DamageParam* damage) {
     if (damage->damageKind != DAMAGEKIND_5) {
         if (damage->damageKind >= DAMAGEKIND_16) {
@@ -457,7 +457,7 @@ s32 func_800FE044(s32 amount, s32 type) {
             i++;
             playerXPBoost >>= 1;
         }
-#if defined(VERSION_HD)
+#if VERSION < VER_JP10
         i -= 2;
 #endif
         if (i <= 0) {
@@ -508,9 +508,9 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
         if (CheckEquipmentItemCount(ITEM_BRILLIANT_MAIL, EQUIP_ARMOR) != 0) {
             subwpn->attack += 10;
         }
-#if defined(VERSION_US)
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
         if (subweaponId == 4 || subweaponId == 12) {
-#elif defined(VERSION_HD) || defined(VERSION_PSP)
+#else
         if (subweaponId == 4) {
 #endif
             accessoryCount =
@@ -949,7 +949,7 @@ u16 DealDamage(Entity* enemyEntity, Entity* attackerEntity) {
             damage += SquareRoot0(g_RoomCount);
             break;
         case STAT_LCK:
-#if defined(VERSION_US)
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP
             damage += (rand() % g_Status.statsTotal[STAT_LCK]) + 1;
 #else
             damage += (rand() % g_Status.statsTotal[STAT_LCK]);

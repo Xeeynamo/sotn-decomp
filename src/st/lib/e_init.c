@@ -79,7 +79,7 @@ void EntityFleaArmorAttackHitbox(Entity* self);
 void EntityFleaMan(Entity* self);
 void EntityMudman(Entity* self);
 void func_us_801D1298(Entity* self);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 void func_psp_0926AED0(Entity* self);
 #endif
 
@@ -155,7 +155,7 @@ PfnEntityUpdate EntityUpdates[] = {
     /* 0x44 */ EntitySkeletonPieces,
     /* 0x45 */ EntityChair,
     /* 0x46 */ EntityBreakableDebris,
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     /* 0x47 */ func_psp_0926AED0,
 #else
     /* 0x47 */ func_us_801B8A00,
@@ -166,7 +166,7 @@ PfnEntityUpdate EntityUpdates[] = {
     /* 0x4B */ EntityFleaMan,
     /* 0x4C */ EntityMudman,
     /* 0x4D */ func_us_801D1298,
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     /* 0x4E */ func_us_801B8A00,
 #endif
 };

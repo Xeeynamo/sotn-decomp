@@ -1,0 +1,110 @@
+options:
+  platform:     psx
+  basename:     stsel
+  base_path:    ..
+  build_path:   build/hk
+  target_path:  disks/hk/ST/SEL/SEL.BIN
+  asm_path:     asm/hk/st/sel
+  asset_path:   assets/st/sel
+  src_path:     src/st/sel
+  ld_script_path: build/hk/stsel.ld
+  compiler:     GCC
+  symbol_addrs_path:
+    - config/symbols.hk.txt
+    - config/symbols.hk.stsel.txt
+  undefined_funcs_auto_path: build/hk/config/undefined_funcs_auto.hk.stsel.txt
+  undefined_syms_auto_path:  build/hk/config/undefined_syms_auto.hk.stsel.txt
+  find_file_boundaries: yes
+  use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
+  asm_jtbl_label_macro: jlabel
+  extensions_path: tools/splat_ext
+  disassemble_all: true
+  global_vram_start: 0x80010000
+  section_order:
+    - ".data"
+    - ".rodata"
+    - ".text"
+    - ".bss"
+    - ".sbss"
+  ld_generate_symbol_per_data_segment: true
+sha1: 369ebea2a323278ccdbe25ae495ad4a566b318e8
+segments:
+  - name: stsel
+    type: code
+    start: 0x00000000
+    vram:  0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, .data, select]
+      - [0x46C, .data, utils]
+      - [0x4D0, .data, title]
+      - [0x4E0, .data, ending]
+      - [0x59C, .data, banks]
+      - [0x764, .data, 764]
+      - [0x824, .data, cutscene]
+      - [0x8DC, .data, save_mgr]
+      - [0x2584, data]
+      - [0x25FC, .data, config_us]
+      - [0xA50C, .data, lba_stage]
+      - [0xB2CC, .data, stream_info]
+      - [0xB304, .data, cutscene_data]
+      - [0xC408, .data, C404]
+      - [0xCD58, .data, CD54]
+      - [0xDBD8, .data, sprites]
+      - [0xF9AC, .data, F9A8]
+      - [0x162F8, .data, libpress]
+      - [0x1643C, data]
+      - [0x28454, .rodata, select] # strings in D_80180128
+      #- [0x28630, .rodata, select] # strings in D_801803D0
+      #- [0x286B4, .rodata, select] # strings func_801ACFBC
+      #- [0x286CC, .rodata, select] # DrawNavigationTips jtbl
+      #- [0x286E4, .rodata, select] # strings in func_801AD490
+      #- [0x286FC, .rodata, select] # strings in D_80180454
+      #- [0x28754, .rodata, select] # strings in func_801AD66C
+      #- [0x2876C, .rodata, select] # strings in func_801AD78C
+      #- [0x287AC, .rodata, select] # strings in func_801ADF94
+      #- [0x287D4, .rodata, select] # Update strings and jtbl
+      - [0x28B00, .rodata, memcard] # "BISCPS-45196DRAX00"
+      #- [0x28B14, .rodata, memcard] # FntPrint strings
+      #- [0x28B30, .rodata, memcard] # func_801B3164
+      - [0x28B7C, .rodata, title] # E3 selection strings
+      - [0x28BB4, .rodata, ending] # TestCollision
+      #- [0x28BF4, .rodata, ending] # func_801B55C8
+      #- [0x28C14, .rodata, ending]
+      - [0x28CF0, .rodata, cutscene] # g_DiagActors strings
+      #- [0x28D10, .rodata, cutscene] # SEL_EntityCutscene jtbl
+      - [0x28D94, .rodata, save_mgr]
+      - [0x2905C, .rodata, config_us] # equip strings
+      #- [0x2AB28, .rodata, config_us] # accessories strings
+      #- [0x2B8C0, .rodata, config_us] # menu strings
+      #- [0x2BE0C, .rodata, config_us] # spells strings
+      #- [0x2BFA4, .rodata, config_us] # relics strings
+      #- [0x2C494, .rodata, config_us] # enemies strings
+      - [0x2CBE8, .rodata, lba_stage]
+      - [0x2CF94, rodata] # MDEC_reset strings
+      - [0x2CFB0, .rodata, libpress]
+      - [0x2CFD0, rodata] # timeout and DecDCTvlc strings
+      - [0x2D05C, c, select]
+      - [0x328E0, c, utils]
+      - [0x33D80, c, memcard]
+      - [0x3505C, c, logo]
+      - [0x35120, c, title]
+      - [0x35B44, c, ending]
+      - [0x37440, c, cutscene]
+      - [0x38704, c, credits]
+      - [0x39104, c, save_mgr]
+      - [0x3A798, c, stream]
+      - [0x3B4B4, c, libpress]
+      - [0x3BB1C, asm, handwritten/func_801BAB70]
+      - [0x3BB4C, asm, handwritten/func_801BBB4C]
+      - [0x3C470, .bss, select]
+      - [0x3C538, .bss, utils]
+      - [0x3C544, .bss, memcard]
+      - [0x3C578, .bss, title]
+      - [0x3C660, .bss, credits]
+      - [0x3D860, .bss, save_mgr]
+      - [0x3D868, .bss, stream]
+      - [0x3D8BC, .bss, bss]
+  - [0x580AC]

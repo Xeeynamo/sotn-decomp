@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz0.h"
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #include "../pfn_entity_update.h"
 
 // common

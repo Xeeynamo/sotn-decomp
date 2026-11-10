@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rlib.h"
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 u8 unused_gfx[] = {
 #include "gen/unused_gfx.h" // totally unused
 };

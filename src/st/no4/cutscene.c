@@ -28,7 +28,7 @@ enum DialogueSubsteps {
 
 extern PfnEntityUpdate EntityUpdates[]; // Defined by e_init
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern u8* cutscene_data_ferryman_left;  // Defined by st_init
 extern u8* cutscene_data_ferryman_right; // Defined by st_init
 
@@ -184,7 +184,7 @@ void EntityCutscene(Entity* self) {
     RECT rect;
     s32 ptr;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     DisableAutoPowerOff();
 #endif
 
@@ -219,7 +219,7 @@ void EntityCutscene(Entity* self) {
                 return;
             }
             nextByte = SetCutsceneScript(cutscene_data_ferryman_left);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             cutscene_script_ptr = cutscene_data_ferryman_left;
 #endif
         } else if (g_CastleFlags[MET_FERRYMAN_2]) {
@@ -228,7 +228,7 @@ void EntityCutscene(Entity* self) {
             return;
         } else {
             nextByte = SetCutsceneScript(cutscene_data_ferryman_right);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             cutscene_script_ptr = cutscene_data_ferryman_right;
 #endif
         }
@@ -246,7 +246,7 @@ void EntityCutscene(Entity* self) {
         // us: loop breaks on on line 564 and closes on line 565
         // pspeu: loop breaks on lines 539 and 558 and closes on line 559
         while (true) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             nextByte = *g_Dialogue.scriptCur++;
             endLoopFlag = false;
             if (PadReadPSP() & PAD_START) {
@@ -275,7 +275,7 @@ void EntityCutscene(Entity* self) {
                         continue;
                     }
                     g_Dialogue.nextCharX = CUTSCENE_UNK1_NEXT_X;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     if (!(g_Dialogue.unk12 & 1)) {
                         g_Dialogue.nextLineY += CS_LINE_SPACING;
                     }
@@ -300,7 +300,7 @@ void EntityCutscene(Entity* self) {
 #endif
                     return;
                 case CSOP_SET_SPEED:
-#ifdef VERSION_US
+#if VERSION == VER_US
                     g_Dialogue.unk17 =
 #endif
                         *g_Dialogue.scriptCur++;
@@ -318,13 +318,13 @@ void EntityCutscene(Entity* self) {
                         continue;
                     }
                     i = *g_Dialogue.scriptCur++;
-                    prim = g_Dialogue.prim[LEN(g_Dialogue.prim) - 1];
+                    prim = g_Dialogue.primPortrait;
                     j = *g_Dialogue.scriptCur++;
                     uCoord = 0;
                     vCoord = 0;
                     prim->clut = 0x220;
                     prim->tpage = 144;
-#ifdef VERSION_US
+#if VERSION == VER_US
                     if (j & 0x80) {
                         prim->u0 = prim->u2 = 47;
                         prim->u1 = prim->u3 = 0;
@@ -342,7 +342,7 @@ void EntityCutscene(Entity* self) {
                     prim->y0 = prim->y1 = prim->y2 = prim->y3 = 60;
                     CutsceneUnk1();
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     CutsceneUnk4();
 #else
                 CutsceneUnk4(0);
@@ -352,7 +352,7 @@ void EntityCutscene(Entity* self) {
                     prim->drawMode = DRAW_DEFAULT;
 
                     DrawCutsceneActorName(
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                         i, self, actor_names, actor_name_len_index,
                         actor_name_index, 1
 #else
@@ -368,8 +368,8 @@ void EntityCutscene(Entity* self) {
                         continue;
                     }
                     prim = g_Dialogue.prim[0];
-#ifdef VERSION_PSP
-                    for (i = 0; i < LEN(g_Dialogue.prim) - 1; i++) {
+#if TARGET == TARGET_PSP
+                    for (i = 0; i < LEN(g_Dialogue.prim); i++) {
                         prim->drawMode = DRAW_HIDE;
                         prim = prim->next;
                     }
@@ -390,7 +390,7 @@ void EntityCutscene(Entity* self) {
                     if (skip_cutscene) {
                         continue;
                     }
-                    prim = g_Dialogue.prim[LEN(g_Dialogue.prim) - 1];
+                    prim = g_Dialogue.primPortrait;
                     prim = prim->next;
                     prim->y0 = prim->y1 = prim->y2 = prim->y3 = 24;
                     prim->drawMode = DRAW_TPAGE | DRAW_TRANSP;
@@ -469,7 +469,7 @@ void EntityCutscene(Entity* self) {
                         ptr |= (u32)*g_Dialogue.scriptCur++;
                         ptr <<= 4;
                         ptr |= (u32)*g_Dialogue.scriptCur++;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                         switch (ptr) {
                         case 0:
                             ptr = (u32)&D_893CF8C;
@@ -509,7 +509,7 @@ void EntityCutscene(Entity* self) {
                         // j here is used as a parameter for LoadTPage in
                         // other overlays, but is unused in no4
                         LoadTPage((u_long*)ptr, 1, 0, 0, 256, 48, 72);
-#elif defined(VERSION_PC)
+#elif defined(PLATFORM_PSYZ)
                     j = *g_Dialogue.scriptCur++;
                     // j here is used as a parameter for LoadTPage in
                     // other overlays, but is unused in no4
@@ -544,7 +544,7 @@ void EntityCutscene(Entity* self) {
                         continue;
                     }
                     g_Dialogue.nextCharTimer = g_Dialogue.unk17;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     endLoopFlag = true;
                 } // This closes the CSOP switch for psp
                 if (endLoopFlag) {
@@ -585,7 +585,7 @@ void EntityCutscene(Entity* self) {
         rect.w = 2;
         rect.h = 8;
         vCoord = (g_Dialogue.nextCharY * 12) + 384;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         StoreImage(&rect, (u_long*)buffer1);
         for (i = 0; i < 32; i++) {
             // Swaps the upper and lower 4 bits of each member
@@ -675,7 +675,7 @@ void EntityCutscene(Entity* self) {
         g_Dialogue.nextCharX += 2;
 #endif
         break;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     case DIALOGUE_LOAD_PORTRAIT:
         ptr = (g_Dialogue.nextCharY + 1) & 3;
         if (!self->step_s) {
@@ -687,7 +687,7 @@ void EntityCutscene(Entity* self) {
                 prim->drawMode = DRAW_HIDE;
             }
         }
-        for (i = 0; i < LEN(g_Dialogue.prim) - 1; i++) {
+        for (i = 0; i < LEN(g_Dialogue.prim); i++) {
             if (i == ptr) {
                 continue;
             }
@@ -701,7 +701,7 @@ void EntityCutscene(Entity* self) {
         break;
 #endif
     case DIALOGUE_START_TEXT:
-        prim = g_Dialogue.prim[LEN(g_Dialogue.prim) - 1];
+        prim = g_Dialogue.primPortrait;
         prim->x0 = prim->x2 -= 4;
         prim->x1 = prim->x3 += 4;
         prim->y0 = prim->y1 -= 6;
@@ -716,7 +716,7 @@ void EntityCutscene(Entity* self) {
         }
         break;
     case DIALOGUE_UNLOAD_PORTRAIT:
-        prim = g_Dialogue.prim[LEN(g_Dialogue.prim) - 1];
+        prim = g_Dialogue.primPortrait;
         prim->x0 = prim->x2 += 4;
         prim->x1 = prim->x3 -= 4;
         prim->y0 = prim->y1 += 6;
@@ -731,7 +731,7 @@ void EntityCutscene(Entity* self) {
         break;
     case DIALOGUE_OPEN_DIALOG_BOX:
         dialogue_started = true;
-        prim = g_Dialogue.prim[LEN(g_Dialogue.prim) - 1];
+        prim = g_Dialogue.primPortrait;
         prim = prim->next;
         g_Dialogue.portraitAnimTimer--;
         if (g_Dialogue.portraitAnimTimer >= 12) {
@@ -750,7 +750,7 @@ void EntityCutscene(Entity* self) {
         }
         break;
     case DIALOGUE_CLOSE_DIALOG_BOX:
-        prim = g_Dialogue.prim[LEN(g_Dialogue.prim) - 1];
+        prim = g_Dialogue.primPortrait;
         prim = prim->next;
         g_Dialogue.portraitAnimTimer--;
         if (g_Dialogue.portraitAnimTimer >= 12) {

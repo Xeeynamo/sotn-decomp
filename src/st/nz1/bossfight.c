@@ -179,7 +179,7 @@ void EntityBossDoors(Entity* self) {
 
     case 4:
         if (!g_bossDoorsLocked) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             doorTilemap = D_pspeu_092637C8;
 #else
             doorTilemap = D_us_8018113C;

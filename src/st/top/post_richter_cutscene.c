@@ -205,7 +205,7 @@ void func_us_801AD400(Entity* self) {
     }
 }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 
 void func_pspeu_092496C8(Entity* self) {
     Entity* player = &PLAYER;

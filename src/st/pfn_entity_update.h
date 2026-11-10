@@ -2,13 +2,13 @@
 
 extern PfnEntityUpdate EntityUpdates[];
 
-#if defined(VERSION_PSP) || defined(VERSION_PC)
+#if TARGET == TARGET_PSP || defined(PLATFORM_PSYZ)
 extern PfnEntityUpdate* PfnEntityUpdates;
 #else
 #define PfnEntityUpdates EntityUpdates
 #endif
 
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 
 // A horizontally ordered array with head and tail sigils in the 1st field
 extern LayoutEntity** g_pStObjLayoutHorizontal;

@@ -337,9 +337,16 @@ s32 func_060071C8(void) {
     return 1;
 }
 
+#ifdef SATZ
+void sotn_satz_equip(void);
+#endif
+
 Equipment* func_060076D0(s32 arg0) {
     Equipment* ret;
 
+#ifdef SATZ
+    sotn_satz_equip();
+#endif
     if (g_Status.equipment[4] == 0x19) {
         ret = &DAT_060645AC[0xDF];
     } else {
@@ -454,7 +461,14 @@ void func_060078EC(s32 arg0) {
 
 s32 DAT_06038C5C = 0;
 
-SPR_2DefineWork(sp2WorkArea, 0x280, 0x304, 0x200, 1, 0x200);
+#define COMMAND_MAX 0x280
+#define GOUR_TBL_MAX 0x304
+#define LOOKUP_TBL_MAX 0x200
+#define CHAR_MAX 1
+#define DRAW_PRTY_MAX 0x200
+
+SPR_2DefineWork(sp2WorkArea, COMMAND_MAX, GOUR_TBL_MAX, LOOKUP_TBL_MAX,
+                CHAR_MAX, DRAW_PRTY_MAX);
 
 static s32 DAT_060576AC;
 
@@ -472,7 +486,7 @@ void InitSpriteEngine(s32 arg0) {
     DAT_0605BECA = 0;
     DAT_0605AEB0 = 0;
     DAT_0605AEA8 = 0;
-    DAT_0605BEC8 = 0x304;
+    DAT_0605BEC8 = GOUR_TBL_MAX;
     DAT_060576AC = 0;
     DAT_0605AEAC = (SprSpCmd*)sp2MstSpCmd;
     DAT_0605BEC4 = 0x11180;
@@ -480,14 +494,14 @@ void InitSpriteEngine(s32 arg0) {
     DAT_06038C5C = 2;
 }
 
-u16 AllocSpriteCharVram(u16 arg0, s32 arg1, s16* size, void* src) {
+u16 AllocSpriteCharVram(u16 arg0, s32 arg1, XyInt* size, void* src) {
     u32 temp_r2;
     s32 dst;
     u32 var_r8;
     u16 temp_r10;
 
     temp_r10 = DAT_0605BECA;
-    var_r8 = size[0] * size[1];
+    var_r8 = size->x * size->y;
     if (arg0 == 0 || arg0 == 8) {
         var_r8 = var_r8 / 2;
     } else if (arg0 == 40) {
@@ -497,7 +511,7 @@ u16 AllocSpriteCharVram(u16 arg0, s32 arg1, s16* size, void* src) {
     if (DAT_0605BECA < 0x400) {
         u16* ptr = DAT_0605AEC0[DAT_0605BECA];
         ptr[0] = DAT_0605BEC4 / 8;
-        ptr[1] = (((u16)size[0] / 8) << 8) | size[1];
+        ptr[1] = (((u16)size->x / 8) << 8) | size->y;
         if (src != NULL) {
             dst = VRAM_ADDR + DAT_0605BEC4;
             temp_r2 = (uptr)src & 0x0FF00000;
@@ -523,7 +537,7 @@ u16 func_06007B34(SprLookupTbl* tbl) {
     u16 tblNo;
 
     tblNo = DAT_0605AEA8;
-    if (tblNo < 0x200) {
+    if (tblNo < LOOKUP_TBL_MAX) {
         if (tbl != NULL) {
             entry = tbl->entry;
             for (i = 0; i < 0x10; i++) {
@@ -531,23 +545,24 @@ u16 func_06007B34(SprLookupTbl* tbl) {
             }
             SPR_2SetLookupTbl(tblNo, tbl);
         }
-        DAT_0605AEA8 += 1;
+        DAT_0605AEA8++;
     }
     return tblNo;
 }
 
-s32 func_06007B8C(s16* colors) {
+u16 func_06007B8C(SprLookupTbl* tbl) {
+    u16* entry;
     u32 charNo;
     s16* dst;
     s32 i;
 
     charNo = DAT_0605AEB0;
     if (charNo <= 0x3E) {
-        if (colors != NULL) {
+        if (tbl != NULL) {
             dst = (s16*)(SCL_COLRAM_ADDR + 0x800 + charNo * 0x20);
-
+            entry = tbl->entry;
             for (i = 0; i < 0x10; i++) {
-                HW_STORE(dst++, *colors++ & 0x7FFF);
+                HW_STORE(dst++, *entry++ & 0x7FFF);
             }
         }
         DAT_0605AEB0++;
@@ -555,7 +570,8 @@ s32 func_06007B8C(s16* colors) {
     return charNo | 0x4000;
 }
 
-u16 func_06007BE0(s16* colors, s32 arg1) {
+u16 func_06007BE0(SprLookupTbl* tbl) {
+    u16* entry;
     u16 tblNo;
     u16 i;
     u16 vram;
@@ -563,16 +579,17 @@ u16 func_06007BE0(s16* colors, s32 arg1) {
     SprLookupTbl lookupTbl;
 
     tblNo = DAT_0605AEA8;
-    if (tblNo > 0x1FFU) {
+    if (tblNo >= LOOKUP_TBL_MAX) {
         return tblNo;
     }
     if (DAT_0605AEB0 > 0x3E) {
         return DAT_0605AEB0 | 0x4000;
     }
-    if (colors != NULL) {
+    if (tbl != NULL) {
         dst = (s16*)(SCL_COLRAM_ADDR + 0x800 + DAT_0605AEB0 * 0x20);
+        entry = tbl->entry;
         for (i = 0; i < 0x10; i++) {
-            HW_STORE(dst++, *colors++ & 0x7FFF);
+            HW_STORE(dst++, *entry++ & 0x7FFF);
         }
 
         vram = LocalLookupTblNoToVram(DAT_0605AEB0);
@@ -582,7 +599,7 @@ u16 func_06007BE0(s16* colors, s32 arg1) {
 
         SPR_2SetLookupTbl(DAT_0605AEA8, &lookupTbl);
     }
-    DAT_0605AEA8 += 1;
+    DAT_0605AEA8++;
     DAT_0605AEB0++;
     return tblNo;
 }
@@ -592,7 +609,7 @@ u16 SprSetGourTbl(SprGourTbl* gourTbl) {
     u16 prev;
 
     prev = DAT_0605BEC8;
-    if (DAT_0605BEC8 < 0x304) {
+    if (DAT_0605BEC8 < GOUR_TBL_MAX) {
         SPR_2SetGourTbl(DAT_0605BEC8, gourTbl);
         DAT_0605BEC8++;
     }
@@ -608,7 +625,7 @@ void ResetSpriteVram() {
     DAT_0605BECA = 0;
     DAT_0605AEA8 = 0;
     DAT_0605AEB0 = 0;
-    DAT_0605BEC8 = 0x304;
+    DAT_0605BEC8 = GOUR_TBL_MAX;
     DAT_060576AC = 0;
     DAT_0605BEC4 = 0x11180;
     DAT_06038DBC = 0;
@@ -1726,9 +1743,10 @@ void func_0600A088(void) {
         }
     }
     temp = VRAM_ADDR + SPR_2LookupTblNoToVram(0) * 8;
-    QueueVramTransfer(temp, DAT_06038DD0[0], 0x200);
+    QueueVramTransfer(temp, HOST_TO_BUS16(DAT_06038DD0[0], 0x200), 0x200);
     if (DAT_06038DBC != 0) {
-        QueueVramTransfer(DAT_06038DBC, DAT_06038DD0[3], 0x20);
+        QueueVramTransfer(
+            DAT_06038DBC, HOST_TO_BUS16(DAT_06038DD0[3], 0x20), 0x20);
     }
 }
 
@@ -1745,7 +1763,16 @@ void SetCharTrans(u16 arg0, s32 arg1, s32 arg2) {
     QueueVramTransfer(VRAM_ADDR + DAT_0605AEC0[arg0][0] * 8, arg2, arg1);
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A29C, LookupTblNoToVramAddr);
+void LookupTblNoToVramAddr(u16 tableNo, u8* src) {
+    u32 dst;
+
+    if (tableNo & 0x4000) {
+        dst = SCL_COLRAM_ADDR + 0x800 + (tableNo & ~0x4000) * 0x20;
+    } else {
+        dst = VRAM_ADDR + SPR_2LookupTblNoToVram(tableNo & 0xFFF) * 8;
+    }
+    QueueVramTransfer(dst, HOST_TO_BUS16(src, 0x20), 0x20);
+}
 
 void func_0600A304(s32 gourTblNo, SprGourTbl* gourTbl) {
     SPR_2SetGourTbl(gourTblNo, gourTbl);
@@ -1763,8 +1790,8 @@ void func_0600A330(void) {
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A350, func_0600A350);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A490, func_0600A490);
 
-// MapBytesThroughLutPair
-void func_0600A5FC(u8* src, u8* dst0, u8* dst1, s32 count) {
+// func_0600A5FC
+void MapBytesThroughLutPair(u8* src, u8* dst0, u8* dst1, s32 count) {
     u8 value;
 
     while (count > 0) {
@@ -1788,26 +1815,24 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A77C, func_0600A77C);
 
 // original name: UpdateMirage
 void func_0600AA18(s32 arg0) {
-    unkStruct* var_r3;
+    s32 i, j, k;
+    s32 var_r2;
     UNK0605D910* var_r7;
+    unkStruct2* temp_r4;
+    unkStruct* var_r3;
     unkStruct* var_r5;
-    s32 var_r0;
-    s32 var_r0_2;
-    s32 var_r2_2;
-    s32 var_r6;
-    s16* temp_r4;
-    unkStruct* var_r6_2;
+    unkStruct* var_r6;
 
-    if ((arg0 == 0) || (arg0 == 2)) {
+    if (arg0 == 0 || arg0 == 2) {
         if (arg0 == 2) {
             var_r3 = DAT_0605D910[1].unk14;
         } else {
             var_r3 = DAT_0605D910[0].unk14;
         }
-        for (var_r6 = 0; var_r6 < 6; var_r6++) {
-            for (var_r0 = 0; var_r0 < 5; var_r0++) {
-                var_r3->unk0[var_r0] = -1;
-                var_r3->unkA[var_r0] = 0;
+        for (i = 0; i < 6; i++) {
+            for (j = 0; j < 5; j++) {
+                var_r3->unk0[j] = -1;
+                var_r3->unkA[j] = 0;
             }
             var_r3++;
         }
@@ -1817,18 +1842,18 @@ void func_0600AA18(s32 arg0) {
         } else {
             var_r7 = &DAT_0605D910[0];
         }
-        temp_r4 = &var_r7->unkA8;
+        temp_r4 = &var_r7->unkA8[0];
         var_r5 = &var_r7->unk14[5];
-        var_r6_2 = &var_r7->unk14[4];
-        for (var_r0_2 = 5; var_r0_2 > 0; var_r0_2--) {
-            *var_r5-- = *var_r6_2--;
+        var_r6 = &var_r7->unk14[4];
+        for (k = 5; k > 0; k--) {
+            *var_r5-- = *var_r6--;
         }
-        var_r7->unk14[0] = *((unkStruct*)&temp_r4[8]);
-        var_r2_2 = var_r7->unk8 + 1;
-        if (var_r2_2 > 6) {
-            var_r2_2 = 0;
+        var_r7->unk14[0] = temp_r4->unk10;
+        var_r2 = var_r7->unk8 + 1;
+        if (var_r2 > 6) {
+            var_r2 = 0;
         }
-        var_r7->unk4 = var_r2_2;
+        var_r7->unk4 = var_r2;
     }
 }
 
@@ -1846,7 +1871,39 @@ s32 GetEnemyPlayerCharaAddr(void) {
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600AD98, InitPaletteRemapLuts);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600AE30, func_0600AE30);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600AEE4, func_0600AEE4);
+
+u16 func_06007B34(SprLookupTbl* tbl);
+u16 func_06007B8C(SprLookupTbl* tbl);
+u16 func_06007BE0(SprLookupTbl* tbl);
+
+u16 func_0600AEE4(u16* arg0) {
+    s32 count;
+    s16 temp_r1;
+    s32 i;
+    u16 var_r12;
+
+    temp_r1 = *arg0 & 0xF000;
+    count = *arg0 & 0xFFF;
+
+    if (temp_r1 == 0x4000) {
+        var_r12 = ((u16(*)())func_06007B8C)(&(((SprLookupTbl*)(arg0 + 1))[0]));
+        for (i = 1; i < count; i++) {
+            ((u16(*)())func_06007B8C)(&(((SprLookupTbl*)(arg0 + 1))[i]));
+        }
+    } else if (temp_r1 == 0x2000) {
+        var_r12 = ((u16(*)())func_06007BE0)(&(((SprLookupTbl*)(arg0 + 1))[0]));
+        for (i = 1; i < count; i++) {
+            ((u16(*)())func_06007BE0)(&(((SprLookupTbl*)(arg0 + 1))[i]));
+        }
+    } else {
+        count = *arg0;
+        var_r12 = ((u16(*)())func_06007B34)(&(((SprLookupTbl*)(arg0 + 1))[0]));
+        for (i = 1; i < count; i++) {
+            ((u16(*)())func_06007B34)(&(((SprLookupTbl*)(arg0 + 1))[i]));
+        }
+    }
+    return var_r12;
+}
 
 void func_0600AFA8(SpriteObject* sprite, SaturnSpriteFrameHeader* frame) {
     SpritePart* part;
@@ -2044,7 +2101,7 @@ void func_0600BD68(void) {
     node = g_SpriteListHead;
     func_0600A088();
     func_0600A77C(0, 0, NULL);
-    var_r9 = DAT_0605D910;
+    var_r9 = &DAT_0605D910[0];
     var_r11 = 4;
     for (i = 0; i < 2; i++) {
         if (var_r9->unk10 != 0) {
@@ -2088,13 +2145,13 @@ void func_0600BE7C(void) {
 }
 
 void func_0600BEA8(void) {
-    s16 size[2];
+    XyInt size;
     Unk0605DB60* entry;
     s32 i;
 
-    size[0] = 0x80;
-    size[1] = 0x40;
-    AllocSpriteCharVram(8, 0, size, NULL);
+    size.x = 0x80;
+    size.y = 0x40;
+    AllocSpriteCharVram(8, 0, &size, NULL);
 
     entry = d_0605DB60;
 
@@ -2108,42 +2165,42 @@ void func_0600BEA8(void) {
 }
 
 void func_0600BF08(void) {
-    s16 size[2];
+    XyInt size;
 
-    size[0] = 0x60;
-    size[1] = 0x80;
-    AllocSpriteCharVram(8, 0, size, NULL);
+    size.x = 0x60;
+    size.y = 0x80;
+    AllocSpriteCharVram(8, 0, &size, NULL);
 }
 
 void func_0600BF38(void) {
-    s16 size[2];
+    XyInt size;
     s32 i;
 
-    size[0] = 0x80;
-    size[1] = 0x50;
+    size.x = 0x80;
+    size.y = 0x50;
     for (i = 0; i < 8; i++) {
-        AllocSpriteCharVram(8, 0, size, NULL);
+        AllocSpriteCharVram(8, 0, &size, NULL);
     }
     func_0600AB60();
 }
 
 void func_0600BF8C(void) {
-    s16 size[2];
+    XyInt size;
     s32 i;
 
-    size[0] = 0x100;
-    size[1] = 0x80;
+    size.x = 0x100;
+    size.y = 0x80;
     for (i = 0; i < 2; i++) {
-        AllocSpriteCharVram(8, 0, size, NULL);
+        AllocSpriteCharVram(8, 0, &size, NULL);
     }
 }
 
 void func_0600BFD8(void) {
-    s16 size[2];
+    XyInt size;
 
-    size[0] = 0x100;
-    size[1] = 0xA0;
-    AllocSpriteCharVram(8, 0, size, NULL);
+    size.x = 0x100;
+    size.y = 0xA0;
+    AllocSpriteCharVram(8, 0, &size, NULL);
 }
 
 void func_0600C00C(void) {
@@ -2177,7 +2234,7 @@ void func_0600C00C(void) {
     DAT_06038FD4 = DAT_0605BECA;
 }
 
-void func_0600C0C4(int arg0) {
+void func_0600C0C4(s32 arg0) {
     if (arg0 == 0) {
         DAT_0605BECA = 10;
         DAT_060645D4[0]->allocationIndex = 10;
@@ -2276,7 +2333,7 @@ void func_0600C298(s32 arg0) {
 // _SetLocalPalData
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C2EC, func_0600C2EC);
 
-s32 func_0600C3A8(u16* arg0, u16* arg1, u16* arg2, u32 arg3) {
+s32 func_0600C3A8(u16* arg0, u16* arg1, u16* arg2, u16* arg3) {
     s32 ret;
 
     ret = 1;
@@ -3317,27 +3374,25 @@ bool CheckClipScreenArea(XyInt* arg0) {
     return true;
 }
 
-// 0x0600E51C
-void RotateVec2Degrees(MthXy* arg0, s16 arg1) {
-    Fixed32 angle;
+void func_0600E51C(MthXy* arg0, s16 angle) {
+    Fixed32 a;
     Fixed32 s, c;
     MthXy pos;
 
-    angle = MTH_IntToFixed(arg1);
-    c = MTH_Cos(angle);
-    s = MTH_Sin(angle);
+    a = MTH_IntToFixed(angle);
+    c = MTH_Cos(a);
+    s = MTH_Sin(a);
 
     pos = *arg0;
     arg0->x = MTH_Mul(c, pos.x) - MTH_Mul(s, pos.y);
     arg0->y = MTH_Mul(s, pos.x) + MTH_Mul(c, pos.y);
 }
 
-// 0x0600E5A4
-void RotateVec2(MthXy* arg0, s16 arg1) {
+void func_0600E5A4(MthXy* arg0, s16 angle) {
     Fixed32 s, c;
     MthXy pos;
 
-    rsincos(arg1, &s, &c);
+    rsincos(angle, &s, &c);
     c *= 0x10;
     s *= 0x10;
 
@@ -3624,13 +3679,92 @@ const s16 rsin_tbl[] = {
     0x0FFF, 0x0FFF, 0x0FFF, 0x0FFF, 0x0FFF, 0x0FFF, 0x0FFF,
 };
 
-//_SSsin
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F7BC, rsin);
+// original name: SSsin
+s32 rsin(s32 angle) {
+    s32 a = angle & 0xFFF;
+    s32 ret;
 
-//_SScos
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F81C, rcos);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F87C, rsincos);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F914, SquareRoot0);
+    if (a < 0x800) {
+        if (a < 0x400) {
+            ret = rsin_tbl[a];
+        } else {
+            ret = rsin_tbl[0x7FF - a];
+        }
+    } else {
+        if (a < 0xC00) {
+            ret = -rsin_tbl[a - 0x800];
+        } else {
+            ret = -rsin_tbl[0xFFF - a];
+        }
+    }
+    return ret;
+}
+
+// original name: SScos
+s32 rcos(s32 angle) {
+    s32 a = angle & 0xFFF;
+    s32 ret;
+
+    if (a < 0x800) {
+        if (a < 0x400) {
+            ret = rsin_tbl[0x3FF - a];
+        } else {
+            ret = -rsin_tbl[a - 0x400];
+        }
+    } else {
+        if (a < 0xC00) {
+            ret = -rsin_tbl[0xBFF - a];
+        } else {
+            ret = rsin_tbl[a - 0xC00];
+        }
+    }
+    return ret;
+}
+
+void rsincos(s32 angle, s32* sinOut, s32* cosOut) {
+    s32 a = angle & 0xFFF;
+
+    if (a < 0x800) {
+        if (a < 0x400) {
+            *sinOut = rsin_tbl[a];
+            *cosOut = rsin_tbl[0x3FF - a];
+        } else {
+            *sinOut = rsin_tbl[0x7FF - a];
+            *cosOut = -rsin_tbl[a - 0x400];
+        }
+    } else {
+        if (a < 0xC00) {
+            *sinOut = -rsin_tbl[a - 0x800];
+            *cosOut = -rsin_tbl[0xBFF - a];
+        } else {
+            *sinOut = -rsin_tbl[0xFFF - a];
+            *cosOut = rsin_tbl[a - 0xC00];
+        }
+    }
+}
+
+u32 SquareRoot0(s32 value) {
+    u32 root = 1;
+    u32 step;
+
+    if (value == 0) {
+        return 0;
+    }
+
+    for (step = value; step > 1; step >>= 1) {
+        root++;
+    }
+
+    root = 1 << ((root - 1) / 2);
+
+    for (step = root >> 1; step != 0; step >>= 1) {
+        u32 next = root + step;
+        if (next * next <= value) {
+            root += step;
+        }
+    }
+    return root;
+}
 
 #define N 1024 // Size of ring buffer - must be power of 2.
 #define N_MIN_1 1023

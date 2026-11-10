@@ -52,7 +52,7 @@
 #include <gen/rno0_tilemap_48.h>
 
 #include <gen/rno0_tiledef_rload.h>
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #include <gen/rno0_tiledef_rsave.h>
 #include <gen/rno0_tiledef_rno0.h>
 #else

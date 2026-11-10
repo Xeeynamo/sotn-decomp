@@ -1,0 +1,105 @@
+options:
+  platform:     psx
+  basename:     ric
+  base_path:    ..
+  build_path:   build/jp11
+  target_path:  disks/jp11/BIN/RIC.BIN
+  asm_path:     asm/jp11/ric
+  asset_path:   assets/ric
+  src_path:     src/ric
+  ld_script_path: build/jp11/ric.ld
+  compiler:     GCC
+  symbol_addrs_path:
+    - config/symbols.jp10.txt
+  undefined_funcs_auto_path: build/jp11/config/undefined_funcs_auto.jp11.ric.txt
+  undefined_syms_auto_path:  build/jp11/config/undefined_syms_auto.jp11.ric.txt
+  find_file_boundaries: yes
+  use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
+  asm_jtbl_label_macro: jlabel
+  extensions_path: tools/splat_ext
+  disassemble_all: true
+  global_vram_start: 0x80010000
+  section_order:
+    - ".data"
+    - ".rodata"
+    - ".text"
+    - ".bss"
+    - ".sbss"
+  ld_generate_symbol_per_data_segment: true
+sha1: 47c5616861d9ca77e00130f4af8553acd1f28eb1
+segments:
+  - name: ric
+    type: code
+    start: 0x00000000
+    vram:  0x8013C000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, .data, pl_header]
+      - [0x170AC, .data, spritebanks]
+      - [0x18568, .data, d_18568]
+      - [0x1859C, .data, d_1859C]
+      - [0x18674, .data, pl_blueprints]
+      - [0x18688, .data, pl_blueprints] # subweapons
+      - [0x188F4, .data, pl_blueprints]
+      - [0x1895C, .data, pl_blueprints] # entity table
+      - [0x18A6C, .data, pl_blueprints] # blueprints
+      - [0x18C40, .data, pl_blueprints]
+      - [0x18ED4, .data, pl_blueprints] # RicEntityMaria
+      - [0x18F7C, .data, pl_blueprints] # RicEntityPlayerBlinkWhite and onwards
+      - [0x1938C, .data, pl_anims]
+      - [0x199AC, .data, pl_whip]
+      - [0x19D64, .data, pl_subweapon_holywater]
+      - [0x19DDC, .data, pl_subweapon_cross]
+      - [0x19E70, .data, pl_subweapons]
+      - [0x19E98, .data, 2F8E8]
+      - [0x19EE0, .data, 319C4]
+      - [0x19EFC, .data, pl_crash_cross]
+      - [0x1A444, .rodata, pl_main] # UpdateEntityRichter
+      - [0x1A5E0, .rodata, pl_debug]
+      - [0x1A5F0, .rodata, pl_steps]
+      - [0x1A7A8, .rodata, pl_steps] # RicStepTeleport and onwards
+      - [0x1A7C0, .rodata, pl_setstep]
+      - [0x1A8B8, .rodata, pl_collision]
+      - [0x1A8BB, .rodata, pl_blueprints]
+      - [0x1A8CC, .rodata, pl_blueprints] # RicEntityFactory and onwards
+      - [0x1A984, .rodata, pl_blueprints] # RicEntityMaria
+      - [0x1A99C, .rodata, pl_blueprints] # RicEntityPlayerBlinkWhite
+      - [0x1A9DC, .rodata, pl_blueprints] # RicEntityTeleport
+      - [0x1AA54, .rodata, pl_whip]
+      - [0x1AA70, .rodata, pl_subweapon_holywater] # RicEntitySubwpnHolyWater
+      - [0x1AA88, .rodata, pl_subweapon_cross] # RicEntitySubwpnCrashCross
+      - [0x1AAA0, .rodata, pl_subweapon_cross] # RicEntityRevivalColumn
+      - [0x1AAB8, .rodata, pl_subweapon_cross] # RicEntitySubwpnCross
+      - [0x1AAD8, .rodata, pl_subweapon_cross] # RicEntitySubwpnAgunea
+      - [0x1AAD8, .rodata, 2F8E8]
+      - [0x1AAEC, .rodata, 319C4]
+      - [0x1AB1C, .rodata, pl_crash_cross]
+      - [0x1AC04, .rodata, pl_crash_cross]
+      - [0x1AC14, c, pl_main]
+      - [0x1C774, c, pl_debug]
+      - [0x1CAB8, c, pl_steps]
+      - [0x20420, c, pl_utils]
+      - [0x20B90, c, pl_setstep]
+      - [0x21AA0, c, pl_collision]
+      - [0x2382C, c, pl_blueprints]
+      - [0x2A6B8, c, pl_whip]
+      - [0x2B98C, c, pl_subweapon_dummy]
+      - [0x2B99C, c, pl_subweapon_holywater]
+      - [0x2CF60, c, pl_subweapon_cross]
+      - [0x2E1A0, c, pl_subweapons]
+      - [0x2F81C, c, 2F8E8]
+      - [0x318F8, c, 319C4]
+      - [0x358D8, c, 319C4]
+      - [0x371C0, c, pl_crash_cross]
+      - [0x37A98, .bss, pl_steps]
+      - [0x37EB4, .bss, pl_collision]
+      - [0x37EB8, .bss, pl_blueprints]
+      - [0x37FB4, .bss, pl_whip]
+      - [0x37FBC, .bss, pl_subweapon_cross]
+      - [0x397C0, .bss, pl_subweapons]
+      - [0x397C4, .bss, 2F8E8]
+      - [0x397C8, .bss, 319C4]
+      - [0x39814, .bss, bss]
+  - [0x3998C]

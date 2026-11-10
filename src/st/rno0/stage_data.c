@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 u8 D_80185638[] = {
 #include <gen/D_80185638.h>
 };
@@ -91,7 +91,7 @@ u16 D_80191660[] = {
 u16 D_801917C0[] = {
 #include <gen/D_801917C0.h>
 };
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
 // palette_def bulk copies 0x80 colors, PSX reads the rest from D_80191840
 u16 D_80191800[0x80] = {
 #include <gen/D_80191800.h>

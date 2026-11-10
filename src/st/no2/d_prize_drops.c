@@ -16,7 +16,7 @@ u16 PrizeDrops[] = {
     ITEMDROP_LUCK_POTION,
     ITEMDROP_ESTOC,
     ITEMDROP_IRON_BALL,
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
     // Garnet is replaced with Sword Card on PSP
     ITEMDROP_GARNET,
 #endif

@@ -13,7 +13,7 @@ enum Palettes {
     PAL_PUFF_OPAQUE_OFFSET = 0x2E0,
 };
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(BACKGROUND_BLOCK);
 extern s32 E_ID(LOCK_CAMERA);
 extern s32 E_ID(UNK_ID13);

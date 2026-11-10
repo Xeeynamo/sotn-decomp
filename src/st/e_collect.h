@@ -12,7 +12,7 @@
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
 
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 #include "blit_char_psp.h"
 #endif
 
@@ -105,8 +105,8 @@ static s8 unusedStuff[] = {-4, -4, 4, -4, -4, 4, 4, 4, 0x80, 0x00};
 static u16 aluric_subweapons_idx[] = {1, 2, 4, 3, 6, 5, 7, 8, 9};
 static u16 aluric_subweapons_id[] = {0, 14, 15, 17, 16, 19, 18, 20, 21, 22};
 
-// Gold appears up here on PSX, down lower on VERSION_PSP
-#if !defined(VERSION_PSP) && (STAGE != STAGE_ST0)
+// Gold appears up here on PSX, down lower on PSP
+#if TARGET != TARGET_PSP && STAGE != STAGE_ST0
 const char* g_goldCollectTexts[] = {
     _S("$1"),   _S("$25"),  _S("$50"),   _S("$100"),  _S("$250"),
     _S("$400"), _S("$700"), _S("$1000"), _S("$2000"), _S("$5000"),
@@ -131,7 +131,7 @@ AnimateEntityFrame* g_SubweaponAnimPrizeDrop[] = {
 #endif
 };
 
-#if defined(VERSION_PSP) && (STAGE != STAGE_ST0)
+#if TARGET == TARGET_PSP && STAGE != STAGE_ST0
 static u16 maria_subweapons_idx[] = {1, 2, 4, 3, 0, 0, 0, 0, 0};
 static u16 maria_subweapons_id[] = {19, 14, 15, 17, 16};
 static AnimateEntityFrame D_psp_09246398[] = {
@@ -168,7 +168,7 @@ static u32 c_GoldPrizes[] = {1, 5, 10, 20, 40, 70, 100, 200, 400, 1000};
 #endif
 
 static s16 g_PrizeDropCollisionOffsets[] = {-6, 4, 0, -8};
-#if !defined(VERSION_BETA) && !defined(STAGE_IS_TEK) && STAGE != STAGE_ST0
+#if VERSION >= VER_BETA_HD && STAGE != STAGE_ST0
 // Note that this array is in data. MAD/ST0 have it in rodata.
 s8 c_HeartPrizes[] = {1, 5};
 #endif
@@ -232,7 +232,7 @@ static void PrizeDropFall2(u16 arg0) {
 
 // This function is messy, maybe there's a better way.
 static void CollectHeart(u16 heartIdx) {
-#if defined VERSION_BETA || defined STAGE_IS_TEK || STAGE == STAGE_ST0
+#if VERSION < VER_BETA_HD || STAGE == STAGE_ST0
     s8 heartPrizes[2] = {0x01, 0x05};
     s8 mad_unknown[2] = {0x01, 0x02};
 #else
@@ -305,13 +305,13 @@ void CollectGold(u16 goldSize) {
 #endif
 }
 
-#if defined VERSION_BETA || defined STAGE_IS_TEK || STAGE == STAGE_ST0
+#if VERSION < VER_BETA_HD || STAGE == STAGE_ST0
 void func_801937BC(void) {}
 
 void UnusedDestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 #endif
 
-#if defined(VERSION_PSP) && (STAGE != STAGE_ST0)
+#if TARGET == TARGET_PSP && STAGE != STAGE_ST0
 #include "collect_subweapon_psp.h"
 #else
 #include "collect_subweapon.h"
@@ -319,7 +319,7 @@ void UnusedDestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
 #if STAGE != STAGE_ST0
 void CollectHeartVessel(void) {
-#if defined(VERSION_BETA) || defined(STAGE_IS_TEK)
+#if VERSION < VER_BETA_HD
     if (0) { // MAD doesn't need to test character, is always alucard
 #else
     if (g_PlayableCharacter != PLAYER_ALUCARD) {
@@ -346,8 +346,7 @@ static void CollectLifeVessel(void) {
 #endif
 
 // MAD doesn't take an argument, others do
-#if defined VERSION_BETA || defined STAGE_IS_TEK ||                            \
-    (STAGE == STAGE_ST0 && !defined(VERSION_PSP))
+#if VERSION < VER_BETA_HD || (TARGET != TARGET_PSP && STAGE == STAGE_ST0)
 static void CollectDummy(void) { DestroyEntity(g_CurrentEntity); }
 // Extra unused function, putting it in this same if-block.
 Entity* func_801939C4(void) {
@@ -376,7 +375,7 @@ void EntityPrizeDrop(Entity* self) {
     // if self->params & 0x8000 then the item will not disappear
     itemId = self->params & 0x7FFF;
     if (self->step) {
-#if defined(VERSION_PSP) && STAGE != STAGE_ST0
+#if TARGET == TARGET_PSP && STAGE != STAGE_ST0
         if (g_PlayableCharacter == PLAYER_MARIA) {
             AnimateEntity(g_MariaSubweaponAnimPrizeDrop[itemId], self);
         } else {
@@ -386,7 +385,7 @@ void EntityPrizeDrop(Entity* self) {
         AnimateEntity(g_SubweaponAnimPrizeDrop[itemId], self);
 #endif
     }
-#if defined(VERSION_US) && STAGE != STAGE_ST0
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP && STAGE != STAGE_ST0
     if (self->step > 1 && self->step < 5 && self->hitFlags) {
 #else
     if (self->step && self->step < 5 && self->hitFlags) {
@@ -414,7 +413,7 @@ void EntityPrizeDrop(Entity* self) {
             itemId = self->params = 0;
         }
 
-#if defined(VERSION_PSP) && STAGE != STAGE_ST0
+#if TARGET == TARGET_PSP && STAGE != STAGE_ST0
         if (g_PlayableCharacter == PLAYER_MARIA && itemId >= 0xE &&
             itemId < 23) {
             switch (itemId) {
@@ -439,9 +438,7 @@ void EntityPrizeDrop(Entity* self) {
                 break;
             }
         }
-#endif
 
-#if defined(VERSION_PSP) && STAGE != STAGE_ST0
         if (itemId >= 14 && itemId < 23 &&
             g_PlayableCharacter != PLAYER_MARIA) {
             s32 subWeaponId = aluric_subweapons_id[g_Status.subWeapon];
@@ -467,7 +464,7 @@ void EntityPrizeDrop(Entity* self) {
             DestroyEntity(self);
         } else {
             self->step++;
-#if !defined(VERSION_BETA) && !defined(STAGE_IS_TEK) && STAGE != STAGE_ST0
+#if VERSION >= VER_BETA_HD && STAGE != STAGE_ST0
             index = self->ext.equipItemDrop.castleFlag;
             if (index) {
                 index--;
@@ -482,7 +479,7 @@ void EntityPrizeDrop(Entity* self) {
         }
         break;
     case 2:
-#if STAGE == STAGE_ST0 || defined(STAGE_IS_TEK)
+#if STAGE == STAGE_ST0 || VERSION < VER_BETA_MAD
         if (self->velocityX < 0) {
 #else
         if (self->velocityY < 0) {
@@ -547,8 +544,7 @@ void EntityPrizeDrop(Entity* self) {
             CollectHeartVessel();
 #endif
         } else if (itemId < 14) {
-#if defined VERSION_BETA || defined STAGE_IS_TEK ||                            \
-    (STAGE == STAGE_ST0 && !defined(VERSION_PSP))
+#if VERSION < VER_BETA_HD || (TARGET != TARGET_PSP && STAGE == STAGE_ST0)
             // this is only allowed in BETA PSX and ST0 PSX, not on ST0 PSP
             // probably due to a compilation error fix
             CollectDummy();
@@ -566,14 +562,14 @@ void EntityPrizeDrop(Entity* self) {
             return;
         }
         break;
-#if !defined(VERSION_BETA) && !defined(STAGE_IS_TEK) && STAGE != STAGE_ST0
+#if VERSION >= VER_BETA_HD && STAGE != STAGE_ST0
     case 6:
 #endif
     case 7:
         switch (self->step_s) {
         case 0:
             self->animCurFrame = 0;
-#if defined(VERSION_PSP) && STAGE != STAGE_ST0
+#if TARGET == TARGET_PSP && STAGE != STAGE_ST0
             if (itemId >= 14 && itemId < 23) {
                 s32 subWeaponId;
                 if (g_PlayableCharacter == PLAYER_MARIA) {
@@ -604,7 +600,7 @@ void EntityPrizeDrop(Entity* self) {
                 prim = &g_PrimBuf[primIndex];
                 prim->tpage = 0x1A;
                 prim->clut = 0x170;
-#if defined VERSION_BETA || defined STAGE_IS_TEK || STAGE == STAGE_ST0
+#if VERSION < VER_BETA_HD || STAGE == STAGE_ST0
                 prim->u0 = prim->u2 = 0;
                 prim->u1 = prim->u3 = 0x20;
                 prim->v0 = prim->v1 = 0;
@@ -710,25 +706,7 @@ void EntityExplosion(Entity* entity) {
 
 // Weird difference here. These functions are not related.
 // But MAD has one and not the other.
-#if !(defined VERSION_BETA || defined STAGE_IS_TEK || STAGE == STAGE_ST0)
-static void BlinkItem(Entity* self, u16 timer) {
-    Primitive* prim;
-    s32 temp;
-    prim = &g_PrimBuf[self->primIndex];
-
-    prim->x0 = prim->x2 = self->posX.i.hi - 7;
-    prim->x1 = prim->x3 = prim->x0 + 14;
-
-    prim->y0 = prim->y1 = self->posY.i.hi - 7;
-    prim->y2 = prim->y3 = prim->y0 + 14;
-
-    if (timer & 2) {
-        PCOL(prim) = 0xFF;
-    } else {
-        PCOL(prim) = 0x80;
-    }
-}
-#else
+#if VERSION < VER_BETA_HD || STAGE == STAGE_ST0
 static Point16 g_collectVelocity[] = {
     {0x0160, 0xFD20}, {0xFE80, 0xFC90}, {0x00E0, 0xFC20}, {0xFF40, 0xFD30},
     {0x0020, 0xFB60}, {0xFFC0, 0xFCC0}, {0x0090, 0xFC40}, {0xFFA0, 0xFC30},
@@ -754,9 +732,27 @@ void Unreferenced_MAD_ST0_func(Entity* self) {
         self->zPriority -= 1;
     }
 }
+#else
+static void BlinkItem(Entity* self, u16 timer) {
+    Primitive* prim;
+    s32 temp;
+    prim = &g_PrimBuf[self->primIndex];
+
+    prim->x0 = prim->x2 = self->posX.i.hi - 7;
+    prim->x1 = prim->x3 = prim->x0 + 14;
+
+    prim->y0 = prim->y1 = self->posY.i.hi - 7;
+    prim->y2 = prim->y3 = prim->y0 + 14;
+
+    if (timer & 2) {
+        PCOL(prim) = 0xFF;
+    } else {
+        PCOL(prim) = 0x80;
+    }
+}
 #endif
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 char* obtainedStr;
 #endif
 
@@ -771,7 +767,7 @@ void EntityEquipItemDrop(Entity* self) {
 
     itemId = self->params & 0x7FFF;
     if (
-#if defined(VERSION_US) && STAGE != STAGE_ST0
+#if VERSION >= VER_JP11 && TARGET != TARGET_PSP && STAGE != STAGE_ST0
         self->step >= 2 &&
 #else
         self->step &&
@@ -782,7 +778,7 @@ void EntityEquipItemDrop(Entity* self) {
 
     switch (self->step) {
     case 0:
-#if !(defined VERSION_BETA || defined STAGE_IS_TEK || STAGE == STAGE_ST0)
+#if VERSION >= VER_BETA_HD && STAGE != STAGE_ST0
         if (g_PlayableCharacter != PLAYER_ALUCARD) {
             self->params = 0;
             self->pfnUpdate = EntityPrizeDrop;
@@ -811,7 +807,7 @@ void EntityEquipItemDrop(Entity* self) {
             DestroyEntity(self);
             return;
         }
-#if !(defined VERSION_BETA || defined STAGE_IS_TEK || STAGE == STAGE_ST0)
+#if VERSION >= VER_BETA_HD && STAGE != STAGE_ST0
         index = self->ext.equipItemDrop.castleFlag;
         if (index) {
             index--;
@@ -827,7 +823,7 @@ void EntityEquipItemDrop(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         g_ItemIconSlots[i] = 0x1E0;
-#if !(defined VERSION_BETA || defined STAGE_IS_TEK || STAGE == STAGE_ST0)
+#if VERSION >= VER_BETA_HD && STAGE != STAGE_ST0
         self->ext.equipItemDrop.iconSlot = i;
 #endif
         if (itemId < NUM_HAND_ITEMS) {
@@ -843,16 +839,15 @@ void EntityEquipItemDrop(Entity* self) {
         prim->tpage = 0x1A;
         prim->clut = i + 464;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         prim->u0 = prim->u2 = (i & 7) * 0x10 + 1;
-#else
-        prim->u0 = prim->u2 = (u8)(i & 7) * 0x10 + 1;
-#endif
         prim->u1 = prim->u3 = prim->u0 + 0xE;
 
-#ifdef VERSION_PSP
         prim->v0 = prim->v1 = (i & 0x18) * 2 + 0x81;
 #else
+        prim->u0 = prim->u2 = (u8)(i & 7) * 0x10 + 1;
+        prim->u1 = prim->u3 = prim->u0 + 0xE;
+
         prim->v0 = prim->v1 = (u8)(i & 0x18) * 2 + 0x81;
 #endif
         prim->v2 = prim->v3 = prim->v0 + 0xE;
@@ -864,7 +859,7 @@ void EntityEquipItemDrop(Entity* self) {
         self->step++;
         break;
     case 2:
-#if defined VERSION_BETA || defined STAGE_IS_TEK || STAGE == STAGE_ST0
+#if VERSION < VER_BETA_HD || STAGE == STAGE_ST0
         if (self->velocityX < 0) {
 #else
         if (self->velocityY < 0) {
@@ -896,7 +891,7 @@ void EntityEquipItemDrop(Entity* self) {
                 self->ext.equipItemDrop.aliveTimer = 80;
                 self->step++;
             }
-#if !(defined VERSION_BETA || defined STAGE_IS_TEK || STAGE == STAGE_ST0)
+#if VERSION >= VER_BETA_HD && STAGE != STAGE_ST0
         } else {
             i = self->ext.equipItemDrop.iconSlot;
             g_ItemIconSlots[i] = 0x10;
@@ -936,12 +931,7 @@ void EntityEquipItemDrop(Entity* self) {
     }
 
     if (self->step > 1) {
-#if !(defined VERSION_BETA || defined STAGE_IS_TEK || STAGE == STAGE_ST0)
-        if (self->ext.equipItemDrop.timer) {
-            self->ext.equipItemDrop.timer--;
-        }
-        BlinkItem(self, self->ext.equipItemDrop.timer);
-#else
+#if VERSION < VER_BETA_HD || STAGE == STAGE_ST0
         prim = &g_PrimBuf[self->primIndex];
         prim->x0 = prim->x2 = self->posX.i.hi - 7;
         prim->x1 = prim->x3 = prim->x0 + 0xE;
@@ -955,20 +945,24 @@ void EntityEquipItemDrop(Entity* self) {
                 PCOL(prim) = 0x80;
             }
         }
+#else
+        if (self->ext.equipItemDrop.timer) {
+            self->ext.equipItemDrop.timer--;
+        }
+        BlinkItem(self, self->ext.equipItemDrop.timer);
 #endif
     }
 }
 
-#if !(defined VERSION_BETA || STAGE == STAGE_ST0 || defined(VERSION_PSP) ||    \
-      defined(VERSION_HD))
+#if REGION != REGION_JP && STAGE != STAGE_ST0
 #include "blit_char.h"
 #endif
 
-#if defined(VERSION_PSP) && STAGE != STAGE_ST0
+#if TARGET == TARGET_PSP && STAGE != STAGE_ST0
 extern char* obtainedStr; // BSS
 #else
 const char* g_RelicOrbTexts[] = {
-#if !defined(VERSION_US) || STAGE == STAGE_ST0
+#if REGION == REGION_JP || STAGE == STAGE_ST0
     "を入手した"
 #else
     "Obtained ",
@@ -980,7 +974,7 @@ s16 g_RelicOrbTextBg1EY[] = {16, 12, 8, 4, 0, -4, -8, -12};
 s16 g_RelicOrbTextBg1SY[] = {-32, -26, -20, -13, -7, -1, 5, 12};
 s16 g_RelicOrbTextBg2SY[] = {-16, -12, -8, -4, 0, 4, 8, 12};
 s16 g_RelicOrbTextBg2EY[] = {32, 26, 20, 13, 7, 1, -5, -12};
-#if STAGE != STAGE_ST0 && !defined(STAGE_IS_TEK)
+#if STAGE != STAGE_ST0 && VERSION >= VER_BETA_MAD
 s16 g_RelicOrbSparkleX[] = {-8, 4, -2, 8, 0, 4, -4, 2};
 s16 g_RelicOrbSparkleY[] = {-2, 2, 4, -3, 0, 2, -4, 3};
 #endif
@@ -989,7 +983,7 @@ extern u16 msgBoxTpage[0x600];
 
 // params: (& 0x7FFF) Relic ID
 void EntityRelicOrb(Entity* self) {
-#if STAGE == STAGE_ST0 || defined(STAGE_IS_TEK)
+#if STAGE == STAGE_ST0 || VERSION < VER_BETA_MAD
     const int PrimCount = 3;
 #else
     const int PrimCount = 7;
@@ -997,13 +991,13 @@ void EntityRelicOrb(Entity* self) {
     // prim 0: green rectangle for Obtained text bg
     // prim 1: blue rectangle for Obtained text bg
 
-#if defined(VERSION_BETA) || defined(STAGE_IS_TEK) || STAGE == STAGE_ST0
+#if VERSION < VER_BETA_HD || STAGE == STAGE_ST0
     const int MaxItemSlots = LEN(g_ItemIconSlots);
 #else
     const int MaxItemSlots = LEN(g_ItemIconSlots) - 1;
 #endif
     u16 relicId;
-#if defined(VERSION_PSP) || STAGE == STAGE_ST0 || defined(STAGE_IS_TEK)
+#if VERSION == VER_BETA_TEK || TARGET == TARGET_PSP || STAGE == STAGE_ST0
     u16 isObtainedTextStored;
 #else
     bool isObtainedTextStored;
@@ -1021,19 +1015,19 @@ void EntityRelicOrb(Entity* self) {
     // unnamed variables
     u8* var_v0_5;
     u16 var_s2;
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
     char sp34[0x100];
 #endif
 
 // The unk7C variable matches different other variables
 // in different versions. We use this as a hack to match everywhere.
-#if STAGE == STAGE_ST0 || defined(STAGE_IS_TEK)
+#if STAGE == STAGE_ST0 || VERSION < VER_BETA_MAD
 #define orbUnk7C isObtainedTextStored
 #else
 #define orbUnk7C var_s2
 #endif
 
-#if !defined(VERSION_US) || STAGE == STAGE_ST0
+#if REGION == REGION_JP || STAGE == STAGE_ST0
     u16 vramX;
     u16* chPixSrc;
     u16* chPixDst;
@@ -1076,14 +1070,14 @@ void EntityRelicOrb(Entity* self) {
 #if STAGE == STAGE_ST0
         g_api.LoadEquipIcon(g_api.equipDefs[relicId].icon,
                             g_api.equipDefs[relicId].iconPalette, iconSlot);
-#elif defined(STAGE_IS_TEK)
+#elif VERSION < VER_BETA_MAD
         // TEK relics have no icon yet, they all borrow the one of equipment 3
         self->ext.relicOrb.iconSlot = iconSlot;
         g_api.LoadEquipIcon(
             g_api.equipDefs[3].icon, g_api.equipDefs[3].iconPalette, iconSlot);
 #else
         self->ext.relicOrb.iconSlot = iconSlot;
-#if !defined(VERSION_BETA) && !defined(STAGE_IS_TEK)
+#if VERSION >= VER_BETA_HD
         g_ItemIconSlots[iconSlot] = 0x10;
 #endif
         g_api.LoadEquipIcon(g_api.relicDefs[relicId].icon,
@@ -1092,7 +1086,7 @@ void EntityRelicOrb(Entity* self) {
         prim = &g_PrimBuf[primIndex];
         for (i = 0; prim != NULL; i++) {
             if (i != 0) {
-#if STAGE == STAGE_ST0 || defined(STAGE_IS_TEK)
+#if STAGE == STAGE_ST0 || VERSION < VER_BETA_MAD
                 prim->type = PRIM_G4;
 #endif
                 prim->drawMode = DRAW_HIDE;
@@ -1105,27 +1099,27 @@ void EntityRelicOrb(Entity* self) {
                 // Pulls iconSlot & 0b11000
                 prim->v0 = prim->v1 = ((iconSlot & 24) << 1) + 0x81;
                 prim->v2 = prim->v3 = prim->v0 + 14;
-#if STAGE != STAGE_ST0 && !defined(STAGE_IS_TEK)
+#if STAGE != STAGE_ST0 && VERSION >= VER_BETA_MAD
                 prim->drawMode = DRAW_COLORS | DRAW_UNK02;
 #else
                 prim->drawMode = DRAW_UNK02;
 #endif
             }
-#if STAGE == STAGE_ST0 || defined(STAGE_IS_TEK)
+#if STAGE == STAGE_ST0 || VERSION < VER_BETA_MAD
             prim->priority = 0xC0;
 #else
             prim->priority = 0x7E;
 #endif
             prim = prim->next;
         }
-#if STAGE != STAGE_ST0 && !defined(STAGE_IS_TEK)
+#if STAGE != STAGE_ST0 && VERSION >= VER_BETA_MAD
         self->posY.i.lo = 0x8000;
         self->velocityY = FIX(0.25);
         self->ext.relicOrb.floatTimer = 64;
         self->ext.relicOrb.yFloatSpeed = -FIX(0.0078125);
 #endif
         break;
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
     case 1:
         iconSlot = self->ext.relicOrb.iconSlot;
         g_ItemIconSlots[iconSlot] = 0x10;
@@ -1146,7 +1140,7 @@ void EntityRelicOrb(Entity* self) {
     case 5:
 #if STAGE != STAGE_ST0
         g_api.func_800FE044(relicId, 0x2000);
-#if !defined(VERSION_BETA) && !defined(STAGE_IS_TEK)
+#if VERSION >= VER_BETA_HD
         msg = g_api.relicDefs[relicId].name;
         if (relicId >= RELIC_SWORD_CARD && relicId < RELIC_FAERIE_CARD) {
             g_Status.relics[relicId] ^= RELIC_FLAG_ACTIVE;
@@ -1168,7 +1162,7 @@ void EntityRelicOrb(Entity* self) {
         ClearImage(&rect, 0, 0, 0);
 
         prim = &g_PrimBuf[self->primIndex];
-#if STAGE == STAGE_ST0 || defined(STAGE_IS_TEK)
+#if STAGE == STAGE_ST0 || VERSION < VER_BETA_MAD
         for (i = 0; prim != NULL; i++) {
 #else
         for (i = 0; i < 3; i++) {
@@ -1190,7 +1184,7 @@ void EntityRelicOrb(Entity* self) {
                 prim->priority = 0x1FE;
                 prim->drawMode = DRAW_HIDE;
             } else {
-#if STAGE != STAGE_ST0 && !defined(STAGE_IS_TEK)
+#if STAGE != STAGE_ST0 && VERSION >= VER_BETA_MAD
                 prim->type = PRIM_G4;
 #endif
                 prim->x0 = prim->x1 = prim->x2 = prim->x3 = 0x80;
@@ -1219,7 +1213,7 @@ void EntityRelicOrb(Entity* self) {
         msgLen = 0;
         var_s2 = 0;
         isObtainedTextStored = false;
-#if defined(VERSION_PSP) && STAGE != STAGE_ST0
+#if TARGET == TARGET_PSP && STAGE != STAGE_ST0
         msg = g_api.relicDefs[relicId].name;
         switch (g_UserLanguage) {
         case LANG_EN:
@@ -1247,7 +1241,7 @@ void EntityRelicOrb(Entity* self) {
         }
         msgLen = strlen(sp34);
         BlitChar(&sp34[0], 0, 12, 0x100);
-#elif !defined(VERSION_US) || STAGE == STAGE_ST0
+#elif REGION == REGION_JP || STAGE == STAGE_ST0
         vramX = 0;
         msg = g_api.relicDefs[relicId].name;
         while (true) {
@@ -1304,7 +1298,7 @@ void EntityRelicOrb(Entity* self) {
         // Animates the blue/green rectangle for the Obtain text bg
         prim = &g_PrimBuf[self->primIndex];
         prim = prim->next;
-#if STAGE == STAGE_ST0 || defined(STAGE_IS_TEK)
+#if STAGE == STAGE_ST0 || VERSION < VER_BETA_MAD
         for (i = 0; prim != NULL; i++) {
 #else
         for (i = 0; i < 2; i++) {
@@ -1333,7 +1327,7 @@ void EntityRelicOrb(Entity* self) {
         orbUnk7C = self->ext.relicOrb.unk7C;
         prim = &g_PrimBuf[self->primIndex];
         prim = prim->next;
-#if STAGE == STAGE_ST0 || defined(STAGE_IS_TEK)
+#if STAGE == STAGE_ST0 || VERSION < VER_BETA_MAD
         for (i = 0; prim != NULL; i++) {
 #else
         for (i = 0; i < 3; i++) {
@@ -1366,7 +1360,7 @@ void EntityRelicOrb(Entity* self) {
 
     case 9:
         prim = &g_PrimBuf[self->primIndex];
-#if defined(VERSION_US) && !defined(VERSION_PSP) && STAGE != STAGE_ST0
+#if REGION != REGION_JP && STAGE != STAGE_ST0
         prim->x0 = 0x80 - self->ext.relicOrb.unk7E;
 #else
         prim->x0 = 0x80 - self->ext.relicOrb.unk7E * 6;
@@ -1385,13 +1379,13 @@ void EntityRelicOrb(Entity* self) {
     }
 
     if (self->step < 2) {
-#if STAGE == STAGE_ST0 || defined(STAGE_IS_TEK)
+#if STAGE == STAGE_ST0 || VERSION < VER_BETA_MAD
         prim = &g_PrimBuf[self->primIndex];
         prim->x0 = prim->x2 = self->posX.i.hi - 7;
         prim->x1 = prim->x3 = prim->x0 + 14;
         prim->y0 = prim->y1 = self->posY.i.hi - 7;
         prim->y2 = prim->y3 = prim->y0 + 14;
-#elif defined(VERSION_BETA)
+#elif VERSION == VER_BETA_MAD
         // This is just the function BlinkItem inlined
         prim = &g_PrimBuf[self->primIndex];
         prim->x0 = prim->x2 = self->posX.i.hi - 7;
@@ -1408,7 +1402,7 @@ void EntityRelicOrb(Entity* self) {
     BlinkItem(self, g_Timer);
     prim = &g_PrimBuf[self->primIndex];
 #endif
-#if STAGE != STAGE_ST0 && !defined(STAGE_IS_TEK)
+#if STAGE != STAGE_ST0 && VERSION >= VER_BETA_MAD
         // Animates the four sparkles while the relic is floating
         for (i = 0; i < 3; i++) { // Skip the first three primitives
             prim = prim->next;
@@ -1500,7 +1494,7 @@ void EntityPersistentItemDrop(Entity* self) {
     if (!self->step) {
         index = self->ext.persistentDrop.unkB4 =
             self->params + HEART_DROP_CASTLE_FLAG;
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
         value = g_CastleFlags[CASTLE_COLLECTIBLES_100] >> (index & 7);
 #else
         value = g_CastleFlags[(index >> 3) + CASTLE_COLLECTIBLES_100] >>
@@ -1524,7 +1518,7 @@ void EntityPersistentItemDrop(Entity* self) {
         index = self->ext.persistentDrop.unkB4;
         if (self->step < 5) {
             if (self->hitFlags) {
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
                 g_CastleFlags[CASTLE_COLLECTIBLES_100] |= 1 << (index & 7);
 #else
                 g_CastleFlags[(index >> 3) + CASTLE_COLLECTIBLES_100] |=
@@ -1538,7 +1532,7 @@ void EntityPersistentItemDrop(Entity* self) {
     update(self);
 }
 
-#if !defined(VERSION_BETA) && !defined(STAGE_IS_TEK)
+#if VERSION >= VER_BETA_HD
 // params: message box duration, in frames
 // ext.messageBox.label: box size and text to render
 void EntityMessageBox(Entity* self) {
@@ -1612,7 +1606,11 @@ void EntityMessageBox(Entity* self) {
                 prim->u1 = self->ext.messageBox.width;
                 prim->v1 = self->ext.messageBox.height;
                 prim->clut = PAL_UNK_1A1;
+#if VERSION >= VER_JP12 && TARGET != TARGET_PSP
+                prim->priority = 0x1FC;
+#else
                 prim->priority = 0x1FD;
+#endif
                 prim->drawMode = DRAW_HIDE;
             } else {
                 prim->type = PRIM_G4;
@@ -1632,7 +1630,11 @@ void EntityMessageBox(Entity* self) {
                         self->posY.i.hi + self->ext.messageBox.height / 2 + 4;
                     PGRN(prim) = 0x80;
                 }
+#if VERSION >= VER_JP12 && TARGET != TARGET_PSP
+                prim->priority = 0x1FB;
+#else
                 prim->priority = 0x1FC;
+#endif
                 prim->drawMode = DRAW_TPAGE | DRAW_TRANSP;
             }
             prim = prim->next;
@@ -1640,7 +1642,7 @@ void EntityMessageBox(Entity* self) {
         self->step++;
         break;
     case 2:
-#if defined(VERSION_US)
+#if REGION != REGION_JP
         dstPix = g_Pix[0];
         chPix = dstPix;
         str = self->ext.messageBox.label;
@@ -1667,13 +1669,13 @@ void EntityMessageBox(Entity* self) {
         }
         LoadTPage((u_long*)dstPix, 0, 0, VramX, VramY,
                   self->ext.messageBox.width, self->ext.messageBox.height);
-#elif defined(VERSION_PSP)
+#elif TARGET == TARGET_PSP
         nCh = 0;
         x = VramX;
         y = VramY;
         str = self->ext.messageBox.label;
         BlitChar(str, 0, 0, 0x180);
-#elif defined(VERSION_HD)
+#elif VERSION >= VER_BETA_HD
         nCh = 0;
         x = VramX;
         y = VramY;

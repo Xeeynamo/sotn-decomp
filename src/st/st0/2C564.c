@@ -4,7 +4,7 @@
 
 // D_801C2578 is initialized in 2DAC8.c, but the bss layout for psx does not
 // allow for it to be defined in that file currently
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern u32 D_801C2578;                            // bss
 static bool g_isDraculaFirstFormDefeated = false; // bss for pspeu
 #else
@@ -60,7 +60,7 @@ static Point16 unused[] = {
     {80, 64}, {48, 34}, {26, 20}, {18, 16}, {15, 13}, {13, 12}, {12, 11},
     {11, 10}, {10, 10}, {9, 9},   {9, 8},   {8, 8},   {8, 4}};
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern u32 E_ID(DRACULA_FIREBALL);
 extern u32 E_ID(DRACULA_METEORBALL);
 extern u32 E_ID(DRACULA_BODY);
@@ -616,7 +616,7 @@ void EntityDracula(Entity* self) {
                 entity->poseTimer = 0;
                 entity->pose = 0;
                 SetSubStep(1);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 g_api.PlaySfx(SFX_PSP_DRACULA_FIREBALL_ATTACK);
 #else
                 g_api.PlaySfx(SFX_DRACULA_FIREBALL_ATTACK);
@@ -953,7 +953,7 @@ void EntityDraculaBody(Entity* self) {
         break;
     }
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
     if (g_isDraculaFirstFormDefeated) {
         self->hitboxState = 0;
     }

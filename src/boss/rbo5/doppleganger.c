@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo5.h"
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 PlayerState g_Dop;
 s32 D_us_801D36E8[32];
 s32 D_us_801D3768[32];
@@ -11,7 +11,7 @@ extern s32 D_us_801D36E8[];
 extern s32 D_us_801D3768[];
 #endif
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5/doppleganger", func_us_801C096C);
 #else
 static void func_us_801C096C(void) {
@@ -105,7 +105,7 @@ extern AnimationFrame* D_us_80183D40[];
 extern SpriteParts* D_us_801B1674[];
 extern s32 D_us_801D3FEC;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 char D_pspeu_09262FC0[] = "noroi:%02x\n";
 INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5/doppleganger", EntityDoppleganger40);
 #else
@@ -535,7 +535,7 @@ s32 D_us_801D32FC;
 s32 D_us_801D3300;
 s32 D_us_801D3304;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5/doppleganger", func_us_801C1DC8);
 #else
 void func_us_801C1DC8(void) {
@@ -1015,7 +1015,7 @@ void func_us_801C1DC8(void) {
 
 extern EInit EInitUnk16;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 INCLUDE_ASM("boss/rbo5_psp/nonmatchings/rbo5/doppleganger", EntityUnkId16);
 #else
 void EntityUnkId16(Entity* self) {

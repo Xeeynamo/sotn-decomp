@@ -167,7 +167,7 @@ static void FindFirstEntityToTheLeft(s16 posX) {
     }
 }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #define DECREMENT_AND_CHECK(x) (x)--
 #else
 #define DECREMENT_AND_CHECK(x) --(x) != (u8) - 1
@@ -237,10 +237,10 @@ static void CreateEntitiesToTheLeft(s16 posX) {
         g_LayoutObjPosHorizontal = LAYOUT_OBJ_POSITION_BACKWARD;
     }
 // MAD and TEK only run once to create one entity to the left.
-#if !defined(VERSION_BETA) && !defined(STAGE_IS_TEK)
+#if VERSION >= VER_BETA_HD
     while (true) {
 #else
-    if (true) {
+    {
 #endif
         layoutObjHorizontal = g_LayoutObjHorizontal;
         if (layoutObjHorizontal[LAYOUT_OBJ_POS_X] == LAYOUT_OBJ_START) {

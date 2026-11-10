@@ -45,7 +45,7 @@ void EntityAxeKnightThrowingAxe(Entity*);
 void func_us_801CBA30(Entity*);
 void InitializeUnkEntity(Entity*);
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 void func_pspeu_09249898(Entity*);
 void func_pspeu_092496C8(Entity*);
 void func_pspeu_092497B0(Entity*);
@@ -95,7 +95,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityAxeKnightThrowingAxe,
     func_us_801CBA30,
     InitializeUnkEntity,
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     func_pspeu_09249898,
     func_pspeu_092496C8,
     func_pspeu_092497B0

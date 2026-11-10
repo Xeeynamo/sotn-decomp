@@ -4,7 +4,7 @@
 u16 D_us_8018E704[] = {
 #include "gen/D_us_8018E704.h"
 };
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 // unreferenced
 u16 D_us_8018E9C4[] = {
 #include "gen/D_us_8018E9C4.h"

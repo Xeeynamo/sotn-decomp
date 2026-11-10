@@ -16,6 +16,8 @@ var saturnSplitterYAMLs = []string{
 	"config/saturn/t_bat.prg.yaml",
 	"config/saturn/stage_02.prg.yaml",
 	"config/saturn/warp.prg.yaml",
+	"config/saturn/title.prg.yaml",
+	"config/saturn/logo.prg.yaml",
 	"config/saturn/alucard.prg.yaml",
 	"config/saturn/richter.prg.yaml",
 	"config/saturn/maria.prg.yaml",
@@ -71,6 +73,8 @@ var saturnExtractSentinels = []string{
 	"config/saturn/t_fairy2.ld",
 	"config/saturn/sub.ld",
 	"config/saturn/warp.ld",
+	"config/saturn/title.ld",
+	"config/saturn/logo.ld",
 	"config/saturn/zero.ld",
 	"config/saturn/zero_syms.txt",
 }

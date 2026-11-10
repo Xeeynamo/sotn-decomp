@@ -287,12 +287,12 @@ void EntityUnkID29(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         self->ext.utimer.t++;
         if (self->ext.utimer.t > 8) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             g_unkGraphicsStruct.unk28 = 0xFF;
 #endif
             self->step++;
             prim->drawMode = DRAW_HIDE;
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
             DestroyEntity(self);
 #endif
         } else if (self->ext.utimer.t & 1) {
@@ -332,9 +332,9 @@ void EntityUnkID29(Entity* self) {
             g_unkGraphicsStruct.pauseEnemies = false;
 
             if (g_RoomCount > 1846) {
-                D_800978B4 = 3;
+                g_EndingVariant = ENDING_GOOD;
             } else {
-                D_800978B4 = 5;
+                g_EndingVariant = ENDING_BEST;
             }
             g_GameState = Game_Ending;
             g_GameStep = Play_Reset;

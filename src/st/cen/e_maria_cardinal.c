@@ -44,7 +44,7 @@ void EntityMariaCardinalAttack(Entity* self) {
         MarSetWeaponParams(
             self, 36, ELEMENT_HOLY | ELEMENT_FIRE, 0, 16, 16, 1, 0);
         g_api.PlaySfx(SFX_FIREBALL_SHOT_B);
-        g_Maria.unk7A = 1;
+        g_Maria.runDisable = 1;
         self->ext.mariaCardinal.timer = 0;
         self->step++;
         break;
@@ -69,7 +69,7 @@ void EntityMariaCardinalAttack(Entity* self) {
         }
         break;
     case 3:
-        g_Maria.unk7A = 0;
+        g_Maria.runDisable = 0;
         g_Maria.unk66 = 0;
         DestroyEntity(self);
         break;
@@ -109,7 +109,7 @@ void EntityMariaCardinalCrash(Entity* self) {
         }
         self->posX.i.hi = MARIA.posX.i.hi + var_s0;
         self->posY.i.hi = MARIA.posY.i.hi + 24;
-#if defined(VERSION_PC)
+#ifdef PLATFORM_PSYZ
         g_Maria.unk20 = (signed long long)self;
 #else
         g_Maria.unk20 = (s32)self;

@@ -12,13 +12,13 @@ static s16 lava_tpages[] = {2, 8, -4, 0, -3, -10, 4, 12, 0, 7, 1, -8};
 static SVECTOR lava_vec = {.vx = 0, .vy = 0, .vz = -512, .pad = 0};
 static SVECTOR unused = {.vx = 0, .vy = 0, .vz = -512, .pad = 0};
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(SNOWFLAKES);
 #endif
 
 // BSS
 static SVECTOR empty = {0};
-#ifdef VERSION_US
+#if VERSION == VER_US
 static Primitive* main_lava_prims[14];
 static Primitive* top_layer_prims[14];
 #else
@@ -334,7 +334,7 @@ void EntitySnowflakes(Entity* self) {
         if (!(g_Timer % 7)) {
             prim = self->ext.lava.prim;
             prim = FindFirstUnkPrim(prim);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             if (prim != NULL) {
 #else
             if (1) {

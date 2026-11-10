@@ -35,7 +35,7 @@ static u16 secret_wall_tiles[][3] = {
     {0x0012, 0x0013, 0x0014}, {0x0026, 0x0027, 0x0014},
     {0x0012, 0x0027, 0x0028}};
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(BREAKABLE_WALL_SEGMENT);
 extern s32 E_ID(BREAKABLE_WALL_PARTICLES);
 extern s32 E_ID(BREAKABLE_WALL_DEBRIS);

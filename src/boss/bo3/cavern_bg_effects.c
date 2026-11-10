@@ -72,7 +72,7 @@ void EntityFloatingIcePlatform(Entity* self) {
     }
 
     hitboxPtr = &ice_platform_hitboxes[hitboxIndex * 2];
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     GetPlayerCollisionWith(self, hitboxPtr[0], hitboxPtr[1], 4);
 #else
     GetPlayerCollisionWith(self, *hitboxPtr++, *hitboxPtr, 4);

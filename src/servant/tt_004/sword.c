@@ -25,7 +25,7 @@ typedef struct SwordScratchPad {
     /* 0x1C */ s32 zPriority;
 } SwordScratchPad;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #define sp2 ((SwordUnkStruct*)SP(0x24))
 #else
 #define sp2 ((SwordUnkStruct*)SP(sizeof(SwordScratchPad)))
@@ -48,7 +48,7 @@ static bool D_us_80178B84;
 static s32 D_us_80178B88;
 
 // DATA
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #include "sword_data.h"
 #endif
 static VECTOR g_TransferVector = {0, 0, 6500};
@@ -87,7 +87,7 @@ static u16 g_SwordClut[] = {
 static s32 D_us_80170218 = 30;
 static s32 D_us_8017021C = 60;
 static s32 D_us_80170220 = 15;
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 #include "sword_data.h"
 #endif
 
@@ -299,7 +299,7 @@ void func_us_80172940(Entity* self) {
 }
 
 static s32 Max3(s32 arg0, s32 arg1, s32 arg2) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #define abs labs
 #endif
     s32 var_s2 = abs(arg0);
@@ -312,18 +312,18 @@ static s32 Max3(s32 arg0, s32 arg1, s32 arg2) {
         return var_s1;
     } else if (var_s0 >= var_s2 && var_s0 >= var_s1) {
         return var_s0;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     } else {
         return 0;
 #endif
     }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #undef abs
 #endif
 }
 
 static s32 Min3(s32 arg0, s32 arg1, s32 arg2) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #define abs labs
 #endif
     s32 var_s2 = abs(arg0);
@@ -336,12 +336,12 @@ static s32 Min3(s32 arg0, s32 arg1, s32 arg2) {
         return var_s1;
     } else if (var_s0 <= var_s2 && var_s0 <= var_s1) {
         return var_s0;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     } else {
         return 0;
 #endif
     }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #undef abs
 #endif
 }
@@ -380,7 +380,7 @@ void func_us_80172C8C(SVECTOR* arg0, MATRIX* arg1) {
     arg1->m[2][2] = FLT_TO_I(D_us_801782C0 * D_us_801782BC);
 }
 
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
 #define sp(field) (((SwordScratchPad*)SP(0))->field)
 #else
 #define sp(field)                                                              \
@@ -685,7 +685,7 @@ void ServantInit(InitializeMode mode) {
     dst = &g_Clut[1][CLUT_INDEX_SERVANT];
     src = g_ServantClut;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     for (j = 1; j < LEN(g_ServantClut); j++) {
         g_ServantClut[j] |= 0x8000;
     }
@@ -715,7 +715,7 @@ void ServantInit(InitializeMode mode) {
     self->facingLeft = (PLAYER.facingLeft + 1) & 1;
 
     if (mode == MENU_SWITCH_SERVANT) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if ((D_8003C708.flags & FLAG_UNK_20) ||
             (D_8003C708.flags & FLAG_UNK_40)) {
 #else
@@ -1843,7 +1843,7 @@ void func_us_80176674(Entity* self) {
 
     case 2:
         pauseAllowed = false;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #define params 0x4F9
 #else
 #define params 0x4FB
@@ -2208,7 +2208,7 @@ ServantEvent g_Events[] = {
     MAKE_EVENT(FAM_ACTIVE_SWORD, 49, 20, 0, 4, CHECK_NONE, 0, E_UNK_DC, 0),
     MAKE_EVENT(FAM_ACTIVE_SWORD, 16, 21, 0, 4, CHECK_NONE, 0, E_UNK_DC, 0),
     MAKE_EVENT(FAM_ACTIVE_SWORD, 41, 50, 0, 4, FOR_CASTLE_FLAG(CAT_SPIKE_ROOM_LIT), 1, E_UNK_DC, 15),
-#if defined(VERSION_HD)
+#if VERSION == VER_BETA_HD
     { 0, 0, -1, 1, -1, -1, -1, -1, -1, -1, 0, 0, 0 }
 #else
     NULL_EVENT
@@ -2222,7 +2222,7 @@ u32 g_CurrentServant = 0;
 s32 g_CurrentRoomX = 0;
 s32 g_CurrentRoomY = 0;
 
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
 #include "../servant_update_anim.h"
 #include "../../destroy_entity.h"
 #include "../accumulate_toward_zero.h"

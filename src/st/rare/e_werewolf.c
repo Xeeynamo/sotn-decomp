@@ -731,7 +731,7 @@ void EntityWerewolfDeathFlames(Entity* self) {
                 gte_rtps();
                 gte_stsxy((long*)&prim->x3);
                 gte_avsz4();
-#ifdef VERSION_US
+#if VERSION == VER_US
                 gte_stszotz(otz);
 #else
                 gte_stszotz(&otz);

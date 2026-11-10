@@ -8,7 +8,7 @@ extern EInit g_EInitEnvironment;
 extern EInit g_EInitParticle;
 extern EInit g_EInitBreakable;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(BREAKABLE_DEBRIS);
 #endif
 

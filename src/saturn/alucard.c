@@ -379,7 +379,7 @@ s8 func_060A7DE8(void) {
     if (PLAYER.step_s != 0) {
         if (g_unkGraphicsStruct.D_8009744C != 0 ||
             (g_Player.padTapped & 0x20) != 0 || func_06070410(0, 1) < 0) {
-            SetPlayerStepNoInline(Player_UnmorphBat);
+            ((void (*)())SetPlayerStep)(Player_UnmorphBat);
             g_Player.unk452 = 0;
             g_Player.unk454 = 0;
             func_060BAF44(g_CurrentEntity, 0x0021007B, 0);
@@ -514,7 +514,7 @@ void func_060A96A0(void) {
     void (*fn)(s32);
     s32 arg;
 
-    if (g_Player.unk7A != 0) {
+    if (g_Player.runDisable != 0) {
         fn = func_060A59E0;
         arg = 0;
         goto call;
@@ -633,7 +633,7 @@ void func_060AB4A4(void) {
     switch (PLAYER.step_s) {
     case 0:
         func_060B7A6C();
-        g_Player.unk42C = 0x46;
+        g_Player.damagePalette = 0x46;
         g_Player.timers[2] = 6;
         PLAYER.velocityX = 0;
         PLAYER.velocityY = 0;
@@ -661,7 +661,7 @@ void func_060AB590(void) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     if ((g_Player.padSim >> 16) != 2) {
-        SetPlayerStepNoInline(Player_AxearmorStand);
+        ((void (*)())SetPlayerStep)(Player_AxearmorStand);
         PLAYER.velocityY = 0;
         PLAYER.velocityX = 0;
         func_060A5674NoInline(0xD2);
@@ -1037,7 +1037,7 @@ s16 func_060B0584(void) {
 void func_060B0638(s32 arg0, s32 arg1, s32 arg2) {
     if (g_Player.healKind != 0) {
         g_Status.hp += g_Player.healAmount;
-        func_0606FFC8(arg0, arg1, arg2, 0x250);
+        func_800FE8F0();
         func_060B9610Healing(g_Player.healAmount, 1);
 
         if (g_Player.healKind == 1) {

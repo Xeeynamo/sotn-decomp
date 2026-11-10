@@ -44,7 +44,7 @@ void EntityTowerExit(Entity* self) {
     case 4: // 4 and the specific params case increments self->step each time
         offsetY = self->posY.i.hi - PLAYER.posY.i.hi;
         deltaY = abs(offsetY);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (deltaY < 32) {
 #else
         if (deltaY < 48) {

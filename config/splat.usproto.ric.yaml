@@ -1,0 +1,107 @@
+options:
+  platform:     psx
+  basename:     ric
+  base_path:    ..
+  build_path:   build/usproto
+  target_path:  disks/usproto/BIN/RIC.BIN
+  asm_path:     asm/usproto/ric
+  asset_path:   assets/ric
+  src_path:     src/ric
+  ld_script_path: build/usproto/ric.ld
+  compiler:     GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+  undefined_funcs_auto_path: build/usproto/config/undefined_funcs_auto.usproto.ric.txt
+  undefined_syms_auto_path:  build/usproto/config/undefined_syms_auto.usproto.ric.txt
+  find_file_boundaries: yes
+  use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
+  asm_jtbl_label_macro: jlabel
+  extensions_path: tools/splat_ext
+  disassemble_all: true
+  global_vram_start: 0x80010000
+  section_order:
+    - ".data"
+    - ".rodata"
+    - ".text"
+    - ".bss"
+    - ".sbss"
+  ld_generate_symbol_per_data_segment: true
+sha1: d076912661e67a38afae0a1b5044ab5f10bcfb39
+segments:
+  - name: ric
+    type: code
+    start: 0x00000000
+    vram:  0x8013C000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, .data, pl_header]
+      - [0x170AC, .data, spritebanks]
+      - [0x18568, .data, d_18568]
+      - [0x1859C, .data, d_1859C]
+      - [0x18674, .data, pl_blueprints]
+      - [0x18688, .data, pl_blueprints] # subweapons
+      - [0x188F4, .data, pl_blueprints]
+      - [0x1895C, .data, pl_blueprints] # entity table
+      - [0x18A6C, .data, pl_blueprints] # blueprints
+      - [0x18C40, .data, pl_blueprints]
+      - [0x18ED4, .data, pl_blueprints] # RicEntityMaria
+      - [0x18F7C, .data, pl_blueprints] # RicEntityPlayerBlinkWhite and onwards
+      - [0x1938C, .data, pl_anims]
+      - [0x199AC, .data, pl_whip]
+      - [0x19D64, .data, pl_subweapon_holywater]
+      - [0x19DDC, .data, pl_subweapon_cross]
+      - [0x19E70, .data, pl_subweapons]
+      - [0x19E98, .data, 2F8E8]
+      - [0x19EE0, .data, 319C4]
+      - [0x19EFC, .data, pl_crash_cross]
+      - [0x1A444, .rodata, pl_main] # UpdateEntityRichter
+      - [0x1A5E0, .rodata, pl_debug]
+      - [0x1A5F0, .rodata, pl_steps]
+      - [0x1A7A8, .rodata, pl_steps] # RicStepTeleport and onwards
+      - [0x1A7C0, .rodata, pl_steps] # RicStepHighJump
+      - [0x1A800, .rodata, pl_utils]
+      - [0x1A80C, .rodata, pl_setstep]
+      - [0x1A904, .rodata, pl_collision]
+      - [0x1A907, .rodata, pl_blueprints]
+      - [0x1A918, .rodata, pl_blueprints] # RicEntityFactory and onwards
+      - [0x1A9D0, .rodata, pl_blueprints] # RicEntityMaria
+      - [0x1A9E8, .rodata, pl_blueprints] # RicEntityPlayerBlinkWhite
+      - [0x1AA28, .rodata, pl_blueprints] # RicEntityTeleport
+      - [0x1AAA0, .rodata, pl_whip]
+      - [0x1AABC, .rodata, pl_subweapon_holywater] # RicEntitySubwpnHolyWater
+      - [0x1AAD4, .rodata, pl_subweapon_cross] # RicEntitySubwpnCrashCross
+      - [0x1AAEC, .rodata, pl_subweapon_cross] # RicEntityRevivalColumn
+      - [0x1AB04, .rodata, pl_subweapon_cross] # RicEntitySubwpnCross
+      - [0x1AB24, .rodata, pl_subweapon_cross] # RicEntitySubwpnAgunea
+      - [0x1AB24, .rodata, 2F8E8]
+      - [0x1AB38, .rodata, 319C4]
+      - [0x1AB68, .rodata, pl_crash_cross]
+      - [0x1AC50, .rodata, pl_crash_cross]
+      - [0x1AC60, c, pl_main]
+      - [0x1C7C0, c, pl_debug]
+      - [0x1CB04, c, pl_steps]
+      - [0x204AC, c, pl_utils]
+      - [0x20C50, c, pl_setstep]
+      - [0x21B6C, c, pl_collision]
+      - [0x238F8, c, pl_blueprints]
+      - [0x2A784, c, pl_whip]
+      - [0x2BA58, c, pl_subweapon_dummy]
+      - [0x2BA68, c, pl_subweapon_holywater]
+      - [0x2D02C, c, pl_subweapon_cross]
+      - [0x2E26C, c, pl_subweapons]
+      - [0x2F8E8, c, 2F8E8]
+      - [0x319C4, c, 319C4]
+      - [0x359A4, c, 319C4]
+      - [0x3728C, c, pl_crash_cross]
+      - [0x37B64, .bss, pl_steps]
+      - [0x37F80, .bss, pl_collision]
+      - [0x37F84, .bss, pl_blueprints]
+      - [0x38080, .bss, pl_whip]
+      - [0x38088, .bss, pl_subweapon_cross]
+      - [0x3988C, .bss, pl_subweapons]
+      - [0x39890, .bss, 2F8E8]
+      - [0x39894, .bss, 319C4]
+      - [0x398E0, .bss, bss]
+  - [0x39A58]

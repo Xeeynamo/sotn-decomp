@@ -100,7 +100,7 @@ void EntityLockCamera(Entity* self) {
 
     switch (self->params) {
     case 4:
-#if defined(STAGE_IS_NO0) || defined(STAGE_IS_TEK)
+#if defined(STAGE_IS_NO0) || VERSION < VER_BETA_MAD
         self->ext.lockCamera.unk8A = 1;
 #endif
         break;

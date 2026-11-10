@@ -672,7 +672,7 @@ void EntityHellfireBeastThorsHammer(Entity* self) {
                 prim->clut = PAL_HELLFIRE_BEAST_LIGHTNING;
                 prim->v0 = prim->v2 = 0x20;
                 prim->v1 = prim->v3 = 0x10;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 PGREY(prim, 0) = 0xF0;
 #else
                 PGREY(prim, 0) = 0xC0;
@@ -817,7 +817,7 @@ void EntityHellfireBeastThorsHammer(Entity* self) {
             self->hitboxOffY = 8;
 
             // FAKE! PSX requires some trickery here, was not able to resolve
-#ifdef VERSION_US
+#if VERSION == VER_US
             fake = 8;
             while (prim != NULL) {
                 prim->drawMode = fake;
@@ -880,7 +880,7 @@ void EntityHellfireBeastFlamePillarAnimation(Entity* self) {
         DestroyEntity(self);
     }
 
-#if defined(VERSION_PSP) || defined(FIX_UB)
+#if TARGET == TARGET_PSP || defined(FIX_UB)
     // Non-PSX versions fix a null pointer here
     if (self->ext.hellfireBeastThorsHammer.entity != NULL &&
         !self->ext.hellfireBeastThorsHammer.entity->entityId) {
@@ -1093,7 +1093,7 @@ void EntityHellfireBeastFlamePillar(Entity* self) {
                 prim->u2 = prim->u3 = 0x12;
                 prim->v0 = prim->v2 = 0;
                 prim->v1 = prim->v3 = 0x3F;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 PGREY(prim, 0) = 0xC0;
 #else
                 PGREY(prim, 0) = 0x60;

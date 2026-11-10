@@ -12,7 +12,7 @@ static NowLoadingModel g_NowLoadingModel;
 #include "../get_lang.h"
 
 // Function used in a good number of places throughout
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #define LOADFILESIM_PSPALT(F, T) func_psp_090FAB30(F, T, true)
 #else
 #define LOADFILESIM_PSPALT(F, T) LoadFileSim(F, T)
@@ -68,7 +68,7 @@ void func_800E414C(void) {
                 g_LoadFile = CdFile_StageChr | 0x8000;
             }
             g_LoadOvlIdx = D_8003C710;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             func_psp_08932AD4(g_LoadOvlIdx);
 #endif
             D_8003C708.unk2++;
@@ -135,6 +135,18 @@ void HandleTitle(void) {
         func_800EA538(0);
         ResetPendingGfxLoad();
         SetStageDisplayBuffer();
+#if REGION == REGION_EU
+        if (g_GameState == Game_Init) {
+            if (g_IsUsingCd) {
+                return;
+            }
+            g_StageId = STAGE_EU_WARNING;
+            g_LoadFile = CdFile_StagePrg;
+            g_CdStep = CdStep_LoadInit;
+            g_GameStep = 100;
+            break;
+        }
+#endif
         g_StageId = STAGE_SEL;
         if (g_UseDisk) {
             if (g_IsUsingCd) {
@@ -143,12 +155,12 @@ void HandleTitle(void) {
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_Sel;
         }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         D_800974A4 = 0;
 #endif
         g_GameStep++;
         break;
-#if defined(VERSION_US)
+#if VERSION >= VER_US && TARGET != TARGET_PSP
     case 100:
         if (!g_IsUsingCd) {
             RECT rect;
@@ -166,6 +178,9 @@ void HandleTitle(void) {
             SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 0x100, 0x280, 0x100);
             SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 0x100, 0x280, 0x100);
             SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, 0x280, 0x100);
+#if REGION == REGION_EU
+            g_GpuBuffers[0].disp.screen.y = g_GpuBuffers[1].disp.screen.y = 24;
+#endif
             SetDispMask(0);
             D_8013640C = 110;
             g_GameStep++;
@@ -204,29 +219,17 @@ void HandleTitle(void) {
         g_GameStep++;
         break;
     case 2:
-#if defined(VERSION_US)
-        g_GameStep = 3;
-#else
         g_GameStep++;
-#endif
         break;
     case 3:
-#if defined(VERSION_US)
-        g_GameStep = 4;
-#else
         g_GameStep++;
-#endif
         break;
     case 4:
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_StagePrg;
         }
-#if defined(VERSION_US)
-        g_GameStep = 5;
-#else
         g_GameStep++;
-#endif
         break;
     case 5:
         if (g_UseDisk) {
@@ -242,7 +245,7 @@ void HandleTitle(void) {
         g_GameEngineStep = Engine_Init;
         break;
     case 6:
-#if defined(VERSION_US)
+#if VERSION >= VER_US && TARGET != TARGET_PSP
         if (g_GameState == Game_Title) {
             callback = g_api.o.HitDetection;
             callback();
@@ -263,7 +266,7 @@ void HandleTitle(void) {
     }
 }
 
-void func_800E493C(void) {
+void ApplySoundMode(void) {
     if (g_Settings.isSoundMono == false) {
         PlaySfx(SET_SOUNDMODE_STEREO);
     } else {
@@ -286,14 +289,14 @@ void func_800E4970(void) {
     PlaySfx(SET_UNK_12);
     PlaySfx(SET_UNK_0B);
     MuteSound();
-    func_800E493C();
+    ApplySoundMode();
 }
 
 void func_800E4A04(void) { s32 pad[3]; }
 
 s16 g_ButtonMask[] = {
     PAD_SQUARE, PAD_CIRCLE, PAD_CROSS,     PAD_TRIANGLE,
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     PAD_L1,     PAD_R1,     PAD_SHOULDERS,
 #else
     PAD_R2,     PAD_L1,     PAD_R1,    PAD_L2,
@@ -321,7 +324,7 @@ s16 g_ButtonMask[] = {
 
 static u8 g_StageSelectOrder[] = {
     STAGE_MEMORYCARD, STAGE_ST0,     UPRIGHT_STAGES,
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
     REVERSE_STAGES,   DEBUG_STAGES,  BOSSES,
     REVERSE_BOSSES,   STAGE_TOP_ALT, STAGE_ENDING,
 #else
@@ -356,7 +359,7 @@ static RECT D_800A01C0[] = {
     {64, 0, 128, 0},      // unknown usage
 };
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 static char* D_psp_0914C3D8[] = {"alucard ", "richter ", "maria   "};
 
 static u8 game_over_left_it[] = {
@@ -452,8 +455,18 @@ void HandlePlay(void) {
             g_Settings.windowColors[1] = 0;
             g_Settings.windowColors[2] = 8;
             g_Settings.isCloakLiningReversed = 0;
+#if REGION == REGION_EU || REGION == REGION_HK
+            if (g_StageId == STAGE_ST0 ||
+                g_PlayableCharacter != PLAYER_ALUCARD) {
+                g_Settings.isSoundMono = true;
+                ApplySoundMode();
+            }
+#elif VERSION == VER_JP12
+            // BUGFIX: don't reset sound settings to mono
+#else
             g_Settings.isSoundMono = true;
-            func_800E493C();
+            ApplySoundMode();
+#endif
             for (i = 0; i < LEN(g_Settings.equipOrderTypes); i++) {
                 g_Settings.equipOrderTypes[i] = i;
             }
@@ -488,21 +501,21 @@ void HandlePlay(void) {
         RunMainEngine();
         break;
     case Play_PrepareNextStage:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         func_psp_0891B0DC(0, 0x100);
         ClearClut8bpp();
 #endif
         PlaySfx(SET_UNK_12);
         PlaySfx(SET_UNK_0B);
         MuteSound();
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         func_psp_0892A620(0, true);
         func_psp_0892A620(1, true);
 #endif
         if (D_80097C98 & 0x80000000) {
             func_800E4970();
             DemoInit(2);
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
             return;
 #else
             if (D_psp_08C630D4 != 0) {
@@ -531,14 +544,14 @@ void HandlePlay(void) {
 #endif
         }
         if (D_80097C98 & 0x08000000) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             func_psp_0892A620(0, true);
             func_psp_0892A620(1, true);
 #endif
             func_800E4970();
             return;
         }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (D_psp_08C630D4 == 0) {
             g_StageId = func_800F16D0();
         }
@@ -612,7 +625,7 @@ void HandlePlay(void) {
                 g_LoadOvlIdx = STAGE_LIB;
             }
         }
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
         MoveImage(&g_Vram.D_800ACD80, 0, 0x100);
 #endif
 
@@ -660,7 +673,7 @@ void HandlePlay(void) {
             break;
         }
         g_GameStep++;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         func_psp_08932AD4(g_StageId);
 #endif
         break;
@@ -671,7 +684,7 @@ void HandlePlay(void) {
             g_LoadFile = CdFile_StageSfx;
             g_LoadOvlIdx = g_StageId;
         } else {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             if (!func_psp_08932B74()) {
                 break;
             }
@@ -807,7 +820,7 @@ void HandleGameOver(void) {
         func_800EDAE4();
         HideAllBackgroundLayers();
         func_800EAD7C();
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         ClearClut8bpp();
         func_psp_0892F83C();
 #endif
@@ -815,7 +828,7 @@ void HandleGameOver(void) {
         break;
     case Gameover_AllocResources:
         if (g_StageId != STAGE_ST0) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             func_psp_0891B0DC(0x40, 0);
             func_psp_0891AE04();
 #else
@@ -830,8 +843,12 @@ void HandleGameOver(void) {
             SetTexturedPrimRect(prim, 0, 0x60, 0xFF, 0x20, 0, 0);
             func_801072BC(prim);
             prim->tpage = 8;
+#if VERSION == VER_USPROTO
+            prim->drawMode = DRAW_HIDE;
+#else
             prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
                              DRAW_COLORS | DRAW_TRANSP;
+#endif
             prim->p1 = 0x60;
             prim = prim->next;
 
@@ -851,7 +868,7 @@ void HandleGameOver(void) {
 
             for (i = 0; i < 0x100; i++) {
                 SetTexturedPrimRect(prim, i, 0, 1, 0xF0, i & 0x3F, 0);
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
                 prim->tpage = (i / 0x40) + 0x10C;
 #else
                 prim->tpage = (i / 0x40) + 0x101;
@@ -918,7 +935,7 @@ void HandleGameOver(void) {
             if (LoadFileSim(11, SimFileType_System) < 0) {
                 break;
             }
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
         }
 #else
             func_psp_0891CEB8(0, 0xF0);
@@ -936,9 +953,10 @@ void HandleGameOver(void) {
             func_psp_091040A0(D_psp_09156F28);
         }
 #endif
-#if defined(VERSION_US)
+#if IS_VER_INTL
         PlaySfx(MU_LAND_OF_BENEDICTION);
 #else
+        // On Japanese builds, there are multiple Game Over sounds
         if (g_PlayableCharacter != PLAYER_ALUCARD) {
             PlaySfx(MU_LAND_OF_BENEDICTION);
         } else {
@@ -999,7 +1017,11 @@ void HandleGameOver(void) {
         if (temp != 0x80) {
             break;
         }
+#if VERSION == VER_USPROTO
+        prim->drawMode = DRAW_HIDE;
+#else
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
+#endif
         prim->p1 = 4;
         g_GameStep++;
         break;
@@ -1013,7 +1035,11 @@ void HandleGameOver(void) {
         yScroll = prim->v0;
         if (yScroll == 0x60) {
             yScroll = 0x40;
+#if VERSION == VER_USPROTO
+            prim->drawMode = DRAW_HIDE;
+#else
             prim->drawMode = DRAW_COLORS;
+#endif
             prim->p1 = 0;
             prim->next->p1 = 1;
             g_GameStep++;
@@ -1059,7 +1085,7 @@ void HandleGameOver(void) {
         if (temp) {
             break;
         }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         func_psp_0891AE68();
 #endif
         FreePrimitives(D_8013640C);
@@ -1071,7 +1097,7 @@ void HandleGameOver(void) {
     case Gameover_11:
     case Gameover_11_Alt:
         if (g_GameStep == Gameover_11_Alt) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             func_psp_0892A998();
 #endif
             SetGameState(Game_Title);
@@ -1086,7 +1112,7 @@ void HandleGameOver(void) {
 
 static RECT D_800A0240 = {0x340, 0x180, 0x40, 0x40};
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 void func_psp_08932CEC(bool, s8);
 extern u8 D_psp_091463F8;
 extern u8 D_psp_09146400;
@@ -1137,7 +1163,7 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
     s16 ex;
     s16 ey;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     RECT sp48;
 
     sp48.x = 0x740;
@@ -1297,7 +1323,7 @@ void HandleNowLoading(void) {
     s32 weaponId, weaponId1, weaponId2;
     NowLoadingModel* nowLoadingModel = &g_NowLoadingModel;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #define ANIM_LIMIT Play_PrepareNextStage
 #else
 #define ANIM_LIMIT Play_Default
@@ -1309,7 +1335,7 @@ void HandleNowLoading(void) {
     case Play_Reset:
         D_8003C730 = 0;
         D_80097924 = -1;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         D_8006C378 = -1;
 #endif
         ClearBackbuffer();
@@ -1334,7 +1360,7 @@ void HandleNowLoading(void) {
             PlaySfx(SFX_DEBUG_SELECT);
             D_800987B4 -= 8;
         }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (g_pads[0].repeat & PAD_SELECT) {
             g_PlayableCharacter++;
             g_PlayableCharacter %= 3;
@@ -1354,13 +1380,13 @@ void HandleNowLoading(void) {
         }
 #endif
         g_StageId = g_StageSelectOrder[D_800987B4];
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         FntPrint("Player:%s\n", D_psp_0915E500[g_PlayableCharacter]);
 #endif
         FntPrint("%02x (%02x)\n", D_800987B4, g_StageId);
         if (g_StageId == STAGE_MEMORYCARD) {
             FntPrint("memory card load\n");
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         } else if ((g_StageId >= 0xF0) && (g_StageId < 0xFF)) {
             FntPrint("ending(type%d)\n", g_StageId - 0xF0);
 #else
@@ -1380,9 +1406,9 @@ void HandleNowLoading(void) {
             PlaySfx(SFX_START_SLAM_B);
             if (g_StageId == STAGE_MEMORYCARD) {
                 SetGameState(Game_MainMenu);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             } else if ((g_StageId >= 0xF0) && (g_StageId < 0xFF)) {
-                D_800978B4 = g_StageId - 0xF0;
+                g_EndingVariant = g_StageId - 0xF0;
 #else
             } else if (g_StageId == STAGE_ENDING) {
 #endif
@@ -1391,7 +1417,7 @@ void HandleNowLoading(void) {
                 strcpy(g_Status.saveName, "alucard ");
                 g_DemoMode = Demo_None;
                 if (g_DebugPlayer != 0) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     strcpy(
                         g_Status.saveName, D_psp_0915E500[g_PlayableCharacter]);
                     g_GameClearFlag = SAVE_FLAG_CLEAR;
@@ -1402,7 +1428,7 @@ void HandleNowLoading(void) {
                         strcpy(g_Status.saveName, "richter ");
                         g_PlayableCharacter = PLAYER_RICHTER;
                         g_GameClearFlag = SAVE_FLAG_CLEAR;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     } else if (g_PlayableCharacter == PLAYER_MARIA) {
                         strcpy(g_Status.saveName, "maria   ");
                         g_PlayableCharacter = PLAYER_MARIA;
@@ -1412,7 +1438,7 @@ void HandleNowLoading(void) {
                         g_PlayableCharacter = PLAYER_ALUCARD;
                         g_GameClearFlag = SAVE_FLAG_NORMAL;
                     }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     if (D_psp_08C630D4 == 1) {
                         DemoInit(1);
                     } else if (D_psp_08C630D4 == 2) {
@@ -1431,7 +1457,7 @@ void HandleNowLoading(void) {
         }
         break;
     case Play_PrepareDemo:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
             if (g_PlayableCharacter == PLAYER_MARIA) {
                 func_psp_08932FD4(2);
@@ -1461,7 +1487,7 @@ void HandleNowLoading(void) {
         } else {
             if (g_StageId == STAGE_ST0 ||
                 g_PlayableCharacter != PLAYER_ALUCARD) {
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
                 if (0) { // to align curly braces
 #else
                 if (g_PlayableCharacter == PLAYER_MARIA) {
@@ -1486,7 +1512,7 @@ void HandleNowLoading(void) {
                         break;
                     }
                     if (g_StageId == STAGE_ST0) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                         // BUGS: wrong signature
                         if (LoadFileSim(0x8004, SimFileType_Vh, true) < 0) {
                             break;
@@ -1516,7 +1542,7 @@ void HandleNowLoading(void) {
                 }
             }
         }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         g_GameStep = Play_Default;
 #else
         nowLoadingModel->step = 0;
@@ -1525,7 +1551,7 @@ void HandleNowLoading(void) {
 #endif
         break;
     case Play_Default:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
             func_psp_08933130(1);
         } else {
@@ -1554,21 +1580,21 @@ void HandleNowLoading(void) {
                     break;
                 }
             }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             func_psp_0891CEB8(0, 0xFD);
         }
         func_psp_08932AD4(g_StageId);
         g_GameStep = Play_PrepareNextStage;
-#else
-        }
-        g_GameStep++;
-#endif
         break;
     case Play_PrepareNextStage:
-#ifdef VERSION_PSP
         if (!func_psp_08932B74()) {
             break;
         }
+#else
+        }
+        g_GameStep++;
+        break;
+    case Play_PrepareNextStage:
 #endif
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
@@ -1645,7 +1671,7 @@ void HandleNowLoading(void) {
         if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
             g_GameStep = Play_16;
         } else {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             if (1) {
 #else
             if (g_UseDisk) {
@@ -1659,7 +1685,7 @@ void HandleNowLoading(void) {
                 }
                 if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
                     weaponId = g_EquipDefs[0xD8].weaponId;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     weaponId1 = weaponId;
                     weaponId2 = weaponId;
                 } else {
@@ -1674,7 +1700,7 @@ void HandleNowLoading(void) {
 #endif
                 }
                 g_EquippedWeaponIds[0] = weaponId;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 func_psp_08932CEC(0, weaponId1);
                 func_psp_08932CEC(1, weaponId2);
 #endif
@@ -1683,7 +1709,7 @@ void HandleNowLoading(void) {
         }
         break;
     case Play_Unk11:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (!func_psp_08932D34(0)) {
             break;
         }
@@ -1775,13 +1801,13 @@ void HandleNowLoading(void) {
             g_LoadFile = CdFile_ServantChr;
             g_LoadOvlIdx = g_Servant - 1;
         }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         func_psp_08932E78(g_Servant - 1);
 #endif
         g_GameStep++;
         break;
     case Play_Unk15:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (!func_psp_08932EA4()) {
             break;
         }
@@ -1798,7 +1824,7 @@ void HandleNowLoading(void) {
         break;
     case Play_16:
         AnimateNowLoading(nowLoadingModel, 64, 112, true);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (D_8003C730 != 4) {
 #else
         if (1) {
@@ -1820,7 +1846,7 @@ void HandleNowLoading(void) {
         break;
     }
 }
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 static u8 intro_left_sp[] = {
 #include "../dra/gen/intro_left_sp.h"
 };
@@ -1875,7 +1901,7 @@ void HandleVideoPlayback(void) {
             if (!g_IsUsingCd) {
                 func_800EA538(0);
                 func_800EA5E4(0x1A);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 D_psp_0915FBF8[3] =
                     (u_long*)GetLang(NULL, intro_left_fr, intro_left_sp,
                                      intro_left_ge, intro_left_it);
@@ -1920,12 +1946,12 @@ void HandleVideoPlayback(void) {
             prim = &g_PrimBuf[D_8013640C];
             temp = prim->r0 + 1;
             func_80107250(prim, temp);
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
             if (temp == 96) {
                 prim2 = prim->next;
-#if defined(VERSION_US)
+#if REGION != REGION_JP
                 prim2->drawMode = DRAW_HIDE;
-#elif defined(VERSION_HD)
+#else
                 prim2->drawMode = DRAW_DEFAULT;
 #endif
             }
@@ -1960,12 +1986,12 @@ void HandleVideoPlayback(void) {
             break;
 
         case 5:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             if (!g_UseDisk || !g_IsUsingCd) {
 #else
             if (!g_IsUsingCd) {
 #endif
-                D_8003C728 = 1;
+                g_IsMoviePlaying = 1;
                 g_CurrentStream = 1;
                 g_GameStep++;
             }
@@ -1973,7 +1999,7 @@ void HandleVideoPlayback(void) {
 
         case 6:
             g_api.o.UpdateRoomPosition();
-            if (!D_8003C728) {
+            if (!g_IsMoviePlaying) {
                 goto hack;
             }
             break;
@@ -2169,7 +2195,7 @@ void HandleEnding(void) {
             g_LoadFile = CdFile_AlucardPrg;
         }
         g_GameStep++;
-        if (D_800978B4 != 3 && D_800978B4 != 5) {
+        if (g_EndingVariant != ENDING_GOOD && g_EndingVariant != ENDING_BEST) {
             g_GameStep++;
         }
         break;
@@ -2192,12 +2218,16 @@ void HandleEnding(void) {
         g_api.o.UpdateStageEntities();
         break;
     case 10:
-#if defined(VERSION_US)
+#if VERSION >= VER_US && TARGET != TARGET_PSP
         PlaySfx(18);
         PlaySfx(11);
         MuteSound();
 #endif
+#if REGION == REGION_EU
+        SetGameState(Game_99);
+#else
         SetGameState(Game_Init);
+#endif
         break;
     case 256:
         g_StageId = STAGE_TOP_ALT;
@@ -2215,7 +2245,7 @@ void UpdateGame(void) {
     case Game_Title:
         HandleTitle();
         break;
-#if defined(VERSION_US)
+#if VERSION >= VER_US && TARGET != TARGET_PSP
     case Game_99:
         HandleTitle();
         break;

@@ -1276,7 +1276,7 @@ s16 D_us_801818A0[36][10] = {
     },
 };
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern u8** doppleganger_sprites;
 extern u8** bat_form_sprites;
 #else
@@ -1286,7 +1286,7 @@ extern u8** bat_form_sprites[];
 s32 D_us_80181B70 = 0;
 
 // player turns white for some sort of status effect
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_49A6C", EntityDopplegangerBlinkWhite);
 #else
 void EntityDopplegangerBlinkWhite(Entity* self) {
@@ -1921,7 +1921,7 @@ s16 D_us_80181B74[23][5] = {
 
 };
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_49A6C", EntityDopplegangerOutline);
 #else
 void EntityDopplegangerOutline(Entity* self) {
@@ -2362,7 +2362,7 @@ unkStr_8011E4BC* D_us_80181D0C[] = {
 extern s32 D_us_801D4118[32];
 extern s32 D_us_801D4198[32];
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_49A6C", func_us_801CD178);
 #else
 void func_us_801CD178(Entity* self) {
@@ -2850,7 +2850,7 @@ Point16* D_us_80181DF8[] = {
     &D_us_80181DF0, &D_us_80181DE4, &D_us_80181DF4, &D_us_80181DC8,
 };
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_49A6C", EntityHitByIce);
 #else
 void EntityHitByIce(Entity* self) {
@@ -3113,7 +3113,7 @@ static Primitive* func_80121F58(
         if (DOPPLEGANGER.animSet == 0xF) {
             arg2->tpage = 0x118;
         } else {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             arg2->tpage = 0x18;
 #else
             arg2->tpage = 0x10;
@@ -3175,7 +3175,7 @@ s32 D_us_801D40AC;
 STATIC_PAD_BSS(0x68);
 
 // spawns mist (player transform)
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_49A6C", EntityMist);
 #else
 void EntityMist(Entity* self) {
@@ -3869,6 +3869,6 @@ void EntityDopplegangerDissolves(Entity* self) {
     func_us_801C5354(1, 1);
 }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 u_long D_us_801D421C[0x200];
 #endif

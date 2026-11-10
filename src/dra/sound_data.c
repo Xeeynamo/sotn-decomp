@@ -14,7 +14,7 @@ SeqData g_SeqInfo[] = {
 
 XaMusicConfig g_XaMusicConfigs[] = {
 #include GEN_VERSION(xa_music_config.h)
-#if defined(VERSION_PC)
+#ifdef PLATFORM_PSYZ
     {0},
     {0},
 #endif

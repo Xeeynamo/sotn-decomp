@@ -249,7 +249,7 @@ void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
         h.Title[i] = 0;
     }
 
-#if defined(VERSION_US)
+#if VERSION == VER_US
     strcpy(h.Title, "ＣＡＳＴＬＥＶＡＮＩＡ−");
 #else
     strcpy(h.Title, "ドラキュラＸ−");
@@ -286,7 +286,7 @@ void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
         }
     }
 
-#if defined(VERSION_HD)
+#if VERSION < VER_JP10
     // writes stage name
     strcat(h.Title, "　");
     strcat(h.Title, g_SaveAreaNames[g_StageId]);
@@ -357,11 +357,6 @@ void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
     dst->rng = g_randomNext;
 }
 
-extern s32 D_psp_091FC3F8;
-extern s32 D_psp_091FC400;
-extern s32 D_psp_091FC408;
-extern s32 D_psp_091FC410;
-
 s32 ApplySaveData(SaveData* save) {
     s32 i;
     u32 prevCompletionFlags1;
@@ -386,10 +381,10 @@ s32 ApplySaveData(SaveData* save) {
     g_Tilemap.top = savePtr->info.roomY;
 
     g_Status = *srcStatus;
-    D_psp_091FC410 = g_Status.timerHours;
-    D_psp_091FC408 = g_Status.timerMinutes;
-    D_psp_091FC400 = g_Status.timerSeconds;
-    D_psp_091FC3F8 = g_Status.timerFrames;
+    g_TimerCopyHours = g_Status.timerHours;
+    g_TimerCopyMinutes = g_Status.timerMinutes;
+    g_TimerCopySeconds = g_Status.timerSeconds;
+    g_TimerCopyFrames = g_Status.timerFrames;
 
     g_MenuNavigation = *srcNav;
 

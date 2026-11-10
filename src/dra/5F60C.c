@@ -101,13 +101,9 @@ void func_800FF708(s32 equipType, s32 slot) {
 char* g_LuckCode = "x-x!v''q";
 char* g_AxeArmorCode = "axearmor";
 
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 extern s32 D_psp_091CDC80;
 extern s32 D_psp_091CDC88;
-extern s32 D_psp_091FC3F8;
-extern s32 D_psp_091FC400;
-extern s32 D_psp_091FC408;
-extern s32 D_psp_091FC410;
 #endif
 
 // original name: status_work_init
@@ -116,7 +112,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
     s32 dracDefeatTime;
 // opposite of each version's signed/unsigned char definition.
 // a mystery to be solved.
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
     s8* fileName;
 #else
     u8* fileName;
@@ -259,7 +255,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         g_Status.statsBase[STAT_INT] = 10;
         g_Status.statsBase[STAT_LCK] = 10;
         g_Status.gold = 0;
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
         g_Status.D_80097C40 = 0;
 #endif
         g_Status.equipment[LEFT_HAND_SLOT] = ITEM_EMPTY_HAND;
@@ -287,8 +283,9 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         g_Status.timerMinutes = 0;
         g_Status.timerSeconds = 0;
         g_Status.timerFrames = 0;
-#if defined(VERSION_PSP)
-        D_psp_091FC3F8 = D_psp_091FC400 = D_psp_091FC408 = D_psp_091FC410 = 0;
+#ifdef CLOCK_BUGFIX
+        g_TimerCopyFrames = g_TimerCopySeconds = g_TimerCopyMinutes =
+            g_TimerCopyHours = 0;
 #endif
         make_all();
         return;
@@ -452,6 +449,17 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         g_Status.statsBase[STAT_CON] = 6;
         g_Status.statsBase[STAT_INT] = 6;
         g_Status.statsBase[STAT_LCK] = 6;
+#if VERSION == VER_USPROTO
+        g_Status.hpMax = g_Status.hp = 200;
+        g_Status.hearts = 50;
+        g_Status.heartsMax = 80;
+        g_Status.mpMax = 30;
+        g_Status.mp = g_Status.mpMax;
+        g_Status.gold = 0;
+        for (i = 0; i < LEN(g_Status.relics); i++) {
+            g_Status.relics[i] = 0;
+        }
+#else
         g_Status.hp = g_Status.hpMax = 70;
         g_Status.hearts = 10;
         g_Status.heartsMax = 50;
@@ -461,10 +469,10 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         g_Status.heartsMax = 2000;
         g_Status.gold = 500000;
         g_Status.exp = 11000;
-#if defined(VERSION_US)
+#if VERSION >= VER_US && TARGET != TARGET_PSP
         g_Status.level = 20;
 #endif
-#if !defined(VERSION_HD)
+#if VERSION >= VER_JP11
         if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
             g_Status.exp = 110000;
         }
@@ -488,8 +496,9 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         for (i = 0; i < 90; i++) {
             g_Status.equipBodyCount[i] = 1;
         }
+#endif
 
-#if defined(VERSION_US)
+#if VERSION >= VER_USPROTO && TARGET != TARGET_PSP
         g_Status.equipment[LEFT_HAND_SLOT] = ITEM_SHORT_SWORD;
         g_Status.equipment[RIGHT_HAND_SLOT] = ITEM_LEATHER_SHIELD;
         g_Status.equipment[HEAD_SLOT] = ITEM_EMPTY_HEAD;
@@ -501,6 +510,10 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         g_Status.timerMinutes = 0;
         g_Status.timerSeconds = 0;
         g_Status.timerFrames = 0;
+#if VERSION >= VER_EU
+        g_TimerCopyFrames = g_TimerCopySeconds = g_TimerCopyMinutes =
+            g_TimerCopyHours = 0;
+#endif
         g_Status.subWeapon = 0;
         g_Status.relics[RELIC_CUBE_OF_ZOE] = 3;
         g_Status.relics[RELIC_SPIRIT_ORB] = 3;
@@ -566,8 +579,9 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         g_Status.timerMinutes = 0;
         g_Status.timerSeconds = 0;
         g_Status.timerFrames = 0;
-#ifdef VERSION_PSP
-        D_psp_091FC3F8 = D_psp_091FC400 = D_psp_091FC408 = D_psp_091FC410 = 0;
+#if TARGET == TARGET_PSP
+        g_TimerCopyFrames = g_TimerCopySeconds = g_TimerCopyMinutes =
+            g_TimerCopyHours = 0;
 #endif
         g_Status.subWeapon = SUBWPN_STOPWATCH;
 
@@ -606,7 +620,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
 
 static PlayerHud g_PlayerHud;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #define RIC_HUD_NUM_SPRITES 10
 #else
 #define RIC_HUD_NUM_SPRITES 9
@@ -690,7 +704,7 @@ void DrawRichterHud(void) {
     prim = prim->next;
 
     // Extra HUD sprite on PSP! Should identify what this is.
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     SetTexturedPrimRect(prim, 18, 38, 8, 8, 0, 0);
     prim->tpage = 0x1B;
     prim->clut = 0x102;
@@ -730,7 +744,7 @@ RicSubwpnIconParams g_ricSubwpnIcons[] = {
     {0x008, 0x00D, 0x018, 0x010, 0x0A8, 0x0D0, 0x01E, 0x17F},
     {0x008, 0x006, 0x018, 0x018, 0x080, 0x0D8, 0x01E, 0x17F}};
 
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 
 RicSubwpnIconParams D_psp_09147418[] = {
     {0x00C, 0x009, 0x010, 0x017, 0x098, 0x0D8, 0x01E, 0x17F},
@@ -1089,7 +1103,7 @@ void DrawRichterHudSubweapon(void) {
     prim->drawMode = altPrim->drawMode;
     prim = prim->next;
 
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
 
     if (g_PlayableCharacter == PLAYER_MARIA) {
         prim = func_psp_090E4CD0(prim);

@@ -26,7 +26,7 @@ static Borbo6ParticleData InitData[] = {
      anim1}, // Palette 0x2EA instead of 2E0. Green!
     {ANIMSET_OVL(4), 88, 14, 48, anim3}}; // Messed up in viewer. Wrong context?
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(UNK_16);
 #endif
 // This function spawns 6 of the below entity. Never called. Stripped on PSP.

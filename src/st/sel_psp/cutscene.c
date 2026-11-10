@@ -3,8 +3,6 @@
 #include <cutscene.h>
 
 // BSS
-static Dialogue4 D_psp_09287E60;
-static u16 D_801BB0F8[0x30][0x30];
 u32 D_801BC3E8;
 static s32 g_SkipCutscene;
 static Dialogue g_Dialogue;
@@ -27,7 +25,6 @@ extern u8 gfx_portrait_maria[];
 extern u8 gfx_portrait_richter[];
 extern s32 D_psp_09285BA0;
 extern u8* D_psp_09285BA8;
-extern u8* D_psp_09285B98;
 
 // clang-format off
 static u16 actor_names_en[] = {
@@ -99,7 +96,6 @@ static u16 D_80180834[] = {0x00, 0x20};
 static u16 D_80180838[] = {0x1A1, 0x1A1, 0x1A1};
 static u8 D_psp_09285918[] = {3, 4, 0};
 static u8 D_psp_09285920[] = {3, 4, 0};
-static u32 D_psp_09285928[] = {6, 5, 6, 5};
 static s32 D_801D6B00;
 
 #include "../../get_lang.h"
@@ -230,7 +226,7 @@ u8 SetCutsceneScript(u8* script) {
         prim = g_Dialogue.prim[3] = prim->next;
 
         prim->drawMode = DRAW_HIDE;
-        prim = g_Dialogue.prim[4] = prim->next;
+        prim = g_Dialogue.primPortrait = prim->next;
 
         prim->type = PRIM_GT4;
         prim->drawMode = DRAW_HIDE;
@@ -362,7 +358,7 @@ void EntityCutscene(Entity* self) {
                         continue;
                     }
                     i = *g_Dialogue.scriptCur++;
-                    prim = g_Dialogue.prim[4];
+                    prim = g_Dialogue.primPortrait;
                     nextChar2 = *g_Dialogue.scriptCur++;
                     var_s7 = nextChar2 & 1;
                     x = D_80180824[var_s7];
@@ -410,7 +406,7 @@ void EntityCutscene(Entity* self) {
                     }
                     g_Dialogue.startX = *g_Dialogue.scriptCur++;
                     g_Dialogue.startY = *g_Dialogue.scriptCur++;
-                    prim = g_Dialogue.prim[4];
+                    prim = g_Dialogue.primPortrait;
                     prim = prim->next;
                     prim->y0 = prim->y1 = prim->y2 = prim->y3 =
                         g_Dialogue.startY;
@@ -739,7 +735,7 @@ void EntityCutscene(Entity* self) {
         break;
 
     case 3:
-        prim = g_Dialogue.prim[4];
+        prim = g_Dialogue.primPortrait;
         prim->x0 = prim->x2 -= 4;
         prim->x1 = prim->x3 += 4;
         prim->y0 = prim->y1 -= 6;
@@ -756,7 +752,7 @@ void EntityCutscene(Entity* self) {
         break;
 
     case 4:
-        prim = g_Dialogue.prim[4];
+        prim = g_Dialogue.primPortrait;
         prim->x0 = prim->x2 += 4;
         prim->x1 = prim->x3 -= 4;
         prim->y0 = prim->y1 += 6;
@@ -772,7 +768,7 @@ void EntityCutscene(Entity* self) {
 
     case 5:
         D_801D6B00 = 1;
-        prim = g_Dialogue.prim[4];
+        prim = g_Dialogue.primPortrait;
         prim = prim->next;
         g_Dialogue.portraitAnimTimer--;
         if (g_Dialogue.portraitAnimTimer >= 12) {
@@ -790,7 +786,7 @@ void EntityCutscene(Entity* self) {
         break;
 
     case 6:
-        prim = g_Dialogue.prim[4];
+        prim = g_Dialogue.primPortrait;
         prim = prim->next;
         g_Dialogue.portraitAnimTimer--;
         if (g_Dialogue.portraitAnimTimer >= 12) {
@@ -815,289 +811,4 @@ void EntityCutscene(Entity* self) {
         g_CutsceneHasControl = 0;
         break;
     }
-}
-
-u8 func_801B76F0(u8* msg) {
-    Primitive* prim;
-    s16 i;
-    s16 temp_v0;
-
-    D_psp_09287E60.primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x20);
-    D_psp_09287E60.nextCharTimer = 0;
-    if (D_psp_09287E60.primIndex != -1) {
-        D_psp_09287E60.scriptCur = msg;
-        D_psp_09287E60.startY = D_psp_09287E60.nextCharX = 0x200;
-        D_psp_09287E60.startY += 0xB;
-        D_psp_09287E60.nextLineX = 0;
-        D_psp_09287E60.nextCharY = 0;
-        D_psp_09287E60.portraitAnimTimer = 0;
-        D_psp_09287E60.unk12 = 0;
-        D_psp_09287E60.clutIndex = 0;
-        prim = &g_PrimBuf[D_psp_09287E60.primIndex];
-        D_psp_09287E60.prim = prim;
-        for (i = 0; i < 0x20; i++) {
-            temp_v0 = i & 1;
-            if (temp_v0) {
-                prim->tpage = 9;
-                prim->x0 = 0xF8;
-            } else {
-                prim->tpage = 8;
-                prim->x0 = 0x18;
-            }
-            temp_v0 = i >> 1;
-            prim->u0 = 0;
-            prim->v0 = temp_v0 * 0x10;
-            prim->u1 = 0xF0;
-            prim->v1 = 0x10;
-            prim->y0 = temp_v0 * 0x13 + 0xF0;
-            prim->clut = PAL_UNK_1A1;
-            prim->x1 = 0;
-            prim->priority = 3;
-            prim->drawMode = DRAW_DEFAULT;
-            prim = prim->next;
-        }
-
-        return 1;
-    }
-    D_psp_09287E60.primIndex = 0;
-    return 0;
-}
-
-void func_801B786C(s16 nextCharY) {
-    RECT rect;
-
-    rect.x = 0x200;
-    rect.y = nextCharY * 0x10;
-    rect.w = 0x80;
-    rect.h = 0x10;
-    ClearImage(&rect, 0, 0, 0);
-}
-
-u16* func_801B78BC(char ch) {
-    u16 jCh;
-
-    if (ch >= 'a') {
-        jCh = ('ａ' - 'a') + ch;
-    } else if (ch >= 'A') {
-        jCh = ('Ａ' - 'A') + ch;
-    } else if (ch == ',') {
-        jCh = '，';
-    } else if (ch == '/') {
-        jCh = '／';
-    } else if (ch == '.') {
-        jCh = '．';
-    } else if (ch == '-') {
-        jCh = '−';
-    } else if (ch == '(') {
-        jCh = '（';
-    } else if (ch == ')') {
-        jCh = '）';
-    } else if (ch == '\'') {
-        jCh = '’';
-    } else if (ch == '&') {
-        jCh = '＆';
-    } else if (ch == '"') {
-        jCh = '”';
-    } else if (ch == ' ') {
-        return NULL;
-    } else {
-        jCh = ('Ａ' - 'A') + ch;
-        if (ch >= 'a') {
-            ++jCh;
-        }
-    }
-
-    return g_api.func_80106A28(jCh, 0);
-}
-
-s32 func_801B79D4(Entity* entity) {
-    Primitive* prim;
-    u16 nextChar;
-    u16 glyphIndex;
-    u16* glyph;
-    u16 y;
-    s16 y0;
-    s32 i;
-    u16* var_s4;
-
-    DisableAutoPowerOff();
-    switch (entity->step) {
-    case 0:
-        if (func_801B76F0(D_psp_09285B98)) {
-            entity->flags |= FLAG_HAS_PRIMS;
-            entity->primIndex = D_psp_09287E60.primIndex;
-            entity->step++;
-            func_801B786C(0);
-            glyphIndex = 0;
-            while (true) {
-                nextChar = *D_psp_09287E60.scriptCur++;
-                if (nextChar == 1) {
-                    D_psp_09287E60.startY =
-                        D_psp_09287E60.nextCharX + *D_psp_09287E60.scriptCur++;
-                    D_psp_09287E60.nextLineX++;
-                    break;
-                }
-                glyph = func_801B78BC(nextChar);
-                if (glyph != NULL) {
-                    var_s4 = D_801BB0F8[glyphIndex];
-                    for (i = 0; i < 0x30; i++) {
-                        *var_s4++ = *glyph++;
-                    }
-                    glyph = D_801BB0F8[glyphIndex];
-                    y = D_psp_09287E60.nextLineX * 0x10;
-                    LoadTPage(
-                        (u_long*)glyph, 0, 0, D_psp_09287E60.startY, y, 12, 16);
-                    D_psp_09287E60.startY += 3;
-                    nextChar = D_psp_09287E60.startY - D_psp_09287E60.nextCharX;
-                    if (nextChar >= 0x38 && nextChar < 0x40) {
-                        D_psp_09287E60.startY += 8;
-                    }
-                    glyphIndex++;
-                } else {
-                    D_psp_09287E60.startY += 2;
-                    nextChar = D_psp_09287E60.startY - D_psp_09287E60.nextCharX;
-                    if (nextChar >= 0x38 && nextChar < 0x40) {
-                        D_psp_09287E60.startY += 8;
-                    }
-                }
-            }
-        }
-        break;
-
-    case 1:
-        if (!D_psp_09287E60.nextCharY) {
-            break;
-        }
-        nextChar = 0;
-        glyphIndex = 0;
-        nextChar = *D_psp_09287E60.scriptCur++;
-        switch (nextChar) {
-        case 0:
-            entity->step = 7;
-            D_psp_09287E60.unk12 = 0x300;
-            return 0;
-
-        case 1:
-            D_psp_09287E60.startY =
-                D_psp_09287E60.nextCharX + *D_psp_09287E60.scriptCur++;
-            D_psp_09287E60.nextLineX++;
-            if (D_psp_09287E60.nextLineX > 0xF) {
-                D_psp_09287E60.nextLineX = 0;
-            }
-            D_psp_09287E60.nextCharY = 0;
-            return 0;
-
-        case 2:
-            D_psp_09287E60.startY =
-                D_psp_09287E60.nextCharX + *D_psp_09287E60.scriptCur++;
-            D_psp_09287E60.nextLineX++;
-            if (D_psp_09287E60.nextLineX > 0xF) {
-                D_psp_09287E60.nextLineX = 0;
-            }
-            prim = D_psp_09287E60.prim;
-            for (i = 0; i < D_psp_09287E60.nextLineX; i++) {
-                prim = prim->next;
-                prim = prim->next;
-            }
-            y0 = prim->y0;
-            prim = D_psp_09287E60.prim;
-            while (prim != NULL) {
-                if (y0 <= prim->y0) {
-                    prim->y0 += 6;
-                    prim->x1 += 6;
-                }
-                prim = prim->next;
-            }
-            D_psp_09287E60.unk12 += 0x21;
-            D_psp_09287E60.portraitAnimTimer += 6;
-            D_psp_09287E60.nextCharY = 0;
-            return 0;
-
-        case 3:
-            D_psp_09287E60.startY =
-                D_psp_09287E60.nextCharX + *D_psp_09287E60.scriptCur++;
-            D_psp_09287E60.nextLineX++;
-            if (D_psp_09287E60.nextLineX > 0xF) {
-                D_psp_09287E60.nextLineX = 0;
-            }
-            prim = D_psp_09287E60.prim;
-            for (i = 0; i < D_psp_09287E60.nextLineX; i++) {
-                prim = prim->next;
-                prim = prim->next;
-            }
-            y0 = prim->y0;
-            prim = D_psp_09287E60.prim;
-            while (prim != NULL) {
-                if (y0 <= prim->y0) {
-                    prim->y0 += 12;
-                    prim->x1 += 12;
-                }
-                prim = prim->next;
-            }
-            D_psp_09287E60.unk12 += 0x42;
-            D_psp_09287E60.portraitAnimTimer += 12;
-            D_psp_09287E60.nextCharY = 0;
-            return 0;
-
-        default:
-            if (nextChar & 0x80) {
-                nextChar <<= 8;
-                nextChar += *D_psp_09287E60.scriptCur++;
-                glyph = g_api.func_80106A28(nextChar, 0);
-            } else {
-                glyph = func_801B78BC(nextChar);
-            }
-            if (glyph != NULL) {
-                y = D_psp_09287E60.nextLineX * 0x10;
-                LoadTPage(
-                    (u_long*)glyph, 0, 0, D_psp_09287E60.startY, y, 12, 16);
-                D_psp_09287E60.startY += 3;
-                nextChar = D_psp_09287E60.startY - D_psp_09287E60.nextCharX;
-                if (nextChar >= 0x38 && nextChar < 0x40) {
-                    D_psp_09287E60.startY += 8;
-                }
-            } else {
-                D_psp_09287E60.startY += 3;
-                nextChar = D_psp_09287E60.startY - D_psp_09287E60.nextCharX;
-                if (nextChar >= 0x38 && nextChar < 0x40) {
-                    D_psp_09287E60.startY += 8;
-                }
-            }
-            break;
-        }
-        break;
-
-    case 2:
-        break;
-
-    case 7:
-        if (!--D_psp_09287E60.unk12) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-    if (!D_psp_09287E60.unk12) {
-        func_801B786C(D_psp_09287E60.nextLineX);
-        D_psp_09287E60.nextCharY = 1;
-        D_psp_09287E60.unk12 = 0x69;
-    }
-    D_psp_09287E60.unk12--;
-    if (!D_psp_09287E60.clutIndex) {
-        prim = D_psp_09287E60.prim;
-        for (i = 0; i < 0x20; i++) {
-            prim->y0--;
-            if (prim->y0 == -19) {
-                prim->y0 =
-                    D_psp_09287E60.portraitAnimTimer - (s16)prim->x1 + 0x11D;
-                prim->x1 = D_psp_09287E60.portraitAnimTimer;
-            }
-            prim = prim->next;
-        }
-        D_psp_09287E60.nextCharTimer++;
-        D_psp_09287E60.nextCharTimer %= 4;
-        D_psp_09287E60.clutIndex = D_psp_09285928[D_psp_09287E60.nextCharTimer];
-    }
-    D_psp_09287E60.clutIndex--;
-    return 0;
 }

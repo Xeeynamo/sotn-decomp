@@ -131,7 +131,7 @@ void SetFadeMode(FadeModes fadeMode) {
     }
 }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #define IFSTATEMENT prim1->y1-- == 0
 #else
 #define IFSTATEMENT --prim1->y1 == -1
@@ -231,7 +231,7 @@ void UpdateFade(bool skipFollowup) {
             prim1->drawMode = prim2->drawMode =
                 DRAW_ABSPOS | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
         } else if (prim1clut == 1) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             if (prim1->y1-- == 0) {
 #else
             if (--prim1->y1 == -1) {
@@ -258,7 +258,7 @@ void UpdateFade(bool skipFollowup) {
             prim1->drawMode = prim2->drawMode =
                 DRAW_ABSPOS | DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
         } else if (prim1clut == 1) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             if (prim1->y1-- == 0) {
 #else
             if (--prim1->y1 == -1) {

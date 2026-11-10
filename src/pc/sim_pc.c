@@ -608,6 +608,38 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             LoadImage(&g_Vram.D_800ACDA8, D_80280000);
             StoreImage(&g_Vram.D_800ACDA8, g_Clut[0]);
             return 0;
+        // edf.bin, edb.bin, c_edf.bin, c_edb.bin are packed back-to-back
+        // inside a single combined BIN/F_END.BIN on disk
+        case 14: // ending bitmap foreground
+            if (FileReadToBuf(SOTN_DATA_DIR "/BIN/F_END.BIN", D_80280000,
+                              0x00000, 0x2000) < 0) {
+                return -1;
+            }
+            LoadImage(&g_Vram.D_800ACDE0, D_80280000);
+            return 0;
+        case 15: // ending bitmap background
+            if (FileReadToBuf(SOTN_DATA_DIR "/BIN/F_END.BIN", D_80280000,
+                              0x02000, 0x10000) < 0) {
+                return -1;
+            }
+            LoadImage(&g_Vram.D_800ACDD8, D_80280000);
+            return 0;
+        case 16: // ending palette foreground
+            if (FileReadToBuf(SOTN_DATA_DIR "/BIN/F_END.BIN", D_80280000,
+                              0x12000, 0x2000) < 0) {
+                return -1;
+            }
+            LoadImage(&g_Vram.D_800ACDB8, D_80280000);
+            StoreImage(&g_Vram.D_800ACDB8, g_Clut[2]);
+            return 0;
+        case 17: // ending palette background
+            if (FileReadToBuf(SOTN_DATA_DIR "/BIN/F_END.BIN", D_80280000,
+                              0x14000, 0x2000) < 0) {
+                return -1;
+            }
+            LoadImage(&g_Vram.D_800ACDA8, D_80280000);
+            StoreImage(&g_Vram.D_800ACDA8, g_Clut[0]);
+            return 0;
         case 12:
             sim.path = "ST/SEL/F_SEL.BIN";
             sim.kind = SIM_STAGE_CHR;

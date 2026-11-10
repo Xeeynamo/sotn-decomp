@@ -148,7 +148,7 @@ void RicEntityCrashHydroStorm(Entity* self) {
 
             // both rcos and rsin could be pre-calcualted values
             // PSP and PSX are logically equivalent
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
             line->velocityX.val = (rcos(ROT(258.75)) * 16) * 12;
 #else
             line->velocityX.val = -(rcos(ROT(258.75)) * -16) * 12;
@@ -205,7 +205,9 @@ void RicEntityCrashHydroStorm(Entity* self) {
         self->ext.subweapon.timer++;
         break;
     case 2:
-#if defined(VERSION_HD) || defined(VERSION_PSP)
+#if VERSION <= VER_JP10 || TARGET == TARGET_PSP
+        // bugfix: if another crash is triggered while the hydrostorm is still
+        // playing, then the new crash will be immediately halted.
         if (self->params == 0x28) {
             g_Player.unk4E = 1;
         }

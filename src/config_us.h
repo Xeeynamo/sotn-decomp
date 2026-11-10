@@ -2,6 +2,11 @@
 #include "game.h"
 #include "items.h"
 
+// `GEN_VERSION` for the generated files that live under `src/dra/gen`
+// clang-format off
+#define DRA_GEN_VERSION(file) CPP_STR(PATH_JOIN(dra/gen, PATH_JOIN(VERSION_TOKEN, file)))
+// clang-format on
+
 // clang-format off
 SubweaponDef g_SubwpnDefs[] = {
     {0, 30000, 0x0000, 0, 0, 0x00, 0x5D, 0, 0x02, 0x01, 0, 0, 0},
@@ -20,11 +25,11 @@ SubweaponDef g_SubwpnDefs[] = {
 };
 
 Equipment g_EquipDefs[] = {
-#include "dra/gen/us/equipment.h"
+#include DRA_GEN_VERSION(equipment.h)
 };
 
 Accessory g_AccessoryDefs[] = {
-#include "dra/gen/us/accessories.h"
+#include DRA_GEN_VERSION(accessories.h)
 };
 
 const char* g_MenuStr[] = {
@@ -39,7 +44,11 @@ const char* g_MenuStr[] = {
     _S("LEVEL"),
     _S("TIME"),
     _S("ROOMS"),
+#if VERSION == VER_USPROTO
+    _S("BEAT"),
+#else
     _S("KILLS"),
+#endif
     _S("HP"),
     _S("MP"),
     _S("HEART"),
@@ -48,8 +57,13 @@ const char* g_MenuStr[] = {
     _S("Cloak lining"),
     _S("Cloak color"),
     _S("・・・・・"),
+#if VERSION == VER_USPROTO
+    _S("Lining"),
+    _S("Exterior"),
+#else
     _S("Exterior"),
     _S("Lining"),
+#endif
     _S("Right hand"),
     _S("Left hand"),
     _S("Jump"),
@@ -85,16 +99,38 @@ const char* g_MenuStr[] = {
     _S("Defeat Olrox"),
     _S("Defeat Doppleganger 10"),
     _S("Defeat Granfaloon"),
+#if VERSION == VER_USPROTO
+    _S("Defeat Minotaurus and Werewolf"),
+#elif VERSION >= VER_EU
+    _S("Defeat Minotaur & Werewolf"),
+#else
     _S("Defeat Minotaur and Werewolf"),
+#endif
     _S("Defeat Scylla"),
+#if VERSION >= VER_EU
+    _S("Defeat Slogra & Gaibon"),
+#else
     _S("Defeat Slogra and Gaibon"),
+#endif
     _S("Defeat Hippogryph"),
+#if VERSION == VER_USPROTO
+    _S("Defeat Beezelbub"),
+#else
     _S("Defeat Beelzebub"),
+#endif
     _S("Defeat Succubus"),
     _S("Defeat Karasuman"),
+#if VERSION >= VER_EU
+    _S("Defeat Trevor, Grant & Sypha"),
+#else
     _S("Defeat Ralph, Grant & Sypha"),
+#endif
     _S("Defeat Death"),
+#if VERSION == VER_USPROTO
+    _S("Defeat Cerberos"),
+#else
     _S("Defeat Cerberus"),
+#endif
     _S("Save Richter Belmont"),
     _S("Defeat Medusa"),
     _S("Defeat the Creature"),
@@ -197,7 +233,11 @@ RelicDesc g_RelicDefs[] = {
     {" Sword Card", "Summons ””Sword”” familiar", 265, 272, 5},
     {"Sprite Card", "Summons ””Pixie”” familiar", 265, 272, 6},
     {" Nosedevil Card", "Summons ””Nose−devil”” familiar", 265, 272, 7},
+#if VERSION == VER_USPROTO
+    {"Heart of Vlad", "１ of ５ Treasures． Voide Curse．", 268, 275, 0},
+#else
     {"Heart of Vlad", "１ of ５ Treasures． Avoid Curse．", 268, 275, 0},
+#endif
     {" Tooth of Vlad", "１ of ５ Treasures． STR ＋１０", 270, 277, 0},
     {"Rib of Vlad", "１ of ５ Treasures． CON ＋１０", 267, 274, 0},
     {" Ring of Vlad", "１ of ５ Treasures． INT ＋１０", 271, 278, 0},
@@ -205,7 +245,7 @@ RelicDesc g_RelicDefs[] = {
 };
 
 EnemyDef g_EnemyDefs[] = {
-#include "dra/gen/us/enemydefs.h"
+#include DRA_GEN_VERSION(enemydefs.h)
 };
 
 // clang-format on

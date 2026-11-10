@@ -205,6 +205,7 @@ extern s8 DAT_0606446C;
 extern s32 DAT_06064470;
 extern s8 DAT_06064474;
 extern s16 DAT_0606447C;
+extern u32 D_06044110[2];
 extern u8* DAT_06064480;
 extern s32 DAT_06064484;
 extern s8 DAT_06064488;

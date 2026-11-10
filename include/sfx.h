@@ -2,6 +2,7 @@
 #define SFX_H
 
 #include "types.h"
+#include "version.h"
 
 /**
  * File: sfx.h
@@ -89,6 +90,7 @@ enum {
 
     // us: includes US build
     // jp: includes HD and PSP builds
+    // usproto: same as us up to 0x357, then the jp content shifted by 2
     /* us:0x2FF, jp:0x2FF */ MU_NO_AUDIO = 0x2FF, // for cutscenes and bosses
     /* us:0x301, jp:0x301 */ MU_LOST_PAINTING = 0x301,
     /* us:0x302, jp:0x302 */ MU_LOST_PAINTING_LOOP_POINT,
@@ -128,7 +130,7 @@ enum {
     /* us:0x324, jp:0x324 */ MU_WANDERING_GHOSTS_LOOP_POINT,
     /* us:0x325, jp:0x325 */ MU_THE_DOOR_TO_THE_ABYSS,
     /* us:0x326, jp:0x326 */ MU_THE_DOOR_TO_THE_ABYSS_LOOP_POINT,
-#if defined(VERSION_US)
+#if REGION != REGION_JP
     /* us:0x327           */ MU_METAMORPHOSIS,
     /* us:0x328           */ MU_METAMORPHOSIS_II,
     /* us:0x329           */ MU_METAMORPHOSIS_III,
@@ -157,15 +159,15 @@ enum {
     /* us:0x33F, jp:0x33C */ MU_NOCTURNE,
     /* us:0x340, jp:0x33D */ MU_MOONLIGHT_NOCTURNE,
 
-#if defined(VERSION_US)
+#if REGION == REGION_JP
+    __ALIGN_ID_341 = 0x341, // TODO check what this ID does on JP/HD/PSP
+#else
     // Japanese intro
     /* us:0x341           */ JP_VO_NARRATOR_KATSUTE, // "Katsute ..."
     /* us:0x342           */ JP_VO_NARRATOR_SOSHITE, // "Soshite 5 nen no
                                                      // tsukihi ga nagareta"
     /* us:0x343           */ JP_VO_NARRATOR_AKUMAJO, // "Akumajo Dracula X Gekka
                                                      // no Yasoukyoku"
-#elif defined(VERSION_PSP)
-    __ALIGN_ID_341 = 0x341, // TODO check what this ID does on JP/HD/PSP
 #endif
 
     // Used for the japanese sound test, messages from the developers
@@ -177,41 +179,109 @@ enum {
     /* us:0x349, jp:0x347 */ JP_VO_WAKAMOTO_NORIO_MESSAGE,   // Wakamoto Norio
     /* us:0x34A, jp:0x348 */ JP_VO_YOKOYAMA_CHISA_MESSAGE,   // Yokoyama Chisa
     /* us:0x34B, jp:0x349 */ JP_VO_YANAMI_JYOUJI_MESSAGE,    // Yanami Jyouji
+    /* us:0x34B, jp:0x349 */ MU_ID_MAD = JP_VO_YANAMI_JYOUJI_MESSAGE,
 
-#ifdef VERSION_US
     // Various voice actors saying konami
-    /* us:0x34C           */ JP_VO_KONAMI_1,  // woman says konami
-    /* us:0x34D           */ JP_VO_KONAMI_2,  // woman says konami
-    /* us:0x34E           */ JP_VO_KONAMI_3,  // woman says konami
-    /* us:0x34F           */ JP_VO_KONAMI_4,  // man says kona (mi cut off?)
-    /* us:0x350           */ JP_VO_KONAMI_5,  // man says kona (mi cut off?)
-    /* us:0x351           */ JP_VO_KONAMI_6,  // man says konami
-    /* us:0x352           */ JP_VO_KONAMI_7,  // man says konami
-    /* us:0x353           */ JP_VO_KONAMI_8,  // man says konami
-    /* us:0x354           */ JP_VO_KONAMI_9,  // woman says konami
-    /* us:0x355           */ JP_VO_KONAMI_10, // woman says konami
-    /* us:0x356           */ JP_VO_KONAMI_11, // man says konami
-    /* us:0x357           */ JP_VO_KONAMI_12, // man says konami
+    /* us:0x34C jp:0x34A */ JP_VO_KONAMI_1,  // woman says konami
+    /* us:0x34D jp:0x34B */ JP_VO_KONAMI_2,  // woman says konami
+    /* us:0x34E jp:0x34C */ JP_VO_KONAMI_3,  // woman says konami
+    /* us:0x34F jp:0x34D */ JP_VO_KONAMI_4,  // man says kona (mi cut off?)
+    /* us:0x350 jp:0x34E */ JP_VO_KONAMI_5,  // man says kona (mi cut off?)
+    /* us:0x351 jp:0x34F */ JP_VO_KONAMI_6,  // man says konami
+    /* us:0x352 jp:0x350 */ JP_VO_KONAMI_7,  // man says konami
+    /* us:0x353 jp:0x351 */ JP_VO_KONAMI_8,  // man says konami
+    /* us:0x354 jp:0x352 */ JP_VO_KONAMI_9,  // woman says konami
+    /* us:0x355 jp:0x353 */ JP_VO_KONAMI_10, // woman says konami
+    /* us:0x356 jp:0x354 */ JP_VO_KONAMI_11, // man says konami
+    /* us:0x357 jp:0x355 */ JP_VO_KONAMI_12, // man says konami
 
     // Prologue cutscene
-    /* us:0x358,          */ NA_VO_RI_DIE_MONSTER, // Richter: "Die monster ..."
-    /* us:0x359,          */ NA_VO_DR_IT_WAS_NOT,  // Dracula: "It was not by my
+    /* us:0x358, jp:0x356 */ NA_VO_RI_DIE_MONSTER, // Richter: "Die monster ..."
+    /* us:0x359, jp:0x357 */ NA_VO_DR_IT_WAS_NOT,  // Dracula: "It was not by my
                                                    // hand ..."
-    /* us:0x35A,          */ NA_VO_RI_TRIBUTE,     // Richter: "Tribute? ..."
-    /* us:0x390,          */ UNK_390 = 0x390,
-    /* us:0x391,          */ NA_VO_AL_DEATH_DREAM_WORLD, // Alucard: Death in
+    /* us:0x35A, jp:0x358 */ NA_VO_RI_TRIBUTE,     // Richter: "Tribute? ..."
+    /* us:0x35B, jp:0x359 */ UNK_35B,
+    /* us:0x35C, jp:0x35A */ UNK_35C,
+    /* us:0x35D, jp:0x35B */ UNK_35D,
+    /* us:0x35E, jp:0x35C */ UNK_35E,
+    /* us:0x35F, jp:0x35D */ UNK_35F,
+    /* us:0x360, jp:0x35E */ UNK_360,
+    /* us:0x361, jp:0x35F */ UNK_361,
+    /* us:0x362, jp:0x360 */ UNK_362,
+    /* us:0x363, jp:0x361 */ UNK_363,
+    /* us:0x364, jp:0x362 */ UNK_364,
+    /* us:0x365, jp:0x363 */ UNK_365,
+    /* us:0x366, jp:0x364 */ UNK_366,
+    /* us:0x367, jp:0x365 */ UNK_367,
+    /* us:0x368, jp:0x366 */ UNK_368,
+    /* us:0x369, jp:0x367 */ UNK_369,
+    /* us:0x36A, jp:0x368 */ UNK_36A,
+    /* us:0x36B, jp:0x369 */ UNK_36B,
+    /* us:0x36C, jp:0x36A */ UNK_36C,
+    /* us:0x36D, jp:0x36B */ UNK_36D,
+    /* us:0x36E, jp:0x36C */ UNK_36E,
+    /* us:0x36F, jp:0x36D */ UNK_36F,
+    /* us:0x370, jp:0x36E */ UNK_370,
+    /* us:0x371, jp:0x36F */ UNK_371,
+    /* us:0x372, jp:0x370 */ UNK_372,
+    /* us:0x373, jp:0x371 */ UNK_373,
+    /* us:0x374, jp:0x372 */ UNK_374,
+    /* us:0x375, jp:0x373 */ UNK_375,
+    /* us:0x376, jp:0x374 */ UNK_376,
+    /* us:0x377, jp:0x375 */ UNK_377,
+    /* us:0x378, jp:0x376 */ UNK_378,
+    /* us:0x379, jp:0x377 */ UNK_379,
+    /* us:0x37A, jp:0x378 */ UNK_37A,
+    /* us:0x37B, jp:0x379 */ UNK_37B,
+    /* us:0x37C, jp:0x37A */ UNK_37C,
+    /* us:0x37D, jp:0x37B */ UNK_37D,
+    /* us:0x37E, jp:0x37C */ UNK_37E,
+    /* us:0x37F, jp:0x37D */ UNK_37F,
+    /* us:0x380, jp:0x37E */ UNK_380,
+    /* us:0x381, jp:0x37F */ UNK_381,
+    /* us:0x382, jp:0x380 */ UNK_382,
+    /* us:0x383, jp:0x381 */ UNK_383,
+    /* us:0x384, jp:0x382 */ UNK_384,
+    /* us:0x385, jp:0x383 */ UNK_385,
+    /* us:0x386, jp:0x384 */ UNK_386,
+    /* us:0x387, jp:0x385 */ UNK_387,
+    /* us:0x388, jp:0x386 */ UNK_388,
+    /* us:0x389, jp:0x387 */ UNK_389,
+    /* us:0x38A, jp:0x388 */ UNK_38A,
+    /* us:0x38B, jp:0x389 */ UNK_38B,
+    /* us:0x38C, jp:0x38A */ UNK_38C,
+    /* us:0x38D, jp:0x38B */ UNK_38D,
+    /* us:0x38E, jp:0x38C */ UNK_38E,
+    /* us:0x38F, jp:0x38D */ UNK_38F,
+    /* us:0x390, jp:0x38E */ UNK_390,
+    /* us:0x391, jp:0x38F */ NA_VO_AL_DEATH_DREAM_WORLD, // Alucard: Death in
                                                          // the dream world will
                                                          // set your soul
                                                          // wandering for
                                                          // eternity, demon.
-#else
-    /*           jp:0x391 */ VO_GAMEOVER_SUCCUBUS_TAUNT = 0x391,
-#endif
-#ifdef VERSION_US
-    /* us:0x3A8, jp:0x3A6 */ UNK_3A8 = 0x3A8,
-#else
-    /* us:0x3A8, jp:0x3A6 */ UNK_3A8 = 0x3A6,
-#endif
+    /* us:0x392, jp:0x390 */ UNK_392,
+    /* us:0x393, jp:0x391 */ VO_GAMEOVER_SUCCUBUS_TAUNT,
+    /* us:0x394, jp:0x392 */ UNK_394,
+    /* us:0x395, jp:0x393 */ UNK_395,
+    /* us:0x396, jp:0x394 */ UNK_396,
+    /* us:0x397, jp:0x395 */ UNK_397,
+    /* us:0x398, jp:0x396 */ UNK_398,
+    /* us:0x399, jp:0x397 */ UNK_399,
+    /* us:0x39A, jp:0x398 */ UNK_39A,
+    /* us:0x39B, jp:0x399 */ UNK_39B,
+    /* us:0x39C, jp:0x39A */ UNK_39C,
+    /* us:0x39D, jp:0x39B */ UNK_39D,
+    /* us:0x39E, jp:0x39C */ UNK_39E,
+    /* us:0x39F, jp:0x39D */ UNK_39F,
+    /* us:0x3A0, jp:0x39E */ UNK_3A0,
+    /* us:0x3A1, jp:0x39F */ UNK_3A1,
+    /* us:0x3A2, jp:0x3A0 */ UNK_3A2,
+    /* us:0x3A3, jp:0x3A1 */ UNK_3A3,
+    /* us:0x3A4, jp:0x3A2 */ UNK_3A4,
+    /* us:0x3A5, jp:0x3A3 */ UNK_3A5,
+    /* us:0x3A6, jp:0x3A4 */ UNK_3A6,
+    /* us:0x3A7, jp:0x3A5 */ UNK_3A7,
+    /* us:0x3A8, jp:0x3A6 */ UNK_3A8,
     /* us:0x3A9, jp:0x3A7 */ NA_VO_AL_INTERESTED, // Alucard: "I'm interested in
                                                   // this"
     /* us:0x3AA, jp:0x3A8 */ UNK_3AA,
@@ -224,36 +294,188 @@ enum {
     /* us:0x3B1, jp:0x3AF */ UNK_3B1,
     /* us:0x3B2, jp:0x3B0 */ NA_VO_ML_FAREWELL, // Master Librarian: "Farewell
                                                 // for now"
-#ifdef VERSION_US
-    /* us:0x3CD,          */ UNK_3CD = 0x3CD,
-    /* us:0x3CE,          */ NA_VO_MA_IF_YOU_WEAR, // Maria: If you wear these,
+    /* us:0x3B3, jp:0x3B1 */ UNK_3B3,
+    /* us:0x3B4, jp:0x3B2 */ UNK_3B4,
+    /* us:0x3B5, jp:0x3B3 */ UNK_3B5,
+    /* us:0x3B6, jp:0x3B4 */ UNK_3B6,
+    /* us:0x3B7, jp:0x3B5 */ UNK_3B7,
+    /* us:0x3B8, jp:0x3B6 */ UNK_3B8,
+    /* us:0x3B9, jp:0x3B7 */ UNK_3B9,
+    /* us:0x3BA, jp:0x3B8 */ UNK_3BA,
+    /* us:0x3BB, jp:0x3B9 */ UNK_3BB,
+    /* us:0x3BC, jp:0x3BA */ UNK_3BC,
+    /* us:0x3BD, jp:0x3BB */ UNK_3BD,
+    /* us:0x3BE, jp:0x3BC */ UNK_3BE,
+    /* us:0x3BF, jp:0x3BD */ UNK_3BF,
+    /* us:0x3C0, jp:0x3BE */ UNK_3C0,
+    /* us:0x3C1, jp:0x3BF */ UNK_3C1,
+    /* us:0x3C2, jp:0x3C0 */ UNK_3C2,
+    /* us:0x3C3, jp:0x3C1 */ UNK_3C3,
+    /* us:0x3C4, jp:0x3C2 */ UNK_3C4,
+    /* us:0x3C5, jp:0x3C3 */ UNK_3C5,
+    /* us:0x3C6, jp:0x3C4 */ UNK_3C6,
+    /* us:0x3C7, jp:0x3C5 */ UNK_3C7,
+    /* us:0x3C8, jp:0x3C6 */ UNK_3C8,
+    /* us:0x3C9, jp:0x3C7 */ UNK_3C9,
+    /* us:0x3CA, jp:0x3C8 */ UNK_3CA,
+    /* us:0x3CB, jp:0x3C9 */ UNK_3CB,
+    /* us:0x3CC, jp:0x3CA */ UNK_3CC,
+    /* us:0x3CD, jp:0x3CB */ UNK_3CD,
+    /* us:0x3CE, jp:0x3CC */ NA_VO_MA_IF_YOU_WEAR, // Maria: If you wear these,
                                                    // you can see beyond evil
                                                    // illusions.
-#else
-    /*           jp:0x3CE */ VO_GAMEOVER_MARIA = 0x3CE,
-#endif
-#ifdef VERSION_US
-    /* us:0x3D9,          */ UNK_3D9 = 0x3D9,
-    /* us:0x3DA,          */ NA_VO_RI_IMPRESSIVE_WHIP, // Richter: Impressive,
+    /* us:0x3CF, jp:0x3CD */ UNK_3CF,
+    /* us:0x3D0, jp:0x3CE */ VO_GAMEOVER_MARIA,
+    /* us:0x3D1, jp:0x3CF */ UNK_3D1,
+    /* us:0x3D2, jp:0x3D0 */ UNK_3D2,
+    /* us:0x3D3, jp:0x3D1 */ UNK_3D3,
+    /* us:0x3D4, jp:0x3D2 */ UNK_3D4,
+    /* us:0x3D5, jp:0x3D3 */ UNK_3D5,
+    /* us:0x3D6, jp:0x3D4 */ UNK_3D6,
+    /* us:0x3D7, jp:0x3D5 */ UNK_3D7,
+    /* us:0x3D8, jp:0x3D6 */ UNK_3D8,
+    /* us:0x3D9, jp:0x3D7 */ UNK_3D9,
+    /* us:0x3DA, jp:0x3D8 */ NA_VO_RI_IMPRESSIVE_WHIP, // Richter: Impressive,
                                                        // you were able to avoid
                                                        // my whip. Let's see how
                                                        // you like this!
-    /* us:0x3DB,          */ NA_VO_RI_IMPRESSIVE_ESCAPE, // Richter: Impressive,
+    /* us:0x3DB, jp:0x3D9 */ NA_VO_RI_IMPRESSIVE_ESCAPE, // Richter: Impressive,
                                                          // but you can't escape
                                                          // this.
-    /* us:0x3DC,          */ NA_VO_RI_ONLY_THE_COUNT,    // Richter: Hah, I knew
-                                                      // it. Only the count is a
-                                                      // true match for me.
-#else
-    /*           jp:0x3DA */ VO_GAMEOVER_RICHTER_TAUNT_1 = 0x3DA,
-    /*           jp:0x3DB */ VO_GAMEOVER_RICHTER_TAUNT_2,
-    /*           jp:0x3DC */ VO_GAMEOVER_RICHTER_TAUNT_3,
-#endif
-#ifdef VERSION_US
-    /* us:0x45E, jp:0x45C */ NOSE_DEMON_INTRO_PREV_A = 0x45E,
-#else
-    /* us:0x45E, jp:0x45C */ NOSE_DEMON_INTRO_PREV_A = 0x45C,
-#endif
+    /* us:0x3DC, jp:0x3DA */ VO_GAMEOVER_RICHTER_TAUNT_1, // Richter: Hah, I
+                                                          // knew it. Only the
+                                                          // count is a true
+                                                          // match for me.
+    /* us:0x3DD, jp:0x3DB */ VO_GAMEOVER_RICHTER_TAUNT_2,
+    /* us:0x3DE, jp:0x3DC */ VO_GAMEOVER_RICHTER_TAUNT_3,
+    /* us:0x3DF, jp:0x3DD */ UNK_3DF,
+    /* us:0x3E0, jp:0x3DE */ UNK_3E0,
+    /* us:0x3E1, jp:0x3DF */ UNK_3E1,
+    /* us:0x3E2, jp:0x3E0 */ UNK_3E2,
+    /* us:0x3E3, jp:0x3E1 */ UNK_3E3,
+    /* us:0x3E4, jp:0x3E2 */ UNK_3E4,
+    /* us:0x3E5, jp:0x3E3 */ UNK_3E5,
+    /* us:0x3E6, jp:0x3E4 */ UNK_3E6,
+    /* us:0x3E7, jp:0x3E5 */ UNK_3E7,
+    /* us:0x3E8, jp:0x3E6 */ UNK_3E8,
+    /* us:0x3E9, jp:0x3E7 */ UNK_3E9,
+    /* us:0x3EA, jp:0x3E8 */ UNK_3EA,
+    /* us:0x3EB, jp:0x3E9 */ UNK_3EB,
+    /* us:0x3EC, jp:0x3EA */ UNK_3EC,
+    /* us:0x3ED, jp:0x3EB */ UNK_3ED,
+    /* us:0x3EE, jp:0x3EC */ UNK_3EE,
+    /* us:0x3EF, jp:0x3ED */ UNK_3EF,
+    /* us:0x3F0, jp:0x3EE */ UNK_3F0,
+    /* us:0x3F1, jp:0x3EF */ UNK_3F1,
+    /* us:0x3F2, jp:0x3F0 */ UNK_3F2,
+    /* us:0x3F3, jp:0x3F1 */ UNK_3F3,
+    /* us:0x3F4, jp:0x3F2 */ UNK_3F4,
+    /* us:0x3F5, jp:0x3F3 */ UNK_3F5,
+    /* us:0x3F6, jp:0x3F4 */ UNK_3F6,
+    /* us:0x3F7, jp:0x3F5 */ UNK_3F7,
+    /* us:0x3F8, jp:0x3F6 */ UNK_3F8,
+    /* us:0x3F9, jp:0x3F7 */ UNK_3F9,
+    /* us:0x3FA, jp:0x3F8 */ UNK_3FA,
+    /* us:0x3FB, jp:0x3F9 */ UNK_3FB,
+    /* us:0x3FC, jp:0x3FA */ UNK_3FC,
+    /* us:0x3FD, jp:0x3FB */ UNK_3FD,
+    /* us:0x3FE, jp:0x3FC */ UNK_3FE,
+    /* us:0x3FF, jp:0x3FD */ UNK_3FF,
+    /* us:0x400, jp:0x3FE */ UNK_400,
+    /* us:0x401, jp:0x3FF */ UNK_401,
+    /* us:0x402, jp:0x400 */ UNK_402,
+    /* us:0x403, jp:0x401 */ UNK_403,
+    /* us:0x404, jp:0x402 */ UNK_404,
+    /* us:0x405, jp:0x403 */ UNK_405,
+    /* us:0x406, jp:0x404 */ UNK_406,
+    /* us:0x407, jp:0x405 */ UNK_407,
+    /* us:0x408, jp:0x406 */ UNK_408,
+    /* us:0x409, jp:0x407 */ UNK_409,
+    /* us:0x40A, jp:0x408 */ UNK_40A,
+    /* us:0x40B, jp:0x409 */ UNK_40B,
+    /* us:0x40C, jp:0x40A */ UNK_40C,
+    /* us:0x40D, jp:0x40B */ UNK_40D,
+    /* us:0x40E, jp:0x40C */ UNK_40E,
+    /* us:0x40F, jp:0x40D */ UNK_40F,
+    /* us:0x410, jp:0x40E */ UNK_410,
+    /* us:0x411, jp:0x40F */ UNK_411,
+    /* us:0x412, jp:0x410 */ UNK_412,
+    /* us:0x413, jp:0x411 */ UNK_413,
+    /* us:0x414, jp:0x412 */ UNK_414,
+    /* us:0x415, jp:0x413 */ UNK_415,
+    /* us:0x416, jp:0x414 */ UNK_416,
+    /* us:0x417, jp:0x415 */ UNK_417,
+    /* us:0x418, jp:0x416 */ UNK_418,
+    /* us:0x419, jp:0x417 */ UNK_419,
+    /* us:0x41A, jp:0x418 */ UNK_41A,
+    /* us:0x41B, jp:0x419 */ UNK_41B,
+    /* us:0x41C, jp:0x41A */ UNK_41C,
+    /* us:0x41D, jp:0x41B */ UNK_41D,
+    /* us:0x41E, jp:0x41C */ UNK_41E,
+    /* us:0x41F, jp:0x41D */ UNK_41F,
+    /* us:0x420, jp:0x41E */ UNK_420,
+    /* us:0x421, jp:0x41F */ UNK_421,
+    /* us:0x422, jp:0x420 */ UNK_422,
+    /* us:0x423, jp:0x421 */ UNK_423,
+    /* us:0x424, jp:0x422 */ UNK_424,
+    /* us:0x425, jp:0x423 */ UNK_425,
+    /* us:0x426, jp:0x424 */ UNK_426,
+    /* us:0x427, jp:0x425 */ UNK_427,
+    /* us:0x428, jp:0x426 */ UNK_428,
+    /* us:0x429, jp:0x427 */ UNK_429,
+    /* us:0x42A, jp:0x428 */ UNK_42A,
+    /* us:0x42B, jp:0x429 */ UNK_42B,
+    /* us:0x42C, jp:0x42A */ UNK_42C,
+    /* us:0x42D, jp:0x42B */ UNK_42D,
+    /* us:0x42E, jp:0x42C */ UNK_42E,
+    /* us:0x42F, jp:0x42D */ UNK_42F,
+    /* us:0x430, jp:0x42E */ UNK_430,
+    /* us:0x431, jp:0x42F */ UNK_431,
+    /* us:0x432, jp:0x430 */ UNK_432,
+    /* us:0x433, jp:0x431 */ UNK_433,
+    /* us:0x434, jp:0x432 */ UNK_434,
+    /* us:0x435, jp:0x433 */ UNK_435,
+    /* us:0x436, jp:0x434 */ UNK_436,
+    /* us:0x437, jp:0x435 */ UNK_437,
+    /* us:0x438, jp:0x436 */ UNK_438,
+    /* us:0x439, jp:0x437 */ UNK_439,
+    /* us:0x43A, jp:0x438 */ UNK_43A,
+    /* us:0x43B, jp:0x439 */ UNK_43B,
+    /* us:0x43C, jp:0x43A */ UNK_43C,
+    /* us:0x43D, jp:0x43B */ UNK_43D,
+    /* us:0x43E, jp:0x43C */ UNK_43E,
+    /* us:0x43F, jp:0x43D */ UNK_43F,
+    /* us:0x440, jp:0x43E */ UNK_440,
+    /* us:0x441, jp:0x43F */ UNK_441,
+    /* us:0x442, jp:0x440 */ UNK_442,
+    /* us:0x443, jp:0x441 */ UNK_443,
+    /* us:0x444, jp:0x442 */ UNK_444,
+    /* us:0x445, jp:0x443 */ UNK_445,
+    /* us:0x446, jp:0x444 */ UNK_446,
+    /* us:0x447, jp:0x445 */ UNK_447,
+    /* us:0x448, jp:0x446 */ UNK_448,
+    /* us:0x449, jp:0x447 */ UNK_449,
+    /* us:0x44A, jp:0x448 */ UNK_44A,
+    /* us:0x44B, jp:0x449 */ UNK_44B,
+    /* us:0x44C, jp:0x44A */ UNK_44C,
+    /* us:0x44D, jp:0x44B */ UNK_44D,
+    /* us:0x44E, jp:0x44C */ UNK_44E,
+    /* us:0x44F, jp:0x44D */ UNK_44F,
+    /* us:0x450, jp:0x44E */ UNK_450,
+    /* us:0x451, jp:0x44F */ UNK_451,
+    /* us:0x452, jp:0x450 */ UNK_452,
+    /* us:0x453, jp:0x451 */ UNK_453,
+    /* us:0x454, jp:0x452 */ UNK_454,
+    /* us:0x455, jp:0x453 */ UNK_455,
+    /* us:0x456, jp:0x454 */ UNK_456,
+    /* us:0x457, jp:0x455 */ UNK_457,
+    /* us:0x458, jp:0x456 */ UNK_458,
+    /* us:0x459, jp:0x457 */ UNK_459,
+    /* us:0x45A, jp:0x458 */ UNK_45A,
+    /* us:0x45B, jp:0x459 */ UNK_45B,
+    /* us:0x45C, jp:0x45A */ UNK_45C,
+    /* us:0x45D, jp:0x45B */ UNK_45D,
+    /* us:0x45E, jp:0x45C */ NOSE_DEMON_INTRO_PREV_A,
     /* us:0x45F, jp:0x45D */ NOSE_DEMON_INTRO_PREV_B,
     /* us:0x460, jp:0x45E */ UNK_460,
     /* us:0x461, jp:0x45F */ UNK_461,
@@ -269,11 +491,10 @@ enum {
     /* us:0x46B, jp:0x469 */ UNK_46B,
     /* us:0x46C, jp:0x46A */ UNK_46C,
     /* us:0x46D, jp:0x46B */ UNK_46D,
-#ifdef VERSION_US
-    /* us:0x471, jp:0x46F */ UNK_471 = 0x471,
-#else
-    /* us:0x471, jp:0x46F */ UNK_471 = 0x46F,
-#endif
+    /* us:0x46E, jp:0x46C */ UNK_46E,
+    /* us:0x46F, jp:0x46D */ UNK_46F,
+    /* us:0x470, jp:0x46E */ UNK_470,
+    /* us:0x471, jp:0x46F */ UNK_471,
     /* us:0x472, jp:0x470 */ FAERIE_INTRO_LIFE,    // "Thank you for giving me
                                                    // life"
     /* us:0x473, jp:0x471 */ FAERIE_INTRO_COMMAND, // "Your word is my command"
@@ -312,11 +533,21 @@ enum {
     /* us:0x491, jp:0x48E */ UNK_491,
     /* us:0x492, jp:0x48F */ FAERIE_DARKNESS_HINT, // "Some animals can live in
                                                    // complete darkness"
-#ifdef VERSION_US
-    /* us:0x4A1, jp:0x49F */ YOUSEI_INTRO = 0x4A1,
-#else
-    /* us:0x4A1, jp:0x49F */ YOUSEI_INTRO = 0x49F,
-#endif
+    /* us:0x493, jp:0x491 */ UNK_493,
+    /* us:0x494, jp:0x492 */ UNK_494,
+    /* us:0x495, jp:0x493 */ UNK_495,
+    /* us:0x496, jp:0x494 */ UNK_496,
+    /* us:0x497, jp:0x495 */ UNK_497,
+    /* us:0x498, jp:0x496 */ UNK_498,
+    /* us:0x499, jp:0x497 */ UNK_499,
+    /* us:0x49A, jp:0x498 */ UNK_49A,
+    /* us:0x49B, jp:0x499 */ UNK_49B,
+    /* us:0x49C, jp:0x49A */ UNK_49C,
+    /* us:0x49D, jp:0x49B */ UNK_49D,
+    /* us:0x49E, jp:0x49C */ UNK_49E,
+    /* us:0x49F, jp:0x49D */ UNK_49F,
+    /* us:0x4A0, jp:0x49E */ UNK_4A0,
+    /* us:0x4A1, jp:0x49F */ YOUSEI_INTRO,
     /* us:0x4A2, jp:0x4A0 */ UNK_4A2,
     /* us:0x4A3, jp:0x4A1 */ UNK_4A3,
     /* us:0x4A4, jp:0x4A2 */ YOUSEI_SFX_EVENT_A,
@@ -368,11 +599,24 @@ enum {
     /* us:0x4D2, jp:0x4D0 */ UNK_4D2,
     /* us:0x4D3, jp:0x4D1 */ UNK_4D3,
     /* us:0x4D4, jp:0x4D2 */ YOUSEI_DARKNESS_HINT,
-#ifdef VERSION_US
-    /* us:0x4E6, jp:0x4E4 */ UNK_4E6 = 0x4E6,
-#else
-    /* us:0x4E6, jp:0x4E4 */ UNK_4E6 = 0x4E4,
-#endif
+    /* us:0x4D5, jp:0x4D3 */ UNK_4D5,
+    /* us:0x4D6, jp:0x4D4 */ UNK_4D6,
+    /* us:0x4D7, jp:0x4D5 */ UNK_4D7,
+    /* us:0x4D8, jp:0x4D6 */ UNK_4D8,
+    /* us:0x4D9, jp:0x4D7 */ UNK_4D9,
+    /* us:0x4DA, jp:0x4D8 */ UNK_4DA,
+    /* us:0x4DB, jp:0x4D9 */ UNK_4DB,
+    /* us:0x4DC, jp:0x4DA */ UNK_4DC,
+    /* us:0x4DD, jp:0x4DB */ UNK_4DD,
+    /* us:0x4DE, jp:0x4DC */ UNK_4DE,
+    /* us:0x4DF, jp:0x4DD */ UNK_4DF,
+    /* us:0x4E0, jp:0x4DE */ UNK_4E0,
+    /* us:0x4E1, jp:0x4DF */ UNK_4E1,
+    /* us:0x4E2, jp:0x4E0 */ UNK_4E2,
+    /* us:0x4E3, jp:0x4E1 */ UNK_4E3,
+    /* us:0x4E4, jp:0x4E2 */ UNK_4E4,
+    /* us:0x4E5, jp:0x4E3 */ UNK_4E5,
+    /* us:0x4E6, jp:0x4E4 */ UNK_4E6,
     /* us:0x4E7, jp:0x4E5 */ UNK_4E7, // PSP: Unknown SFX related to the priest
     /* us:0x4E8, jp:0x4E6 */ DEMON_INTRO_COMMAND, // Command me, my lord and
                                                   // master
@@ -385,8 +629,13 @@ enum {
                                                 // press it and see?
     /* us:0x4EF, jp:0x4ED */ DEMON_SWITCH_2,    // Hmm, this switch hasn't been
                                                 // pressed yet
+
+#if VERSION == VER_USPROTO
+    /*      usproto:0x52F */ UNK_52D = 0x52F,
+#else
     /* us:0x52D, jp:0x52D */ UNK_52D = 0x52D,
-#ifdef VERSION_US
+#endif
+#if IS_VER_INTL
     /* us:0x52E,          */ JP_VO_SH_GROAN,      // Shaft groans
     /* us:0x52F,          */ JP_VO_SH_SCREAM,     // Shaft screams
     /* us:0x530,          */ JP_VO_SH_SONO_TEIDO, // Shaft: Sono teido no
@@ -412,7 +661,7 @@ enum {
 // plays a different sample in ARE.  0x709 is another example; the pitch
 // is higher in NP3, but normal for RCHI and NZ0.
 
-#ifdef VERSION_BETA
+#if VERSION == VER_BETA_MAD
 // MAD uses an earlier build and has different sfx IDs
 enum Sfx {
     SFX_METAL_CLANG_E = 0x611, // Same ID as final
@@ -425,7 +674,7 @@ enum Sfx {
     SFX_GOLD_PICKUP = 0x69D,
     SFX_WEAPON_HIT_A = 0x6DB
 };
-#elif defined(STAGE_IS_TEK)
+#elif VERSION < VER_BETA_MAD
 // TEK links against a different build of the game with its own sfx IDs.
 // Only the sfx referenced by the TEK sources are listed here.
 enum Sfx {

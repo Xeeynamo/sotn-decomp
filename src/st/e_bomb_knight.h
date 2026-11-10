@@ -432,7 +432,7 @@ void EntityThrownBomb(Entity* self) {
             self->animCurFrame = 1;
             self->blendMode = BLEND_ADD | BLEND_TRANSP;
 // please konami what are you doing, other doesn't even exist yet
-#ifdef VERSION_US
+#if VERSION == VER_US
             other->drawFlags = ENTITY_DEFAULT;
 #else
             self->drawFlags = ENTITY_DEFAULT;
@@ -625,7 +625,7 @@ void EntityBombKnightArm(Entity* self) {
 
     if (!self->step) {
         InitializeEntity(g_EInitBombKnight);
-#ifdef VERSION_US
+#if VERSION == VER_US
         self->flags |= FLAG_UNK_00200000 | FLAG_UNK_2000;
 #endif
         self->animSet = 0;

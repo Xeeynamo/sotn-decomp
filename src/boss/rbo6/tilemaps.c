@@ -5,7 +5,7 @@
 #include <gen/rbo6_tilemap_1.h>
 #include <gen/rbo6_tilemap_2.h>
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 #include <gen/rbo6_tiledef_rload.h>
 #endif
 

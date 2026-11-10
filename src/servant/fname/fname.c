@@ -12,7 +12,9 @@
 // * no familiar events, and no sound effects
 // * always spawns next to Alucard, no matter how it was summoned
 
-#define VERSION_BETA
+#include <version.h>
+#undef VERSION
+#define VERSION VER_BETA_MAD
 #include <servant.h>
 #include <sfx.h>
 #include "../tt_000/bat.h"

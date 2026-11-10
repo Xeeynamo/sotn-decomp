@@ -259,7 +259,7 @@ void func_us_801AE8E8(Entity* self) {
         temp_a0_3++;
     }
     if (!self->params) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         iterations = 1;
 #else
         iterations = 2;

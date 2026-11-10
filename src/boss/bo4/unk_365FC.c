@@ -11,7 +11,7 @@ static u16 D_us_80180670[][2] = {
     {0x05AE, 0x05AF}, {0x05B0, 0x05B1}, {0x05B2, 0x05B3}, {0x05B4, 0x05B5},
 };
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(ID_1B);
 #endif
 
@@ -35,13 +35,13 @@ void EntityUnkId1B(Entity* self) {
         // are you coming from the left door or right door
         if (PLAYER.posX.i.hi < 0x80) {
             g_Player.padSim = PAD_RIGHT;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             leftBlockFlag = 0;
             rightBlockFlag = 0x100;
 #endif
         } else {
             g_Player.padSim = PAD_LEFT;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             leftBlockFlag = 0x100;
             rightBlockFlag = 0;
 #endif
@@ -58,7 +58,7 @@ void EntityUnkId1B(Entity* self) {
             for (i = 1; i < 4; i++, next++) {
                 // no declaration
                 CreateEntityFromCurrentEntity(E_ID(ID_1B), next);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 next->params = i + leftBlockFlag;
 #else
                 next->params = i;
@@ -68,7 +68,7 @@ void EntityUnkId1B(Entity* self) {
             for (i = 0; i < 4; i++, next++) {
                 // no declaration
                 CreateEntityFromCurrentEntity(E_ID(ID_1B), next);
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 next->params = i + rightBlockFlag;
 #else
                 next->params = 0x100 + i;
@@ -98,7 +98,7 @@ void EntityUnkId1B(Entity* self) {
         break;
 
     case 2:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (!self->params) {
             g_Player.padSim = PAD_NONE;
             g_Player.demo_timer = 4;
@@ -115,7 +115,7 @@ void EntityUnkId1B(Entity* self) {
         break;
 
     case 3:
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         if (!self->params) {
             g_Player.padSim = 0;
             g_Player.demo_timer = 0x18;

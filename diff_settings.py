@@ -37,7 +37,7 @@ def apply(config, args):
     name = re.sub(
         r"^(?:st|bos?s?)/?(?=[a-z])",
         "",
-        f"{args.overlay.lower() if version != 'us' else args.overlay.upper()}",
+        f"{args.overlay.upper() if version in ('us', 'jp10', 'jp11', 'jp12', 'usproto', 'eu', 'hk') else args.overlay.lower()}",
         flags=re.IGNORECASE,
     )
 
@@ -45,8 +45,24 @@ def apply(config, args):
         "us": "disks/us",
         "hd": "disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin",
         "pspeu": "disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN",
+        "jp10": "disks/jp10",
+        "jp11": "disks/jp11",
+        "jp12": "disks/jp12",
+        "usproto": "disks/usproto",
+        "eu": "disks/eu",
+        "hk": "disks/hk",
     }
-    binaryExt = {"us": "BIN", "hd": "bin", "pspeu": "bin"}
+    binaryExt = {
+        "us": "BIN",
+        "hd": "bin",
+        "pspeu": "bin",
+        "jp10": "BIN",
+        "jp11": "BIN",
+        "jp12": "BIN",
+        "usproto": "BIN",
+        "eu": "BIN",
+        "hk": "BIN",
+    }
     path_prefix = ""
     name_prefix = ""
 
@@ -107,8 +123,4 @@ def apply(config, args):
     )
 
     config["objdump_executable"] = "mipsel-linux-gnu-objdump"
-    config["arch"] = {
-        "us": "mipsel",
-        "hd": "mipsel",
-        "pspeu": "mipsel:4000",
-    }[version]
+    config["arch"] = "mipsel:4000" if version == "pspeu" else "mipsel"

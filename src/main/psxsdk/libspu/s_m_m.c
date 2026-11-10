@@ -2,7 +2,7 @@
 #include "common.h"
 #include "libspu_internal.h"
 
-#ifndef VERSION_PC
+#ifndef PLATFORM_PSYZ
 long SpuMalloc(long size) {
     s32 var_s2;
     s32 var_s3;

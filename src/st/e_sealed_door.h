@@ -24,7 +24,7 @@ static s16 g_eBlueDoorTiles[][8] = {
     {0x597, 0x597, 0x597, 0x597, 0x000, 0x000, 0x000, 0x000},
 };
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 static char sealed_door_ENG[] = "\x98\x10Magically sealed\x81\x44";
 static char sealed_door_ES[] = "\x98\x10Sellado m\xCCgicamente.";
 static char sealed_door_IT[] = "\xA8\x10Sigillato magicamente.";
@@ -36,6 +36,8 @@ static char sealed_door_DE[] = "\x98\x10Magisch versiegelt.";
 static char* sealed_door_label;
 
 #include "../get_lang.h"
+#elif REGION == REGION_JP
+static char sealed_door_label[] = "\x78\x0E魔法で施錠されている";
 #else
 static char sealed_door_label[] = "\x7C\x0EMagically sealed．";
 // NZ0 has an extra .word in data vs NO0
@@ -186,7 +188,7 @@ void EntitySealedDoor(Entity* self) {
                     break;
                 }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 sealed_door_label =
                     GetLang(sealed_door_ENG, sealed_door_FR, sealed_door_ES,
                             sealed_door_DE, sealed_door_IT);

@@ -4,18 +4,18 @@
 
 extern EInit g_EInitSpawner;
 
-#if !defined(INVERTED_STAGE)
-#define UP +
-#define DOWN -
-#define UNK9C 0x4B
-#define UNKA0 0
-#define X_OFF 0x65
-#else
+#ifdef INVERTED_STAGE
 #define UP -
 #define DOWN +
 #define UNK9C 0xB5
 #define UNKA0 0x100
 #define X_OFF 0x7B
+#else
+#define UP +
+#define DOWN -
+#define UNK9C 0x4B
+#define UNKA0 0
+#define X_OFF 0x65
 #endif
 
 static s16 D_us_80181BFC[] = {

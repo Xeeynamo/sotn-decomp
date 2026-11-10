@@ -6,7 +6,7 @@
 // must be defined in the overlay
 
 // pspeu needs this to not be static
-#ifdef VERSION_US
+#if VERSION == VER_US
 static
 #endif
     void
@@ -15,7 +15,7 @@ static
     g_Dialogue.nextCharY = 0;
     g_Dialogue.nextCharTimer = 0;
     g_Dialogue.unk17 = CUTSCENE_UNK1_UNK17;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     g_Dialogue.startX = 52;
     g_Dialogue.nextLineY = 44;
     g_Dialogue.clutIndex = 417;
@@ -45,13 +45,13 @@ static u8 SetCutsceneScript(u8* script) {
         prim->drawMode = DRAW_HIDE;
         prim = g_Dialogue.prim[2] = prim->next;
 
+#if TARGET == TARGET_PSP
         prim->drawMode = DRAW_HIDE;
         prim = g_Dialogue.prim[3] = prim->next;
-
-#ifdef VERSION_PSP
-        prim->drawMode = DRAW_HIDE;
-        prim = g_Dialogue.prim[4] = prim->next;
 #endif
+
+        prim->drawMode = DRAW_HIDE;
+        prim = g_Dialogue.primPortrait = prim->next;
 
         prim->type = PRIM_GT4;
         prim->drawMode = DRAW_HIDE;

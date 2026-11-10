@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rnz1.h"
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(BAT_WINGS);
 extern s32 E_ID(DARKWING_WIND_DUST);
 extern s32 E_ID(FADING_FIREBALL);
@@ -90,7 +90,7 @@ static bool WakeupRotateHelper(s16* rot, s16 target, s16 increment) {
 }
 
 static s32 WindAttackHelper(s32 arg0) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     Collider sp2C;
 #endif
     Entity* other;
@@ -126,7 +126,7 @@ static s32 WindAttackHelper(s32 arg0) {
             other->velocityX -= FIX(1.0 / 8);
         }
         var_s5 = g_Player.vram_flag & ~TOUCHING_GROUND;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         xVar = other->posX.i.hi;
         yVar = F(other->posY).i.hi + F(other->velocityY).i.hi;
         g_api.CheckCollision(xVar, yVar, &sp2C, 0);
@@ -655,7 +655,7 @@ void EntityDarkwingBat(Entity* self) {
         switch (self->step_s) {
         case 0:
             g_BossFlag |= 2;
-#ifdef VERSION_US
+#if VERSION == VER_US
             self->flags |= FLAG_UNK_00200000;
             self->hitboxState = 0;
 #endif

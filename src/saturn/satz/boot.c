@@ -75,6 +75,9 @@ static void sotn_satz_warp(void) {
     unsigned x, y, room;
 
     if (!warp) {
+        warp = SATZ_STAGE_START;
+    }
+    if (!*warp) {
         return;
     }
     if (sscanf(warp, "%i %i %i", &x, &y, &room) != 3) {
@@ -87,12 +90,16 @@ static void sotn_satz_warp(void) {
 
 void sotn_satz_boot_override(void) {
     sotn_satz_cram_init();
-    g_CurrentRoom.stageID = 0x42;
-    g_PlayableCharacter = 2;
+    g_CurrentRoom.stageID = SATZ_STAGE_ID;
+    g_PlayableCharacter = SATZ_PLAYER_ID;
     D_8006C374 = 0x48;
     DAT_06061dd0 = 1;
     sotn_satz_warp();
 }
+
+unsigned sotn_satz_updates;
+int sotn_satz_voice = -1;
+void sotn_satz_poll(void) {}
 
 static uint64_t s_Frame;
 
@@ -257,5 +264,30 @@ void satz_app_frame(uint64_t frame) {
     }
     if (DAT_0605cea0.unk2 == 0x31 && DAT_0605cea0.unk0 >= 6) {
         DAT_0605D7F8 = 1;
+    }
+}
+
+void sotn_satz_equip(void) {
+    static int done;
+    const char* v = getenv("SOTN_SATZ_EQUIP");
+    char* end;
+    int i;
+
+    if (done) {
+        return;
+    }
+    done = 1;
+    if (getenv("SOTN_SATZ_EQUIP_LOG")) {
+        for (i = 0; i < 8; i++) {
+            fprintf(stderr, "equip[%d] = %#x\n", i,
+                    (unsigned)g_Status.equipment[i]);
+        }
+    }
+    for (i = 0; v && *v && i < 8; i++) {
+        g_Status.equipment[i] = strtoul(v, &end, 0);
+        if (end == v) {
+            satz_die("SOTN_SATZ_EQUIP: want numbers");
+        }
+        v = end;
     }
 }

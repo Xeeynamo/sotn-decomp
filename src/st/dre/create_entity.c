@@ -2,7 +2,7 @@
 #include "dre.h"
 #include "../pfn_entity_update.h"
 
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
 u32 D_801A3264[24];
 #endif
 

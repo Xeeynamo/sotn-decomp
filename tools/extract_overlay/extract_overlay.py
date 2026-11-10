@@ -827,6 +827,19 @@ def parse_psp_ovl_load(ovl_name, path_prefix, asm_path):
     )
 
 
+VERSION_CONDITIONS = {
+    "us": "VERSION == VER_US",
+    "hd": "VERSION == VER_BETA_HD",
+    "jp10": "VERSION == VER_JP10",
+    "jp11": "VERSION == VER_JP11",
+    "jp12": "VERSION == VER_JP12",
+    "usproto": "VERSION == VER_USPROTO",
+    "eu": "VERSION == VER_EU",
+    "hk": "VERSION == VER_HK",
+    "pspeu": "TARGET == TARGET_PSP",
+}
+
+
 def create_header_c(header_items, ovl_name, ovl_type, version, header_path):
     def strip_prefix(symbol):
         prefix = f"{ovl_name.upper()}_"
@@ -869,7 +882,7 @@ def create_header_c(header_items, ovl_name, ovl_type, version, header_path):
             include = new_lines[1]
             existing_lines = existing_header.rstrip("\n").splitlines()
             existing_lines = existing_lines[2:]
-            ifdef = f"#ifdef VERSION_{'PSP' if version=='pspeu' else version.upper()}"
+            ifdef = f"#if {VERSION_CONDITIONS[version]}"
             new_header = f"{license}\n{include}\n{ifdef}\n{"\n".join(new_lines[2:])}\n#else\n{'\n'.join(existing_lines)}\n#endif\n"
 
     header_path.write_text(new_header)

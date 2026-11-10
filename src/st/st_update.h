@@ -19,7 +19,7 @@ u16 UNK_Invincibility0[] = {
     PAL_FLAG(PAL_CC_STONE_EFFECT),     PAL_FLAG(PAL_CC_DARK_EFFECT),
     PAL_FLAG(PAL_CC_CURSE_EFFECT),     PAL_FLAG(PAL_CC_CURSE_EFFECT),
     PAL_FLAG(PAL_CC_CRITICAL_EFFECT),  PAL_FLAG(PAL_CC_CRITICAL_EFFECT),
-#if !(defined VERSION_BETA) && !defined(STAGE_IS_TEK)
+#if VERSION >= VER_BETA_HD
     PAL_FLAG(PAL_CC_CURSE_EFFECT),     PAL_FLAG(PAL_CC_CURSE_EFFECT),
 #endif
 };
@@ -32,7 +32,7 @@ s32 Random(void) {
 }
 
 // TEK does not cache the entity flags in a local
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
 #define UPDATE_FLAGS e->flags
 #else
 #define UPDATE_FLAGS flags
@@ -62,7 +62,7 @@ void Update(void) {
             continue;
 
         if (e->step) {
-#ifndef STAGE_IS_TEK
+#if VERSION >= VER_BETA_MAD
             // TEK uses `e->flags`, recent build cache result in `flags`
             flags = e->flags;
 #endif
@@ -102,7 +102,7 @@ void Update(void) {
                 }
             }
 
-#ifdef STAGE_IS_TEK
+#if VERSION < VER_BETA_MAD
             if (e->flags & FLAG_UNK_20000000) {
                 if (!(e->flags & FLAG_UNK_10000000)) {
                     if (e->posX.i.hi < -64 || e->posX.i.hi > 320 ||
@@ -125,7 +125,7 @@ void Update(void) {
                     continue;
                 }
             }
-#ifndef STAGE_IS_TEK
+#if VERSION >= VER_BETA_MAD
             if (g_unkGraphicsStruct.D_800973FC) {
                 if (!(UPDATE_FLAGS & (FLAG_UNK_2000 | FLAG_DEAD)) &&
                     !(UPDATE_FLAGS & FLAG_UNK_200 && !(g_GameTimer & 3))) {
@@ -153,7 +153,7 @@ void UpdateStageEntities(void) {
             continue;
 
         if (entity->step) {
-#if defined(VERSION_BETA) || defined(STAGE_IS_TEK)
+#if VERSION < VER_BETA_HD
             if (D_80096ED0_mad && !(entity->flags & FLAG_UNK_10000))
 #else
             if (!(entity->flags & FLAG_UNK_10000))

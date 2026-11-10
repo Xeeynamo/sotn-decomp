@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 D_psp_E_KILLER_FISH_DEATH_PUFF;
 #endif
 
@@ -120,7 +120,7 @@ void EntityKillerFish(Entity* self) {
             if (entity == NULL) {
                 break;
             }
-#if defined(STAGE_IS_NO4) || defined(VERSION_PSP)
+#if TARGET == TARGET_PSP || defined(STAGE_IS_NO4)
             CreateEntityFromCurrentEntity(E_ID(KILLER_FISH_DEATH_PUFF), entity);
 #else
             CreateEntityFromCurrentEntity(E_KILLER_FISH_DEATH_PUFF, entity);

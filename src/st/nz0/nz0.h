@@ -108,7 +108,7 @@ typedef enum EntityID {
 
 Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(EXPLODE_PUFF_OPAQUE);
 extern s32 E_ID(EXPLOSION);
 extern s32 E_ID(CANNON_SHOT);

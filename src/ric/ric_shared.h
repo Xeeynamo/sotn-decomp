@@ -143,7 +143,7 @@ enum RicSubweapons {
     PL_W_CRASH_CROSS,
     PL_W_CRASH_CROSS_BEAM,
     PL_W_WHIP,
-    PL_W_15,
+    PL_W_FLAMEWHIP,
     PL_W_HYDROSTORM,
     PL_W_BIBLE_BEAM,
     PL_W_KICK,

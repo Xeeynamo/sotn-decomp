@@ -50,7 +50,7 @@ void RenderTilemap(void) {
     u16 page;
     u8 u, v;
 
-#ifdef VERSION_PC
+#ifdef PLATFORM_PSYZ
     SPRT_16 _sp16;
     TilemapRenderer _r;
     SPRT_16* sp16 = &_sp16;

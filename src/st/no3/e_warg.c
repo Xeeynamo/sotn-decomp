@@ -432,7 +432,7 @@ void EntityWarg(Entity* self) {
                 CreateEntityFromCurrentEntity(E_EXPLODE_PUFF_TRANS, part);
 // These are the same code, but compiler instruction reordering is messing it
 // up. There's almost certainly a single solution, but I can't find it.
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 part->params =
                     ((g_unkGraphicsStruct.g_zEntityCenter - 8 - (Random() & 7))
                      << 8) +
@@ -500,7 +500,7 @@ void EntityWarg(Entity* self) {
                 drawEnv.clip = rect;
                 drawEnv.ofs[0] = 0;
                 drawEnv.ofs[1] = 0x100;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 drawEnv.dtd = 0;
 #endif
                 SetDrawEnv(dr_env, &drawEnv);
@@ -522,7 +522,7 @@ void EntityWarg(Entity* self) {
                 return;
             }
             prim = prim->next;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             prim->tpage = 0x1110;
 #else
             prim->tpage = 0x110;

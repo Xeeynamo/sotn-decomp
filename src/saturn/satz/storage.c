@@ -77,7 +77,7 @@ void* sotn_satz_retail_address(uint32_t address) {
     sotn_satz_unimplemented("sotn_satz_retail_address: no native object");
 }
 
-uint32_t sotn_satz_be16_copy(const void* src, uint32_t bytes) {
+void* sotn_satz_be16_copy(const void* src, uint32_t bytes) {
     static uint16_t ring[0x2000];
     static uint32_t next;
     const uint16_t* in = src;
@@ -92,5 +92,5 @@ uint32_t sotn_satz_be16_copy(const void* src, uint32_t bytes) {
     for (i = 0; i < words; i++) {
         out[i] = (uint16_t)((in[i] >> 8) | (in[i] << 8));
     }
-    return (uint32_t)(uintptr_t)out;
+    return out;
 }

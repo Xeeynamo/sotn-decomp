@@ -2,7 +2,7 @@
 #include "st0.h"
 #include "disk.h"
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #define GET_CLUT(x, y) getClut(x, y)
 #else
 #define GET_CLUT(x, y) GetClut(x, y)
@@ -18,7 +18,7 @@ static ProloguePrimitive D_80181568[] = {
     {0x01, 0x00, 0xFF, 0x80, 1, -272, 0x98},
     {0x00, 0x00, 0xFF, 0x80, 256, -272, 0x9A},
     {0x00, 0x00, 0x88, 0x70, 112, -384, 0x8C},
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
     {0x00, 0x71, 0xA0, 0x8F, 248, -415, 0x8C},
 #else
     {0x00, 0x70, 0xA0, 0x90, 248, -416, 0x8C},
@@ -121,7 +121,7 @@ static void SetTitleDisplayBuffer(void) {
                   DISP_TITLE_H);
     SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, DISP_TITLE_W, DISP_TITLE_H);
     g_GpuBuffers[0].draw.clip.y = 0;
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
     g_GpuBuffers[1].draw.clip.y = 0;
 #else
     g_GpuBuffers[1].draw.clip.y = DISP_TITLE_W / 2;
@@ -150,7 +150,7 @@ void PrologueScroll(void) {
     Entity* entity;
     s32 primIndex;
 
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
     const int EndTimer = 0x14C0; // approximately 110 seconds
     entity = &g_Entities[STAGE_ENTITY_START];
     DisableAutoPowerOff();
@@ -262,7 +262,7 @@ void PrologueScroll(void) {
         g_GpuBuffers[1].draw.r0 = 0;
         g_GpuBuffers[1].draw.g0 = 0;
         g_GpuBuffers[1].draw.b0 = 0x18;
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
         func_psp_0891CEB8(0x100, 0xF0);
         func_psp_0891CEB8(0x100, 0xF1);
 #endif
@@ -288,7 +288,7 @@ void PrologueScroll(void) {
         break;
     case 5: // 0x801B0940
         if (
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
             1
 #else
             g_api.func_80131F68()
@@ -334,7 +334,7 @@ void PrologueScroll(void) {
             DestroyEntity(entity);
             D_801BEE00 = 0;
             g_GameStep++;
-#if defined(VERSION_PSP)
+#if TARGET == TARGET_PSP
             func_pspeu_09246B88();
 #endif
         }

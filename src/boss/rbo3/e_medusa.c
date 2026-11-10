@@ -2,7 +2,7 @@
 
 #include "rbo3.h"
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(UNK_24);
 extern s32 E_ID(UNK_25);
 extern s32 E_ID(UNK_26);

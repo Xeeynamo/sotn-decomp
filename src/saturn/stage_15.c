@@ -726,7 +726,7 @@ INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E56C8, func_060E56C8);
 u16 func_060E57E0(s32 minX, s32 maxX) {
     u16 standing;
 
-    g_Player.unk7A = 1;
+    g_Player.runDisable = 1;
     if (PLAYER.step != 0 || (standing = PLAYER.step_s) != 1 ||
         PLAYER.posX.i.hi < minX || PLAYER.posX.i.hi > maxX) {
         standing = 0;

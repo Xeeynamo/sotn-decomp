@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-#if !(defined(VERSION_PSP) && defined(STAGE_IS_RNO2))
+#if TARGET != TARGET_PSP || !defined(STAGE_IS_RNO2)
 typedef enum {
     BLOODY_ZOMBIE_INIT,
     BLOODY_ZOMBIE_WALK,
@@ -206,7 +206,7 @@ void EntityBloodSplatter(Entity* self) {
     }
 }
 
-#if !(defined(VERSION_PSP) && defined(STAGE_IS_RNO2))
+#if TARGET != TARGET_PSP || !defined(STAGE_IS_RNO2)
 static void func_801C53AC(Primitive* prim) {
     switch (prim->next->u2) {
     case 0:

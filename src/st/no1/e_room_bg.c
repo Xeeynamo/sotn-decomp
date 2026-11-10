@@ -53,7 +53,7 @@ void EntityBackgroundBlock(Entity* self) {
         InitializeEntity(g_EInitCommon);
         self->animSet = objInit->animSet;
         self->zPriority = objInit->zPriority;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
         objInit->facingLeft; // For match on PSP
         self->unk5A = LOHU(objInit->facingLeft);
 #else

@@ -347,7 +347,7 @@ bool func_us_801C6040(s32 branchFlags);
 
 extern PlayerState g_Dop;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_465F0", DopplegangerStepHighJump);
 #else
 void DopplegangerStepHighJump(void) {
@@ -469,7 +469,7 @@ s16 D_us_8018133C[] = {
     SFX_VO_DOP_PAIN_C, SFX_VO_DOP_PAIN_B, SFX_VO_DOP_PAIN_A,
 };
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 char D_pspeu_0926B178[] = "dam_kind:%04x\n";
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_465F0", DopplegangerHandleDamage);
 #else
@@ -841,7 +841,7 @@ static s32 CheckWingSmashInput(void) {
 s32 g_WingSmashTimer;
 extern s32 D_us_801D4A1C;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_465F0", ControlBatForm);
 #else
 void ControlBatForm(void) {

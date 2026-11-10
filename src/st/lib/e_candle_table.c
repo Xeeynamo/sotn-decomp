@@ -9,7 +9,7 @@ static u8 D_us_80181A68[] = {3, 1, 3, 2, 3, 3, 3, 4, 3, 5, 3, 6, 3, 7, 0, 0};
 static u8 D_us_80181A78[] = {
     3, 9, 3, 10, 3, 11, 3, 12, 3, 13, 3, 14, 3, 15, 3, 16, 0, 0};
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 static s32 D_us_80181A8C = 0;
 extern s32 E_ID(CANDLE_TABLE);
 // I expect this symbol will change depending on the function that is

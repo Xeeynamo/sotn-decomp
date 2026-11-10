@@ -431,11 +431,11 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
     bool step_s_zero;
     s32 i;
 
-    if (g_Player.unk7A == 2) {
-        g_Player.unk7A = 0;
+    if (g_Player.runDisable == 2) {
+        g_Player.runDisable = 0;
     }
-    if (g_Player.unk7A == 3) {
-        g_Player.unk7A = 0;
+    if (g_Player.runDisable == 3) {
+        g_Player.runDisable = 0;
     }
     step_s_zero = false;
     if (mar_hit_stun_timer) {
@@ -1002,7 +1002,7 @@ void MarStepDragonCrash(void) {
 }
 
 void MarStepCardinalAttack(void) {
-    if (g_Player.unk7A == 0) {
+    if (g_Player.runDisable == 0) {
         MarSetStand(0);
         g_Player.unk46 = 0;
     }

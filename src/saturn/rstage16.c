@@ -252,7 +252,7 @@ L_case30:
 u16 func_060E17D0(s32 minX, s32 maxX) {
     u16 result;
 
-    g_Player.unk7A = 1;
+    g_Player.runDisable = 1;
     if (PLAYER.step != 0 || (result = PLAYER.step_s, result != 1) ||
         PLAYER.posX.i.hi < minX || PLAYER.posX.i.hi > maxX) {
         result = 0;

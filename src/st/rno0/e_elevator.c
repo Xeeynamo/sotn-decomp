@@ -3,7 +3,7 @@
 
 extern EInit g_EInitElevator;
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(ELEVATOR_PART);
 #endif
 
@@ -134,7 +134,7 @@ void EntityElevator(Entity* self) {
         if (var_s6) {
             dx = self->posX.i.hi - player->posX.i.hi;
             if (g_pads[0].pressed & PAD_UP && abs(dx) < 8) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 if (F(player->velocityX).i.hi != 0) {
                     break;
                 }
@@ -142,7 +142,7 @@ void EntityElevator(Entity* self) {
                 g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
                 g_Player.demo_timer = 2;
                 g_Player.padSim = 0;
-#ifndef VERSION_PSP
+#if TARGET != TARGET_PSP
                 player->velocityX = 0;
                 player->velocityY = 0;
 #endif

@@ -114,7 +114,7 @@ extern void* DAT_060D6008;
 extern void* DAT_060D600C;
 extern void* DAT_060D6010;
 extern void* DAT_060D6014;
-extern void* DAT_060D6018;
+extern s32 (*DAT_060D6018)();
 extern void* DAT_060D601C;
 extern void* DAT_060D6020;
 extern void* DAT_060D6024;

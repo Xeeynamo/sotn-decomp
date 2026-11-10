@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(ID_2A);
 #endif
 
@@ -308,7 +308,7 @@ void func_us_801BBD90(Entity* self) {
             prim = prim->next;
 
             self->ext.et_801BBD90.unk7C = prim;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             prim->tpage = 0x8010;
 #else
             prim->tpage = 0x10;
@@ -385,7 +385,7 @@ void func_us_801BBD90(Entity* self) {
                 prim = prim->next;
             }
             self->step_s++;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
             D_psp_08C62AA4 = true;
 #endif
         }
@@ -449,7 +449,7 @@ void func_us_801BBD90(Entity* self) {
                 angle = self->ext.et_801BBD90.unk8C;
                 angle &= 0xFFF;
                 while (prim != NULL) {
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                     prim->tpage = 0x10;
                     prim->u0 = prim->u2 = 0;
                     prim->u1 = prim->u3 = 4;
@@ -694,7 +694,7 @@ void func_us_801BCB34(Entity* self) {
     Primitive* prim;
     s16 posX, posY;
     s32 primIndex;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
     s8 dPad;
 #else
     u8 dPad;
@@ -755,7 +755,7 @@ void func_us_801BCB34(Entity* self) {
             }
             if (dPad) {
                 dPad += self->ext.et_801BBD90.unk84;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 if (dPad == -1U || dPad > 2) {
                     break;
                 }
@@ -775,7 +775,7 @@ void func_us_801BCB34(Entity* self) {
                 self->poseTimer = 0;
                 self->step_s = 0;
                 self->step++;
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
                 PLAYER.posX.val = self->posX.val;
                 PLAYER.velocityX = 0;
 #endif

@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "game.h"
 
-#ifndef HARD_LINK
 u8 gfx_portrait_alucard[] = {
 #include <gen/gfx_portrait_alucard.h>
 };
@@ -13,7 +12,6 @@ u8 gfx_portrait_maria[] = {
 u8 gfx_portrait_richter[] = {
 #include <gen/gfx_portrait_richter.h>
 };
-#endif
 
 u8 D_80192228[] = {
 #include <gen/D_80192228.h>

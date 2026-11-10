@@ -1,6 +1,7 @@
-#ifndef VERSION_PC
+#ifndef PLATFORM_PSYZ
 #ifndef LIBGTE_H
 #define LIBGTE_H
+#include <version.h>
 
 void InitGeom();
 
@@ -78,8 +79,7 @@ int rcos(int a);
 int rsin(int a);
 long ratan2(long y, long x);
 
-#if !defined(VERSION_PC) && !defined(M2CTX) && !defined(PERMUTER) &&           \
-    !defined(VERSION_PSP)
+#if TARGET != TARGET_PSP && !defined(M2CTX) && !defined(PERMUTER)
 #define gte_ldv0(r0)                                                           \
     __asm__ volatile("lwc2	$0, 0( %0 );"                                       \
                      "lwc2	$1, 4( %0 )"                                        \
@@ -374,7 +374,7 @@ long ratan2(long y, long x);
                      :                                                         \
                      : "r"(r0), "r"(r1), "r"(r2))
 
-#elif defined(VERSION_PSP)
+#elif TARGET == TARGET_PSP
 
 void gte_SetGeomScreen(long h);
 void gte_SetRotMatrix(MATRIX* m);

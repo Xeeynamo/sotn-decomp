@@ -3,7 +3,7 @@
 
 #include "../../st/pfn_entity_update.h"
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 #define PSP_RNZ0_WTF
 #endif
 

@@ -5,7 +5,7 @@
 #include <gen/rcen_tilemap_1.h>
 #include <gen/rcen_tilemap_2.h>
 
-#ifdef VERSION_US
+#if VERSION == VER_US
 #include <gen/rcen_tiledef_rload.h>
 #endif
 
