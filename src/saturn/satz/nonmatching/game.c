@@ -11,7 +11,6 @@ extern s32 D_801375B8;
 void func_0606D554(s32);
 void DestroyEntitiesFrom(s32);
 void func_0600C1A0(void);
-void func_0600C2EC(void);
 void func_0606D3FC(void);
 void StatusDispInit(void);
 s32 func_800F0CD8(u16);
@@ -130,7 +129,7 @@ void func_06071C3C(void) {
     func_0600B254();
     InitPrimBuf();
     func_0600C1A0();
-    func_0600C2EC();
+    SetLocalPalData();
     if (DAT_0605cd70.unk4 == 1 || DAT_0605cd70.unk4 == 4) {
         if (g_CurrentRoom.stageID == 0x41 && g_CurrentRoom.unk6 == 0x12) {
             g_CurrentRoom.unkC = 2;

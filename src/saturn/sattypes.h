@@ -903,7 +903,7 @@ SpriteObject* CreateSpriteObject(
 #define BSS __attribute__((section(".bss")))
 #endif
 
-#define SPRITE_OBJECT_MAX 255 /* 0x0FF */
+#define SPRITE_OBJECT_MAX 256 /* 0x100 */
 #define SPRITE_PART_MAX 640   /* 0x280 */
 
 typedef struct {

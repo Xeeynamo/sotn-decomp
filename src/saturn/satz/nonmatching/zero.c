@@ -198,11 +198,8 @@ static void FadeColors(
     s16 fromR, s16 fromG, s16 fromB, s16 toR, s16 toG, s16 toB);
 
 static void ColorOffsetSet(s16 value);
-void func_06009CCC(void);
 
-s16 func_0600AE30(u8* data, SaturnSpriteImage* images, s32 colorMode);
 s16 func_0600AEE4(u16* palettes);
-void func_0600C2EC(void);
 static void sotn_satz_cmd_offset_vertex(SprSpCmd* cmd, s32 i, s16 dx, s16 dy);
 s32 rsin(s32 angle);
 s32 rcos(s32 angle);
@@ -752,36 +749,6 @@ static const char* StageMapFile(void) {
     return g_StageFileRecords[stage].map;
 }
 
-s32 QueueVramTransfer(u32 dst, void* src, s32 size) {
-    s32 i;
-
-    for (i = 0; i < DAT_06057770; i++) {
-        if (DAT_060576B0[i].src == src && DAT_060576B0[i].dst == dst &&
-            DAT_060576B0[i].size == size) {
-            return 1;
-        }
-    }
-    if (DAT_06057770 > 15) {
-        return 0;
-    }
-    DAT_060576B0[i].src = src;
-    DAT_060576B0[i].dst = dst;
-    DAT_060576B0[i].size = size;
-    DAT_06057770++;
-    return 1;
-}
-
-void FlushVramTransfers(void) {
-    s32 i;
-
-    for (i = 0; i < DAT_06057770; i++) {
-        DMA_ScuMemCopy(satz_bus_pointer(DAT_060576B0[i].dst),
-                       DAT_060576B0[i].src, DAT_060576B0[i].size);
-        while (DMA_ScuResult() == 2) {
-        }
-    }
-}
-
 static void FadeColors(
     s16 fromR, s16 fromG, s16 fromB, s16 toR, s16 toG, s16 toB) {
     DAT_06057774[0] = fromR;
@@ -796,27 +763,6 @@ static void ColorOffsetSet(s16 value) {
     DAT_0605778C = value;
     DAT_0605778A = value;
     DAT_06057788 = value;
-}
-
-void func_06009CCC(void) {
-    UNK_0605c680* cam = &DAT_0605c680;
-    s32 oldX = cam->unk4;
-    s32 oldY = cam->unkC;
-    s32 x = g_Tilemap.scrollX.i.hi << 16;
-    s32 y = g_Tilemap.scrollY.i.hi << 16;
-
-    cam->unk8 = oldX;
-    cam->unk10 = oldY;
-    cam->unk4 = x;
-    cam->unk3C = cam->unk34;
-    cam->unkC = y;
-    cam->unk40 = cam->unk38;
-    cam->unk34 = (DAT_0605C100 << 16) + x;
-    cam->unk38 = (DAT_0605CD80 << 16) + y;
-    cam->unk18 = cam->g_ScrollDeltaX;
-    cam->g_ScrollDeltaX = x - oldX;
-    cam->unk20 = cam->g_ScrollDeltaY;
-    cam->g_ScrollDeltaY = y - oldY;
 }
 
 u16 func_0600A77C(u16 frame, u16 mode, SaturnSpriteImage* images) {
@@ -940,84 +886,6 @@ void func_0600AB60(void) {
         ((s32*)DAT_0605D910)[70] = DAT_06064668[1].byteCount;
         ((s32*)DAT_0605D910)[71] = DAT_06064668[2].sourceOffset;
         ((s32*)DAT_0605D910)[72] = DAT_06064668[2].byteCount;
-    }
-}
-
-void InitPaletteRemapLuts(void) {
-    s32 i;
-
-    memset(DAT_0605D910, 0, 0x248);
-    func_0600AA18(0);
-    func_0600AA18(2);
-    for (i = 0; i <= 0xFF; i++) {
-        DAT_060577A0[i] = i;
-        DAT_060578A0[i] = 0;
-    }
-    for (i = 10; i <= 0xFF; i += 0x10) {
-        DAT_060577A0[i] = (u16)i & 0xF0;
-        DAT_060578A0[i] = 10;
-    }
-    for (i = 0; i <= 0xF; i++) {
-        DAT_060577A0[0xA0 + i] = i;
-        DAT_060578A0[0xA0 + i] = 0xA0;
-    }
-    DAT_060577A0[0xAA] = 0;
-    DAT_060578A0[0xAA] = 0xAA;
-}
-
-s16 func_0600AE30(u8* data, SaturnSpriteImage* images, s32 colorMode) {
-    u16 size[2];
-    s16 first;
-
-    size[0] = images->storedWidth * 2;
-    size[1] = images->storedHeight * 2;
-    first = AllocSpriteCharVram((u16)colorMode, 0, size, data);
-    for (images++; images->storedWidth != 0; images++) {
-        size[0] = images->storedWidth * 2;
-        size[1] = images->storedHeight * 2;
-        AllocSpriteCharVram(
-            (u16)colorMode, 0, size,
-            data != NULL ? data + images->characterOffsetUnits * 8 : NULL);
-    }
-    return first;
-}
-
-SpriteObject* AllocSpriteObject(void) {
-    SpriteObject* obj;
-
-    if (g_SpriteObjectsInUse > 0xFF) {
-        return NULL;
-    }
-    obj = g_SpriteObjectFreeList;
-    g_SpriteObjectFreeList = obj->next;
-    g_SpriteObjectsInUse++;
-    obj->flags = 0;
-    obj->slotAndStreamId &= 0xFF00;
-    obj->rotate = 0;
-    obj->scaleX = 0x40;
-    obj->scaleY = 0x40;
-    obj->unk0C = 0;
-    obj->unk0D = 0x80;
-    obj->zPriority = 0x80;
-    obj->subPixelX = 0;
-    obj->subPixelY = 0;
-    obj->posX = 0x02000000;
-    obj->posY = 0x01000000;
-    return obj;
-}
-
-void func_0600B0B8(SpritePart* part, void* arg1, s32 count) {
-    SaturnSpritePart* src = arg1;
-    s32 i;
-
-    for (i = 0; i < count; i++, src++, part = part->next) {
-        u16 attributes =
-            (part->attributes & 0xE080) | (src->attributes & 0x1F7F);
-        part->attributes = src->attributes;
-        part->offsetX = src->offsetX;
-        part->offsetY = src->offsetY;
-        part->imageIndex = src->imageIndex;
-        part->attributes = attributes;
     }
 }
 
@@ -1186,28 +1054,6 @@ s32 func_0600B954(
     }
     cmd->control = ((flags ^ attributes) & 0x30) | 0x1000;
     return 1;
-}
-
-void func_0600C2EC(void) {
-    SaturnSpriteResource* bank;
-    s32 i;
-    u16 slot;
-    u16 table;
-
-    DAT_0605AEA8 = DAT_06038FD6;
-    DAT_0605AEB0 = DAT_06038FD8;
-    for (i = 0; (bank = DAT_060645EC[i]) != NULL; i++) {
-        if (bank->palettes != NULL) {
-            bank->flags = func_0600AEE4(bank->palettes);
-        }
-    }
-    slot = g_SaturnSharedSpriteBank0Resource.flags + 15;
-    if (slot & 0x4000) {
-        table = LocalLookupTblNoToVram(slot & 0x0FFF);
-    } else {
-        table = SPR_2LookupTblNoToVram(slot & 0x0FFF);
-    }
-    DAT_06038DBC = table * 8 + 0x25C00000;
 }
 
 void func_0600C6E4(s32 arg0) {

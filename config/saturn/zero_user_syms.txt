@@ -41,6 +41,7 @@ _GetSpriteObjectGourTbl = 0x0600BD4C;
 _AllocGameSprite = 0x0600BE18;
 _func_0600C0C4 = 0x0600C0C4;
 _func_0600C298 = 0x0600C298;
+_SetLocalPalData = 0x0600C2EC;
 _SetGameoverToFrameBuffer = 0x0600C7E4;
 _ClearFrameBuffer = 0x0600CAB8;
 _Crc32 = 0x0600CB74;

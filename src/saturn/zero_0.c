@@ -818,8 +818,45 @@ void func_060082E8(void) {
     DAT_06057770 = 0;
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600831C, QueueVramTransfer);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008374, FlushVramTransfers);
+s32 QueueVramTransfer(void* dst, void* src, u32 size) {
+    VramTransfer* ptr;
+    s32 i;
+
+    ptr = DAT_060576B0;
+    for (i = DAT_06057770; i > 0; i--) {
+        if (ptr->src == src && ptr->dst == dst && ptr->size == size) {
+            return 1;
+        }
+        ptr++;
+    }
+    if (DAT_06057770 < 0x10) {
+        ptr->src = src;
+        ptr->dst = dst;
+        ptr->size = size;
+        DAT_06057770++;
+        return 1;
+    }
+    return 0;
+}
+
+void FlushVramTransfers(void) {
+    VramTransfer* ptr;
+    s32 i;
+
+    ptr = DAT_060576B0;
+    for (i = 0; i < DAT_06057770; i++, ptr++) {
+        s32 temp_r2 = (uptr)ptr->src & 0x0FF00000;
+        if (temp_r2 == 0x00200000) {
+            DMA_CpuMemCopy2(ptr->dst, ptr->src, ptr->size / 2);
+            while (DMA_CpuResult() == 2) {
+            }
+        } else if (temp_r2 == 0x06000000) {
+            DMA_ScuMemCopy(ptr->dst, ptr->src, ptr->size);
+            while (DMA_ScuResult() == 2) {
+            }
+        }
+    }
+}
 
 void func_0600841C(void) {
     s32 i;
@@ -1609,8 +1646,21 @@ void func_06009838(void) {
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60098F0, func_060098F0);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009AE8, func_06009AE8);
 
-// _UPDATE_BG
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009CCC, func_06009CCC);
+// original name: UPDATE_BG
+void func_06009CCC(void) {
+    DAT_0605c680.unk8 = DAT_0605c680.unk4;
+    DAT_0605c680.unk10 = DAT_0605c680.unkC;
+    DAT_0605c680.unk4 = g_Tilemap.scrollX.i.hi * 0x10000;
+    DAT_0605c680.unkC = g_Tilemap.scrollY.i.hi * 0x10000;
+    DAT_0605c680.unk3C = DAT_0605c680.unk34;
+    DAT_0605c680.unk40 = DAT_0605c680.unk38;
+    DAT_0605c680.unk34 = DAT_0605c680.unk4 + DAT_0605C100 * 0x10000;
+    DAT_0605c680.unk38 = DAT_0605c680.unkC + DAT_0605CD80 * 0x10000;
+    DAT_0605c680.unk18 = DAT_0605c680.g_ScrollDeltaX;
+    DAT_0605c680.unk20 = DAT_0605c680.g_ScrollDeltaY;
+    DAT_0605c680.g_ScrollDeltaX = DAT_0605c680.unk4 - DAT_0605c680.unk8;
+    DAT_0605c680.g_ScrollDeltaY = DAT_0605c680.unkC - DAT_0605c680.unk10;
+}
 
 void func_06009D30(void) {
     u32 i;
@@ -1679,7 +1729,7 @@ void func_0600A088(void) {
     u16* ptr;
     s32 i, j;
     u8 flag;
-    s32 temp;
+    s32 dst;
     u16 save;
 
     ptr = DAT_06038DD0;
@@ -1742,10 +1792,11 @@ void func_0600A088(void) {
             }
         }
     }
-    temp = VRAM_ADDR + SPR_2LookupTblNoToVram(0) * 8;
-    QueueVramTransfer(temp, HOST_TO_BUS16(DAT_06038DD0[0], 0x200), 0x200);
+    dst = VRAM_ADDR + SPR_2LookupTblNoToVram(0) * 8;
+    ((s32(*)())QueueVramTransfer)(
+        dst, HOST_TO_BUS16(DAT_06038DD0[0], 0x200), 0x200);
     if (DAT_06038DBC != 0) {
-        QueueVramTransfer(
+        ((s32(*)())QueueVramTransfer)(
             DAT_06038DBC, HOST_TO_BUS16(DAT_06038DD0[3], 0x20), 0x20);
     }
 }
@@ -1760,7 +1811,8 @@ void func_0600A240(s32 arg0) {
 
 // original name: SetCharTrans
 void SetCharTrans(u16 arg0, s32 arg1, s32 arg2) {
-    QueueVramTransfer(VRAM_ADDR + DAT_0605AEC0[arg0][0] * 8, arg2, arg1);
+    ((s32(*)())QueueVramTransfer)(
+        VRAM_ADDR + DAT_0605AEC0[arg0][0] * 8, arg2, arg1);
 }
 
 void LookupTblNoToVramAddr(u16 tableNo, u8* src) {
@@ -1771,7 +1823,7 @@ void LookupTblNoToVramAddr(u16 tableNo, u8* src) {
     } else {
         dst = VRAM_ADDR + SPR_2LookupTblNoToVram(tableNo & 0xFFF) * 8;
     }
-    QueueVramTransfer(dst, HOST_TO_BUS16(src, 0x20), 0x20);
+    ((s32(*)())QueueVramTransfer)(dst, HOST_TO_BUS16(src, 0x20), 0x20);
 }
 
 void func_0600A304(s32 gourTblNo, SprGourTbl* gourTbl) {
@@ -1869,12 +1921,48 @@ s32 GetEnemyPlayerCharaAddr(void) {
 #endif
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600AD98, InitPaletteRemapLuts);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600AE30, func_0600AE30);
+void InitPaletteRemapLuts(void) {
+    s32 i;
 
-u16 func_06007B34(SprLookupTbl* tbl);
-u16 func_06007B8C(SprLookupTbl* tbl);
-u16 func_06007BE0(SprLookupTbl* tbl);
+    memset(DAT_0605D910, 0, sizeof(DAT_0605D910));
+    func_0600AA18(0);
+    func_0600AA18(2);
+    for (i = 0; i < 0x100; i++) {
+        DAT_060577A0[i] = i;
+        DAT_060578A0[i] = 0;
+    }
+    for (i = 10; i < 0x100; i += 0x10) {
+        DAT_060577A0[i] = i & 0xF0U;
+        DAT_060578A0[i] = 10;
+    }
+    for (i = 0; i < 0x10; i++) {
+        DAT_060577A0[0xA0 + i] = i;
+        DAT_060578A0[0xA0 + i] = 0xA0;
+    }
+    DAT_060577A0[0xAA] = 0;
+    DAT_060578A0[0xAA] = 0xAA;
+}
+
+u16 func_0600AE30(void* src, SaturnSpriteImage* arg1, u16 colorMode) {
+    XyInt size;
+    u16 ret;
+
+    size.x = arg1->storedWidth * 2;
+    size.y = arg1->storedHeight * 2;
+    ret = AllocSpriteCharVram(colorMode, 0, &size, src);
+    arg1++;
+    while (arg1->storedWidth != 0) {
+        size.x = arg1->storedWidth * 2;
+        size.y = arg1->storedHeight * 2;
+        if (src != NULL) {
+            AllocSpriteCharVram(colorMode, 0, &size, (uptr)src + arg1->characterOffsetUnits * 8);
+        } else {
+            AllocSpriteCharVram(colorMode, 0, &size, NULL);
+        }
+        arg1++;
+    }
+    return ret;
+}
 
 u16 func_0600AEE4(u16* arg0) {
     s32 count;
@@ -1925,7 +2013,28 @@ void func_0600AFA8(SpriteObject* sprite, SaturnSpriteFrameHeader* frame) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B004, func_0600B004);
+void func_0600B004(SpriteObject* sprite, SaturnSpriteFrameHeader* frame) {
+    SpritePart* part;
+    SaturnSpritePart* src;
+    s32 i;
+    s32 count;
+
+    sprite->flags = (sprite->flags & ~0x3F08) | (frame->header & 0x3F08);
+    sprite->slotAndStreamId =
+        (sprite->slotAndStreamId & ~0x7F) | (frame->commandFlags & 0x7F);
+
+    count = (frame->header & 0x3F00) >> 8;
+    part = sprite->parts;
+    src = (SaturnSpritePart*)(frame + 1);
+
+    for (i = 0; i < count; i++, src++) {
+        u16 attributes =
+            (part->attributes & 0xE080) | (src->attributes & ~0xE080);
+        *((SaturnSpritePart*)part) = *src;
+        part->attributes = attributes;
+        part = part->next;
+    }
+}
 
 // original name: SetParts
 void SetParts(SpritePart* part, SaturnSpritePart* src, s32 count) {
@@ -1937,7 +2046,17 @@ void SetParts(SpritePart* part, SaturnSpritePart* src, s32 count) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B0B8, func_0600B0B8);
+void func_0600B0B8(SpritePart* part, SaturnSpritePart* src, s32 count) {
+    s32 i;
+
+    for (i = 0; i < count; i++, src++) {
+        u16 attributes =
+            (part->attributes & 0xE080) | (src->attributes & ~0xE080);
+        *((SaturnSpritePart*)part) = *src;
+        part->attributes = attributes;
+        part = part->next;
+    }
+}
 
 void func_0600B104(SpritePart* part, s32 arg1, s32 count) {
     s32 i;
@@ -1949,7 +2068,30 @@ void func_0600B104(SpritePart* part, s32 arg1, s32 count) {
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B12C, func_0600B12C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B1A8, AllocSpriteObject);
+
+SpriteObject* AllocSpriteObject(void) {
+    SpriteObject* obj;
+
+    if (g_SpriteObjectsInUse >= SPRITE_OBJECT_MAX) {
+        return NULL;
+    }
+    obj = g_SpriteObjectFreeList;
+    g_SpriteObjectFreeList = obj->next;
+    g_SpriteObjectsInUse++;
+    obj->flags = 0;
+    obj->slotAndStreamId &= 0xFF00;
+    obj->rotate = 0;
+    obj->scaleX = 0x40;
+    obj->scaleY = 0x40;
+    obj->unk0C = 0;
+    obj->unk0D = 0x80;
+    obj->zPriority = 0x80;
+    obj->subPixelX = 0;
+    obj->subPixelY = 0;
+    obj->posX = 0x02000000;
+    obj->posY = 0x01000000;
+    return obj;
+}
 
 void func_0600B234(void) {
     InitPaletteRemapLuts();
@@ -2219,16 +2361,16 @@ void func_0600C00C(void) {
         DAT_0605BECA = 13;
     }
     for (i = 5; (bank = DAT_06064650[i]) != NULL; i++) {
-        if (bank->palettes != NULL) {
-            if (bank->images != NULL) {
-                if (bank->flags & 0x4000) {
-                    bank->allocationIndex =
-                        func_0600AE30(NULL, bank->images, 0);
-                } else {
-                    bank->allocationIndex =
-                        func_0600AE30(NULL, bank->images, 8);
-                }
-            }
+        if (bank->palettes == NULL) {
+            continue;
+        }
+        if (bank->images == NULL) {
+            continue;
+        }
+        if (bank->flags & 0x4000) {
+            bank->allocationIndex = ((u16(*)())func_0600AE30)(NULL, bank->images, 0);
+        } else {
+            bank->allocationIndex = ((u16(*)())func_0600AE30)(NULL, bank->images, 8);
         }
     }
     DAT_06038FD4 = DAT_0605BECA;
@@ -2250,26 +2392,21 @@ extern SaturnSpriteResource** DAT_060645EC;
 
 void func_0600C114(void) {
     SaturnSpriteResource* bank;
-    SaturnSpriteImage* image;
-    s32 palette;
     s32 i;
 
     DAT_0605BECA = DAT_06038FD4;
-    bank = DAT_060645EC[0];
-    i = 0;
-    while (bank != NULL) {
-        if (bank->palettes != NULL) {
-            if (bank->images != NULL) {
-                if (bank->flags & 0x4000) {
-                    palette = 0;
-                } else {
-                    palette = 8;
-                }
-                bank->allocationIndex = func_0600AE30(0, bank->images, palette);
-            }
+    for (i = 0; (bank = DAT_060645EC[i]) != NULL; i++) {
+        if (bank->palettes == NULL) {
+            continue;
         }
-        i++;
-        bank = DAT_060645EC[i];
+        if (bank->images == NULL) {
+            continue;
+        }
+        if (bank->flags & 0x4000) {
+            bank->allocationIndex = ((u16(*)())func_0600AE30)(NULL, bank->images, 0);
+        } else {
+            bank->allocationIndex = ((u16(*)())func_0600AE30)(NULL, bank->images, 8);
+        }
     }
 }
 
@@ -2330,8 +2467,29 @@ void func_0600C298(s32 arg0) {
     DAT_0605AEA8 = prev;
 }
 
-// _SetLocalPalData
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C2EC, func_0600C2EC);
+static u16 LookupTblNoToVram(u16 arg0) {
+    if (arg0 & 0x4000) {
+        return ((u16(*)())LocalLookupTblNoToVram)(arg0 & 0xFFF);
+    } else {
+        return SPR_2LookupTblNoToVram(arg0 & 0xFFF);
+    }
+}
+
+// original name: SetLocalPalData
+void SetLocalPalData(void) {
+    SaturnSpriteResource* bank;
+    s32 i;
+
+    DAT_0605AEA8 = DAT_06038FD6;
+    DAT_0605AEB0 = DAT_06038FD8;
+    for (i = 0; (bank = DAT_060645EC[i]) != NULL; i++) {
+        if (bank->palettes == NULL) {
+            continue;
+        }
+        bank->flags = func_0600AEE4(bank->palettes);
+    }
+    DAT_06038DBC = VRAM_ADDR + LookupTblNoToVram(g_SaturnSharedSpriteBank0Resource.flags + 15) * 8;
+}
 
 s32 func_0600C3A8(u16* arg0, u16* arg1, u16* arg2, u16* arg3) {
     s32 ret;
