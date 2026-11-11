@@ -88,7 +88,6 @@ void func_0600A030();
 void ScrollEntitiesWithCamera(s32, s32, s32, s32);
 void func_800F2860();
 void HitDetection();
-void func_06009CCC();
 void func_0600FC04();
 void func_06071C3C();
 void StartColorOffsetFade(s32, s32);

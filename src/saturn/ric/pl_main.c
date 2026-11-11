@@ -65,10 +65,6 @@ static s16 func_80156DE4(void) {
     return 0;
 }
 
-typedef struct {
-    s16 buttonsCorrect;
-    s16 timer;
-} ButtonComboState;
 extern ButtonComboState g_RicComboButtons[2];
 extern s32 D_80175958[32];
 extern s32 D_801759D8[32];

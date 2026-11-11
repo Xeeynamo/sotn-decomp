@@ -141,7 +141,6 @@ s32 func_0606BB4C(void) {
     return 0;
 }
 
-void func_0600C2EC(void);
 void func_0600C1A0();
 
 void func_0606BEE4(void) {
@@ -153,7 +152,7 @@ void func_0606BEE4(void) {
     AllocGameSprite(g_PlayableCharacter);
     func_0600C1A0();
     func_0600C00C();
-    func_0600C2EC();
+    SetLocalPalData();
     func_0600C114();
     func_060645A4();
     DAT_0605D7DC = DAT_00252000;

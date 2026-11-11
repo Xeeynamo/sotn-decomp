@@ -3,7 +3,9 @@
 #define _SPR2_
 #include "spr.h"
 
-extern Uint32 SPR_SlaveParam;
+Uint32* SPR_SlaveCommand = NULL;
+Uint32 SPR_SlaveState = 0;
+Uint32 SPR_SlaveParam = 0;
 
 // func_06023108
 void SPR_InitSlaveSH(void) {}

@@ -7,7 +7,8 @@ extern EInit g_EInitObtainable;
 // this is how the original source code worked
 void MoveEntity(Entity*);
 
-#if VERSION >= VER_BETA_HD && VERSION <= VER_JP10 && !defined(STAGE_IS_NO0)
+#if VERSION >= VER_BETA_HD && (VERSION < VER_US || VERSION == VER_JP12) &&     \
+    !defined(STAGE_IS_NO0)
 static u32 padding = 0;
 #endif
 

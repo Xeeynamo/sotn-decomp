@@ -312,7 +312,16 @@ typedef struct {
     /* 0xA0 */ s16 origin;
     /* 0xA2 */ s16 spawnIndex;
     /* 0xA4 */ s16 entityIdMod;
+    /* 0xA6 */ s16 unkA6;
+    /* 0xA8 */ s16 unkA8;
+    /* 0xAA */ s16 argLow;
+    /* 0xAC */ s16 argHigh;
 } ET_Factory;
+
+typedef struct {
+    s16 buttonsCorrect;
+    s16 timer;
+} ButtonComboState;
 
 typedef struct {
     /* 0x7C */ u8 pad0[0x4];
@@ -582,8 +591,13 @@ typedef struct {
 typedef struct {
     /* 0x78 */ u8 padding[0x10];
     /* 0x88 */ struct Entity* parent;
-    /* 0x8C */ u8 pad8C[0x1E];
+    /* 0x8C */ u8 pad8C[0x1C];
+    /* 0xA8 */ u8 anim;
+    /* 0xA9 */ u8 padA9;
     /* 0xAA */ s16 equipId;
+    /* 0xAC */ s16 subweaponId;
+    /* 0xAE */ u8 padAE[2];
+    /* 0xB0 */ void* frames;
 } ET_Weapon;
 
 typedef struct {
@@ -894,7 +908,7 @@ SpriteObject* CreateSpriteObject(
 #define BSS __attribute__((section(".bss")))
 #endif
 
-#define SPRITE_OBJECT_MAX 255 /* 0x0FF */
+#define SPRITE_OBJECT_MAX 256 /* 0x100 */
 #define SPRITE_PART_MAX 640   /* 0x280 */
 
 typedef struct {
@@ -1162,12 +1176,13 @@ typedef struct {
     /* 0x000 */ Collider colFloor[4];
     /* 0x090 */ Collider colCeiling[4];
     /* 0x120 */ Collider colWall[14];
-    char pad318[0x8];
+    /* 0x318 */ s32 unk318;
+    char pad31C[4];
     u16 unk320;
     u16 unk322;
     char pad324[4];
     /* 0x328 */ s32 anim; // index into the character's animation table
-    char pad32C[0x30];
+    /* 0x32C */ s32 unk32C[12];
     /* 0x35C */ u16 poseTimer;
     /* 0x35E */ u16 pose;
     /* 0x360 */ AnimationFrame* animFrames;
@@ -1175,28 +1190,36 @@ typedef struct {
     /* 0x394 */ u8 unk394;
     /* 0x395 */ u8 unk395;
     /* 0x396 */ u16 unk396;
-    char pad398[4];
+    /* 0x398 */ u8 unk398;
+    /* 0x399 */ u8 unk399;
+    /* 0x39A */ u8 unk39A;
+    /* 0x39B */ u8 unk39B;
     /* 0x39C */ u8 unk39C;
     /* 0x39D */ u8 unk39D;
     /* 0x39E */ s8 unk39E;
-    char pad39F[0x11];
+    char pad39F[9];
+    /* 0x3A8 */ u8 unk3A8;
+    char pad3A9[7];
     /* 0x3B0 */ u32 padPressed;
     /* 0x3B4 */ u32 padTapped;
     /* 0x3B8 */ u32 padHeld;
     /* 0x3BC */ u32 padSim;
-    /* 0x3C0 */ s32 : 32;
+    /* 0x3C0 */ u32 D_80072EF8;
     /* 0x3C4 */ s32 demo_timer;
     /* 0x3C8 */ s16 timers[16]; // the array is bigger than PSX
     u16 unk3E8;
     char pad3EA[2];
     /* 0x3EC */ s32 vram_flag;
     /* 0x3F0 */ s32 unk04; // copy of the previous field
-    char pad3F4[4];
+    /* 0x3F4 */ s32 unk08;
     /* 0x3F8 */ u32 status;
     /* 0x3FC */ u32 unk3FC;
-    char pad400[8];
+    /* 0x400 */ u32 unk14;
+    /* 0x404 */ s32 unk18;
     /* 0x408 */ s32 warp_flag;
-    char pad40C[0x20];
+    /* 0x40C */ s32 unk20;
+    /* 0x410 */ u32 unk24;
+    char pad414[0x18];
     /* 0x42C */ u16 damagePalette;
     /* 0x42E */ u16 high_jump_timer;
     /* 0x430 */ u16 unk44;
@@ -1207,7 +1230,7 @@ typedef struct {
     /* 0x43A */ u16 unk4E;
     /* 0x43C */ u16 prev_step;
     /* 0x43E */ u16 prev_step_s;
-    char pad440[0x2];
+    /* 0x440 */ u16 unk54;
     /* 0x442 */ u16 healKind;   // 0 = none, 1 = potion, 2 = high potion
     /* 0x444 */ u16 healAmount; // hit points restored by func_060B0638
     /* 0x446 */ u16 damageTaken;
@@ -1218,7 +1241,9 @@ typedef struct {
     /* 0x450 */ u16 grabDamage;
     /* 0x452 */ s16 unk452;
     u16 unk454;
-    char pad456[6];
+    char pad456[2];
+    /* 0x458 */ u16 unk6C;
+    /* 0x45A */ u16 unk6E;
     /* 0x45C */ u16 unk70;
     /* 0x45E */ u16 unk72;
     /* 0x460 */ u32 unk74;

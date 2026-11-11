@@ -1,10 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
-
-typedef struct {
-    u16 padding;
-    u8 ranges[10][2];
-} AlucardEntityRanges;
+#include "alucard.h"
 
 AlucardEntityRanges g_AlucardEntityRanges = {
     0,

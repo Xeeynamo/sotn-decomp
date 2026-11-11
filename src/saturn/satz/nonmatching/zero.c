@@ -105,9 +105,6 @@ extern SprSpCmd* d_0605AEAC;
 extern s32 DAT_0603900C[];
 extern s32 (*DAT_0603904C[])(Primitive* prim);
 
-s32 func_06007B8C(s16* colors);
-u16 func_06007BE0(s16* colors, s32 arg1);
-u16 func_06007B34(SprLookupTbl* tbl);
 #include "../../zero/text.h"
 
 extern SprSpCmd* d_0605AEAC;
@@ -201,11 +198,8 @@ static void FadeColors(
     s16 fromR, s16 fromG, s16 fromB, s16 toR, s16 toG, s16 toB);
 
 static void ColorOffsetSet(s16 value);
-void func_06009CCC(void);
 
-s16 func_0600AE30(u8* data, SaturnSpriteImage* images, s32 colorMode);
 s16 func_0600AEE4(u16* palettes);
-void func_0600C2EC(void);
 static void sotn_satz_cmd_offset_vertex(SprSpCmd* cmd, s32 i, s16 dx, s16 dy);
 s32 rsin(s32 angle);
 s32 rcos(s32 angle);
@@ -755,36 +749,6 @@ static const char* StageMapFile(void) {
     return g_StageFileRecords[stage].map;
 }
 
-s32 QueueVramTransfer(u32 dst, void* src, s32 size) {
-    s32 i;
-
-    for (i = 0; i < DAT_06057770; i++) {
-        if (DAT_060576B0[i].src == src && DAT_060576B0[i].dst == dst &&
-            DAT_060576B0[i].size == size) {
-            return 1;
-        }
-    }
-    if (DAT_06057770 > 15) {
-        return 0;
-    }
-    DAT_060576B0[i].src = src;
-    DAT_060576B0[i].dst = dst;
-    DAT_060576B0[i].size = size;
-    DAT_06057770++;
-    return 1;
-}
-
-void FlushVramTransfers(void) {
-    s32 i;
-
-    for (i = 0; i < DAT_06057770; i++) {
-        DMA_ScuMemCopy(satz_bus_pointer(DAT_060576B0[i].dst),
-                       DAT_060576B0[i].src, DAT_060576B0[i].size);
-        while (DMA_ScuResult() == 2) {
-        }
-    }
-}
-
 static void FadeColors(
     s16 fromR, s16 fromG, s16 fromB, s16 toR, s16 toG, s16 toB) {
     DAT_06057774[0] = fromR;
@@ -799,27 +763,6 @@ static void ColorOffsetSet(s16 value) {
     DAT_0605778C = value;
     DAT_0605778A = value;
     DAT_06057788 = value;
-}
-
-void func_06009CCC(void) {
-    UNK_0605c680* cam = &DAT_0605c680;
-    s32 oldX = cam->unk4;
-    s32 oldY = cam->unkC;
-    s32 x = g_Tilemap.scrollX.i.hi << 16;
-    s32 y = g_Tilemap.scrollY.i.hi << 16;
-
-    cam->unk8 = oldX;
-    cam->unk10 = oldY;
-    cam->unk4 = x;
-    cam->unk3C = cam->unk34;
-    cam->unkC = y;
-    cam->unk40 = cam->unk38;
-    cam->unk34 = (DAT_0605C100 << 16) + x;
-    cam->unk38 = (DAT_0605CD80 << 16) + y;
-    cam->unk18 = cam->g_ScrollDeltaX;
-    cam->g_ScrollDeltaX = x - oldX;
-    cam->unk20 = cam->g_ScrollDeltaY;
-    cam->g_ScrollDeltaY = y - oldY;
 }
 
 u16 func_0600A77C(u16 frame, u16 mode, SaturnSpriteImage* images) {
@@ -944,95 +887,6 @@ void func_0600AB60(void) {
         ((s32*)DAT_0605D910)[71] = DAT_06064668[2].sourceOffset;
         ((s32*)DAT_0605D910)[72] = DAT_06064668[2].byteCount;
     }
-}
-
-void InitPaletteRemapLuts(void) {
-    s32 i;
-
-    memset(DAT_0605D910, 0, 0x248);
-    func_0600AA18(0);
-    func_0600AA18(2);
-    for (i = 0; i <= 0xFF; i++) {
-        DAT_060577A0[i] = i;
-        DAT_060578A0[i] = 0;
-    }
-    for (i = 10; i <= 0xFF; i += 0x10) {
-        DAT_060577A0[i] = (u16)i & 0xF0;
-        DAT_060578A0[i] = 10;
-    }
-    for (i = 0; i <= 0xF; i++) {
-        DAT_060577A0[0xA0 + i] = i;
-        DAT_060578A0[0xA0 + i] = 0xA0;
-    }
-    DAT_060577A0[0xAA] = 0;
-    DAT_060578A0[0xAA] = 0xAA;
-}
-
-s16 func_0600AE30(u8* data, SaturnSpriteImage* images, s32 colorMode) {
-    u16 size[2];
-    s16 first;
-
-    size[0] = images->storedWidth * 2;
-    size[1] = images->storedHeight * 2;
-    first = AllocSpriteCharVram((u16)colorMode, 0, size, data);
-    for (images++; images->storedWidth != 0; images++) {
-        size[0] = images->storedWidth * 2;
-        size[1] = images->storedHeight * 2;
-        AllocSpriteCharVram(
-            (u16)colorMode, 0, size,
-            data != NULL ? data + images->characterOffsetUnits * 8 : NULL);
-    }
-    return first;
-}
-
-s16 func_0600AEE4(u16* palettes) {
-    u16 header = palettes[0];
-    s32 count = header & 0x0FFF;
-    s32 i;
-    u16 first;
-
-    if ((header & 0xF000) == 0x4000) {
-        first = func_06007B8C((s16*)(palettes + 1));
-        for (i = 1; i < count; i++) {
-            func_06007B8C((s16*)(palettes + 1 + i * 16));
-        }
-    } else if ((header & 0xF000) == 0x2000) {
-        first = func_06007BE0((s16*)(palettes + 1), 0);
-        for (i = 1; i < count; i++) {
-            func_06007BE0((s16*)(palettes + 1 + i * 16), 0);
-        }
-    } else {
-        count = header;
-        first = func_06007B34((SprLookupTbl*)(palettes + 1));
-        for (i = 1; i < count; i++) {
-            func_06007B34((SprLookupTbl*)(palettes + 1 + i * 16));
-        }
-    }
-    return first;
-}
-
-SpriteObject* AllocSpriteObject(void) {
-    SpriteObject* obj;
-
-    if (g_SpriteObjectsInUse > 0xFF) {
-        return NULL;
-    }
-    obj = g_SpriteObjectFreeList;
-    g_SpriteObjectFreeList = obj->next;
-    g_SpriteObjectsInUse++;
-    obj->flags = 0;
-    obj->slotAndStreamId &= 0xFF00;
-    obj->rotate = 0;
-    obj->scaleX = 0x40;
-    obj->scaleY = 0x40;
-    obj->unk0C = 0;
-    obj->unk0D = 0x80;
-    obj->zPriority = 0x80;
-    obj->subPixelX = 0;
-    obj->subPixelY = 0;
-    obj->posX = 0x02000000;
-    obj->posY = 0x01000000;
-    return obj;
 }
 
 void func_0600B254(void) {
@@ -1202,28 +1056,6 @@ s32 func_0600B954(
     return 1;
 }
 
-void func_0600C2EC(void) {
-    SaturnSpriteResource* bank;
-    s32 i;
-    u16 slot;
-    u16 table;
-
-    DAT_0605AEA8 = DAT_06038FD6;
-    DAT_0605AEB0 = DAT_06038FD8;
-    for (i = 0; (bank = DAT_060645EC[i]) != NULL; i++) {
-        if (bank->palettes != NULL) {
-            bank->flags = func_0600AEE4(bank->palettes);
-        }
-    }
-    slot = g_SaturnSharedSpriteBank0Resource.flags + 15;
-    if (slot & 0x4000) {
-        table = LocalLookupTblNoToVram(slot & 0x0FFF);
-    } else {
-        table = SPR_2LookupTblNoToVram(slot & 0x0FFF);
-    }
-    DAT_06038DBC = table * 8 + 0x25C00000;
-}
-
 void func_0600C6E4(s32 arg0) {
     s32 i;
 
@@ -1333,75 +1165,6 @@ void func_0600DE38(void) {
     for (i = start; i < end; i++) {
         SpMstCmd[i].grshAddr += gour;
     }
-}
-
-s32 rsin(s32 angle) {
-    s32 a = angle & 0xFFF;
-
-    if (a <= 0x3FF) {
-        return rsin_tbl[a];
-    }
-    if (a <= 0x7FF) {
-        return rsin_tbl[0x7FF - a];
-    }
-    if (a <= 0xBFF) {
-        return -rsin_tbl[a - 0x800];
-    }
-    return -rsin_tbl[0xFFF - a];
-}
-
-s32 rcos(s32 angle) {
-    s32 a = angle & 0xFFF;
-
-    if (a <= 0x3FF) {
-        return rsin_tbl[0x3FF - a];
-    }
-    if (a <= 0x7FF) {
-        return -rsin_tbl[a - 0x400];
-    }
-    if (a <= 0xBFF) {
-        return -rsin_tbl[0xBFF - a];
-    }
-    return rsin_tbl[a - 0xC00];
-}
-
-void rsincos(s32 angle, s32* sinOut, s32* cosOut) {
-    s32 a = angle & 0xFFF;
-
-    if (a <= 0x3FF) {
-        *sinOut = rsin_tbl[a];
-        *cosOut = rsin_tbl[0x3FF - a];
-    } else if (a <= 0x7FF) {
-        *sinOut = rsin_tbl[0x7FF - a];
-        *cosOut = -rsin_tbl[a - 0x400];
-    } else if (a <= 0xBFF) {
-        *sinOut = -rsin_tbl[a - 0x800];
-        *cosOut = -rsin_tbl[0xBFF - a];
-    } else {
-        *sinOut = -rsin_tbl[0xFFF - a];
-        *cosOut = rsin_tbl[a - 0xC00];
-    }
-}
-
-u32 SquareRoot0(s32 value) {
-    u32 x = value;
-    u32 bits, root, step, next;
-
-    if (x == 0) {
-        return 0;
-    }
-    bits = 1;
-    for (step = x; step > 1; step >>= 1) {
-        bits++;
-    }
-    root = 1u << ((bits - 1) >> 1);
-    for (step = root >> 1; step != 0; step >>= 1) {
-        next = root + step;
-        if (next * next <= x) {
-            root = next;
-        }
-    }
-    return root;
 }
 
 static void SoundSetRequest(s32 fx) {
@@ -3195,3 +2958,176 @@ void func_0601AC48(void) {
 void func_06030DF0(void) {}
 
 #include <stdarg.h>
+
+#define R16(p, o) (*(u16*)((u8*)(p) + (o)))
+#define R32(p, o) (*(s32*)((u8*)(p) + (o)))
+extern u8 DAT_0604B5E0[];
+
+static u16 StreamSlotPatterns(
+    u8* slot, u32 vram, u8* src, s32 size, u16 frame) {
+    u16 chr;
+
+    vram += R32(slot, 8);
+    QueueVramTransfer(vram, src, size);
+    chr = (u16)(vram >> 3);
+    R16(slot, 0xE) = 1;
+    R16(slot, 0x10 + R16(slot, 0xC) * 2) = frame;
+    R16(slot, 0x1A + R16(slot, 0xC) * 2) = chr;
+    R32(slot, 8) += size;
+    R16(slot, 0xC)++;
+    return chr;
+}
+
+u16 func_0600A490(u8* record, u16 frame, s32 flag, s32 playableCharacter) {
+    SaturnPlayerGraphicsRecord* gfx;
+    u8* slot = record + 0xA8;
+    u8* src;
+    u8* dst2;
+    s32 size;
+    u16 chr0, chr1;
+
+    if (playableCharacter == 1 || playableCharacter == 2) {
+        gfx = &DAT_06064668[frame];
+    } else {
+        gfx = &DAT_06064668[frame + 3];
+    }
+    src = g_WorkBuffer.load.data + R32(slot, 8);
+    dst2 = DAT_0604B5E0 + R32(slot, 8);
+    size = DecompressLZSS(
+        sotn_satz_retail_address(gfx->sourceOffset), src, gfx->byteCount);
+    if (R32(record, 0xC) != 0) {
+        MapBytesThroughLut(src, dst2, size);
+    } else {
+        func_0600A5FC(src, src, dst2, size);
+    }
+    chr0 = StreamSlotPatterns(
+        slot, R32(record, 0x8C + R32(record, 8) * 4), src, size, frame);
+    chr1 = StreamSlotPatterns(
+        record + 0xCC, R32(record + 0xCC, 4), dst2, size, frame);
+    return flag ? chr1 : chr0;
+}
+
+void func_0600B12C(SpriteObject* dst, SpriteObject* src) {
+    SpritePart* d = dst->parts;
+    SpritePart* s = src->parts;
+    s32 count = (src->flags >> 8) & 0x3F;
+
+    while (d != NULL && s != NULL) {
+        d->attributes = s->attributes;
+        d->offsetX = s->offsetX;
+        d->offsetY = s->offsetY;
+        d->imageIndex = s->imageIndex;
+        d->rotate = s->rotate;
+        d->scaleX = s->scaleX;
+        d->scaleY = s->scaleY;
+        d = d->next;
+        s = s->next;
+        if (--count <= 0) {
+            break;
+        }
+    }
+    dst->flags = src->flags;
+    dst->slotAndStreamId =
+        (dst->slotAndStreamId & 0xFF00) | (src->slotAndStreamId & 0xFF);
+    dst->charBase = src->charBase;
+    dst->clutBase = src->clutBase;
+    dst->rotate = src->rotate;
+    dst->scaleX = src->scaleX;
+    dst->scaleY = src->scaleY;
+    dst->unk0C = src->unk0C;
+    dst->unk0D = src->unk0D;
+    dst->zPriority = src->zPriority;
+    dst->subPixelX = src->subPixelX;
+    dst->subPixelY = src->subPixelY;
+    dst->posX = src->posX;
+    dst->posY = src->posY;
+}
+
+s32 func_0600BA24(
+    SprSpCmd* cmd, SpriteObject* obj, SpritePart* part, s32* pos) {
+    u16 flags = obj->flags;
+    u16 attributes = part->attributes;
+    SaturnSpriteImage image = obj->images[part->imageIndex];
+    s32 x = pos[0];
+    s32 y = pos[1];
+    s32 m[4];
+    MthXy offset;
+    s32 scale, rotate, angle, base;
+    s16 ax, bx, cx, dx, lo, hi;
+
+    m[1] = 0;
+    m[2] = 0;
+    scale = (flags & 0x40) ? obj->scaleX : 0x40;
+    if (scale == 0x40) {
+        m[0] = image.storedWidth << 16;
+        offset.x = part->offsetX << 16;
+    } else {
+        m[0] = (image.storedWidth * scale) << 10;
+        offset.x = (part->offsetX * scale) << 10;
+    }
+    scale = (flags & 0x40) ? obj->scaleY : 0x40;
+    if (scale == 0x40) {
+        m[3] = image.storedHeight << 16;
+        offset.y = part->offsetY << 16;
+    } else {
+        m[3] = (image.storedHeight * scale) << 10;
+        offset.y = (part->offsetY * scale) << 10;
+    }
+    rotate = (flags & 0x40) ? obj->rotate : 0;
+    angle = (s16)(part->rotate + rotate);
+    if (rotate != 0) {
+        func_0600E5A4(&offset, rotate);
+    }
+    if (angle != 0) {
+        func_0600BCE0(m, angle);
+    }
+    if (flags & 0x10) {
+        m[0] = -m[0];
+        m[2] = -m[2];
+        x -= offset.x;
+    } else {
+        x += offset.x;
+    }
+    if (flags & 0x20) {
+        m[1] = -m[1];
+        m[3] = -m[3];
+        y -= offset.y;
+    } else {
+        y += offset.y;
+    }
+
+    base = x - m[2] + 0x8000;
+    cmd->ax = ax = (u32)(base - m[0]) >> 16;
+    cmd->bx = bx = (u32)(base + m[0]) >> 16;
+    base = x + m[2] + 0x8000;
+    cmd->cx = cx = (u32)(base + m[0]) >> 16;
+    cmd->dx = dx = (u32)(base - m[0]) >> 16;
+    if (m[2] > 0) {
+        lo = ax < bx ? ax : bx;
+        hi = cx >= dx ? cx : dx;
+    } else {
+        lo = cx < dx ? cx : dx;
+        hi = ax >= bx ? ax : bx;
+    }
+    if (hi < 0 || lo > 319) {
+        return 0;
+    }
+    base = y - m[3] + 0x8000;
+    cmd->ay = ax = (u32)(base - m[1]) >> 16;
+    cmd->by = bx = (u32)(base + m[1]) >> 16;
+    base = y + m[3] + 0x8000;
+    cmd->cy = cx = (u32)(base + m[1]) >> 16;
+    cmd->dy = dx = (u32)(base - m[1]) >> 16;
+    if (m[3] > 0) {
+        lo = ax < bx ? ax : bx;
+        hi = cx >= dx ? cx : dx;
+    } else {
+        lo = cx < dx ? cx : dx;
+        hi = ax >= bx ? ax : bx;
+    }
+    if (hi < 0 || lo > 239) {
+        return 0;
+    }
+    cmd->control = (attributes & 0x30) | 0x1002;
+    return 1;
+}

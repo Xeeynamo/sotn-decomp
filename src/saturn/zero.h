@@ -293,9 +293,11 @@ void DestroySpriteObject(SpriteObject*);
 extern u32 g_randomNext;
 extern s16* DAT_06039128[];
 void func_0600C18C();
+void SetLocalPalData(void);
 void func_0600BF08();
 void func_0600BEA8();
 SpriteObject* AllocSpriteObject(void);
+struct SprGourTbl* GetSpriteObjectGourTbl(SpriteObject* obj);
 extern s32 g_SpritePartsInUse;               /* 0x06038DB8 */
 extern s32 g_SpriteObjectsInUse;             /* 0x06038DB4 */
 extern s32 g_SpriteListCount;                /* 0x06038DB0 */
@@ -414,14 +416,16 @@ void func_0600B234(void);
 void func_0600DAB4(void);
 void func_06009058(u16 arg0);
 void func_06009AE8(s32, Unk0605CD90*, UNK_0605c680*);
+void func_06009CCC(void);
 void func_06009D60(u32);
 void func_06009F84(Unk0605CD90*);
+void func_0600B004(SpriteObject* sprite, SaturnSpriteFrameHeader* frame);
 void SPR_2OpenCommand(Uint16);
 extern MthMatrix DAT_060579A8[2];
 typedef struct {
     void* src;
-    u32 dst;
-    s32 size;
+    void* dst;
+    u32 size;
 } VramTransfer;
 extern VramTransfer DAT_060576B0[16];
 extern s8 DAT_06057F50[PER_WORK_SIZE(1, 2)];
@@ -437,17 +441,29 @@ typedef struct {
 } unkStruct;
 
 typedef struct {
+    s32 unk0;
+    u32 unk4;
+    s32 unk8;
+    s16 unkC;
+    s16 unkE;
+    unkStruct unk10;
+} unkStruct2;
+
+typedef struct {
     s16 : 16;
-    s16 : 16;
+    s16 unk2;
     s32 unk4;
     s32 unk8;
     s32 unkC;
     s32 unk10;
     unkStruct unk14[6];
-    s32 unk8C[7]; // pad
-    s32 unkA8;
-    s32 unkAC[30]; // pad
-} UNK0605D910;     // size: 0x124
+    s32 unk8C[7];
+    unkStruct2 unkA8[3];
+    s32 unk114;
+    s32 unk118;
+    s32 unk11C;
+    s32 unk120;
+} UNK0605D910; // size: 0x124
 
 extern UNK0605D910 DAT_0605D910[2];
 extern char DAT_0605DD70[];
@@ -464,6 +480,7 @@ extern s16 DAT_06057788;
 extern s16 DAT_0605778A;
 extern s16 DAT_0605778C;
 extern u8 DAT_060577A0[];
+extern u8 DAT_060578A0[];
 void func_06008AB4(void);
 void func_0600BD68(void);
 void SetCurrentMatrixBinAngle(MthXyz* rot, MthXyz* pos);
@@ -492,7 +509,6 @@ extern u16 DAT_06038DA0[];
 extern s32 DAT_06038FDC;
 extern u8* DAT_060579A4;
 u16* func_0600CB04(s32 col, s32 row);
-extern u8 DAT_060578A0[];
 void rsincos(s32 angle, s32* sinOut, s32* cosOut);
 long ratan2(long dx, long dy);
 void func_0600BF38();

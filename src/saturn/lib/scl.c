@@ -40,13 +40,13 @@ extern Uint16 SclRPMD;
 
 extern Uint16 SclRotateTableMode;
 
-extern Uint32 SclColRamAlloc256[];
-extern Uint32 SclColRamAlloc2048[];
+extern Uint32 SclColRamAlloc256[8];
+extern Uint32 SclColRamAlloc2048[1];
 
 extern Uint16* regaddr;
 
-extern Uint32 SclAddrLsTbl[];
-extern Uint32 SclAddrCsTbl[];
+extern Uint32 SclAddrLsTbl[2];
+extern Uint32 SclAddrCsTbl[2];
 extern Uint16 SclLengthLsTbl;
 extern Uint16 SclLengthCsTbl;
 

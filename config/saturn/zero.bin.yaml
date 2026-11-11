@@ -271,7 +271,8 @@ segments:
       - [0x43620, .data, zero/fontmap]
       - [0x43798, .data, zero/stgfiles]
       - [0x44140, .data, zero/sysflag]
-      - [0x44144, .data, lib/spr/spr_data]
+      - [0x44144, .data, lib/spr/spr_1c]
+      - [0x44178, .data, lib/spr/spr_slv]
 
       # SYS vars
       - start: 0x44184
