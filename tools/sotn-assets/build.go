@@ -77,6 +77,11 @@ func ninjaStampValue(versionStr string) string {
 			stamp += "," + key
 		}
 	}
+	for _, key := range []string{"SOTN_PSP_COMPILER", "SOTN_PSP_MWCC"} {
+		if value, ok := os.LookupEnv(key); ok {
+			stamp += "," + key + "=" + value
+		}
+	}
 	return stamp
 }
 

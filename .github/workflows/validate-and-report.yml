@@ -20,6 +20,13 @@ on:
           - native64
           - dos
         default: native64
+      psp_compiler:
+        description: PSP compiler backend
+        type: choice
+        options:
+          - native64
+          - wibo
+        default: native64
 
 concurrency:
   group: ${{ github.ref }}-${{ github.job }}-${{ github.event_name }}-${{ github.number }}
@@ -37,6 +44,7 @@ jobs:
     environment: ${{ (github.event_name != 'pull_request_target' || contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.pull_request.author_association)) && '' || 'ci-secrets' }}
     env:
       VERSION: ${{ matrix.version }}
+      SOTN_PSP_COMPILER: ${{ inputs.psp_compiler || 'native64' }}
       FROGRESS_API_BASE_URL: ${{ secrets.FROGRESS_API_BASE_URL }}
       FROGRESS_API_SECRET: ${{ secrets.FROGRESS_API_SECRET }}
       DISCORD_PROGRESS_WEBHOOK: ${{ secrets.DISCORD_PROGRESS_WEBHOOK }}
@@ -99,6 +107,7 @@ jobs:
     environment: ${{ (github.event_name != 'pull_request_target' || contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.pull_request.author_association)) && '' || 'ci-secrets' }}
     env:
       DISCORD_PROGRESS_WEBHOOK: ${{ secrets.DISCORD_PROGRESS_WEBHOOK }}
+      SOTN_PSP_COMPILER: ${{ inputs.psp_compiler || 'native64' }}
     steps:
       - name: Install requirements
         run: sudo apt-get install binutils-mipsel-linux-gnu
@@ -222,6 +231,7 @@ jobs:
     runs-on: ubuntu-24.04
     env:
       VERSION: ${{ matrix.version }}
+      SOTN_PSP_COMPILER: ${{ inputs.psp_compiler || 'native64' }}
     steps:
       - name: Install requirements
         run: sudo apt-get install binutils-mipsel-linux-gnu
@@ -279,6 +289,7 @@ jobs:
     runs-on: ubuntu-24.04
     env:
       VERSION: ${{ matrix.version }}
+      SOTN_PSP_COMPILER: ${{ inputs.psp_compiler || 'native64' }}
     steps:
       - name: Install requirements
         run: sudo apt-get install binutils-mipsel-linux-gnu

@@ -936,13 +936,24 @@ with open(build_ninja, "w") as f:
         description="psx strip $in",
     )
     extra_mw_flags = "--skip-asm" if sotn_progress_report else ""
+    psp_compiler = os.environ.get("SOTN_PSP_COMPILER", "native64")
+    if psp_compiler == "native64":
+        mwcc_flags = "--mwcc-path " + os.environ.get(
+            "SOTN_PSP_MWCC", "bin/mwccpsp-native64"
+        )
+    elif psp_compiler == "wibo":
+        if "SOTN_PSP_MWCC" in os.environ:
+            raise SystemExit("SOTN_PSP_MWCC cannot be used with SOTN_PSP_COMPILER=wibo")
+        mwcc_flags = "--mwcc-path bin/mwccpsp.exe --use-wibo --wibo-path bin/wibo"
+    else:
+        raise SystemExit("SOTN_PSP_COMPILER must be either 'native64' or 'wibo'")
     nw.rule(
         "psp-cc",
         command=(
             "VERSION=$version"
             " tools/sotn_str/target/release/sotn_str process -p -f $in $str_flags"
             f" | bin/mw -o $out {extra_mw_flags}"
-            " --mwcc-path bin/mwccpsp.exe --use-wibo --wibo-path bin/wibo --as-path tools/pspas/target/release/pspas"
+            f" {mwcc_flags} --as-path tools/pspas/target/release/pspas"
             " --asm-dir asm/pspeu --macro-inc-path include/macro.inc "
             " -gccdep -MD"  # for metrowerks, "system" headers seem to be anything included with angle brackets
             f" -gccinc -I$src_dir -Iinclude -Iinclude/pspsdk -Iinclude/psxsdk -D_internal_version_$version -DSOTN_STR {extra_cpp_defs} $cpp_flags -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck"
