@@ -1,20 +1,35 @@
-#include "../sattypes.h"
-#include "../inc_asm.h"
-
 #define _SPR2_
 #include "spr.h"
 #include "../machine.h"
 
-extern Uint16 SpEraseLTPoint;
-extern Uint16 SpEraseRBPoint;
-extern Uint16 EraseData;
-extern Uint16 EraseLeftX;
-extern Uint16 EraseTopY;
-extern Uint16 EraseRightX;
-extern Uint16 EraseBotY;
-extern Uint16 BitWidth;
+Sint32 SpInitialFlag = 0;
+// TODO import these symbols here
+extern Sint32 SpScreenX;
+extern Sint32 SpScreenY;
+extern Uint16 SpTvMode;
+extern Uint16 SpFbcrMode;
+extern Uint16 SpDie;
+extern Uint16 SpDil;
 
-extern XyInt scrSize[8];
+static Uint16 SpEraseLTPoint = 0;
+static Uint16 SpEraseRBPoint = 0;
+static Uint16 EraseData = 0;
+static Uint16 EraseLeftX = 0;
+static Uint16 EraseTopY = 0;
+static Uint16 EraseRightX = 0;
+static Uint16 EraseBotY = 0;
+static Uint16 BitWidth = 0;
+
+static XyInt scrSize[8] = {
+    {320, 224}, /* SPR_TV_320X224  */
+    {320, 240}, /* SPR_TV_320X240  */
+    {352, 224}, /* SPR_TV_352X224  */
+    {352, 240}, /* SPR_TV_352X240  */
+    {640, 224}, /* SPR_TV_640X224  */
+    {640, 240}, /* SPR_TV_640X240  */
+    {704, 224}, /* SPR_TV_704X224  */
+    {704, 240}, /* SPR_TV_704X240  */
+};
 
 // func_060217EC
 void SPR_Initial(Uint8** VRAM) {

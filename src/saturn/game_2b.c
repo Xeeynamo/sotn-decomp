@@ -1540,8 +1540,6 @@ void SyncSpriteObjectPosUnchecked(Entity* entity, s16* offset) {
     temp->posY = entity->posY.val;
 }
 
-void func_0600B004(SpriteObject* sprite, SaturnSpriteFrameHeader* frame);
-
 u32 AnimateEntityWithSpriteData(
     Entity* entity, u8* frames, SaturnSpriteFrameHeader** spriteFrames) {
     SpritePart* parts;

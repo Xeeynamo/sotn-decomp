@@ -525,7 +525,7 @@ void func_0606797C(char* str, s16* arg1, s32 arg2) {
 
 void func_06067A04(void) {
     s32 temp = 1;
-    s32 temp2 = (DAT_0605AEC0[temp][0] * 8) + VRAM_ADDR;
+    s32 dst = (DAT_0605AEC0[temp][0] * 8) + VRAM_ADDR;
 
-    QueueVramTransfer(temp2, g_WorkBuffer.stage.vram, 0x1800);
+    QueueVramTransfer(dst, g_WorkBuffer.stage.vram, 0x1800);
 }

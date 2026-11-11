@@ -51,7 +51,6 @@ void FreePrimitives(s32 primIndex);
 void SyncSpriteObjectPosUnchecked(Entity* self, s16* offset);
 void DestroyEntity(Entity* entity);
 
-void func_0600B004(SpriteObject* sprite, SaturnSpriteFrameHeader* frame);
 void MoveEntity(Entity*);
 void func_0600FB0C(s32);
 SpriteObject* CreateSpriteObject(
