@@ -543,6 +543,83 @@ static void sit_down(void) {
 
 int ReduceWeapon(s32 hand);
 
+s32 func_0606FC80(SubweaponDef* subwpn, s16 subweaponId, s16 useHearts);
+void func_060C1618(Entity* self);
+
+static void alu_attack_voice(void) {
+    s16 sfx[4] = {0x708, 0x709, 0x70A, 0x70B};
+    u32 r = (MTH_GetRand() >> 7) & 3;
+
+    if (r <= 3) {
+        PlaySfx(sfx[r]);
+    }
+}
+
+static void alu_attack_pose(Equipment* item, s32 anim) {
+    set_anim(anim);
+    g_Player.unk46 = (u8)item->unk10 + 0x8001;
+    g_Player.unk54 = item->lockDuration;
+    PLAYER.step_s = (u8)item->unk10 + 0x40;
+    g_Player.timers[9] = 4;
+}
+
+s32 func_060A6420(void) {
+    SubweaponDef sub;
+    s32 atLedge = 0, i, nFound, nEmpty, r;
+    s16 id;
+    Entity* e;
+
+    if (!(g_Player.padPressed & 0x1000)) {
+        return 1;
+    }
+    if (g_Player.vram_flag & 0x20) {
+        atLedge = 1;
+    }
+    id = func_0606FC80(&sub, 0, 0);
+    if (!id) {
+        return 1;
+    }
+    if (id == 6 && g_unkGraphicsStruct.pauseEnemies) {
+        return 4;
+    }
+    e = &g_Entities[32];
+    for (i = 0, nFound = 0, nEmpty = 0;;) {
+        s16 other = e->ext.factory.argHigh;
+        if (!e->entityId) {
+            nEmpty++;
+        }
+        if (other && other == id) {
+            nFound++;
+        }
+        i++;
+        if (nFound >= sub.chainLimit) {
+            r = -1;
+            break;
+        }
+        e++;
+        if (i > 15) {
+            r = nEmpty ? 0 : -1;
+            break;
+        }
+    }
+    if (r < 0) {
+        return 2;
+    }
+    id = func_0606FC80(&sub, 0, 1);
+    if (!id) {
+        return 3;
+    }
+    func_060BAF44(g_CurrentEntity, sub.blueprintNum, (s16)(id << 9));
+    g_Player.timers[10] = 4;
+    if (PLAYER.step_s < 0x40) {
+        if (PLAYER.step == 0) {
+            set_anim(sub.anim + atLedge);
+        }
+        alu_attack_voice();
+    }
+    return 0;
+}
+
 void func_060A6688(s32 arg0) {
     PLAYER.step = 0x12;
     PLAYER.step_s = arg0;
@@ -638,6 +715,374 @@ s32 func_060A67B8(void) {
     return 1;
 }
 
+s32 func_060A69F4(void) {
+    Equipment props;
+    s32 both = 0, atLedge = 0, variant = 0;
+    u32 buttons;
+    s32 hand = 0, i, n, s;
+    Equipment* item = NULL;
+    u16 id = 0;
+    s32 anim;
+    Entity* ent;
+    Entity* e;
+
+    if (g_Player.vram_flag & 0x20) {
+        atLedge = 1;
+    }
+    buttons = g_Player.padTapped & 0x600;
+    if (buttons && !func_060A6420()) {
+        return 1;
+    }
+    if (!g_Player.unk48) {
+        if (GetEquipItemCategory(0) == 9 && (g_Player.padPressed & 0x400)) {
+            buttons |= 0x400;
+        }
+        if (GetEquipItemCategory(1) == 9 && (g_Player.padPressed & 0x200)) {
+            buttons |= 0x200;
+        }
+    }
+    switch (buttons) {
+    case 0:
+        return 0;
+    case 0x200:
+        hand = 1;
+        g_Player.D_80072EF8 = 0x200;
+        break;
+    case 0x400:
+        hand = 0;
+        g_Player.D_80072EF8 = 0x400;
+        break;
+    case 0x600:
+        if (!g_Player.unk72 && D_8013AEE4) {
+            s = (u16)D_8013AEE4;
+            if (s) {
+                item = &g_EquipDefs[s];
+                id = s;
+            }
+            g_Player.D_80072EF8 = 0x400;
+            hand = (D_8013AEE4 & 0x80000000) ? 1 : 0;
+            if (func_060A637C(id, hand) >= 0 &&
+                !HasEnoughMp(g_EquipDefs[id].mpUsage, 0)) {
+                both = 1;
+                goto make;
+            }
+        }
+        g_Player.D_80072EF8 = 0x400;
+        hand = 0;
+        break;
+    }
+    item = &g_EquipDefs[g_Status.equipment[hand]];
+    id = g_Status.equipment[hand];
+    if (item->unk17 == item->specialMove && item->unk17) {
+        if (g_Entities[16].ext.weapon.equipId == id) {
+            id = item->unk17;
+            item = &g_EquipDefs[id];
+            if (func_060A637C(id, hand) >= 0) {
+                goto make;
+            }
+        } else if (g_Entities[16].ext.weapon.equipId == item->unk17 &&
+                   func_060A637C(id, hand) >= 0) {
+            goto make;
+        }
+    }
+    if (DAT_060CE7A0[1].buttonsCorrect == COMBO_COMPLETE) {
+        s = g_EquipDefs[g_Status.equipment[hand]].specialMove;
+        if (s &&
+            ((u16)g_Status.equipment[hand] != 0x11 ||
+             (g_Player.vram_flag & 0x41) == 1) &&
+            (g_Player.vram_flag & 1)) {
+            id = s;
+            item = &g_EquipDefs[s];
+            if (func_060A637C(id, hand) >= 0 &&
+                !HasEnoughMp(g_EquipDefs[id].mpUsage, 0)) {
+                goto make;
+            }
+        }
+    }
+    if (DAT_060CE7A0[2].buttonsCorrect == COMBO_COMPLETE) {
+        s = g_EquipDefs[g_Status.equipment[hand]].unk17;
+        if (s) {
+            id = s;
+            item = &g_EquipDefs[s];
+            if (func_060A637C(id, hand) >= 0) {
+                goto make;
+            }
+        }
+    }
+    item = &g_EquipDefs[g_Status.equipment[hand]];
+    id = g_Status.equipment[hand];
+    if (func_060A637C(id, hand) < 0) {
+        return 0;
+    }
+make:
+    if (!id) {
+        ent = func_060BAF44(g_CurrentEntity, (hand << 23) + 0x2A + hand, 0);
+    } else if (item->unk13 == 0x37) {
+        ent = func_060A66FC(item, hand);
+        if (ent == &g_Entities[0]) {
+            return 1;
+        }
+    } else if (item->unk13 == 0x80) {
+        for (n = 0, e = &g_Entities[32], i = 32; i < 64; i++, e++) {
+            if (e->entityId == 0x48) {
+                n++;
+            }
+        }
+        if (n > 1) {
+            return 0;
+        }
+        ent = func_060BAF44(
+            g_CurrentEntity, ((item->unk14 & 0x7F) << 16) | 0x80, (s16)id);
+    } else if (g_Player.timers[1]) {
+        func_060BAF44(g_CurrentEntity, 0x10039, 0);
+        goto cursed;
+    } else if (!both) {
+        ent = func_060BAF44(g_CurrentEntity,
+                            item->unk13 + ((hand + 1) << 12) +
+                                (((item->unk14 & 0x7F) + (hand << 7)) << 16),
+                            (s16)id);
+    } else {
+        ent = func_060BAF44(g_CurrentEntity,
+                            item->unk13 + ((hand + 1) << 14) +
+                                (((item->unk14 & 0x7F) + (hand << 7)) << 16),
+                            (s16)id);
+    }
+    if (!ent) {
+        return 0;
+    }
+    ReduceWeapon(hand);
+    if (both) {
+        ReduceWeapon((hand + 1) & 1);
+    }
+    HasEnoughMp(g_EquipDefs[id].mpUsage, 1);
+    if (id == 0x61 && g_Player.unk72) {
+        return 0;
+    }
+    g_Player.unk3E8 = 0;
+    anim = item->playerAnim;
+    switch ((u8)item->unk10) {
+    case 0x1D:
+        GetEquipProperties(hand, &props, id);
+        if (props.attack > 10) {
+            goto swing;
+        }
+    case 0xD:
+        if ((rand() & 7) != 3) {
+            goto swing;
+        }
+    cursed:
+        switch (PLAYER.step) {
+        case 0:
+        case 1:
+        case 0x13:
+            set_anim(0xAF);
+            PLAYER.step = 0;
+            break;
+        case 2:
+            set_anim(0xB0);
+            PLAYER.step = 2;
+            break;
+        case 3:
+        case 4:
+            set_anim(0xB1);
+            PLAYER.step = 4;
+            break;
+        }
+        g_Player.unk46 = 0x8012;
+        g_Player.unk54 = 0xFF;
+        PLAYER.step_s = 0x51;
+        PlaySfx(0x701);
+        return 1;
+    case 0xC:
+        if (func_060A637C(item->specialMove, hand) >= 0 &&
+            func_060A637C(item->specialMove, (hand + 1) & 1) >= 0) {
+            goto swing;
+        }
+        item = &g_EquipDefs[0];
+        func_060BAF44(g_CurrentEntity, (hand << 23) + 0x2A + hand, 0);
+        anim = item->playerAnim;
+        goto swing;
+    case 0x13:
+    case 0x14:
+    case 0x15:
+    case 0x16:
+        PLAYER.step = 0;
+        DAT_0605CA40 = 0x28;
+        g_CurrentEntity->velocityX = 0;
+        PlaySfx(0x709);
+        goto pose;
+    case 0x1C:
+        PLAYER.step = 0;
+        DAT_0605CA40 = 10;
+        g_CurrentEntity->velocityX = 0;
+        PlaySfx(0x709);
+        goto pose;
+    case 0x17:
+    case 0x20:
+        PLAYER.step = 0;
+        func_060A5060();
+        g_CurrentEntity->velocityX =
+            g_CurrentEntity->facingLeft == 1 ? -0x64000 : 0x64000;
+        g_CurrentEntity->velocityY = 0;
+        PlaySfx(0x709);
+        goto pose;
+    case 0x1B:
+        func_060A5060();
+        g_CurrentEntity->velocityX =
+            g_CurrentEntity->facingLeft == 1 ? -0x50000 : 0x50000;
+        PLAYER.velocityX >>= 1;
+        PlaySfx(0x709);
+        variant = atLedge;
+        if (g_Player.vram_flag & 1) {
+            PLAYER.step = 0;
+            g_CurrentEntity->velocityY = 0;
+        } else {
+            PLAYER.step = 4;
+        }
+        alu_attack_pose(item, anim + variant);
+        return 1;
+    case 0x18:
+        PLAYER.step = (u16)(PLAYER.step - 3) <= 1 ? 4 : 0;
+        DAT_0605CA40 = 0x80;
+        g_CurrentEntity->velocityY = 0;
+        g_CurrentEntity->velocityX = 0;
+        PlaySfx(0x709);
+        goto pose;
+    case 0x1A:
+    case 0x21:
+        PLAYER.step = 0;
+        DAT_0605CA40 = 0x28;
+        g_CurrentEntity->velocityY = 0;
+        g_CurrentEntity->velocityX = 0;
+        PlaySfx(0x709);
+        goto pose;
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 6:
+    case 7:
+    case 0xB:
+    case 0xE:
+    case 0xF:
+    case 0x10:
+    case 0x12:
+    swing:
+        alu_attack_voice();
+    case 8:
+    case 9:
+    case 0xA:
+    case 0x19:
+    pose:
+        switch (PLAYER.step) {
+        case 0:
+        case 1:
+        case 0x13:
+            g_CurrentEntity->velocityX >>= 1;
+            PLAYER.step = 0;
+            variant = atLedge;
+            break;
+        case 2:
+            variant = 2;
+            if (g_Player.padPressed & 0xC000) {
+                variant = 3;
+            }
+            if (!g_Player.unk72 && PLAYER.step_s == 2) {
+                variant = atLedge;
+                PLAYER.step = 0;
+            }
+            break;
+        case 3:
+        case 4:
+            variant = 4;
+            if (PLAYER.velocityY > 0) {
+                variant = 5;
+                if ((u8)item->unk10 == 0) {
+                    if ((g_Player.padPressed & 0xC000) &&
+                        (g_Player.padPressed & 0x2000)) {
+                        variant = 6;
+                    }
+                } else if (g_Player.padPressed & 0x2000) {
+                    variant = 6;
+                }
+            }
+            break;
+        }
+        alu_attack_pose(item, anim + variant);
+        return 1;
+    case 5:
+        switch (PLAYER.step) {
+        case 0:
+        case 1:
+        case 2:
+        case 0x13:
+            g_CurrentEntity->velocityX >>= 1;
+            set_anim(anim + atLedge);
+            g_Player.unk46 = (u8)item->unk10 + 0x8001;
+            g_Player.unk54 = item->lockDuration;
+            PLAYER.step = 0;
+            PLAYER.step_s = (u8)item->unk10 + 0x40;
+            g_CurrentEntity->velocityX = 0;
+            break;
+        }
+        alu_attack_voice();
+        return 1;
+    case 0x80:
+        switch (PLAYER.step) {
+        case 0:
+            PLAYER.step_s = 2;
+            set_anim(anim + atLedge);
+            break;
+        case 2:
+            PLAYER.step_s = 0;
+            set_anim(anim + 2);
+            break;
+        }
+        return 1;
+    case 0x86:
+        func_060A7D68(1, 0x20);
+    case 0x81:
+    case 0x82:
+        alu_attack_voice();
+    case 0x84:
+        if (PLAYER.step_s <= 0x3F) {
+            switch (PLAYER.step) {
+            case 0:
+                set_anim(anim + atLedge);
+                break;
+            case 2:
+                variant = 2;
+                if (!g_Player.unk72 && PLAYER.step_s == 2) {
+                    variant = atLedge;
+                    PLAYER.step = 0;
+                    PLAYER.step_s = 0;
+                }
+                set_anim(anim + variant);
+                break;
+            }
+        }
+        return 1;
+    case 0x83:
+        if (PLAYER.step_s <= 0x3F && PLAYER.step == 0) {
+            set_anim(anim + atLedge);
+        }
+        return 1;
+    case 0x87:
+        PlaySfx(0x70A);
+        g_Player.timers[9] = 4;
+        PLAYER.velocityY = 0;
+        PLAYER.velocityX = 0;
+        PLAYER.step = 0xF;
+        PLAYER.step_s = 0;
+        set_anim(anim);
+        func_060BAF44(g_CurrentEntity, 0x14003D, 0);
+        g_Player.unk48 = 0;
+        return 1;
+    }
+    return 1;
+}
+
 static s32 pressing_back(void) {
     return (g_Entities[0].facingLeft && (g_Player.padPressed & 0x8000)) ||
            (!g_Entities[0].facingLeft && (g_Player.padPressed & 0x4000));
@@ -652,6 +1097,11 @@ static void satz_chair(void) {
     if (chair >= 0) {
         g_Player.unk14 = chair;
     }
+}
+
+void func_060A7D3C(void) {
+    DestroyEntity(&g_Entities[16]);
+    g_Player.unk46 = 0;
 }
 
 void func_060A81DC(void) {
@@ -1651,6 +2101,71 @@ void func_060AD714(void) {
     if ((u16)g_Player.timers[14] | (u16)g_Player.timers[13]) {
         g_Player.status |= 0x100;
     }
+}
+
+s32 func_060ADACC(s8* frameProps, u16** frames) {
+    Entity* e = g_CurrentEntity;
+    u16* seq = frames[e->ext.weapon.anim];
+    u16 entry = seq[g_Player.poseTimer];
+    s8* hb;
+
+    if (entry == 0xFFFF) {
+        return -1;
+    }
+    if (frameProps) {
+        hb = &frameProps[(entry >> 9) * 4];
+        e->hitboxOffX = hb[0];
+        e->hitboxOffY = hb[1];
+        e->hitboxWidth = hb[2];
+        e->hitboxHeight = hb[3];
+    }
+    e->animCurFrame = entry & 0x1FF;
+    g_Player.unk399 = entry & 0x1FF;
+    if ((u8)entry) {
+        func_060C1618(e);
+    }
+    return (g_Player.unk39D & 0x40) ? -1 : 0;
+}
+
+void func_060ADB80(s8* frameProps, AnimationFrame** frames) {
+    Entity* e = g_CurrentEntity;
+    ET_Weapon* ext = &e->ext.weapon;
+    AnimationFrame* f = &frames[ext->anim][e->pose];
+    s8* hb;
+
+    if (e->poseTimer != -1) {
+        if (e->poseTimer == 0) {
+            e->poseTimer = f->duration;
+        } else if (--e->poseTimer == 0) {
+            e->pose++;
+            f = &frames[ext->anim][e->pose];
+            if (f->duration == 0) {
+                e->pose = f->pose;
+                f = &frames[ext->anim][e->pose];
+                e->poseTimer = f->duration;
+            } else if (f->duration == 0xFFFF) {
+                e->pose--;
+                e->poseTimer = -1;
+                f = &frames[ext->anim][e->pose];
+            } else if (f->duration == 0xFFFE) {
+                ext->anim = f->pose & 0xFF;
+                e->pose = (u8)(f->pose >> 8);
+                f = &frames[ext->anim][e->pose];
+                e->poseTimer = f->duration;
+            } else {
+                e->poseTimer = f->duration;
+            }
+        }
+    }
+    if (frameProps) {
+        hb = &frameProps[(f->pose >> 9) * 4];
+        e->hitboxOffX = hb[0];
+        e->hitboxOffY = hb[1];
+        e->hitboxWidth = hb[2];
+        e->hitboxHeight = hb[3];
+    }
+    e->animCurFrame = f->pose & 0x1FF;
+    func_060C1618(e);
 }
 
 void func_060ADD74(void) {
@@ -2744,7 +3259,7 @@ void func_060B25F4(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->ext.spriteEntity.frames = g_SaturnSharedSpriteBank10Frames;
+        self->ext.weapon.frames = g_SaturnSharedSpriteBank10Frames;
         sprite->zPriority = PLAYER.zPriority + 2;
         self->animSet = 0x8010;
         self->palette = 0x110;
@@ -3257,6 +3772,41 @@ void func_060B3A90(void) {
             }
         }
     }
+}
+
+Entity* func_060B93C4(void) {
+    s32 found[128];
+    s32* turn = (s32*)g_AlucardMiscFrameProperties;
+    Entity* e = &g_Entities[64];
+    s32 i, n = 0, k;
+
+    for (i = 0; i < 128; i++, e++) {
+        found[i] = 0;
+        if (!e->entityId || !e->hitboxState || (e->flags & 0x00200000)) {
+            continue;
+        }
+        if (e->posX.i.hi < -0x10 || e->posX.i.hi > 0x150 ||
+            e->posY.i.hi > 0xF0 || e->posY.i.hi < 0 || e->hitPoints > 0x6FFF) {
+            continue;
+        }
+        if (!(e->flags & 0x80000)) {
+            e->flags |= 0x80000;
+            return e;
+        }
+        n++;
+        found[i] = 1;
+    }
+    if (n) {
+        k = *turn & 0x7F;
+        for (i = 0; i < 128; i++) {
+            if (found[k]) {
+                *turn = (k + 1) % 128;
+                return &g_Entities[64 + k];
+            }
+            k = (k + 1) % 128;
+        }
+    }
+    return NULL;
 }
 
 typedef struct {
@@ -3906,7 +4456,7 @@ void func_060BB968(Entity* self) {
             return;
         }
         sprite->zPriority = PLAYER.zPriority + 2;
-        self->ext.spriteEntity.frames = g_SaturnSharedSpriteBank5Frames;
+        self->ext.weapon.frames = g_SaturnSharedSpriteBank5Frames;
         self->step++;
         break;
     case 1:
@@ -4662,7 +5212,7 @@ static PfnEntityUpdate player_entity_function(u16 id) {
 }
 
 void func_060C1618(Entity* self) {
-    SaturnSpriteFrameHeader** frames = self->ext.spriteEntity.frames;
+    SaturnSpriteFrameHeader** frames = self->ext.weapon.frames;
     SpriteObject* sprite = self->unk0;
     SaturnSpriteFrameHeader* frame;
     s32 n;

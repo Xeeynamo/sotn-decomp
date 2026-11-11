@@ -591,8 +591,13 @@ typedef struct {
 typedef struct {
     /* 0x78 */ u8 padding[0x10];
     /* 0x88 */ struct Entity* parent;
-    /* 0x8C */ u8 pad8C[0x1E];
+    /* 0x8C */ u8 pad8C[0x1C];
+    /* 0xA8 */ u8 anim;
+    /* 0xA9 */ u8 padA9;
     /* 0xAA */ s16 equipId;
+    /* 0xAC */ s16 subweaponId;
+    /* 0xAE */ u8 padAE[2];
+    /* 0xB0 */ void* frames;
 } ET_Weapon;
 
 typedef struct {
@@ -1186,7 +1191,7 @@ typedef struct {
     /* 0x395 */ u8 unk395;
     /* 0x396 */ u16 unk396;
     /* 0x398 */ u8 unk398;
-    char pad399[1];
+    /* 0x399 */ u8 unk399;
     /* 0x39A */ u8 unk39A;
     /* 0x39B */ u8 unk39B;
     /* 0x39C */ u8 unk39C;

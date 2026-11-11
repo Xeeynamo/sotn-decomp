@@ -53,8 +53,8 @@ void* sotn_satz_load_target(void* dst) {
 s32 (*sotn_satz_movie_entry(void))(void);
 extern s32 (*DAT_06066000)();
 
-#ifdef SATZ_WEAPON_SLOT
-extern SaturnWeaponOvl g_WeaponHeader;
+#ifdef SATZ_WEAPONS
+extern SaturnWeaponOvl* const sotn_satz_weapon_headers[2][WEAPON_SLOTS];
 extern void* DAT_060D9018;
 
 static int install_weapon(int hand, void* dst, u32 sector, s32* size) {
@@ -76,22 +76,27 @@ static int install_weapon(int hand, void* dst, u32 sector, s32* size) {
         &DAT_060D6038,
         &DAT_060D603C,
     };
+    u32 slot = sector / (WEAPON_SLOT_SIZE / 0x800);
+    SaturnWeaponOvl* header;
     u32 i;
 
     if (dst != (hand ? g_Weapon1OvlArea : g_Weapon0OvlArea) ||
-        sector != SATZ_WEAPON_SLOT * (WEAPON_SLOT_SIZE / 0x800)) {
-        satz_die("WEAPON%d.PRG loaded to %p from sector %u: only slot %d is "
-                 "built",
-                 hand, dst, sector, SATZ_WEAPON_SLOT);
+        sector % (WEAPON_SLOT_SIZE / 0x800) || slot >= WEAPON_SLOTS) {
+        satz_die("WEAPON%d.PRG loaded to %p from sector %u", hand, dst, sector);
     }
+    header = sotn_satz_weapon_headers[hand][slot];
+    if (!header) {
+        satz_die("WEAPON%d.PRG slot %u has no C", hand, slot);
+    }
+    memcpy(dst, header, sizeof(*header));
     if (hand) {
-        DAT_060D9018 = (void*)g_WeaponHeader.entries[6];
-        DAT_060D9040 = g_WeaponHeader.data;
+        DAT_060D9018 = (void*)header->entries[6];
+        DAT_060D9040 = header->data;
     } else {
         for (i = 0; i < 16; i++) {
-            *words[i] = (void*)g_WeaponHeader.entries[i];
+            *words[i] = (void*)header->entries[i];
         }
-        DAT_060D6040 = g_WeaponHeader.data;
+        DAT_060D6040 = header->data;
     }
     *size = WEAPON_SLOT_SIZE;
     return 1;
@@ -106,7 +111,7 @@ int sotn_satz_install_overlay(
     if (!is_prg(name)) {
         return 0;
     }
-#ifdef SATZ_WEAPON_SLOT
+#ifdef SATZ_WEAPONS
     if (!strcmp(name, "WEAPON0.PRG") || !strcmp(name, "WEAPON1.PRG")) {
         return install_weapon(name[6] == '1', dst, sector, size);
     }

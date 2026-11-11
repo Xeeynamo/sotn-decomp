@@ -72,13 +72,13 @@ void EntityVenusWeedFlower(Entity* self);
 void EntityVenusWeedTendril(Entity* self);
 void EntityVenusWeedDart(Entity* self);
 void EntityVenusWeedSpike(Entity* self);
-void func_us_801BBE58_from_rnz1(Entity* self);
-void func_us_801BC650_from_rnz1(Entity* self);
-void func_us_801BCE4C_from_rnz1(Entity* self);
-void func_us_801BCA5C_from_rnz1(Entity* self);
-void func_us_801BCB9C_from_rnz1(Entity* self);
-void func_us_801BCD80_from_rnz1(Entity* self);
-void func_us_801BCFC8_from_rnz1(Entity* self);
+void EntityBombKnight(Entity* self);
+void EntityThrownBomb(Entity* self);
+void EntityKnightDeathParts(Entity* self);
+void EntityBombFuseSparks(Entity* self);
+void EntityThrownRock(Entity* self);
+void EntityRockPiece(Entity* self);
+void EntityBombKnightArm(Entity* self);
 void func_us_801C870C(Entity* self);
 void EntityBreakableCrystalFloor(Entity* self);
 void EntityBreakableWall(Entity* self);
@@ -169,13 +169,13 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityVenusWeedTendril,
     EntityVenusWeedDart,
     EntityVenusWeedSpike,
-    func_us_801BBE58_from_rnz1,
-    func_us_801BC650_from_rnz1,
-    func_us_801BCE4C_from_rnz1,
-    func_us_801BCA5C_from_rnz1,
-    func_us_801BCB9C_from_rnz1,
-    func_us_801BCD80_from_rnz1,
-    func_us_801BCFC8_from_rnz1,
+    EntityBombKnight,
+    EntityThrownBomb,
+    EntityKnightDeathParts,
+    EntityBombFuseSparks,
+    EntityThrownRock,
+    EntityRockPiece,
+    EntityBombKnightArm,
     func_us_801C870C,
     EntityBreakableCrystalFloor,
     EntityBreakableWall,
@@ -217,9 +217,9 @@ EInit g_EInitVenusWeedTendril = {ANIMSET_OVL(7), 0x00, 0x50, PAL_BLUE_VENUS_WEED
 EInit g_EInitVenusWeedDart = {ANIMSET_OVL(7), 0x37, 0x50, PAL_BLUE_VENUS_WEED, ENEMY_BLUE_VENUS_WEED_DART};
 EInit g_EInitBombKnight = {ANIMSET_OVL(5), 0x01, 0x4C, PAL_BOMB_KNIGHT_ROCK_KNIGHT, ENEMY_BOMB_KNIGHT};
 EInit g_EInitRockKnight = {ANIMSET_OVL(5), 0x01, 0x4C, PAL_BOMB_KNIGHT_ROCK_KNIGHT, ENEMY_ROCK_KNIGHT};
-EInit D_us_80180BCC = {ANIMSET_OVL(5), 0x24, 0x4C, PAL_BOMB_KNIGHT_ROCK_KNIGHT, ENEMY_BOMB};
-EInit D_us_80180BD8 = {ANIMSET_OVL(5), 0x00, 0x4C, PAL_BOMB_KNIGHT_ROCK_KNIGHT, ENEMY_PARTICLE};
-EInit D_us_80180BE4 = {ANIMSET_OVL(5), 0x41, 0x4C, PAL_BOMB_KNIGHT_ROCK_KNIGHT, ENEMY_ROCK};
+EInit g_EInitBomb = {ANIMSET_OVL(5), 0x24, 0x4C, PAL_BOMB_KNIGHT_ROCK_KNIGHT, ENEMY_BOMB};
+EInit g_EInitKnightDebris = {ANIMSET_OVL(5), 0x00, 0x4C, PAL_BOMB_KNIGHT_ROCK_KNIGHT, ENEMY_PARTICLE};
+EInit g_EInitRock = {ANIMSET_OVL(5), 0x41, 0x4C, PAL_BOMB_KNIGHT_ROCK_KNIGHT, ENEMY_ROCK};
 EInit g_EInitJackOBones = {ANIMSET_OVL(10), 0x01, 0x52, PAL_JACK_O_BONES, ENEMY_JACK_O_BONES};
 EInit g_EInitJackOBones2 = {ANIMSET_OVL(10), 0x00, 0x52, PAL_JACK_O_BONES, ENEMY_PARTICLE};
 EInit g_EInitJackOBones3 = {ANIMSET_OVL(10), 0x15, 0x52, PAL_JACK_O_BONES, ENEMY_JACK_O_BONES_3};

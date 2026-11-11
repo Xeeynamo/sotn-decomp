@@ -15,6 +15,10 @@ enum Palettes {
     PAL_DARK_OCTOPUS = 0x220,
     PAL_CAVE_TROLL = 0x227,
     PAL_BOMB_KNIGHT_ROCK_KNIGHT = 0x228,
+    PAL_BOMB_KNIGHT_THROW_BOMB_2 =
+        0x22C, // TODO: check in-game for better name, also rnz1
+    PAL_BOMB_KNIGHT_THROW_BOMB_3 =
+        0x22D, // TODO: check in-game for better name, also rnz1
     PAL_BLUE_VENUS_WEED = 0x234,
     PAL_KILLER_FISH = 0x268,
     PAL_IMP_BALLOON_POD = 0x280,
@@ -93,13 +97,13 @@ typedef enum EntityID {
     E_VENUS_WEED_TENDRIL,      // EntityVenusWeedTendril
     E_VENUS_WEED_DART,         // EntityVenusWeedDart
     E_VENUS_WEED_SPIKE,        // EntityVenusWeedSpike
-    E_UNK_48,                  // func_us_801BBE58_from_rnz1
-    E_UNK_49,                  // func_us_801BC650_from_rnz1
-    E_UNK_4A,                  // func_us_801BCE4C_from_rnz1
-    E_UNK_4B,                  // func_us_801BCA5C_from_rnz1
-    E_UNK_4C,                  // func_us_801BCB9C_from_rnz1
-    E_UNK_4D,                  // func_us_801BCD80_from_rnz1
-    E_UNK_4E,                  // func_us_801BCFC8_from_rnz1
+    E_BOMB_KNIGHT,             // EntityBombKnight
+    E_THROWN_BOMB,             // EntityThrownBomb
+    E_DEATH_PARTS,             // EntityKnightDeathParts
+    E_FUSE_SPARKS,             // EntityBombFuseSparks
+    E_THROWN_ROCK,             // EntityThrownRock
+    E_ROCK_PIECE,              // EntityRockPiece
+    E_BOMB_KNIGHT_ARM,         // EntityBombKnightArm
     E_UNK_4F,                  // func_us_801C870C
     E_BREAKABLE_CRYSTAL_FLOOR, // EntityBreakableCrystalFloor
     E_BREAKABLE_WALL,          // EntityBreakableWall
