@@ -85,7 +85,6 @@ void DestroyEntity();
 void PlaySfx(s32 sfxId);
 void SetStep(u8 step);
 void SyncSpriteObjectPosUnchecked(Entity* self, s16* offset);
-void func_0600B004(SpriteObject* sprite, SaturnSpriteFrameHeader* frame);
 void SyncSpriteObjectPos(Entity* self);
 u8 UnkCollisionFunc2(void* self, void* sensors);
 u16 UnkCollisionFunc(void* self, void* sensors, int count);

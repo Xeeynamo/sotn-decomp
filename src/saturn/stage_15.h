@@ -16,7 +16,6 @@ void CheckCollision(s32 x, s32 y, Collider* result, u16 flags);
 void MoveEntity(Entity* self);
 void FallEntity(Entity* self);
 void SyncSpriteObjectPos(Entity* self);
-void func_0600B004(SpriteObject* sprite, SaturnSpriteFrameHeader* frame);
 #include "../shared_sprite_banks.h"
 #include "inc_asm.h"
 
