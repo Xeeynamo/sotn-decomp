@@ -22,6 +22,7 @@ static char* out;
 static size_t out_len, out_cap;
 
 static int is_v221; // ASPSX 2.21 instead of 2.34
+static int use_comm_section; // keep .comm symbols as commons
 
 static int is_reorder = 1;
 static int skip_instructions;
@@ -382,6 +383,16 @@ static int contains_comma_reg(Str s, Str r) {
     return 0;
 }
 
+static int line_sets_reg_imm(Str line, Str r) {
+    line = strip_comments(line);
+    Str op = token(line, 0);
+    if (!eq(op, "li") && !eq(op, "lui")) {
+        return 0;
+    }
+    Str rest = trim((Str){op.ptr + op.len, line.len - (int)(op.ptr + op.len - line.ptr)});
+    return m_first(rest, r);
+}
+
 static int line_loads_from_reg(Str line, Str r) {
     line = strip_comments(line);
     check_reg(r);
@@ -696,7 +707,8 @@ static Str get_next_instruction(
 }
 
 static void handle_nop_before_next_instruction(Str next, Str r_dest) {
-    if (line_loads_from_reg(next, r_dest) && (!uses_at(next) || is_v221)) {
+    if ((line_loads_from_reg(next, r_dest) && (!uses_at(next) || is_v221)) ||
+        (is_v221 && line_sets_reg_imm(next, r_dest))) {
         Str label = get_next_instruction(0, 1, 1, 0);
         if (is_label(label)) {
             emit_s(label);
@@ -870,6 +882,9 @@ static void process_line(Str line) {
             emit_s(line);
             emit(".set\tnoreorder");
         } else if (starts(line, ".comm") || starts(line, ".lcomm")) {
+            if (use_comm_section && starts(line, ".comm")) {
+                emit_s(line);
+            }
         } else if (starts(line, ".data")) {
             emit(".section .data");
         } else if (starts(line, ".sdata")) {
@@ -969,10 +984,12 @@ static void process_line(Str line) {
 }
 
 int main(int argc, char** argv) {
-    if (argc != 2 || (strcmp(argv[1], "2.34") && strcmp(argv[1], "2.21"))) {
-        fail("usage: cmaspsx 2.34|2.21 < input.s > output.s", mk(argv[0]));
+    if (argc < 2 || argc > 3 || (strcmp(argv[1], "2.34") && strcmp(argv[1], "2.21")) ||
+        (argc == 3 && strcmp(argv[2], "--use-comm-section"))) {
+        fail("usage: cmaspsx 2.34|2.21 [--use-comm-section] < input.s > output.s", mk(argv[0]));
     }
     is_v221 = !strcmp(argv[1], "2.21");
+    use_comm_section = argc == 3;
 
     size_t len = 0, cap = 1 << 20;
     char* in = malloc(cap);
@@ -1016,7 +1033,8 @@ int main(int argc, char** argv) {
         if (starts(l, ".sdata")) {
             fail("unsupported .sdata", l);
         }
-        if (!starts(l, ".comm") && !starts(l, ".lcomm")) {
+        if ((use_comm_section && starts(l, ".comm")) ||
+            (!starts(l, ".comm") && !starts(l, ".lcomm"))) {
             continue;
         }
         Str var = token(l, 1), parts[2];

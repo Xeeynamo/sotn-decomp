@@ -64,9 +64,8 @@ segments:
       - [0x28CCC, .rodata, save_mgr]
       - [0x28F88, .rodata, config_jp]
       - [0x2C970, .rodata, lba_stage]
-      - [0x2CD1C, rodata] # MDEC_reset strings
-      - [0x2CD38, .rodata, libpress]
-      - [0x2CD58, rodata] # timeout and DecDCTvlc strings
+      - [0x2CD1C, .rodata, libpress]
+      - [0x2CDC8, rodata] # DecDCTvlc strings
       - [0x2CDE4, c, select]
       - [0x323A8, c, utils]
       - [0x33848, c, memcard]

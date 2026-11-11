@@ -83,9 +83,8 @@ segments:
       #- [0x2BFA4, .rodata, config_us] # relics strings
       #- [0x2C494, .rodata, config_us] # enemies strings
       - [0x2CBE8, .rodata, lba_stage]
-      - [0x2CF94, rodata] # MDEC_reset strings
-      - [0x2CFB0, .rodata, libpress]
-      - [0x2CFD0, rodata] # timeout and DecDCTvlc strings
+      - [0x2CF94, .rodata, libpress]
+      - [0x2D040, rodata] # DecDCTvlc strings
       - [0x2D05C, c, select]
       - [0x328E0, c, utils]
       - [0x33D80, c, memcard]

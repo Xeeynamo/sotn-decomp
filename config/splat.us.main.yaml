@@ -12,6 +12,7 @@ options:
   symbol_addrs_path:
     - config/symbols.us.txt
     - config/symbols.us.main.txt
+  create_c_files: no
   create_undefined_funcs_auto: no
   undefined_funcs_auto_path: build/us/config/undefined_funcs_auto.us.main.txt
   create_undefined_syms_auto: yes
@@ -240,6 +241,7 @@ segments:
       - [0x18BB4, c, psxsdk/libapi/a13]
       - [0x18BC4, c, psxsdk/libspu/s_m_init]
       - [0x18C18, c, psxsdk/libspu/s_m_m]
+      - [0x18EE0, c, psxsdk/libspu/s_m_int]
       - [0x191E0, c, psxsdk/libspu/s_m_wsa]
       - [0x197F4, c, psxsdk/libspu/s_m_f]
       - [0x19870, c, psxsdk/libspu/s_snv]
@@ -281,7 +283,8 @@ segments:
       - [0x1E990, .data, psxsdk/libgte/strings]
       - [0x1EA10, .data, psxsdk/libgte/rcossin]
       - [0x22A10, .data, psxsdk/libgte/ratan]
-      - [0x23214, .data, psxsdk/libcd/sys]
+      - [0x23214, .data, psxsdk/libcd/cdrom]
+      - [0x23224, .data, psxsdk/libcd/sys]
       - [0x232A4, .data, psxsdk/libcd/bios]
       - [0x235B0, .data, psxsdk/libcd/iso9660]
       - [0x235B8, .data, psxsdk/libcd/cdread]
@@ -294,13 +297,15 @@ segments:
       - [0x23648, .data, psxsdk/libcd/c_009]
       - [0x23658, .data, psxsdk/libcd/c_010]
       - [0x23668, .data, psxsdk/libcd/c_011]
-      - [0x23678, data]
+      - [0x236B8, data]
       - [0x236C0, .data, psxsdk/libsnd/ssinit]
       - [0x236F0, .data, psxsdk/libsnd/ssstart]
       - [0x23708, .data, psxsdk/libsnd/vs_vtbp] # needs to be ram address + 0x800
       - [0x23710, .data, psxsdk/libsnd/vmanager]
-      - [0x23898, data]
-      - [0x23DB8, .data, psxsdk/libspu/s_srmp]
+      - [0x23898, .data, psxsdk/libspu/s_ini]
+      - [0x23CFC, .data, psxsdk/libspu/spu]
+      - [0x23D5C, .data, psxsdk/libspu/s_m]
+      - [0x23D68, .data, psxsdk/libspu/s_rmp]
       - [0x24060, .data, psxsdk/libspu/s_n2p]
       - [0x241E4, bss]
       - [0x241F8, .bss, main]
@@ -312,6 +317,6 @@ segments:
       - [0x2BE84, .bss, psxsdk/libcd/c_004]
       - [0x2BE8C, .bss, psxsdk/libcd/c_011]
       - [0x2BE90, .bss, psxsdk/libsnd/vmanager]
-      - [0x2C5D0, bss]
+      - [0x2C5D8, bss]
   - [0x89800]
 

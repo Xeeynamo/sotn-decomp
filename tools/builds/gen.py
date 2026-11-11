@@ -182,6 +182,56 @@ def get_compiler_params(source_file_path: str) -> CompilerParams:
     return c
 
 
+PSYQ_DIR = "psy-q-decomp"
+psyq_objects = {}
+
+
+def get_psyq_object(ver: str, file_name: str):
+    if ver not in psyq_objects:
+        psyq_objects[ver] = {}
+        if os.path.exists(f"config/psyq.{ver}.txt"):
+            with open(f"config/psyq.{ver}.txt") as f:
+                for line in f:
+                    fields = line.split("#")[0].split()
+                    if fields:
+                        psyq_objects[ver][f"src/{fields[0]}.c"] = fields[1:]
+    return psyq_objects[ver].get(file_name)
+
+
+def add_psyq_psx(nw: ninja_syntax.Writer, ver: str, output: str, ld_path: str, fields):
+    src = f"{PSYQ_DIR}/{fields[0]}"
+    if src.endswith(".s"):
+        nw.build(rule="psyq-as", outputs=output, inputs=src, implicit=[ld_path])
+        return
+    cpp_flags = f"-I{PSYQ_DIR}/src/snd -I{PSYQ_DIR}/include -D__CHAR_UNSIGNED__ -Wno-endif-labels"
+    aspsx_ver = "2.34"
+    maspsx_flags = ""
+    for opt in fields[1:]:
+        key, _, value = opt.partition("=")
+        if key == "VERSION":
+            cpp_flags += f" -DVERSION={value}"
+        elif key == "PSYQ":
+            aspsx_ver = {"3.3": "2.21", "3.5": "2.34"}[value]
+        elif key == "COMMON":
+            maspsx_flags = "--use-comm-section"
+        else:
+            raise ValueError(f"{src}: option '{opt}' is not recognized")
+    nw.build(
+        rule="psx-cc",
+        outputs=output,
+        inputs=src,
+        implicit=[ld_path, CMASPSX],
+        order_only=[f"src/.assets_build_done_{ver}"],
+        variables={
+            "version": ver,
+            "cpp_flags": cpp_flags,
+            "cc_flags": "-O2",
+            "aspsx_ver": aspsx_ver,
+            "maspsx_flags": maspsx_flags,
+        },
+    )
+
+
 def add_c_psx(
     nw: ninja_syntax.Writer,
     ver: str,
@@ -194,6 +244,10 @@ def add_c_psx(
     if output in entries:
         return output
     entries[output] = {}
+    psyq = get_psyq_object(ver, file_name)
+    if psyq:
+        add_psyq_psx(nw, ver, output, ld_path, psyq)
+        return output
     c_params = get_compiler_params(file_name)
     nw.build(
         rule="psx-cc",
@@ -895,7 +949,7 @@ with open(build_ninja, "w") as f:
         f" cpp -nostdinc $cpp_flags -MMD -MF $out.d -lang-c -Iinclude -Iinclude/psxsdk -undef -Wall -fno-builtin {cpp_defs} {extra_cpp_defs} $in"
         " | tools/sotn_str/target/release/sotn_str process --sjis"
         " | bin/cc1-psx-26 -G0 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -g -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff $cc_flags"
-        f" | {CMASPSX} $aspsx_ver"
+        f" | {CMASPSX} $aspsx_ver $maspsx_flags"
         " | mipsel-linux-gnu-as -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1 -G0 -o $out"
     )
     nw.rule(
@@ -909,6 +963,12 @@ with open(build_ninja, "w") as f:
         "psx-as",
         command="mipsel-linux-gnu-as -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1 -G0 -o $out $in",
         description="psx as $in",
+    )
+    nw.rule(
+        "psyq-as",
+        command="(cat $in; printf '\\t.text\\n\\t.align 3\\n')"
+        " | mipsel-linux-gnu-as -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1 -G0 -o $out",
+        description="psy-q as $in",
     )
     nw.rule(
         "psx-copy",

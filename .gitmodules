@@ -30,3 +30,7 @@
 [submodule "tools/saturn/satz"]
 	path = tools/saturn/satz
 	url = https://github.com/sozud/satz.git
+[submodule "psy-q-decomp"]
+	path = psy-q-decomp
+	url = https://github.com/sozud/psy-q-decomp.git
+	branch = master

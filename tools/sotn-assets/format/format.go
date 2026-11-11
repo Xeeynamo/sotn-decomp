@@ -193,16 +193,6 @@ func formatLicense() error {
 		}
 	}
 
-	mitFiles, err := collectLicenseFiles([]string{"src/main/psxsdk"}, nil)
-	if err != nil {
-		return fmt.Errorf("collecting MIT files: %w", err)
-	}
-	for _, f := range mitFiles {
-		if err := addSPDXLicense(f, "MIT"); err != nil {
-			return err
-		}
-	}
-
 	includeFiles := []string{
 		"include/game.h",
 		"include/entity.h",

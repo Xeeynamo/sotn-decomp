@@ -1,0 +1,179 @@
+main/psxsdk/libapi/a07        src/api/mips/a07.s
+main/psxsdk/libapi/a08        src/api/mips/a08.s
+main/psxsdk/libapi/a09        src/api/mips/a09.s
+main/psxsdk/libapi/a10        src/api/mips/a10.s
+main/psxsdk/libapi/a11        src/api/mips/a11.s
+main/psxsdk/libapi/a12        src/api/mips/a12.s
+main/psxsdk/libapi/a13        src/api/mips/a13.s
+main/psxsdk/libapi/a20        src/api/mips/a20.v26.s
+main/psxsdk/libapi/a21        src/api/mips/a21.v26.s
+main/psxsdk/libapi/a22        src/api/mips/a22.s
+main/psxsdk/libapi/a23        src/api/mips/a23.s
+main/psxsdk/libapi/a24        src/api/mips/a24.s
+main/psxsdk/libapi/a25        src/api/mips/a25.s
+main/psxsdk/libapi/a36        src/api/mips/a36.s
+main/psxsdk/libapi/a37        src/api/mips/a37.s
+main/psxsdk/libapi/a50        src/api/mips/a50.s
+main/psxsdk/libapi/a51        src/api/mips/a51.s
+main/psxsdk/libapi/a52        src/api/mips/a52.s
+main/psxsdk/libapi/a53        src/api/mips/a53.s
+main/psxsdk/libapi/a54        src/api/mips/a54.s
+main/psxsdk/libapi/a65        src/api/mips/a65.s
+main/psxsdk/libapi/a66        src/api/mips/a66.s
+main/psxsdk/libapi/a67        src/api/mips/a67.s
+main/psxsdk/libapi/a69        src/api/mips/a69.v26.s
+main/psxsdk/libapi/a81        src/api/mips/a81.s
+main/psxsdk/libapi/a91        src/api/mips/a91.s
+main/psxsdk/libapi/c112       src/api/mips/c112.s
+main/psxsdk/libapi/c114       src/api/mips/c114.v26.s
+main/psxsdk/libapi/c57        src/api/mips/c57.s
+main/psxsdk/libapi/c66        src/api/mips/c66.s
+main/psxsdk/libapi/c67        src/api/mips/c67.s
+main/psxsdk/libapi/c68        src/api/mips/c68.s
+main/psxsdk/libapi/c73        src/api/mips/c73.s
+main/psxsdk/libapi/counter    src/api/counter.c            VERSION=35
+main/psxsdk/libapi/l10        src/api/mips/l10.s
+main/psxsdk/libc/a56          src/c/mips/a56.s
+main/psxsdk/libc/a63          src/c/mips/a63.v30.s
+main/psxsdk/libc/c19          src/c/mips/c19.s
+main/psxsdk/libc/c21          src/c/mips/c21.s
+main/psxsdk/libc/c23          src/c/mips/c23.s
+main/psxsdk/libc/c24          src/c/mips/c24.s
+main/psxsdk/libc/c25          src/c/mips/c25.s
+main/psxsdk/libc/c27          src/c/mips/c27.s
+main/psxsdk/libc/c42          src/c/mips/c42.s
+main/psxsdk/libc/c43          src/c/mips/c43.s
+main/psxsdk/libc/c46          src/c/mips/c46.s
+main/psxsdk/libc/c47          src/c/mips/c47.s
+main/psxsdk/libc/c48          src/c/mips/c48.s
+main/psxsdk/libc/c51          src/c/mips/c51.s
+main/psxsdk/libc/c52          src/c/mips/c52.s
+main/psxsdk/libc/c63          src/c/mips/c63.s
+main/psxsdk/libc/memmove      src/c/memmove.c              VERSION=35
+main/psxsdk/libc/sprintf      src/c/sprintf.c              VERSION=35
+main/psxsdk/libcard/a74       src/card/mips/a74.v30.s
+main/psxsdk/libcard/a75       src/card/mips/a75.v30.s
+main/psxsdk/libcard/a78       src/card/mips/a78.s
+main/psxsdk/libcard/a80       src/card/mips/a80.s
+main/psxsdk/libcard/c171      src/card/mips/c171.s
+main/psxsdk/libcard/c172      src/card/mips/c172.s
+main/psxsdk/libcard/card      src/card/card.c              VERSION=35
+main/psxsdk/libcd/bios        src/cd/bios.c                VERSION=35 COMMON
+main/psxsdk/libcd/c_002       src/cd/c_002.c               VERSION=35 COMMON
+main/psxsdk/libcd/c_003       src/cd/c_003.c               VERSION=35 COMMON
+main/psxsdk/libcd/c_004       src/cd/c_004.c               VERSION=35 COMMON
+main/psxsdk/libcd/c_005       src/cd/c_005.c               VERSION=35 COMMON
+main/psxsdk/libcd/c_007       src/cd/c_007.c               VERSION=35 COMMON
+main/psxsdk/libcd/c_008       src/cd/c_008.c               VERSION=35 COMMON
+main/psxsdk/libcd/c_009       src/cd/c_009.c               VERSION=35 COMMON
+main/psxsdk/libcd/c_010       src/cd/c_010.c               VERSION=35 COMMON
+main/psxsdk/libcd/c_011       src/cd/c_011.c               VERSION=35 COMMON
+main/psxsdk/libcd/cdread      src/cd/cdread.c              VERSION=35 COMMON
+main/psxsdk/libcd/cdread2     src/cd/cdread2.c             VERSION=35 COMMON
+main/psxsdk/libcd/cdrom       src/cd/cdrom.c               VERSION=35 COMMON
+main/psxsdk/libcd/event       src/cd/event.c               VERSION=35
+main/psxsdk/libcd/iso9660     src/cd/iso9660.c             VERSION=35 COMMON
+main/psxsdk/libcd/sys         src/cd/sys.c                 VERSION=35 COMMON
+main/psxsdk/libetc/intr       src/etc/intr.c               VERSION=35 COMMON
+main/psxsdk/libetc/intr_dma   src/etc/intr_dma.c           VERSION=35 COMMON
+main/psxsdk/libetc/intr_vb    src/etc/intr_vb.c            VERSION=35 COMMON
+main/psxsdk/libetc/pad        src/etc/pad.c                VERSION=35 COMMON
+main/psxsdk/libetc/vmode      src/etc/vmode.c              VERSION=35
+main/psxsdk/libetc/vsync      src/etc/vsync.c              VERSION=35
+main/psxsdk/libgpu/ext        src/gpu/ext.c                VERSION=30
+main/psxsdk/libgpu/font       src/gpu/font.c               VERSION=31 PSYQ=3.3
+main/psxsdk/libgpu/prim       src/gpu/prim.c               VERSION=30
+main/psxsdk/libgpu/sys        src/gpu/sys.c                VERSION=31 PSYQ=3.3
+main/psxsdk/libgs/gs_007      src/gs/gs_007.c              VERSION=40
+main/psxsdk/libgs/gs_008      src/gs/gs_008.c              VERSION=40
+main/psxsdk/libgs/gs_009      src/gs/gs_009.c              VERSION=40
+main/psxsdk/libgte/fog_01     src/gte/fog_01.c             VERSION=35
+main/psxsdk/libgte/geo_00     src/gte/geo_00.c             VERSION=35
+main/psxsdk/libgte/geo_01     src/gte/geo_01.c             VERSION=35
+main/psxsdk/libgte/ratan      src/gte/ratan.c              VERSION=35
+main/psxsdk/libgte/rcossin    src/gte/rcossin.c            VERSION=35
+main/psxsdk/libgte/rsin       src/gte/rsin.c               VERSION=35
+main/psxsdk/libgte/strings    src/gte/strings.c            VERSION=35
+main/psxsdk/libsnd/adsr       src/snd/adsr.c               VERSION=35
+main/psxsdk/libsnd/cres       src/snd/cres.c               VERSION=35
+main/psxsdk/libsnd/decre      src/snd/decre.c              VERSION=35
+main/psxsdk/libsnd/next       src/snd/next.c               VERSION=35
+main/psxsdk/libsnd/pause      src/snd/pause.c              VERSION=35
+main/psxsdk/libsnd/play       src/snd/play.c               VERSION=35
+main/psxsdk/libsnd/replay     src/snd/replay.c             VERSION=35
+main/psxsdk/libsnd/scsmvol    src/snd/scsmvol.c            VERSION=35
+main/psxsdk/libsnd/scssattr   src/snd/scssattr.c           VERSION=35
+main/psxsdk/libsnd/scssvol    src/snd/scssvol.c            VERSION=35
+main/psxsdk/libsnd/seqinit    src/snd/seqinit.c            VERSION=35
+main/psxsdk/libsnd/seqread    src/snd/seqread.c            VERSION=35
+main/psxsdk/libsnd/seskoff    src/snd/seskoff.c            VERSION=35
+main/psxsdk/libsnd/seskon     src/snd/seskon.c             VERSION=35
+main/psxsdk/libsnd/sscall     src/snd/sscall.c             VERSION=35
+main/psxsdk/libsnd/ssclose    src/snd/ssclose.c            VERSION=35
+main/psxsdk/libsnd/ssend      src/snd/ssend.c              VERSION=35
+main/psxsdk/libsnd/ssinit     src/snd/ssinit.c             VERSION=35 COMMON
+main/psxsdk/libsnd/ssinit_h   src/snd/ssinit_h.c           VERSION=31
+main/psxsdk/libsnd/ssplay     src/snd/ssplay.c             VERSION=35
+main/psxsdk/libsnd/ssquit     src/snd/ssquit.c             VERSION=35
+main/psxsdk/libsnd/ssstart    src/snd/ssstart.c            VERSION=35
+main/psxsdk/libsnd/sstable    src/snd/sstable.c            VERSION=35
+main/psxsdk/libsnd/sstick     src/snd/sstick.c             VERSION=35
+main/psxsdk/libsnd/ssvol      src/snd/ssvol.c              VERSION=35
+main/psxsdk/libsnd/stop       src/snd/stop.c               VERSION=35
+main/psxsdk/libsnd/tempo      src/snd/tempo.c              VERSION=35
+main/psxsdk/libsnd/ut_gpa     src/snd/ut_gpa.c             VERSION=35
+main/psxsdk/libsnd/ut_gva     src/snd/ut_gva.c             VERSION=35
+main/psxsdk/libsnd/ut_rdel    src/snd/ut_rdel.c            VERSION=35
+main/psxsdk/libsnd/ut_rdep    src/snd/ut_rdep.c            VERSION=35
+main/psxsdk/libsnd/ut_rev     src/snd/ut_rev.c             VERSION=35
+main/psxsdk/libsnd/ut_rfb     src/snd/ut_rfb.c             VERSION=35
+main/psxsdk/libsnd/ut_roff    src/snd/ut_roff.c            VERSION=35
+main/psxsdk/libsnd/ut_ron     src/snd/ut_ron.c             VERSION=35
+main/psxsdk/libsnd/ut_sva     src/snd/ut_sva.c             VERSION=35
+main/psxsdk/libsnd/vm_doff    src/snd/vm_doff.c            VERSION=35
+main/psxsdk/libsnd/vm_don     src/snd/vm_don.c             VERSION=35
+main/psxsdk/libsnd/vm_vsu     src/snd/vm_vsu.c             VERSION=35
+main/psxsdk/libsnd/vmanager   src/snd/vmanager.c           VERSION=35 COMMON
+main/psxsdk/libsnd/vs_mono    src/snd/vs_mono.c            VERSION=35
+main/psxsdk/libsnd/vs_srv     src/snd/vs_srv.c             VERSION=35
+main/psxsdk/libsnd/vs_vab     src/snd/vs_vab.c             VERSION=35
+main/psxsdk/libsnd/vs_vfb     src/snd/vs_vfb.c             VERSION=35
+main/psxsdk/libsnd/vs_vh      src/snd/vs_vh.c              VERSION=35
+main/psxsdk/libsnd/vs_vtb     src/snd/vs_vtb.c             VERSION=35
+main/psxsdk/libsnd/vs_vtbp    src/snd/vs_vtbp.c            VERSION=35
+main/psxsdk/libsnd/vs_vtc     src/snd/vs_vtc.c             VERSION=35
+main/psxsdk/libspu/s_cb       src/spu/s_cb.c               VERSION=35
+main/psxsdk/libspu/s_crwa     src/spu/s_crwa.c             VERSION=35 COMMON
+main/psxsdk/libspu/s_dcb      src/spu/s_dcb.c              VERSION=35
+main/psxsdk/libspu/s_gva      src/spu/s_gva.c              VERSION=35
+main/psxsdk/libspu/s_i        src/spu/s_i.c                VERSION=35
+main/psxsdk/libspu/s_ini      src/spu/s_ini.c              VERSION=35 COMMON
+main/psxsdk/libspu/s_it       src/spu/s_it.c               VERSION=35
+main/psxsdk/libspu/s_itc      src/spu/s_itc.c              VERSION=35
+main/psxsdk/libspu/s_m        src/spu/s_m.c                VERSION=35 COMMON
+main/psxsdk/libspu/s_m_f      src/spu/s_m_f.c              VERSION=35 COMMON
+main/psxsdk/libspu/s_m_init   src/spu/s_m_init.c           VERSION=35 COMMON
+main/psxsdk/libspu/s_m_int    src/spu/s_m_int.c            VERSION=35 COMMON
+main/psxsdk/libspu/s_m_m      src/spu/s_m_m.c              VERSION=35 COMMON
+main/psxsdk/libspu/s_m_util   src/spu/s_m_util.c           VERSION=35
+main/psxsdk/libspu/s_m_wsa    src/spu/s_m_wsa.c            VERSION=35 COMMON
+main/psxsdk/libspu/s_n2p      src/spu/s_n2p.c              VERSION=35
+main/psxsdk/libspu/s_q        src/spu/s_q.c                VERSION=35
+main/psxsdk/libspu/s_r        src/spu/s_r.c                VERSION=35
+main/psxsdk/libspu/s_rmp      src/spu/s_rmp.c              VERSION=35 COMMON
+main/psxsdk/libspu/s_sav      src/spu/s_sav.c              VERSION=35
+main/psxsdk/libspu/s_sca      src/spu/s_sca.c              VERSION=35 COMMON
+main/psxsdk/libspu/s_si       src/spu/s_si.c               VERSION=35
+main/psxsdk/libspu/s_sic      src/spu/s_sic.c              VERSION=35
+main/psxsdk/libspu/s_sk       src/spu/s_sk.c               VERSION=35
+main/psxsdk/libspu/s_snv      src/spu/s_snv.c              VERSION=35
+main/psxsdk/libspu/s_sr       src/spu/s_sr.c               VERSION=35
+main/psxsdk/libspu/s_srmp     src/spu/s_srmp.c             VERSION=35 COMMON
+main/psxsdk/libspu/s_stm      src/spu/s_stm.c              VERSION=35
+main/psxsdk/libspu/s_stsa     src/spu/s_stsa.c             VERSION=35
+main/psxsdk/libspu/s_sva      src/spu/s_sva.c              VERSION=35
+main/psxsdk/libspu/s_w        src/spu/s_w.c                VERSION=35
+main/psxsdk/libspu/s_wp       src/spu/s_wp.c               VERSION=35
+main/psxsdk/libspu/spu        src/spu/spu.c                VERSION=35 COMMON
+main/psxsdk/libspu/sr_gaks    src/spu/sr_gaks.c            VERSION=35
+st/sel/libpress               src/press/libpress.c         VERSION=35

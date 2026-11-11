@@ -107,9 +107,9 @@ void func_801B99E4(void) {
         return;
     }
 
-    if ((*g_StreamIsRGB24 == 1) && D_8003C908) {
+    if ((*g_StreamIsRGB24 == 1) && StCdIntrFlag) {
         StCdInterrupt();
-        D_8003C908 = false;
+        StCdIntrFlag = false;
     }
 
     rect = g_StreamEnv.dec.slice;

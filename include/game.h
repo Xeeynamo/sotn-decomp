@@ -2191,7 +2191,7 @@ extern Vram g_Vram;
 extern GameApi g_api;
 extern bool g_PauseAllowed;
 extern u32 g_GameTimer; // Increases when unpaused
-extern bool D_8003C908;
+extern bool StCdIntrFlag;
 extern s32 g_EquippedWeaponIds[2];
 extern u32 g_Timer; // Increases continuously
 extern s16* D_92641C8[];
