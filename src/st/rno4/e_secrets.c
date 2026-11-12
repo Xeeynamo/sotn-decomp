@@ -111,7 +111,7 @@ void EntityBreakableWall(Entity* self) {
         self->hitboxWidth = 8;
         self->hitboxHeight = 0x20;
         self->hitboxState = 2;
-        if (g_CastleFlags[0xCB]) {
+        if (g_CastleFlags[RNO4_SECRET_WALL_OPEN]) {
             i = 0x18;
         } else {
             i = 0;
@@ -125,7 +125,7 @@ void EntityBreakableWall(Entity* self) {
             tilemapIndex -= 0x10;
         }
 
-        if (g_CastleFlags[0xCB]) {
+        if (g_CastleFlags[RNO4_SECRET_WALL_OPEN]) {
             DestroyEntity(self);
             return;
         }
@@ -170,9 +170,9 @@ void EntityBreakableWall(Entity* self) {
                 }
             }
 
-            g_api_PlaySfx(SFX_WALL_DEBRIS_B);
-            g_CastleFlags[0xCB] = 1;
-            g_api_RevealSecretPassageAtPlayerPositionOnMap(0xCB);
+            g_api.PlaySfx(SFX_WALL_DEBRIS_B);
+            g_CastleFlags[RNO4_SECRET_WALL_OPEN] = 1;
+            g_api.RevealSecretPassageAtPlayerPositionOnMap(0xCB);
             DestroyEntity(self);
             return;
         }
