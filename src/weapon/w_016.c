@@ -282,8 +282,7 @@ s32 func_ptr_80170010(Entity* self) {
         self->velocityY = FIX(-1.0);
 
         if (!(D_74000_8017BD74 & 1)) {
-            factory =
-                g_api.CreateEntFactoryFromEntity(self, FACTORY(4, 11), 0);
+            factory = g_api.CreateEntFactoryFromEntity(self, FACTORY(4, 11), 0);
             if (factory) {
                 if (g_HandId == 0) {
                     factory->entityId = 0xEF;
