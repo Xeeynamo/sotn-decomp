@@ -209,12 +209,10 @@ void func_ptr_80170008(Entity* self) {
             self->ext.weapon_016.unk84 += 1;
         }
         if ((u16)self->ext.weapon_016.unk84 & 1) {
-            g_api.CreateEntFactoryFromEntity(
-                self, WFACTORY(0x3A, 0), 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x3A, 0), 0);
         }
         if (flag != 0) {
-            g_api.CreateEntFactoryFromEntity(
-                self, WFACTORY(0x6E, 0), 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x6E, 0), 0);
         }
         break;
     }
@@ -284,7 +282,8 @@ s32 func_ptr_80170010(Entity* self) {
         self->velocityY = FIX(-1.0);
 
         if (!(D_74000_8017BD74 & 1)) {
-            factory = g_api.CreateEntFactoryFromEntity(self, FACTORY(BP_4, 11), 0);
+            factory =
+                g_api.CreateEntFactoryFromEntity(self, FACTORY(4, 11), 0);
             if (factory) {
                 if (g_HandId == 0) {
                     factory->entityId = 0xEF;
