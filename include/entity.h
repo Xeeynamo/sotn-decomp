@@ -936,6 +936,22 @@ typedef struct {
 } ET_Death;
 
 typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 angle;
+    /* 0x84 */ s32 speed;
+    /* 0x88 */ u8 unk88;
+    /* 0x89 */ u8 unk89;
+    /* 0x8A */ u8 unk8A;
+    /* 0x8B */ u8 unk8B;
+    /* 0x8C */ u8 unk8C;
+    /* 0x8D */ u8 unk8D;
+    /* 0x8E */ u8 pad8E[0xE];
+    /* 0x9C */ struct Entity* parent;
+    /* 0xA0 */ struct Entity* unkA0;
+} ET_RBO2Ball;
+
+typedef struct {
     /* 0x7C */ u8 unk7C;
     /* 0x7D */ u8 : 8;
     /* 0x7E */ s16 : 16;
@@ -4965,6 +4981,7 @@ typedef union { // offset=0x7C
     ET_AlucardController alucardController;
     ET_FadeToWhite fadeToWhite;
     ET_Death death;
+    ET_RBO2Ball rbo2Ball;
     ET_SpittleBone spittleBone;
     ET_Player player;
     ET_801AF774 et_801AF774;
