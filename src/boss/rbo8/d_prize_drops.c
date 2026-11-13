@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo8.h"
 
-#if TARGET == TARGET_PSP
 u16 PrizeDrops[ZERO_LEN] = {};
-#else
-u16 PrizeDrops[] = {ITEMDROP_SMALL_HEART, ITEMDROP_SMALL_HEART};
+#if TARGET != TARGET_PSP
+s32 D_us_80181754 = 0;
 #endif

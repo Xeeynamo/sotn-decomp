@@ -52,4 +52,12 @@ typedef enum EntityID {
     NUM_ENTITIES,
 };
 
+#if TARGET == TARGET_PSP
+extern s32 E_ID(UNK_17);
+extern s32 E_ID(UNK_18);
+extern s32 E_ID(UNK_19);
+extern s32 E_ID(UNK_1A);
+extern s32 E_ID(UNK_1C);
+#endif
+
 #endif // RBO8_H

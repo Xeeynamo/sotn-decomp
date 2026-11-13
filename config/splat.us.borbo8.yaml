@@ -69,7 +69,7 @@ segments:
       - [0x22F8, data]
       - [0x2314, .data, e_life_up]
       - [0x2368, data]
-      - [0x14EE0, .rodata, unk_15868]
+      - [0x14EC8, .rodata, unk_15868]
       - [0x15044, .rodata, e_red_door]
       - [0x1505C, .rodata, e_collect]
       - [0x15130, .rodata, e_stage_name]
