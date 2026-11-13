@@ -609,19 +609,19 @@ void func_ptr_80170028(Entity* self) {
         self->pose = rand() % 5;
         self->poseTimer = 2;
         self->ext.weapon.unk7E = 0x400;
-        self->ext.weapon.unk80 = (self->params & 0xFF) * 4;
+        self->ext.weapon.angle = (self->params & 0xFF) * 4;
         self->step++;
         return;
     case 1:
         // Actually, looks like it's using unk80 as the life timer.
-        if (--self->ext.weapon.unk80 == 0) {
+        if (--self->ext.weapon.angle == 0) {
             self->animSet = self->ext.weapon.parent->animSet;
-            self->ext.weapon.unk80 = 0x40;
+            self->ext.weapon.angle = 0x40;
             self->step++;
         }
         return;
     case 2:
-        if (--self->ext.weapon.unk80 == 0) {
+        if (--self->ext.weapon.angle == 0) {
             DestroyEntity(self);
             return;
         }

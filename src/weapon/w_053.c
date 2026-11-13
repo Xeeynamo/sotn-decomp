@@ -111,16 +111,16 @@ s32 func_ptr_80170004(Entity* self) {
 
     if (self->step == 0) {
         self->facingLeft = PLAYER.facingLeft;
-        self->ext.weapon.unk82 = 20;
+        self->ext.weapon.angSpd = 20;
         if (self->facingLeft != 0) {
-            self->ext.weapon.unk82 = -20;
+            self->ext.weapon.angSpd = -20;
         }
-        self->ext.weapon.unk80 = -5;
+        self->ext.weapon.angle = -5;
         if (g_Player.status & PLAYER_STATUS_CROUCH) {
-            self->ext.weapon.unk80 = 11;
+            self->ext.weapon.angle = 11;
         }
-        self->posX.i.hi += self->ext.weapon.unk82;
-        self->posY.i.hi += self->ext.weapon.unk80;
+        self->posX.i.hi += self->ext.weapon.angSpd;
+        self->posY.i.hi += self->ext.weapon.angle;
 
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
 
@@ -204,16 +204,16 @@ s32 func_ptr_80170004(Entity* self) {
     if (params >= 0x1E && params < 0x32) {
         self->hitboxOffX = 0x12;
     } else {
-        self->ext.weapon.unk82 = 0x26;
+        self->ext.weapon.angSpd = 0x26;
         if (self->facingLeft) {
-            self->ext.weapon.unk82 = -0x26;
+            self->ext.weapon.angSpd = -0x26;
         }
-        self->ext.weapon.unk80 = -5;
+        self->ext.weapon.angle = -5;
         if (g_Player.status & PLAYER_STATUS_CROUCH) {
-            self->ext.weapon.unk80 = 0xB;
+            self->ext.weapon.angle = 0xB;
         }
-        self->posX.i.hi = self->ext.weapon.unk82 + PLAYER.posX.i.hi;
-        self->posY.i.hi = self->ext.weapon.unk80 + PLAYER.posY.i.hi;
+        self->posX.i.hi = self->ext.weapon.angSpd + PLAYER.posX.i.hi;
+        self->posY.i.hi = self->ext.weapon.angle + PLAYER.posY.i.hi;
     }
 
     x = self->posX.i.hi;
@@ -346,11 +346,11 @@ void func_ptr_8017000C(Entity* self) {
 
     if (self->step == 0) {
         self->facingLeft = PLAYER.facingLeft;
-        self->ext.weapon.unk80 = -5;
+        self->ext.weapon.angle = -5;
         if (g_Player.status & PLAYER_STATUS_CROUCH) {
-            self->ext.weapon.unk80 = 0xB;
+            self->ext.weapon.angle = 0xB;
         }
-        self->posY.i.hi = self->posY.i.hi + self->ext.weapon.unk80;
+        self->posY.i.hi = self->posY.i.hi + self->ext.weapon.angle;
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
 
         if (self->primIndex != -1) {

@@ -167,26 +167,26 @@ void func_ptr_80170004(Entity* self) {
         SetSpeedX(FIX(1.5));
         self->velocityY = FIX(-5.125);
         self->ext.weapon.lifetime = 8;
-        self->ext.weapon.unk80 = self->ext.weapon.unk82 = 0;
+        self->ext.weapon.angle = self->ext.weapon.angSpd = 0;
         self->ext.weapon.unk92 = D_D6000_8017A618[rand() & 0xF];
         self->ext.weapon.unk94 = PLAYER.posY.i.hi;
         self->ext.weapon.unk96 = PLAYER.posX.i.hi;
-        g_Player.timers[10] = 4;
+        g_Player.timers[ALU_T_USE_SUBWPN] = 4;
 
         self->step++;
         break;
 
     case 1:
 
-        self->ext.weapon.unk80++;
-        if (self->ext.weapon.unk80 > 8) {
-            self->ext.weapon.unk80 = 8;
+        self->ext.weapon.angle++;
+        if (self->ext.weapon.angle > 8) {
+            self->ext.weapon.angle = 8;
         }
 
         // n.b.! BUG: unk82 is incremented but unk80 is clamped
-        self->ext.weapon.unk82 += 4;
-        if (self->ext.weapon.unk80 > 0x18) {
-            self->ext.weapon.unk80 = 0x18;
+        self->ext.weapon.angSpd += 4;
+        if (self->ext.weapon.angle > 0x18) {
+            self->ext.weapon.angle = 0x18;
         }
 
         self->posX.val += self->velocityX;
@@ -369,11 +369,11 @@ void func_ptr_80170004(Entity* self) {
 
     prim = &g_PrimBuf[self->primIndex];
 
-    prim->x0 = prim->x2 = x - self->ext.weapon.unk80;
-    prim->x1 = prim->x3 = x + self->ext.weapon.unk80;
+    prim->x0 = prim->x2 = x - self->ext.weapon.angle;
+    prim->x1 = prim->x3 = x + self->ext.weapon.angle;
 
-    prim->y0 = prim->y1 = y - 4 - self->ext.weapon.unk82;
-    prim->y2 = prim->y3 = y + 4 + self->ext.weapon.unk82;
+    prim->y0 = prim->y1 = y - 4 - self->ext.weapon.angSpd;
+    prim->y2 = prim->y3 = y + 4 + self->ext.weapon.angSpd;
     prim = prim->next;
 
     for (i = 0; i < LEN(D_D6000_8017A5F4) - 1; i++) {
@@ -813,12 +813,12 @@ void func_ptr_8017000C(Entity* self) {
             self->posY.i.hi -= 28 + (rand() & 15);
             self->posX.i.hi += D_D6000_8017A66C[D_D6000_8017CC44 % 3];
             self->posX.i.hi += -4 + (rand() & 7);
-            self->ext.weapon.unk82 = (self->facingLeft + 1) & 1;
+            self->ext.weapon.angSpd = (self->facingLeft + 1) & 1;
             self->facingLeft = 0;
             self->drawFlags = DRAW_COLORS;
             self->step = 2;
             g_api.PlaySfx(SFX_FAST_SWORD_SWISHES);
-            self->ext.weapon.unk80 = rand();
+            self->ext.weapon.angle = rand();
             self->ext.weapon.lifetime = ((u8)self->params * 4) + 0x30;
             D_D6000_8017CC44++;
         } else {
@@ -840,9 +840,9 @@ void func_ptr_8017000C(Entity* self) {
     case 1:
         if (maskedParams == 2) {
             result = g_api.func_80118B18(
-                self, self->ext.weapon_030.other, self->ext.weapon.unk82);
+                self, self->ext.weapon_030.other, self->ext.weapon.angSpd);
             if (result >= 0) {
-                temp_a2 = self->ext.weapon.unk80 & 0xFFF;
+                temp_a2 = self->ext.weapon.angle & 0xFFF;
                 angle = temp_a2;
                 angleDiff = abs(angle - result);
                 if (self->ext.weapon.unk98 > angleDiff) {
@@ -861,13 +861,13 @@ void func_ptr_8017000C(Entity* self) {
                         angle += self->ext.weapon.unk98;
                     }
                 }
-                self->ext.weapon.unk80 = angle & 0xFFF;
+                self->ext.weapon.angle = angle & 0xFFF;
             }
             self->velocityX =
-                (rcos(self->ext.weapon.unk80) * self->ext.weapon.unk9A) >> 5;
-            temp_lo = rsin(self->ext.weapon.unk80) * self->ext.weapon.unk9A;
+                (rcos(self->ext.weapon.angle) * self->ext.weapon.unk9A) >> 5;
+            temp_lo = rsin(self->ext.weapon.angle) * self->ext.weapon.unk9A;
             self->ext.weapon.unk98 += 0x18;
-            self->rotate = -self->ext.weapon.unk80 + 0x800;
+            self->rotate = -self->ext.weapon.angle + 0x800;
             self->velocityY = -(temp_lo >> 5);
         }
         if (self->hitFlags != 0) {
@@ -885,8 +885,8 @@ void func_ptr_8017000C(Entity* self) {
         }
         return;
     case 3:
-        self->ext.weapon.unk80 += 0x100;
-        self->rotate = -self->ext.weapon.unk80 + 0x800;
+        self->ext.weapon.angle += 0x100;
+        self->rotate = -self->ext.weapon.angle + 0x800;
         if (--self->ext.weapon.lifetime == 0) {
             self->ext.weapon_030.other = g_api.func_80118970();
             self->ext.weapon.unk98 = 0x20;
