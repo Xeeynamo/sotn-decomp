@@ -1172,7 +1172,7 @@
 | rno3       | func_pspeu_0923D978               |       21 |          1 |        |       |     |
 | rno4       | func_pspeu_09244570               |       21 |          1 |        |       |     |
 | rno4       | func_pspeu_0924F870               |       21 |          1 |        |       |     |
-| rno4       | Random                            |       21 |          1 |        |       |     |
+| rno4       | func_pspeu_09240A88               |       21 |          1 |        |       |     |
 | rnz0       | func_pspeu_09245960               |       21 |          1 |        |       |     |
 | rnz0       | func_pspeu_09253600               |       21 |          1 |        |       |     |
 | rnz0       | func_pspeu_09242B10               |       21 |          1 |        |       |     |
@@ -5683,7 +5683,7 @@
 | rno1       | func_pspeu_092420B0               |       97 |         12 |        |       |     |
 | rno2       | func_pspeu_0924C830               |       97 |         12 |        |       |     |
 | rno3       | func_pspeu_09249150               |       97 |         12 |        |       |     |
-| rno4       | PlaySfxPositional                 |       97 |         12 |        |       |     |
+| rno4       | func_pspeu_092528D8               |       97 |         12 |        |       |     |
 | rnz0       | func_pspeu_0924A340               |       97 |         12 |        |       |     |
 | rnz1       | func_pspeu_09244098               |       97 |         12 |        |       |     |
 | rtop       | func_pspeu_092422A0               |       97 |         12 |        |       |     |
@@ -7821,7 +7821,7 @@
 | ric        | func_pspeu_092AA678               |      242 |         29 |        |       |     |
 | dra        | func_psp_090FF738                 |      242 |         31 |        |       |     |
 | rnz0       | func_pspeu_09257B98               |      242 |         34 |        |       |     |
-| rno4       | EntityBreakableWall               |      242 |         35 |        |       |     |
+| rno4       | func_pspeu_09253FF8               |      242 |         35 |        |       |     |
 | nz0        | func_pspeu_0923B4D0               |      243 |         17 |        |       |     |
 | bo2        | RunCutsceneEvents                 |      243 |         18 |        |       |     |
 | mar        | RunCutsceneEvents                 |      243 |         18 |        |       |     |
