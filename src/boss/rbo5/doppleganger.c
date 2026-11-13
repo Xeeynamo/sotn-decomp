@@ -574,7 +574,7 @@ void func_us_801C1DC8(void) {
                     g_Dop.padSim = PAD_RIGHT;
                 }
             }
-            if (g_Player.timers[10]) {
+            if (g_Player.timers[ALU_T_USE_SUBWPN]) {
                 if (rand() & 1) {
                     func_us_801C1DB0(7);
                 } else {
@@ -647,7 +647,7 @@ void func_us_801C1DC8(void) {
                 break;
             }
         } else {
-            if (g_Player.timers[10]) {
+            if (g_Player.timers[ALU_T_USE_SUBWPN]) {
                 if (rand() & 1) {
                     func_us_801C1DB0(7);
                 } else {

@@ -1252,7 +1252,7 @@ void EntityBatFireball(Entity* self) {
         func_8011A328(self, 9);
         self->hitboxWidth = 4;
         self->hitboxHeight = 8;
-        g_Player.timers[10] = 4;
+        g_Player.timers[ALU_T_USE_SUBWPN] = 4;
         self->step++;
         break;
     case 1:
@@ -1505,7 +1505,7 @@ void EntitySubwpnReboundStone(Entity* self) {
         func_8011A290(self);
         self->hitboxWidth = 4;
         self->hitboxHeight = 4;
-        g_Player.timers[10] = 4;
+        g_Player.timers[ALU_T_USE_SUBWPN] = 4;
         CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             self->ext.reboundStone.unk84 = 4;
@@ -1808,7 +1808,7 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
             prim = prim->next;
         }
         PlaySfx(SFX_WEAPON_SWISH_C);
-        g_Player.timers[10] = 4;
+        g_Player.timers[ALU_T_USE_SUBWPN] = 4;
         self->step++;
         break;
     case 1:
@@ -1951,7 +1951,7 @@ void EntitySubwpnAgunea(Entity* self) {
         SetSpeedX(FIX(6));
         PlaySfx(SFX_WEAPON_SWISH_C);
         CreateEntFactoryFromEntity(self, FACTORY(BP_BLINK_WHITE, 0x52), 0);
-        g_Player.timers[10] = 4;
+        g_Player.timers[ALU_T_USE_SUBWPN] = 4;
         self->step++;
         break;
     case 1:
