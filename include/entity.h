@@ -3924,6 +3924,23 @@ typedef struct {
 } ET_Minotaur;
 
 typedef struct {
+    /* 0x7C */ struct Entity* parent;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 moveTimer;
+    /* 0x84 */ s32 targetPosX;
+    /* 0x88 */ s16 nextStep;
+    /* 0x8A */ s16 : 16;
+    /* 0x8C */ u8 : 8;
+    /* 0x8D */ u8 isReady;
+    /* 0x8E */ u8 hasNextStep;
+    /* 0x8F */ u8 signal;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 attack;
+} ET_WerewolfARE;
+
+typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 bodyGlowPhase;
@@ -5202,6 +5219,7 @@ typedef union { // offset=0x7C
     ET_WhiteDragon whiteDragon;
     ET_Werewolf werewolf;
     ET_Minotaur minotaur;
+    ET_WerewolfARE werewolfARE;
     ET_Azaghal azaghal;
     ET_Karasuman karasuman;
     ET_PhantomSkull phantom_skull;
