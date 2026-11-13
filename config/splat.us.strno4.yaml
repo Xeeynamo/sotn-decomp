@@ -52,6 +52,8 @@ segments:
       - [0xD50, data]
       - [0xE58, .data, d_water_data]
       - [0x104C, data]
+      - [0x1508, .data, e_ferryman]
+      - [0x15DC, data]
       - [0x1620, .data, d_prize_drops]
       - [0x1660, .data, e_misc]
       - [0x16BC, .data, e_secrets]
