@@ -6078,8 +6078,8 @@
 | 0.99 | true     | func_801C4DCC                       | asm/us/st/np3/matchings/water_effects/func_801C4DCC.s 
 | 0.99 | true     | func_us_801B8414                    | asm/us/st/nz1/matchings/water_effects/func_us_801B8414.s 
 | 0.99 | true     | func_us_801C74DC                    | asm/us/st/rno3/matchings/water_effects/func_us_801C74DC.s 
+| 0.99 | true     | EntitySplashWater                   | asm/us/st/rno4/matchings/water_effects/EntitySplashWater.s 
 | 0.99 | true     | func_us_801B8794                    | asm/us/st/rnz1/matchings/water_effects/func_us_801B8794.s 
-| 0.99 | false    | EntitySplashWater                   | asm/us/st/rno4/nonmatchings/water_effects/EntitySplashWater.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801A27EC                    | asm/us/boss/bo3/matchings/water_effects/func_us_801A27EC.s 
 | 1.00 | true     | func_801D2A9C                       | asm/us/st/no3/matchings/water_effects/func_801D2A9C.s 
@@ -6087,8 +6087,8 @@
 | 1.00 | true     | func_801C61B4                       | asm/us/st/np3/matchings/water_effects/func_801C61B4.s 
 | 1.00 | true     | func_us_801B97FC                    | asm/us/st/nz1/matchings/water_effects/func_us_801B97FC.s 
 | 0.99 | true     | func_us_801C88E8                    | asm/us/st/rno3/matchings/water_effects/func_us_801C88E8.s 
+| 0.99 | true     | EntityWaterDrop                     | asm/us/st/rno4/matchings/water_effects/EntityWaterDrop.s 
 | 0.99 | true     | func_us_801B9BA0                    | asm/us/st/rnz1/matchings/water_effects/func_us_801B9BA0.s 
-| 0.99 | false    | EntityWaterDrop                     | asm/us/st/rno4/nonmatchings/water_effects/EntityWaterDrop.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801A4F48                    | asm/us/boss/rbo8/matchings/giantbro_helpers/func_us_801A4F48.s 
 | 1.00 | true     | func_us_801D0288                    | asm/us/st/are/matchings/e_plate_lord/func_us_801D0288.s 
@@ -6256,24 +6256,24 @@
 | 1.00 | true     | func_801C56D8                       | asm/us/st/np3/matchings/water_effects/func_801C56D8.s 
 | 1.00 | true     | func_us_801B8D20                    | asm/us/st/nz1/matchings/water_effects/func_us_801B8D20.s 
 | 0.97 | true     | func_us_801C7DF0                    | asm/us/st/rno3/matchings/water_effects/func_us_801C7DF0.s 
+| 0.97 | true     | EntitySurfacingWater                | asm/us/st/rno4/matchings/water_effects/EntitySurfacingWater.s 
 | 0.97 | true     | func_us_801B90A8                    | asm/us/st/rnz1/matchings/water_effects/func_us_801B90A8.s 
-| 0.97 | false    | EntitySurfacingWater                | asm/us/st/rno4/nonmatchings/water_effects/EntitySurfacingWater.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801D24AC                       | asm/us/st/no3/matchings/water_effects/func_801D24AC.s 
 | 1.00 | true     | func_us_801D70F8                    | asm/us/st/no4/matchings/water_effects/func_us_801D70F8.s 
 | 1.00 | true     | func_801C5BC4                       | asm/us/st/np3/matchings/water_effects/func_801C5BC4.s 
 | 1.00 | true     | func_us_801B920C                    | asm/us/st/nz1/matchings/water_effects/func_us_801B920C.s 
 | 0.99 | true     | func_us_801C82F0                    | asm/us/st/rno3/matchings/water_effects/func_us_801C82F0.s 
+| 0.99 | true     | EntitySideWaterSplash               | asm/us/st/rno4/matchings/water_effects/EntitySideWaterSplash.s 
 | 0.99 | true     | func_us_801B95A8                    | asm/us/st/rnz1/matchings/water_effects/func_us_801B95A8.s 
-| 0.99 | false    | EntitySideWaterSplash               | asm/us/st/rno4/nonmatchings/water_effects/EntitySideWaterSplash.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801D2840                       | asm/us/st/no3/matchings/water_effects/func_801D2840.s 
 | 1.00 | true     | func_us_801D748C                    | asm/us/st/no4/matchings/water_effects/func_us_801D748C.s 
 | 1.00 | true     | func_801C5F58                       | asm/us/st/np3/matchings/water_effects/func_801C5F58.s 
 | 1.00 | true     | func_us_801B95A0                    | asm/us/st/nz1/matchings/water_effects/func_us_801B95A0.s 
 | 1.00 | true     | func_us_801C868C                    | asm/us/st/rno3/matchings/water_effects/func_us_801C868C.s 
+| 1.00 | true     | EntitySmallWaterDrop                | asm/us/st/rno4/matchings/water_effects/EntitySmallWaterDrop.s 
 | 1.00 | true     | func_us_801B9944                    | asm/us/st/rnz1/matchings/water_effects/func_us_801B9944.s 
-| 1.00 | false    | EntitySmallWaterDrop                | asm/us/st/rno4/nonmatchings/water_effects/EntitySmallWaterDrop.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C82E0                    | asm/us/boss/bo0/matchings/e_bloody_zombie/func_us_801C82E0.s 
 | 1.00 | true     | func_us_801C87F0                    | asm/us/st/lib/matchings/e_bloody_zombie/func_us_801C87F0.s 
@@ -7639,12 +7639,12 @@
 | 0.95 | true     | func_us_801A9390                    | asm/us/st/top/matchings/e_breakable/func_us_801A9390.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C6940                    | asm/us/st/rno3/matchings/water_effects/func_us_801C6940.s 
+| 1.00 | true     | func_pspeu_0924B480                 | asm/us/st/rno4/matchings/water_effects/func_pspeu_0924B480.s 
 | 1.00 | true     | func_us_801B7BF8                    | asm/us/st/rnz1/matchings/water_effects/func_us_801B7BF8.s 
-| 1.00 | false    | func_pspeu_0924B480                 | asm/us/st/rno4/nonmatchings/water_effects/func_pspeu_0924B480.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C6A70                    | asm/us/st/rno3/matchings/water_effects/func_us_801C6A70.s 
+| 1.00 | true     | EntityAlucardWaterEffect            | asm/us/st/rno4/matchings/water_effects/EntityAlucardWaterEffect.s 
 | 1.00 | true     | func_us_801B7D28                    | asm/us/st/rnz1/matchings/water_effects/func_us_801B7D28.s 
-| 1.00 | false    | EntityAlucardWaterEffect            | asm/us/st/rno4/nonmatchings/water_effects/EntityAlucardWaterEffect.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801AFFBC                    | asm/us/st/rtop/matchings/e_clock_tower/func_us_801AFFBC.s 
 | 0.94 | true     | func_801BB2AC                       | asm/us/st/st0/matchings/3AB08/func_801BB2AC.s 
@@ -8881,7 +8881,7 @@
 | 0.96 | true     | func_us_801C96AC                    | asm/us/st/rno4/matchings/e_secrets/func_us_801C96AC.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C89F4                    | asm/us/st/no4/matchings/e_secrets/func_us_801C89F4.s 
-| 0.92 | false    | EntityBreakableWall                 | asm/us/st/rno4/nonmatchings/e_secrets/EntityBreakableWall.s 
+| 0.92 | true     | func_us_801C99A0                    | asm/us/st/rno4/matchings/e_secrets/func_us_801C99A0.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C3160                    | asm/us/st/no4/matchings/first_c_file/func_us_801C3160.s 
 | 0.95 | false    | func_us_801C3160_from_no4           | asm/us/st/rno4/nonmatchings/first_c_file/func_us_801C3160_from_no4.s 
