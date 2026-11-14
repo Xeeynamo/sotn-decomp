@@ -184,7 +184,7 @@ void EntityWeaponAttack(Entity* self) {
         self->ext.weapon.unk8A = 0x40;
         self->ext.weapon.unk94 = 0x180;
         self->ext.weapon.unk90 = 0;
-        self->ext.weapon.unk82 = 0x40;
+        self->ext.weapon.angSpd = 0x40;
         self->posY.i.hi = 64;
         g_api.PlaySfx(SFX_TRANSFORM_3X);
         g_unkGraphicsStruct.unk28 = 2;
@@ -226,7 +226,7 @@ void EntityWeaponAttack(Entity* self) {
                 prim->u3--;
             }
 
-            self->ext.weapon.unk82 += 8;
+            self->ext.weapon.angSpd += 8;
             self->posY.i.hi -= 8;
             self->ext.weapon.lifetime = 32;
             self->step++;
@@ -284,7 +284,7 @@ void EntityWeaponAttack(Entity* self) {
     }
 
     selfY = self->posY.i.hi;
-    selfY_bottom = self->posY.i.hi + self->ext.weapon.unk82;
+    selfY_bottom = self->posY.i.hi + self->ext.weapon.angSpd;
     offset = 64;
     base = 192;
     prim = &g_PrimBuf[self->primIndex];
