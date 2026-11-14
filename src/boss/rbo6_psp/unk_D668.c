@@ -3,6 +3,316 @@
 
 INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D668", DecreaseBrightness);
 
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D668", func_us_801A4594);
+extern s32 D_psp_E_UNK_32;
+extern s32 D_pspeu_0926C048;
+extern u32 D_pspeu_0926C050;
+extern s32 D_pspeu_0926C058;
+extern EInit g_EInitInteractable;
+extern s32 g_EndingVariant;
+
+void func_us_801A4594(Entity* self) {
+    Entity* other;
+    Primitive* prim;
+    s32 primIndex;
+    s32 temp;
+    s32 tempBool;
+
+    FntPrint("end_step %x\n", self->step);
+    g_Player.padSim = 0;
+    g_Player.demo_timer = 0x80;
+    g_Player.status |= 0x100000;
+    g_PauseAllowed = 0;
+    g_unkGraphicsStruct.pauseEnemies = 1;
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitInteractable);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x20);
+        if (primIndex == -1) {
+            self->step = 0;
+            return;
+        }
+        self->flags |= 0x800000;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.prim = prim;
+        while (prim != NULL) {
+            prim->drawMode = 8;
+            prim = prim->next;
+        }
+        if (g_Player.status & 2) {
+            g_Player.padSim = 0;
+        } else if (g_Player.status & 4) {
+            g_Player.padSim = 0x100;
+        } else if (g_Player.status & 1) {
+            g_Player.padSim = 0x200;
+        }
+    case 1:
+        prim = self->ext.prim;
+        prim->type = 4;
+        prim->tpage = 0x1A;
+        prim->clut = 0x19F;
+        prim->clut = 0x2E2;
+        
+        prim->u0 = prim->u2 = 0;
+        prim->u1 = prim->u3 = 0x3F;
+        prim->v0 = prim->v1 = 0xC0;
+        prim->v2 = prim->v3 = 0xFF;
+       
+        prim->x0 =  prim->x2 = 0x80;
+        prim->x1 = prim->x3 = 0x80;
+        prim->y0 = prim->y1 = 0x80;
+        prim->y1 = prim->y3 = 0x80;
+        
+        prim->r0 = prim->g0 = prim->b0 = 0;
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
+        prim->priority = 0x90;
+        prim->drawMode = 0x37;
+        prim = prim->next;
+        self->ext.ILLEGAL.u32[2] = (u32) prim;
+        prim->type = 3;
+        prim->x0 = prim->x2 = 0;
+        prim->x1 = prim->x3 = 0x100;
+        prim->y0 = prim->y1 = 0x10;
+        prim->y2 = prim->y3 = 0xF0;
+        prim->priority = 0x50;
+        prim->drawMode = 8;
+        prim = prim->next;
+        self->ext.ILLEGAL.u32[3] = (u32) prim;
+        prim->type = 3;
+        
+        prim->x0 = prim->x2 = 0x40;
+        prim->x1 = prim->x3 = 0;
+        prim->y0 = prim->y1 = 0x10;
+        prim->y2 = prim->y3 = 0xF0;
+        prim->priority = 0x90;
+        prim->drawMode = 8;
+        prim = prim->next;
+        prim->type = 3;
+        prim->x0 = prim->x2 = 0xC0;
+        prim->x1 = prim->x3 = 0x100;
+        prim->y0 = prim->y1 = 0x10;
+        prim->y2 = prim->y3 = 0xF0;
+        prim->priority = 0x90;
+        prim->drawMode = 8;
+        prim = prim->next;
+        self->ext.ILLEGAL.u32[4] = (u32) prim;
+        prim->type = 3;
+        prim->x0 = prim->x2 = 0;
+        prim->x1 = prim->x3 = 0x100;
+        prim->y0 = prim->y1 = 0x10;
+        prim->y2 = prim->y3 = 0xF0;
+        prim->priority = 0x1FF;
+        prim->drawMode = 8;
+        prim = prim->next;
+        self->step += 1;
+        /* fallthrough */
+    case 2:
+        prim = self->ext.prim;
+        prim->x0 = prim->x2 -= 3;        
+        prim->x1 = prim->x3 += 3;
+        prim->y0 =  prim->y1 -= 3;               
+        prim->y2 = prim->y3 += 3;
+        temp = prim->r0;
+        temp += 8;
+        if (temp > 0x60) {
+            temp = 0x60;
+            self->ext.ILLEGAL.s16[2] = 0x10;
+            g_api.PlaySfx(0x62F);
+            self->step += 1;
+        }
+        
+        prim->g0 = prim->b0 = prim->r0 = temp;
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
+        break;
+    case 3:
+        prim = self->ext.prim;
+        if (self->ext.ILLEGAL.s16[2] & 1) {
+            prim->x0 = prim->x2 -= 1;
+            prim->x1 = prim->x3 += 1;
+            prim->y0 = prim->y1 -= 1;
+            prim->y2 = prim->y3 += 1;
+        }
+        if (!--self->ext.ILLEGAL.s16[2]) {
+            self->step += 1;
+        }
+        break;
+    case 4:
+        prim = self->ext.prim;
+        tempBool = PrimDecreaseBrightness(prim, 4);
+
+        if (tempBool == 0) {
+            prim->drawMode = 8;
+            self->step += 1;
+        }
+        prim = (Primitive*)self->ext.ILLEGAL.u32[2];
+        prim->drawMode = 4;
+        prim->r0 += 4;
+        prim->g0 += 3;
+        prim->b0 += 2;
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
+        D_pspeu_0926C048 = 1;
+        /* fallthrough */
+    case 5:
+        prim = (Primitive*)self->ext.ILLEGAL.u32[3];
+        prim->drawMode = 0x31;
+        temp = prim->r1;
+        if (temp < 0xC0) {
+            temp += 4;
+        } else {
+            self->step += 1;
+        }
+        
+        prim->g1 = prim->b1 = prim->r1 = temp;
+        LOW(prim->r3) = LOW(prim->r1);
+
+        prim = prim->next;
+        prim->drawMode = 0x31;
+        prim->g1 = prim->b1 = prim->r1 = temp;
+        LOW(prim->r3) = LOW(prim->r1);
+        if ((self->step == 5) && (D_pspeu_0926C048 < 4) && !(g_Timer & 0xF)) {
+            D_pspeu_0926C048 += 1;
+        }
+        break;
+    case 6:
+        prim = (Primitive*)self->ext.ILLEGAL.u32[2];
+        prim->drawMode = 4;
+        if ((prim->r0) < 0xA0) {
+            prim->r0 += 4;
+        }
+        if ((prim->g0) < 0x80) {
+            prim->g0 += 3;
+        }
+        if ((prim->g0) < 0x30) {
+            prim->b0 += 2;
+        }
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
+        tempBool = 1;
+        prim = (Primitive*)self->ext.ILLEGAL.u32[3];
+        prim->drawMode = 0x31;
+        temp = prim->r1;
+        temp++;
+        if (temp > 0xFF) {
+            temp = 0xFF;
+        }
+        prim->g1 = prim->b1 = prim->r1 = temp;
+        LOW(prim->r3) = LOW(prim->r1);
+        if (prim->x0 < 0x80) {
+            prim->x0 = prim->x2 += 1;
+            tempBool = 0;
+        }
+        prim = prim->next;
+        prim->drawMode = 0x31;
+        prim->g1 = prim->b1 = prim->r1 = temp;
+        LOW(prim->r3) = LOW(prim->r1);
+        if (prim->x0 > 0x80) {
+            prim->x0 = prim->x2 -= 1;
+            tempBool = 0;
+        }
+        if (tempBool != 0) {
+            self->step += 1;
+        }
+        break;
+    case 7:
+        tempBool = 0;
+        prim = (Primitive*)self->ext.ILLEGAL.u32[3];
+        tempBool += DecreaseBrightness(prim, 2);
+        prim = prim->next;
+        tempBool += DecreaseBrightness(prim, 2);
+        D_pspeu_0926C058 = 0x80 - prim->r0 / 2;
+        other = AllocEntity(&g_Entities[0x40], &g_Entities[256]);
+        if (other != NULL) {
+            CreateEntityFromCurrentEntity(D_psp_E_UNK_32, other);
+            temp = Random();
+            if (temp < 0x20) {
+                temp += 0x60;
+            }
+            if (temp > 0xE0) {
+                temp -= 0x80;
+            }
+            other->posX.i.hi = temp;
+            other->posY.i.hi = 0xF0;
+            other->params = 0;
+        }
+        if (tempBool == 0) {
+            self->step += 1;
+        }
+        break;
+    case 8:
+        other = &PLAYER;
+        if (other->posX.i.hi > 0x80) {
+            D_pspeu_0926C050 = 0x80;
+        } else {
+            D_pspeu_0926C050 = 0x20;
+        }
+        self->step += 1;
+        /* fallthrough */
+    case 9:
+        g_Player.padSim = D_pspeu_0926C050;
+        prim = (Primitive*)self->ext.ILLEGAL.u32[4];
+        prim->drawMode = 0x31;
+        tempBool = DecreaseBrightness(prim, 4);
+        if (tempBool == 0) {
+            self->step += 1;
+        }
+        return;
+    case 10:
+        prim = (Primitive*)self->ext.ILLEGAL.u32[4];
+        prim->drawMode = 0;
+        tempBool = PrimDecreaseBrightness(prim, 8);
+        if (tempBool == 0) {
+            self->step += 1;
+        }
+        return;
+    case 11:
+        g_PauseAllowed = 1;
+        g_unkGraphicsStruct.pauseEnemies = 0;
+        if (g_RoomCount > 1846) {
+            g_EndingVariant = ENDING_GOOD;
+        } else {
+            g_EndingVariant = ENDING_BEST;
+        }
+        g_GameState = Game_Ending;
+        g_GameStep = 0;
+        self->step += 1;
+        /* fallthrough */
+    case 12:
+        g_PauseAllowed = 1;
+        g_unkGraphicsStruct.pauseEnemies = 0;
+        return;
+    }
+    if (D_pspeu_0926C048 != 0) {
+        if (!(g_Timer & 7)) {
+            if (D_pspeu_0926C058 != 0) {
+                g_api.PlaySfxVolPan(0x69D, D_pspeu_0926C058, 0);
+            } else {
+                g_api.PlaySfx(0x69D);
+            }
+        }
+        if (!(g_Timer & 1)) {
+            other = AllocEntity(&g_Entities[0x40], &g_Entities[256]);
+            if (other != NULL) {
+                CreateEntityFromCurrentEntity(D_psp_E_UNK_32, other);
+                temp = Random();
+                if (temp < 0x20) {
+                    temp += 0x60;
+                }
+                if (temp > 0xE0) {
+                    temp -= 0x80;
+                }
+                other->posX.i.hi = temp;
+                other->posY.i.hi = 0xF0;
+                other->params = 0;
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D668", func_us_801A4F14);
