@@ -71,9 +71,9 @@ void func_us_801A4594(Entity* self) {
         if (g_Player.status & 2) {
             g_Player.padSim = 0;
         } else if (g_Player.status & 4) {
-            g_Player.padSim = 0x100;
+            g_Player.padSim = PAD_L1;
         } else if (g_Player.status & 1) {
-            g_Player.padSim = 0x200;
+            g_Player.padSim = PAD_R1;
         }
     case 1:
         prim = self->ext.prim;
