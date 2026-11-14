@@ -88,7 +88,7 @@ s32 g_PrevScrollX;
 s32 g_PrevScrollY;
 s32 D_80073080;
 s32 g_GameClearFlag;
-bool D_8003C908;
+bool StCdIntrFlag;
 s32 D_8003C100;
 s32 g_EndingVariant;
 u32 g_RoomCount;
