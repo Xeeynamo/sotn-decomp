@@ -315,4 +315,155 @@ void func_us_801A4594(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D668", func_us_801A4F14);
+extern EInit g_EInitParticle;
+
+void func_us_801A4F14(Entity* self) {
+    Primitive* prim;
+    s32 primIndex;
+    s32 intRandy;
+    s32 yVar;
+    s32 xVar;
+    s32 width;
+    s16* yPtr;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitParticle);
+        self->animCurFrame = 0;
+        intRandy = Random() % D_pspeu_0926C048;
+        self->hitboxWidth = (intRandy + 2);
+        intRandy++;
+        self->velocityY = 0xFFFE8000 - ((Random() % (intRandy + 2)) << 0x11);
+        self->ext.ILLEGAL.u32[5] = -0x1000 - ((Random() % (intRandy + 1)) * 0x3000);
+        self->opacity = (((Random() % intRandy) * 8) + 0x20);
+        if (intRandy < D_pspeu_0926C048 / 2) {
+            self->zPriority = 0x54;
+        } else {
+            self->zPriority = 0x90;
+        }
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 7);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= 0x800000;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.prim = prim;
+        prim->tpage = 0x1A;
+        prim->clut = 0x2EC;
+        prim->u0 = prim->u2 = 0;
+        prim->u1 = prim->u3 = 0x40;
+        prim->v0 = prim->v1 = 0xC0;
+        prim->v2 = prim->v3 = 0xE0;
+        prim->r0 = prim->g0 = prim->b0 = self->opacity;
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
+        prim->priority = self->zPriority;
+        prim->drawMode = 0x37;
+        prim = prim->next;
+        for(i = 0; i < 4; i++) {
+            prim->tpage = 0x1A;
+            prim->clut = 0x2EC;
+            prim->u0 = prim->u2 = 0;
+            prim->u1 = prim->u3 = 0x40;
+            prim->v0 = prim->v1 = 0xE0;
+            prim->v2 = prim->v3 = 0xE2;
+            prim->r0 = prim->g0 = prim->b0 = self->opacity;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
+            prim->priority = self->zPriority + 1;
+            prim->drawMode = 0x37;
+            prim = prim->next;
+        }
+        prim->tpage = 0x1A;
+        prim->clut = 0x2EC;
+        prim->u0 = prim->u2 = 0;
+        prim->u1 = prim->u3 = 0x40;
+        prim->v0 = prim->v1 = 0xE0;
+        prim->v2 = prim->v3 = 0xFF;
+        prim->r0 = prim->g0 = prim->b0 = self->opacity;
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
+        prim->priority = self->zPriority;
+        prim->drawMode = 0x37;
+        prim = prim->next;
+        self->ext.ILLEGAL.u32[2] = (u32) prim;
+        prim->tpage = 0x1A;
+        prim->clut = 0x15F;
+        prim->clut = 0x2EC;
+        prim->u0 = prim->u2 = 0;
+        prim->u1 = prim->u3 = 0x3F;
+        prim->v0 = prim->v1 = 0xC0;
+        prim->v2 = prim->v3 = 0xFF;
+        prim->r0 = prim->g0 = prim->b0 = self->opacity + 0x20;
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
+        prim->priority = self->zPriority;
+        prim->drawMode = 0x77;
+        if ((self->hitboxWidth) < 4) {
+            prim->drawMode = 8;
+        }
+        yPtr = &self->ext.ILLEGAL.s16[0x10];
+        for(i = 0; i < 6; i++) {
+            *yPtr = self->posY.i.hi;
+            yPtr ++;
+        }
+        break;
+    case 1:
+        MoveEntity();
+        self->velocityY += self->ext.ILLEGAL.u32[5];
+        break;
+    }
+    yPtr = &self->ext.ILLEGAL.s16[0x15];
+    for(i = 0; i < 5; i++) {
+        yPtr[0] = yPtr[-1];
+        yPtr --;
+    }
+    yPtr = &self->ext.ILLEGAL.s16[0x10];
+    *yPtr = self->posY.i.hi;
+    width = self->hitboxWidth;
+    prim = self->ext.prim;
+    xVar = self->posX.i.hi;
+    yVar = self->posY.i.hi - self->hitboxWidth;
+    prim->x0 = xVar - width;
+    prim->x1 = xVar + width;
+    prim->y0 = prim->y1 = yVar;
+    prim = (Primitive*)self->ext.ILLEGAL.u32[2];
+    prim->x0 = (xVar - (width * 2));
+    prim->x1 = (xVar + (width * 2));
+    prim->y0 = prim->y1 = yVar - width;
+    prim = self->ext.prim;
+    // redundant, yPtr already holds this
+    yPtr = &self->ext.ILLEGAL.s16[0x10];
+    for(i = 0; i < 5; i++) {
+        yVar = *yPtr;
+        prim->x2 = xVar - width;
+        prim->x3 = xVar + width;
+        prim->y2 = prim->y3 = yVar;
+        prim->drawMode = 0x35;
+        prim = prim->next;
+        prim->x0 = xVar - width;
+        prim->x1 = xVar + width;
+        prim->y0 = prim->y1 = yVar;
+        yPtr++;
+    }
+    yVar += self->hitboxWidth;
+    prim->x2 = xVar - width;
+    prim->x3 = xVar + width;
+    prim->y2 = prim->y3 = yVar;
+    prim->drawMode = 0x35;
+    prim = prim->next;
+    prim = (Primitive*)self->ext.ILLEGAL.u32[2];
+    prim->x2 = (xVar - (width * 2));
+    prim->x3 = (xVar + (width * 2));
+    prim->y2 = prim->y3 = yVar + self->hitboxWidth * 2;
+    if (yVar < 0x10) {
+        DestroyEntity(self);
+    }
+}
