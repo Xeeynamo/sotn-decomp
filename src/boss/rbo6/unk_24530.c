@@ -44,7 +44,6 @@ s32 unused = 0;
 u32 D_pspeu_0926C050 = 0;
 s32 D_pspeu_0926C058 = 0;
 
-
 void func_us_801A4594(Entity* self) {
     Entity* other;
     Primitive* prim;
@@ -55,7 +54,7 @@ void func_us_801A4594(Entity* self) {
     FntPrint("end_step %x\n", self->step);
     g_Player.padSim = 0;
     g_Player.demo_timer = 0x80;
-    g_Player.status |= 0x100000;
+    g_Player.status |= PLAYER_STATUS_UNK100000;
     g_PauseAllowed = 0;
     g_unkGraphicsStruct.pauseEnemies = 1;
     switch (self->step) {
@@ -66,102 +65,103 @@ void func_us_801A4594(Entity* self) {
             self->step = 0;
             return;
         }
-        self->flags |= 0x800000;
+        self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         self->ext.prim = prim;
         while (prim != NULL) {
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
-        if (g_Player.status & 2) {
-            #if TARGET == TARGET_PSP
+        if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
+#if TARGET == TARGET_PSP
             g_Player.padSim = 0;
 #else
             g_Player.padSim = PAD_L1;
-            #endif
-        } else if (g_Player.status & 4) {
+#endif
+        } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
             g_Player.padSim = PAD_WOLF;
-        } else if (g_Player.status & 1) {
+        } else if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
             g_Player.padSim = PAD_R1;
         }
     case 1:
         prim = self->ext.prim;
-        prim->type = 4;
+        prim->type = PRIM_GT4;
         prim->tpage = 0x1A;
         prim->clut = 0x19F;
         prim->clut = 0x2E2;
-        
+
         prim->u0 = prim->u2 = 0;
         prim->u1 = prim->u3 = 0x3F;
         prim->v0 = prim->v1 = 0xC0;
         prim->v2 = prim->v3 = 0xFF;
-       
-        prim->x0 =  prim->x2 = 0x80;
+
+        prim->x0 = prim->x2 = 0x80;
         prim->x1 = prim->x3 = 0x80;
         prim->y0 = prim->y1 = 0x80;
         prim->y1 = prim->y3 = 0x80;
-        
+
         prim->r0 = prim->g0 = prim->b0 = 0;
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
         prim->priority = 0x90;
-        prim->drawMode = 0x37;
+        prim->drawMode =
+            DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         prim = prim->next;
-        self->ext.ILLEGAL.u32[2] = (u32) prim;
-        prim->type = 3;
+        self->ext.ILLEGAL.u32[2] = (u32)prim;
+        prim->type = PRIM_G4;
         prim->x0 = prim->x2 = 0;
         prim->x1 = prim->x3 = 0x100;
         prim->y0 = prim->y1 = 0x10;
         prim->y2 = prim->y3 = 0xF0;
         prim->priority = 0x50;
-        prim->drawMode = 8;
+        prim->drawMode = DRAW_HIDE;
         prim = prim->next;
-        self->ext.ILLEGAL.u32[3] = (u32) prim;
-        prim->type = 3;
-        
+        self->ext.ILLEGAL.u32[3] = (u32)prim;
+        prim->type = PRIM_G4;
+
         prim->x0 = prim->x2 = 0x40;
         prim->x1 = prim->x3 = 0;
         prim->y0 = prim->y1 = 0x10;
         prim->y2 = prim->y3 = 0xF0;
         prim->priority = 0x90;
-        prim->drawMode = 8;
+        prim->drawMode = DRAW_HIDE;
         prim = prim->next;
-        prim->type = 3;
+        prim->type = PRIM_G4;
         prim->x0 = prim->x2 = 0xC0;
         prim->x1 = prim->x3 = 0x100;
         prim->y0 = prim->y1 = 0x10;
         prim->y2 = prim->y3 = 0xF0;
         prim->priority = 0x90;
-        prim->drawMode = 8;
+        prim->drawMode = DRAW_HIDE;
         prim = prim->next;
-        self->ext.ILLEGAL.u32[4] = (u32) prim;
-        prim->type = 3;
+        self->ext.ILLEGAL.u32[4] = (u32)prim;
+        prim->type = PRIM_G4;
         prim->x0 = prim->x2 = 0;
         prim->x1 = prim->x3 = 0x100;
         prim->y0 = prim->y1 = 0x10;
         prim->y2 = prim->y3 = 0xF0;
         prim->priority = 0x1FF;
-        prim->drawMode = 8;
+        prim->drawMode = DRAW_HIDE;
         prim = prim->next;
         self->step += 1;
         /* fallthrough */
     case 2:
         prim = self->ext.prim;
-        prim->x0 = prim->x2 -= 3;        
+        prim->x0 = prim->x2 -= 3;
         prim->x1 = prim->x3 += 3;
-        prim->y0 =  prim->y1 -= 3;               
+        prim->y0 = prim->y1 -= 3;
         prim->y2 = prim->y3 += 3;
         temp = prim->r0;
         temp += 8;
         if (temp > 0x60) {
             temp = 0x60;
             self->ext.ILLEGAL.s16[2] = 0x10;
-            g_api.PlaySfx(0x62F);
+            g_api.PlaySfx(SFX_WEAPON_APPEAR);
             self->step += 1;
         }
-        
+
         prim->g0 = prim->b0 = prim->r0 = temp;
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
@@ -184,11 +184,11 @@ void func_us_801A4594(Entity* self) {
         tempBool = PrimDecreaseBrightness(prim, 4);
 
         if (tempBool == 0) {
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
             self->step += 1;
         }
         prim = (Primitive*)self->ext.ILLEGAL.u32[2];
-        prim->drawMode = 4;
+        prim->drawMode = DRAW_COLORS;
         prim->r0 += 4;
         prim->g0 += 3;
         prim->b0 += 2;
@@ -199,19 +199,19 @@ void func_us_801A4594(Entity* self) {
         /* fallthrough */
     case 5:
         prim = (Primitive*)self->ext.ILLEGAL.u32[3];
-        prim->drawMode = 0x31;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
         temp = prim->r1;
         if (temp < 0xC0) {
             temp += 4;
         } else {
             self->step += 1;
         }
-        
+
         prim->g1 = prim->b1 = prim->r1 = temp;
         LOW(prim->r3) = LOW(prim->r1);
 
         prim = prim->next;
-        prim->drawMode = 0x31;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
         prim->g1 = prim->b1 = prim->r1 = temp;
         LOW(prim->r3) = LOW(prim->r1);
         if ((self->step == 5) && (D_pspeu_0926C048 < 4) && !(g_Timer & 0xF)) {
@@ -220,7 +220,7 @@ void func_us_801A4594(Entity* self) {
         break;
     case 6:
         prim = (Primitive*)self->ext.ILLEGAL.u32[2];
-        prim->drawMode = 4;
+        prim->drawMode = DRAW_COLORS;
         if ((prim->r0) < 0xA0) {
             prim->r0 += 4;
         }
@@ -235,7 +235,7 @@ void func_us_801A4594(Entity* self) {
         LOW(prim->r3) = LOW(prim->r0);
         tempBool = 1;
         prim = (Primitive*)self->ext.ILLEGAL.u32[3];
-        prim->drawMode = 0x31;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
         temp = prim->r1;
         temp++;
         if (temp > 0xFF) {
@@ -248,7 +248,7 @@ void func_us_801A4594(Entity* self) {
             tempBool = 0;
         }
         prim = prim->next;
-        prim->drawMode = 0x31;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
         prim->g1 = prim->b1 = prim->r1 = temp;
         LOW(prim->r3) = LOW(prim->r1);
         if (prim->x0 > 0x80) {
@@ -296,7 +296,7 @@ void func_us_801A4594(Entity* self) {
     case 9:
         g_Player.padSim = D_pspeu_0926C050;
         prim = (Primitive*)self->ext.ILLEGAL.u32[4];
-        prim->drawMode = 0x31;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
         tempBool = DecreaseBrightness(prim, 4);
         if (tempBool == 0) {
             self->step += 1;
@@ -304,7 +304,7 @@ void func_us_801A4594(Entity* self) {
         return;
     case 10:
         prim = (Primitive*)self->ext.ILLEGAL.u32[4];
-        prim->drawMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         tempBool = PrimDecreaseBrightness(prim, 8);
         if (tempBool == 0) {
             self->step += 1;
@@ -330,9 +330,9 @@ void func_us_801A4594(Entity* self) {
     if (D_pspeu_0926C048 != 0) {
         if (!(g_Timer & 7)) {
             if (D_pspeu_0926C058 != 0) {
-                g_api.PlaySfxVolPan(0x69D, D_pspeu_0926C058, 0);
+                g_api.PlaySfxVolPan(SFX_MAGIC_SWITCH, D_pspeu_0926C058, 0);
             } else {
-                g_api.PlaySfx(0x69D);
+                g_api.PlaySfx(SFX_MAGIC_SWITCH);
             }
         }
         if (!(g_Timer & 1)) {
@@ -374,7 +374,8 @@ void func_us_801A4F14(Entity* self) {
         self->hitboxWidth = (intRandy + 2);
         intRandy++;
         self->velocityY = 0xFFFE8000 - ((Random() % (intRandy + 2)) << 0x11);
-        self->ext.ILLEGAL.u32[5] = -0x1000 - ((Random() % (intRandy + 1)) * 0x3000);
+        self->ext.ILLEGAL.u32[5] =
+            -0x1000 - ((Random() % (intRandy + 1)) * 0x3000);
         self->opacity = (((Random() % intRandy) * 8) + 0x20);
         if (intRandy < D_pspeu_0926C048 / 2) {
             self->zPriority = 0x54;
@@ -386,7 +387,7 @@ void func_us_801A4F14(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags |= 0x800000;
+        self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         self->ext.prim = prim;
@@ -401,9 +402,10 @@ void func_us_801A4F14(Entity* self) {
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
         prim->priority = self->zPriority;
-        prim->drawMode = 0x37;
+        prim->drawMode =
+            DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         prim = prim->next;
-        for(i = 0; i < 4; i++) {
+        for (i = 0; i < 4; i++) {
             prim->tpage = 0x1A;
             prim->clut = 0x2EC;
             prim->u0 = prim->u2 = 0;
@@ -415,7 +417,8 @@ void func_us_801A4F14(Entity* self) {
             LOW(prim->r2) = LOW(prim->r0);
             LOW(prim->r3) = LOW(prim->r0);
             prim->priority = self->zPriority + 1;
-            prim->drawMode = 0x37;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                             DRAW_UNK02 | DRAW_TRANSP;
             prim = prim->next;
         }
         prim->tpage = 0x1A;
@@ -429,9 +432,10 @@ void func_us_801A4F14(Entity* self) {
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
         prim->priority = self->zPriority;
-        prim->drawMode = 0x37;
+        prim->drawMode =
+            DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         prim = prim->next;
-        self->ext.ILLEGAL.u32[2] = (u32) prim;
+        self->ext.ILLEGAL.u32[2] = (u32)prim;
         prim->tpage = 0x1A;
         prim->clut = 0x15F;
         prim->clut = 0x2EC;
@@ -444,14 +448,15 @@ void func_us_801A4F14(Entity* self) {
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
         prim->priority = self->zPriority;
-        prim->drawMode = 0x77;
+        prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                         DRAW_UNK02 | DRAW_TRANSP;
         if ((self->hitboxWidth) < 4) {
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
         }
         yPtr = &self->ext.ILLEGAL.s16[0x10];
-        for(i = 0; i < 6; i++) {
+        for (i = 0; i < 6; i++) {
             *yPtr = self->posY.i.hi;
-            yPtr ++;
+            yPtr++;
         }
         break;
     case 1:
@@ -460,9 +465,9 @@ void func_us_801A4F14(Entity* self) {
         break;
     }
     yPtr = &self->ext.ILLEGAL.s16[0x15];
-    for(i = 0; i < 5; i++) {
+    for (i = 0; i < 5; i++) {
         yPtr[0] = yPtr[-1];
-        yPtr --;
+        yPtr--;
     }
     yPtr = &self->ext.ILLEGAL.s16[0x10];
     *yPtr = self->posY.i.hi;
@@ -480,12 +485,12 @@ void func_us_801A4F14(Entity* self) {
     prim = self->ext.prim;
     // redundant, yPtr already holds this
     yPtr = &self->ext.ILLEGAL.s16[0x10];
-    for(i = 0; i < 5; i++) {
+    for (i = 0; i < 5; i++) {
         yVar = *yPtr;
         prim->x2 = xVar - width;
         prim->x3 = xVar + width;
         prim->y2 = prim->y3 = yVar;
-        prim->drawMode = 0x35;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
         prim = prim->next;
         prim->x0 = xVar - width;
         prim->x1 = xVar + width;
@@ -496,7 +501,7 @@ void func_us_801A4F14(Entity* self) {
     prim->x2 = xVar - width;
     prim->x3 = xVar + width;
     prim->y2 = prim->y3 = yVar;
-    prim->drawMode = 0x35;
+    prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
     prim = prim->next;
     prim = (Primitive*)self->ext.ILLEGAL.u32[2];
     prim->x2 = (xVar - (width * 2));
