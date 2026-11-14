@@ -2,21 +2,75 @@
 #include <stdint.h>
 #include <string.h>
 
-typedef struct {
-    const char* name;
-    uint32_t address;
-    uint8_t* data;
-    uint32_t retail_size;
-} SotnFixedSymbol;
+#include "module.h"
+
 extern const SotnFixedSymbol sotn_fixed_symbols[];
 void sotn_satz_unimplemented(const char* name) __attribute__((noreturn));
+void satz_die(const char* fmt, ...) __attribute__((noreturn));
+
+static const SotnFixedSymbol* s_FixedTables[1 + SATZ_AREA_COUNT] = {
+    sotn_fixed_symbols};
+
+void satz_fixed_symbols_add(const SotnFixedSymbol* table) {
+    int i;
+
+    for (i = 1; i < 1 + SATZ_AREA_COUNT; i++) {
+        if (!s_FixedTables[i]) {
+            s_FixedTables[i] = table;
+            return;
+        }
+    }
+    satz_die("satz_fixed_symbols_add: no room");
+}
+
+void satz_fixed_symbols_remove(const SotnFixedSymbol* table) {
+    int i;
+
+    for (i = 1; i < 1 + SATZ_AREA_COUNT; i++) {
+        if (s_FixedTables[i] == table) {
+            s_FixedTables[i] = NULL;
+        }
+    }
+}
+
+const SotnFixedSymbol* satz_fixed_symbol_named(const char* name) {
+    const SotnFixedSymbol* s;
+    int i;
+
+    for (i = 0; i < 1 + SATZ_AREA_COUNT; i++) {
+        for (s = s_FixedTables[i]; s && s->name; s++) {
+            if (!strcmp(s->name, name)) {
+                return s;
+            }
+        }
+    }
+    return NULL;
+}
+
+const SotnFixedSymbol* satz_fixed_symbol_at(uint32_t address) {
+    const SotnFixedSymbol* s;
+    int i;
+
+    for (i = 0; i < 1 + SATZ_AREA_COUNT; i++) {
+        for (s = s_FixedTables[i]; s && s->name; s++) {
+            if (address >= s->address &&
+                address < s->address + s->retail_size) {
+                return s;
+            }
+        }
+    }
+    return NULL;
+}
 
 void sotn_satz_clear_range(uint32_t start, uint32_t size) {
     const SotnFixedSymbol* s;
+    int i;
 
-    for (s = sotn_fixed_symbols; s->name; s++) {
-        if (s->address >= start && s->address < start + size) {
-            memset(s->data, 0, s->retail_size * 2);
+    for (i = 0; i < 1 + SATZ_AREA_COUNT; i++) {
+        for (s = s_FixedTables[i]; s && s->name; s++) {
+            if (s->address >= start && s->address < start + size) {
+                memset(s->data, 0, s->retail_size * 2);
+            }
         }
     }
 }
@@ -69,10 +123,9 @@ void* sotn_satz_retail_address(uint32_t address) {
     if (address >= 0x060485C0 && address < 0x060485C0 + sizeof(g_WorkBuffer)) {
         return g_WorkBuffer + (address - 0x060485C0);
     }
-    for (s = sotn_fixed_symbols; s->name; s++) {
-        if (address >= s->address && address < s->address + s->retail_size) {
-            return s->data + (address - s->address);
-        }
+    s = satz_fixed_symbol_at(address);
+    if (s) {
+        return s->data + (address - s->address);
     }
     sotn_satz_unimplemented("sotn_satz_retail_address: no native object");
 }

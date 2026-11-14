@@ -35,5 +35,3 @@ SaturnPlayerOvl g_NullPlayer = {
     (u8*)g_MariaSpriteBanks,
     g_MariaPlayerGraphicsRecords,
 };
-
-void (*g_MariaMapMenuFunctions[19])(void);
