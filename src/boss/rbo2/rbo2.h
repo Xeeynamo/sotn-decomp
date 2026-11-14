@@ -62,8 +62,10 @@ enum BossMgrState {
 };
 
 #if TARGET == TARGET_PSP
+extern s32 E_ID(UNK_18);
 extern s32 E_ID(UNK_19);
 extern s32 E_ID(UNK_1A);
+extern s32 E_ID(UNK_1B);
 #endif
 
 #endif // RBO2_H
