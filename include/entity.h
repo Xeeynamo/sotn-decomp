@@ -892,6 +892,38 @@ typedef struct {
     /* 0xB4 */ u16 unkB4[2];
 } ET_GurkhaHammer;
 
+// rbo8 Galamoth body and its parts; shares its layout with ET_GurkhaHammer
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 : 8;
+    /* 0x86 */ u16 hitFloor;
+    /* 0x88 */ u8 unk88;
+    /* 0x89 */ u8 unk89;
+    /* 0x8A */ u8 unk8A;
+    /* 0x8B */ u8 unk8B;
+    /* 0x8C */ u8 unk8C;
+    /* 0x8D */ u8 unk8D;
+    /* 0x8E */ u8 unk8E;
+    /* 0x8F */ u8 : 8;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s16 rotate;
+    /* 0x9E */ s16 length;
+    /* 0xA0 */ struct Entity* parent;
+    /* 0xA4 */ s16 unkA4;
+    /* 0xA6 */ s16 rotVel;
+    /* 0xA8 */ u8 unkA8;
+    /* 0xA9 */ u8 : 8;
+    /* 0xAA */ u16 : 16;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ u16 unkB0[2];
+    /* 0xB4 */ u16 unkB4[2];
+} ET_Galamoth;
+
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 unk80;
@@ -4348,20 +4380,6 @@ typedef struct {
     /* 0x7E */ s16 bobAngle;
 } ET_Shaft;
 
-// func_us_801980E4 (rbo8, rbo8_psp)
-typedef struct {
-    /* 0x7C */ u32 : 32;
-    /* 0x80 */ u32 : 32;
-    /* 0x84 */ u32 : 32;
-    /* 0x88 */ u32 : 32;
-    /* 0x8C */ u32 : 32;
-    /* 0x90 */ u32 : 32;
-    /* 0x94 */ u32 : 32;
-    /* 0x98 */ u32 : 32;
-    /* 0x9C */ u32 : 32;
-    /* 0xA0 */ struct Entity* source;
-} ET_801980E4;
-
 typedef struct {
     /* 0x7C */ struct Entity* target;
 } ET_CutsceneStage;
@@ -4975,6 +4993,7 @@ typedef union { // offset=0x7C
     ET_801D0B78 et_801D0B78;
     ET_WaterEffects waterEffects;
     ET_GurkhaHammer GH_Props;
+    ET_Galamoth galamoth;
     ET_TransparentWater transparentWater;
     ET_HeartRoomGoldDoor heartRoomGoldDoor;
     ET_CastleDoorTransition castleDoorTransition;
@@ -5234,7 +5253,6 @@ typedef union { // offset=0x7C
     ET_801B0930 et_801B0930;
     ET_801C03E8 et_801C03E8;
     ET_Shaft shaft;
-    ET_801980E4 et_801980E4;
     ET_Hippogryph hippogryph;
     ET_HippogryphEgg hippogryphEgg;
     ET_CutsceneStage cutsceneStage;

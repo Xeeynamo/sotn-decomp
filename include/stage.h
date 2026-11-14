@@ -85,7 +85,7 @@ typedef struct {
     s16* unk4;
 } unkStr_801CDD80;
 
-// Used in e_blade, e_gurkha, no2/hammer
+// Used in e_blade, e_gurkha, no2/hammer, rbo8 (Galamoth)
 // note on member types: length and zOffset definitely look signed
 // in the data, but psp uses lhu instead of lh.
 typedef struct {
@@ -94,7 +94,7 @@ typedef struct {
     u16 length;
     u16 params;
     u16 zOffset;
-} giantBroBodyPartsInit;
+} largeEnemyBodyParts;
 
 // Used by no2/372E8, rbo3/rbo3, e_explosion_puff_opaque
 typedef struct {

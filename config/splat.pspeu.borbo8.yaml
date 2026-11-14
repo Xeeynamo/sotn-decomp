@@ -81,6 +81,8 @@ segments:
       - [0x17630, data]
       - [0x23450, .data, rbo8/header]
       - [0x23480, data]
+      - [0x24038, .data, rbo8_psp/unk_EF80]
+      - [0x24058, data]
       - [0x24088, .data, rbo8/e_lock_camera]
       - [0x24100, data, '24100']
       - [0x24180, .rodata, rbo8/e_life_up]
