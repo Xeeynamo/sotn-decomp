@@ -51,11 +51,11 @@ void EntityWeaponAttack(Entity* self) {
         if (self->facingLeft) {
             fakePrim->velocityX.val = FIX(-3.5);
         }
-        self->ext.weapon.unk82 = -0x100;
-        self->ext.weapon.unk80 = 0x800;
+        self->ext.weapon.angSpd = -0x100;
+        self->ext.weapon.angle = 0x800;
         if (self->facingLeft != 0) {
-            self->ext.weapon.unk82 = -self->ext.weapon.unk82;
-            self->ext.weapon.unk80 += 0x800;
+            self->ext.weapon.angSpd = -self->ext.weapon.angSpd;
+            self->ext.weapon.angle += 0x800;
         }
         self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY - 8;
         if (PLAYER.step != Player_Crouch) {
@@ -70,7 +70,7 @@ void EntityWeaponAttack(Entity* self) {
         DestroyEntityWeapon(1);
         self->hitboxHeight = self->hitboxWidth = 4;
         g_api.PlaySfx(SFX_THROW_WEAPON_SWISHES);
-        g_Player.timers[10] = 4;
+        g_Player.timers[ALU_T_USE_SUBWPN] = 4;
         self->step++;
         break;
     case 1:
@@ -78,8 +78,8 @@ void EntityWeaponAttack(Entity* self) {
             self->ext.weapon.unk7E += 8;
         }
         fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
-        self->rotate += abs(self->ext.weapon.unk82);
-        self->ext.weapon.unk80 += self->ext.weapon.unk82;
+        self->rotate += abs(self->ext.weapon.angSpd);
+        self->ext.weapon.angle += self->ext.weapon.angSpd;
         fakePrim->posX.i.hi = fakePrim->x0;
         fakePrim->posY.i.hi = fakePrim->y0;
         fakePrim->posX.val += fakePrim->velocityX.val;
@@ -88,11 +88,12 @@ void EntityWeaponAttack(Entity* self) {
         break;
     }
     fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
-    angle = self->ext.weapon.unk80;
+    angle = self->ext.weapon.angle;
     cosine = rcos(angle) * self->ext.weapon.unk7E;
     sine = -rsin(angle) * self->ext.weapon.unk7E;
     self->posX.val = cosine + fakePrim->posX.val;
     self->posY.val = sine + fakePrim->posY.val;
+    // Spawn a shadow image every-other frame
     if (self->ext.weapon.lifetime & 1) {
         // Create a factory, with a 1 shifted 0xC, or a 2 shifted 0xC (which is
         // a 1 shifted 0xD)
@@ -105,6 +106,7 @@ void EntityWeaponAttack(Entity* self) {
     self->ext.weapon.lifetime++;
 }
 
+// Shadow image of the thrown item, fades over time
 s32 func_ptr_80170004(Entity* self) {
 
     if (self->step == 0) {
@@ -176,7 +178,7 @@ void func_ptr_80170008(Entity* self) {
         if (flag != 0) {
             g_api.PlaySfx(SFX_FM_EXPLODE_B);
         }
-        g_Player.timers[10] = 4;
+        g_Player.timers[ALU_T_USE_SUBWPN] = 4;
         self->step++;
         break;
     case 1:
@@ -207,12 +209,10 @@ void func_ptr_80170008(Entity* self) {
             self->ext.weapon_016.unk84 += 1;
         }
         if ((u16)self->ext.weapon_016.unk84 & 1) {
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) | 0x3A, 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x3A, 0), 0);
         }
         if (flag != 0) {
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) | 0x6E, 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x6E, 0), 0);
         }
         break;
     }
@@ -254,7 +254,7 @@ void func_ptr_8017000C(Entity* self) {
         self->hitboxHeight = 12;
         self->hitboxWidth = 12;
         g_api.PlaySfx(SFX_WEAPON_SWISH_B);
-        g_Player.timers[10] = 4;
+        g_Player.timers[ALU_T_USE_SUBWPN] = 4;
         self->step++;
         break;
     case 1:
@@ -338,7 +338,7 @@ s32 func_ptr_80170014(Entity* self) {
         self->hitboxHeight = self->hitboxWidth = 8;
         g_api.PlaySfx(SFX_VO_ALU_ATTACK_A);
         self->ext.weapon.unk7E = 0x40;
-        g_Player.timers[10] = 4;
+        g_Player.timers[ALU_T_USE_SUBWPN] = 4;
         self->step++;
         return;
     case 1:

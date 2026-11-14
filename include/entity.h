@@ -136,8 +136,8 @@ typedef struct {
 typedef struct {
     /* 0x7C */ s16 lifetime;
     /* 0x7E */ s16 unk7E;
-    /* 0x80 */ s16 unk80; // Y?
-    /* 0x82 */ s16 unk82; // X?
+    /* 0x80 */ s16 angle;
+    /* 0x82 */ s16 angSpd;
     /* 0x84 */ struct Entity* some_ent;
     /* 0x88 */ s16 childPalette;
     /* 0x8A */ s16 unk8A;
@@ -892,6 +892,38 @@ typedef struct {
     /* 0xB4 */ u16 unkB4[2];
 } ET_GurkhaHammer;
 
+// rbo8 Galamoth body and its parts; shares its layout with ET_GurkhaHammer
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 : 8;
+    /* 0x86 */ u16 hitFloor;
+    /* 0x88 */ u8 unk88;
+    /* 0x89 */ u8 unk89;
+    /* 0x8A */ u8 unk8A;
+    /* 0x8B */ u8 unk8B;
+    /* 0x8C */ u8 unk8C;
+    /* 0x8D */ u8 unk8D;
+    /* 0x8E */ u8 unk8E;
+    /* 0x8F */ u8 : 8;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s16 rotate;
+    /* 0x9E */ s16 length;
+    /* 0xA0 */ struct Entity* parent;
+    /* 0xA4 */ s16 unkA4;
+    /* 0xA6 */ s16 rotVel;
+    /* 0xA8 */ u8 unkA8;
+    /* 0xA9 */ u8 : 8;
+    /* 0xAA */ u16 : 16;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ u16 unkB0[2];
+    /* 0xB4 */ u16 unkB4[2];
+} ET_Galamoth;
+
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 unk80;
@@ -934,6 +966,22 @@ typedef struct {
     /* 0x84 */ u16 moveTimer;
     /* 0x86 */ u16 moveDirection;
 } ET_Death;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 angle;
+    /* 0x84 */ s32 speed;
+    /* 0x88 */ u8 unk88;
+    /* 0x89 */ u8 unk89;
+    /* 0x8A */ u8 unk8A;
+    /* 0x8B */ u8 unk8B;
+    /* 0x8C */ u8 unk8C;
+    /* 0x8D */ u8 unk8D;
+    /* 0x8E */ u8 pad8E[0xE];
+    /* 0x9C */ struct Entity* parent;
+    /* 0xA0 */ struct Entity* unkA0;
+} ET_RBO2Ball;
 
 typedef struct {
     /* 0x7C */ u8 unk7C;
@@ -3908,6 +3956,23 @@ typedef struct {
 } ET_Minotaur;
 
 typedef struct {
+    /* 0x7C */ struct Entity* parent;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 moveTimer;
+    /* 0x84 */ s32 targetPosX;
+    /* 0x88 */ s16 nextStep;
+    /* 0x8A */ s16 : 16;
+    /* 0x8C */ u8 : 8;
+    /* 0x8D */ u8 isReady;
+    /* 0x8E */ u8 hasNextStep;
+    /* 0x8F */ u8 signal;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 attack;
+} ET_WerewolfBoss;
+
+typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 bodyGlowPhase;
@@ -4331,20 +4396,6 @@ typedef struct {
     /* 0x7C */ s16 timer;
     /* 0x7E */ s16 bobAngle;
 } ET_Shaft;
-
-// func_us_801980E4 (rbo8, rbo8_psp)
-typedef struct {
-    /* 0x7C */ u32 : 32;
-    /* 0x80 */ u32 : 32;
-    /* 0x84 */ u32 : 32;
-    /* 0x88 */ u32 : 32;
-    /* 0x8C */ u32 : 32;
-    /* 0x90 */ u32 : 32;
-    /* 0x94 */ u32 : 32;
-    /* 0x98 */ u32 : 32;
-    /* 0x9C */ u32 : 32;
-    /* 0xA0 */ struct Entity* source;
-} ET_801980E4;
 
 typedef struct {
     /* 0x7C */ struct Entity* target;
@@ -4959,12 +5010,14 @@ typedef union { // offset=0x7C
     ET_801D0B78 et_801D0B78;
     ET_WaterEffects waterEffects;
     ET_GurkhaHammer GH_Props;
+    ET_Galamoth galamoth;
     ET_TransparentWater transparentWater;
     ET_HeartRoomGoldDoor heartRoomGoldDoor;
     ET_CastleDoorTransition castleDoorTransition;
     ET_AlucardController alucardController;
     ET_FadeToWhite fadeToWhite;
     ET_Death death;
+    ET_RBO2Ball rbo2Ball;
     ET_SpittleBone spittleBone;
     ET_Player player;
     ET_801AF774 et_801AF774;
@@ -5185,6 +5238,7 @@ typedef union { // offset=0x7C
     ET_WhiteDragon whiteDragon;
     ET_Werewolf werewolf;
     ET_Minotaur minotaur;
+    ET_WerewolfBoss werewolfBoss;
     ET_Azaghal azaghal;
     ET_Karasuman karasuman;
     ET_PhantomSkull phantom_skull;
@@ -5217,7 +5271,6 @@ typedef union { // offset=0x7C
     ET_801B0930 et_801B0930;
     ET_801C03E8 et_801C03E8;
     ET_Shaft shaft;
-    ET_801980E4 et_801980E4;
     ET_Hippogryph hippogryph;
     ET_HippogryphEgg hippogryphEgg;
     ET_CutsceneStage cutsceneStage;

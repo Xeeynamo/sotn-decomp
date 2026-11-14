@@ -61,4 +61,9 @@ enum BossMgrState {
     BOSS_MGR_DEATH_REWARD_SPAWNED = 0x80,
 };
 
+#if TARGET == TARGET_PSP
+extern s32 E_ID(UNK_19);
+extern s32 E_ID(UNK_1A);
+#endif
+
 #endif // RBO2_H

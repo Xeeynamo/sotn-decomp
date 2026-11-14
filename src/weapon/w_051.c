@@ -491,13 +491,13 @@ void func_ptr_80170008(Entity* self) {
         if (!(temp_s6 & 3)) {
             g_api.PlaySfx(SFX_WEAPON_SWISH_C);
         }
-        self->ext.weapon.unk82 = color == 0 ? 20 : 30;
+        self->ext.weapon.angSpd = color == 0 ? 20 : 30;
         if (self->facingLeft) {
-            self->ext.weapon.unk82 = -self->ext.weapon.unk82;
+            self->ext.weapon.angSpd = -self->ext.weapon.angSpd;
         }
-        self->ext.weapon.unk80 = -18;
-        self->posX.i.hi += self->ext.weapon.unk82;
-        self->posY.i.hi += self->ext.weapon.unk80;
+        self->ext.weapon.angle = -18;
+        self->posX.i.hi += self->ext.weapon.angSpd;
+        self->posY.i.hi += self->ext.weapon.angle;
         self->rotate = anim->rotation;
         self->ext.timer.t = anim->timer;
         self->ext.weapon.unk7E = 0;

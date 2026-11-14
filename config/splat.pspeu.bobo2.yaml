@@ -81,6 +81,8 @@ segments:
       - [0x36B40, data]
       - [0x37420, .data, bo2/e_lock_camera]
       - [0x37498, data, '37498']
+      - [0x37718, .data, bo2_psp/unk_15900]
+      - [0x37750, data]
       - [0x37780, .rodata, bo2/e_life_up]
       - [0x377A0, .rodata, bo2/e_red_door]
       - [0x377B8, .rodata, bo2/e_collect]

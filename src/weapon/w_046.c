@@ -245,16 +245,16 @@ void EntityWeaponAttack(Entity* self) {
             self->hitboxHeight = 20;
             self->hitboxOffY = -5;
         }
-        self->ext.weapon.unk82 = 20;
+        self->ext.weapon.angSpd = 20;
         if (self->facingLeft) {
-            self->ext.weapon.unk82 = -20;
+            self->ext.weapon.angSpd = -20;
         }
-        self->ext.weapon.unk80 = -5;
+        self->ext.weapon.angle = -5;
         if (g_Player.status & PLAYER_STATUS_CROUCH) {
-            self->ext.weapon.unk80 = 11;
+            self->ext.weapon.angle = 11;
         }
-        self->posX.i.hi = self->posX.i.hi + self->ext.weapon.unk82;
-        self->posY.i.hi = self->posY.i.hi + self->ext.weapon.unk80;
+        self->posX.i.hi = self->posX.i.hi + self->ext.weapon.angSpd;
+        self->posY.i.hi = self->posY.i.hi + self->ext.weapon.angle;
         DestroyEntityWeapon(true);
         self->ext.factory.unk84 = 0;
         if (!temp) {
@@ -292,8 +292,8 @@ void EntityWeaponAttack(Entity* self) {
     }
 
     temp_s5 = self->ext.timer.t;
-    baseX = PLAYER.posX.i.hi + self->ext.weapon.unk82;
-    baseY = PLAYER.posY.i.hi + self->ext.weapon.unk80;
+    baseX = PLAYER.posX.i.hi + self->ext.weapon.angSpd;
+    baseY = PLAYER.posY.i.hi + self->ext.weapon.angle;
     angle = self->rotate;
 
     angle += 0x600;

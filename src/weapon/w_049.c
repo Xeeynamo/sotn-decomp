@@ -146,8 +146,8 @@ s32 func_ptr_80170004(Entity* self) {
         self->facingLeft = 1;
         self->flags = FLAG_UNK_100000 | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->drawFlags = ENTITY_ROTATE;
-        self->ext.weapon.unk80 = params * 512;
-        self->rotate = self->ext.weapon.unk80 - FIX(1.0 / 64);
+        self->ext.weapon.angle = params * 512;
+        self->rotate = self->ext.weapon.angle - FIX(1.0 / 64);
         self->attack = self->ext.weapon.parent->attack;
         self->attackElement = self->ext.weapon.parent->attackElement;
         self->hitboxState = self->ext.weapon.parent->hitboxState;
@@ -174,7 +174,7 @@ s32 func_ptr_80170004(Entity* self) {
         if (--self->ext.weapon.lifetime == 0x18 && params == 0) {
             g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x40, 0), 0);
         }
-        self->ext.weapon.unk80 = self->ext.weapon.unk80 - 0x20;
+        self->ext.weapon.angle = self->ext.weapon.angle - 0x20;
         if (self->ext.weapon.lifetime < 0x11) {
             DestroyEntity(self);
             return;
@@ -182,7 +182,7 @@ s32 func_ptr_80170004(Entity* self) {
         break;
     }
 
-    angle = self->ext.weapon.unk80;
+    angle = self->ext.weapon.angle;
     initialX = self->posX.i.hi;
     magnitude = self->ext.weapon.unk7E;
     initialY = self->posY.i.hi;
@@ -425,7 +425,7 @@ s32 func_ptr_80170010(Entity* self) {
     case 0:
         self->facingLeft = 1;
         self->flags = FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
-        self->ext.weapon.unk80 = params * 512;
+        self->ext.weapon.angle = params * 512;
         self->ext.weapon.equipId = self->ext.weapon.parent->ext.weapon.equipId;
         SetWeaponProperties(self, 0);
         self->enemyId = self->ext.weapon.parent->enemyId;
@@ -437,7 +437,7 @@ s32 func_ptr_80170010(Entity* self) {
         break;
     case 1:
         self->ext.weapon.unk7E += 4;
-        self->ext.weapon.unk80 -= 0x20;
+        self->ext.weapon.angle -= 0x20;
         if (self->ext.weapon.unk7E >= 0x40) {
             self->step += 1;
         }
@@ -452,7 +452,7 @@ s32 func_ptr_80170010(Entity* self) {
         break;
     }
 
-    angle = self->ext.weapon.unk80;
+    angle = self->ext.weapon.angle;
     magnitude = self->ext.weapon.unk7E;
     self->ext.weapon.lifetime++;
     self->posX.i.hi = baseX + (((rcos(angle) >> 4) * magnitude) >> 8);
