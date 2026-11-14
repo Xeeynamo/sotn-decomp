@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
@@ -16,6 +17,8 @@ const (
 	cc1Psx26Release       = "cc1-psx-26"
 	saturnCompilerRepo    = "sozud/saturn-compiler-repro"
 	saturnCompilerRelease = "v1.0.0"
+	pspCompilerRepo       = "sozud/mweppc"
+	pspCompilerRelease    = "mwccpsp-v1.0.0"
 )
 
 func EnsureBuildDeps(versions []string) error {
@@ -30,7 +33,9 @@ func EnsureBuildDeps(versions []string) error {
 		case sotn.PlatformPSX:
 			ensurePSXDeps(&eg)
 		case sotn.PlatformPSP:
-			ensurePSPDeps(&eg)
+			if err := ensurePSPDeps(&eg); err != nil {
+				return err
+			}
 		case sotn.PlatformSaturn:
 			if err := ensureSaturnDeps(&eg); err != nil {
 				return err
@@ -57,7 +62,41 @@ func ensurePSXDeps(eg *errgroup.Group) {
 	})
 }
 
-func ensurePSPDeps(eg *errgroup.Group) {
+func ensurePSPDeps(eg *errgroup.Group) error {
+	compiler := os.Getenv("SOTN_PSP_COMPILER")
+	if compiler == "" {
+		compiler = "native64"
+	}
+	switch compiler {
+	case "native64":
+		if os.Getenv("SOTN_PSP_MWCC") == "" {
+			eg.Go(func() error {
+				return downloadTarGzFromGithubIfNotExists(
+					pspCompilerRepo, pspCompilerRelease,
+					fmt.Sprintf("mwccpsp-native64-%s-%s", runtime.GOOS, runtime.GOARCH),
+					"bin/mwccpsp-native64",
+				)
+			})
+		}
+	case "wibo":
+		if os.Getenv("SOTN_PSP_MWCC") != "" {
+			return fmt.Errorf(
+				"SOTN_PSP_MWCC cannot be used with SOTN_PSP_COMPILER=wibo")
+		}
+		eg.Go(func() error {
+			return downloadFromGithubIfNotExists("decompals/wibo", "0.6.13", "wibo", "bin/wibo")
+		})
+		eg.Go(func() error {
+			return downloadAndExtractAllTarGzFromGithub(
+				"Xeeynamo/sotn-decomp", cc1Psx26Release,
+				"mwccpsp_219", "bin",
+			)
+		})
+	default:
+		return fmt.Errorf(
+			"SOTN_PSP_COMPILER must be either %q or %q, got %q",
+			"native64", "wibo", compiler)
+	}
 	eg.Go(func() error {
 		return downloadTarGzFromGithubIfNotExists(
 			"Xeeynamo/sotn-decomp", cc1Psx26Release,
@@ -69,15 +108,6 @@ func ensurePSPDeps(eg *errgroup.Group) {
 	})
 	eg.Go(func() error {
 		return CargoBuild("tools/sotn_str/Cargo.toml", "")
-	})
-	eg.Go(func() error {
-		return downloadFromGithubIfNotExists("decompals/wibo", "0.6.13", "wibo", "bin/wibo")
-	})
-	eg.Go(func() error {
-		return downloadAndExtractAllTarGzFromGithub(
-			"Xeeynamo/sotn-decomp", cc1Psx26Release,
-			"mwccpsp_219", "bin",
-		)
 	})
 	eg.Go(func() error {
 		const MetroWrapVersion = "0.2.2"
@@ -98,6 +128,7 @@ func ensurePSPDeps(eg *errgroup.Group) {
 		_ = os.Remove(".crates2.json")
 		return nil
 	})
+	return nil
 }
 
 // gen.py invokes sotn-assets by path as "bin/sotn-assets", so the running

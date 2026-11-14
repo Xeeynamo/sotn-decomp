@@ -35,3 +35,5 @@ This project is possible thanks to the hard work of tools provided by the Decomp
 * [frogress](https://github.com/decompals/frogress) by @ethteck to store and retrieve progression data.
 * [esa-new](https://github.com/mkst/esa-new) by @mkst as an inspiration on how to set-up a PS1 decompilation project.
 * [oot](https://github.com/zeldaret/oot) as an inspiration of what it is possible to achieve with a complete decompiled video game.
+* [mweppc](https://github.com/doldecomp/mweppc) for their CodeWarrior for GameCube decompilation, which enabled our mwccpsp decompilation and native build.
+* [mwccpsp](https://github.com/sozud/mweppc/tree/mwccpsp), our decompilation of CodeWarrior PSP 3.0.1 219 used to build the PSP version.
