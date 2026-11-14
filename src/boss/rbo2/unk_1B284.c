@@ -4,7 +4,33 @@
 
 INCLUDE_ASM("boss/rbo2/nonmatchings/unk_1B284", EntityBreakable);
 
-INCLUDE_ASM("boss/rbo2/nonmatchings/unk_1B284", func_us_8019A98C_from_rcen);
+s16 _LimitAngleChange(s16 delta, s16 base, s16 target) {
+    s16 diff;
+    s16 ret;
+
+    base &= 0xFFF;
+    diff = target - base;
+    ret = diff;
+
+    if (diff > ROT(180)) {
+        ret = diff - ROT(360);
+    }
+
+    if (diff < ROT(-180)) {
+        ret = diff + ROT(360);
+    }
+
+    if (abs(ret) > delta) {
+        if (diff < 0) {
+            ret = base - delta;
+        } else {
+            ret = base + delta;
+        }
+        return ret;
+    }
+
+    return target;
+}
 
 INCLUDE_ASM("boss/rbo2/nonmatchings/unk_1B284", func_us_8019B430);
 
@@ -19,7 +45,6 @@ extern u8 D_us_801806B8[];
 extern u8 D_us_801806D0[];
 extern EInit g_EInitDeath1;
 extern s32 g_BossMgrState;
-s16 func_us_8019A98C_from_rcen(s32 arg0, s16 arg1, s16 arg2);
 void func_us_8019B430(void);
 
 void func_us_8019B52C(Entity* self) {
@@ -103,8 +128,7 @@ void func_us_8019B52C(Entity* self) {
             posX -= self->posX.i.hi;
             posY -= self->posY.i.hi;
             angle = ratan2(posY, posX);
-            angle = func_us_8019A98C_from_rcen(
-                0x30, self->ext.deathBoss.angle, angle);
+            angle = _LimitAngleChange(0x30, self->ext.deathBoss.angle, angle);
             self->velocityX = (self->ext.deathBoss.speed * rcos(angle)) >> 12;
             self->velocityY = (self->ext.deathBoss.speed * rsin(angle)) >> 12;
             self->ext.deathBoss.angle = angle;
@@ -292,8 +316,7 @@ void func_us_8019B52C(Entity* self) {
         posY -= self->posY.i.hi;
         angle = ratan2(posY, posX);
         self->ext.deathBoss.speed = FIX(1.75);
-        angle =
-            func_us_8019A98C_from_rcen(0x30, self->ext.deathBoss.angle, angle);
+        angle = _LimitAngleChange(0x30, self->ext.deathBoss.angle, angle);
         self->velocityX = (self->ext.deathBoss.speed * rcos(angle)) >> 12;
         self->velocityY = (self->ext.deathBoss.speed * rsin(angle)) >> 12;
         self->ext.deathBoss.angle = angle;
@@ -489,26 +512,7 @@ void func_us_8019B52C(Entity* self) {
         break;
 
     case 0xFF:
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params) {
-                break;
-            }
-            self->animCurFrame++;
-            self->params |= 1;
-        } else {
-            self->params = 0;
-        }
-        if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (self->step_s) {
-                break;
-            }
-            self->animCurFrame--;
-            self->step_s |= 1;
-        } else {
-            self->step_s = 0;
-        }
-        break;
+#include "../../st/pad2_anim_debug.h"
     }
 
     posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
