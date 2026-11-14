@@ -1,6 +1,5 @@
 g_EInitParticle = 0x801804E0;
 g_EInitInteractable = 0x801804F8;
-g_BossFlag = 0x801806E4;
 rooms = 0x80181460;
 cutscene_1 = 0x80181720;
 cutscene_3 = 0x801819E7;
