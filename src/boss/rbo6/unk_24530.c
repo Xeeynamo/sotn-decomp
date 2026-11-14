@@ -32,7 +32,7 @@ static s32 DecreaseBrightness(Primitive* prim, u32 brightnessOffset) {
     return ret;
 }
 
-#ifdef VERSION_PSP
+#if TARGET == TARGET_PSP
 extern s32 E_ID(UNK_32);
 #endif
 
@@ -283,9 +283,9 @@ void func_us_801A4594(Entity* self) {
     case 8:
         other = &PLAYER;
         if (other->posX.i.hi > 0x80) {
-            D_pspeu_0926C050 = 0x8000;
+            D_pspeu_0926C050 = PAD_LEFT;
         } else {
-            D_pspeu_0926C050 = 0x2000;
+            D_pspeu_0926C050 = PAD_RIGHT;
         }
         self->step += 1;
         /* fallthrough */

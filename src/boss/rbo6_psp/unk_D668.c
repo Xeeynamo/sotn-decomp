@@ -31,9 +31,14 @@ static s32 DecreaseBrightness(Primitive* prim, u32 brightnessOffset) {
     }
     return ret;
 }
+
+#if TARGET == TARGET_PSP
+extern s32 E_ID(UNK_32);
+#endif
+
 extern EInit g_EInitInteractable;
 extern s32 g_EndingVariant;
-extern s32 D_psp_E_UNK_32;
+
 s32 D_pspeu_0926C058;
 u32 D_pspeu_0926C050;
 s32 D_pspeu_0926C048;
@@ -258,7 +263,7 @@ void func_us_801A4594(Entity* self) {
         D_pspeu_0926C058 = 0x80 - prim->r0 / 2;
         other = AllocEntity(&g_Entities[0x40], &g_Entities[256]);
         if (other != NULL) {
-            CreateEntityFromCurrentEntity(D_psp_E_UNK_32, other);
+            CreateEntityFromCurrentEntity(E_ID(UNK_32), other);
             temp = Random();
             if (temp < 0x20) {
                 temp += 0x60;
@@ -277,9 +282,9 @@ void func_us_801A4594(Entity* self) {
     case 8:
         other = &PLAYER;
         if (other->posX.i.hi > 0x80) {
-            D_pspeu_0926C050 = 0x80;
+            D_pspeu_0926C050 = PAD_LEFT;
         } else {
-            D_pspeu_0926C050 = 0x20;
+            D_pspeu_0926C050 = PAD_RIGHT;
         }
         self->step += 1;
         /* fallthrough */
@@ -328,7 +333,7 @@ void func_us_801A4594(Entity* self) {
         if (!(g_Timer & 1)) {
             other = AllocEntity(&g_Entities[0x40], &g_Entities[256]);
             if (other != NULL) {
-                CreateEntityFromCurrentEntity(D_psp_E_UNK_32, other);
+                CreateEntityFromCurrentEntity(E_ID(UNK_32), other);
                 temp = Random();
                 if (temp < 0x20) {
                     temp += 0x60;
