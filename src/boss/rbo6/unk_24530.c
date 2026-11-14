@@ -359,7 +359,7 @@ extern EInit g_EInitParticle;
 void func_us_801A4F14(Entity* self) {
     Primitive* prim;
     s32 primIndex;
-    s32 intRandy;
+    s32 initRandy;
     s32 yVar;
     s32 xVar;
     s32 width;
@@ -370,14 +370,14 @@ void func_us_801A4F14(Entity* self) {
     case 0:
         InitializeEntity(g_EInitParticle);
         self->animCurFrame = 0;
-        intRandy = Random() % D_pspeu_0926C048;
-        self->hitboxWidth = (intRandy + 2);
-        intRandy++;
-        self->velocityY = 0xFFFE8000 - ((Random() % (intRandy + 2)) << 0x11);
+        initRandy = Random() % D_pspeu_0926C048;
+        self->hitboxWidth = (initRandy + 2);
+        initRandy++;
+        self->velocityY = 0xFFFE8000 - ((Random() % (initRandy + 2)) << 0x11);
         self->ext.ILLEGAL.u32[5] =
-            -0x1000 - ((Random() % (intRandy + 1)) * 0x3000);
-        self->opacity = (((Random() % intRandy) * 8) + 0x20);
-        if (intRandy < D_pspeu_0926C048 / 2) {
+            -0x1000 - ((Random() % (initRandy + 1)) * 0x3000);
+        self->opacity = (((Random() % initRandy) * 8) + 0x20);
+        if (initRandy < D_pspeu_0926C048 / 2) {
             self->zPriority = 0x54;
         } else {
             self->zPriority = 0x90;
