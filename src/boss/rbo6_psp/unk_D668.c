@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rbo6/rbo6.h"
 
-s32 DecreaseBrightness(Primitive* prim, u32 brightnessOffset) {
+static s32 DecreaseBrightness(Primitive* prim, u32 brightnessOffset) {
     s32 newColor;
     s32 i;
     s32 j;
