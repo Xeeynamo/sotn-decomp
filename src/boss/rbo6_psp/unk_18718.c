@@ -7,6 +7,16 @@ extern EInit g_EInitInteractable;
 
 #define offsetof(st, m) (size_t)((size_t) & (((st*)0)->m))
 
+typedef struct {
+    MATRIX mat[2];
+    SVECTOR rot[1];
+    SVECTOR segEnds[2];
+    s32 sxy[14];
+    s32 otz[7];
+    CVECTOR color;
+    u8 shade[7];
+} RBO6_SCRATCHPAD;
+
 #if TARGET == TARGET_PSP
 extern s32 E_ID(UNK_30);
 extern s32 E_ID(UNK_31);

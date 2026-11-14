@@ -184,17 +184,6 @@ typedef struct {
     u8 var_s5[1];
 } ST0_SCRATCHPAD;
 
-// Used in rbo6/unk_31738
-typedef struct {
-    MATRIX mat[2];
-    SVECTOR rot[1];
-    SVECTOR segEnds[2];
-    s32 sxy[14];
-    s32 otz[7];
-    CVECTOR color;
-    u8 shade[7];
-} RBO6_SCRATCHPAD;
-
 extern u16 g_ItemIconSlots[ICON_SLOT_NUM];
 
 /*
