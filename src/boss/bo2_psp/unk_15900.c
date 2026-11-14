@@ -61,7 +61,7 @@ void func_us_801B385C(Entity* self) {
     s16 angle;
 
     FntPrint("wolf_step %x\n", self->step);
-    FntPrint("wolf_set_step %x\n", self->ext.werewolfARE.nextStep);
+    FntPrint("wolf_set_step %x\n", self->ext.werewolfBoss.nextStep);
     if (self->flags & FLAG_DEAD && self->step < 0x20) {
         SetStep(0x20);
     }
@@ -113,28 +113,28 @@ void func_us_801B385C(Entity* self) {
         break;
     case 2:
         if (!self->step_s) {
-            if (!self->ext.werewolfARE.moveTimer) {
-                self->ext.werewolfARE.moveTimer = 0x20;
+            if (!self->ext.werewolfBoss.moveTimer) {
+                self->ext.werewolfBoss.moveTimer = 0x20;
             }
-            self->ext.werewolfARE.isReady = false;
+            self->ext.werewolfBoss.isReady = false;
             self->step_s++;
         }
 
         AnimateEntity(werewolf_anim_idle, self);
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-        if (self->ext.werewolfARE.moveTimer) {
-            self->ext.werewolfARE.moveTimer--;
+        if (self->ext.werewolfBoss.moveTimer) {
+            self->ext.werewolfBoss.moveTimer--;
         } else {
-            self->ext.werewolfARE.isReady = true;
+            self->ext.werewolfBoss.isReady = true;
         }
 
-        if (self->ext.werewolfARE.targetPosX) {
-            self->ext.werewolfARE.isReady = false;
+        if (self->ext.werewolfBoss.targetPosX) {
+            self->ext.werewolfBoss.isReady = false;
             SetStep(4);
-        } else if (self->ext.werewolfARE.hasNextStep) {
-            self->ext.werewolfARE.isReady = false;
-            self->ext.werewolfARE.hasNextStep = false;
-            SetStep(self->ext.werewolfARE.nextStep);
+        } else if (self->ext.werewolfBoss.hasNextStep) {
+            self->ext.werewolfBoss.isReady = false;
+            self->ext.werewolfBoss.hasNextStep = false;
+            SetStep(self->ext.werewolfBoss.nextStep);
         } else {
             entity = &PLAYER;
             i = entity->velocityX;
@@ -143,14 +143,14 @@ void func_us_801B385C(Entity* self) {
             }
             if (self->facingLeft == entity->facingLeft &&
                 GetDistanceToPlayerX() < 0x38 && i > 0) {
-                self->ext.werewolfARE.isReady = false;
+                self->ext.werewolfBoss.isReady = false;
                 SetStep(6);
             }
         }
         break;
     case 4:
         if (!self->step_s) {
-            i = self->ext.werewolfARE.targetPosX;
+            i = self->ext.werewolfBoss.targetPosX;
             entity = &PLAYER;
             if (self->posX.i.hi > entity->posX.i.hi) {
                 i = entity->posX.i.hi + i;
@@ -165,9 +165,9 @@ void func_us_801B385C(Entity* self) {
                     i = 0x70;
                 }
             }
-            self->ext.werewolfARE.targetPosX = i;
+            self->ext.werewolfBoss.targetPosX = i;
             i = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
-            i = self->ext.werewolfARE.targetPosX - i;
+            i = self->ext.werewolfBoss.targetPosX - i;
             if (i > 0) {
                 self->velocityX = FIX(1.125);
             } else {
@@ -180,7 +180,7 @@ void func_us_801B385C(Entity* self) {
         UnkCollisionFunc2(werewolf_sensors);
         arrived = false;
         i = self->posX.i.hi + g_Tilemap.scrollX.i.hi -
-            self->ext.werewolfARE.targetPosX;
+            self->ext.werewolfBoss.targetPosX;
         if (self->velocityX > 0) {
             if (i > 0) {
                 arrived = true;
@@ -189,7 +189,7 @@ void func_us_801B385C(Entity* self) {
             arrived = true;
         }
         if (arrived) {
-            self->ext.werewolfARE.targetPosX = 0;
+            self->ext.werewolfBoss.targetPosX = 0;
             SetStep(2);
         }
         break;
@@ -207,11 +207,11 @@ void func_us_801B385C(Entity* self) {
             entity = self + 3;
             i = entity->posX.i.hi - self->posX.i.hi;
             if (self->facingLeft == entity->facingLeft && abs(i) < 0x20) {
-                self->ext.werewolfARE.signal = true;
+                self->ext.werewolfBoss.signal = true;
             } else {
-                self->ext.werewolfARE.signal = false;
+                self->ext.werewolfBoss.signal = false;
             }
-            entity->ext.minotaur.signal = self->ext.werewolfARE.signal ^ 1;
+            entity->ext.minotaur.signal = self->ext.werewolfBoss.signal ^ 1;
             self->step_s++;
             // fallthrough
         case 1:
@@ -241,9 +241,9 @@ void func_us_801B385C(Entity* self) {
                     CreateEntityFromEntity(E_ID(UNK_1D), self, entity);
                     entity->facingLeft = self->facingLeft;
                     entity->posY.i.hi -= 0x10;
-                    entity->ext.werewolfARE.parent = self + 3;
-                    entity->ext.werewolfARE.signal =
-                        self->ext.werewolfARE.signal;
+                    entity->ext.werewolfBoss.parent = self + 3;
+                    entity->ext.werewolfBoss.signal =
+                        self->ext.werewolfBoss.signal;
                 }
             }
             break;
@@ -273,12 +273,12 @@ void func_us_801B385C(Entity* self) {
     case 12:
         if (!self->step_s) {
             if (!AnimateEntity(werewolf_anim_charge_init, self)) {
-                self->ext.werewolfARE.timer = 0x80;
+                self->ext.werewolfBoss.timer = 0x80;
                 self->step_s++;
             }
         } else {
             AnimateEntity(werewolf_anim_charge_wait, self);
-            if (!--self->ext.werewolfARE.timer) {
+            if (!--self->ext.werewolfBoss.timer) {
                 SetStep(14);
             }
         }
@@ -297,11 +297,11 @@ void func_us_801B385C(Entity* self) {
         case 0:
             self->velocityX = 0;
             self->velocityY = 0;
-            self->ext.werewolfARE.signal = false;
+            self->ext.werewolfBoss.signal = false;
             self->step_s++;
             // fallthrough
         case 1:
-            if (self->ext.werewolfARE.signal) {
+            if (self->ext.werewolfBoss.signal) {
                 self->step_s++;
             }
             break;
@@ -315,14 +315,14 @@ void func_us_801B385C(Entity* self) {
                 } else {
                     self->velocityX = FIX(-6.0);
                 }
-                self->ext.werewolfARE.timer = 0x30;
+                self->ext.werewolfBoss.timer = 0x30;
             }
             break;
         case 3:
             UnkCollisionFunc2(werewolf_sensors);
             self->velocityX -= self->velocityX / 64;
             self->animCurFrame = 0x2B;
-            if (!--self->ext.werewolfARE.timer) {
+            if (!--self->ext.werewolfBoss.timer) {
                 SetSubStep(4);
             }
             break;
@@ -345,7 +345,7 @@ void func_us_801B385C(Entity* self) {
                 self->velocityX = FIX(-3.5);
             }
             self->velocityY = 0;
-            self->ext.werewolfARE.timer = 0x20;
+            self->ext.werewolfBoss.timer = 0x20;
             self->animCurFrame = 0x17;
             self->drawFlags |= ENTITY_ROTATE;
             self->step_s++;
@@ -356,7 +356,7 @@ void func_us_801B385C(Entity* self) {
             if (!(g_Timer & 8)) {
                 PlaySfxPositional(SFX_WEREWOLF_SPIN_ATTACK);
             }
-            if (!(self->ext.werewolfARE.timer & 3)) {
+            if (!(self->ext.werewolfBoss.timer & 3)) {
                 entity = AllocEntity(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
@@ -367,7 +367,7 @@ void func_us_801B385C(Entity* self) {
                     entity->params = self->animCurFrame;
                 }
             }
-            if (!--self->ext.werewolfARE.timer) {
+            if (!--self->ext.werewolfBoss.timer) {
                 self->step_s = 2;
             }
             break;
@@ -380,7 +380,7 @@ void func_us_801B385C(Entity* self) {
     case 0x16:
         switch (self->step_s) {
         case 0:
-            self->ext.werewolfARE.signal = false;
+            self->ext.werewolfBoss.signal = false;
             entity = self + 3;
             if (self->posX.i.hi > entity->posX.i.hi) {
                 self->facingLeft = 0;
@@ -411,7 +411,7 @@ void func_us_801B385C(Entity* self) {
             if (!(g_Timer & 7)) {
                 PlaySfxPositional(SFX_WEREWOLF_SPIN_ATTACK);
             }
-            if (!(self->ext.werewolfARE.timer & 3)) {
+            if (!(self->ext.werewolfBoss.timer & 3)) {
                 entity = AllocEntity(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
@@ -456,27 +456,27 @@ void func_us_801B385C(Entity* self) {
             posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
             if (posY < 0x2C) {
                 self->posY.i.hi = 0x2C - g_Tilemap.scrollY.i.hi;
-                self->ext.werewolfARE.timer = 8;
+                self->ext.werewolfBoss.timer = 8;
                 self->step_s++;
             }
             break;
         case 5:
             self->animCurFrame = 0x17;
             self->rotate -= ROT(33.75);
-            if (!--self->ext.werewolfARE.timer) {
-                self->ext.werewolfARE.timer = 0xC;
+            if (!--self->ext.werewolfBoss.timer) {
+                self->ext.werewolfBoss.timer = 0xC;
                 self->step_s++;
             }
             break;
         case 6:
             self->animCurFrame = 0x1B;
             self->rotate = 0;
-            if (!--self->ext.werewolfARE.timer) {
+            if (!--self->ext.werewolfBoss.timer) {
                 entity = &PLAYER;
                 angle = GetAngleBetweenEntities(self, entity);
                 self->velocityX = rcos(angle) * 0x50;
                 self->velocityY = rsin(angle) * 0x50;
-                self->ext.werewolfARE.attack = self->attack;
+                self->ext.werewolfBoss.attack = self->attack;
                 self->attack *= 2;
                 self->step_s++;
             }
@@ -489,11 +489,11 @@ void func_us_801B385C(Entity* self) {
             }
             if (UnkCollisionFunc3(werewolf_sensors_ground) & 1) {
                 PlaySfxPositional(SFX_STOMP_HARD_B);
-                self->attack = self->ext.werewolfARE.attack;
-                self->ext.werewolfARE.timer = 0x10;
+                self->attack = self->ext.werewolfBoss.attack;
+                self->ext.werewolfBoss.timer = 0x10;
                 self->step_s++;
             }
-            if (!(self->ext.werewolfARE.timer & 3)) {
+            if (!(self->ext.werewolfBoss.timer & 3)) {
                 entity = AllocEntity(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
@@ -508,7 +508,7 @@ void func_us_801B385C(Entity* self) {
         case 8:
             self->drawFlags = ENTITY_DEFAULT;
             self->animCurFrame = 0xC;
-            if (!--self->ext.werewolfARE.timer) {
+            if (!--self->ext.werewolfBoss.timer) {
                 SetStep(4);
             }
             break;
@@ -517,12 +517,12 @@ void func_us_801B385C(Entity* self) {
     case 0x18:
         switch (self->step_s) {
         case 0:
-            self->ext.werewolfARE.signal = false;
+            self->ext.werewolfBoss.signal = false;
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step_s++;
             // fallthrough
         case 1:
-            if (self->ext.werewolfARE.signal) {
+            if (self->ext.werewolfBoss.signal) {
                 self->step_s++;
             }
             break;
@@ -535,7 +535,7 @@ void func_us_801B385C(Entity* self) {
                 } else {
                     self->velocityX = FIX(-3.5);
                 }
-                self->ext.werewolfARE.timer = 0x40;
+                self->ext.werewolfBoss.timer = 0x40;
                 self->step_s++;
             }
             break;
@@ -545,7 +545,7 @@ void func_us_801B385C(Entity* self) {
             if (!(g_Timer & 7)) {
                 PlaySfxPositional(SFX_WEREWOLF_SPIN_ATTACK);
             }
-            if (!(self->ext.werewolfARE.timer & 3)) {
+            if (!(self->ext.werewolfBoss.timer & 3)) {
                 entity = AllocEntity(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
@@ -572,7 +572,7 @@ void func_us_801B385C(Entity* self) {
                     entity->zPriority = self->zPriority + 1;
                 }
             }
-            if (!--self->ext.werewolfARE.timer) {
+            if (!--self->ext.werewolfBoss.timer) {
                 self->step_s++;
             }
             break;
@@ -595,7 +595,7 @@ void func_us_801B385C(Entity* self) {
         switch (self->step_s) {
         case 0:
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            self->ext.werewolfARE.signal = false;
+            self->ext.werewolfBoss.signal = false;
             self->step_s++;
             // fallthrough
         case 1:
@@ -620,7 +620,7 @@ void func_us_801B385C(Entity* self) {
             } else {
                 self->animCurFrame = 0x19;
             }
-            if (!(self->ext.werewolfARE.timer & 3)) {
+            if (!(self->ext.werewolfBoss.timer & 3)) {
                 entity = AllocEntity(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
@@ -663,7 +663,7 @@ void func_us_801B385C(Entity* self) {
             } else {
                 self->animCurFrame = 0x19;
             }
-            if (self->ext.werewolfARE.signal) {
+            if (self->ext.werewolfBoss.signal) {
                 self->drawFlags = ENTITY_DEFAULT;
                 self->animCurFrame = 0xA;
                 self->velocityX = 0;
@@ -681,12 +681,12 @@ void func_us_801B385C(Entity* self) {
                     entity->zPriority = self->zPriority - 1;
                 }
                 PlaySfxPositional(SFX_FIREBALL_SHOT_A);
-                self->ext.werewolfARE.timer = 0x40;
+                self->ext.werewolfBoss.timer = 0x40;
                 self->step_s++;
             }
             break;
         case 7:
-            if (!--self->ext.werewolfARE.timer) {
+            if (!--self->ext.werewolfBoss.timer) {
                 self->blendMode = BLEND_NO;
                 SetStep(4);
             }
@@ -695,7 +695,7 @@ void func_us_801B385C(Entity* self) {
         break;
     case 0x20:
         entity = self + 3;
-        self->ext.werewolfARE.isReady = true;
+        self->ext.werewolfBoss.isReady = true;
         entity->ext.minotaur.signal = true;
         switch (self->step_s) {
         case 0:
@@ -730,7 +730,7 @@ void func_us_801B385C(Entity* self) {
             }
             break;
         case 4:
-            self->ext.werewolfARE.targetPosX = 0;
+            self->ext.werewolfBoss.targetPosX = 0;
             self->animCurFrame = 0;
             break;
         }

@@ -3938,7 +3938,7 @@ typedef struct {
     /* 0x94 */ s32 : 32;
     /* 0x98 */ s32 : 32;
     /* 0x9C */ s32 attack;
-} ET_WerewolfARE;
+} ET_WerewolfBoss;
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
@@ -5219,7 +5219,7 @@ typedef union { // offset=0x7C
     ET_WhiteDragon whiteDragon;
     ET_Werewolf werewolf;
     ET_Minotaur minotaur;
-    ET_WerewolfARE werewolfARE;
+    ET_WerewolfBoss werewolfBoss;
     ET_Azaghal azaghal;
     ET_Karasuman karasuman;
     ET_PhantomSkull phantom_skull;
