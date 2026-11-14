@@ -78,6 +78,8 @@ segments:
       - [0x13628, data, '13628']
       - [0x15B20, .data, bo7/e_init]
       - [0x15C68, data]
+      - [0x15EC0, .data, bo7_psp/unk_E700]
+      - [0x15ED0, data, 15ED0]
       - [0x15F10, .data, bo7/e_lock_camera]
       - [0x15F88, data, 15F88]
       - [0x20090, .data, bo7/header]

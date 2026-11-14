@@ -41,7 +41,7 @@ typedef enum EntityID {
     E_BREAKABLE_WALL_DEBRIS, // EntityBreakableWallDebris
     E_BREAKABLE_DEBRIS,      // EntityBreakableDebris
     E_CERBERUS_GATE_DEBUG,   // EntityCerberusGateDebug
-    E_UNK_1C,                // func_us_80194D3C
+    E_CERBERUS,              // EntityCerberus
     E_UNK_1D,                // func_us_801959E0
     E_UNK_1E,                // func_us_80195AF0
     E_UNK_1F,                // func_us_80195C50
