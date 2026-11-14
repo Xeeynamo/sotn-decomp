@@ -75,11 +75,15 @@ void func_us_801A4594(Entity* self) {
             prim = prim->next;
         }
         if (g_Player.status & 2) {
-            g_Player.padSim = 4;
+            #if TARGET == TARGET_PSP
+            g_Player.padSim = 0;
+#else
+            g_Player.padSim = PAD_L1;
+            #endif
         } else if (g_Player.status & 4) {
-            g_Player.padSim = 2;
+            g_Player.padSim = PAD_WOLF;
         } else if (g_Player.status & 1) {
-            g_Player.padSim = 8;
+            g_Player.padSim = PAD_R1;
         }
     case 1:
         prim = self->ext.prim;
