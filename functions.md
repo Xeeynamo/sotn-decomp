@@ -3415,7 +3415,7 @@
 | main       | func_psp_0892E818                 |       48 |          4 |        |       |     |
 | rbo2       | CutsceneCameraPan                 |       48 |          5 |        |       |     |
 | dai        | func_pspeu_09253138               |       48 |          5 |        |       |     |
-| rbo2       | func_pspeu_09246AE8               |       48 |          7 |        |       |     |
+| rbo2       | func_us_8019B430                  |       48 |          7 |        |       |     |
 | main       | __eqdf2                           |       48 |          7 |        |       |     |
 | main       | __gedf2                           |       48 |          7 |        |       |     |
 | main       | __gtdf2                           |       48 |          7 |        |       |     |
@@ -5147,7 +5147,7 @@
 | no3        | func_pspeu_09239D40               |       83 |          7 |        |       |     |
 | nz1        | func_pspeu_0924D578               |       83 |          7 |        |       |     |
 | rare       | func_pspeu_0924EFE8               |       83 |          7 |        |       |     |
-| rbo2       | func_us_8019A98C                  |       83 |          8 |        |       |     |
+| rbo2       | _LimitAngleChange                 |       83 |          8 |        |       |     |
 | nz1        | func_pspeu_09258BB8               |       83 |          8 |        |       |     |
 | rcen       | func_pspeu_09249BA0               |       83 |          8 |        |       |     |
 |            | func_pspeu_09249608               |       83 |          9 |        |       |     |
