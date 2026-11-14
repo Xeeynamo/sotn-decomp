@@ -1976,6 +1976,16 @@ typedef struct {
     /* 0x80 */ s16 timer;
 } ET_DebugCerberusGate;
 
+// CHI Cerberus
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ u8 retreat;
+    /* 0x85 */ u8 fireballIdx;
+    /* 0x86 */ u8 attackCount;
+} ET_Cerberus;
+
 // CHI Room3, Middle, Falling Stairs
 typedef struct {
     /* 0x7C */ struct Primitive* prim7C;
@@ -5097,6 +5107,7 @@ typedef union { // offset=0x7C
 
     ET_DemonSwitchWall demonSwitchWall;
     ET_DebugCerberusGate debugCerberusGate;
+    ET_Cerberus cerberus;
     ET_FallingStairs fallingStairs;
     ET_SalemWitch salemWitch;
     ET_SalemWitchTribolt salemWitchTribolt;

@@ -28,7 +28,7 @@ void EntityBreakableWall(Entity* self);
 void EntityBreakableWallDebris(Entity* self);
 void EntityBreakableDebris(Entity* self);
 void EntityCerberusGateDebug(Entity* self);
-void func_us_80194D3C(Entity* self);
+void EntityCerberus(Entity* self);
 void func_us_801959E0(Entity* self);
 void func_us_80195AF0(Entity* self);
 void func_us_80195C50(Entity* self);
@@ -63,7 +63,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityBreakableWallDebris,
     EntityBreakableDebris,
     EntityCerberusGateDebug,
-    func_us_80194D3C,
+    EntityCerberus,
     func_us_801959E0,
     func_us_80195AF0,
     func_us_80195C50,
