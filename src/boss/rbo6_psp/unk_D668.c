@@ -31,13 +31,13 @@ static s32 DecreaseBrightness(Primitive* prim, u32 brightnessOffset) {
     }
     return ret;
 }
-
-extern s32 D_psp_E_UNK_32;
-extern s32 D_pspeu_0926C048;
-extern u32 D_pspeu_0926C050;
-extern s32 D_pspeu_0926C058;
 extern EInit g_EInitInteractable;
 extern s32 g_EndingVariant;
+extern s32 D_psp_E_UNK_32;
+s32 D_pspeu_0926C058;
+u32 D_pspeu_0926C050;
+s32 D_pspeu_0926C048;
+
 
 void func_us_801A4594(Entity* self) {
     Entity* other;
