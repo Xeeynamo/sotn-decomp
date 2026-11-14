@@ -887,7 +887,8 @@ typedef struct {
     /* 0xA8 */ u8 unkA8;
     /* 0xA9 */ u8 : 8;
     /* 0xAA */ u16 : 16;
-    /* 0xAC */ s32 : 32;
+    /* 0xAC */ u16 unkAC;
+    /* 0xAE */ u16 : 16;
     /* 0xB0 */ u16 unkB0[2];
     /* 0xB4 */ u16 unkB4[2];
 } ET_GurkhaHammer;
@@ -923,6 +924,25 @@ typedef struct {
     /* 0xB0 */ u16 unkB0[2];
     /* 0xB4 */ u16 unkB4[2];
 } ET_Galamoth;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s32 hitPoints;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ u16 unkB0[2];
+    /* 0xB4 */ u16 unkB4[2];
+} ET_Beezelbub;
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
@@ -5033,6 +5053,7 @@ typedef union { // offset=0x7C
     ET_WaterEffects waterEffects;
     ET_GurkhaHammer GH_Props;
     ET_Galamoth galamoth;
+    ET_Beezelbub beezelbub;
     ET_TransparentWater transparentWater;
     ET_HeartRoomGoldDoor heartRoomGoldDoor;
     ET_CastleDoorTransition castleDoorTransition;

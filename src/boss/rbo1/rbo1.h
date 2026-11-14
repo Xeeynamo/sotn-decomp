@@ -48,6 +48,13 @@ typedef enum EntityID {
     NUM_ENTITIES,
 };
 
+#if TARGET == TARGET_PSP
+extern s32 E_ID(UNK_17);
+extern s32 E_ID(UNK_18);
+extern s32 E_ID(UNK_19);
+extern s32 E_ID(UNK_1D);
+#endif
+
 enum BossMgrState {
     BOSS_MGR_IDLE = 0,          // initial state, fight not yet engaged
     BOSS_MGR_FIGHT_ON = 1,      // boss battle started
