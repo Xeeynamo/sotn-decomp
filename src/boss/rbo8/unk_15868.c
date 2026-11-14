@@ -44,7 +44,7 @@ extern EInit g_EInitGalamothLvl50;
 extern s32 D_us_80180C0C;
 extern s16 D_us_80180C10[];
 extern s8 D_us_80180C88[];
-extern giantBroBodyPartsInit D_us_80180CD0[];
+extern largeEnemyBodyParts D_us_80180CD0[];
 extern s16 D_us_80180D70[];
 extern s16 D_us_80180D90[];
 extern s16 D_us_80180DB0[];
@@ -84,7 +84,7 @@ extern s32 D_us_80181754;
 void func_us_80195D80(Entity* self) {
     Entity* ent;
     s16* ptr;
-    giantBroBodyPartsInit* parts;
+    largeEnemyBodyParts* parts;
     Primitive* prim;
     Entity* part;
     s16 angle;
@@ -476,7 +476,7 @@ void func_us_80195D80(Entity* self) {
                 ent = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (ent != NULL) {
                     CreateEntityFromCurrentEntity(E_ID(UNK_18), ent);
-                    ent->ext.et_801980E4.source = self + 7;
+                    ent->ext.galamoth.parent = self + 7;
                 }
             }
             if (!--self->ext.galamoth.timer) {
@@ -536,7 +536,7 @@ void func_us_80195D80(Entity* self) {
                 ent = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (ent != NULL) {
                     CreateEntityFromCurrentEntity(E_ID(UNK_18), ent);
-                    ent->ext.et_801980E4.source = self + 7;
+                    ent->ext.galamoth.parent = self + 7;
                 }
             }
             if (!--self->ext.galamoth.timer) {
@@ -623,7 +623,7 @@ void func_us_80195D80(Entity* self) {
                 ent = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (ent != NULL) {
                     CreateEntityFromCurrentEntity(E_ID(UNK_18), ent);
-                    ent->ext.et_801980E4.source = self + 7;
+                    ent->ext.galamoth.parent = self + 7;
                 }
             }
             if (!self->ext.galamoth.unkB4[0] && !self->ext.galamoth.unkB0[0]) {
@@ -652,7 +652,7 @@ void func_us_80195D80(Entity* self) {
                 ent = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (ent != NULL) {
                     CreateEntityFromCurrentEntity(E_ID(UNK_18), ent);
-                    ent->ext.et_801980E4.source = self + 7;
+                    ent->ext.galamoth.parent = self + 7;
                 }
             }
             func_801CDF1C(ptr, D_us_801812C8, 0);
@@ -919,7 +919,7 @@ void func_us_801980E4(Entity* self) {
         } else {
             self->palette = PAL_FLAG(0x207);
         }
-        source = self->ext.et_801980E4.source;
+        source = self->ext.galamoth.parent;
         self->facingLeft = source->facingLeft;
         self->rotate = source->rotate;
         self->posX.i.hi = source->posX.i.hi;

@@ -10,7 +10,6 @@ g_EInitGalamothLvl50 = 0x80180A74;
 g_EInitGalamothLvl0 = 0x80180A80;
 BackgroundBlockInit = 0x80180AC0;
 D_us_80180C88 = 0x80180C88;
-PrizeDrops = 0x80181754;
 rooms = 0x801822F8;
 func_801CE1E8 = 0x80195644;
 func_801CE228 = 0x80195684;

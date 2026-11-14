@@ -4364,20 +4364,6 @@ typedef struct {
     /* 0x7E */ s16 bobAngle;
 } ET_Shaft;
 
-// func_us_801980E4 (rbo8, rbo8_psp)
-typedef struct {
-    /* 0x7C */ u32 : 32;
-    /* 0x80 */ u32 : 32;
-    /* 0x84 */ u32 : 32;
-    /* 0x88 */ u32 : 32;
-    /* 0x8C */ u32 : 32;
-    /* 0x90 */ u32 : 32;
-    /* 0x94 */ u32 : 32;
-    /* 0x98 */ u32 : 32;
-    /* 0x9C */ u32 : 32;
-    /* 0xA0 */ struct Entity* source;
-} ET_801980E4;
-
 typedef struct {
     /* 0x7C */ struct Entity* target;
 } ET_CutsceneStage;
@@ -5250,7 +5236,6 @@ typedef union { // offset=0x7C
     ET_801B0930 et_801B0930;
     ET_801C03E8 et_801C03E8;
     ET_Shaft shaft;
-    ET_801980E4 et_801980E4;
     ET_Hippogryph hippogryph;
     ET_HippogryphEgg hippogryphEgg;
     ET_CutsceneStage cutsceneStage;

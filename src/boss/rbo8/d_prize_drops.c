@@ -2,6 +2,3 @@
 #include "rbo8.h"
 
 u16 PrizeDrops[ZERO_LEN] = {};
-#if TARGET != TARGET_PSP
-s32 D_us_80181754 = 0;
-#endif
