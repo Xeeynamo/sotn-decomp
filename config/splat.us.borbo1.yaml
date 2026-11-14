@@ -63,7 +63,7 @@ segments:
       - [0x150C, data]
       - [0x1530, .data, e_life_up]
       - [0x1584, data]
-      - [0x11E04, .rodata, unk_12274]
+      - [0x11DE4, .rodata, unk_12274]
       - [0x11E60, .rodata, e_boss_room]
       - [0x11E94, .rodata, e_red_door]
       - [0x11EAC, .rodata, e_collect]

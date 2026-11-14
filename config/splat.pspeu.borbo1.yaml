@@ -75,6 +75,8 @@ segments:
       - [0x12BB0, .data, rbo1/collision]
       - [0x12F88, .data, rbo1/e_room_fg]
       - [0x13028, data, '13028']
+      - [0x132E8, .data, rbo1_psp/unk_E230]
+      - [0x13308, data]
       - [0x14068, .data, rbo1/e_init]
       - [0x141D8, data]
       - [0x1F300, .data, rbo1/header]
