@@ -1,7 +1,36 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rbo6/rbo6.h"
 
-INCLUDE_ASM("boss/rbo6_psp/nonmatchings/rbo6_psp/unk_D668", DecreaseBrightness);
+s32 DecreaseBrightness(Primitive* prim, u32 brightnessOffset) {
+    s32 newColor;
+    s32 i;
+    s32 j;
+    u8* rgbVal;
+    u8* rPtr;
+    s32 ret;
+
+    ret = 0;
+
+    // Starting at prim->r0, update r0,g0,b0
+    // Then we skip 0xC bytes of the prim to take us to r1,g1,b1
+    // and so on for r2,g2,b2 and r3,g3,b3
+    rPtr = &prim->r0;
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 3; j++) {
+            rgbVal = &rPtr[j];
+            newColor = *rgbVal;
+            newColor += brightnessOffset;
+            if (newColor > 0xFF) {
+                newColor = 0xFF;
+            } else {
+                ret |= 1;
+            }
+            *rgbVal = newColor;
+        }
+        rPtr += 0xC;
+    }
+    return ret;
+}
 
 extern s32 D_psp_E_UNK_32;
 extern s32 D_pspeu_0926C048;
