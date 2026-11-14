@@ -49,7 +49,7 @@ typedef enum {
 // Struct reminder: Entity slot offset, parent entity's slot offset, length, params, zOffset
 // To view the body parts, make sure Hammer is loaded, then invoke:
 // python3 tools/display_animset_frames.py LIVE no2 0x8006 0x23E 48 48 --unk5A 0x4C
-static giantBroBodyPartsInit D_us_801821AC[] = {
+static largeEnemyBodyParts D_us_801821AC[] = {
     {LEG_UPPER, PELVIS, 16, 7, 1},
     {LEG_LOWER, LEG_UPPER, 14, 8, 2},
     {FOOT, LEG_LOWER, 0, 9, 3},
@@ -345,7 +345,7 @@ void EntityHammer(Entity* self) {
     Entity* otherEnt;
     Entity* part;
     s16* ptr;
-    giantBroBodyPartsInit* parts;
+    largeEnemyBodyParts* parts;
     s32 step;
 
     if ((self->step & 1) && (self->hitFlags & 3)) {

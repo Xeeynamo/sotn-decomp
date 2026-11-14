@@ -127,7 +127,7 @@ static s32 func_801D0B78(Entity* ent) {
 
 // clang-format off
 static s16 D_801833E4[] = {0, 9, 0, 4, 4, -4, -8, 0};
-static giantBroBodyPartsInit D_801833F4[] = {
+static largeEnemyBodyParts D_801833F4[] = {
     {9, 18, 16, 7, 1},    {10, 9, 14, 8, 2},    {11, 10, 0, 9, 3},
     {12, 18, 16, 13, -1}, {13, 12, 14, 14, -2}, {14, 13, 0, 15, -3},
     {18, 0, 8, 3, 0},     {2, 0, -12, 2, 1},    {1, 2, -4, 1, 0},
@@ -305,7 +305,7 @@ void EntityBlade(Entity* self) {
     Collider collider;
     Entity* part;
     s32 var_s3;
-    giantBroBodyPartsInit* parts;
+    largeEnemyBodyParts* parts;
     s16* ptr;
     Entity* ent_s0;
 
