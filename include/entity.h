@@ -865,6 +865,31 @@ typedef struct {
 } ET_WaterEffects;
 
 typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 angle;
+    /* 0x84 */ s16 targetAngle;
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s16 rotate;
+    /* 0x9E */ s16 length;
+    /* 0xA0 */ struct Entity* parent;
+    /* 0xA4 */ s16 unkA4;
+    /* 0xA6 */ s16 rotVel;
+    /* 0xA8 */ u8 unkA8;
+    /* 0xA9 */ u8 : 8;
+    /* 0xAA */ u16 : 16;
+    /* 0xAC */ u16 unkAC;
+    /* 0xAE */ u16 : 16;
+    /* 0xB0 */ u16 unkB0[2];
+    /* 0xB4 */ u16 unkB4[2];
+} ET_Death2;
+
+typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 : 16;
@@ -5033,6 +5058,7 @@ typedef union { // offset=0x7C
     ET_WaterEffects waterEffects;
     ET_GurkhaHammer GH_Props;
     ET_Galamoth galamoth;
+    ET_Death2 death2;
     ET_TransparentWater transparentWater;
     ET_HeartRoomGoldDoor heartRoomGoldDoor;
     ET_CastleDoorTransition castleDoorTransition;
