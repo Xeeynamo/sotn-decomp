@@ -5,7 +5,6 @@ GetPlayerCollisionWith = 0x0924FD70;
 func_pspeu_09246618_from_bo3 = 0x09252A30;
 func_us_801A07CC_from_bo3 = 0x09252B58;
 func_us_801C5518_from_no4 = 0x09252E10;
-LoadFerrymanGateTiles = 0x09254D08;
 func_us_801C12B0_from_no4 = 0x09254DF0;
 func_us_801C15F8_from_no4 = 0x09255258;
 EntityBgColumnsParallax_from_no4 = 0x09255C98;

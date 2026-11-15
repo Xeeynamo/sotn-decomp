@@ -49,7 +49,7 @@ segments:
       - [0xC68, .data, e_room_bg]
       - [0xCA0, .data, e_red_door_tiles]
       - [0xCD0, .data, e_lock_camera]
-      - [0xD50, data]
+      - [0xD50, .data, e_breakable]
       - [0xE58, .data, d_water_data]
       - [0x104C, data]
       - [0x1508, .data, e_ferryman]
