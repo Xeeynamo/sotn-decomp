@@ -1549,8 +1549,8 @@ void func_06009570(s32 arg0) {
     SCL_SetConfig(SCL_NBG0, &scfg);
     ptr = &DAT_0605CD90[3];
     temp_r1 = DAT_06038CA0[arg0];
-    ptr->unk8 = (u16*)(SCL_VDP2_VRAM_B0 + 0x18000);
     ptr->dst0 = (u16*)(SCL_VDP2_VRAM_A1);
+    ptr->unk8 = (u16*)(SCL_VDP2_VRAM_B0 + 0x18000);
     ptr->dst4 = (u16*)(SCL_COLRAM_ADDR + 0x600);
     ptr->unk24 = 0x30;
     ptr->unkC = *temp_r1++ + DAT_00252000;
@@ -1818,7 +1818,55 @@ void func_06009D60(u32 bank) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009DB0, func_06009DB0);
+void func_06009DB0(void) {
+    SclConfig scfg;
+    Unk0605CD90* ptr;
+    s32* temp_r1;
+    s16* src;
+
+    SCL_InitConfigTb(&scfg);
+    scfg.charsize = SCL_CHAR_SIZE_1X1;
+    scfg.pnamesize = SCL_PN1WORD;
+    scfg.platesize = SCL_PL_SIZE_1X1;
+    scfg.coltype = SCL_COL_TYPE_256;
+    scfg.datatype = SCL_CELL;
+    scfg.mapover = SCL_OVER_0;
+    scfg.flip = SCL_PN_12BIT;
+    scfg.patnamecontrl = 0x64;
+    scfg.plate_addr[3] = SCL_VDP2_VRAM_B0 + 0x18000;
+    scfg.plate_addr[2] = SCL_VDP2_VRAM_B0 + 0x18000;
+    scfg.plate_addr[1] = SCL_VDP2_VRAM_B0 + 0x18000;
+    scfg.plate_addr[0] = SCL_VDP2_VRAM_B0 + 0x18000;
+    SCL_SetConfig(SCL_NBG0, &scfg);
+    ptr = &DAT_0605CD90[3];
+    temp_r1 = DAT_06038C88;
+    ptr->dst0 = (u16*)(SCL_VDP2_VRAM_A1);
+    ptr->unk8 = (u16*)(SCL_VDP2_VRAM_B0 + 0x18000);
+    ptr->dst4 = (u16*)(SCL_COLRAM_ADDR + 0x600);
+    ptr->unk24 = 3;
+    ptr->unkC = *temp_r1++ + DAT_00252000;
+    ptr->unk18 = *temp_r1++;
+    ptr->unk10 = *temp_r1++ + DAT_00252000;
+    ptr->unk1C = *temp_r1++;
+    ptr->unk14 = *temp_r1++ + DAT_00252000;
+    ptr->unk20 = *temp_r1++;
+    ptr->divisorX = ptr->divisorY = 1;
+    ptr->flags = 0;
+    SCL_Open(SCL_NBG0);
+    SCL_MoveTo(FIXED(0), FIXED(8), FIXED(0));
+    SCL_Close();
+    DAT_0605C120[3] = &g_PlayerOvl;
+    src = DAT_0605C120[3];
+    DecompressLZSS(ptr->unk14, src, ptr->unk20);
+    ptr->width = src[0];
+    ptr->height = src[1];
+    DAT_0605D6C0[3].tileFlags = 0xC4;
+    if (g_CurrentRoom.stageID != 0x38) {
+        SCL_SetCycleTable(DAT_06038D80);
+    } else {
+        SCL_SetCycleTable(DAT_06038D90);
+    }
+}
 
 void func_06009F10(void) {
     SclConfig scfg;
@@ -1839,8 +1887,37 @@ void func_06009F10(void) {
     SCL_SetConfig(SCL_NBG2, &scfg);
 }
 
-// _X_SCROLL_TRANS
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009F84, func_06009F84);
+// original name: X_SCROLL_TRANS
+void func_06009F84(Unk0605CD90* arg0) {
+    u16 i, j;
+    u16 x;
+    s16* dst;
+    s16* src;
+    s32 scrollX;
+
+    scrollX = (DAT_0605c680.unk3C / 4) * 7;
+
+    x = scrollX >> 0x13;
+    x += 0x2A;
+
+    dst = arg0->unk8;
+    dst += x % 0x40U;
+    src = DAT_0605C120[0] + 2;
+    src += x;
+    for (i = 0; i < 0x20; i++) {
+        for (j = 0; j < 4; j++) {
+            *dst++ = *src++;
+
+            if (((u16)(x + j) % 0x40) == (0x40 - 1)) {
+                dst -= 0x40;
+            }
+        }
+        dst = arg0->unk8 + (x % 0x40U) + i * 0x40;
+        src = DAT_0605C120[0] + 2;
+        src += x;
+        src += i * 0x500;
+    }
+}
 
 void func_0600A030(void) {
     Unk0605CD90* ptr;
