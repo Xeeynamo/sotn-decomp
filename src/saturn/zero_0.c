@@ -1687,10 +1687,10 @@ void func_060098F0(u16 arg0, Unk0605CD90* arg1, UNK_0605c680* arg2) {
     dst = arg1->unk8;
     src = DAT_0605C120[arg0] + 2;
     tileBase = arg1->unk24 << 0xC;
-    
+
     w = arg1->width;
     h = arg1->height;
-    
+
     dst += (x % 0x40U) + (y % 0x40U) * 0x40;
     src += (x % w) + (y % h) * w;
 
