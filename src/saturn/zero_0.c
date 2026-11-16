@@ -1071,7 +1071,7 @@ void func_0600871C(Unk0605CD90* arg0, UNK_0605c680* arg1, s32 arg2) {
 
     src = DAT_0605C120[arg2] + 2;
     dst = arg0->unk8;
-    tileBase = arg0->unk24 * 0x1000;
+    tileBase = arg0->unk24 << 0xC;
 
     src += (x % arg0->width) + (y % arg0->height) * arg0->width;
     dst += (x % 0x40U) + (y % 0x40U) * 0x40;
@@ -1113,7 +1113,7 @@ void BuildSubDispTilemap(Unk0605CD90* arg0) {
 
     src = DAT_0605C120[3] + 2;
     dst = arg0->unk8;
-    tileBase = arg0->unk24 * 0x1000;
+    tileBase = arg0->unk24 << 0xC;
 
     j = 0;
     dst += j * 0x20;
@@ -1653,8 +1653,129 @@ void func_06009838(void) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60098F0, func_060098F0);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009AE8, func_06009AE8);
+void func_060098F0(u16 arg0, Unk0605CD90* arg1, UNK_0605c680* arg2) {
+    u16 i, j;
+    u16 w, h;
+    u16 tileBase;
+    s32 x, y;
+    u16* dst;
+    u16* src;
+    s32 scrollX, scrollY;
+    s32 dy;
+
+    scrollX = arg2->unk3C / arg1->divisorX;
+    scrollY = arg2->unk40 / arg1->divisorY;
+
+    x = scrollX >> 0x13;
+    y = scrollY >> 0x13;
+
+    if (arg2->g_ScrollDeltaX >= 0) {
+        x += 0x2A;
+    }
+
+    if (arg2->g_ScrollDeltaX < 0) {
+        x -= 4;
+    }
+
+    for (dy = 4; dy > 0; dy--) {
+        if ((y - dy) >= 0) {
+            break;
+        }
+    }
+    y -= dy;
+
+    dst = arg1->unk8;
+    src = DAT_0605C120[arg0] + 2;
+    tileBase = arg1->unk24 << 0xC;
+    
+    w = arg1->width;
+    h = arg1->height;
+    
+    dst += (x % 0x40U) + (y % 0x40U) * 0x40;
+    src += (x % w) + (y % h) * w;
+
+    for (i = 0; i < 2; i++) {
+        for (j = 0; j < (dy + 0x22); j++) {
+            *dst = *src + tileBase;
+            if (((y + j) % 0x40U) == (0x40 - 1)) {
+                dst -= 0x40 * (0x40 - 1);
+            } else {
+                dst += 0x40;
+            }
+            src += w;
+            if (arg1->flags & 2) {
+                if (((y + j) % h) == (h - 1)) {
+                    src -= w * h;
+                }
+            }
+        }
+        dst = arg1->unk8 + ((x + 1) % 0x40U) + (y % 0x40U) * 0x40;
+        src = DAT_0605C120[arg0] + 2;
+        src += ((x + 1) % w) + (y % h) * w;
+    }
+}
+
+void func_06009AE8(u16 arg0, Unk0605CD90* arg1, UNK_0605c680* arg2) {
+    u16 i, j;
+    u16 w, h;
+    u16 tileBase;
+    s32 x, y;
+    s16* dst;
+    s16* src;
+    s32 scrollX, scrollY;
+    s32 dx;
+
+    scrollX = arg2->unk3C / arg1->divisorX;
+    scrollY = arg2->unk40 / arg1->divisorY;
+
+    x = scrollX >> 0x13;
+    y = scrollY >> 0x13;
+
+    if (arg2->g_ScrollDeltaY > 0) {
+        y += 0x20;
+    }
+
+    if (arg2->g_ScrollDeltaY < 0) {
+        y -= 4;
+    }
+
+    for (dx = 4; dx > 0; dx--) {
+        if ((x - dx) >= 0) {
+            break;
+        }
+    }
+    x -= dx;
+
+    dst = arg1->unk8;
+    src = DAT_0605C120[arg0] + 2;
+    tileBase = arg1->unk24 << 0xC;
+
+    w = arg1->width;
+    h = arg1->height;
+
+    dst += (x % 0x40U) + (y % 0x40U) * 0x40;
+    src += (x % w) + (y % h) * w;
+
+    for (i = 0; i < 2; i++) {
+        for (j = 0; j < (dx + 0x2C); j++) {
+            *dst = *src + tileBase;
+            if (((x + j) % 0x40U) == (0x40 - 1)) {
+                dst -= (0x40 - 1);
+            } else {
+                dst += 1;
+            }
+            src += 1;
+            if (arg1->flags & 1) {
+                if (((x + j) % w) == (w - 1)) {
+                    src -= w;
+                }
+            }
+        }
+        dst = arg1->unk8 + (x % 0x40U) + ((y + 1) % 0x40U) * 0x40;
+        src = DAT_0605C120[arg0] + 2;
+        src += (x % w) + ((y + 1) % h) * w;
+    }
+}
 
 // original name: UPDATE_BG
 void func_06009CCC(void) {
@@ -2217,7 +2338,133 @@ void DestroySpriteObject(SpriteObject* obj) {
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B4C4, func_0600B4C4);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B954, func_0600B954);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600BA24, func_0600BA24);
+
+void func_0600E5A4(MthXy* arg0, s16 angle);
+void func_0600BCE0(s32* mtx, s16 angle);
+
+s32 func_0600BA24(
+    SprSpCmd* cmd, SpriteObject* obj, SpritePart* part, MthXy* arg3) {
+    s32 m[4];
+    SaturnSpriteImage sp10;
+    MthXy offset;
+    MthXy pos;
+    s32 attributes;
+    s16 angle;
+    u16 flags;
+    s16 min;
+    s16 max;
+    s16 rotate;
+    u32 base;
+    u8 scale;
+    s32 ret;
+
+    flags = obj->flags;
+    pos = *arg3;
+
+    attributes = part->attributes;
+    sp10 = obj->images[part->imageIndex];
+    m[1] = m[2] = 0;
+    ret = 1;
+
+    if (flags & 0x40) {
+        scale = obj->scaleX;
+    } else {
+        scale = 0x40;
+    }
+    if (scale == 0x40) {
+        m[0] = (sp10.storedWidth * scale) * 0x400;
+        offset.x = (part->offsetX * scale) * 0x400;
+    } else {
+        m[0] = (sp10.storedWidth * scale) * 0x400;
+        offset.x = (part->offsetX * scale) * 0x400;
+    }
+
+    if (flags & 0x40) {
+        scale = obj->scaleY;
+    } else {
+        scale = 0x40;
+    }
+    if (scale == 0x40) {
+        m[3] = (sp10.storedHeight * scale) * 0x400;
+        offset.y = (part->offsetY * scale) * 0x400;
+    } else {
+        m[3] = (sp10.storedHeight * scale) * 0x400;
+        offset.y = (part->offsetY * scale) * 0x400;
+    }
+
+    if (flags & 0x40) {
+        rotate = obj->rotate;
+    } else {
+        rotate = 0;
+    }
+    angle = part->rotate + rotate;
+    if (rotate != 0) {
+        func_0600E5A4(&offset, rotate);
+    }
+    if (angle != 0) {
+        func_0600BCE0(m, angle);
+    }
+
+    if (flags & 0x10) {
+        m[0] = -m[0];
+        m[2] = -m[2];
+        pos.x -= offset.x;
+    } else {
+        pos.x += offset.x;
+    }
+
+    if (flags & 0x20) {
+        m[1] = -m[1];
+        m[3] = -m[3];
+        pos.y -= offset.y;
+    } else {
+        pos.y += offset.y;
+    }
+
+    base = pos.x - m[2] + 0x8000;
+    cmd->ax = (base - m[0]) / 0x10000;
+    cmd->bx = (base + m[0]) / 0x10000;
+
+    base = pos.x + m[2] + 0x8000;
+    cmd->cx = (base + m[0]) / 0x10000;
+    cmd->dx = (base - m[0]) / 0x10000;
+
+    if (m[2] > 0) {
+        min = (cmd->ax > cmd->bx) ? cmd->bx : cmd->ax;
+        max = (cmd->cx < cmd->dx) ? cmd->dx : cmd->cx;
+    } else {
+        min = (cmd->cx > cmd->dx) ? cmd->dx : cmd->cx;
+        max = (cmd->ax < cmd->bx) ? cmd->bx : cmd->ax;
+    }
+
+    if (max < 0 || min >= 0x140) {
+        ret = 0;
+    } else {
+        base = pos.y - m[3] + 0x8000;
+        cmd->ay = (base - m[1]) / 0x10000;
+        cmd->by = (base + m[1]) / 0x10000;
+
+        base = pos.y + m[3] + 0x8000;
+        cmd->cy = (base + m[1]) / 0x10000;
+        cmd->dy = (base - m[1]) / 0x10000;
+
+        if (m[3] > 0) {
+            min = (cmd->ay > cmd->by) ? cmd->by : cmd->ay;
+            max = (cmd->cy < cmd->dy) ? cmd->dy : cmd->cy;
+        } else {
+            min = (cmd->cy > cmd->dy) ? cmd->dy : cmd->cy;
+            max = (cmd->ay < cmd->by) ? cmd->by : cmd->ay;
+        }
+
+        if (max < 0 || min >= 0xF0) {
+            ret = 0;
+        } else {
+            cmd->control = (attributes & 0x30) | 0x1002;
+        }
+    }
+
+    return ret;
+}
 
 void func_0600BCE0(s32* mtx, s16 angle) {
     Fixed32 s, c;

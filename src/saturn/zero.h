@@ -415,7 +415,7 @@ void func_06009D30(void);
 void func_0600B234(void);
 void func_0600DAB4(void);
 void func_06009058(u16 arg0);
-void func_06009AE8(s32, Unk0605CD90*, UNK_0605c680*);
+void func_06009AE8(u16, Unk0605CD90*, UNK_0605c680*);
 void func_06009CCC(void);
 void func_06009D60(u32);
 void func_06009F84(Unk0605CD90*);
