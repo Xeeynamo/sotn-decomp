@@ -21,26 +21,47 @@ const char DAT_0602DCC4[] = "CDC Version 1.22 1997-02-27";
 
 const u16 DAT_0602DCE0[] = {0x00, 0x00};
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DCE4, CDC_GetDataPtr);
+Uint32* CDC_GetDataPtr(void) { return (Uint32*)0x25818000; }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DCFC, CDC_GetHirqReq);
+Sint32 CDC_GetHirqReq(void) { return *((volatile Uint16*)0x25890008); }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DD18, CDC_ClrHirqReq);
+extern Uint16 DAT_06057EF4;
 
-// _CDREG_ClrHirqReq
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DD60, func_0602DD60);
+void CDC_ClrHirqReq(Sint32 bitpat) {
+    DAT_06057EF4 |= *(volatile Uint16*)0x25890008;
+    bitpat |= 1;
+    CDREG_ClrHirqReq(bitpat);
+    return;
+}
 
-// _CDREG_InitHirqReq
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DD88, func_0602DD88);
+void CDREG_ClrHirqReq(Sint32 bitpat) {
+    *(volatile Uint16*)0x25890008 = bitpat;
+    return;
+}
 
-// _CDREG_SetHirqFlag
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DDBC, func_0602DDBC);
+void CDREG_InitHirqReq(void) {
+    CDREG_ClrHirqReq(
+        CDC_HIRQ_MPED | CDC_HIRQ_EFLS | CDC_HIRQ_ECPY | CDC_HIRQ_EHST |
+        CDC_HIRQ_ESEL | CDC_HIRQ_DCHG | CDC_HIRQ_CMOK);
+    DAT_06057EF4 =
+        CDC_HIRQ_MPED | CDC_HIRQ_EFLS | CDC_HIRQ_ECPY | CDC_HIRQ_EHST |
+        CDC_HIRQ_ESEL | CDC_HIRQ_DCHG | CDC_HIRQ_CMOK;
+    return;
+}
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DDE8, func_0602DDE8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DE04, func_0602DE04);
+void CDREG_SetHirqFlag(Sint32 bitpat) {
+    DAT_06057EF4 |= bitpat;
+    return;
+}
 
-// _CDC_GetMpegPtr
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DE2C, func_0602DE2C);
+Sint32 CDC_GetHirqMsk(void) { return *((volatile Uint16*)0x2589000C); }
+
+void CDC_SetHirqMsk(Sint32 bitpat) {
+    *((volatile Uint16*)0x2589000C) = bitpat;
+    return;
+}
+
+Uint32* CDC_GetMpegPtr(void) { return (Uint32*)0x25810028; }
 
 // _CDREG_TgetData
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DE44, func_0602DE44);

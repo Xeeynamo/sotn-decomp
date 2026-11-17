@@ -170,10 +170,10 @@ Sint32 CDC_CdInit(Sint32 iflag, Sint32 stnby, Sint32 ecc, Sint32 retry) {
 
     if ((iflag & 0x81) == 1) {
         func_0602F46C(10500);
-        func_0602DDBC(CDC_HIRQ_ESEL | CDC_HIRQ_CMOK);
+        CDREG_SetHirqFlag(CDC_HIRQ_ESEL | CDC_HIRQ_CMOK);
         ret = CDSUB_UpdCdstat(CDC_HIRQ_ESEL, pCmd);
         if (ret == CDC_ERR_OK) {
-            func_0602DD88();
+            CDREG_InitHirqReq();
         }
     } else {
         ret = CDSUB_UpdCdstat(0, pCmd);
@@ -214,7 +214,7 @@ Sint32 CDC_DataReady(Sint32 dtype) {
     if (ret != CDC_ERR_OK) {
         CDC_DataEnd(&cdwnum);
     }
-    func_0602DD60(~CDC_HIRQ_DRDY);
+    CDREG_ClrHirqReq(~CDC_HIRQ_DRDY);
     return ret;
 }
 
@@ -234,6 +234,6 @@ Sint32 CDC_DataEnd(Sint32* cdwnum) {
 
     ret = CDSUB_UpdStatus(0, pCmd, pCmdRsp);
     *cdwnum = pCmdRsp->start.val32 & 0xFFFFFF;
-    func_0602DD60(~CDC_HIRQ_DRDY);
+    CDREG_ClrHirqReq(~CDC_HIRQ_DRDY);
     return ret;
 }
