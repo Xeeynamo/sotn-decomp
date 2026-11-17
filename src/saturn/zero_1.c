@@ -238,7 +238,6 @@ void func_06011EE0(s32 arg0, s32 arg1) {
     set_imask(msk);
 }
 
-void func_06011F40(s32 arg0);
 void func_06011F40(s32 arg0) { SND_StopPcm(arg0); }
 
 void func_06011F58(void) {
