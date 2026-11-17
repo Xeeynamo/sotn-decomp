@@ -317,11 +317,10 @@ void func_06004878(void) {
     while (PER_LInit(PER_KD_SYS, 0, 0, NULL, 0) == PER_INT_ERR) {
     }
 
-    do {
-        DAT_060505E0 = PER_GET_SYS();
-    } while (DAT_060505E0 == NULL);
+    while ((DAT_060505E0 = PER_GET_SYS()) == NULL) {
+    }
 
-    DAT_0605D764 = DAT_060505E0->sm & PER_MSK_STEREO ? false : true;
+    DAT_0605D764 = PER_GS_SM(DAT_060505E0) & PER_MSK_STEREO ? false : true;
     if (DAT_0605D764 != 0) {
         ((s32(*)(s32))PlaySfx)(0xF0000006);
     } else {
@@ -339,10 +338,10 @@ void func_06004924(void) {
     while (PER_LInit(PER_KD_SYS, 0, 0, NULL, 0) == PER_INT_ERR) {
     }
 
-    do {
-        DAT_060505E4 = PER_GET_SYS();
-    } while (DAT_060505E4 == NULL);
-    status_sys = DAT_060505E4->sm;
+    while ((DAT_060505E4 = PER_GET_SYS()) == NULL) {
+    }
+
+    status_sys = PER_GS_SM(DAT_060505E4);
     if (DAT_0605D764 != 0) {
         status_sys &= ~PER_MSK_STEREO;
     } else {
@@ -376,26 +375,25 @@ void InitializePads(void);
 
 void func_06004A74(void) {
     u32 status;
-    s32 i;
 
     g_pads[0].previous = g_pads[0].pressed;
-    status = PER_LGetPer(&DAT_060505F8, &DAT_060505FC);
-    if (DAT_060505FC->con != PER_MCON_NCON_UNKNOWN &&
-        DAT_060505F8->id == PER_ID_DGT && DAT_060505F8->size == PER_SIZE_DGT) {
+    status = PER_LGetPer(&per_data, &mul_data);
+    if (mul_data->con != PER_MCON_NCON_UNKNOWN && per_data->id == PER_ID_DGT &&
+        per_data->size == PER_SIZE_DGT) {
         if (!DAT_0605D7F0) {
             UpdatePads();
             UpdatePadsRepeat();
         }
-    } else if (DAT_060505F8->id == PER_ID_ANL) {
+    } else if (per_data->id == PER_ID_ANL) {
         InitializePads();
     }
     if (status == PER_INT_ERR) {
         InitializePads();
     }
-    if (DAT_060505FC->con != 1) {
+    if (mul_data->con != 1) {
         func_06004A10();
     }
-    if (status == PER_INT_ERR || DAT_060505FC->con != 1) {
+    if (status == PER_INT_ERR || mul_data->con != 1) {
         DAT_06057F60[0] = 0x01;
         DAT_06057F60[1] = 0x00;
         DAT_06057F60[2] = 0x00;
@@ -404,14 +402,14 @@ void func_06004A74(void) {
         DAT_06057F60[5] = 0x98;
         DAT_06057F60[6] = 0x19;
     } else {
-        DAT_06050600 = PER_GET_TIM();
-        DAT_06057F60[0] = DAT_06050600[0];
-        DAT_06057F60[1] = DAT_06050600[1];
-        DAT_06057F60[2] = DAT_06050600[2];
-        DAT_06057F60[3] = DAT_06050600[3];
-        DAT_06057F60[4] = DAT_06050600[4];
-        DAT_06057F60[5] = DAT_06050600[5];
-        DAT_06057F60[6] = DAT_06050600[6];
+        tim_data = PER_GET_TIM();
+        DAT_06057F60[0] = tim_data[0];
+        DAT_06057F60[1] = tim_data[1];
+        DAT_06057F60[2] = tim_data[2];
+        DAT_06057F60[3] = tim_data[3];
+        DAT_06057F60[4] = tim_data[4];
+        DAT_06057F60[5] = tim_data[5];
+        DAT_06057F60[6] = tim_data[6];
     }
 }
 
@@ -424,7 +422,7 @@ void UpdatePads(void) {
     sotn_satz_poll();
 #endif
     g_pads[0].previous = g_pads[0].pressed;
-    g_pads[0].pressed = ~DAT_060505F8->buttons;
+    g_pads[0].pressed = ~per_data->buttons;
     g_pads[0].tapped =
         (g_pads[0].pressed ^ g_pads[0].previous) & g_pads[0].pressed;
 }
@@ -501,7 +499,7 @@ void func_06004D84(void) {
 
     SCL_VblankStart();
     DAT_0605C10C++;
-    func_06008EE8();
+    UpdateColorOffsetFade();
     SignalSlaveSh2();
 
     set_imask(msk);

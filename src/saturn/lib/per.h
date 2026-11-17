@@ -46,6 +46,12 @@
 #define PER_MSK_STEREO (0x1 << 9)
 #define PER_MSK_HELP (0x1 << 10)
 
+#define PER_GS_CC(data) ((data)->cc)
+#define PER_GS_AC(data) ((data)->ac)
+#define PER_GS_SS(data) ((data)->ss)
+#define PER_GS_SM(data) ((data)->sm)
+#define PER_GS_SMPC_STAT(data) ((data)->stat)
+
 #define PER_HOT_RES_ON 0x1
 #define PER_HOT_RES_OFF 0x0
 

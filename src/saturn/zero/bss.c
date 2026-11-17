@@ -3,7 +3,6 @@
 #include "zero.h"
 #include "zero/sound.h"
 #include "zero/overlay.h"
-#include "zero/text.h"
 
 VramTransfer DAT_060576B0[16] BSS = {0};
 s32 DAT_06057770 BSS = {0};
@@ -32,16 +31,19 @@ s32 DAT_06057C28 BSS = {0};
 s32 DAT_06057C2C BSS = {0};
 s32 DAT_06057C30 BSS = {0};
 u8 D_06057C34_pad[0x34] BSS = {0};
-u8 D_06057C68_pad[0x4] BSS = {0};
-u8 D_06057C6C_pad[0x4] BSS = {0};
-u8 D_06057C70_pad[0x4] BSS = {0};
-u8 D_06057C74_pad[0x4] BSS = {0};
-u8 D_06057C78_pad[0x4] BSS = {0};
-u8 D_06057C7C_pad[0x4] BSS = {0};
-u8 D_06057C80_pad[0x4] BSS = {0};
-u8 D_06057C84_pad[0x4] BSS = {0};
-u8 D_06057C88_pad[0x4] BSS = {0};
-u8 D_06057C8C_pad[0x4] BSS = {0};
+
+// lib/snd
+volatile Uint8* adr_com_block BSS = NULL;
+volatile Uint8* adr_host_int_work BSS = NULL;
+Uint32 intrflag BSS = 0;
+volatile Uint8* adr_sys_info_tbl BSS = NULL;
+volatile Uint32* adr_snd_area_crnt BSS = NULL;
+volatile Uint16* adr_song_stat BSS = NULL;
+volatile Uint16* adr_tl_vl BSS = NULL;
+volatile Uint16* adr_tl_hz_vl BSS = NULL;
+volatile Uint16* adr_pcm BSS = NULL;
+volatile Uint16* adr_seq BSS = NULL;
+
 s32 DAT_06057C90 BSS = {0};
 u8 D_06057C94_pad[0xDC] BSS = {0};
 u8 D_06057D70_pad[0xC] BSS = {0};
@@ -116,12 +118,10 @@ u8 DAT_06057F40 BSS = {0};
 u8 D_06057F41_pad BSS = 0;
 u16 D_06057F42_pad BSS = 0;
 u8 D_06057F44_pad[0xC] BSS = {0};
-s8 DAT_06057F50[PER_WORK_SIZE(1, 2)] BSS = {0};
+u8 DAT_06057F50[PER_WORK_SIZE(1, 2)] BSS = {0};
 u16 D_06057F5A_pad BSS = 0;
 u8 D_06057F5C_pad[0x4] BSS = {0};
-u8 DAT_06057F60[2] BSS = {0};
-u16 D_06057F62_pad BSS = 0;
-u8 D_06057F64_pad[0x4] BSS = {0};
+u8 DAT_06057F60[8] BSS = {0};
 u8 DAT_06057f68 BSS = {0};
 u8 D_06057F69_pad BSS = 0;
 u16 D_06057F6A_pad BSS = 0;
@@ -137,8 +137,7 @@ struct SprSpCmd* DAT_0605AEAC BSS = {0};
 u16 DAT_0605AEB0 BSS = {0};
 u16 D_0605AEB2_pad BSS = 0;
 u8 D_0605AEB4_pad[0xC] BSS = {0};
-u16 DAT_0605AEC0[1][2] BSS = {0};
-u8 D_0605AEC4_pad[0xFFC] BSS = {0};
+u16 DAT_0605AEC0[0x400][2] BSS = {0};
 XyInt DAT_0605BEC0 BSS = {0};
 u32 DAT_0605BEC4 BSS = {0};
 u16 DAT_0605BEC8 BSS = {0};
@@ -433,7 +432,7 @@ u16 D_06064402_pad BSS = 0;
 s8 DAT_06064404[1] BSS = {0};
 u8 D_06064405_pad BSS = 0;
 u16 D_06064406_pad BSS = 0;
-s32 DAT_06064408 BSS = {0};
+u32 DAT_06064408 BSS = 0;
 s8 DAT_0606440C BSS = {0};
 s8 DAT_0606440D BSS = {0};
 s8 DAT_0606440E BSS = {0};
@@ -463,7 +462,7 @@ u8 D_06064478_pad[0x4] BSS = {0};
 s16 DAT_0606447C BSS = {0};
 u16 D_0606447E_pad BSS = 0;
 u8* DAT_06064480 BSS = {0};
-s32 DAT_06064484 BSS = {0};
+u32 DAT_06064484 BSS = 0;
 s8 DAT_06064488 BSS = {0};
 u8 D_06064489_pad BSS = 0;
 u16 D_0606448A_pad BSS = 0;

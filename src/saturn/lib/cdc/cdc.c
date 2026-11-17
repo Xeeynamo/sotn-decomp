@@ -1,47 +1,25 @@
-#include "sattypes.h"
-#include "inc_asm.h"
+#include "../../sattypes.h"
+#include "../../inc_asm.h"
+#include "../machine.h"
 
 #include "cdc.h"
 
-// SEGA_CDC.A
+typedef struct {
+    union {
+        Uint32 val32;
+        Uint16 val16[2];
+        Uint8 val8[4];
+    } start;
+    union {
+        Uint32 val32;
+        Uint16 val16[2];
+        Uint8 val8[4];
+    } end;
+} CdcCmd;
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D4A4, CDC_CdPlay);
+const char DAT_0602DCC4[] = "CDC Version 1.22 1997-02-27";
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D528, func_0602D528);
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D600, CDC_CdSeek);
-
-// _CDC_CdScan
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D660, func_0602D660);
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D6BC, CDC_GetCurStat);
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D724, CDC_GetLastStat);
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D754, CDC_GetPeriStat);
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D7CC, func_0602D7CC);
-
-// _CDC_GetHwInfo
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D86C, func_0602D86C);
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D90C, CDC_TgetToc);
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D98C, CDC_GetSes);
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D9FC, CDC_CdInit);
-
-// _CDC_CdOpen
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DAD4, func_0602DAD4);
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DB1C, CDC_DataReady);
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DBA4, CDC_DataEnd);
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DC14, func_0602DC14);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DC4C, func_0602DC4C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DC98, func_0602DC98);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DCA8, func_0602DCA8);
+const u16 DAT_0602DCE0[] = {0x00, 0x00};
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DCE4, CDC_GetDataPtr);
 
@@ -74,8 +52,14 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DF38, func_0602DF38);
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E044, func_0602E044);
 
-// _writeCmd
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E0A8, func_0602E0A8);
+// original name: writeCmd
+void func_0602E0A8(CdcCmd* cmd) {
+    *((volatile Uint16*)0x25890018) = cmd->start.val16[0];
+    *((volatile Uint16*)0x2589001C) = cmd->start.val16[1];
+    *((volatile Uint16*)0x25890020) = cmd->end.val16[0];
+    *((volatile Uint16*)0x25890024) = cmd->end.val16[1];
+    return;
+}
 
 // _CDREG_ReadRsp
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E0FC, func_0602E0FC);
@@ -163,27 +147,69 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602F1C0, func_0602F1C0);
 // _CDC_CdGetLastBuf
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602F224, func_0602F224);
 
-// _CDC_MpSetImgPos
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602F288, func_0602F288);
+extern CdcStat DAT_06057EF8;
 
-// _CDMSB_UpdMpstat
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602F2C4, func_0602F2C4);
+// func_0602F288
+Sint32 CDSUB_UpdStatus(Sint32 mask, CdcCmd* pCmd, CdcCmd* pCmdRsp) {
+    return CDSUB_CdCmd(mask, pCmd, pCmdRsp, 0);
+}
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602F300, func_0602F300);
+// func_0602F2C4
+Sint32 CDSUB_UpdCdstat(Sint32 mask, CdcCmd* pCmd) {
+    CdcCmd cmdRsp;
 
-// _CDSUB_GetCdstat
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602F398, func_0602F398);
+    return CDSUB_CdCmd(mask, pCmd, &cmdRsp, 1);
+}
 
-// _CDSUB_RspToCdstat
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602F3FC, func_0602F3FC);
+// func_0602F300
+Sint32 CDSUB_CdCmd(Sint32 mask, CdcCmd* pCmd, CdcCmd* pCmdRsp, Sint32 getRsp) {
+    Sint32 ret;
+    Uint32 msk;
+    CdcStat* stat;
+
+    ret = func_0602DEDC(mask, pCmd, pCmdRsp);
+    if (ret != CDC_ERR_OK) {
+        return ret;
+    }
+    msk = get_imask();
+    set_imask(15);
+
+    stat = &DAT_06057EF8;
+    if (getRsp) {
+        CDSUB_RspToCdstat(pCmdRsp, stat);
+    } else {
+        stat->status = pCmdRsp->start.val8[0];
+    }
+
+    set_imask(msk);
+
+    return ret;
+}
+
+// func_0602F398
+Sint32 CDSUB_GetCdstat(CdcStat* stat) {
+    Uint32 msk;
+
+    msk = get_imask();
+    set_imask(15);
+
+    *stat = DAT_06057EF8;
+
+    set_imask(msk);
+
+    return CDC_ERR_OK;
+}
+
+// func_0602F3FC
+void CDSUB_RspToCdstat(CdcCmd* pCmdRsp, CdcStat* stat) {
+    stat->status = pCmdRsp->start.val8[0];
+    stat->report.flgrep = pCmdRsp->start.val8[1];
+    stat->report.ctladr = pCmdRsp->start.val8[2];
+    stat->report.tno = pCmdRsp->start.val8[3];
+    stat->report.idx = pCmdRsp->end.val8[0];
+    stat->report.fad = pCmdRsp->end.val32 & 0xFFFFFF;
+    return;
+}
 
 // _CDSUB_SoftTimer
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602F46C, func_0602F46C);
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602F4A0, func_0602F4A0);
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602F4D8, func_0602F4D8);
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602F524, func_0602F524);
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602F534, func_0602F534);

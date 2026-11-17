@@ -41,12 +41,9 @@ void func_060784B8(SprSpCmd* cmd, s32 portraitIndex, s32 colorTableIndex) {
 
 extern SaturnSpriteResource** DAT_060645EC;
 extern SprSpCmd DAT_06086108;
-extern SprSpCmd* DAT_0605AEAC;
 
 // original name: disp_char
-void func_06078550(s32 arg0, u8 ch, Point16* pos);
-
-void func_06078550(s32 arg0, u8 ch, Point16* pos) {
+void func_06078550(s32 arg0, u8 ch, XyInt* pos) {
     SprSpCmd* cmd = &DAT_06086108;
     SaturnSpriteResource* iVar5 = DAT_060645EC[13];
 
@@ -63,8 +60,8 @@ void func_06078550(s32 arg0, u8 ch, Point16* pos) {
 }
 
 // original name: disp_string
-void func_06078604(s32 arg0, u8* str, Point16* pos) {
-    Point16 point;
+void func_06078604(s32 arg0, u8* str, XyInt* pos) {
+    XyInt point;
     s32 x, y;
     s32 drawX, drawY;
     s32 count;
@@ -103,9 +100,9 @@ void func_06078604(s32 arg0, u8* str, Point16* pos) {
 }
 
 // original name: disp_num_string
-void func_06078684(s32 arg0, s32 num, Point16* pos) {
+void func_06078684(s32 arg0, s32 num, XyInt* pos) {
     s32 count = 0;
-    Point16 point = *pos;
+    XyInt point = *pos;
 
     while (count < 10) {
         u8 ch = num % 10;
@@ -159,7 +156,7 @@ char* GetMenuItemName(s32 id) {
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60787C8, func_060787C8);
 
 // original name: SubDispSpecial
-void func_06078920(s32 arg0, Point16* pos) {
+void func_06078920(s32 arg0, XyInt* pos) {
     SprSpCmd* cmd;
     u16* ptr;
 
@@ -179,7 +176,7 @@ void func_06078920(s32 arg0, Point16* pos) {
     }
 }
 
-void func_060789C4(s32 arg0, s32 arg1, Point16* pos) {
+void func_060789C4(s32 arg0, s32 arg1, XyInt* pos) {
     SprSpCmd* cmd;
     s32 charBase;
     u16* ptr;
@@ -208,7 +205,7 @@ void func_060789C4(s32 arg0, s32 arg1, Point16* pos) {
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078B48, func_06078B48);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078E28, func_06078E28);
 
-void func_06078F58(s32 arg0, s32 arg1, Point16* pos) {
+void func_06078F58(s32 arg0, s32 arg1, XyInt* pos) {
     SprSpCmd* cmd;
     s32 charBase;
     u16* ptr;
@@ -232,7 +229,7 @@ void func_06078F58(s32 arg0, s32 arg1, Point16* pos) {
 }
 
 // original name: SubDispSortKind
-void func_06079008(s32 arg0, s32 arg1, Point16* pos) {
+void func_06079008(s32 arg0, s32 arg1, XyInt* pos) {
     SprSpCmd* cmd;
     u16* ptr;
     s32 charBase;
@@ -256,7 +253,7 @@ void func_06079008(s32 arg0, s32 arg1, Point16* pos) {
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60790B4, func_060790B4);
 
 // original name: SubDispFace
-void func_06079208(s32 arg0, Point16* pos) {
+void func_06079208(s32 arg0, XyInt* pos) {
     SprSpCmd* cmd;
     SaturnSpriteImage* image;
 
@@ -282,7 +279,7 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f60792B8, func_060792B8);
 extern s32 DAT_06085E54;
 extern u16 DAT_06085E58[][2];
 
-void func_06079424(s32 arg0, s32 arg1, s32 arg2, Point16* pos) {
+void func_06079424(s32 arg0, s32 arg1, s32 arg2, XyInt* pos) {
     SprSpCmd* cmd;
     s32 iVar7;
     s32 iVar8;
@@ -316,7 +313,7 @@ void func_06079424(s32 arg0, s32 arg1, s32 arg2, Point16* pos) {
     }
 }
 
-void func_06079580(s32 arg0, s32 arg1, Point16* pos) {
+void func_06079580(s32 arg0, s32 arg1, XyInt* pos) {
     SprSpCmd* cmd = &DAT_06086108;
 
     func_060784B8(cmd, DAT_06085E58[arg1][0], DAT_06085E58[arg1][1]);
@@ -330,7 +327,7 @@ void func_06079580(s32 arg0, s32 arg1, Point16* pos) {
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079670, func_06079670);
 
-void func_0607973C(s32 arg0, Point16* pos) {
+void func_0607973C(s32 arg0, XyInt* pos) {
     SprSpCmd* cmd;
     s16 top;
     s16 left;
@@ -370,7 +367,7 @@ void func_0607973C(s32 arg0, Point16* pos) {
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60797FC, func_060797FC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079958, func_06079958);
 
-void func_06079A2C(s32 arg0, s32 arg1, Point16* pos) {
+void func_06079A2C(s32 arg0, s32 arg1, XyInt* pos) {
     SprSpCmd* cmd;
     s32 shade;
 

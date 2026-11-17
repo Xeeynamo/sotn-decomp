@@ -1064,7 +1064,9 @@ o2_srcs = [
 
 lib_srcs = [
     'src/saturn/lib/bup.c',
-    'src/saturn/lib/cdc.c',
+    'src/saturn/lib/cdc/cdc_drv.c',
+    'src/saturn/lib/cdc/cdc_cmn.c',
+    'src/saturn/lib/cdc/cdc.c',
     'src/saturn/lib/csh.c',
     'src/saturn/lib/dma/dma_cpum.c',
     'src/saturn/lib/dma/dma_scu1.c',
@@ -1807,7 +1809,9 @@ multi_objs = {
         'build/saturn/zero_2.o',
         'build/saturn/zero_3.o',
         'build/saturn/lib/bup.o',
-        'build/saturn/lib/cdc.o',
+        'build/saturn/lib/cdc/cdc_drv.o',
+        'build/saturn/lib/cdc/cdc_cmn.o',
+        'build/saturn/lib/cdc/cdc.o',
         'build/saturn/lib/csh.o',
         'build/saturn/lib/dma/dma_cpum.o',
         'build/saturn/lib/dma/dma_scu1.o',

@@ -1,7 +1,7 @@
 #ifndef GFS_H
 #define GFS_H
 
-#include "../cdc.h"
+#include "../cdc/cdc.h"
 
 #define GFS_FNAME_LEN 12
 
