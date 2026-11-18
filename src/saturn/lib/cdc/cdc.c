@@ -17,26 +17,6 @@ typedef struct {
     } end;
 } CdcCmd;
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E4B4, CDC_SetSctLen);
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E520, CDC_GetSctData);
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E5A4, CDC_DelSctData);
-
-// _CDC_GetdelSctData
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E628, func_0602E628);
-
-// _CDC_PutSctData
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E6AC, func_0602E6AC);
-
-// _CDC_CopySctData
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E71C, func_0602E71C);
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E7B0, CDC_MoveSctData);
-
-// _CDC_GetCopyErr
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E844, func_0602E844);
-
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E8A8, CDC_SetFiltRange);
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E914, func_0602E914);
