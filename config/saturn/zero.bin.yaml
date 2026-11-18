@@ -160,7 +160,8 @@ segments:
       - [0x29C44, c, lib/cdc/cdc_reg]
       - [0x2A180, c, lib/cdc/cdc_cfs]
       - [0x2A434, c, lib/cdc/cdc_bio]
-      - [0x2A828, c, lib/cdc/cdc]
+      - [0x2A828, c, lib/cdc/cdc_sel]
+      - [0x2ACF4, c, lib/cdc/cdc]
 
       # MTH_FIXD.SRC
       - start: 0x2B4D0
