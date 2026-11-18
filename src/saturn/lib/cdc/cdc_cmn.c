@@ -2,17 +2,10 @@
 
 #include "cdc.h"
 
-typedef struct {
-    union {
-        Uint32 val32;
-        Uint16 val16[2];
-        Uint8 val8[4];
-    } start;
-    union {
-        Uint32 val32;
-        Uint16 val16[2];
-        Uint8 val8[4];
-    } end;
+typedef union {
+    Uint32 val32[2];
+    Uint16 val16[4];
+    Uint8 val8[8];
 } CdcCmd;
 
 Sint32 CDC_GetCurStat(CdcStat* stat) {
@@ -23,11 +16,11 @@ Sint32 CDC_GetCurStat(CdcStat* stat) {
     CdcCmd* pCmdRsp;
 
     pCmd = &cmd;
-    pCmd->start.val32 = 0;
-    pCmd->end.val32 = 0;
+    pCmd->val32[0] = 0;
+    pCmd->val32[1] = 0;
 
     pCmdRsp = &cmdRsp;
-    pCmd->start.val8[0] = 0;
+    pCmd->val8[0] = 0;
 
     ret = CDSUB_CdCmd(0, pCmd, pCmdRsp, 1);
 
@@ -75,8 +68,8 @@ Sint32 getPeriRsp(CdcCmd* pCmdRsp) {
 
         set_imask(msk);
 
-        if (pCmdRsp->start.val32 == pCmdRsp2->start.val32 &&
-            pCmdRsp->end.val32 == pCmdRsp2->end.val32) {
+        if (pCmdRsp->val32[0] == pCmdRsp2->val32[0] &&
+            pCmdRsp->val32[1] == pCmdRsp2->val32[1]) {
             ret = CDC_ERR_OK;
             break;
         }
@@ -92,19 +85,19 @@ Sint32 CDC_GetHwInfo(CdcHw* hw) {
     CdcCmd* pCmdRsp;
 
     pCmd = &cmd;
-    pCmd->start.val32 = 0;
-    pCmd->end.val32 = 0;
+    pCmd->val32[0] = 0;
+    pCmd->val32[1] = 0;
 
     pCmdRsp = &cmdRsp;
-    pCmd->start.val8[0] = 1;
+    pCmd->val8[0] = 1;
 
     ret = CDSUB_UpdStatus(0, pCmd, pCmdRsp);
 
-    hw->hflag = pCmdRsp->start.val8[2];
-    hw->ver = pCmdRsp->start.val8[3];
-    hw->mpver = pCmdRsp->end.val8[1];
-    hw->drv = pCmdRsp->end.val8[2];
-    hw->rev = pCmdRsp->end.val8[3];
+    hw->hflag = pCmdRsp->val8[2];
+    hw->ver = pCmdRsp->val8[3];
+    hw->mpver = pCmdRsp->val8[5];
+    hw->drv = pCmdRsp->val8[6];
+    hw->rev = pCmdRsp->val8[7];
 
     return ret;
 }
@@ -118,17 +111,17 @@ Sint32 CDC_TgetToc(Uint32* toc) {
     Sint32 tsize;
 
     pCmd = &cmd;
-    pCmd->start.val32 = 0;
-    pCmd->end.val32 = 0;
+    pCmd->val32[0] = 0;
+    pCmd->val32[1] = 0;
 
     pCmdRsp = &cmdRsp;
-    pCmd->start.val8[0] = 2;
+    pCmd->val8[0] = 2;
 
     ret = CDSUB_UpdStatus(0, pCmd, pCmdRsp);
     if (ret != CDC_ERR_OK) {
         return ret;
     }
-    tsize = pCmdRsp->start.val32 & 0xFFFFFF;
+    tsize = pCmdRsp->val32[0] & 0xFFFFFF;
     ret = CDREG_TgetData(tsize, toc);
     return ret;
 }
@@ -141,15 +134,15 @@ Sint32 CDC_GetSes(Sint32 sesno, Uint32* ses) {
     CdcCmd* pCmdRsp;
 
     pCmd = &cmd;
-    pCmd->start.val32 = 0;
-    pCmd->end.val32 = 0;
+    pCmd->val32[0] = 0;
+    pCmd->val32[1] = 0;
 
     pCmdRsp = &cmdRsp;
-    pCmd->start.val8[0] = 3;
-    pCmd->start.val8[1] = sesno;
+    pCmd->val8[0] = 3;
+    pCmd->val8[1] = sesno;
 
     ret = CDSUB_UpdStatus(0, pCmd, pCmdRsp);
-    *ses = pCmdRsp->end.val32;
+    *ses = pCmdRsp->val32[1];
     return ret;
 }
 
@@ -159,14 +152,14 @@ Sint32 CDC_CdInit(Sint32 iflag, Sint32 stnby, Sint32 ecc, Sint32 retry) {
     CdcCmd* pCmd;
 
     pCmd = &cmd;
-    pCmd->start.val32 = 0;
-    pCmd->end.val32 = 0;
+    pCmd->val32[0] = 0;
+    pCmd->val32[1] = 0;
 
-    pCmd->start.val8[0] = 4;
-    pCmd->start.val8[1] = iflag;
-    pCmd->start.val16[1] = stnby;
-    pCmd->end.val8[2] = ecc;
-    pCmd->end.val8[3] = retry;
+    pCmd->val8[0] = 4;
+    pCmd->val8[1] = iflag;
+    pCmd->val16[1] = stnby;
+    pCmd->val8[6] = ecc;
+    pCmd->val8[7] = retry;
 
     if ((iflag & 0x81) == 1) {
         func_0602F46C(10500);
@@ -187,10 +180,10 @@ Sint32 CDC_CdOpen(void) {
     CdcCmd* pCmd;
 
     pCmd = &cmd;
-    pCmd->start.val32 = 0;
-    pCmd->end.val32 = 0;
+    pCmd->val32[0] = 0;
+    pCmd->val32[1] = 0;
 
-    pCmd->start.val8[0] = 5;
+    pCmd->val8[0] = 5;
 
     ret = CDSUB_UpdCdstat(0, pCmd);
     return ret;
@@ -226,14 +219,14 @@ Sint32 CDC_DataEnd(Sint32* cdwnum) {
     CdcCmd* pCmdRsp;
 
     pCmd = &cmd;
-    pCmd->start.val32 = 0;
-    pCmd->end.val32 = 0;
+    pCmd->val32[0] = 0;
+    pCmd->val32[1] = 0;
 
     pCmdRsp = &cmdRsp;
-    pCmd->start.val8[0] = 6;
+    pCmd->val8[0] = 6;
 
     ret = CDSUB_UpdStatus(0, pCmd, pCmdRsp);
-    *cdwnum = pCmdRsp->start.val32 & 0xFFFFFF;
+    *cdwnum = pCmdRsp->val32[0] & 0xFFFFFF;
     CDREG_ClrHirqReq(~CDC_HIRQ_DRDY);
     return ret;
 }

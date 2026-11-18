@@ -2,17 +2,10 @@
 
 #include "cdc.h"
 
-typedef struct {
-    union {
-        Uint32 val32;
-        Uint16 val16[2];
-        Uint8 val8[4];
-    } start;
-    union {
-        Uint32 val32;
-        Uint16 val16[2];
-        Uint8 val8[4];
-    } end;
+typedef union {
+    Uint32 val32[2];
+    Uint16 val16[4];
+    Uint8 val8[8];
 } CdcCmd;
 
 const char DAT_0602DCC4[] = "CDC Version 1.22 1997-02-27";
@@ -114,7 +107,7 @@ Sint32 doCmdRsp(Sint32 bitpat, CdcCmd* pCmd, CdcCmd* pCmdRsp) {
         return ret;
     }
     CDREG_ReadRsp(pCmdRsp);
-    status = pCmdRsp->start.val8[0];
+    status = pCmdRsp->val8[0];
     if (status == CDC_ST_REJECT) {
         ret = CDC_ERR_REJECT;
     } else if (status & CDC_ST_WAIT) {
@@ -144,17 +137,17 @@ Sint32 CDREG_WaitHirq(Sint32 bitpat, Sint32* hirq) {
 }
 
 void writeCmd(CdcCmd* cmd) {
-    *((volatile Uint16*)0x25890018) = cmd->start.val16[0];
-    *((volatile Uint16*)0x2589001C) = cmd->start.val16[1];
-    *((volatile Uint16*)0x25890020) = cmd->end.val16[0];
-    *((volatile Uint16*)0x25890024) = cmd->end.val16[1];
+    *((volatile Uint16*)0x25890018) = cmd->val16[0];
+    *((volatile Uint16*)0x2589001C) = cmd->val16[1];
+    *((volatile Uint16*)0x25890020) = cmd->val16[2];
+    *((volatile Uint16*)0x25890024) = cmd->val16[3];
     return;
 }
 
 void CDREG_ReadRsp(CdcCmd* cmd) {
-    cmd->start.val16[0] = *((volatile Uint16*)0x25890018);
-    cmd->start.val16[1] = *((volatile Uint16*)0x2589001C);
-    cmd->end.val16[0] = *((volatile Uint16*)0x25890020);
-    cmd->end.val16[1] = *((volatile Uint16*)0x25890024);
+    cmd->val16[0] = *((volatile Uint16*)0x25890018);
+    cmd->val16[1] = *((volatile Uint16*)0x2589001C);
+    cmd->val16[2] = *((volatile Uint16*)0x25890020);
+    cmd->val16[3] = *((volatile Uint16*)0x25890024);
     return;
 }

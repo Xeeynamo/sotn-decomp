@@ -1,16 +1,9 @@
 #include "cdc.h"
 
-typedef struct {
-    union {
-        Uint32 val32;
-        Uint16 val16[2];
-        Uint8 val8[4];
-    } start;
-    union {
-        Uint32 val32;
-        Uint16 val16[2];
-        Uint8 val8[4];
-    } end;
+typedef union {
+    Uint32 val32[2];
+    Uint16 val16[4];
+    Uint8 val8[8];
 } CdcCmd;
 
 Sint32 CDC_CdPlay(CdcPly* ply) {
@@ -19,14 +12,14 @@ Sint32 CDC_CdPlay(CdcPly* ply) {
     CdcCmd* pCmd;
 
     pCmd = &cmd;
-    pCmd->start.val32 = 0;
-    pCmd->end.val32 = 0;
+    pCmd->val32[0] = 0;
+    pCmd->val32[1] = 0;
 
-    pCmd->start.val8[0] = 0x10;
-    func_0602D528(&ply->start, &pCmd->start.val8[1]);
+    pCmd->val8[0] = 0x10;
+    func_0602D528(&ply->start, &pCmd->val8[1]);
 
-    pCmd->end.val8[0] = ply->pmode;
-    func_0602D528(&ply->end, &pCmd->end.val8[1]);
+    pCmd->val8[4] = ply->pmode;
+    func_0602D528(&ply->end, &pCmd->val8[5]);
 
     ret = CDSUB_UpdCdstat(0, pCmd);
     return ret;
@@ -68,11 +61,11 @@ Sint32 CDC_CdSeek(CdcPos* pos) {
     CdcCmd* pCmd;
 
     pCmd = &cmd;
-    pCmd->start.val32 = 0;
-    pCmd->end.val32 = 0;
+    pCmd->val32[0] = 0;
+    pCmd->val32[1] = 0;
 
-    pCmd->start.val8[0] = 0x11;
-    func_0602D528(pos, &pCmd->start.val8[1]);
+    pCmd->val8[0] = 0x11;
+    func_0602D528(pos, &pCmd->val8[1]);
 
     ret = CDSUB_UpdCdstat(0, pCmd);
     return ret;
@@ -84,11 +77,11 @@ Sint32 CDC_CdScan(Sint32 scandir) {
     CdcCmd* pCmd;
 
     pCmd = &cmd;
-    pCmd->start.val32 = 0;
-    pCmd->end.val32 = 0;
+    pCmd->val32[0] = 0;
+    pCmd->val32[1] = 0;
 
-    pCmd->start.val8[0] = 0x12;
-    pCmd->start.val8[1] = scandir;
+    pCmd->val8[0] = 0x12;
+    pCmd->val8[1] = scandir;
 
     ret = CDSUB_UpdCdstat(0, pCmd);
     return ret;
