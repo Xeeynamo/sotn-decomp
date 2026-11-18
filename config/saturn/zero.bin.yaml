@@ -157,7 +157,8 @@ segments:
       # CDC
       - [0x29424, c, lib/cdc/cdc_drv]
       - [0x2963C, c, lib/cdc/cdc_cmn]
-      - [0x29C44, c, lib/cdc/cdc]
+      - [0x29C44, c, lib/cdc/cdc_reg]
+      - [0x2A180, c, lib/cdc/cdc]
 
       # MTH_FIXD.SRC
       - start: 0x2B4D0

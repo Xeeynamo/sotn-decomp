@@ -17,79 +17,6 @@ typedef struct {
     } end;
 } CdcCmd;
 
-const char DAT_0602DCC4[] = "CDC Version 1.22 1997-02-27";
-
-const u16 DAT_0602DCE0[] = {0x00, 0x00};
-
-Uint32* CDC_GetDataPtr(void) { return (Uint32*)0x25818000; }
-
-Sint32 CDC_GetHirqReq(void) { return *((volatile Uint16*)0x25890008); }
-
-extern Uint16 DAT_06057EF4;
-
-void CDC_ClrHirqReq(Sint32 bitpat) {
-    DAT_06057EF4 |= *(volatile Uint16*)0x25890008;
-    bitpat |= 1;
-    CDREG_ClrHirqReq(bitpat);
-    return;
-}
-
-void CDREG_ClrHirqReq(Sint32 bitpat) {
-    *(volatile Uint16*)0x25890008 = bitpat;
-    return;
-}
-
-void CDREG_InitHirqReq(void) {
-    CDREG_ClrHirqReq(
-        CDC_HIRQ_MPED | CDC_HIRQ_EFLS | CDC_HIRQ_ECPY | CDC_HIRQ_EHST |
-        CDC_HIRQ_ESEL | CDC_HIRQ_DCHG | CDC_HIRQ_CMOK);
-    DAT_06057EF4 =
-        CDC_HIRQ_MPED | CDC_HIRQ_EFLS | CDC_HIRQ_ECPY | CDC_HIRQ_EHST |
-        CDC_HIRQ_ESEL | CDC_HIRQ_DCHG | CDC_HIRQ_CMOK;
-    return;
-}
-
-void CDREG_SetHirqFlag(Sint32 bitpat) {
-    DAT_06057EF4 |= bitpat;
-    return;
-}
-
-Sint32 CDC_GetHirqMsk(void) { return *((volatile Uint16*)0x2589000C); }
-
-void CDC_SetHirqMsk(Sint32 bitpat) {
-    *((volatile Uint16*)0x2589000C) = bitpat;
-    return;
-}
-
-Uint32* CDC_GetMpegPtr(void) { return (Uint32*)0x25810028; }
-
-// _CDREG_TgetData
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DE44, func_0602DE44);
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DEDC, func_0602DEDC);
-
-// _doCmdRsp
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DF38, func_0602DF38);
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E044, func_0602E044);
-
-// original name: writeCmd
-void func_0602E0A8(CdcCmd* cmd) {
-    *((volatile Uint16*)0x25890018) = cmd->start.val16[0];
-    *((volatile Uint16*)0x2589001C) = cmd->start.val16[1];
-    *((volatile Uint16*)0x25890020) = cmd->end.val16[0];
-    *((volatile Uint16*)0x25890024) = cmd->end.val16[1];
-    return;
-}
-
-// _CDREG_ReadRsp
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E0FC, func_0602E0FC);
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E150, func_0602E150);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E188, func_0602E188);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E1D4, func_0602E1D4);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E1E4, func_0602E1E4);
-
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E200, CDC_ChgDir);
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E268, CDC_ReadDir);
@@ -171,24 +98,25 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602F224, func_0602F224);
 extern CdcStat DAT_06057EF8;
 
 // func_0602F288
-Sint32 CDSUB_UpdStatus(Sint32 mask, CdcCmd* pCmd, CdcCmd* pCmdRsp) {
-    return CDSUB_CdCmd(mask, pCmd, pCmdRsp, 0);
+Sint32 CDSUB_UpdStatus(Sint32 bitpat, CdcCmd* pCmd, CdcCmd* pCmdRsp) {
+    return CDSUB_CdCmd(bitpat, pCmd, pCmdRsp, 0);
 }
 
 // func_0602F2C4
-Sint32 CDSUB_UpdCdstat(Sint32 mask, CdcCmd* pCmd) {
+Sint32 CDSUB_UpdCdstat(Sint32 bitpat, CdcCmd* pCmd) {
     CdcCmd cmdRsp;
 
-    return CDSUB_CdCmd(mask, pCmd, &cmdRsp, 1);
+    return CDSUB_CdCmd(bitpat, pCmd, &cmdRsp, 1);
 }
 
 // func_0602F300
-Sint32 CDSUB_CdCmd(Sint32 mask, CdcCmd* pCmd, CdcCmd* pCmdRsp, Sint32 getRsp) {
+Sint32 CDSUB_CdCmd(
+    Sint32 bitpat, CdcCmd* pCmd, CdcCmd* pCmdRsp, Sint32 getRsp) {
     Sint32 ret;
     Uint32 msk;
     CdcStat* stat;
 
-    ret = func_0602DEDC(mask, pCmd, pCmdRsp);
+    ret = CDREG_CmdRsp(bitpat, pCmd, pCmdRsp);
     if (ret != CDC_ERR_OK) {
         return ret;
     }

@@ -70,8 +70,8 @@ Sint32 getPeriRsp(CdcCmd* pCmdRsp) {
         msk = get_imask();
         set_imask(15);
 
-        func_0602E0FC(pCmdRsp);
-        func_0602E0FC(pCmdRsp2);
+        CDREG_ReadRsp(pCmdRsp);
+        CDREG_ReadRsp(pCmdRsp2);
 
         set_imask(msk);
 
@@ -129,7 +129,7 @@ Sint32 CDC_TgetToc(Uint32* toc) {
         return ret;
     }
     tsize = pCmdRsp->start.val32 & 0xFFFFFF;
-    ret = func_0602DE44(tsize, toc);
+    ret = CDREG_TgetData(tsize, toc);
     return ret;
 }
 
@@ -206,7 +206,7 @@ Sint32 CDC_DataReady(Sint32 dtype) {
     if (dtype == CDC_DRDY_PUT) {
         bitpat |= CDC_HIRQ_EHST;
     }
-    ret = func_0602E044(bitpat, &hirq);
+    ret = CDREG_WaitHirq(bitpat, &hirq);
     if ((dtype == CDC_DRDY_PUT) && (ret == CDC_ERR_OK) &&
         (hirq & CDC_HIRQ_EHST)) {
         ret = CDC_ERR_PUT;
