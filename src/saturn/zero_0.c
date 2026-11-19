@@ -488,7 +488,7 @@ void InitSpriteEngine(s32 arg0) {
     DAT_0605AEA8 = 0;
     DAT_0605BEC8 = GOUR_TBL_MAX;
     DAT_060576AC = 0;
-    DAT_0605AEAC = (SprSpCmd*)sp2MstSpCmd;
+    DAT_0605AEAC = (SprSpCmd*)&sp2MstSpCmd[0];
     DAT_0605BEC4 = 0x11180;
     func_0600E240(&DAT_0605BEC0);
     DAT_06038C5C = 2;
@@ -636,7 +636,7 @@ extern const XyInt DAT_0600E23C;
 void func_06007D54(void) {
     SprSpCmd cmd;
 
-    SPR_2OpenCommand(1);
+    SPR_2OpenCommand(SPR_2DRAW_PRTY_ON);
 
     cmd.control = 0x1009;
     SET_LOW(cmd.cx, LOW(DAT_0605BEC0));
@@ -1218,10 +1218,10 @@ void func_06008C2C(void) {
     }
 }
 
-void StartColorOffsetFade(s32 arg0, u16 arg1) {
-    DAT_06057786 = arg0;
+void StartColorOffsetFade(s32 type, u16 nFrames) {
+    DAT_06057786 = type;
     DAT_0605BECC = 1;
-    switch (arg0) {
+    switch (type) {
     case 0:
         DAT_06057774[0] = DAT_06057774[1] = DAT_06057774[2] = 0;
         DAT_06057774[3] = DAT_06057774[4] = DAT_06057774[5] = -0xFF;
@@ -1265,15 +1265,15 @@ void StartColorOffsetFade(s32 arg0, u16 arg1) {
         DAT_0605BECC = 0;
         return;
     }
-    DAT_06057780[0] = (DAT_06057774[3] - DAT_06057774[0]) / arg1;
-    DAT_06057780[1] = (DAT_06057774[4] - DAT_06057774[1]) / arg1;
-    DAT_06057780[2] = (DAT_06057774[5] - DAT_06057774[2]) / arg1;
+    DAT_06057780[0] = (DAT_06057774[3] - DAT_06057774[0]) / nFrames;
+    DAT_06057780[1] = (DAT_06057774[4] - DAT_06057774[1]) / nFrames;
+    DAT_06057780[2] = (DAT_06057774[5] - DAT_06057774[2]) / nFrames;
     DAT_06057788 = DAT_06057774[0];
     DAT_0605778A = DAT_06057774[1];
     DAT_0605778C = DAT_06057774[2];
 }
 
-void func_06008EE8(void) {
+void UpdateColorOffsetFade(void) {
     if (DAT_0605BECC == 0) {
         return;
     }
@@ -1350,6 +1350,20 @@ void func_06009010(u8* rgb) {
         SCL_SetColOffset(SCL_OFFSET_A, 0x6F, 0, 0, 0);
     }
 }
+
+// split here ?
+
+extern u8 DAT_06038C84[3];
+extern s32 DAT_06038C88[6];
+extern s32 DAT_06038CA0[][6];
+extern u16 DAT_06038D30[];
+extern u16 DAT_06038D40[];
+extern u16 DAT_06038D50[];
+extern u16 DAT_06038D60[];
+extern u16 DAT_06038D70[];
+extern u16 DAT_06038D80[];
+extern u16 DAT_06038D90[];
+extern u16 DAT_06038DA0[];
 
 void func_06009058(u16 arg0) {
     SclConfig* scfg;
@@ -1542,10 +1556,8 @@ void func_06009570(s32 arg0) {
     scfg.mapover = SCL_OVER_0;
     scfg.flip = SCL_PN_10BIT;
     scfg.patnamecontrl = 0x64;
-    scfg.plate_addr[3] = SCL_VDP2_VRAM_B0 + 0x18000;
-    scfg.plate_addr[2] = SCL_VDP2_VRAM_B0 + 0x18000;
-    scfg.plate_addr[1] = SCL_VDP2_VRAM_B0 + 0x18000;
-    scfg.plate_addr[0] = SCL_VDP2_VRAM_B0 + 0x18000;
+    scfg.plate_addr[0] = scfg.plate_addr[1] = scfg.plate_addr[2] =
+        scfg.plate_addr[3] = SCL_VDP2_VRAM_B0 + 0x18000;
     SCL_SetConfig(SCL_NBG0, &scfg);
     ptr = &DAT_0605CD90[3];
     temp_r1 = DAT_06038CA0[arg0];
@@ -1833,10 +1845,8 @@ void func_06009DB0(void) {
     scfg.mapover = SCL_OVER_0;
     scfg.flip = SCL_PN_12BIT;
     scfg.patnamecontrl = 0x64;
-    scfg.plate_addr[3] = SCL_VDP2_VRAM_B0 + 0x18000;
-    scfg.plate_addr[2] = SCL_VDP2_VRAM_B0 + 0x18000;
-    scfg.plate_addr[1] = SCL_VDP2_VRAM_B0 + 0x18000;
-    scfg.plate_addr[0] = SCL_VDP2_VRAM_B0 + 0x18000;
+    scfg.plate_addr[0] = scfg.plate_addr[1] = scfg.plate_addr[2] =
+        scfg.plate_addr[3] = SCL_VDP2_VRAM_B0 + 0x18000;
     SCL_SetConfig(SCL_NBG0, &scfg);
     ptr = &DAT_0605CD90[3];
     temp_r1 = DAT_06038C88;
@@ -1879,10 +1889,8 @@ void func_06009F10(void) {
     scfg.datatype = SCL_CELL;
     scfg.mapover = SCL_OVER_0;
     scfg.flip = SCL_PN_10BIT;
-    scfg.plate_addr[3] = SCL_VDP2_VRAM_B0 + 0x8000;
-    scfg.plate_addr[2] = SCL_VDP2_VRAM_B0 + 0x8000;
-    scfg.plate_addr[1] = SCL_VDP2_VRAM_B0 + 0x8000;
-    scfg.plate_addr[0] = SCL_VDP2_VRAM_B0 + 0x8000;
+    scfg.plate_addr[0] = scfg.plate_addr[1] = scfg.plate_addr[2] =
+        scfg.plate_addr[3] = SCL_VDP2_VRAM_B0 + 0x8000;
     scfg.patnamecontrl = 0x21;
     SCL_SetConfig(SCL_NBG2, &scfg);
 }
@@ -4439,16 +4447,6 @@ void func_0600FC04(void) {
         }
     }
 }
-
-typedef struct {
-    u8 tileX;
-    u8 tileY;
-    u8 dir;
-    u8 inverted;
-} Unk0600FCF8;
-
-extern Unk0600FCF8 DAT_06039144[0x20];
-extern u8 DAT_060391C4[];
 
 static void DrawSecretPassageOnMap(s32 x, s32 y, s32 dir) {
     Unk0600FCF8 room;

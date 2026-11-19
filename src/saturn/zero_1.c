@@ -282,7 +282,6 @@ void func_06012054(void) {
     DAT_06064214 = 0;
 }
 
-void func_060120A0(void);
 void func_060120A0(void) {
     ((void (*)())func_06011F40)(6);
     if (DAT_06062280 != NULL) {
@@ -535,7 +534,7 @@ s32 func_060126D4(s32 arg0) {
 
     if (DAT_06041280 == 0) {
         ((void (*)())func_06011F40)(5);
-        DAT_06064390 = ((GfsHn(*)(s32, s32))PcmOpen)(DAT_06064324, 2);
+        DAT_06064390 = PcmOpen(DAT_06064324, 2);
         if (DAT_06064390 == NULL) {
             DAT_06064390 = NULL;
             DAT_060644AC = 0;
@@ -580,7 +579,7 @@ s32 func_060127F0(s32 arg0) {
 
     if (DAT_06041284 == 0) {
         ((void (*)())func_06011F40)(5);
-        DAT_060643D0 = ((GfsHn(*)(s32, s32))PcmOpen)(DAT_06064324, 2);
+        DAT_060643D0 = PcmOpen(DAT_06064324, 2);
         if (DAT_060643D0 == NULL) {
             DAT_060643D0 = NULL;
             DAT_060644AC = 0;
@@ -1189,7 +1188,7 @@ s32 func_06014C54(void) {
         DAT_06062280 = NULL;
     }
 
-    DAT_06062280 = ((GfsHn(*)(s32, s32))PcmOpen)(0xF00000F0, 1);
+    DAT_06062280 = PcmOpen(0xF00000F0, 1);
     if (DAT_06062280 == NULL) {
         return -1;
     }
@@ -1205,7 +1204,7 @@ s32 func_06014CB8(s32 arg0) {
         DAT_06062290[arg0] = 0;
     }
 
-    DAT_06062290[arg0] = ((GfsHn(*)(s32, s32))PcmOpen)(arg0 + 0xE0000000, 0);
+    DAT_06062290[arg0] = PcmOpen(arg0 + 0xE0000000, 0);
     if (DAT_06062290[arg0] == NULL)
         return -1;
     DAT_060623B0[0] &= ~2;
@@ -1238,7 +1237,7 @@ void func_06016614(void) {
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016644, func_06016644);
 
-GfsHn PcmOpen(s32 code) {
+GfsHn PcmOpen(s32 code, s32 arg1) {
     u8 name[0x10];
     code2name(code, name);
     return func_06017F5C(name);
@@ -1404,7 +1403,7 @@ s32 func_06016FB8(void) {
         DAT_06064338 = NULL;
     }
 
-    DAT_06064338 = ((GfsHn(*)(s32, s32))PcmOpen)(0xF00000F5, 2);
+    DAT_06064338 = ((GfsHn(*)())PcmOpen)(0xF00000F5, 2);
     if (DAT_06064338 == NULL)
         return -1;
 
@@ -1445,7 +1444,7 @@ void func_06017508(void) {
             if (DAT_06064360 > 0x800) {
                 memcpy(DAT_06064480 + DAT_0606434C, DAT_060644E8, 0x800);
                 DAT_060644E8 += 0x800;
-                DAT_06064408 = (DAT_06064408 + 0x800) & 0x1FFF;
+                DAT_06064408 = (DAT_06064408 + 0x800) % 0x2000;
                 DAT_06064360 -= 0x800;
                 DAT_0606434C = 0x800;
                 DAT_06064238 = 0;
@@ -1458,7 +1457,7 @@ void func_06017508(void) {
                     memset(
                         DAT_06064480 + DAT_0606434C + DAT_06064360, 0, temp_r6);
                 }
-                DAT_06064408 = (DAT_06064408 + DAT_06064360) & 0x1FFF;
+                DAT_06064408 = (DAT_06064408 + DAT_06064360) % 0x2000;
                 DAT_0606434C = 0x800;
                 DAT_06064360 = 0;
                 DAT_06064238 = 0;
@@ -1470,8 +1469,8 @@ void func_06017508(void) {
                     memcpy(DAT_06064480 + DAT_0606434C, DAT_060644E8, 0x800);
                     DAT_060644E8 += 0x800;
                     DAT_06064360 -= 0x800;
-                    DAT_06064408 = (DAT_06064408 + 0x800) & 0x1FFF;
-                    DAT_0606434C = (DAT_0606434C + 0x800) & 0x1FFF;
+                    DAT_06064408 = (DAT_06064408 + 0x800) % 0x2000;
+                    DAT_0606434C = (DAT_0606434C + 0x800) % 0x2000;
                     DAT_06064300 = 4;
                 } else {
                     memcpy(DAT_06064480 + DAT_0606434C, DAT_060644E8,
@@ -1482,9 +1481,9 @@ void func_06017508(void) {
                         memset(DAT_06064480 + DAT_0606434C + DAT_06064360, 0,
                                temp_r6);
                     }
-                    DAT_06064408 = (DAT_06064408 + DAT_06064360) & 0x1FFF;
+                    DAT_06064408 = (DAT_06064408 + DAT_06064360) % 0x2000;
                     DAT_06064360 = 0;
-                    DAT_0606434C = (DAT_0606434C + 0x800) & 0x1FFF;
+                    DAT_0606434C = (DAT_0606434C + 0x800) % 0x2000;
                     DAT_06064300 = 4;
                 }
             } else {
@@ -1494,7 +1493,7 @@ void func_06017508(void) {
 
         if ((DAT_06064408 & 0xFFF) == 0) {
             DAT_06064490[DAT_06064484] = 0;
-            DAT_06064484 = (DAT_06064484 + 1) & 1;
+            DAT_06064484 = (DAT_06064484 + 1) % 2;
         }
         /* fallthrough */
     case 4:
@@ -1520,8 +1519,8 @@ void func_06017508(void) {
 
     case 5:
         SND_GetPcmPlayAdr(&pcm_adr, 5);
-        if (pcm_adr.radr == (DAT_0606434C >> 0xC) &&
-            (DAT_0606434C & 0xFFF) == 0) {
+        if (pcm_adr.radr == (DAT_0606434C / 0x1000) &&
+            (DAT_0606434C % 0x1000) == 0) {
             break;
         }
         if (DAT_06064360 != 0) {
@@ -1541,13 +1540,13 @@ void func_06017508(void) {
                 }
                 DAT_06064408 += DAT_06064360;
                 DAT_06064360 = 0;
-                DAT_0606434C = (DAT_0606434C + 0x800) & 0x1FFF;
+                DAT_0606434C = (DAT_0606434C + 0x800) % 0x2000;
                 DAT_06064300++;
             }
         }
-        if ((DAT_06064408 & 0xFFF) == 0) {
+        if ((DAT_06064408 % 0x1000) == 0) {
             DAT_06064490[DAT_06064484] = 0;
-            DAT_06064484 = (DAT_06064484 + 1) & 1;
+            DAT_06064484 = (DAT_06064484 + 1) % 2;
         }
         break;
 
@@ -1556,19 +1555,19 @@ void func_06017508(void) {
         if (DAT_0604410C == 0) {
             if (pcm_adr.radr != (DAT_0606434C >> 0xC)) {
                 memset(DAT_06064480 + DAT_0606434C, 0, 0x800);
-                DAT_06044108 = (DAT_0606434C + 0x800) & 0x1FFF;
+                DAT_06044108 = (DAT_0606434C + 0x800) % 0x2000;
                 DAT_0604410C = 1;
             } else if (DAT_0606434C & 0x800) {
                 memset(DAT_06064480 + DAT_0606434C, 0, 0x800);
-                DAT_0606434C = (DAT_0606434C + 0x800) & 0x1FFF;
+                DAT_0606434C = (DAT_0606434C + 0x800) % 0x2000;
             }
         }
         if (DAT_0604410C == 1) {
             if (pcm_adr.radr == (DAT_0606434C >> 0xC)) {
                 DAT_06064300++;
-            } else if (DAT_06044108 & 0xFFF) {
+            } else if (DAT_06044108 % 0x1000) {
                 memset(DAT_06064480 + DAT_06044108, 0, 0x800);
-                DAT_06044108 = (DAT_06044108 + 0x800) & 0x1FFF;
+                DAT_06044108 = (DAT_06044108 + 0x800) % 0x2000;
             }
         }
         break;

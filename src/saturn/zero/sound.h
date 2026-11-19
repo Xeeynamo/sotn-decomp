@@ -40,7 +40,7 @@ void satz_idle(void);
 #define SOUND_REQUEST_WAIT()
 #endif
 
-GfsHn PcmOpen(s32 code);
+GfsHn PcmOpen(s32 code, s32 arg1);
 GfsHn func_06017F5C(char* fname);
 void PcmClose(GfsHn gfs, s32 type);
 
@@ -72,7 +72,7 @@ typedef struct {
 extern SaturnSoundFile g_SaturnSoundFiles[57];
 extern SaturnSoundConfig g_SaturnSoundConfigs[791];
 extern SaturnSoundCommandConfig g_SaturnSoundCommands[93];
-extern s32 DAT_06044108;
+extern u32 DAT_06044108;
 extern s32 DAT_0604410C;
 extern s32 DAT_06057C24;
 extern s32 DAT_06057C28;
@@ -190,7 +190,7 @@ extern s32 DAT_060643E0[8];
 extern s8 DAT_06064400;
 extern s8 DAT_06064401;
 extern s8 DAT_06064404[];
-extern s32 DAT_06064408;
+extern u32 DAT_06064408;
 extern s8 DAT_0606440C;
 extern s8 DAT_0606440D;
 extern s8 DAT_0606440E;
@@ -207,7 +207,7 @@ extern s8 DAT_06064474;
 extern s16 DAT_0606447C;
 extern u32 D_06044110[2];
 extern u8* DAT_06064480;
-extern s32 DAT_06064484;
+extern u32 DAT_06064484;
 extern s8 DAT_06064488;
 extern u32 DAT_0606448C;
 extern s32 DAT_06064490[];
