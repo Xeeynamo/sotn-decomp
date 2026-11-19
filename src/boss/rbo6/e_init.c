@@ -49,8 +49,8 @@ void EntityDraculaChair(Entity* self);
 void EntityBackgroundVortex(Entity* self);
 void func_us_801B1738(Entity* self);
 void func_us_801B2864(Entity* self);
-void func_us_801A4594(Entity* self);
-void func_us_801A4F14(Entity* self);
+void EntityConcludeFight(Entity* self);
+void EntityRisingSpark(Entity* self);
 
 PfnEntityUpdate EntityUpdates[] = {
     EntityBreakable,
@@ -101,8 +101,8 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityBackgroundVortex,
     func_us_801B1738,
     func_us_801B2864,
-    func_us_801A4594,
-    func_us_801A4F14,
+    EntityConcludeFight,
+    EntityRisingSpark,
 };
 
 // clang-format off

@@ -33,18 +33,19 @@ static s32 DecreaseBrightness(Primitive* prim, u32 brightnessOffset) {
 }
 
 #if TARGET == TARGET_PSP
-extern s32 E_ID(UNK_32);
+extern s32 E_ID(RISING_SPARK);
 #endif
 
 extern EInit g_EInitInteractable;
 extern s32 g_EndingVariant;
 
-s32 D_pspeu_0926C048 = 0;
+s32 sparksSpeed = 0;
 s32 unused = 0;
 u32 dirToMiddle = 0;
 s32 soundVolume = 0;
-
-void func_us_801A4594(Entity* self) {
+// After Dracula has been defeated, and the last cutscene plays with Dracula,
+// This entity is created to run the effects after the fight.
+void EntityConcludeFight(Entity* self) {
     Entity* other;
     Primitive* prim;
     s32 primIndex;
@@ -68,7 +69,7 @@ void func_us_801A4594(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
+        self->ext.concludeFight.prim1 = prim;
         while (prim != NULL) {
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
@@ -85,7 +86,7 @@ void func_us_801A4594(Entity* self) {
             g_Player.padSim = PAD_R1;
         }
     case 1:
-        prim = self->ext.prim;
+        prim = self->ext.concludeFight.prim1;
         prim->type = PRIM_GT4; // already gt4 from allocprimitives but sure
         prim->tpage = 0x1A;
         prim->clut = 0x19F; // and let's assign clut twice, why the hell not
@@ -107,7 +108,7 @@ void func_us_801A4594(Entity* self) {
             DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         prim = prim->next;
 
-        self->ext.ILLEGAL.u32[2] = (u32)prim;
+        self->ext.concludeFight.prim2 = prim;
         prim->type = PRIM_G4;
         prim->x0 = prim->x2 = 0;
         prim->x1 = prim->x3 = 0x100;
@@ -117,7 +118,7 @@ void func_us_801A4594(Entity* self) {
         prim->drawMode = DRAW_HIDE;
         prim = prim->next;
 
-        self->ext.ILLEGAL.u32[3] = (u32)prim;
+        self->ext.concludeFight.prim3 = prim;
         prim->type = PRIM_G4;
         prim->x0 = prim->x2 = 0x40;
         prim->x1 = prim->x3 = 0;
@@ -136,7 +137,7 @@ void func_us_801A4594(Entity* self) {
         prim->drawMode = DRAW_HIDE;
         prim = prim->next;
 
-        self->ext.ILLEGAL.u32[4] = (u32)prim;
+        self->ext.concludeFight.prim4 = prim;
         prim->type = PRIM_G4;
         prim->x0 = prim->x2 = 0;
         prim->x1 = prim->x3 = 0x100;
@@ -148,7 +149,7 @@ void func_us_801A4594(Entity* self) {
         self->step += 1;
         /* fallthrough */
     case 2:
-        prim = self->ext.prim;
+        prim = self->ext.concludeFight.prim1;
         prim->x0 = prim->x2 -= 3;
         prim->x1 = prim->x3 += 3;
         prim->y0 = prim->y1 -= 3;
@@ -157,7 +158,7 @@ void func_us_801A4594(Entity* self) {
         temp += 8;
         if (temp > 0x60) {
             temp = 0x60;
-            self->ext.ILLEGAL.s16[2] = 0x10;
+            self->ext.concludeFight.timer = 0x10;
             g_api.PlaySfx(SFX_WEAPON_APPEAR);
             self->step += 1;
         }
@@ -168,26 +169,26 @@ void func_us_801A4594(Entity* self) {
         LOW(prim->r3) = LOW(prim->r0);
         break;
     case 3:
-        prim = self->ext.prim;
-        if (self->ext.ILLEGAL.s16[2] & 1) {
+        prim = self->ext.concludeFight.prim1;
+        if (self->ext.concludeFight.timer & 1) {
             prim->x0 = prim->x2 -= 1;
             prim->x1 = prim->x3 += 1;
             prim->y0 = prim->y1 -= 1;
             prim->y2 = prim->y3 += 1;
         }
-        if (!--self->ext.ILLEGAL.s16[2]) {
+        if (!--self->ext.concludeFight.timer) {
             self->step += 1;
         }
         break;
     case 4:
-        prim = self->ext.prim;
+        prim = self->ext.concludeFight.prim1;
         tempBool = PrimDecreaseBrightness(prim, 4);
 
         if (tempBool == 0) {
             prim->drawMode = DRAW_HIDE;
             self->step += 1;
         }
-        prim = (Primitive*)self->ext.ILLEGAL.u32[2];
+        prim = (Primitive*)self->ext.concludeFight.prim2;
         prim->drawMode = DRAW_COLORS;
         prim->r0 += 4;
         prim->g0 += 3;
@@ -195,10 +196,10 @@ void func_us_801A4594(Entity* self) {
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
-        D_pspeu_0926C048 = 1;
+        sparksSpeed = 1;
         /* fallthrough */
     case 5:
-        prim = (Primitive*)self->ext.ILLEGAL.u32[3];
+        prim = (Primitive*)self->ext.concludeFight.prim3;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
         temp = prim->r1;
         if (temp < 0xC0) {
@@ -214,12 +215,12 @@ void func_us_801A4594(Entity* self) {
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
         prim->g1 = prim->b1 = prim->r1 = temp;
         LOW(prim->r3) = LOW(prim->r1);
-        if ((self->step == 5) && (D_pspeu_0926C048 < 4) && !(g_Timer & 0xF)) {
-            D_pspeu_0926C048 += 1;
+        if ((self->step == 5) && (sparksSpeed < 4) && !(g_Timer & 0xF)) {
+            sparksSpeed += 1;
         }
         break;
     case 6:
-        prim = (Primitive*)self->ext.ILLEGAL.u32[2];
+        prim = (Primitive*)self->ext.concludeFight.prim2;
         prim->drawMode = DRAW_COLORS;
         if ((prim->r0) < 0xA0) {
             prim->r0 += 4;
@@ -234,7 +235,7 @@ void func_us_801A4594(Entity* self) {
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
         tempBool = 1;
-        prim = (Primitive*)self->ext.ILLEGAL.u32[3];
+        prim = (Primitive*)self->ext.concludeFight.prim3;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
         temp = prim->r1;
         temp++;
@@ -261,14 +262,14 @@ void func_us_801A4594(Entity* self) {
         break;
     case 7:
         tempBool = 0;
-        prim = (Primitive*)self->ext.ILLEGAL.u32[3];
+        prim = (Primitive*)self->ext.concludeFight.prim3;
         tempBool += DecreaseBrightness(prim, 2);
         prim = prim->next;
         tempBool += DecreaseBrightness(prim, 2);
         soundVolume = 0x80 - prim->r0 / 2;
         other = AllocEntity(&g_Entities[0x40], &g_Entities[256]);
         if (other != NULL) {
-            CreateEntityFromCurrentEntity(E_ID(UNK_32), other);
+            CreateEntityFromCurrentEntity(E_ID(RISING_SPARK), other);
             temp = Random();
             if (temp < 0x20) {
                 temp += 0x60;
@@ -295,7 +296,7 @@ void func_us_801A4594(Entity* self) {
         /* fallthrough */
     case 9:
         g_Player.padSim = dirToMiddle;
-        prim = (Primitive*)self->ext.ILLEGAL.u32[4];
+        prim = (Primitive*)self->ext.concludeFight.prim4;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
         tempBool = DecreaseBrightness(prim, 4);
         if (tempBool == 0) {
@@ -303,7 +304,7 @@ void func_us_801A4594(Entity* self) {
         }
         return;
     case 10:
-        prim = (Primitive*)self->ext.ILLEGAL.u32[4];
+        prim = (Primitive*)self->ext.concludeFight.prim4;
         prim->drawMode = DRAW_DEFAULT;
         tempBool = PrimDecreaseBrightness(prim, 8);
         if (tempBool == 0) {
@@ -327,7 +328,7 @@ void func_us_801A4594(Entity* self) {
         g_unkGraphicsStruct.pauseEnemies = 0;
         return;
     }
-    if (D_pspeu_0926C048 != 0) {
+    if (sparksSpeed != 0) {
         if (!(g_Timer & 7)) {
             if (soundVolume != 0) {
                 g_api.PlaySfxVolPan(SFX_MAGIC_SWITCH, soundVolume, 0);
@@ -338,7 +339,7 @@ void func_us_801A4594(Entity* self) {
         if (!(g_Timer & 1)) {
             other = AllocEntity(&g_Entities[0x40], &g_Entities[256]);
             if (other != NULL) {
-                CreateEntityFromCurrentEntity(E_ID(UNK_32), other);
+                CreateEntityFromCurrentEntity(E_ID(RISING_SPARK), other);
                 temp = Random();
                 if (temp < 0x20) {
                     temp += 0x60;
@@ -356,7 +357,8 @@ void func_us_801A4594(Entity* self) {
 
 extern EInit g_EInitParticle;
 
-void func_us_801A4F14(Entity* self) {
+// Fuzzy gold shape, rises up as the screen fades to white
+void EntityRisingSpark(Entity* self) {
     Primitive* prim;
     s32 primIndex;
     s32 initRandy;
@@ -370,14 +372,16 @@ void func_us_801A4F14(Entity* self) {
     case 0:
         InitializeEntity(g_EInitParticle);
         self->animCurFrame = 0;
-        initRandy = Random() % D_pspeu_0926C048;
+        // The sparks speed up as the sequence plays out.
+        // This variable increases to accomplish that.
+        initRandy = Random() % sparksSpeed;
         self->hitboxWidth = (initRandy + 2);
         initRandy++;
-        self->velocityY = 0xFFFE8000 - ((Random() % (initRandy + 2)) << 0x11);
-        self->ext.ILLEGAL.u32[5] =
+        self->velocityY = FIX(-1.5) - ((Random() % (initRandy + 2)) * FIX(2));
+        self->ext.concludeFight.accelY =
             -0x1000 - ((Random() % (initRandy + 1)) * 0x3000);
         self->opacity = (((Random() % initRandy) * 8) + 0x20);
-        if (initRandy < D_pspeu_0926C048 / 2) {
+        if (initRandy < sparksSpeed / 2) {
             self->zPriority = 0x54;
         } else {
             self->zPriority = 0x90;
@@ -390,7 +394,7 @@ void func_us_801A4F14(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
+        self->ext.concludeFight.prim1 = prim;
         prim->tpage = 0x1A;
         prim->clut = 0x2EC;
         prim->u0 = prim->u2 = 0;
@@ -437,7 +441,7 @@ void func_us_801A4F14(Entity* self) {
             DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         prim = prim->next;
 
-        self->ext.ILLEGAL.u32[2] = (u32)prim;
+        self->ext.concludeFight.prim2 = prim;
         prim->tpage = 0x1A;
         prim->clut = 0x15F;
         prim->clut = 0x2EC;
@@ -455,7 +459,7 @@ void func_us_801A4F14(Entity* self) {
         if (self->hitboxWidth < 4) {
             prim->drawMode = DRAW_HIDE;
         }
-        yPtr = &self->ext.ILLEGAL.s16[0x10];
+        yPtr = &self->ext.concludeFight.unk9C[0];
         for (i = 0; i < 6; i++) {
             *yPtr = self->posY.i.hi;
             yPtr++;
@@ -463,31 +467,31 @@ void func_us_801A4F14(Entity* self) {
         break;
     case 1:
         MoveEntity();
-        self->velocityY += self->ext.ILLEGAL.u32[5];
+        self->velocityY += self->ext.concludeFight.accelY;
         break;
     }
-    yPtr = &self->ext.ILLEGAL.s16[0x15];
+    yPtr = &self->ext.concludeFight.unk9C[5];
     for (i = 0; i < 5; i++) {
         yPtr[0] = yPtr[-1];
         yPtr--;
     }
-    yPtr = &self->ext.ILLEGAL.s16[0x10];
+    yPtr = &self->ext.concludeFight.unk9C[0];
     *yPtr = self->posY.i.hi;
     width = self->hitboxWidth;
-    prim = self->ext.prim;
+    prim = self->ext.concludeFight.prim1;
     xVar = self->posX.i.hi;
     yVar = self->posY.i.hi - self->hitboxWidth;
     prim->x0 = xVar - width;
     prim->x1 = xVar + width;
     prim->y0 = prim->y1 = yVar;
-    prim = (Primitive*)self->ext.ILLEGAL.u32[2];
+    prim = (Primitive*)self->ext.concludeFight.prim2;
     prim->x0 = (xVar - (width * 2));
     prim->x1 = (xVar + (width * 2));
     prim->y0 = prim->y1 = yVar - width;
 
-    prim = self->ext.prim;
+    prim = self->ext.concludeFight.prim1;
     // redundant, yPtr already holds this
-    yPtr = &self->ext.ILLEGAL.s16[0x10];
+    yPtr = &self->ext.concludeFight.unk9C[0];
     for (i = 0; i < 5; i++) {
         yVar = *yPtr;
         prim->x2 = xVar - width;
@@ -506,7 +510,7 @@ void func_us_801A4F14(Entity* self) {
     prim->y2 = prim->y3 = yVar;
     prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
     prim = prim->next;
-    prim = (Primitive*)self->ext.ILLEGAL.u32[2];
+    prim = (Primitive*)self->ext.concludeFight.prim2;
     prim->x2 = (xVar - (width * 2));
     prim->x3 = (xVar + (width * 2));
     prim->y2 = prim->y3 = yVar + self->hitboxWidth * 2;

@@ -42,8 +42,8 @@ s32 E_ID(DRACULA_CHAIR);
 s32 E_ID(BACKGROUND_VORTEX);
 s32 E_ID(UNK_2F);
 s32 E_ID(UNK_30);
-s32 E_ID(UNK_31);
-s32 E_ID(UNK_32);
+s32 E_ID(CONCLUDE_FIGHT);
+s32 E_ID(RISING_SPARK);
 
 void InitEntityIds(void) {
     SET_E_ID(BACKGROUND_BLOCK);
@@ -78,8 +78,8 @@ void InitEntityIds(void) {
     SET_E_ID(BACKGROUND_VORTEX);
     SET_E_ID(UNK_2F);
     SET_E_ID(UNK_30);
-    SET_E_ID(UNK_31);
-    SET_E_ID(UNK_32);
+    SET_E_ID(CONCLUDE_FIGHT);
+    SET_E_ID(RISING_SPARK);
 }
 
 u8* cutscene_1;

@@ -4925,6 +4925,19 @@ typedef struct {
     /* 0x8C */ s16 timer;
 } ET_DraculaSummonLightning;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim1;
+    /* 0x80 */ s16 timer;
+    /* 0x84 */ struct Primitive* prim2;
+    /* 0x88 */ struct Primitive* prim3;
+    /* 0x8C */ struct Primitive* prim4;
+    /* 0x90 */ u32 accelY;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ s16 unk9C[6];
+
+} ET_ConcludeFight;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -5336,6 +5349,7 @@ typedef union { // offset=0x7C
     ET_CaveTrollUnk et_caveTrollUnk;
     ET_FinalBossDracula finalDrac;
     ET_DraculaSummonLightning dracZap;
+    ET_ConcludeFight concludeFight;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);
