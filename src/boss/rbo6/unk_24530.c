@@ -41,8 +41,8 @@ extern s32 g_EndingVariant;
 
 s32 D_pspeu_0926C048 = 0;
 s32 unused = 0;
-u32 D_pspeu_0926C050 = 0;
-s32 D_pspeu_0926C058 = 0;
+u32 dirToMiddle = 0;
+s32 soundVolume = 0;
 
 void func_us_801A4594(Entity* self) {
     Entity* other;
@@ -86,21 +86,18 @@ void func_us_801A4594(Entity* self) {
         }
     case 1:
         prim = self->ext.prim;
-        prim->type = PRIM_GT4;
+        prim->type = PRIM_GT4; // already gt4 from allocprimitives but sure
         prim->tpage = 0x1A;
-        prim->clut = 0x19F;
+        prim->clut = 0x19F; // and let's assign clut twice, why the hell not
         prim->clut = 0x2E2;
-
         prim->u0 = prim->u2 = 0;
         prim->u1 = prim->u3 = 0x3F;
         prim->v0 = prim->v1 = 0xC0;
         prim->v2 = prim->v3 = 0xFF;
-
         prim->x0 = prim->x2 = 0x80;
         prim->x1 = prim->x3 = 0x80;
         prim->y0 = prim->y1 = 0x80;
-        prim->y1 = prim->y3 = 0x80;
-
+        prim->y1 = prim->y3 = 0x80; // probably a typo here, should be y2
         prim->r0 = prim->g0 = prim->b0 = 0;
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
@@ -109,6 +106,7 @@ void func_us_801A4594(Entity* self) {
         prim->drawMode =
             DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         prim = prim->next;
+
         self->ext.ILLEGAL.u32[2] = (u32)prim;
         prim->type = PRIM_G4;
         prim->x0 = prim->x2 = 0;
@@ -118,9 +116,9 @@ void func_us_801A4594(Entity* self) {
         prim->priority = 0x50;
         prim->drawMode = DRAW_HIDE;
         prim = prim->next;
+
         self->ext.ILLEGAL.u32[3] = (u32)prim;
         prim->type = PRIM_G4;
-
         prim->x0 = prim->x2 = 0x40;
         prim->x1 = prim->x3 = 0;
         prim->y0 = prim->y1 = 0x10;
@@ -128,6 +126,7 @@ void func_us_801A4594(Entity* self) {
         prim->priority = 0x90;
         prim->drawMode = DRAW_HIDE;
         prim = prim->next;
+
         prim->type = PRIM_G4;
         prim->x0 = prim->x2 = 0xC0;
         prim->x1 = prim->x3 = 0x100;
@@ -136,6 +135,7 @@ void func_us_801A4594(Entity* self) {
         prim->priority = 0x90;
         prim->drawMode = DRAW_HIDE;
         prim = prim->next;
+
         self->ext.ILLEGAL.u32[4] = (u32)prim;
         prim->type = PRIM_G4;
         prim->x0 = prim->x2 = 0;
@@ -265,7 +265,7 @@ void func_us_801A4594(Entity* self) {
         tempBool += DecreaseBrightness(prim, 2);
         prim = prim->next;
         tempBool += DecreaseBrightness(prim, 2);
-        D_pspeu_0926C058 = 0x80 - prim->r0 / 2;
+        soundVolume = 0x80 - prim->r0 / 2;
         other = AllocEntity(&g_Entities[0x40], &g_Entities[256]);
         if (other != NULL) {
             CreateEntityFromCurrentEntity(E_ID(UNK_32), other);
@@ -287,14 +287,14 @@ void func_us_801A4594(Entity* self) {
     case 8:
         other = &PLAYER;
         if (other->posX.i.hi > 0x80) {
-            D_pspeu_0926C050 = PAD_LEFT;
+            dirToMiddle = PAD_LEFT;
         } else {
-            D_pspeu_0926C050 = PAD_RIGHT;
+            dirToMiddle = PAD_RIGHT;
         }
         self->step += 1;
         /* fallthrough */
     case 9:
-        g_Player.padSim = D_pspeu_0926C050;
+        g_Player.padSim = dirToMiddle;
         prim = (Primitive*)self->ext.ILLEGAL.u32[4];
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
         tempBool = DecreaseBrightness(prim, 4);
@@ -329,8 +329,8 @@ void func_us_801A4594(Entity* self) {
     }
     if (D_pspeu_0926C048 != 0) {
         if (!(g_Timer & 7)) {
-            if (D_pspeu_0926C058 != 0) {
-                g_api.PlaySfxVolPan(SFX_MAGIC_SWITCH, D_pspeu_0926C058, 0);
+            if (soundVolume != 0) {
+                g_api.PlaySfxVolPan(SFX_MAGIC_SWITCH, soundVolume, 0);
             } else {
                 g_api.PlaySfx(SFX_MAGIC_SWITCH);
             }
@@ -405,6 +405,7 @@ void func_us_801A4F14(Entity* self) {
         prim->drawMode =
             DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         prim = prim->next;
+
         for (i = 0; i < 4; i++) {
             prim->tpage = 0x1A;
             prim->clut = 0x2EC;
@@ -435,6 +436,7 @@ void func_us_801A4F14(Entity* self) {
         prim->drawMode =
             DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         prim = prim->next;
+
         self->ext.ILLEGAL.u32[2] = (u32)prim;
         prim->tpage = 0x1A;
         prim->clut = 0x15F;
@@ -450,7 +452,7 @@ void func_us_801A4F14(Entity* self) {
         prim->priority = self->zPriority;
         prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
                          DRAW_UNK02 | DRAW_TRANSP;
-        if ((self->hitboxWidth) < 4) {
+        if (self->hitboxWidth < 4) {
             prim->drawMode = DRAW_HIDE;
         }
         yPtr = &self->ext.ILLEGAL.s16[0x10];
@@ -482,6 +484,7 @@ void func_us_801A4F14(Entity* self) {
     prim->x0 = (xVar - (width * 2));
     prim->x1 = (xVar + (width * 2));
     prim->y0 = prim->y1 = yVar - width;
+
     prim = self->ext.prim;
     // redundant, yPtr already holds this
     yPtr = &self->ext.ILLEGAL.s16[0x10];
