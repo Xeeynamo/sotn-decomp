@@ -62,8 +62,8 @@ typedef enum EntityID {
     E_BACKGROUND_VORTEX,    // EntityBackgroundVortex
     E_UNK_2F,               // func_us_801B1738
     E_UNK_30,               // func_us_801B2864
-    E_CONCLUDE_FIGHT,               // EntityConcludeFight
-    E_RISING_SPARK,               // EntityRisingSpark
+    E_CONCLUDE_FIGHT,       // EntityConcludeFight
+    E_RISING_SPARK,         // EntityRisingSpark
     NUM_ENTITIES,
 };
 

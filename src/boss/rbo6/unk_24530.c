@@ -188,7 +188,7 @@ void EntityConcludeFight(Entity* self) {
             prim->drawMode = DRAW_HIDE;
             self->step += 1;
         }
-        prim = (Primitive*)self->ext.concludeFight.prim2;
+        prim = self->ext.concludeFight.prim2;
         prim->drawMode = DRAW_COLORS;
         prim->r0 += 4;
         prim->g0 += 3;
@@ -199,7 +199,7 @@ void EntityConcludeFight(Entity* self) {
         sparksSpeed = 1;
         /* fallthrough */
     case 5:
-        prim = (Primitive*)self->ext.concludeFight.prim3;
+        prim = self->ext.concludeFight.prim3;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
         temp = prim->r1;
         if (temp < 0xC0) {
@@ -220,7 +220,7 @@ void EntityConcludeFight(Entity* self) {
         }
         break;
     case 6:
-        prim = (Primitive*)self->ext.concludeFight.prim2;
+        prim = self->ext.concludeFight.prim2;
         prim->drawMode = DRAW_COLORS;
         if ((prim->r0) < 0xA0) {
             prim->r0 += 4;
@@ -235,7 +235,7 @@ void EntityConcludeFight(Entity* self) {
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
         tempBool = 1;
-        prim = (Primitive*)self->ext.concludeFight.prim3;
+        prim = self->ext.concludeFight.prim3;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
         temp = prim->r1;
         temp++;
@@ -262,7 +262,7 @@ void EntityConcludeFight(Entity* self) {
         break;
     case 7:
         tempBool = 0;
-        prim = (Primitive*)self->ext.concludeFight.prim3;
+        prim = self->ext.concludeFight.prim3;
         tempBool += DecreaseBrightness(prim, 2);
         prim = prim->next;
         tempBool += DecreaseBrightness(prim, 2);
@@ -296,7 +296,7 @@ void EntityConcludeFight(Entity* self) {
         /* fallthrough */
     case 9:
         g_Player.padSim = dirToMiddle;
-        prim = (Primitive*)self->ext.concludeFight.prim4;
+        prim = self->ext.concludeFight.prim4;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
         tempBool = DecreaseBrightness(prim, 4);
         if (tempBool == 0) {
@@ -304,7 +304,7 @@ void EntityConcludeFight(Entity* self) {
         }
         return;
     case 10:
-        prim = (Primitive*)self->ext.concludeFight.prim4;
+        prim = self->ext.concludeFight.prim4;
         prim->drawMode = DRAW_DEFAULT;
         tempBool = PrimDecreaseBrightness(prim, 8);
         if (tempBool == 0) {
@@ -484,7 +484,7 @@ void EntityRisingSpark(Entity* self) {
     prim->x0 = xVar - width;
     prim->x1 = xVar + width;
     prim->y0 = prim->y1 = yVar;
-    prim = (Primitive*)self->ext.concludeFight.prim2;
+    prim = self->ext.concludeFight.prim2;
     prim->x0 = (xVar - (width * 2));
     prim->x1 = (xVar + (width * 2));
     prim->y0 = prim->y1 = yVar - width;
@@ -510,7 +510,7 @@ void EntityRisingSpark(Entity* self) {
     prim->y2 = prim->y3 = yVar;
     prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
     prim = prim->next;
-    prim = (Primitive*)self->ext.concludeFight.prim2;
+    prim = self->ext.concludeFight.prim2;
     prim->x2 = (xVar - (width * 2));
     prim->x3 = (xVar + (width * 2));
     prim->y2 = prim->y3 = yVar + self->hitboxWidth * 2;
