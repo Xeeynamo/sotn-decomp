@@ -267,7 +267,7 @@ void EntityConcludeFight(Entity* self) {
         prim = prim->next;
         tempBool += DecreaseBrightness(prim, 2);
         soundVolume = 0x80 - prim->r0 / 2;
-        other = AllocEntity(&g_Entities[0x40], &g_Entities[256]);
+        other = AllocEntity(&g_Entities[64], &g_Entities[256]);
         if (other != NULL) {
             CreateEntityFromCurrentEntity(E_ID(RISING_SPARK), other);
             temp = Random();
@@ -337,7 +337,7 @@ void EntityConcludeFight(Entity* self) {
             }
         }
         if (!(g_Timer & 1)) {
-            other = AllocEntity(&g_Entities[0x40], &g_Entities[256]);
+            other = AllocEntity(&g_Entities[64], &g_Entities[256]);
             if (other != NULL) {
                 CreateEntityFromCurrentEntity(E_ID(RISING_SPARK), other);
                 temp = Random();
