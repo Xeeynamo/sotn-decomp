@@ -53,7 +53,7 @@ void EntityConcludeFight(Entity* self) {
     s32 tempBool;
 
     FntPrint("end_step %x\n", self->step);
-    g_Player.padSim = 0;
+    g_Player.padSim = PAD_NONE;
     g_Player.demo_timer = 0x80;
     g_Player.status |= PLAYER_STATUS_UNK100000;
     g_PauseAllowed = 0;
@@ -76,14 +76,14 @@ void EntityConcludeFight(Entity* self) {
         }
         if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
 #if TARGET == TARGET_PSP
-            g_Player.padSim = 0;
+            g_Player.padSim = PAD_NONE;
 #else
-            g_Player.padSim = PAD_L1;
+            g_Player.padSim = PAD_MIST;
 #endif
         } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
             g_Player.padSim = PAD_WOLF;
         } else if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
-            g_Player.padSim = PAD_R1;
+            g_Player.padSim = PAD_BAT;
         }
     case 1:
         prim = self->ext.concludeFight.prim1;
