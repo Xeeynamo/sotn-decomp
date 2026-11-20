@@ -1307,7 +1307,7 @@
 | main       | NormalColorCol                    |       23 |          5 |        |       |     |
 | e_maria    | func_pspeu_092519E8               |       23 |          5 |        |       |     |
 | e_maria    | func_pspeu_092521A8               |       23 |          5 |        |       |     |
-| rbo6       | unk_D668.rodata                   |       24 |          0 | Yes    |       |     |
+| rbo6       | e_conclude_fight.rodata           |       24 |          0 | Yes    |       |     |
 | dra        | 63C08.rodata                      |       24 |          0 | Yes    |       |     |
 | ric        | pl_subweapon_cross.rodata         |       24 |          0 | Yes    |       |     |
 | are        | e_grave_keeper.rodata             |       24 |          0 | Yes    |       |     |
@@ -4123,8 +4123,8 @@
 |            | func_pspeu_09245378               |       63 |          7 |        |       |     |
 |            | func_pspeu_09245950               |       63 |          7 |        |       |     |
 | rbo5       | func_pspeu_092456F8               |       63 |          7 |        |       |     |
-| rbo6       | PrimDecreaseBrightness            |       63 |          7 |        |       |     |
 | rbo6       | DecreaseBrightness                |       63 |          7 |        |       |     |
+| rbo6       | PrimDecreaseBrightness            |       63 |          7 |        |       |     |
 |            | func_pspeu_09245BC0               |       63 |          7 |        |       |     |
 | rbo8       | func_pspeu_09245468               |       63 |          7 |        |       |     |
 | dra        | func_psp_0911FBD0                 |       63 |          7 |        |       |     |
@@ -9099,7 +9099,7 @@
 | rlib       | func_pspeu_09244048               |      507 |         73 |        |       |     |
 | no1        | func_pspeu_09249A40               |      507 |         90 | Yes    |       |     |
 | no4        | func_pspeu_09259878               |      507 |         90 | Yes    |       |     |
-| rbo6       | func_us_801A4F14                  |      508 |         33 |        |       |     |
+| rbo6       | EntityRisingSpark                 |      508 |         33 |        |       |     |
 |            | func_pspeu_09252380               |      508 |         49 |        |       |     |
 | maria      | func_pspeu_092B04F8               |      508 |         59 |        |       |     |
 | ric        | func_pspeu_092A8D28               |      508 |         59 |        |       |     |
@@ -9648,7 +9648,7 @@
 |            | func_pspeu_092EA1D8               |      865 |        108 |        |       |     |
 | st0        | func_pspeu_09241D60               |      868 |         52 | Yes    |       |     |
 | no4        | func_pspeu_0923C460               |      870 |        106 | Yes    |       |     |
-| rbo6       | func_us_801A4594                  |      873 |         72 | Yes    |       |     |
+| rbo6       | EntityConcludeFight               |      873 |         72 | Yes    |       |     |
 |            | func_092EBFB0                     |      874 |         53 | Yes    |       |     |
 | lib        | func_psp_09255068                 |      883 |         80 |        |       |     |
 | lib        | func_psp_09263810                 |      884 |         74 | Yes    |       |     |
