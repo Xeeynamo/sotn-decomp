@@ -21,7 +21,7 @@ segments:
 
       - [0x2EFE, c, zero_0]
 
-      - start: 0xD040
+      - start: 0xC380
         type: c
         file: zero_1
         end: 0x14647

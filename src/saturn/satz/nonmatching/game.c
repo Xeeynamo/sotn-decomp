@@ -33,8 +33,6 @@ extern s32 g_GameDataEnd;
 #define _SPR2_
 #include "../../lib/spr/spr.h"
 
-extern s32 (*DAT_0606467C)();
-
 void func_06071C3C(void);
 
 static u16 LookupTblNoToVram_b2(u16 arg0);
