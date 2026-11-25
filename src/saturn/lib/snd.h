@@ -6,6 +6,9 @@
 #define SND_RET_SET 0
 #define SND_RET_NSET 1
 
+#define SND_CTRL_OUTPUT_STEREO (0 << 7)
+#define SND_CTRL_OUTPUT_MONO (1 << 7)
+
 #define SND_MD_MONO (0 << 7)
 #define SND_MD_STEREO (1 << 7)
 #define SND_MD_16 (0 << 4)
@@ -36,6 +39,22 @@
 
 #define SND_PCM_RADR(prm) ((prm).radr)
 #define SND_PCM_LADR(prm) ((prm).ladr)
+
+#define SND_POKE_B(adr, data) (*((volatile Uint8*)(adr)) = ((Uint8)(data)))
+#define SND_POKE_W(adr, data) (*((volatile Uint16*)(adr)) = ((Uint16)(data)))
+#define SND_PEEK_B(adr) (*((volatile Uint8*)(adr)))
+
+#define SND_ADR_INTR_CTRL_WORD (0x00)
+#define SND_ADR_INTR_MODE (0x01)
+#define SND_ADR_PCM_PLAY_NUM (0x02)
+#define SND_ADR_SND_CTRL (0x03)
+#define SND_CMD_TIMING_FLAG (0x60)
+#define SND_CMD_SEQ_CTRL_WORD (0x61)
+
+#define SND_SET_SND_CTRL(ctrl_bit)                                             \
+    do {                                                                       \
+        SND_POKE_B(snd_adr_sys_int_work + SND_ADR_SND_CTRL, (ctrl_bit));       \
+    } while (FALSE)
 
 typedef struct {
     Uint16* prg_adr;
@@ -93,6 +112,13 @@ typedef struct {
     Uint8 radr;
     Uint8 ladr;
 } SndPcmPlayAdr;
+
+extern Uint8* snd_adr_sys_int_work;
+
+SndRet SND_ChgMixPrm(SndEfctOut, SndLev, SndPan);
+
+SndRet SND_StartSeq_DR(SndSeqNum, SndSeqBnkNum, SndSeqSongNum, SndSeqPri);
+SndRet SND_StopSeq(SndSeqNum);
 
 SndRet SND_SetSeqVl(SndSeqNum, SndSeqVl, SndFade);
 

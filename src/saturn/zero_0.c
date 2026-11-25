@@ -4602,4 +4602,3 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60100DC, func_060100DC);
 // _DEBUG_FONT_SET2
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6010274, func_06010274);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6010328, func_06010328);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6010400, func_06010400);
