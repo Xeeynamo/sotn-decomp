@@ -2048,7 +2048,6 @@
 | stage_16/f_nonmat/f60DD6F4.s    | func_060DD6F4   |     1713 |         65 |       |     |
 | stage_15/f_nonmat/f60E9E44.s    | func_060E9E44   |     1725 |        166 |       |     |
 | richter/f_nonmat/f60B061C.s     | func_060B061C   |     1784 |        172 |       |     |
-| zero/f_nonmat/f6010400.s        | func_06010400   |     1800 |        306 |       |     |
 | rstage15/f_nonmat/f60E2A90.s    | func_060E2A90   |     1866 |        265 |       |     |
 | rstage16/f_nonmat/f60E09EC.s    | func_060E09EC   |     1866 |        265 |       |     |
 | alucard/f_nonmat/f60C61E4.s     | func_060C61E4   |     1867 |        141 |       |     |
