@@ -20,7 +20,11 @@ func_us_801C4228_from_no4 = 0x801C7CB8;
 func_us_801C4BD8_from_no4 = 0x801C8514;
 func_us_801A071C_from_bo3 = 0x801C8C84;
 func_us_801A07CC_from_bo3 = 0x801C8D34;
-func_us_801C5518_from_no4 = 0x801C8F38;
+func_us_801C5518 = 0x801C8F38;
 DestroyEntity = 0x801CD5FC;
 AnimateEntity = 0x801CD72C;
 InitializeEntity = 0x801CE30C;
+water_slow_zones = 0x801815F8;
+
+water_tile_rects = 0x8018126C;
+water_surface_lines = 0x80181174;

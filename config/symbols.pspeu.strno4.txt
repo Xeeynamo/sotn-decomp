@@ -2,9 +2,9 @@ DestroyEntity = 0x0924EBE8;
 AnimateEntity = 0x0924ED08;
 InitializeEntity = 0x0924F8B0;
 GetPlayerCollisionWith = 0x0924FD70;
-func_pspeu_09246618_from_bo3 = 0x09252A30;
+func_us_801A071C_from_bo3 = 0x09252A30;
 func_us_801A07CC_from_bo3 = 0x09252B58;
-func_us_801C5518_from_no4 = 0x09252E10;
+func_us_801C5518 = 0x09252E10;
 func_us_801C12B0_from_no4 = 0x09254DF0;
 func_us_801C15F8_from_no4 = 0x09255258;
 EntityBgColumnsParallax_from_no4 = 0x09255C98;
@@ -36,4 +36,11 @@ D_us_80181084 = 0x0929B4D4;
 D_us_80181280 = 0x0929B6D8;
 D_us_801814D4 = 0x0929B938;
 g_FloatingIcePlatformHitbox = 0x0929B940;
+
 D_us_801815DC = 0x0929BEB8;
+D_us_801815E4 = 0x0929B018;
+
+water_tile_rects = 0x0929B5E8;
+water_surface_lines = 0x0929B4E8;
+D_us_801DCF54 = 0x0929BEC0;
+water_slow_zones = 0x0929B030;

@@ -54,7 +54,7 @@ void func_us_801A07CC_from_bo3(Entity* self);
 void EntityWaterBox(Entity* self);
 void func_us_801C81C8(Entity* self);
 void EntityFloatingIcePlatform(Entity* self);
-void func_us_801C5518_from_no4(Entity* self);
+void func_us_801C5518(Entity* self);
 void func_us_801C8C54(Entity* self);
 void func_us_801C909C(Entity* self);
 void func_us_801C4BD8_from_no4(Entity* self);
@@ -151,7 +151,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityWaterBox,
     func_us_801C81C8,
     EntityFloatingIcePlatform,
-    func_us_801C5518_from_no4,
+    func_us_801C5518,
     func_us_801C8C54,
     func_us_801C909C,
     func_us_801C4BD8_from_no4,
