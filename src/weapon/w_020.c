@@ -160,7 +160,7 @@ void EntityWeaponAttack(Entity* self) {
         if (self->poseTimer < 0) {
             // Tails: A small head pops up, and lightning strikes the coin
             if (self->anim == D_90000_8017A8D8) {
-                g_Player.timers[10] = 4;
+                g_Player.timers[ALU_T_USE_SUBWPN] = 4;
                 self->anim = D_90000_8017A8E8;
                 self->poseTimer = self->pose = 0;
                 self->zPriority = 0x1B6;

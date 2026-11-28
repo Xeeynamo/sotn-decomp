@@ -6,7 +6,7 @@
 #include "lib/scl.h"
 #include "lib/per.h"
 #include "lib/bup.h"
-#include "lib/cdc.h"
+#include "lib/cdc/cdc.h"
 #include "lib/gfs/gfs.h"
 #include "lib/snd.h"
 #include "lib/dma/dma.h"
@@ -395,9 +395,9 @@ typedef struct {
     u8 size;
     u16 buttons;
 } PerData;
-extern PerData* DAT_060505F8;
-extern PerMulInfo* DAT_060505FC;
-extern u8* DAT_06050600;
+extern PerData* per_data;
+extern PerMulInfo* mul_data;
+extern u8* tim_data;
 
 void func_0601B1CC(void);
 void MoviePRGClear(void);
@@ -415,7 +415,7 @@ void func_06009D30(void);
 void func_0600B234(void);
 void func_0600DAB4(void);
 void func_06009058(u16 arg0);
-void func_06009AE8(s32, Unk0605CD90*, UNK_0605c680*);
+void func_06009AE8(u16, Unk0605CD90*, UNK_0605c680*);
 void func_06009CCC(void);
 void func_06009D60(u32);
 void func_06009F84(Unk0605CD90*);
@@ -428,12 +428,22 @@ typedef struct {
     u32 size;
 } VramTransfer;
 extern VramTransfer DAT_060576B0[16];
-extern s8 DAT_06057F50[PER_WORK_SIZE(1, 2)];
+extern u8 DAT_06057F50[PER_WORK_SIZE(1, 2)];
 extern XyInt DAT_0605AEA0[2];
 extern struct SprSpCmd* DAT_0605AEAC;
 extern SclConfig DAT_0605BED0[];
 extern s16* DAT_0605C120[];
 extern u32 D_8003C744;
+
+typedef struct {
+    u8 tileX;
+    u8 tileY;
+    u8 dir;
+    u8 inverted;
+} Unk0600FCF8;
+
+extern Unk0600FCF8 DAT_06039144[0x20];
+extern u8 DAT_060391C4[];
 
 typedef struct {
     u16 unk0[5];
@@ -489,23 +499,12 @@ void func_0600DE38(void);
 void func_0600E164(void);
 Equipment* func_060076D0(s32 arg0);
 void func_06008B20(void);
-void func_06008EE8(void);
+void UpdateColorOffsetFade(void);
 void SignalSlaveSh2(void);
 void ResetPadsRepeat(void);
 void func_06008C2C(void);
 extern s32 DAT_060389E0[][2];
 extern s32 DAT_060389F8[];
-extern u8 DAT_06038C84[];
-extern s32 DAT_06038C88[6];
-extern s32 DAT_06038CA0[][6];
-extern u16 DAT_06038D30[];
-extern u16 DAT_06038D40[];
-extern u16 DAT_06038D50[];
-extern u16 DAT_06038D60[];
-extern u16 DAT_06038D70[];
-extern u16 DAT_06038D80[];
-extern u16 DAT_06038D90[];
-extern u16 DAT_06038DA0[];
 extern s32 DAT_06038FDC;
 extern u8* DAT_060579A4;
 u16* func_0600CB04(s32 col, s32 row);

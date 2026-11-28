@@ -531,7 +531,7 @@ void EntitySubwpnBible(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         prim->drawMode &= ~DRAW_HIDE;
         self->ext.et_BibleSubwpn.unk86++;
-        g_Player.timers[10] = 4;
+        g_Player.timers[ALU_T_USE_SUBWPN] = 4;
         self->step++;
     case 2:
         self->ext.et_BibleSubwpn.unk7C++;

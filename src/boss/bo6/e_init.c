@@ -22,7 +22,7 @@ void EntityUnkId13(Entity*);
 void EntityExplosionVariants(Entity*);
 void EntityGreyPuff(Entity*);
 void EntityRichter(Entity*);
-void func_us_801A7DC0(Entity*);
+void EntityCutsceneDialogue(Entity*);
 void func_us_801A9084(Entity*);
 void func_us_801A95F4(Entity*);
 void func_us_801A9208(Entity*);
@@ -36,7 +36,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityEnemyBlood,    EntityMessageBox,        EntityDummy,
     EntityDummy,         EntityBackgroundBlock,   EntityLockCamera,
     EntityUnkId13,       EntityExplosionVariants, EntityGreyPuff,
-    EntityRichter,       func_us_801A7DC0,        func_us_801A9084,
+    EntityRichter,       EntityCutsceneDialogue,  func_us_801A9084,
     func_us_801A95F4,    func_us_801A9208,        func_us_801A9944,
 };
 

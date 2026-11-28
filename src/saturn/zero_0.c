@@ -488,7 +488,7 @@ void InitSpriteEngine(s32 arg0) {
     DAT_0605AEA8 = 0;
     DAT_0605BEC8 = GOUR_TBL_MAX;
     DAT_060576AC = 0;
-    DAT_0605AEAC = (SprSpCmd*)sp2MstSpCmd;
+    DAT_0605AEAC = (SprSpCmd*)&sp2MstSpCmd[0];
     DAT_0605BEC4 = 0x11180;
     func_0600E240(&DAT_0605BEC0);
     DAT_06038C5C = 2;
@@ -636,7 +636,7 @@ extern const XyInt DAT_0600E23C;
 void func_06007D54(void) {
     SprSpCmd cmd;
 
-    SPR_2OpenCommand(1);
+    SPR_2OpenCommand(SPR_2DRAW_PRTY_ON);
 
     cmd.control = 0x1009;
     SET_LOW(cmd.cx, LOW(DAT_0605BEC0));
@@ -844,6 +844,15 @@ void FlushVramTransfers(void) {
     s32 i;
 
     ptr = DAT_060576B0;
+#ifdef SATZ
+    for (i = 0; i < DAT_06057770; i++, ptr++) {
+        DMA_ScuMemCopy(
+            satz_bus_pointer((u32)(uptr)ptr->dst), ptr->src, ptr->size);
+        while (DMA_ScuResult() == 2) {
+        }
+    }
+    return;
+#endif
     for (i = 0; i < DAT_06057770; i++, ptr++) {
         s32 temp_r2 = (uptr)ptr->src & 0x0FF00000;
         if (temp_r2 == 0x00200000) {
@@ -1062,7 +1071,7 @@ void func_0600871C(Unk0605CD90* arg0, UNK_0605c680* arg1, s32 arg2) {
 
     src = DAT_0605C120[arg2] + 2;
     dst = arg0->unk8;
-    tileBase = arg0->unk24 * 0x1000;
+    tileBase = arg0->unk24 << 0xC;
 
     src += (x % arg0->width) + (y % arg0->height) * arg0->width;
     dst += (x % 0x40U) + (y % 0x40U) * 0x40;
@@ -1104,7 +1113,7 @@ void BuildSubDispTilemap(Unk0605CD90* arg0) {
 
     src = DAT_0605C120[3] + 2;
     dst = arg0->unk8;
-    tileBase = arg0->unk24 * 0x1000;
+    tileBase = arg0->unk24 << 0xC;
 
     j = 0;
     dst += j * 0x20;
@@ -1209,10 +1218,10 @@ void func_06008C2C(void) {
     }
 }
 
-void StartColorOffsetFade(s32 arg0, u16 arg1) {
-    DAT_06057786 = arg0;
+void StartColorOffsetFade(s32 type, u16 nFrames) {
+    DAT_06057786 = type;
     DAT_0605BECC = 1;
-    switch (arg0) {
+    switch (type) {
     case 0:
         DAT_06057774[0] = DAT_06057774[1] = DAT_06057774[2] = 0;
         DAT_06057774[3] = DAT_06057774[4] = DAT_06057774[5] = -0xFF;
@@ -1256,15 +1265,15 @@ void StartColorOffsetFade(s32 arg0, u16 arg1) {
         DAT_0605BECC = 0;
         return;
     }
-    DAT_06057780[0] = (DAT_06057774[3] - DAT_06057774[0]) / arg1;
-    DAT_06057780[1] = (DAT_06057774[4] - DAT_06057774[1]) / arg1;
-    DAT_06057780[2] = (DAT_06057774[5] - DAT_06057774[2]) / arg1;
+    DAT_06057780[0] = (DAT_06057774[3] - DAT_06057774[0]) / nFrames;
+    DAT_06057780[1] = (DAT_06057774[4] - DAT_06057774[1]) / nFrames;
+    DAT_06057780[2] = (DAT_06057774[5] - DAT_06057774[2]) / nFrames;
     DAT_06057788 = DAT_06057774[0];
     DAT_0605778A = DAT_06057774[1];
     DAT_0605778C = DAT_06057774[2];
 }
 
-void func_06008EE8(void) {
+void UpdateColorOffsetFade(void) {
     if (DAT_0605BECC == 0) {
         return;
     }
@@ -1341,6 +1350,20 @@ void func_06009010(u8* rgb) {
         SCL_SetColOffset(SCL_OFFSET_A, 0x6F, 0, 0, 0);
     }
 }
+
+// split here ?
+
+extern u8 DAT_06038C84[3];
+extern s32 DAT_06038C88[6];
+extern s32 DAT_06038CA0[][6];
+extern u16 DAT_06038D30[];
+extern u16 DAT_06038D40[];
+extern u16 DAT_06038D50[];
+extern u16 DAT_06038D60[];
+extern u16 DAT_06038D70[];
+extern u16 DAT_06038D80[];
+extern u16 DAT_06038D90[];
+extern u16 DAT_06038DA0[];
 
 void func_06009058(u16 arg0) {
     SclConfig* scfg;
@@ -1533,15 +1556,13 @@ void func_06009570(s32 arg0) {
     scfg.mapover = SCL_OVER_0;
     scfg.flip = SCL_PN_10BIT;
     scfg.patnamecontrl = 0x64;
-    scfg.plate_addr[3] = SCL_VDP2_VRAM_B0 + 0x18000;
-    scfg.plate_addr[2] = SCL_VDP2_VRAM_B0 + 0x18000;
-    scfg.plate_addr[1] = SCL_VDP2_VRAM_B0 + 0x18000;
-    scfg.plate_addr[0] = SCL_VDP2_VRAM_B0 + 0x18000;
+    scfg.plate_addr[0] = scfg.plate_addr[1] = scfg.plate_addr[2] =
+        scfg.plate_addr[3] = SCL_VDP2_VRAM_B0 + 0x18000;
     SCL_SetConfig(SCL_NBG0, &scfg);
     ptr = &DAT_0605CD90[3];
     temp_r1 = DAT_06038CA0[arg0];
-    ptr->unk8 = (u16*)(SCL_VDP2_VRAM_B0 + 0x18000);
     ptr->dst0 = (u16*)(SCL_VDP2_VRAM_A1);
+    ptr->unk8 = (u16*)(SCL_VDP2_VRAM_B0 + 0x18000);
     ptr->dst4 = (u16*)(SCL_COLRAM_ADDR + 0x600);
     ptr->unk24 = 0x30;
     ptr->unkC = *temp_r1++ + DAT_00252000;
@@ -1644,8 +1665,129 @@ void func_06009838(void) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60098F0, func_060098F0);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009AE8, func_06009AE8);
+void func_060098F0(u16 arg0, Unk0605CD90* arg1, UNK_0605c680* arg2) {
+    u16 i, j;
+    u16 w, h;
+    u16 tileBase;
+    s32 x, y;
+    u16* dst;
+    u16* src;
+    s32 scrollX, scrollY;
+    s32 dy;
+
+    scrollX = arg2->unk3C / arg1->divisorX;
+    scrollY = arg2->unk40 / arg1->divisorY;
+
+    x = scrollX >> 0x13;
+    y = scrollY >> 0x13;
+
+    if (arg2->g_ScrollDeltaX >= 0) {
+        x += 0x2A;
+    }
+
+    if (arg2->g_ScrollDeltaX < 0) {
+        x -= 4;
+    }
+
+    for (dy = 4; dy > 0; dy--) {
+        if ((y - dy) >= 0) {
+            break;
+        }
+    }
+    y -= dy;
+
+    dst = arg1->unk8;
+    src = DAT_0605C120[arg0] + 2;
+    tileBase = arg1->unk24 << 0xC;
+
+    w = arg1->width;
+    h = arg1->height;
+
+    dst += (x % 0x40U) + (y % 0x40U) * 0x40;
+    src += (x % w) + (y % h) * w;
+
+    for (i = 0; i < 2; i++) {
+        for (j = 0; j < (dy + 0x22); j++) {
+            *dst = *src + tileBase;
+            if (((y + j) % 0x40U) == (0x40 - 1)) {
+                dst -= 0x40 * (0x40 - 1);
+            } else {
+                dst += 0x40;
+            }
+            src += w;
+            if (arg1->flags & 2) {
+                if (((y + j) % h) == (h - 1)) {
+                    src -= w * h;
+                }
+            }
+        }
+        dst = arg1->unk8 + ((x + 1) % 0x40U) + (y % 0x40U) * 0x40;
+        src = DAT_0605C120[arg0] + 2;
+        src += ((x + 1) % w) + (y % h) * w;
+    }
+}
+
+void func_06009AE8(u16 arg0, Unk0605CD90* arg1, UNK_0605c680* arg2) {
+    u16 i, j;
+    u16 w, h;
+    u16 tileBase;
+    s32 x, y;
+    s16* dst;
+    s16* src;
+    s32 scrollX, scrollY;
+    s32 dx;
+
+    scrollX = arg2->unk3C / arg1->divisorX;
+    scrollY = arg2->unk40 / arg1->divisorY;
+
+    x = scrollX >> 0x13;
+    y = scrollY >> 0x13;
+
+    if (arg2->g_ScrollDeltaY > 0) {
+        y += 0x20;
+    }
+
+    if (arg2->g_ScrollDeltaY < 0) {
+        y -= 4;
+    }
+
+    for (dx = 4; dx > 0; dx--) {
+        if ((x - dx) >= 0) {
+            break;
+        }
+    }
+    x -= dx;
+
+    dst = arg1->unk8;
+    src = DAT_0605C120[arg0] + 2;
+    tileBase = arg1->unk24 << 0xC;
+
+    w = arg1->width;
+    h = arg1->height;
+
+    dst += (x % 0x40U) + (y % 0x40U) * 0x40;
+    src += (x % w) + (y % h) * w;
+
+    for (i = 0; i < 2; i++) {
+        for (j = 0; j < (dx + 0x2C); j++) {
+            *dst = *src + tileBase;
+            if (((x + j) % 0x40U) == (0x40 - 1)) {
+                dst -= (0x40 - 1);
+            } else {
+                dst += 1;
+            }
+            src += 1;
+            if (arg1->flags & 1) {
+                if (((x + j) % w) == (w - 1)) {
+                    src -= w;
+                }
+            }
+        }
+        dst = arg1->unk8 + (x % 0x40U) + ((y + 1) % 0x40U) * 0x40;
+        src = DAT_0605C120[arg0] + 2;
+        src += (x % w) + ((y + 1) % h) * w;
+    }
+}
 
 // original name: UPDATE_BG
 void func_06009CCC(void) {
@@ -1688,7 +1830,53 @@ void func_06009D60(u32 bank) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009DB0, func_06009DB0);
+void func_06009DB0(void) {
+    SclConfig scfg;
+    Unk0605CD90* ptr;
+    s32* temp_r1;
+    s16* src;
+
+    SCL_InitConfigTb(&scfg);
+    scfg.charsize = SCL_CHAR_SIZE_1X1;
+    scfg.pnamesize = SCL_PN1WORD;
+    scfg.platesize = SCL_PL_SIZE_1X1;
+    scfg.coltype = SCL_COL_TYPE_256;
+    scfg.datatype = SCL_CELL;
+    scfg.mapover = SCL_OVER_0;
+    scfg.flip = SCL_PN_12BIT;
+    scfg.patnamecontrl = 0x64;
+    scfg.plate_addr[0] = scfg.plate_addr[1] = scfg.plate_addr[2] =
+        scfg.plate_addr[3] = SCL_VDP2_VRAM_B0 + 0x18000;
+    SCL_SetConfig(SCL_NBG0, &scfg);
+    ptr = &DAT_0605CD90[3];
+    temp_r1 = DAT_06038C88;
+    ptr->dst0 = (u16*)(SCL_VDP2_VRAM_A1);
+    ptr->unk8 = (u16*)(SCL_VDP2_VRAM_B0 + 0x18000);
+    ptr->dst4 = (u16*)(SCL_COLRAM_ADDR + 0x600);
+    ptr->unk24 = 3;
+    ptr->unkC = *temp_r1++ + DAT_00252000;
+    ptr->unk18 = *temp_r1++;
+    ptr->unk10 = *temp_r1++ + DAT_00252000;
+    ptr->unk1C = *temp_r1++;
+    ptr->unk14 = *temp_r1++ + DAT_00252000;
+    ptr->unk20 = *temp_r1++;
+    ptr->divisorX = ptr->divisorY = 1;
+    ptr->flags = 0;
+    SCL_Open(SCL_NBG0);
+    SCL_MoveTo(FIXED(0), FIXED(8), FIXED(0));
+    SCL_Close();
+    DAT_0605C120[3] = &g_PlayerOvl;
+    src = DAT_0605C120[3];
+    DecompressLZSS(ptr->unk14, src, ptr->unk20);
+    ptr->width = src[0];
+    ptr->height = src[1];
+    DAT_0605D6C0[3].tileFlags = 0xC4;
+    if (g_CurrentRoom.stageID != 0x38) {
+        SCL_SetCycleTable(DAT_06038D80);
+    } else {
+        SCL_SetCycleTable(DAT_06038D90);
+    }
+}
 
 void func_06009F10(void) {
     SclConfig scfg;
@@ -1701,16 +1889,43 @@ void func_06009F10(void) {
     scfg.datatype = SCL_CELL;
     scfg.mapover = SCL_OVER_0;
     scfg.flip = SCL_PN_10BIT;
-    scfg.plate_addr[3] = SCL_VDP2_VRAM_B0 + 0x8000;
-    scfg.plate_addr[2] = SCL_VDP2_VRAM_B0 + 0x8000;
-    scfg.plate_addr[1] = SCL_VDP2_VRAM_B0 + 0x8000;
-    scfg.plate_addr[0] = SCL_VDP2_VRAM_B0 + 0x8000;
+    scfg.plate_addr[0] = scfg.plate_addr[1] = scfg.plate_addr[2] =
+        scfg.plate_addr[3] = SCL_VDP2_VRAM_B0 + 0x8000;
     scfg.patnamecontrl = 0x21;
     SCL_SetConfig(SCL_NBG2, &scfg);
 }
 
-// _X_SCROLL_TRANS
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009F84, func_06009F84);
+// original name: X_SCROLL_TRANS
+void func_06009F84(Unk0605CD90* arg0) {
+    u16 i, j;
+    u16 x;
+    s16* dst;
+    s16* src;
+    s32 scrollX;
+
+    scrollX = (DAT_0605c680.unk3C / 4) * 7;
+
+    x = scrollX >> 0x13;
+    x += 0x2A;
+
+    dst = arg0->unk8;
+    dst += x % 0x40U;
+    src = DAT_0605C120[0] + 2;
+    src += x;
+    for (i = 0; i < 0x20; i++) {
+        for (j = 0; j < 4; j++) {
+            *dst++ = *src++;
+
+            if (((u16)(x + j) % 0x40) == (0x40 - 1)) {
+                dst -= 0x40;
+            }
+        }
+        dst = arg0->unk8 + (x % 0x40U) + i * 0x40;
+        src = DAT_0605C120[0] + 2;
+        src += x;
+        src += i * 0x500;
+    }
+}
 
 void func_0600A030(void) {
     Unk0605CD90* ptr;
@@ -2208,7 +2423,133 @@ void DestroySpriteObject(SpriteObject* obj) {
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B4C4, func_0600B4C4);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B954, func_0600B954);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600BA24, func_0600BA24);
+
+void func_0600E5A4(MthXy* arg0, s16 angle);
+void func_0600BCE0(s32* mtx, s16 angle);
+
+s32 func_0600BA24(
+    SprSpCmd* cmd, SpriteObject* obj, SpritePart* part, MthXy* arg3) {
+    s32 m[4];
+    SaturnSpriteImage sp10;
+    MthXy offset;
+    MthXy pos;
+    s32 attributes;
+    s16 angle;
+    u16 flags;
+    s16 min;
+    s16 max;
+    s16 rotate;
+    u32 base;
+    u8 scale;
+    s32 ret;
+
+    flags = obj->flags;
+    pos = *arg3;
+
+    attributes = part->attributes;
+    sp10 = obj->images[part->imageIndex];
+    m[1] = m[2] = 0;
+    ret = 1;
+
+    if (flags & 0x40) {
+        scale = obj->scaleX;
+    } else {
+        scale = 0x40;
+    }
+    if (scale == 0x40) {
+        m[0] = (sp10.storedWidth * scale) * 0x400;
+        offset.x = (part->offsetX * scale) * 0x400;
+    } else {
+        m[0] = (sp10.storedWidth * scale) * 0x400;
+        offset.x = (part->offsetX * scale) * 0x400;
+    }
+
+    if (flags & 0x40) {
+        scale = obj->scaleY;
+    } else {
+        scale = 0x40;
+    }
+    if (scale == 0x40) {
+        m[3] = (sp10.storedHeight * scale) * 0x400;
+        offset.y = (part->offsetY * scale) * 0x400;
+    } else {
+        m[3] = (sp10.storedHeight * scale) * 0x400;
+        offset.y = (part->offsetY * scale) * 0x400;
+    }
+
+    if (flags & 0x40) {
+        rotate = obj->rotate;
+    } else {
+        rotate = 0;
+    }
+    angle = part->rotate + rotate;
+    if (rotate != 0) {
+        func_0600E5A4(&offset, rotate);
+    }
+    if (angle != 0) {
+        func_0600BCE0(m, angle);
+    }
+
+    if (flags & 0x10) {
+        m[0] = -m[0];
+        m[2] = -m[2];
+        pos.x -= offset.x;
+    } else {
+        pos.x += offset.x;
+    }
+
+    if (flags & 0x20) {
+        m[1] = -m[1];
+        m[3] = -m[3];
+        pos.y -= offset.y;
+    } else {
+        pos.y += offset.y;
+    }
+
+    base = pos.x - m[2] + 0x8000;
+    cmd->ax = (base - m[0]) / 0x10000;
+    cmd->bx = (base + m[0]) / 0x10000;
+
+    base = pos.x + m[2] + 0x8000;
+    cmd->cx = (base + m[0]) / 0x10000;
+    cmd->dx = (base - m[0]) / 0x10000;
+
+    if (m[2] > 0) {
+        min = (cmd->ax > cmd->bx) ? cmd->bx : cmd->ax;
+        max = (cmd->cx < cmd->dx) ? cmd->dx : cmd->cx;
+    } else {
+        min = (cmd->cx > cmd->dx) ? cmd->dx : cmd->cx;
+        max = (cmd->ax < cmd->bx) ? cmd->bx : cmd->ax;
+    }
+
+    if (max < 0 || min >= 0x140) {
+        ret = 0;
+    } else {
+        base = pos.y - m[3] + 0x8000;
+        cmd->ay = (base - m[1]) / 0x10000;
+        cmd->by = (base + m[1]) / 0x10000;
+
+        base = pos.y + m[3] + 0x8000;
+        cmd->cy = (base + m[1]) / 0x10000;
+        cmd->dy = (base - m[1]) / 0x10000;
+
+        if (m[3] > 0) {
+            min = (cmd->ay > cmd->by) ? cmd->by : cmd->ay;
+            max = (cmd->cy < cmd->dy) ? cmd->dy : cmd->cy;
+        } else {
+            min = (cmd->cy > cmd->dy) ? cmd->dy : cmd->cy;
+            max = (cmd->ay < cmd->by) ? cmd->by : cmd->ay;
+        }
+
+        if (max < 0 || min >= 0xF0) {
+            ret = 0;
+        } else {
+            cmd->control = (attributes & 0x30) | 0x1002;
+        }
+    }
+
+    return ret;
+}
 
 void func_0600BCE0(s32* mtx, s16 angle) {
     Fixed32 s, c;
@@ -4107,16 +4448,6 @@ void func_0600FC04(void) {
     }
 }
 
-typedef struct {
-    u8 tileX;
-    u8 tileY;
-    u8 dir;
-    u8 inverted;
-} Unk0600FCF8;
-
-extern Unk0600FCF8 DAT_06039144[0x20];
-extern u8 DAT_060391C4[];
-
 static void DrawSecretPassageOnMap(s32 x, s32 y, s32 dir) {
     Unk0600FCF8 room;
     u32 i;
@@ -4271,4 +4602,3 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60100DC, func_060100DC);
 // _DEBUG_FONT_SET2
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6010274, func_06010274);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6010328, func_06010328);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6010400, func_06010400);

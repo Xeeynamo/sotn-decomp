@@ -127,8 +127,8 @@ void func_0601AF5C(void) {
         func_060645B4 = t[0];
         func_06064594 = t[1];
         func_06064628 = (void*)t[2];
-        DAT_06064584 = (void*)t[3];
-        DAT_0606460C = (void*)t[4];
+        func_06064584 = (void*)t[3];
+        func_0606460C = (void*)t[4];
         func_06064638 = (void*)t[5];
         func_060645FC = (void*)t[6];
         func_060645BC = (void*)t[7];
@@ -138,9 +138,9 @@ void func_0601AF5C(void) {
         func_060645A0 = (void*)t[11];
         func_06064630 = (void*)t[12];
         func_06064590 = (void*)t[13];
-        DAT_0606467C = (void*)t[14];
+        func_0606467C = (void*)t[14];
         func_06064618 = (void*)t[15];
-        DAT_06064678 = (void*)t[16];
+        func_06064678 = (void*)t[16];
         func_060645C0 = (void*)t[17];
         func_060645B0 = (void*)t[18];
         return;
@@ -148,8 +148,8 @@ void func_0601AF5C(void) {
         func_060645B4 = DAT_060D4000;
         func_06064594 = DAT_060D4004;
         func_06064628 = DAT_060D4008;
-        DAT_06064584 = DAT_060D400C;
-        DAT_0606460C = DAT_060D4010;
+        func_06064584 = DAT_060D400C;
+        func_0606460C = DAT_060D4010;
         func_06064638 = DAT_060D4014;
         func_060645FC = DAT_060D4018;
         func_060645BC = DAT_060D401C;
@@ -159,17 +159,17 @@ void func_0601AF5C(void) {
         func_060645A0 = DAT_060D402C;
         func_06064630 = DAT_060D4030;
         func_06064590 = DAT_060D4034;
-        DAT_0606467C = DAT_060D4038;
+        func_0606467C = DAT_060D4038;
         func_06064618 = DAT_060D403C;
-        DAT_06064678 = DAT_060D4040;
+        func_06064678 = DAT_060D4040;
         func_060645C0 = DAT_060D4044;
         func_060645B0 = DAT_060D4048;
     } else {
         func_060645B4 = *(void**)g_Weapon0OvlArea;
         func_06064594 = DAT_060D6004;
         func_06064628 = DAT_060D6008;
-        DAT_06064584 = DAT_060D600C;
-        DAT_0606460C = DAT_060D6010;
+        func_06064584 = DAT_060D600C;
+        func_0606460C = DAT_060D6010;
         func_06064638 = DAT_060D6014;
         func_060645FC = DAT_060D6018;
         func_060645BC = DAT_060D601C;
@@ -179,9 +179,9 @@ void func_0601AF5C(void) {
         func_060645A0 = DAT_060D602C;
         func_06064630 = DAT_060D6030;
         func_06064590 = DAT_060D6034;
-        DAT_0606467C = DAT_060D6038;
+        func_0606467C = DAT_060D6038;
         func_06064618 = DAT_060D603C;
-        DAT_06064678 = DAT_060D6040;
+        func_06064678 = DAT_060D6040;
         func_060645C0 = DAT_060D6044;
         func_060645B0 = DAT_060D6048;
     }

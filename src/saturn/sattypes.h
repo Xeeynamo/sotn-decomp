@@ -917,6 +917,7 @@ typedef struct {
 } GameApi;
 
 extern void (*func_06064580)();
+extern void (*func_06064584)();
 extern void (*func_0606458C)();
 extern void (*func_06064590)();
 extern void (*func_06064594)();
@@ -937,6 +938,7 @@ extern void (*func_060645FC)();
 extern void (*func_06064600)();
 extern void (*func_06064604)();
 extern void (*func_06064608)();
+extern void (*func_0606460C)();
 extern void (*func_06064614)();
 extern void (*func_06064618)();
 extern void (*func_0606461C)(s32);
@@ -956,6 +958,8 @@ extern void (*func_0606465C)();
 extern void (*func_06064660)();
 extern void (*func_06064664)();
 extern void (*func_06064674)();
+extern void (*func_06064678)();
+extern void (*func_0606467C)();
 extern void (*func_06064680)();
 extern void (*func_06064684)();
 extern void (*func_06064688)();

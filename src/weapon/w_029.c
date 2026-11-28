@@ -77,11 +77,11 @@ void EntityWeaponAttack(Entity* self) {
         SetSpriteBank1(g_Animset);
         if (self->params & ANIMSET_OVL_FLAG) {
             self->animSet = ANIMSET_OVL(18);
-            self->ext.weapon.unk80 = 0x128;
+            self->ext.weapon.angle = 0x128;
             self->unk5A = 0x66;
         } else {
             self->animSet = ANIMSET_OVL(16);
-            self->ext.weapon.unk80 = 0x110;
+            self->ext.weapon.angle = 0x110;
             self->unk5A = 0x64;
         }
         self->flags = FLAG_POS_PLAYER_LOCKED + FLAG_UNK_20000;
@@ -159,7 +159,7 @@ void EntityWeaponAttack(Entity* self) {
         }
     }
     self->palette =
-        self->ext.weapon.unk80 + D_CF000_8017ACF8[g_GameTimer / 2 % 5];
+        self->ext.weapon.angle + D_CF000_8017ACF8[g_GameTimer / 2 % 5];
     self->drawFlags = PLAYER.drawFlags;
     self->scaleY = PLAYER.scaleY;
     self->rotPivotY = PLAYER.rotPivotY;
@@ -175,7 +175,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->animSet = self->ext.weapon.parent->animSet;
         self->zPriority = self->ext.weapon.parent->zPriority + 4;
         self->unk5A = self->ext.weapon.parent->unk5A;
-        self->ext.weapon.unk80 = self->ext.weapon.parent->ext.weapon.unk80;
+        self->ext.weapon.angle = self->ext.weapon.parent->ext.weapon.angle;
         self->animCurFrame = self->ext.weapon.parent->animCurFrame;
         self->flags = FLAG_POS_CAMERA_LOCKED;
         self->drawFlags = ENTITY_OPACITY | ENTITY_MASK_R;
@@ -193,7 +193,7 @@ s32 func_ptr_80170004(Entity* self) {
         }
     }
     self->palette =
-        self->ext.weapon.unk80 + D_CF000_8017AD04[g_GameTimer / 2 % 5];
+        self->ext.weapon.angle + D_CF000_8017AD04[g_GameTimer / 2 % 5];
 }
 
 void func_ptr_80170008(Entity* self) {}
@@ -249,7 +249,7 @@ void EntityWeaponShieldSpell(Entity* self) {
         prim->u1 = prim->u3 = 0xCF;
         prim->v0 = prim->v1 = self->ext.shield.unk7C;
         prim->v2 = prim->v3 = self->ext.shield.unk7C + 0x4F;
-        self->ext.weapon.unk82 = 0;
+        self->ext.weapon.angSpd = 0;
         prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
             prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
                 0x80;
@@ -271,20 +271,20 @@ void EntityWeaponShieldSpell(Entity* self) {
         self->posY.val += self->velocityY;
         self->scaleX += 12;
         self->scaleY = self->scaleX;
-        self->ext.weapon.unk82 = self->scaleX * 40 / 256;
+        self->ext.weapon.angSpd = self->scaleX * 40 / 256;
 
         if (self->scaleX >= 0x100) {
-            self->ext.weapon.unk82 = 0x28;
+            self->ext.weapon.angSpd = 0x28;
             self->scaleX = 0x100;
             self->scaleY = 0x100;
-            self->ext.weapon.unk80 = 8;
+            self->ext.weapon.angle = 8;
             self->step++;
         }
         self->palette =
             self->ext.weapon.childPalette + D_CF000_8017ACF8[g_Timer / 2 % 5];
         break;
     case 2:
-        if (--self->ext.weapon.unk80 == 0) {
+        if (--self->ext.weapon.angle == 0) {
             self->step++;
         }
         self->palette =
@@ -301,7 +301,7 @@ void EntityWeaponShieldSpell(Entity* self) {
             self->pose = 0;
             self->poseTimer = 0;
             self->flags |= FLAG_UNK_100000;
-            self->ext.weapon.unk80 = 0x20;
+            self->ext.weapon.angle = 0x20;
             self->palette = self->ext.weapon.childPalette;
             self->zPriority = 0x1B6;
             g_api.PlaySfx(SFX_TRANSFORM);
@@ -309,7 +309,7 @@ void EntityWeaponShieldSpell(Entity* self) {
         }
         break;
     case 4:
-        self->ext.weapon.unk82 += 8;
+        self->ext.weapon.angSpd += 8;
         self->scaleX += 0x10;
         if (self->scaleX >= 0x100) {
             self->scaleX = 0x100;
@@ -321,19 +321,19 @@ void EntityWeaponShieldSpell(Entity* self) {
         }
         prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
             prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
-        if (--self->ext.weapon.unk80 == 0) {
+        if (--self->ext.weapon.angle == 0) {
             prim->drawMode |= DRAW_HIDE;
             g_api.PlaySfx(SFX_FIREBALL_SHOT_A);
             // TODO: FACTORY()
             g_api.CreateEntFactoryFromEntity(
                 self, ((g_HandId + 1) << 14) + 102, 0);
-            self->ext.weapon.unk80 = 0x18;
+            self->ext.weapon.angle = 0x18;
             g_unkGraphicsStruct.unk28 = 0;
             self->step++;
         }
         break;
     case 5:
-        if (--self->ext.weapon.unk80 == 0) {
+        if (--self->ext.weapon.angle == 0) {
             self->step++;
         }
         break;
@@ -349,10 +349,10 @@ void EntityWeaponShieldSpell(Entity* self) {
     selfX = self->posX.i.hi;
     selfY = self->posY.i.hi;
     prim = &g_PrimBuf[self->primIndex];
-    prim->x0 = prim->x2 = selfX - self->ext.weapon.unk82;
-    prim->x1 = prim->x3 = (selfX + self->ext.weapon.unk82) - 1;
-    prim->y0 = prim->y1 = selfY - self->ext.weapon.unk82;
-    prim->y2 = prim->y3 = (selfY + self->ext.weapon.unk82) - 1;
+    prim->x0 = prim->x2 = selfX - self->ext.weapon.angSpd;
+    prim->x1 = prim->x3 = (selfX + self->ext.weapon.angSpd) - 1;
+    prim->y0 = prim->y1 = selfY - self->ext.weapon.angSpd;
+    prim->y2 = prim->y3 = (selfY + self->ext.weapon.angSpd) - 1;
     return;
 }
 
@@ -576,11 +576,11 @@ void func_ptr_80170028(Entity* self) {
         SetWeaponProperties(self, 0);
         self->hitboxHeight = 14;
         self->hitboxWidth = 14;
-        self->ext.weapon.unk80 = 10;
+        self->ext.weapon.angle = 10;
         self->step++;
         return;
     }
-    if (--self->ext.weapon.unk80 == 0) {
+    if (--self->ext.weapon.angle == 0) {
         DestroyEntity(self);
     }
 }

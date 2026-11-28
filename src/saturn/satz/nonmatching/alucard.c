@@ -563,6 +563,36 @@ static void alu_attack_pose(Equipment* item, s32 anim) {
     g_Player.timers[9] = 4;
 }
 
+void func_060A5B94(s32 allowFlip) {
+    if (g_Player.unk72) {
+        func_060A5AF0();
+        return;
+    }
+    if (func_060A5060()) {
+        s32 v = PLAYER.step == 0x13 ? 0x2D000 : 0x1E000;
+        set_anim(0x15);
+        PLAYER.velocityX = PLAYER.facingLeft == 1 ? -v : v;
+        g_Player.unk44 = 0;
+    } else {
+        set_anim(0x11);
+        PLAYER.velocityX = 0;
+        g_Player.unk44 = 4;
+    }
+    PLAYER.velocityY = 0xFFFB2000;
+    PLAYER.step = 4;
+    PLAYER.step_s = 0;
+    if (g_Player.unk320 == 1) {
+        g_Player.unk44 |= 0x10;
+    } else if (g_Player.unk320 == 0x13) {
+        g_Player.unk44 |= 0x210;
+    }
+    if (allowFlip) {
+        g_Player.unk44 &= ~1;
+    } else {
+        g_Player.unk44 |= 1;
+    }
+}
+
 s32 func_060A6420(void) {
     SubweaponDef sub;
     s32 atLedge = 0, i, nFound, nEmpty, r;
@@ -1370,6 +1400,290 @@ void func_060A81DC(void) {
     }
     if ((flags & 0x8000) && (flags & 8)) {
         func_060A7D3C();
+    }
+}
+
+void func_060AC018(void);
+
+void func_060A8DF4(void) {
+    s32 flags = 0, atLedge = 0, i;
+    s16 dx;
+
+    if (g_Player.vram_flag & 0x20) {
+        atLedge = 1;
+    }
+    if ((g_Player.padTapped & 0x100) && !(g_Player.unk46 & 0x8000)) {
+        if (g_Player.padPressed & 0x2000) {
+            for (i = 0; i < 4; i++) {
+                if (g_Player.colFloor[i].effects & 0x40) {
+                    g_Player.timers[7] = 8;
+                    return;
+                }
+            }
+        }
+        if (!g_Player.unk72) {
+            func_060A5B94(1);
+            return;
+        }
+    }
+    if (func_060A50E0(0x100C)) {
+        return;
+    }
+    func_060A55B4(0x2800);
+    if (g_Player.unk48) {
+        if (g_Player.anim == 0xF) {
+            g_Player.anim = 0x5D;
+            g_Player.pose = 2;
+            g_Player.poseTimer = 3;
+        }
+    } else if (g_Player.anim == 0x5D) {
+        func_060A5674(0xF);
+    }
+    switch (PLAYER.step_s) {
+    case 0:
+        if (D_060C84E0) {
+            D_060C84E0--;
+        } else if (g_unkGraphicsStruct.D_80097448 > 0x18 && !g_Player.unk48) {
+            dx = PLAYER.facingLeft ? -0xC : 0xC;
+            PLAYER.posX.i.hi += dx;
+            PLAYER.posY.i.hi += 2;
+            func_060BAF44(g_CurrentEntity, 0xD0004, 0);
+            PLAYER.posY.i.hi -= 2;
+            PLAYER.posX.i.hi -= dx;
+            D_060C84E0 = 0x60;
+        }
+        flags = 6;
+        break;
+    case 1:
+        if (!(g_Player.padPressed & 0x2000)) {
+            flags = 1;
+            if (g_Player.poseTimer > 3 || g_Player.anim == 0x5D) {
+                func_060A5674(0x10);
+                PLAYER.step_s = 2;
+                g_Player.poseTimer = 2;
+                if (g_Player.unk72 == 1) {
+                    g_Player.poseTimer = 0;
+                }
+                if (g_Player.unk72 == 2) {
+                    g_Player.poseTimer = 1;
+                }
+                return;
+            }
+        } else if (g_Player.anim == 0x5D) {
+            PLAYER.step_s = 0;
+        } else if (g_Player.unk39D & 0x40) {
+            flags = 0x20;
+        }
+        break;
+    case 5:
+        func_060A7D68(1, 1);
+        if (g_Player.unk72 == g_Player.poseTimer || (g_Player.unk39D & 0x40)) {
+            flags = 0x20;
+        }
+        break;
+    case 3:
+    case 4:
+        func_060A7D68(1, 1);
+        if (g_Player.unk39D & 0x40) {
+            flags = 0x20;
+        }
+        break;
+    case 2:
+        flags = 1;
+        if (g_Player.padPressed & 0x2000) {
+            func_060A56E4(0, PLAYER.velocityX);
+            break;
+        }
+        if (g_Player.unk72) {
+            func_060A7D68(1, 1);
+            switch (g_Player.unk72) {
+            case 1:
+                g_Player.poseTimer = 0;
+                g_Player.pose = 3;
+                break;
+            case 2:
+                if (g_Player.poseTimer > 0) {
+                    g_Player.poseTimer = 1;
+                    g_Player.pose = 3;
+                }
+                break;
+            case 3:
+                if (g_Player.poseTimer > 1) {
+                    g_Player.poseTimer = 2;
+                    g_Player.pose = 3;
+                }
+                break;
+            case 4:
+                if (g_Player.poseTimer > 2) {
+                    g_Player.poseTimer = 3;
+                    g_Player.pose = 3;
+                }
+                break;
+            }
+        } else if (g_Player.unk39D & 0x40) {
+            func_060A580C(0);
+        }
+        break;
+    case 0x40:
+    case 0x59:
+        func_060A7D68(1, 1);
+        if (g_Player.poseTimer < (s32)g_Player.unk54) {
+            if (g_Player.poseTimer <= 1) {
+                func_060A5060();
+                if (!(g_Player.padPressed & 0x2000) && !g_Player.unk72) {
+                    PLAYER.step = 0;
+                    g_Player.anim = 0x1B;
+                }
+            }
+        } else {
+            g_Player.unk46 &= 0x7FFF;
+            flags = 0xE;
+            if (g_Player.poseTimer == 7) {
+                if (g_Player.padPressed & g_Player.D_80072EF8) {
+                    g_Player.pose = 2;
+                } else {
+                    flags = 0x2E;
+                }
+            }
+        }
+        break;
+    case 0x47:
+    case 0x49:
+        if (g_Player.poseTimer == 6 &&
+            (g_Player.padPressed & g_Player.D_80072EF8)) {
+            g_Player.pose = 2;
+        }
+    case 0x41:
+    case 0x42:
+    case 0x43:
+    case 0x44:
+    case 0x45:
+    case 0x46:
+    case 0x48:
+    case 0x4A:
+    case 0x4B:
+    case 0x4C:
+    case 0x4D:
+    case 0x4E:
+    case 0x4F:
+    case 0x50:
+    case 0x53:
+    case 0x54:
+    case 0x55:
+    case 0x56:
+    case 0x57:
+    case 0x58:
+    case 0x5A:
+    case 0x5B:
+    case 0x5C:
+    case 0x5D:
+    case 0x60:
+    case 0x61:
+        func_060A7D68(1, 1);
+        if (g_Player.poseTimer < (s32)g_Player.unk54) {
+            if (g_Player.poseTimer <= 2) {
+                func_060A5060();
+                if (!(g_Player.padPressed & 0x2000) && !g_Player.unk72) {
+                    g_Player.anim = DAT_060C891B[PLAYER.step_s] + atLedge;
+                    PLAYER.step = 0;
+                }
+            }
+        } else {
+            g_Player.unk46 &= 0x7FFF;
+            flags = 0xE;
+            if (g_Player.unk39D & 0x40) {
+                flags = 0x2E;
+            }
+        }
+        if (g_Player.unk39D & 0x40) {
+            PLAYER.step_s = 0;
+        }
+        break;
+    case 0x51:
+        func_060A7D68(1, 1);
+        if (g_Player.unk39D & 0x40) {
+            flags = 0x2E;
+        }
+        break;
+    }
+    if (flags & 0x20) {
+        func_060A56E4(0, 0);
+        flags |= 0x8000;
+    }
+    if ((flags & 2) && g_Player.unk4C) {
+        func_060A5674(0xE);
+        g_Player.poseTimer = 6;
+        PLAYER.step_s = 0;
+        flags |= 0x8000;
+    }
+    if ((flags & 4) && !(g_Player.padPressed & 0x2000)) {
+        func_060A5674(0x10);
+        PLAYER.step_s = 2;
+        flags |= 0x8000;
+    }
+    if ((flags & 1) && func_060A5060()) {
+        switch ((u8)g_Player.unk72) {
+        case 0:
+        case 3:
+        case 4:
+            func_060A59E0(0);
+            flags |= 0x8000;
+            break;
+        case 1:
+        case 2:
+            if (g_Player.padTapped & 0xC000) {
+                PLAYER.step_s = 5;
+                func_060A5674(0xBB);
+                func_060A5574(0xF000);
+                flags |= 0x8000;
+            }
+            break;
+        }
+    }
+    if ((flags & 0x8000) && (flags & 8)) {
+        func_060A7D3C();
+    }
+}
+
+void func_060AC0C8(void) {
+    PLAYER.velocityY = 0;
+    PLAYER.velocityX = 0;
+    g_Player.padSim = 0;
+    g_Player.demo_timer = 8;
+    switch (PLAYER.step_s) {
+    case 0:
+        g_pads[0].pressed = 0;
+        if (g_Player.poseTimer == 8 && g_Player.pose == 1 &&
+            !func_060BAF44(g_CurrentEntity, 0x79, 0)) {
+            g_Player.pose = 2;
+        }
+        break;
+    case 1:
+        if (!D_80097C98) {
+            func_060A580C(0);
+        }
+        break;
+    case 2:
+    case 4:
+        func_060AC018();
+        if (g_Player.poseTimer == 8 && g_Player.pose == 1 &&
+            !func_060BAF44(
+                g_CurrentEntity, PLAYER.step_s == 2 ? 0x20079 : 0x40079, 0)) {
+            g_Player.pose = 2;
+        }
+        if (g_Player.unk39D & 0x40) {
+            func_060A580C(0);
+        }
+        break;
+    case 3:
+    case 5:
+        if (g_Player.unk39D & 0x40) {
+            func_060A580C(0);
+        }
+        if (g_Player.warp_flag) {
+            func_060A580C(0);
+        }
+        break;
     }
 }
 
@@ -5065,6 +5379,56 @@ void func_060BCD98(Entity* self) {
     func_060A7D68(1, 1);
 }
 
+extern AnimationFrame g_AlucardUnknownAnim13[];
+extern s32 DAT_060CE5B0;
+
+void func_060BE620(Entity* self) {
+    SpriteObject* sprite;
+
+    switch (self->step) {
+    case 0:
+        sprite = CreateSpriteObject(
+            g_SaturnSharedSpriteBank7Resource.allocationIndex,
+            g_SaturnSharedSpriteBank7Resource.flags + 5,
+            g_SaturnSharedSpriteBank7Resource.images, 2);
+        self->unk0 = sprite;
+        if (!sprite) {
+            DestroyEntity(self);
+            return;
+        }
+        sprite->flags |= 0x80;
+        self->ext.weapon.frames = g_SaturnSharedOpaquePuffFrames0;
+        sprite->zPriority = PLAYER.zPriority + 2;
+        self->flags = 0x08120000;
+        self->unk56 = 0x79;
+        self->animSet = 0xE;
+        self->palette = 0x819F;
+        self->unk1C = (DAT_060CE5B0 & 1) ? 0x70 : 0x10;
+        DAT_060CE5B0++;
+        self->opacity = 0xFF;
+        self->drawFlags = 0x33;
+        self->scaleY = 0x40;
+        self->scaleX = 0x40;
+        self->anim = g_AlucardUnknownAnim13;
+        self->posY.i.hi += MTH_GetRand() % 35 - 0xF;
+        self->posX.i.hi += MTH_GetRand() % 20 - 0xA;
+        self->velocityY = -0x6000 - (MTH_GetRand() & 0x3FFF);
+        self->step++;
+        break;
+    case 1:
+        if (self->opacity > 0x10) {
+            self->opacity -= 8;
+        }
+        self->posY.val += self->velocityY;
+        self->scaleX += 8;
+        self->scaleY += 8;
+        if (self->poseTimer < 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
+
 void func_060BFB2C(Entity* self) {
     AluRingExt* ext = ALU_RING(self);
     s32 params = (u8)self->params;
@@ -5209,6 +5573,209 @@ static PfnEntityUpdate player_entity_function(u16 id) {
         return (PfnEntityUpdate)((void**)g_Weapon1OvlArea)[id - 0xF0];
     }
     return (PfnEntityUpdate)((void**)g_Weapon0OvlArea)[id - 0xE0];
+}
+
+extern s32 g_AlucardEffectLimits[];
+
+typedef struct {
+    /* 0x78 */ s32 width;
+    /* 0x7C */ s32 height;
+    /* 0x80 */ s32 timer;
+    /* 0x84 */ s32 intensity;
+    /* 0x88 */ Entity* parent;
+    /* 0x8C */ s32 fade;
+} AluTeleportExt;
+extern s16 DAT_060CE710[32][2];
+
+static u16 beam_colour(s32 i, s32 mul) {
+    return ((((u8)(g_AlucardEffectLimits[i + 2] * mul / 256)) >> 3) << 10) +
+           ((((u8)(g_AlucardEffectLimits[i + 1] * mul / 256)) >> 3) << 5) +
+           (((u8)(g_AlucardEffectLimits[i] * mul / 256)) >> 3) + 0x8000;
+}
+
+void func_060C0BF4(Primitive* prim, s32 mul, s32 y, s32 radius, s32 alt) {
+    SprGourTbl* g = &SpGourTbl[prim->unk1C];
+    u16 c;
+
+    prim->y1 = prim->y0 = y - radius;
+    prim->y3 = prim->y2 = y + radius;
+    if (prim->y0 < 0) {
+        prim->y1 = prim->y0 = 0;
+    }
+    if (prim->y0 > 0xF0) {
+        prim->y2 = prim->y3 = 0xF0;
+    }
+    g->entry[2] = g->entry[1] = beam_colour(0, mul);
+    c = beam_colour(alt ? 6 : 3, mul);
+    g->entry[3] = c;
+    g->entry[0] = c;
+}
+
+void func_060C0E48(Entity* self) {
+    AluTeleportExt* ext = (AluTeleportExt*)&self->ext;
+    s32 upper = self->params & 0xFE00, sparks = 0, i, w, h;
+    s16 x, y;
+    Primitive* p;
+    u16 clut;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = AllocPrimitives(1, 0x22);
+        if (self->primIndex == -1) {
+            return;
+        }
+        self->flags = 0x0C810000;
+        p = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 2; i++, p = p->next) {
+            p->type = 0x1004;
+            p->unk4 = 0x5C4;
+            p->unk6 = 0xF39C;
+            p->priority = 0x1B8;
+            p->drawMode = 0;
+        }
+        for (i = 0; i < 32; i++, p = p->next) {
+            DAT_060CE710[i][0] = PLAYER.posX.i.hi + MTH_GetRand() % 28 - 0xE;
+            DAT_060CE710[i][1] = 0xE0 - (MTH_GetRand() & 0x3F);
+            clut = AlucardSpriteResources[5].flags + 0xC;
+            p->unk6 = ((clut >> 14) & 1) ? LocalLookupTblNoToVram(clut & 0xFFF)
+                                         : SPR_2LookupTblNoToVram(clut & 0xFFF);
+            p->x1 = 0;
+            p->y1 = 0;
+            p->x3 = 0;
+            p->y3 = (MTH_GetRand() & 0x1F) + 1;
+            p->priority = 0x1B0;
+            p->drawMode = 8;
+        }
+        if (self->params & 0x100) {
+            ext->width = 0x10;
+            ext->height = 0x100;
+            ext->intensity = 0x80;
+            self->step = 0x14;
+            PlaySfx(0x6EA);
+        } else {
+            ext->width = 1;
+            ext->height = 0x10;
+            ext->intensity = 0x80;
+            self->step = 1;
+            PlaySfx(0x635);
+            PlaySfx(0x6E9);
+        }
+        break;
+    case 1:
+        ext->height += 0x20;
+        if (ext->height > 0x100) {
+            self->step++;
+        }
+        break;
+    case 2:
+        if (++ext->width > 0xF) {
+            ext->width = 0x10;
+            ext->timer = 0x80;
+            self->step++;
+        }
+        break;
+    case 3:
+        sparks = 1;
+        ext->intensity += 4;
+        if (ext->intensity > 0xFF) {
+            ext->intensity = 0x100;
+        }
+        if (--ext->timer == 0) {
+            PLAYER.palette = 0xFF;
+            self->step++;
+        }
+        break;
+    case 4:
+        PLAYER.palette = 0xFF;
+        if (--ext->width <= 0) {
+            ext->width = 0;
+            self->step++;
+        }
+        break;
+    case 5:
+        PLAYER.palette = 0xFF;
+        ext->timer = 3;
+        self->step++;
+        break;
+    case 6:
+        PLAYER.palette = 0xFF;
+        if (--ext->timer == 0) {
+            if (upper == 0) {
+                D_80097C98 = 6;
+            }
+            if (upper == 0x200) {
+                D_80097C98 = 4;
+            }
+            if (upper == 0x400) {
+                D_80097C98 = 5;
+            }
+        }
+        break;
+    case 0x14:
+        ext->fade = 0xFF;
+        ext->timer = 0x20;
+        self->step++;
+        break;
+    case 0x15:
+        if (--ext->timer == 0) {
+            self->step++;
+        }
+        break;
+    case 0x16:
+        ext->fade -= 4;
+        if (ext->fade <= 0) {
+            ext->fade = 0;
+            self->step++;
+        }
+        break;
+    case 0x17:
+        if (--ext->width <= 1) {
+            ext->width = 0;
+            ext->timer = 4;
+            self->step++;
+            g_Player.warp_flag = 1;
+            PlaySfx(0x636);
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    self->posX.i.hi = PLAYER.posX.i.hi;
+    self->posY.i.hi = PLAYER.posY.i.hi;
+    w = ext->width;
+    h = ext->height;
+    x = PLAYER.posX.i.hi;
+    y = PLAYER.posY.i.hi;
+    p = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < 2; i++, p = p->next) {
+        if (w <= 0) {
+            p->drawMode |= 8;
+            continue;
+        }
+        p->drawMode &= ~8;
+        p->x2 = p->x1 = x;
+        p->x3 = p->x0 = i ? x + w : x - w;
+        func_060C0BF4(p, ext->intensity, y, h, upper);
+    }
+    for (i = 0; i < 32; i++, p = p->next) {
+        if (!sparks) {
+            p->drawMode |= 8;
+            continue;
+        }
+        if (p->x3 == 0) {
+            if (--p->y3 == 0) {
+                p->x3++;
+            }
+        } else if (p->x3 == 1) {
+            DAT_060CE710[i][1] -= 0x10;
+            if (func_060BA604(p, DAT_060CE710[i][0], DAT_060CE710[i][1]) < 0) {
+                p->drawMode |= 8;
+                p->x3++;
+            } else {
+                p->drawMode &= ~8;
+            }
+        }
+    }
 }
 
 void func_060C1618(Entity* self) {

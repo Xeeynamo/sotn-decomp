@@ -1831,7 +1831,7 @@ void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
             ent = &g_Entities[16];
             for (j = 16; j < 64; j++, ent++) {
                 // Entity 32 appears to be EntityPlayerDissolves
-                if (ent->entityId == 32) {
+                if (ent->entityId == E_UNK_32) {
                     PlaySfx(SFX_VO_ALU_DEATH);
                     PLAYER.step_s = 16;
                     return;

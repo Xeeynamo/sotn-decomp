@@ -272,7 +272,7 @@ void EntityWeaponAttack(Entity* self) {
         self->velocityY = D_123000_8017A54C[D_123000_8017B208];
         D_123000_8017B208++;
         self->ext.weapon.lifetime = (rand() & 0xF) + 24;
-        g_Player.timers[10] = 4;
+        g_Player.timers[ALU_T_USE_SUBWPN] = 4;
         self->step++;
         break;
 
@@ -341,18 +341,18 @@ s32 func_ptr_80170004(Entity* self) {
     case 2:
         if (--self->ext.weapon.lifetime == 0) {
             if (self->facingLeft) {
-                self->ext.weapon.unk80 = 0;
+                self->ext.weapon.angle = 0;
                 self->ext.weapon.unk7E = 0;
             } else {
-                self->ext.weapon.unk80 = 0x800;
+                self->ext.weapon.angle = 0x800;
                 self->ext.weapon.unk7E = 1;
             }
             self->ext.weapon.some_ent =
-                func_123000_8017A994(self, self->ext.weapon.unk80, 0x280);
+                func_123000_8017A994(self, self->ext.weapon.angle, 0x280);
             g_api.PlaySfx(SFX_BAT_WING_SWISHES);
             g_api.PlaySfx(SFX_BAT_SCREECH);
             self->ext.weapon.lifetime = 0x16;
-            self->ext.weapon.unk82 = 0x80;
+            self->ext.weapon.angSpd = 0x80;
             self->step++;
         }
         break;
@@ -360,31 +360,31 @@ s32 func_ptr_80170004(Entity* self) {
         result = g_api.func_80118B18(
             self, self->ext.weapon.some_ent, self->ext.weapon.unk7E);
         if (result >= 0) {
-            angle = self->ext.weapon.unk80 & 0xFFF;
+            angle = self->ext.weapon.angle & 0xFFF;
             angleDiff = abs(angle - result);
-            if (self->ext.weapon.unk82 > angleDiff) {
-                self->ext.weapon.unk82 = angleDiff;
+            if (self->ext.weapon.angSpd > angleDiff) {
+                self->ext.weapon.angSpd = angleDiff;
             }
             if (angle < result) {
                 if (angleDiff < 0x800) {
-                    angle += self->ext.weapon.unk82;
+                    angle += self->ext.weapon.angSpd;
                 } else {
-                    angle -= self->ext.weapon.unk82;
+                    angle -= self->ext.weapon.angSpd;
                 }
             } else {
                 if (angleDiff < 0x800) {
-                    angle -= self->ext.weapon.unk82;
+                    angle -= self->ext.weapon.angSpd;
                 } else {
-                    angle += self->ext.weapon.unk82;
+                    angle += self->ext.weapon.angSpd;
                 }
             }
-            self->ext.weapon.unk80 = angle & 0xFFF;
+            self->ext.weapon.angle = angle & 0xFFF;
         }
-        trigresult = rcos(self->ext.weapon.unk80);
+        trigresult = rcos(self->ext.weapon.angle);
         trigtemp = trigresult * 16;
         self->velocityX = (trigresult * 32 + trigtemp) << 7 >> 8;
 
-        trigresult = rsin(self->ext.weapon.unk80);
+        trigresult = rsin(self->ext.weapon.angle);
         trigtemp = trigresult * 16;
         self->velocityY = -((trigresult * 32 + trigtemp) << 7) >> 8;
         self->posX.val += self->velocityX;

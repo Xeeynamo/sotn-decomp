@@ -110,7 +110,7 @@ void func_ptr_80170004(Entity* self) {
         }
         SetWeaponProperties(self, 0);
         DestroyEntityWeapon(true);
-        g_Player.timers[10] = 4;
+        g_Player.timers[ALU_T_USE_SUBWPN] = 4;
         self->step++;
         break;
     case 1:

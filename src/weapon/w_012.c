@@ -362,7 +362,7 @@ s32 func_ptr_80170004(Entity* self) {
         DestroyEntityWeapon(true);
         self->hitboxHeight = 4;
         self->hitboxWidth = 4;
-        g_Player.timers[10] = 4;
+        g_Player.timers[ALU_T_USE_SUBWPN] = 4;
         self->ext.weapon_012.vol = 0x60;
         self->step++;
         break;

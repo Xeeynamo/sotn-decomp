@@ -5,7 +5,7 @@ extern EInit g_EInitGurkhaWeapon;
 
 // clang-format off
 static u16 D_80182EF4[] = {0, 9, 0, 4, 4, -4, -8, 0};
-static giantBroBodyPartsInit D_80182F04[] = {
+static largeEnemyBodyParts D_80182F04[] = {
     {9, 0, 16, 7, 1},    {10, 9, 14, 8, 2},    {11, 10, 0, 9, 3},
     {12, 0, 16, 13, -1}, {13, 12, 14, 14, -2}, {14, 13, 0, 15, -3},
     {2, 0, -18, 2, 1},   {1, 2, -4, 17, 0},    {3, 2, 0, 4, 2},
@@ -212,7 +212,7 @@ void EntityGurkha(Entity* self) {
     Entity* ent_s0;
     Entity* part;
     s16* var_s1;
-    giantBroBodyPartsInit* parts;
+    largeEnemyBodyParts* parts;
     s32 res;
 
     if ((self->step & 1) && (self->hitFlags & 3)) {

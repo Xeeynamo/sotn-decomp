@@ -180,7 +180,7 @@ extern s32 g_ExpNext[];
 extern s32 g_LevelHPIncrease[];
 void ApplyJosephsCloakPalette(void);
 void ResetNewGameSettings(void);
-extern s32 DAT_0608609c;
+extern s32 DAT_0608609C;
 void func_060728B4(void);
 void SubDisp(void);
 void RunMainEngine(void);

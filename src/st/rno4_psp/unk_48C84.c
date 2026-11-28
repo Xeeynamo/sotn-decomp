@@ -23,43 +23,37 @@ extern EInit g_EInitCommon;
 
 #if TARGET == TARGET_PSP
 static s16 D_us_801815E4[] = {
-    0x0000, 0x04D0, 0x00D8, 0x00F0,
-    0x0068, 0x00B0, 0x00D8, 0x00F0,
-    0x0340, 0x0074, 0x00D8, 0x00F0,
+    0x0000, 0x04D0, 0x00D8, 0x00F0, 0x0068, 0x00B0,
+    0x00D8, 0x00F0, 0x0340, 0x0074, 0x00D8, 0x00F0,
 };
 #else
-static s16 D_us_801815E4[] = {
-    0x00D8, 0x00F0, 0x0068, 0x00B0,
-    0x00D8, 0x00F0, 0x0340, 0x0074,
-    0x00D8, 0x00F0
-};
+static s16 D_us_801815E4[] = {0x00D8, 0x00F0, 0x0068, 0x00B0, 0x00D8,
+                              0x00F0, 0x0340, 0x0074, 0x00D8, 0x00F0};
 #endif
 
 static s16 water_slow_zones[] = {
-    0x0260, 0x0020, 0x00D0, 0x0080,
-    0x0470, 0x0020, 0x00D0, 0x0080,
-    0x00C0, 0x002C, 0x00E0, 0x0500,
+    0x0260, 0x0020, 0x00D0, 0x0080, 0x0470, 0x0020,
+    0x00D0, 0x0080, 0x00C0, 0x002C, 0x00E0, 0x0500,
 };
 
 static u16 D_us_80181610[] = {
-    0x0373, 0x0000, 0x0000, 0x0000,
-    0x075E, 0x0001, 0x0001, 0x0001,
+    0x0373, 0x0000, 0x0000, 0x0000, 0x075E, 0x0001, 0x0001, 0x0001,
 };
 
 // What to do with these? They are in 63E40.data.s
 // and there are like 6 variables between them
 extern s16 water_surface_lines[]; // 0x63E68
-extern s16 water_tile_rects[]; // 0x63F68
+extern s16 water_tile_rects[];    // 0x63F68
 
 static void func_us_801A071C_from_bo3() {
-  s16 *data;
-  s16 *tileRects;
-  s16 *surfaceLines;
-  s16 value;
+    s16* data;
+    s16* tileRects;
+    s16* surfaceLines;
+    s16 value;
 
-  data = D_us_801815E4;
-  tileRects = water_tile_rects;
-  surfaceLines = water_surface_lines;
+    data = D_us_801815E4;
+    tileRects = water_tile_rects;
+    surfaceLines = water_surface_lines;
 
 #if TARGET == TARGET_PSP
     data += 2;
@@ -67,47 +61,42 @@ static void func_us_801A071C_from_bo3() {
     surfaceLines += 0x70;
 #endif
 
-  value = 0xD8 - D_us_801815DC;
+    value = 0xD8 - D_us_801815DC;
 
-  if (value < 0x18)
-  {
-    value = 0;
-  }
+    if (value < 0x18) {
+        value = 0;
+    }
 
-  *data = value;
-  *tileRects = value;
-  *surfaceLines = value;
+    *data = value;
+    *tileRects = value;
+    *surfaceLines = value;
 
-  data += 4;
-  tileRects += 4;
-  surfaceLines += 5;
+    data += 4;
+    tileRects += 4;
+    surfaceLines += 5;
 
-  if (D_us_801815DC < 0xC0)
-  {
-    value = 0xF0;
-  }
-  else
-  {
-    value = 0x1A8 - D_us_801815DC;
-  }
+    if (D_us_801815DC < 0xC0) {
+        value = 0xF0;
+    } else {
+        value = 0x1A8 - D_us_801815DC;
+    }
 
-  data[0] = value;
-  data += 4;
-  data[0] = value;
+    data[0] = value;
+    data += 4;
+    data[0] = value;
 
-  if (value > 0xE8)
-  {
-    value = 0xE8;
-  }
+    if (value > 0xE8) {
+        value = 0xE8;
+    }
 
-  surfaceLines[0] = value;
-  surfaceLines += 5;
-  surfaceLines[0] = value;
-  value++;
+    surfaceLines[0] = value;
+    surfaceLines += 5;
+    surfaceLines[0] = value;
+    value++;
 
-tileRects[0] = value;
-tileRects += 4;
-tileRects[0] = value;
+    tileRects[0] = value;
+    tileRects += 4;
+    tileRects[0] = value;
 }
 
 void func_us_801A07CC_from_bo3(Entity* self) {
